@@ -1,5 +1,8 @@
 package ho.module.tsforecast;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -9,8 +12,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 class TrainerCurve extends Curve {
 

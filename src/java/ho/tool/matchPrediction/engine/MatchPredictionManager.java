@@ -74,7 +74,7 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
         final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 
         for (int i = 0; i < 91; i++) {
-            de.hattrickorganizer.tools.HelperWrapper.instance().copyArray2Vector(matchengine
+            ho.core.util.HelperWrapper.instance().copyArray2Vector(matchengine
                                                                                  .advance(), actions);
         }
         return actions;

@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.awt.BorderLayout;
@@ -15,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

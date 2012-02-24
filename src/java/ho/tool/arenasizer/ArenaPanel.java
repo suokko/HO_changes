@@ -1,7 +1,13 @@
 // %3426612608:de.hattrickorganizer.gui.arenasizer%
 package ho.tool.arenasizer;
 
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.model.HOModel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.Helper;
+import ho.tool.updater.TableModel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,12 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.model.HOModel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.updater.TableModel;
 
 
 /**

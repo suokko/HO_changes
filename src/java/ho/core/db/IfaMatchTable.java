@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 import ho.module.ifa.DateHelper;
 import ho.module.ifa.IfaMatch;
 
@@ -7,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class IfaMatchTable extends AbstractTable {
 

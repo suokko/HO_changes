@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.core.model.Spieler;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class SpielerTable extends AbstractTable {
 

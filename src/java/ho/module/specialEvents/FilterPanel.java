@@ -1,5 +1,8 @@
 package ho.module.specialEvents;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 class FilterPanel extends JPanel implements ActionListener {
 

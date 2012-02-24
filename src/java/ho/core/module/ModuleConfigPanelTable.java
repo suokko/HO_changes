@@ -1,9 +1,13 @@
 package ho.core.module;
 
 import gui.HOIconName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfigDialog;
+import ho.tool.updater.TableEditor;
+import ho.tool.updater.TableModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +19,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.updater.TableEditor;
-import de.hattrickorganizer.tools.updater.TableModel;
 
 class ModuleConfigPanelTable extends JTable implements ActionListener{
 	private static final long serialVersionUID = 1L;

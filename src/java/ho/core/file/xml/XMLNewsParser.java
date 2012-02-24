@@ -7,12 +7,13 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.News;
+import ho.core.util.HOLogger;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.News;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 

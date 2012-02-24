@@ -2,7 +2,9 @@
 package ho.module.teamAnalyzer.ui;
 
 //import ho.module.teamAnalyzer.SystemManager;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.MatchPopulator;
 import ho.module.teamAnalyzer.ui.controller.RecapListSelectionListener;
@@ -26,8 +28,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 public class RecapPanel extends JPanel {

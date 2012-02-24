@@ -1,10 +1,10 @@
 // %3394711869:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpieler;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
@@ -60,7 +60,7 @@ class ResultPanel extends JPanel {
         average = 0;
         set.setEnabled(false);
         result.setText("Skill");
-        set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Disabled"));
+        set.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("Disabled"));
     }
 
     /**
@@ -84,11 +84,11 @@ class ResultPanel extends JPanel {
         average = kt.getAvg();
 
         if (playerId > 0) {
-            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("OffsetTitle") + " "
+            set.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("OffsetTitle") + " "
                         + name);
             set.setEnabled(true);
         } else {
-            set.setText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Disabled"));
+            set.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("Disabled"));
             set.setEnabled(false);
         }
     }
@@ -122,17 +122,17 @@ class ResultPanel extends JPanel {
                     }
 
                     sp.setTrainingsOffsetTorwart(decimals);
-                    ho.core.db.DBManager.instance().saveSpieler(de.hattrickorganizer.model.HOVerwaltung.instance()
+                    ho.core.db.DBManager.instance().saveSpieler(ho.core.model.HOVerwaltung.instance()
                                                                                                                           .getModel()
                                                                                                                           .getID(),
-                                                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
+                                                                                   ho.core.model.HOVerwaltung.instance()
                                                                                                                           .getModel()
                                                                                                                           .getAllSpieler(),
-                                                                                   de.hattrickorganizer.model.HOVerwaltung.instance()
+                                                                                   ho.core.model.HOVerwaltung.instance()
                                                                                                                           .getModel()
                                                                                                                           .getBasics()
                                                                                                                           .getDatum());
-                    de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+                    ho.core.gui.RefreshManager.instance().doReInit();
                     parent.setVisible(false);
                     parent.dispose();
                 }

@@ -1,10 +1,11 @@
 package ho.tool.matchPrediction.engine;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 import plugins.IMPActions;
 import plugins.IMatchDetails;
 
+
+import ho.core.util.HOLogger;
 
 import java.util.List;
 

@@ -1,11 +1,12 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class XMLCHPPPreParser {
 

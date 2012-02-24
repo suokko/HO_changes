@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.model.Verein;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
 import plugins.IVerein;
-import de.hattrickorganizer.model.Verein;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class VereinTable extends AbstractTable {
 	final static String TABLENAME = "VEREIN";

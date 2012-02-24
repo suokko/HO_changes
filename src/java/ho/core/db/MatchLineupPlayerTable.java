@@ -1,5 +1,8 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineupPlayer;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
@@ -7,8 +10,6 @@ import java.util.Vector;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class MatchLineupPlayerTable extends AbstractTable {
 

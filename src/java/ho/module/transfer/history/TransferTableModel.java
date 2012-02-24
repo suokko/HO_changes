@@ -1,6 +1,7 @@
 // %1126721330463:hoplugins.transfers.ui.model%
 package ho.module.transfer.history;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.transfer.PlayerTransfer;
 
 import java.text.SimpleDateFormat;
@@ -8,7 +9,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

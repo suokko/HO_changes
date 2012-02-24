@@ -1,5 +1,7 @@
 package ho.module.evilcard;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 
@@ -8,7 +10,6 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 class DetailsTable extends JTable {

@@ -1,6 +1,7 @@
 // %2136143411:hoplugins.teamAnalyzer.ui.controller%
 package ho.module.teamAnalyzer.ui.controller;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.component.DownloadPanel;
 import ho.module.teamAnalyzer.vo.Team;
@@ -10,7 +11,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -1,5 +1,9 @@
 package ho.core.db;
 
+import ho.core.model.FutureTrainingWeek;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -9,9 +13,6 @@ import java.util.Vector;
 
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
-import de.hattrickorganizer.model.FutureTrainingWeek;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class FutureTrainingTable extends AbstractTable {
 

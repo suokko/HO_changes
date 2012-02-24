@@ -3,6 +3,7 @@ package ho.module.ifa;
 import ho.core.db.DBManager;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
+import ho.core.util.HelperWrapper;
 
 import java.util.Vector;
 
@@ -11,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 public class StatisticScrollPanel extends JScrollPane {
 	private JTable table;

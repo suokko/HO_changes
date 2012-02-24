@@ -1,6 +1,15 @@
 // %1128099595437:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.datatype.CBItem;
+import ho.core.epv.EPVData;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
+import ho.core.util.Helper;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -28,14 +37,6 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.EPVData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.Helper;
 
 /**
  * MiniScout dialog
@@ -47,23 +48,23 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 	private static final long serialVersionUID = -2092930481559683730L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
-	private JButton jbApply = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JButton jbApplyScout = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JButton jbCancel = new JButton(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
-    private JComboBox jcbAttacking = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbDefense = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbExperience = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbForm = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_FORM);
-    private JComboBox jcbKeeper = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbPassing = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbPlaymaking = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbSpeciality = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_SPECIALITY);
-    private JComboBox jcbStamina = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG_KONDITION);
-    private JComboBox jcbStandards = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbWinger = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
-    private JComboBox jcbLoyalty = new JComboBox(de.hattrickorganizer.tools.Helper.EINSTUFUNG);
+	private JButton jbApply = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbApplyScout = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbCancel = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+    private JComboBox jcbAttacking = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbDefense = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbExperience = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbForm = new JComboBox(ho.core.util.Helper.EINSTUFUNG_FORM);
+    private JComboBox jcbKeeper = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbPassing = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbPlaymaking = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbSpeciality = new JComboBox(ho.core.util.Helper.EINSTUFUNG_SPECIALITY);
+    private JComboBox jcbStamina = new JComboBox(ho.core.util.Helper.EINSTUFUNG_KONDITION);
+    private JComboBox jcbStandards = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbWinger = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbLoyalty = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
     private JCheckBox jchHomegrown = new JCheckBox();
-    private JLabel jlRating = new JLabel(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Unbestimmt")
+    private JLabel jlRating = new JLabel(ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt")
                                          + ": 0.0");
     private JLabel jlStatus = new JLabel("Status: ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);
@@ -119,11 +120,11 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
             clOwner.setScoutEintrag(createScoutEintrag());
             this.setVisible(false);
             this.dispose();
-            de.hattrickorganizer.gui.HOMainFrame.instance().setVisible(true);
+            ho.core.gui.HOMainFrame.instance().setVisible(true);
         } else if (actionEvent.getSource().equals(jbCancel)) {
             this.setVisible(false);
             this.dispose();
-            de.hattrickorganizer.gui.HOMainFrame.instance().setVisible(true);
+            ho.core.gui.HOMainFrame.instance().setVisible(true);
         } else if (actionEvent.getSource().equals(jbApplyScout)) {
             copyPaste();
 		} else if (actionEvent.getSource().equals(jtfAge)) {
@@ -235,7 +236,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
                 spielervalueChanged();
             }
         } catch (Exception e) {
-            message = de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("scout_error");
+            message = ho.core.model.HOVerwaltung.instance().getLanguageString("scout_error");
         }
 
         jtaCopyPaste.setText("");

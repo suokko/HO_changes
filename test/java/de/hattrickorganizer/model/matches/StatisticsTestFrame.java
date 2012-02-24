@@ -1,6 +1,9 @@
 package de.hattrickorganizer.model.matches;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.MatchStatistics;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpielerPosition;
 

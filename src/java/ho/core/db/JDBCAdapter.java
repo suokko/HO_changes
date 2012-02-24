@@ -2,12 +2,13 @@
 package ho.core.db;
 
 
+import ho.core.util.HOLogger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

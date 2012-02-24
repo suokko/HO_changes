@@ -5,8 +5,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
 public class TeamOfTheWeekModule extends DefaultModule {

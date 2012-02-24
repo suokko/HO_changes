@@ -6,10 +6,11 @@
  */
 package ho.module.transfer.scout;
 
+import ho.core.gui.HOMainFrame;
+
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 
 
 /**

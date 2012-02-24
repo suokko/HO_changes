@@ -1,13 +1,13 @@
 package ho.core.db;
 
 import ho.core.model.WorldDetailLeague;
+import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 class WorldDetailsTable extends AbstractTable {
 

@@ -1,6 +1,8 @@
 package ho.module.evilcard;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +12,6 @@ import javax.swing.table.AbstractTableModel;
 
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 class PlayersTableModel extends AbstractTableModel {

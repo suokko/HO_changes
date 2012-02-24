@@ -9,6 +9,7 @@ package ho.tool.hrfExplorer;
 import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,6 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 class HrfDetails {
 

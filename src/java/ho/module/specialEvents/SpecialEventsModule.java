@@ -1,5 +1,6 @@
 package ho.module.specialEvents;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
 import java.awt.event.KeyEvent;
@@ -7,7 +8,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class SpecialEventsModule extends DefaultModule {
 

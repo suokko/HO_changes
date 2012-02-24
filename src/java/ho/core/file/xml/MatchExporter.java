@@ -2,6 +2,9 @@
 package ho.core.file.xml;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOMiniModel;
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,9 +20,6 @@ import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.matches.MatchHelper;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class MatchExporter {
 	//~ Static fields/initializers -----------------------------------------------------------------

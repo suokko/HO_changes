@@ -1,6 +1,7 @@
 // %988591988:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.ui.model.UiRosterTableModel;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.teamAnalyzer.vo.RosterPlayerData;
@@ -20,7 +21,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * TODO Missing Class Documentation

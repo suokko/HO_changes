@@ -1,6 +1,9 @@
 // %3403723335:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
+import ho.core.gui.model.StatistikModel;
+import ho.core.util.HOLogger;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,8 +14,6 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.model.StatistikModel;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Zeigt Statistiken in Form eins Liniendiagrames an
@@ -237,7 +238,7 @@ public class StatistikPanel extends JPanel {
 					.getInstance();
 			calendar.setTimeInMillis(System.currentTimeMillis());
 			titel += (" - "
-					+ de.hattrickorganizer.model.HOVerwaltung.instance()
+					+ ho.core.model.HOVerwaltung.instance()
 							.getModel().getBasics().getTeamName() + " - " + java.text.DateFormat
 					.getDateTimeInstance().format(calendar.getTime()));
 

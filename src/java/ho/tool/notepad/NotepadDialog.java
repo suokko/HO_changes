@@ -2,7 +2,10 @@ package ho.tool.notepad;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,9 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 public class NotepadDialog extends JDialog implements ActionListener{
 

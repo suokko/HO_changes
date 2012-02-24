@@ -7,6 +7,12 @@
 package ho.core.file.xml;
 
 
+import ho.core.util.HOLogger;
+import ho.module.lineup.substitution.Substitution;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
+
 import java.util.ArrayList;
 
 import org.w3c.dom.Document;
@@ -17,11 +23,6 @@ import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 import plugins.MatchOrderType;
 
-import de.hattrickorganizer.model.lineup.Substitution;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.model.matches.MatchLineupTeam;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * DOCUMENT ME!

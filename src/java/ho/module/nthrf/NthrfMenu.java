@@ -1,5 +1,8 @@
 package ho.module.nthrf;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.model.HOVerwaltung;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,8 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * A simple menu for the nthrf plugin.

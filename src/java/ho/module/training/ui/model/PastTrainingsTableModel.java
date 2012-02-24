@@ -2,6 +2,8 @@
 package ho.module.training.ui.model;
 
 import ho.core.db.DBManager;
+import ho.core.training.TrainingPerWeek;
+import ho.core.training.TrainingsManager;
 import ho.module.training.Trainings;
 import ho.module.training.ui.comp.CBItem;
 
@@ -9,8 +11,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.ITrainingWeek;
-import de.hattrickorganizer.logik.TrainingsManager;
-import de.hattrickorganizer.model.TrainingPerWeek;
 
 
 /**

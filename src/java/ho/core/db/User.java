@@ -1,6 +1,9 @@
 // %1916127255:de.hattrickorganizer.model%
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.tool.updater.UpdateHelper;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -10,8 +13,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.updater.UpdateHelper;
 
 /**
  * TODO Missing Class Documentation

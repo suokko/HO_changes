@@ -5,6 +5,8 @@ package ho.core.gui.theme;
 
 
 import gui.HOIconName;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.gui.theme.ho.HOClassicSchema;
 
 import java.awt.Color;
@@ -20,8 +22,6 @@ import java.util.zip.ZipFile;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.templates.RasenPanel;
 
 
 

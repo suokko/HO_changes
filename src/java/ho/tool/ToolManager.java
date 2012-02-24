@@ -1,5 +1,7 @@
 package ho.tool;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.model.HOVerwaltung;
 import ho.tool.arenasizer.ArenaSizerDialog;
 import ho.tool.dbcleanup.DBCleanupTool;
 import ho.tool.export.CsvPlayerExport;
@@ -15,8 +17,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class ToolManager implements ActionListener {
 	private static HOVerwaltung m_hov = HOVerwaltung.instance();

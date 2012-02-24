@@ -7,6 +7,8 @@
 package ho.core.file.xml;
 
 
+import ho.core.util.HOLogger;
+
 import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
@@ -16,8 +18,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.MyHashtable;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Parser for the matchorders.

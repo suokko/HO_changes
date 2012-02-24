@@ -1,7 +1,19 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.datatype.CBItem;
+import ho.core.epv.EPVData;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
 import ho.core.module.IModule;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -32,18 +44,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IEPVData;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.EPVData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 /**
  * A player can be created and modified here.

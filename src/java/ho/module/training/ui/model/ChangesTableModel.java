@@ -1,14 +1,14 @@
 // %2597556203:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.training.SkillChange;
 
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

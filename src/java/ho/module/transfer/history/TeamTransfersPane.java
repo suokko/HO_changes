@@ -1,6 +1,7 @@
 // %1126721330729:hoplugins.transfers.ui%
 package ho.module.transfer.history;
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.sorter.DefaultTableSorter;
 
@@ -17,7 +18,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**

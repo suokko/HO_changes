@@ -1,5 +1,7 @@
 package ho.core.gui.theme;
 
+import ho.core.util.HOLogger;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.BufferedInputStream;
@@ -12,7 +14,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 
 public class ExtSchema extends Schema {

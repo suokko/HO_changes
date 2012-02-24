@@ -1,6 +1,9 @@
 package ho.core.file.xml;
 
 import gui.UserParameter;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.SpielerPosition;
+import ho.module.lineup.substitution.Substitution;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,9 +17,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import plugins.MatchOrderType;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.model.lineup.Substitution;
 
 public class XMLMatchOrderParserNew {
 

@@ -2,6 +2,9 @@
 package ho.module.statistics;
 
 import gui.UserParameter;
+import ho.core.datatype.CBItem;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,9 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import plugins.ISpielePanel;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -1,8 +1,8 @@
 // %3911272477:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 
+import ho.core.gui.HOMainFrame;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.module.transfer.scout.TransferTableModel;

@@ -3,7 +3,11 @@ package ho.module.playerOverview;
 
 import gui.HOColorName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.option.SliderPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,10 +23,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.menu.option.SliderPanel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
 
 /**
  * TODO Missing Class Documentation
@@ -69,7 +69,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		pack();
 
 		final Dimension size =
-			de.hattrickorganizer.gui.HOMainFrame.instance().getToolkit().getScreenSize();
+			ho.core.gui.HOMainFrame.instance().getToolkit().getScreenSize();
 
 		if (size.width > this.getSize().width) {
 			//Mittig positionieren
@@ -103,7 +103,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				HOVerwaltung.instance().getModel().getBasics().getDatum());
 
 			//GUI aktualisieren
-			de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
+			ho.core.gui.RefreshManager.instance().doReInit();
 
 			setVisible(false);
 		} else if (actionEvent.getSource().equals(m_jbAbbrechen)) {
@@ -115,7 +115,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 	 * TODO Missing Method Documentation
 	 */
 	private void initComponents() {
-		setContentPane(new de.hattrickorganizer.gui.templates.ImagePanel());
+		setContentPane(new ho.core.gui.comp.panel.ImagePanel());
 
 		final GridBagLayout layout = new GridBagLayout();
 		final GridBagConstraints constraints = new GridBagConstraints();

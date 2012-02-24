@@ -3,9 +3,10 @@ package ho.module.training;
 
 import plugins.ISpieler;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.Color;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

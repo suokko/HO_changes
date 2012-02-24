@@ -2,6 +2,7 @@ package ho.core.gui.theme;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.model.SpielerPosition;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -24,7 +25,6 @@ import java.util.Hashtable;
 import javax.swing.ImageIcon;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.model.SpielerPosition;
 
 public class ImageUtilities {
 

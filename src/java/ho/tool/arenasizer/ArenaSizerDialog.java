@@ -1,5 +1,7 @@
 package ho.tool.arenasizer;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class ArenaSizerDialog extends JDialog implements ActionListener {
 

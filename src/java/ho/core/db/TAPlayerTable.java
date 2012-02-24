@@ -1,6 +1,7 @@
 package ho.core.db;
 
 import gui.UserParameter;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
 import java.sql.ResultSet;
@@ -8,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Calendar;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 /**
  * The Table UserConfiguration contain all User properties.
  * CONFIG_KEY = Primary Key, fieldname of the class

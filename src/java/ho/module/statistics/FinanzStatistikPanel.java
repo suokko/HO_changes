@@ -4,7 +4,13 @@ package ho.module.statistics;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,19 +29,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.StatistikModel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
  * Das StatistikPanel
  */
 public class FinanzStatistikPanel extends ImagePanel
-    implements ActionListener, FocusListener, de.hattrickorganizer.gui.Refreshable
+    implements ActionListener, FocusListener, ho.core.gui.Refreshable
 {
 	private static final long serialVersionUID = 5245162268414878290L;
 	
@@ -107,7 +107,7 @@ public class FinanzStatistikPanel extends ImagePanel
      * Creates a new FinanzStatistikPanel object.
      */
     public FinanzStatistikPanel() {
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        ho.core.gui.RefreshManager.instance().registerRefreshable(this);
 
         initComponents();
 
@@ -243,7 +243,7 @@ public class FinanzStatistikPanel extends ImagePanel
         constraints2.gridwidth = 2;
         constraints2.fill = GridBagConstraints.NONE;
         constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
+        m_jbDrucken.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
         m_jbDrucken.setPreferredSize(new Dimension(25, 25));
         m_jbDrucken.addActionListener(this);
         layout2.setConstraints(m_jbDrucken, constraints2);
@@ -504,7 +504,7 @@ public class FinanzStatistikPanel extends ImagePanel
                                                 m_jchMarktwert.isSelected(), marketValueColor, format2, 10);
             }
 
-            final String[] yBezeichnungen = de.hattrickorganizer.tools.Helper
+            final String[] yBezeichnungen = ho.core.util.Helper
                                             .convertTimeMillisToFormatString(statistikWerte[16]);
 
             m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,

@@ -1,8 +1,8 @@
 // %1490429830:de.hattrickorganizer.gui.injury%
 package ho.tool.injury;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;

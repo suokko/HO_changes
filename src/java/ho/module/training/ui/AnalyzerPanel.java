@@ -1,6 +1,10 @@
 // %2601556114:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.file.extension.PlayerCreator;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.training.OldTrainingManager;
 import ho.module.training.SkillChange;
 import ho.module.training.ui.model.ChangesTableModel;
@@ -36,10 +40,6 @@ import javax.swing.event.ChangeListener;
 
 import plugins.ISkillup;
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.extension.PlayerCreator;
 
 
 /**

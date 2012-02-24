@@ -2,8 +2,15 @@
 package ho.module.matches;
 
 import gui.HOIconName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.RatingTableEntry;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.Helper;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,13 +31,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -95,7 +95,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     }
 
     public final void actionPerformed(ActionEvent e) {
-        new SpielerDetailDialog(de.hattrickorganizer.gui.HOMainFrame.instance(), m_clMatchPlayer,
+        new SpielerDetailDialog(ho.core.gui.HOMainFrame.instance(), m_clMatchPlayer,
                                 m_clMatchLineup);
     }
 
@@ -145,7 +145,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         panel.setBackground(ColorLabelEntry.BG_STANDARD);
         panel.setOpaque(true);
 
-        m_jbSpieler.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
+        m_jbSpieler.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Spiel_Spielerdetails"));
         m_jbSpieler.setHorizontalAlignment(SwingConstants.LEFT);
         m_jbSpieler.setMargin(new Insets(0, 1, 0, 1));
         m_jbSpieler.setPreferredSize(new Dimension(125, 15));
@@ -218,7 +218,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 
             //SpielerPosition pos = new SpielerPosition( player.getId (), player.getSpielerId (), player.getTaktik () );
             int trickotnummer = 0;
-            final de.hattrickorganizer.model.Spieler spieler = de.hattrickorganizer.model.HOVerwaltung.instance()
+            final ho.core.model.Spieler spieler = ho.core.model.HOVerwaltung.instance()
                                                                                                       .getModel()
                                                                                                       .getSpieler(player
                                                                                                                   .getSpielerId());
@@ -313,8 +313,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     			break;
     			} else {
     			
-    				m_jlPosition.setText(de.hattrickorganizer.model.SpielerPosition
-    						.getNameForPosition(de.hattrickorganizer.model.SpielerPosition.getPosition(posid, taktik)));
+    				m_jlPosition.setText(ho.core.model.SpielerPosition
+    						.getNameForPosition(ho.core.model.SpielerPosition.getPosition(posid, taktik)));
     			}
     		}
         }

@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.model.Finanzen;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class FinanzenTable extends AbstractTable {
 

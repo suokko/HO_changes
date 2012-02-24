@@ -2,7 +2,10 @@
 package ho.module.misc;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.Finanzen;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -15,9 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

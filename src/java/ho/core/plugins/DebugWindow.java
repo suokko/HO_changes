@@ -1,13 +1,14 @@
 // %37322930:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.HOMainFrame;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JDialog;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 
 
 /**

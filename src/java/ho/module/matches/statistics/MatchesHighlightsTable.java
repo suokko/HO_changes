@@ -1,16 +1,16 @@
 package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchesHighlightsStat;
+import ho.module.matches.model.MatchesOverviewRow;
+import ho.tool.updater.TableModel;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import plugins.ISpielePanel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
-import de.hattrickorganizer.tools.updater.TableModel;
 
 public class MatchesHighlightsTable extends JTable {
 

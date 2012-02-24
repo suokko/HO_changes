@@ -1,7 +1,7 @@
 // %1126721329338:hoplugins.transfers.constants%
 package ho.module.transfer;
 
-import de.hattrickorganizer.model.HOVerwaltung;
+import ho.core.model.HOVerwaltung;
 
 
 /**

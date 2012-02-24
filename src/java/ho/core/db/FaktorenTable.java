@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.model.FactorObject;
+import ho.core.model.FormulaFactors;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.FactorObject;
-import de.hattrickorganizer.model.FormulaFactors;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class FaktorenTable extends AbstractTable {
 

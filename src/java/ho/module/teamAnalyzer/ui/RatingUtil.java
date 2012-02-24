@@ -1,11 +1,12 @@
 // %1126721046323:hoplugins.commons.utils%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
+
 import java.util.List;
 import java.util.StringTokenizer;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 /**
  * Utility for Rating Formatting

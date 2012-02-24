@@ -8,6 +8,7 @@ package ho.core.file.xml;
 
 
 import ho.core.model.WorldDetailLeague;
+import ho.core.util.HOLogger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -16,8 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.MyHashtable;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 class XMLWorldDetailsParser {

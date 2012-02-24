@@ -4,10 +4,11 @@ package ho.module.transfer;
 
 import plugins.ISpieler;
 
+import ho.core.model.HOVerwaltung;
+
 import java.util.Iterator;
 import java.util.List;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

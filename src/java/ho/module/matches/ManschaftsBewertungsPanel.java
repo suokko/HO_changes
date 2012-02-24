@@ -3,8 +3,14 @@ package ho.module.matches;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.Helper;
+import ho.core.util.PlayerHelper;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.Matchdetails;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,12 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**

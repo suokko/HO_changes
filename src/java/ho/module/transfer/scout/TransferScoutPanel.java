@@ -3,10 +3,13 @@ package ho.module.transfer.scout;
 
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.table.TableSorter;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,9 +30,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 /**
  * The TransferScout main Panel
  */

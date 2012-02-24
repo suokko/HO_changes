@@ -2,6 +2,11 @@
 package ho.module.matches;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.RasenPanel;
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,11 +24,6 @@ import javax.swing.JLabel;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
-import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.model.matches.MatchLineupTeam;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

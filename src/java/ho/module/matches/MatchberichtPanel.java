@@ -2,7 +2,12 @@
 package ho.module.matches;
 
 import gui.HOIconName;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.Matchdetails;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,11 +20,6 @@ import java.sql.Timestamp;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.Matchdetails;
 
 
 class MatchberichtPanel extends ImagePanel implements ActionListener {

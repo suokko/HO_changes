@@ -1,6 +1,8 @@
 // %3525181034:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.module.training.EffectDAO;
 import ho.module.training.TrainWeekEffect;
 import ho.module.training.ui.model.EffectTableModel;
@@ -15,8 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

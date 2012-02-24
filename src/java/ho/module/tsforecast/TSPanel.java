@@ -27,6 +27,8 @@ package ho.module.tsforecast;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -47,8 +49,6 @@ import javax.swing.JPanel;
 
 import plugins.IHelper;
 import plugins.IMatchDetails;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve

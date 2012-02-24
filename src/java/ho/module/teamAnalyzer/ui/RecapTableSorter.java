@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.transfer.ui.sorter.AbstractTableSorter;
 
@@ -12,7 +13,6 @@ import java.util.List;
 
 import javax.swing.table.TableModel;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

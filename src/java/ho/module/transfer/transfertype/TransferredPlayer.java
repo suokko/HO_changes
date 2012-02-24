@@ -1,8 +1,8 @@
 // %368918737:hoplugins.transfers.vo%
 package ho.module.transfer.transfertype;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.TransferTypes;
 import plugins.ISpieler;

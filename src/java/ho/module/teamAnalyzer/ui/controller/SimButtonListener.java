@@ -1,7 +1,10 @@
 // %3491987323:hoplugins.teamAnalyzer.ui.controller%
 package ho.module.teamAnalyzer.ui.controller;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
@@ -23,9 +26,6 @@ import plugins.IMPTeamData;
 import plugins.IMPTeamRatings;
 import plugins.IMatchDetails;
 import plugins.IMatchPredictionManager;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

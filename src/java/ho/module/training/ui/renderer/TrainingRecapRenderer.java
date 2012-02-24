@@ -1,6 +1,9 @@
 // %36155679:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
+import ho.core.file.extension.PlayerCreator;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.training.ui.TrainingLegendPanel;
 
 import java.awt.Color;
@@ -11,9 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.extension.PlayerCreator;
 
 
 /**

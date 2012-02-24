@@ -1,20 +1,21 @@
 // %1280579671:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * TabbedPane mit Statistiken
  */
 public class StatistikMainPanel extends ImagePanel implements
-		javax.swing.event.ChangeListener, de.hattrickorganizer.gui.Refreshable {
+		javax.swing.event.ChangeListener, ho.core.gui.Refreshable {
 
 	private static final long serialVersionUID = -4248329201381491432L;
 

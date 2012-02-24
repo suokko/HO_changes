@@ -2,13 +2,13 @@
 package ho.module.transfer.transfertype;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.transfer.TransferTypes;
 
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

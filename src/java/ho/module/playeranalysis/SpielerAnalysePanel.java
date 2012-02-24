@@ -3,7 +3,14 @@ package ho.module.playeranalysis;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.SpielerCBItem;
+import ho.core.gui.model.SpielerCBItemRenderer;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,13 +31,6 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -88,8 +88,8 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
         final ComboBoxModel model = m_jcbSpieler.getModel();
 
         for (int i = 0; i < model.getSize(); ++i) {
-            if (model.getElementAt(i) instanceof de.hattrickorganizer.gui.model.SpielerCBItem) {
-                if (((de.hattrickorganizer.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
+            if (model.getElementAt(i) instanceof ho.core.gui.model.SpielerCBItem) {
+                if (((ho.core.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
                      .getSpielerID() == spielerid) {
                     //Spieler gefunden -> Auswählen und fertig
                     m_jcbSpieler.setSelectedIndex(i);

@@ -4,6 +4,7 @@ import gui.UserParameter;
 import ho.core.module.config.ModuleConfig;
 import ho.module.evilcard.EvilCardModule;
 import ho.module.ifa.IfaModule;
+import ho.module.lineup.LineupModule;
 import ho.module.matches.MatchesModule;
 import ho.module.misc.MiscModule;
 import ho.module.nthrf.NthrfModule;
@@ -23,7 +24,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import de.hattrickorganizer.gui.lineup.LineupModule;
 
 public final class ModuleManager {
 

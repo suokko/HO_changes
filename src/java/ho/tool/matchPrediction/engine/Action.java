@@ -101,25 +101,25 @@ public class Action implements plugins.IMPActions, Comparable<Object> {
         final StringBuffer buffer = new StringBuffer();
 
         if (type == IMatchDetails.TAKTIK_KONTER) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Counter"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("Counter"));
         } else {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("Attack"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("Attack"));
         }
 
         buffer.append(" ");
 
         if (area == -1) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_left"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("on_the_left"));
         } else if (area == 0) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_middle"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("on_the_middle"));
         } else {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("on_the_right"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("on_the_right"));
         }
 
         buffer.append(". ");
 
         if (score) {
-            buffer.append(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("TOR"));
+            buffer.append(ho.core.model.HOVerwaltung.instance().getLanguageString("TOR"));
             buffer.append("!");
         }
 

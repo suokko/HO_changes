@@ -7,6 +7,10 @@ import ho.core.file.ExampleFileFilter;
 import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.file.xml.XMLManager;
+import ho.core.model.HOMiniModel;
+import ho.core.model.Team;
+import ho.core.rating.RatingPredictionManager;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -34,10 +38,6 @@ import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.Team;
-import de.hattrickorganizer.prediction.RatingPredictionManager;
-import de.hattrickorganizer.tools.HOLogger;
 
 //implement IPlugin for integration into HO
 //Refreshable to get informed by data updates

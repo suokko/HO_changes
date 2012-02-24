@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.lineup.Lineup;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
 import plugins.ISubstitution;
 
-import de.hattrickorganizer.model.Lineup;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 final class AufstellungTable extends AbstractTable {
@@ -39,7 +40,7 @@ final class AufstellungTable extends AbstractTable {
 	 */
 	Lineup getAufstellung(int hrfID, String name) {
 		ResultSet rs = null;
-		de.hattrickorganizer.model.Lineup auf = null;
+		ho.module.lineup.Lineup auf = null;
 		String sql = null;
 
 		sql = "SELECT * FROM "+getTableName()+" WHERE HRF_ID = " + hrfID + " and Aufstellungsname ='" + name + "'";
@@ -49,7 +50,7 @@ final class AufstellungTable extends AbstractTable {
 			if (rs != null) {
 				rs.first();
 
-				auf = new de.hattrickorganizer.model.Lineup();
+				auf = new ho.module.lineup.Lineup();
 				auf.setKapitaen(rs.getInt("Kapitaen"));
 				auf.setKicker(rs.getInt("Kicker"));
 				auf.setTacticType(rs.getInt("Tactic"));

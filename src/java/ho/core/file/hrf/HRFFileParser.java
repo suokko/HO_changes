@@ -1,17 +1,17 @@
 // %3512883119:de.hattrickorganizer.tools%
 package ho.core.file.hrf;
 
-import de.hattrickorganizer.model.Lineup;
-import de.hattrickorganizer.model.Basics;
-import de.hattrickorganizer.model.Finanzen;
-import de.hattrickorganizer.model.HOModel;
-import de.hattrickorganizer.model.Liga;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.Team;
-import de.hattrickorganizer.model.Verein;
-import de.hattrickorganizer.model.XtraData;
-import de.hattrickorganizer.tools.HOLogger;
 
+import ho.core.model.Basics;
+import ho.core.model.Finanzen;
+import ho.core.model.HOModel;
+import ho.core.model.Spieler;
+import ho.core.model.Team;
+import ho.core.model.Verein;
+import ho.core.model.XtraData;
+import ho.core.util.HOLogger;
+import ho.module.lineup.Lineup;
+import ho.module.series.model.Liga;
 import ho.tool.arenasizer.Stadium;
 
 import java.io.BufferedReader;

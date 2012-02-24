@@ -1,6 +1,7 @@
 package ho.module.specialEvents;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -8,7 +9,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.IMatchKurzInfo;
 

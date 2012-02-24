@@ -1,7 +1,12 @@
 package ho.module.tsforecast;
 
 import ho.core.db.DBManager;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HOLogger;
+import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -27,11 +32,6 @@ import plugins.IJDBCAdapter;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
 import plugins.IRefreshable;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 /**
  * Tab_TSForecast -> „hinzugefügt“

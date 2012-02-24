@@ -2,6 +2,7 @@ package ho.core.gui.theme.nimbus;
 
 import gui.UserParameter;
 import ho.core.gui.theme.FontUtil;
+import ho.core.util.HOLogger;
 
 import java.awt.Font;
 
@@ -13,7 +14,6 @@ import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.DimensionUIResource;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 public class NimbusTheme {
 	
