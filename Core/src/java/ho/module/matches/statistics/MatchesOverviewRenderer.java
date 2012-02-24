@@ -3,6 +3,8 @@ package ho.module.matches.statistics;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.module.matches.model.MatchesHighlightsStat;
+import ho.module.matches.model.MatchesOverviewRow;
 
 import java.awt.Component;
 
@@ -12,8 +14,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.hsqldb.lib.StringUtil;
 
-import de.hattrickorganizer.model.matches.MatchesHighlightsStat;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
 
 class MatchesOverviewRenderer extends DefaultTableCellRenderer {
 

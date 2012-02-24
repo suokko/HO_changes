@@ -1,14 +1,14 @@
 // %733429640:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.model.ReduzedTableModel;
 
 import javax.swing.JTable;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.ReduzedTableModel;
 
 
 /**

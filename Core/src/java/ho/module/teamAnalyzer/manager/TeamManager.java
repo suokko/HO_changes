@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ILigaTabellenEintrag;
 import plugins.IMatchKurzInfo;

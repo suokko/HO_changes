@@ -2,6 +2,7 @@
 package ho.module.playeranalysis;
 
 import gui.HOIconName;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
@@ -13,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**
@@ -98,7 +98,7 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
         final JPanel panel = new ImagePanel(new BorderLayout());
 
         m_jbDrehen = new JButton(ThemeManager.getIcon(HOIconName.TURN));
-        m_jbDrehen.setToolTipText(de.hattrickorganizer.model.HOVerwaltung.instance().getLanguageString("tt_SpielerAnalyse_drehen"));
+        m_jbDrehen.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_SpielerAnalyse_drehen"));
         m_jbDrehen.setPreferredSize(new Dimension(24, 24));
         m_jbDrehen.addActionListener(this);
         panel.add(m_jbDrehen, BorderLayout.WEST);

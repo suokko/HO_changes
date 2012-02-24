@@ -1,6 +1,7 @@
 // %3062152101:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
@@ -13,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

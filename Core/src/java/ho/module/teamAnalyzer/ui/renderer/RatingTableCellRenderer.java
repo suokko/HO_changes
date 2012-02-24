@@ -1,5 +1,7 @@
 package ho.module.teamAnalyzer.ui.renderer;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -8,7 +10,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 /**
  * Renderer for the rating table cells

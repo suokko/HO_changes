@@ -1,5 +1,8 @@
 package ho.module.specialEvents;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.ImagePanel;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -7,8 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import plugins.IRefreshable;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.templates.ImagePanel;
 
 public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 

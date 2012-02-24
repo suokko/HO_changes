@@ -2,20 +2,16 @@
 package ho.module.playerOverview;
 
 import gui.HOIconName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.Spieler;
 
 import javax.swing.SwingConstants;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.model.ServerSpieler;
-import de.hattrickorganizer.model.Spieler;
 
 
-/**
- * Zeigt die Warnings und Verletzungen an
- */
 public class SpielerStatusLabelEntry extends DoppelLabelEntry {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -25,8 +21,7 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
     private ColorLabelEntry verwarnungen = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_STANDARD,
                                                                SwingConstants.LEFT);
-    private de.hattrickorganizer.model.ServerSpieler serverspieler;
-    private de.hattrickorganizer.model.Spieler spieler;
+    private ho.core.model.Spieler spieler;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -36,17 +31,6 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
     public SpielerStatusLabelEntry() {
         super();
         this.setLabels(verwarnungen, verletzung);
-    }
-
-    //~ Methods ------------------------------------------------------------------------------------
-
-    public final void setServerSpieler(ServerSpieler spieler) {
-        this.serverspieler = spieler;
-        updateComponent();
-    }
-
-    public final ServerSpieler getServerSpieler() {
-        return serverspieler;
     }
 
     public final void setSpieler(Spieler spieler) {
@@ -78,17 +62,6 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
                     }
                 }
             }
-            //Wird eigendlich nicht benötigt, darum nur Kartentest
-            else if ((entry.getServerSpieler() != null) && (getServerSpieler() != null)) {
-                if (entry.getServerSpieler().getGelbeKarten() > getServerSpieler().getGelbeKarten()) {
-                    return 1;
-                } else if (entry.getServerSpieler().getGelbeKarten() < getServerSpieler()
-                                                                           .getGelbeKarten()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
         }
 
         return 0;
@@ -115,14 +88,6 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
                 getRechts().setIcon(ThemeManager.getIcon(HOIconName.INJURED));
             } else {
                 getRechts().clear();
-            }
-        } else if (serverspieler != null) {
-            if (serverspieler.isGesperrt()) {
-                getLinks().setIcon(ThemeManager.getIcon(HOIconName.REDCARD));
-            } else if (serverspieler.isGelbVerwarnt()) {
-                getLinks().setIcon(ThemeManager.getIcon(HOIconName.YELLOWCARD));
-            } else {
-                getLinks().clear();
             }
         } else {
             getLinks().clear();

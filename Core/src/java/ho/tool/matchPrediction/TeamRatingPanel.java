@@ -1,6 +1,9 @@
 // %1301666028:de.hattrickorganizer.gui.matchprediction%
 package ho.tool.matchPrediction;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.PlayerHelper;
+import ho.module.matches.model.Matchdetails;
 import ho.tool.matchPrediction.engine.TeamData;
 import ho.tool.matchPrediction.engine.TeamRatings;
 
@@ -17,9 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IMatchDetails;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 class TeamRatingPanel extends JPanel implements ItemListener {
@@ -51,7 +51,7 @@ class TeamRatingPanel extends JPanel implements ItemListener {
         setLayout(m_clLayout);
 
         final TeamRatings tr = (TeamRatings) team.getRatings();
-        final de.hattrickorganizer.model.HOVerwaltung verwaltung = de.hattrickorganizer.model.HOVerwaltung
+        final ho.core.model.HOVerwaltung verwaltung = ho.core.model.HOVerwaltung
                                                                    .instance();
         addLine(tr.getMidfield(), verwaltung.getLanguageString("MatchMittelfeld"));
         addLine(tr.getRightDef(), verwaltung.getLanguageString("rechteAbwehrseite"));

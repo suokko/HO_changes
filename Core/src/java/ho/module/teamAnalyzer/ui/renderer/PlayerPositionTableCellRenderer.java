@@ -1,6 +1,8 @@
 // %4090885170:hoplugins.teamAnalyzer.ui.renderer%
 package ho.module.teamAnalyzer.ui.renderer;
 
+import ho.core.util.HelperWrapper;
+
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

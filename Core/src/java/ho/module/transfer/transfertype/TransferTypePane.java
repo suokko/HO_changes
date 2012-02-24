@@ -3,6 +3,8 @@ package ho.module.transfer.transfertype;
 
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
@@ -41,8 +43,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

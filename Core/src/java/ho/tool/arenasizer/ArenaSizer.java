@@ -6,9 +6,10 @@
  */
 package ho.tool.arenasizer;
 
+import ho.core.util.Helper;
+
 import java.math.BigDecimal;
 
-import de.hattrickorganizer.tools.Helper;
 
 class ArenaSizer {
 

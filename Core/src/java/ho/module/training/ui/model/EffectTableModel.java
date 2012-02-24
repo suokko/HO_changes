@@ -1,6 +1,7 @@
 // %1838430110:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.training.TrainWeekEffect;
 
 import java.text.NumberFormat;
@@ -8,7 +9,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

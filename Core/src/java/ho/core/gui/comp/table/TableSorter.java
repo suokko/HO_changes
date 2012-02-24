@@ -1,6 +1,12 @@
 // %649934645:de.hattrickorganizer.gui.utils%
 package ho.core.gui.comp.table;
 
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.model.PlayerOverviewModel;
+import ho.core.model.Spieler;
+import ho.core.util.HOLogger;
+import ho.module.lineup.LineupColumnModel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
@@ -12,11 +18,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.model.LineupColumnModel;
-import de.hattrickorganizer.gui.model.PlayerOverviewModel;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 
@@ -76,7 +77,7 @@ public class TableSorter extends TableMap {
         if (spielerid != 0) {
             for (int i = 0; i < getRowCount(); i++) {
                 try {
-                    if (spielerid == Integer.parseInt(((de.hattrickorganizer.gui.templates.ColorLabelEntry) getValueAt(i,
+                    if (spielerid == Integer.parseInt(((ho.core.gui.comp.entry.ColorLabelEntry) getValueAt(i,
                                                                                                                        idSpalte))
                                                       .getText())) {
                         //Die Zeile zurückgeben, muss vorher gemapped werden

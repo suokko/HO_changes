@@ -1,6 +1,10 @@
 // %1476100437:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -12,9 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import plugins.IHOMiniModel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

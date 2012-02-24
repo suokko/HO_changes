@@ -1,5 +1,7 @@
 package ho.core.gui.comp.renderer;
 
+import ho.core.gui.comp.entry.ColorLabelEntry;
+
 import java.awt.Component;
 
 import javax.swing.JCheckBox;
@@ -7,7 +9,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 public class BooleanTableCellRenderer extends JCheckBox implements TableCellRenderer {
 

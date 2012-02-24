@@ -3,6 +3,8 @@ package ho.core.gui.comp.renderer;
 
 import gui.HOColorName;
 import gui.HOIconName;
+import ho.core.datatype.CBItem;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.ListCellRenderer;
@@ -10,8 +12,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 
 /**

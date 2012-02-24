@@ -1,11 +1,12 @@
 // %3615011109:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.model.Spieler;
+
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
-import de.hattrickorganizer.model.Spieler;
 
 
 /**

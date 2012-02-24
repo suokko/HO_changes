@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.manager.TeamManager;
 import ho.module.teamAnalyzer.ui.NumberTextField;
@@ -17,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

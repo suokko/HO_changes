@@ -2,6 +2,13 @@
 package ho.module.transfer.scout;
 
 
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.HomegrownEntry;
+import ho.core.gui.comp.entry.SpielerLabelEntry;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
+
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -10,12 +17,6 @@ import javax.swing.table.AbstractTableModel;
 
 import plugins.ISpielerPosition;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.HomegrownEntry;
-import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
 
 /**
  * DOCUMENT ME!

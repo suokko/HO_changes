@@ -13,7 +13,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.MyHashtable;
 
 
 /**
@@ -72,7 +71,7 @@ public class xmlPlayersParser {
             list = root.getElementsByTagName("Player");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                hash = new de.hattrickorganizer.model.MyHashtable();
+                hash = new ho.core.file.xml.MyHashtable();
 
                 //Root setzen
                 root = (Element) list.item(i);

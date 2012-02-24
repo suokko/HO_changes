@@ -4,7 +4,11 @@ package ho.module.series;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -30,11 +34,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matchlist.Spielplan;
 
 
 /**

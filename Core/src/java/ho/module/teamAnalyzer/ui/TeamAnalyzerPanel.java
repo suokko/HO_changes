@@ -1,6 +1,8 @@
 package ho.module.teamAnalyzer.ui;
 
 import gui.UserParameter;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
@@ -16,8 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import plugins.IRefreshable;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 

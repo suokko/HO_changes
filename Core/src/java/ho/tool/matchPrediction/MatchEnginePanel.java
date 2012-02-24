@@ -2,6 +2,9 @@
 package ho.tool.matchPrediction;
 
 import gui.UserParameter;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.tool.matchPrediction.engine.MatchPredictionManager;
 import ho.tool.matchPrediction.engine.MatchResult;
 import ho.tool.matchPrediction.engine.TeamData;
@@ -23,9 +26,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import plugins.IMatchResult;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class MatchEnginePanel extends ImagePanel implements
 		plugins.IMatchPredictionPanel, ActionListener {
@@ -86,7 +86,7 @@ public class MatchEnginePanel extends ImagePanel implements
 	public final void calculateNMatches(int numberOfMatches) {
 		int match = (1 + numberOfMatches) * 1000;
 
-		final de.hattrickorganizer.gui.login.LoginWaitDialog waitDialog = new de.hattrickorganizer.gui.login.LoginWaitDialog(
+		final ho.core.net.login.LoginWaitDialog waitDialog = new ho.core.net.login.LoginWaitDialog(
 				HOMainFrame.instance(), false);
 		waitDialog.setVisible(true);
 

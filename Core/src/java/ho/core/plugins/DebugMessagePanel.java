@@ -1,6 +1,9 @@
 // %1930709824:de.hattrickorganizer.gui.pluginWrapper%
 package ho.core.plugins;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.util.HOLogger;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JEditorPane;
@@ -10,8 +13,6 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 class DebugMessagePanel extends ImagePanel {

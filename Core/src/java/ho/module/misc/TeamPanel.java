@@ -2,7 +2,11 @@
 package ho.module.misc;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.Basics;
+import ho.core.model.HOVerwaltung;
+import ho.module.series.model.Liga;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -13,10 +17,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.Basics;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Liga;
 
 
 /**

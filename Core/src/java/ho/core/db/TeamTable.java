@@ -1,10 +1,11 @@
 package ho.core.db;
 
+import ho.core.model.Team;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.Team;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 final class TeamTable extends AbstractTable {

@@ -1,13 +1,14 @@
 // %827897234:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.model.BaseTableModel;
+
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import plugins.ISkillup;
-import de.hattrickorganizer.gui.model.BaseTableModel;
 
 
 /**

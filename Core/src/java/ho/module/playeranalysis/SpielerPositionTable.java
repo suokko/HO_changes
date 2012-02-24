@@ -2,12 +2,12 @@
 package ho.module.playeranalysis;
 
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.model.SpielerPositionTableModel;
+import ho.core.util.Helper;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.gui.model.SpielerPositionTableModel;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**

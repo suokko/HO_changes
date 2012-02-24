@@ -1,6 +1,8 @@
 // %3513105810:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
 import ho.module.training.ui.comp.VerticalIndicator;
@@ -10,8 +12,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 import plugins.IHOMiniModel;
 import plugins.ISpieler;

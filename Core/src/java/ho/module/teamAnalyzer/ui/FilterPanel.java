@@ -1,6 +1,9 @@
 // %3467106003:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.manager.TeamManager;
@@ -20,9 +23,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

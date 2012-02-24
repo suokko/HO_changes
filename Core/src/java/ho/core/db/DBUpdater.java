@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.HO;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
-import de.hattrickorganizer.HO;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class DBUpdater {
 	JDBCAdapter m_clJDBCAdapter;

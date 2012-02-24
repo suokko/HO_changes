@@ -3,8 +3,21 @@ package ho.module.matches;
 
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.entry.RatingTableEntry;
+import ho.core.gui.comp.entry.SpielerLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.core.util.PlayerHelper;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.playerOverview.SpielerDetailPanel;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
@@ -29,19 +42,6 @@ import javax.swing.WindowConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
@@ -304,7 +304,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
     public void windowOpened(WindowEvent e) {
     }
 
-    private void setLabels(de.hattrickorganizer.model.Spieler m_clSpieler) {
+    private void setLabels(ho.core.model.Spieler m_clSpieler) {
         final Spieler m_clVergleichsSpieler = HOVerwaltung.instance().getModel().getSpieler(m_clSpieler.getSpielerID());
 
         m_jpName.setText(m_clSpieler.getName());
@@ -511,7 +511,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             m_jpFuehrung2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getFuehrung()
                                                         - m_clSpieler.getFuehrung(),
                                                         !m_clVergleichsSpieler.isOld(), true);
-            m_jpBestPos.setText(de.hattrickorganizer.model.SpielerPosition.getNameForPosition(m_clSpieler
+            m_jpBestPos.setText(ho.core.model.SpielerPosition.getNameForPosition(m_clSpieler
                                                                                               .getIdealPosition())
                                 + " ("
                                 + m_clSpieler.calcPosValue(m_clSpieler.getIdealPosition(), true)
@@ -1260,7 +1260,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
         subconstraints.gridx = 2;
         subconstraints.gridy = 2;
-        label = new JLabel(de.hattrickorganizer.tools.Helper.round(rating[2], 2) + "");
+        label = new JLabel(ho.core.util.Helper.round(rating[2], 2) + "");
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);
@@ -1293,7 +1293,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subpanel = new ImagePanel(sublayout);
         subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")
                                                             + " "
-                                                            + SpielerPosition.getNameForPosition(de.hattrickorganizer.model.SpielerPosition
+                                                            + SpielerPosition.getNameForPosition(ho.core.model.SpielerPosition
                                                                                   .getPosition(matchplayer.getId(),
                                                                                                matchplayer.getTaktik()))));
 
@@ -1360,7 +1360,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
         subconstraints.gridx = 2;
         subconstraints.gridy = 2;
-        label = new JLabel(de.hattrickorganizer.tools.Helper.round(ratingPos[2], 2) + "");
+        label = new JLabel(ho.core.util.Helper.round(ratingPos[2], 2) + "");
         label.setHorizontalAlignment(SwingConstants.RIGHT);
         sublayout.setConstraints(label, subconstraints);
         subpanel.add(label);

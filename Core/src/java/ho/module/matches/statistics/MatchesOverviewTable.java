@@ -2,17 +2,16 @@ package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.table.ToolTipHeader;
+import ho.core.gui.comp.table.UserColumn;
+import ho.core.gui.model.UserColumnController;
+import ho.core.util.Helper;
+import ho.module.matches.model.MatchesOverviewRow;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ISpielePanel;
-import de.hattrickorganizer.gui.model.MatchesOverviewColumnModel;
-import de.hattrickorganizer.gui.model.UserColumn;
-import de.hattrickorganizer.gui.model.UserColumnController;
-import de.hattrickorganizer.model.matches.MatchesOverviewRow;
-import de.hattrickorganizer.tools.Helper;
 
 public class MatchesOverviewTable extends JTable {
 	private static final long serialVersionUID = -8724051830928497450L;

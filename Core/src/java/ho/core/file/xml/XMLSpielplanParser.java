@@ -7,14 +7,15 @@
 package ho.core.file.xml;
 
 
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.module.series.Paarung;
+import ho.module.series.Spielplan;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.hattrickorganizer.model.matchlist.Paarung;
-import de.hattrickorganizer.model.matchlist.Spielplan;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**

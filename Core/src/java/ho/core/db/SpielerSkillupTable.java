@@ -1,5 +1,9 @@
 package ho.core.db;
 
+import ho.core.model.HOModel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -9,9 +13,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOModel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class SpielerSkillupTable extends AbstractTable {
 

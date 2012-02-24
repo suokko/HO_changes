@@ -1,6 +1,7 @@
 // %55184142:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.vo.UserTeamSpotLineup;
 
@@ -8,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

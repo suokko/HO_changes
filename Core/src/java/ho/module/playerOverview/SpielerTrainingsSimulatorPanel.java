@@ -1,8 +1,19 @@
 // %857396099:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.datatype.CBItem;
+import ho.core.epv.EPVData;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
 import ho.core.module.IModule;
+import ho.core.util.Helper;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -26,17 +37,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.model.CBItem;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.EPVData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -44,7 +44,7 @@ import de.hattrickorganizer.tools.Helper;
  * what effect this will have on ratings for the player.
  */
 final class SpielerTrainingsSimulatorPanel extends ImagePanel
-    implements de.hattrickorganizer.gui.Refreshable, ItemListener, ActionListener, FocusListener
+    implements ho.core.gui.Refreshable, ItemListener, ActionListener, FocusListener
 {
 
 	private static final long serialVersionUID = 7657564758631332932L;

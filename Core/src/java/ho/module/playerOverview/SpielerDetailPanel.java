@@ -4,10 +4,25 @@ package ho.module.playerOverview;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.epv.EPVData;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.entry.RatingTableEntry;
+import ho.core.gui.comp.entry.SpielerLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.renderer.SmilieListCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
+import ho.core.model.SpielerPosition;
 import ho.core.module.IModule;
+import ho.core.util.Helper;
+import ho.core.util.PlayerHelper;
+import ho.module.lineup.Lineup;
 import ho.module.statistics.StatistikMainPanel;
 
 import java.awt.BorderLayout;
@@ -30,21 +45,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.gui.templates.RatingTableEntry;
-import de.hattrickorganizer.gui.templates.SpielerLabelEntry;
-import de.hattrickorganizer.model.EPVData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.Lineup;
-import de.hattrickorganizer.model.Spieler;
-import de.hattrickorganizer.model.SpielerPosition;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.PlayerHelper;
 
 
 /**
@@ -325,7 +325,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
                 } else if (itemEvent.getSource().equals(m_jcbInformation)) {
                     m_clPlayer.setManuellerSmilie(m_jcbInformation.getSelectedItem().toString());
                 } else if (itemEvent.getSource().equals(m_jcbUserBestPosition)) {
-                    m_clPlayer.setUserPosFlag((byte) ((de.hattrickorganizer.gui.model.CBItem) m_jcbUserBestPosition
+                    m_clPlayer.setUserPosFlag((byte) ((ho.core.datatype.CBItem) m_jcbUserBestPosition
                                                        .getSelectedItem()).getId());
                 }
                 HOMainFrame.instance().getSpielerUebersichtPanel().update();

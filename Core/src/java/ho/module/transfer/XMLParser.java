@@ -2,6 +2,10 @@
 package ho.module.transfer;
 
 
+import ho.core.gui.HOMainFrame;
+import ho.core.net.MyConnector;
+import ho.core.util.HelperWrapper;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -15,9 +19,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.IXMLParser;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.net.MyConnector;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

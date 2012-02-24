@@ -1,5 +1,7 @@
 package ho.module.ifa;
 
+import ho.core.util.HOLogger;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,7 +30,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 public class ImageDesignPanel extends JPanel implements ActionListener {
 	public static int FLAG_WIDTH = 8;

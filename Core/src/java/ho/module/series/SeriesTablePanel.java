@@ -2,7 +2,15 @@
 package ho.module.series;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.VAPTableModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.core.util.StringUtilities;
 import ho.module.series.model.LigaTabellenEintrag;
 
 import java.awt.BorderLayout;
@@ -22,14 +30,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import plugins.ILigaTabellenEintrag;
-import de.hattrickorganizer.gui.model.VAPTableModel;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.DoppelLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.StringUtilities;
 
 
 /**

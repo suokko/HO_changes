@@ -2,7 +2,11 @@
 package ho.module.teamOfTheWeek;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
+import ho.core.util.HelperWrapper;
+import ho.module.series.Spielplan;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,10 +34,6 @@ import plugins.IJDBCAdapter;
 import plugins.IPaarung;
 import plugins.ISpielerPosition;
 import plugins.LineupPanel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matchlist.Spielplan;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

@@ -4,14 +4,14 @@
  */
 package ho.module.training.ui;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.DebugWindow;
+import ho.core.util.HOLogger;
 
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

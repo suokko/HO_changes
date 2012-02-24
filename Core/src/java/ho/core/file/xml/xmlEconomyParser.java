@@ -7,13 +7,14 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+
 import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -87,7 +88,7 @@ public class xmlEconomyParser {
     protected final Hashtable<?, ?> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
-        final de.hattrickorganizer.model.MyHashtable hash = new de.hattrickorganizer.model.MyHashtable();
+        final ho.core.file.xml.MyHashtable hash = new ho.core.file.xml.MyHashtable();
 
         if (doc == null) {
             return hash;

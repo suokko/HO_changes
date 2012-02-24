@@ -1,13 +1,14 @@
 package ho.core.db;
 
+import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.UserColumn;
+import ho.core.gui.model.UserColumnFactory;
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import de.hattrickorganizer.gui.model.HOColumnModel;
-import de.hattrickorganizer.gui.model.UserColumn;
-import de.hattrickorganizer.gui.model.UserColumnFactory;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 class UserColumnsTable extends AbstractTable {

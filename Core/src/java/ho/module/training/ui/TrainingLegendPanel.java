@@ -4,6 +4,9 @@
  */
 package ho.module.training.ui;
 
+import ho.core.file.extension.PlayerCreator;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 
 import java.awt.Color;
@@ -20,9 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
-import de.hattrickorganizer.tools.extension.PlayerCreator;
 
 
 /**

@@ -1,5 +1,8 @@
 package ho.module.evilcard;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -7,8 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class FilterPanel extends ImagePanel implements ActionListener {
 

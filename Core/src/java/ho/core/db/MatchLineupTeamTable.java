@@ -1,12 +1,13 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
 import plugins.ISubstitution;
-import de.hattrickorganizer.model.matches.MatchLineupPlayer;
-import de.hattrickorganizer.model.matches.MatchLineupTeam;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class MatchLineupTeamTable extends AbstractTable {
 

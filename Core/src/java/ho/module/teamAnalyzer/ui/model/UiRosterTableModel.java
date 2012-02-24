@@ -1,9 +1,10 @@
 // %4256899041:hoplugins.teamAnalyzer.ui.model%
 package ho.module.teamAnalyzer.ui.model;
 
+import ho.core.gui.model.BaseTableModel;
+
 import java.util.Vector;
 
-import de.hattrickorganizer.gui.model.BaseTableModel;
 
 
 /**

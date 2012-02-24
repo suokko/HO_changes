@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.XMLParser;
@@ -15,8 +17,6 @@ import java.util.List;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 public class TransferTable extends AbstractTable {
 	final static String TABLENAME = "TRANSFER";

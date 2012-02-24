@@ -4,7 +4,16 @@ package ho.module.statistics;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.SpielerCBItem;
+import ho.core.gui.model.SpielerCBItemRenderer;
+import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,15 +41,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.SpielerCBItem;
-import de.hattrickorganizer.gui.model.SpielerCBItemRenderer;
-import de.hattrickorganizer.gui.model.StatistikModel;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -120,7 +120,7 @@ class SpielerStatistikPanel extends ImagePanel
      * Creates a new SpielerStatistikPanel object.
      */
     SpielerStatistikPanel() {
-        de.hattrickorganizer.gui.RefreshManager.instance().registerRefreshable(this);
+        ho.core.gui.RefreshManager.instance().registerRefreshable(this);
 
         initSpielerCB();
 
@@ -238,7 +238,7 @@ class SpielerStatistikPanel extends ImagePanel
     }
 
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        Helper.parseInt(de.hattrickorganizer.gui.HOMainFrame.instance(),
+        Helper.parseInt(ho.core.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 

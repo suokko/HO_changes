@@ -1,7 +1,9 @@
 // %2624369625:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui.lineup;
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RatingUtil;
 
@@ -12,8 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

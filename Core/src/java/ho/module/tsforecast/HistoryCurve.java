@@ -1,5 +1,7 @@
 package ho.module.tsforecast;
 
+import ho.core.model.HOVerwaltung;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -7,7 +9,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.IBasics;
 import plugins.IMatchLineup;

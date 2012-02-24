@@ -1,10 +1,11 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineup;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class MatchLineupTable extends AbstractTable {
 
@@ -148,8 +149,8 @@ public final class MatchLineupTable extends AbstractTable {
 				adapter.executeUpdate(sql);
 
 				//Einträge noch saven
-				DBManager.instance().storeMatchLineupTeam((de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
-				DBManager.instance().storeMatchLineupTeam((de.hattrickorganizer.model.matches.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
+				DBManager.instance().storeMatchLineupTeam((ho.module.matches.model.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
+				DBManager.instance().storeMatchLineupTeam((ho.module.matches.model.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchLineup Error" + e);
 				HOLogger.instance().log(getClass(),e);

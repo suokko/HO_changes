@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
 import java.sql.ResultSet;
@@ -11,8 +13,6 @@ import java.util.Vector;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.ISpielePanel;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.tools.HOLogger;
 
 final class MatchesKurzInfoTable extends AbstractTable {
 	final static String TABLENAME = "MATCHESKURZINFO";

@@ -7,6 +7,10 @@
 package ho.core.file.xml;
 
 import ho.core.db.DBManager;
+import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchHighlight;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.Matchdetails;
 
 import java.util.Vector;
 
@@ -16,10 +20,6 @@ import org.w3c.dom.NodeList;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
-import de.hattrickorganizer.model.matches.MatchHighlight;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matches.Matchdetails;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

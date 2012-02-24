@@ -1,12 +1,13 @@
 // %2330994818:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

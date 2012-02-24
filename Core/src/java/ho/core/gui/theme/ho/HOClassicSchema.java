@@ -7,13 +7,13 @@ import gui.HOBooleanName;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.gui.theme.Schema;
+import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HOBooleanName {
 

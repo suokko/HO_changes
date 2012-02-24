@@ -1,6 +1,8 @@
 // %1193228360:hoplugins.teamAnalyzer.ui.component%
 package ho.module.teamAnalyzer.ui.component;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 
@@ -14,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

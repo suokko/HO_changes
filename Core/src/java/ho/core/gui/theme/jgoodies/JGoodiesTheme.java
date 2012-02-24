@@ -2,6 +2,7 @@ package ho.core.gui.theme.jgoodies;
 
 import gui.UserParameter;
 import ho.core.gui.theme.FontUtil;
+import ho.core.util.HOLogger;
 
 import java.awt.Font;
 
@@ -24,7 +25,6 @@ import com.jgoodies.looks.plastic.theme.SkyBlue;
 import com.jgoodies.looks.plastic.theme.SkyGreen;
 import com.jgoodies.looks.plastic.theme.SkyKrupp;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 public class JGoodiesTheme {
 

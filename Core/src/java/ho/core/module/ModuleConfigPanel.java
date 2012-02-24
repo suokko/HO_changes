@@ -1,5 +1,9 @@
 package ho.core.module;
 
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.option.OptionManager;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,9 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.OptionManager;
 
 public class ModuleConfigPanel extends JPanel implements ActionListener {
 

@@ -1,6 +1,8 @@
 // %1351448296:de.hattrickorganizer.gui.league%
 package ho.module.series;
 
+import ho.core.util.HOLogger;
+
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +11,6 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**

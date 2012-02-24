@@ -1,6 +1,8 @@
 // %924224980:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.comp.panel.RasenPanel;
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -21,8 +23,6 @@ import javax.swing.ScrollPaneConstants;
 import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.gui.templates.RasenPanel;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

@@ -3,13 +3,13 @@ package ho.module.playeranalysis;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.comp.table.UserColumn;
+import ho.core.gui.model.PlayerAnalysisModel;
+import ho.core.gui.model.UserColumnController;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.gui.model.PlayerAnalysisModel;
-import de.hattrickorganizer.gui.model.UserColumn;
-import de.hattrickorganizer.gui.model.UserColumnController;
 
 
 /**
@@ -128,7 +128,7 @@ final class SpielerMatchesTable extends JTable {
             
 
             //Reihenfolge -> nach [][1] sortieren
-            targetColumn = de.hattrickorganizer.tools.Helper.sortintArray(targetColumn, 1);
+            targetColumn = ho.core.util.Helper.sortintArray(targetColumn, 1);
 
             if (targetColumn != null) {
                 for (int i = 0; i < targetColumn.length; i++) {

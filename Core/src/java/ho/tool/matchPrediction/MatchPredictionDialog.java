@@ -1,11 +1,12 @@
 package ho.tool.matchPrediction;
 
+import ho.core.gui.HOMainFrame;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JDialog;
 
-import de.hattrickorganizer.gui.HOMainFrame;
 
 public class MatchPredictionDialog extends JDialog {
 

@@ -2,6 +2,7 @@ package ho.module.teamAnalyzer;
 
 import java.awt.event.KeyEvent;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.ui.component.SettingPanel;
@@ -11,7 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public final class TeamAnalyzerModule extends DefaultModule {
 

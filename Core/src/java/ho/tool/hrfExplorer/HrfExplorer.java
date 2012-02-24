@@ -6,8 +6,11 @@ package ho.tool.hrfExplorer;
 import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -52,9 +55,6 @@ import javax.swing.table.TableColumn;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IRefreshable;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * @author KickMuck

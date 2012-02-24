@@ -2,6 +2,7 @@
 package ho.core.gui.comp.renderer;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;
@@ -11,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import plugins.IHOTableEntry;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
 
 
 /**

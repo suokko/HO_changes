@@ -1,6 +1,7 @@
 // %888293640:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;
@@ -8,7 +9,6 @@ import java.util.Date;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IPaarung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

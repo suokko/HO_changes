@@ -2,7 +2,9 @@
 package ho.module.misc;
 
 import gui.HOColorName;
+import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -14,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import plugins.IVerein;
-import de.hattrickorganizer.gui.templates.ColorLabelEntry;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

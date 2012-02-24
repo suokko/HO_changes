@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;
@@ -17,7 +18,6 @@ import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 
 /**

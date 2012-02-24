@@ -1,11 +1,12 @@
 package ho.core.epv;
 
 
+import ho.core.util.Helper;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import plugins.IEPVData;
-import de.hattrickorganizer.tools.Helper;
 
 class EPVCalculator
 {

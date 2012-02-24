@@ -2,11 +2,11 @@
 package ho.module.playerOverview;
 
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.model.PlayerOverviewModel;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.hattrickorganizer.gui.model.PlayerOverviewModel;
 
 
 /**
@@ -64,7 +64,7 @@ public class SpielerUebersichtPrintTable extends JTable {
         int[][] targetColumn = spaltenreihenfolge;
 
         //Reihenfolge -> nach [][1] sortieren
-        targetColumn = de.hattrickorganizer.tools.Helper.sortintArray(targetColumn, 1);
+        targetColumn = ho.core.util.Helper.sortintArray(targetColumn, 1);
 
         if (targetColumn != null) {
             for (int i = 0; i < targetColumn.length; i++) {

@@ -1,11 +1,12 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
 import plugins.ISpielerPosition;
-import de.hattrickorganizer.tools.HOLogger;
 
 public final class PositionenTable extends AbstractTable {
 
@@ -37,7 +38,7 @@ public final class PositionenTable extends AbstractTable {
 	 */
 	Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		ResultSet rs = null;
-		de.hattrickorganizer.model.SpielerPosition pos = null;
+		ho.core.model.SpielerPosition pos = null;
 		String sql = null;
 		final Vector<ISpielerPosition> ret = new Vector<ISpielerPosition>();
 
@@ -80,7 +81,7 @@ public final class PositionenTable extends AbstractTable {
 						playerID = 0;
 					}
 					
-					pos = new de.hattrickorganizer.model.SpielerPosition(roleID, playerID, (byte)behavior);
+					pos = new ho.core.model.SpielerPosition(roleID, playerID, (byte)behavior);
 					ret.add(pos);
 				}
 			}
@@ -100,14 +101,14 @@ public final class PositionenTable extends AbstractTable {
 	 */
 	void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		String statement = null;
-		de.hattrickorganizer.model.SpielerPosition pos = null;
+		ho.core.model.SpielerPosition pos = null;
 
 		//bereits vorhandenen Eintrag entdernen
 		DBManager.instance().deleteSystem(hrfId, sysName);
 
 		//speichern vorbereiten
 		for (int i = 0;(positionen != null) && (sysName != null) && (i < positionen.size()); i++) {
-			pos = (de.hattrickorganizer.model.SpielerPosition) positionen.elementAt(i);
+			pos = (ho.core.model.SpielerPosition) positionen.elementAt(i);
 			statement = "INSERT INTO "+getTableName()+" ( HRF_ID, ID, Aufstellungsname, SpielerID, Taktik ) VALUES(";
 			statement += ("" + hrfId + "," + pos.getId() + ",'" + sysName + "'," + pos.getSpielerId() + "," + pos.getTaktik() + " )");
 

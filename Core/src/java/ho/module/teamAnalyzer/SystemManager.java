@@ -1,6 +1,7 @@
 // %2940960156:hoplugins.teamAnalyzer%
 package ho.module.teamAnalyzer;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.manager.MatchManager;
 import ho.module.teamAnalyzer.manager.MatchPopulator;
 import ho.module.teamAnalyzer.manager.NameManager;
@@ -11,7 +12,6 @@ import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 
 /**

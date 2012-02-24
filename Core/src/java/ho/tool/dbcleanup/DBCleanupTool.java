@@ -1,6 +1,12 @@
 package ho.tool.dbcleanup;
 
 import ho.core.db.DBManager;
+import ho.core.file.hrf.HRF;
+import ho.core.gui.RefreshManager;
+import ho.core.model.HOMiniModel;
+import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -9,12 +15,6 @@ import java.util.GregorianCalendar;
 import javax.swing.JFrame;
 
 import plugins.IMatchLineup;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.model.HOMiniModel;
-import de.hattrickorganizer.model.HRF;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 /**
  * HO Database Cleanup Tool

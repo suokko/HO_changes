@@ -1,6 +1,10 @@
 package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.StringUtilities;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,10 +16,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpielePanel;
 
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.tools.StringUtilities;
 
 public class MatchesOverviewCommonPanel extends ImagePanel {
 

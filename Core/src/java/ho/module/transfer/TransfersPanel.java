@@ -1,6 +1,8 @@
 package ho.module.transfer;
 
 import ho.core.db.DBManager;
+import ho.core.gui.RefreshManager;
+import ho.core.model.HOVerwaltung;
 import ho.module.transfer.history.HistoryPane;
 import ho.module.transfer.scout.TransferScoutPanel;
 import ho.module.transfer.transfertype.TransferTypePane;
@@ -15,8 +17,6 @@ import javax.swing.JTabbedPane;
 
 import plugins.IRefreshable;
 import plugins.ISpieler;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.model.HOVerwaltung;
 
 public class TransfersPanel extends JPanel implements IRefreshable{
 

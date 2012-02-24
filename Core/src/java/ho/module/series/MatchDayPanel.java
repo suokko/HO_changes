@@ -4,9 +4,17 @@ package ho.module.series;
 import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
+import ho.core.util.StringUtilities;
+import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,15 +35,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
 import plugins.IPaarung;
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.model.matches.MatchKurzInfo;
-import de.hattrickorganizer.model.matches.MatchLineup;
-import de.hattrickorganizer.model.matchlist.Paarung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
-import de.hattrickorganizer.tools.StringUtilities;
 
 
 /**

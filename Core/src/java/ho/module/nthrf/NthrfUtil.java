@@ -2,6 +2,8 @@ package ho.module.nthrf;
 
 import ho.core.file.ExampleFileFilter;
 import ho.core.file.xml.XMLManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.net.MyConnector;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -18,8 +20,6 @@ import org.w3c.dom.Element;
 
 import plugins.IDownloadHelper;
 import plugins.IXMLParser;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.net.MyConnector;
 
 class NthrfUtil {
 

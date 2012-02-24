@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.core.util.HOLogger;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -10,7 +12,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import de.hattrickorganizer.tools.HOLogger;
 
 final class ModuleConfigTable extends AbstractTable {
 	final static String TABLENAME = "MODULE_CONFIGURATION";

@@ -1,6 +1,10 @@
 // %1451261274:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.panel.ImagePanel;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,9 +14,6 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.templates.ImagePanel;
 
 
 /**

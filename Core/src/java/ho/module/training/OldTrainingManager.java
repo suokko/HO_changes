@@ -3,6 +3,9 @@ package ho.module.training;
 
 
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HelperWrapper;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HelperWrapper;
 
 import plugins.ISkillup;
 import plugins.ISpieler;

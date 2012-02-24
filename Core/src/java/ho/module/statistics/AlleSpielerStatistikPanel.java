@@ -5,7 +5,15 @@ import gui.HOColorName;
 import gui.HOIconName;
 import gui.UserParameter;
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
+import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,14 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import de.hattrickorganizer.gui.HOMainFrame;
-import de.hattrickorganizer.gui.RefreshManager;
-import de.hattrickorganizer.gui.Refreshable;
-import de.hattrickorganizer.gui.model.StatistikModel;
-import de.hattrickorganizer.gui.templates.ImagePanel;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
-import de.hattrickorganizer.tools.Helper;
 
 
 /**
@@ -376,7 +376,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
                 anzahlHRF = 1;
             }
             gup.statistikAnzahlHRF = anzahlHRF;
-            final java.text.NumberFormat format = de.hattrickorganizer.tools.Helper.DEFAULTDEZIMALFORMAT;
+            final java.text.NumberFormat format = ho.core.util.Helper.DEFAULTDEZIMALFORMAT;
             final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();
             final double[][] statistikWerte = DBManager.instance().
             	getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, m_jcbGruppe.getSelectedItem().toString());

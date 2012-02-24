@@ -1,12 +1,11 @@
 // %1598857424:de.hattrickorganizer.logik%
 package ho.core.epv;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 import plugins.IEPVData;
 import plugins.IPlayerData;
 import plugins.ISpieler;
-import de.hattrickorganizer.model.EPVData;
-import de.hattrickorganizer.model.HOVerwaltung;
-import de.hattrickorganizer.tools.HOLogger;
 
 /**
  * Main EPV manager class

@@ -1,11 +1,12 @@
 // %612514260:plugins%
 package plugins;
 
+import ho.core.training.TrainingPerWeek;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import de.hattrickorganizer.model.TrainingPerWeek;
 
 
 /**

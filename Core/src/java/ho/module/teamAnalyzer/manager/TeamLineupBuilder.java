@@ -1,6 +1,7 @@
 // %3549957018:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.report.PositionReport;
 import ho.module.teamAnalyzer.report.SpotReport;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -17,7 +18,6 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import de.hattrickorganizer.model.HOVerwaltung;
 
 import plugins.ISpielerPosition;
 

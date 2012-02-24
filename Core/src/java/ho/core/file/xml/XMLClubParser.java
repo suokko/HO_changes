@@ -7,11 +7,12 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.Verein;
+import ho.core.util.HOLogger;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.hattrickorganizer.model.Verein;
-import de.hattrickorganizer.tools.HOLogger;
 
 
 /**
@@ -83,7 +84,7 @@ public class XMLClubParser {
     protected final java.util.Hashtable<?, ?> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
-        de.hattrickorganizer.model.MyHashtable club = new de.hattrickorganizer.model.MyHashtable();
+        ho.core.file.xml.MyHashtable club = new ho.core.file.xml.MyHashtable();
 
         if (doc == null) {
             return club;
