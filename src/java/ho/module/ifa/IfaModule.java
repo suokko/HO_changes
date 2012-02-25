@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
 public class IfaModule extends DefaultModule {
@@ -20,7 +21,7 @@ public class IfaModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		return "Todo: Int. Friendly Analyzer";
+		return HOVerwaltung.instance().getLanguageString("Tab_IFA");
 	}
 
 	@Override

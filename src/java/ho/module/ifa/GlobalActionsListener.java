@@ -198,7 +198,7 @@ public class GlobalActionsListener extends MouseAdapter implements
 		if (path != null) {
 			return new ImageIcon(path);
 		}
-		System.err.println("Couldn't find file: " + path);
+		HOLogger.instance().debug(this.getClass(), "Couldn't find file: " + path);
 		return null;
 	}
 
