@@ -287,7 +287,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 		importHeader.add(hoV.getLanguageString("pfad"));
 		
 		m_TableModel_Imports = new HrfTableModel(importHeader, importValues);
-		m_Table_Imports = new HrfTable(m_TableModel_Imports, "import");
+		m_Table_Imports = new HrfTable(m_TableModel_Imports, "HRFImportieren");
 		
         /*
          *Erstellen der Dummy Tabelle "Filelist"
@@ -340,13 +340,13 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Ar_Detail_Label_fix[0] = hoV.getLanguageString("Liga");
         m_Ar_Detail_Label_fix[1] = hoV.getLanguageString("Season") + " / " +hoV.getLanguageString("Spieltag");
         m_Ar_Detail_Label_fix[2] = hoV.getLanguageString("Punkte") + " / " + hoV.getLanguageString("Tore");
-        m_Ar_Detail_Label_fix[3] =hoV.getLanguageString("tabplatz");
+        m_Ar_Detail_Label_fix[3] =hoV.getLanguageString("Platzierung");
         m_Ar_Detail_Label_fix[4] = hoV.getLanguageString("Training");
         m_Ar_Detail_Label_fix[5] = hoV.getLanguageString("Intensitaet");
         m_Ar_Detail_Label_fix[6] = hoV.getLanguageString("CoTrainer");
         m_Ar_Detail_Label_fix[7] = hoV.getLanguageString("Torwarttrainer");
         m_Ar_Detail_Label_fix[8] = hoV.getLanguageString("Selbstvertrauen");
-        m_Ar_Detail_Label_fix[9] = hoV.getLanguageString("anzspieler");
+        m_Ar_Detail_Label_fix[9] = hoV.getLanguageString("AnzahlSpieler");
         m_Ar_Detail_Label_fix[10] =hoV.getLanguageString("Stimmung");
 		m_Ar_Detail_Label_fix[11] = hoV.getLanguageString("lasthrf");
 		m_Ar_Detail_Label_fix[12] = hoV.getLanguageString("nexthrf");
@@ -422,7 +422,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_Select_All.setToolTipText(hoV.getLanguageString("ttSelect"));
         m_Button_Select_All.addActionListener(this);
         
-        m_Button_reset = new JButton(hoV.getLanguageString("btReset"));
+        m_Button_reset = new JButton(hoV.getLanguageString("Reset"));
         m_Button_reset.setToolTipText(hoV.getLanguageString("ttReset"));
         m_Button_reset.addActionListener(this);
         
@@ -430,8 +430,8 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_Delete_Row.setToolTipText(hoV.getLanguageString("ttRemove"));
         m_Button_Delete_Row.addActionListener(this);
         
-        m_Button_GoTo = new JButton(hoV.getLanguageString("btGoto"));
-        m_Button_GoTo.setToolTipText(hoV.getLanguageString("ttGoto"));
+        m_Button_GoTo = new JButton(hoV.getLanguageString("ok"));
+        m_Button_GoTo.setToolTipText(hoV.getLanguageString("ttok"));
         m_Button_GoTo.setBackground(hellblau);
         m_Button_GoTo.addActionListener(this);
         
@@ -612,7 +612,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		m_Ar_days[0] = hoV.getLanguageString("mon");
 		m_Ar_days[1] = hoV.getLanguageString("die");
-		m_Ar_days[2] = hoV.getLanguageString("mit");
+		m_Ar_days[2] = hoV.getLanguageString("wed");
 		m_Ar_days[3] = hoV.getLanguageString("don");
 		m_Ar_days[4] = hoV.getLanguageString("fre");
 		m_Ar_days[5] = hoV.getLanguageString("sam");
@@ -1196,7 +1196,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 					
         			File tmp_File = new File(deletePath);
         			
-        			int option = JOptionPane.showConfirmDialog(null,HOVerwaltung.instance().getLanguageString("deletefile") + "\n" + deletePath,HOVerwaltung.instance().getLanguageString("delFile"),JOptionPane.YES_NO_OPTION);
+        			int option = JOptionPane.showConfirmDialog(null,HOVerwaltung.instance().getLanguageString("deletefile") + "\n" + deletePath,HOVerwaltung.instance().getLanguageString("deletefile"),JOptionPane.YES_NO_OPTION);
         			if(option == 0)
         			{
         				//Löschen der Datei von der Platte

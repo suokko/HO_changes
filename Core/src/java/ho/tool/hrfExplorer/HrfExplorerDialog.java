@@ -21,7 +21,7 @@ public class HrfExplorerDialog extends JDialog {
 	private void initialize() {
 		setSize(1024,668);
 		setLayout(new BorderLayout());
-		setTitle(HOVerwaltung.instance().getLanguageString("HrfExplorer"));
+		setTitle(HOVerwaltung.instance().getLanguageString("Tab_HRF-Explorer"));
 		
 		add(new HrfExplorer(),BorderLayout.CENTER);
 		
