@@ -4,6 +4,7 @@ public class WorldDetailLeague {
 	private int leagueId;
 	private int countryId;
 	private String countryName;
+	private int activeUsers;
 	
 	public WorldDetailLeague(){
 		
@@ -39,7 +40,13 @@ public class WorldDetailLeague {
 	public final void setCountryName(String countryName) {
 		this.countryName = countryName;
 	}
-	
+	public final int getActiveUsers() {
+		return activeUsers;
+	}
+	public final void setActiveUsers(int activeUsers) {
+		this.activeUsers = activeUsers;
+	}
+
 	@Override
 	public String toString(){
 		return getCountryName();

@@ -18,10 +18,11 @@ class WorldDetailsTable extends AbstractTable {
 	}
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[3];
+		columns = new ColumnDescriptor[4];
 		columns[0]= new ColumnDescriptor("LEAGUE_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("COUNTRY_ID",Types.INTEGER,false);
 		columns[2]= new ColumnDescriptor("COUNTRYNAME",Types.VARCHAR,false,128);
+		columns[3]= new ColumnDescriptor("ACTIVE_USER",Types.INTEGER,false);
 	}
 
 	
@@ -40,7 +41,8 @@ class WorldDetailsTable extends AbstractTable {
 		statement.append(") VALUES (");
 		statement.append(league.getLeagueId()).append(",");
 		statement.append(league.getCountryId()).append(",'");
-		statement.append(DBManager.insertEscapeSequences(league.getCountryName())).append("')");
+		statement.append(DBManager.insertEscapeSequences(league.getCountryName())).append("',");
+		statement.append(league.getActiveUsers()).append(")");
 		adapter.executeQuery(statement.toString());
 	}
 	
@@ -94,6 +96,7 @@ class WorldDetailsTable extends AbstractTable {
 				league.setLeagueId(rs.getInt(columns[0].getColumnName()));
 				league.setCountryId(rs.getInt(columns[1].getColumnName()));
 				league.setCountryName(DBManager.deleteEscapeSequences(rs.getString(columns[2].getColumnName())));
+				league.setActiveUsers(rs.getInt(columns[3].getColumnName()));
 		} catch (SQLException ex){
 			HOLogger.instance().error(this.getClass(), ex);
 		}

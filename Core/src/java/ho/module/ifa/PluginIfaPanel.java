@@ -1,11 +1,18 @@
 package ho.module.ifa;
 
+import ho.core.model.HOVerwaltung;
+
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class PluginIfaPanel extends JPanel {
 	private static final long serialVersionUID = 6250843484613905192L;
@@ -14,37 +21,46 @@ public class PluginIfaPanel extends JPanel {
 	private ImageDesignPanel imageDesignPanel;
 	private StatisticScrollPanel statisticScrollPanelAway;
 	private StatisticScrollPanel statisticScrollPanelHome;
-
+	private JPanel toolbarPanel;
+	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
+	private JTabbedPane tabbedPane;
+	
 	public PluginIfaPanel() {
 		initialize();
 	}
 
 	private void initialize() {
-		setLayout(this.layout);
-		this.constraints.fill = 1;
-		this.constraints.anchor = 10;
-		this.constraints.insets = new Insets(10, 10, 10, 10);
-		this.constraints.weightx = 1.0D;
-		this.constraints.weighty = 1.0D;
-
+//		setLayout(this.layout);
+//		this.constraints.fill = 1;
+//		this.constraints.anchor = 10;
+//		this.constraints.insets = new Insets(10, 10, 10, 10);
+//		this.constraints.weightx = 1.0D;
+//		this.constraints.weighty = 1.0D;
+//
 		this.imageDesignPanel = new ImageDesignPanel(this);
-		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
-		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
-		add(this.imageDesignPanel, this.constraints, 1, 0, 1, 2);
-		this.constraints.weightx = 3.0D;
-		add(this.statisticScrollPanelAway, this.constraints, 0, 0, 1, 1);
-		add(this.statisticScrollPanelHome, this.constraints, 0, 1, 1, 1);
+		this.statisticScrollPanelAway = new StatisticScrollPanel(false);
+		this.statisticScrollPanelHome = new StatisticScrollPanel(true);
+//		add(this.imageDesignPanel, this.constraints, 1, 0, 1, 2);
+//		this.constraints.weightx = 3.0D;
+//		add(this.statisticScrollPanelAway, this.constraints, 0, 0, 1, 1);
+//		add(this.statisticScrollPanelHome, this.constraints, 0, 1, 1, 1);
+		setLayout(new BorderLayout());
+		add(getToolbar(),BorderLayout.NORTH);
+		add(getTabbedPane(),BorderLayout.CENTER);
+		
 	}
 
-	private void add(Component c, GridBagConstraints constraints, int x, int y,
-			int w, int h) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		constraints.gridwidth = w;
-		constraints.gridheight = h;
-		add(c, constraints);
+	
+	private JTabbedPane getTabbedPane(){
+		if(tabbedPane == null){
+			tabbedPane = new JTabbedPane();
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), statisticScrollPanelHome);
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), statisticScrollPanelAway);
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ImageBuilder"), imageDesignPanel);
+		}
+		return tabbedPane;
 	}
-
+	
 	public ImageDesignPanel getImageDesignPanel() {
 		return this.imageDesignPanel;
 	}
@@ -56,4 +72,22 @@ public class PluginIfaPanel extends JPanel {
 	public StatisticScrollPanel getStatisticScrollPanelHome() {
 		return this.statisticScrollPanelHome;
 	}
+	
+	public JPanel getToolbar(){
+		if(toolbarPanel == null){
+			toolbarPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			refreshButton.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					PluginIfaUtils.updateMatchesTable();
+					getImageDesignPanel().refreshFlagPanel();
+					getStatisticScrollPanelHome().refresh();
+					getStatisticScrollPanelAway().refresh();
+					
+				}
+			});
+			toolbarPanel.add(refreshButton);
+		}
+		return toolbarPanel;
+		}
 }
