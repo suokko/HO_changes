@@ -80,15 +80,15 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		FLAG_WIDTH = Integer.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_WIDTH));
 
 		StateChangeListener changeListener = new StateChangeListener();
-		JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
+		JButton button = new JButton(HOVerwaltung.instance().getLanguageString("update"));
 		button.setActionCommand("update");
 		button.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
 		add(this.northPanel, button, this.constraints, 0, 0, 2, 1);
 
-		this.home = new JRadioButton("Visited Countries", true);
+		this.home = new JRadioButton(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), true);
 		this.home.setActionCommand("visited");
 		this.home.addActionListener(this);
-		this.away = new JRadioButton("Hosted Countries", false);
+		this.away = new JRadioButton(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), false);
 		this.away.setActionCommand("hosted");
 		this.away.addActionListener(this);
 		ButtonGroup group = new ButtonGroup();
@@ -144,7 +144,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.textField.setPreferredSize(new Dimension(150, 25));
 		add(this.northPanel, this.textField, this.constraints, 1, 5, 1, 1);
 
-		this.animGif = new JCheckBox("Animated GIF",
+		this.animGif = new JCheckBox(HOVerwaltung.instance().getLanguageString("animatedGIF"),
 				new Boolean(ConfigManager.getTextFromConfig(ConfigManager.IFA_GIFANIMATED)).booleanValue());
 		add(this.northPanel, this.animGif, this.constraints, 0, 6, 1, 1);
 

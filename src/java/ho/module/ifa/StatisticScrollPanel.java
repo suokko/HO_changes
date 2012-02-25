@@ -26,7 +26,7 @@ public class StatisticScrollPanel extends JScrollPane {
 	}
 
 	public void initialize() {
-		this.columnNames = new String[] { HOVerwaltung.instance().getLanguageString("Country"), HOVerwaltung.instance().getLanguageString("tooltip.MatchCount"), HOVerwaltung.instance().getLanguageString("Gewonnen"),
+		this.columnNames = new String[] { HOVerwaltung.instance().getLanguageString("Country"), HOVerwaltung.instance().getLanguageString("Spiele"), HOVerwaltung.instance().getLanguageString("Gewonnen"),
 		HOVerwaltung.instance().getLanguageString("Unendschieden"), HOVerwaltung.instance().getLanguageString("Verloren"), HOVerwaltung.instance().getLanguageString("LastMatch") };
 		try {
 			this.model = new SortedTableModel(new DefaultTableModel(
