@@ -1,6 +1,7 @@
 package ho.module.ifa;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.util.HelperWrapper;
@@ -25,8 +26,8 @@ public class StatisticScrollPanel extends JScrollPane {
 	}
 
 	public void initialize() {
-		this.columnNames = new String[] { "Country", "Matches played", "Won",
-				"Draw", "Lost", "Last Match" };
+		this.columnNames = new String[] { HOVerwaltung.instance().getLanguageString("Country"), HOVerwaltung.instance().getLanguageString("tooltip.MatchCount"), HOVerwaltung.instance().getLanguageString("Gewonnen"),
+		HOVerwaltung.instance().getLanguageString("Unendschieden"), HOVerwaltung.instance().getLanguageString("Verloren"), HOVerwaltung.instance().getLanguageString("LastMatch") };
 		try {
 			this.model = new SortedTableModel(new DefaultTableModel(
 					getTableData(), this.columnNames));

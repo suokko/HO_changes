@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
@@ -79,7 +80,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		FLAG_WIDTH = Integer.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_WIDTH));
 
 		StateChangeListener changeListener = new StateChangeListener();
-		JButton button = new JButton("Update");
+		JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
 		button.setActionCommand("update");
 		button.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
 		add(this.northPanel, button, this.constraints, 0, 0, 2, 1);
@@ -96,7 +97,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		add(this.northPanel, this.home, this.constraints, 0, 1, 1, 1);
 		add(this.northPanel, this.away, this.constraints, 1, 1, 1, 1);
 
-		this.headerYesNo = new JCheckBox("Show Header",
+		this.headerYesNo = new JCheckBox(HOVerwaltung.instance().getLanguageString("showHeader"),
 				new Boolean(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW))
 						.booleanValue());
@@ -104,7 +105,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.headerYesNo.addChangeListener(changeListener);
 		add(this.northPanel, this.headerYesNo, this.constraints, 0, 2, 1, 1);
 
-		this.roundly = new JCheckBox("Roundly",
+		this.roundly = new JCheckBox(HOVerwaltung.instance().getLanguageString("Roundly"),
 				new Boolean(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_ROUNDLY))
 						.booleanValue());
@@ -112,7 +113,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.roundly.addChangeListener(changeListener);
 		add(this.northPanel, this.roundly, this.constraints, 0, 3, 1, 1);
 
-		this.greyColored = new JCheckBox("Grey",
+		this.greyColored = new JCheckBox(HOVerwaltung.instance().getLanguageString("Grey"),
 				new Boolean(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_GREY))
 						.booleanValue());
@@ -134,7 +135,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				MIN_FLAG_WIDTH, MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
 		this.sizeSpinner.addChangeListener(changeListener);
-		sizePanel.add(new JLabel("Flags/Row: "));
+		sizePanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Flaggen")+"/"+(HOVerwaltung.instance().getLanguageString("Row")+": ")));
 		sizePanel.add(this.sizeSpinner);
 		add(this.northPanel, sizePanel, this.constraints, 0, 5, 1, 1);
 		this.textField = new JTextField(
@@ -152,14 +153,14 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				Double.parseDouble(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_GIFDELAY)), 0.0D,
 				60.0D, 0.1D));
-		spinnerPanel.add(new JLabel("Delay: "));
+		spinnerPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Delay")+": "));
 		spinnerPanel.add(this.delaySpinner);
 		add(this.northPanel, spinnerPanel, this.constraints, 1, 6, 1, 1);
 		setEmblemPanel(true);
 		setEmblemPanel(false);
 		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1,
 				1);
-		JButton saveImage = new JButton("Save Image");
+		JButton saveImage = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
 		saveImage.addActionListener(new GlobalActionsListener(
 				this.pluginIfaPanel));
 		saveImage.setActionCommand("saveImage");

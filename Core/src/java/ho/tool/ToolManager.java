@@ -28,7 +28,7 @@ public class ToolManager implements ActionListener {
 	private final JMenuItem m_jmiCsvPlayerExporter = new JMenuItem(m_hov.getLanguageString("CSVExporter"));
 	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(m_hov.getLanguageString("dbcleanup"));
 	private final JMenuItem m_jmiArenaSizer = new JMenuItem(m_hov.getLanguageString("ArenaSizer"));
-	private final JMenuItem m_jmiHrfExplorer = new JMenuItem(m_hov.getLanguageString("HrfExplorer"));
+	private final JMenuItem m_jmiHrfExplorer = new JMenuItem(m_hov.getLanguageString("Tab_HRF-Explorer"));
 	
 	
 	
