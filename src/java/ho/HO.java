@@ -206,7 +206,7 @@ public class HO {
 				.exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
 		// Anzeigen
-		interuptionsWindow.setInfoText(9,"Prepare to show");
+		interuptionsWindow.setInfoText(8,"Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
 		// Startbild weg

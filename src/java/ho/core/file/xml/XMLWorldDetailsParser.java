@@ -104,7 +104,6 @@ class XMLWorldDetailsParser {
         Element root = null;
         final ArrayList<WorldDetailLeague> arrayList = new ArrayList<WorldDetailLeague>();
         NodeList list = null;
-        String tempLeagueID = null;
         XMLManager xml = XMLManager.instance();
         if (doc == null) {
             return new WorldDetailLeague[0];
@@ -124,7 +123,10 @@ class XMLWorldDetailsParser {
                  tmp.setLeagueId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
                  ele = (Element) root.getElementsByTagName("EnglishName").item(0);
                  tmp.setCountryName(xml.getFirstChildNodeValue(ele));
-                  root = (Element) root.getElementsByTagName("Country").item(0);
+                 ele = (Element) root.getElementsByTagName("ActiveUsers").item(0);
+                 tmp.setActiveUsers(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                 
+                 root = (Element) root.getElementsByTagName("Country").item(0);
                   ele = (Element) root.getElementsByTagName("CountryID").item(0);
                   tmp.setCountryId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
                   arrayList.add(tmp);

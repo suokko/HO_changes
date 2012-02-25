@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 
 
 public class ImageDesignPanel extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 6107052908932568929L;
 	public static int FLAG_WIDTH = 8;
 	public static int MIN_FLAG_WIDTH = 5;
 	public static int MAX_FLAG_WIDTH = 12;
@@ -80,10 +81,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		FLAG_WIDTH = Integer.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_WIDTH));
 
 		StateChangeListener changeListener = new StateChangeListener();
-		JButton button = new JButton(HOVerwaltung.instance().getLanguageString("update"));
-		button.setActionCommand("update");
-		button.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
-		add(this.northPanel, button, this.constraints, 0, 0, 2, 1);
+
 
 		this.home = new JRadioButton(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), true);
 		this.home.setActionCommand("visited");

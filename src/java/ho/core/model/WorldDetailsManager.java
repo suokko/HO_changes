@@ -37,8 +37,8 @@ public class WorldDetailsManager {
 		return countryMap.get(Integer.valueOf(countryId)).getCountryName();
 	}
 
-	public WorldDetailLeague getWorldDetailLeagueByLeagueId(int leagueId){
-		return leagueMap.get(Integer.valueOf(leagueId));
+	public WorldDetailLeague getWorldDetailLeagueByLeagueId(Integer leagueId){
+		return leagueMap.get(leagueId);
 	}
 
 	public final WorldDetailLeague[] getLeagues() {

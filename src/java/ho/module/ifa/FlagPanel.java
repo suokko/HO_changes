@@ -17,6 +17,7 @@ import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
 public class FlagPanel extends JPanel {
+	private static final long serialVersionUID = -379778441206176830L;
 	private GridBagLayout layout = new GridBagLayout();
 	private GridBagConstraints constraints = new GridBagConstraints();
 	private int countriesPlayedIn;
