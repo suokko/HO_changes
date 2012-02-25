@@ -1,5 +1,7 @@
 package ho.module.ifa;
 
+import ho.core.model.HOVerwaltung;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -38,7 +40,7 @@ public class EmblemPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
 		if (this.logo == null) {
-			this.logo = new JLabel("Klick here to load your Emblem");
+			this.logo = new JLabel(HOVerwaltung.instance().getLanguageString("loadEmblem"));
 			this.logo.setPreferredSize(new Dimension(100, 100));
 			this.logo.setVerticalAlignment(0);
 			this.logo.setHorizontalAlignment(0);
@@ -76,7 +78,7 @@ public class EmblemPanel extends JPanel {
 			this.logo.setPreferredSize(new Dimension(image.getIconWidth(),
 					image.getIconHeight()));
 		} else {
-			this.logo.setText("Klick here to load your Emblem");
+			this.logo.setText(HOVerwaltung.instance().getLanguageString("loadEmblem"));
 			this.imagePath = "";
 		}
 	}
