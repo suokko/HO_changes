@@ -1,18 +1,33 @@
 package ho.module.ifa;
 
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.model.WorldDetailLeague;
+
 import java.awt.Component;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class StatisticTableCellRenderer implements TableCellRenderer {
+public class StatisticTableCellRenderer extends DefaultTableCellRenderer {
+	
+	private static final long serialVersionUID = -4623597445367469673L;
+
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
-		if ((value instanceof JLabel)) {
-			return (JLabel) value;
+		
+		setIcon(null);
+		setHorizontalAlignment(SwingConstants.CENTER);
+		
+		if ((value instanceof WorldDetailLeague)) {
+			int countryId = ((WorldDetailLeague)value).getCountryId();
+			setIcon(ImageUtilities.getFlagIcon(countryId));
+			setHorizontalAlignment(SwingConstants.LEADING);
 		}
 
-		return new JLabel(value.toString());
+		return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 	}
 }

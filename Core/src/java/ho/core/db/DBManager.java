@@ -1923,7 +1923,7 @@ public class DBManager {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getLastMatchDate();
 	}
 	
-	public Vector<Object[]> getIfaMatches(boolean home) {
+	public IfaMatch[] getIfaMatches(boolean home) {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getMatches(home);
 	}
 	

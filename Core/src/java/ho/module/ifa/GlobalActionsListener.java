@@ -136,11 +136,6 @@ public class GlobalActionsListener extends MouseAdapter implements
 			} catch (Exception e) {
 				 HOLogger.instance().error(GlobalActionsListener.class, e);
 			}
-		} else if (arg0.getActionCommand().equalsIgnoreCase("update")) {
-			PluginIfaUtils.updateMatchesTable();
-			this.pluginIfaPanel.getImageDesignPanel().refreshFlagPanel();
-			this.pluginIfaPanel.getStatisticScrollPanelHome().refresh();
-			this.pluginIfaPanel.getStatisticScrollPanelAway().refresh();
 		}
 	}
 
