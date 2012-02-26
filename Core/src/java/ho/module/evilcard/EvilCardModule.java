@@ -1,5 +1,6 @@
 package ho.module.evilcard;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
 import java.awt.event.KeyEvent;
@@ -20,7 +21,7 @@ public class EvilCardModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		return "Todo: Evil Card";
+		return HOVerwaltung.instance().getLanguageString("Tab_Evilcard");
 	}
 
 	@Override
