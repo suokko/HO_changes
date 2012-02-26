@@ -81,7 +81,7 @@ public class StatisticScrollPanel extends JScrollPane {
 			objects[counter][3] = 	Integer.valueOf(stat.getDraw());
 			objects[counter][4] = 	Integer.valueOf(home?stat.getHomeLost():stat.getHomeWon());
 			objects[counter][5] =  StringUtilities.getResultString(stat.getHomeGoals(),stat.getAwayGoals());
-			objects[counter][6] =  Integer.valueOf(stat.getLeague().getActiveUsers());
+			objects[counter][6] =  Integer.valueOf(WorldDetailsManager.instance().getTotalUsers()/stat.getLeague().getActiveUsers());
 			objects[counter][7] =  stat.getLastPlayedDate();
 			counter++;
 		}

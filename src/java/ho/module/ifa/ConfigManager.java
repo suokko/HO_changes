@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 
 public class ConfigManager {
@@ -24,10 +25,10 @@ public class ConfigManager {
 		config.setInteger(IFA_BRIGHTNESS, Integer.valueOf(50));
 		config.setBoolean(IFA_GREY, true);
 		config.setBoolean(IFA_ROUNDLY,false);
-		config.setString(IFA_VISITEDHEADER, "Visited");
+		config.setString(IFA_VISITEDHEADER, HOVerwaltung.instance().getLanguageString("Visited"));
 		config.setString(IFA_VISITEDPATHEMBLEM,"");
 
-		config.setString(IFA_HOSTEDHEADER,"Hosted");
+		config.setString(IFA_HOSTEDHEADER,HOVerwaltung.instance().getLanguageString("Hosted"));
 		config.setString(IFA_HOSTEDPATHEMBLEM,"");
 
 		config.setBoolean(IFA_GIFANIMATED,false);

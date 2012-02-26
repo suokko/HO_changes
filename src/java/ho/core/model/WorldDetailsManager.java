@@ -10,6 +10,8 @@ public class WorldDetailsManager {
 	private WorldDetailLeague[] leagues;
 	private HashMap<Integer,WorldDetailLeague> countryMap = new HashMap<Integer,WorldDetailLeague>();
 	private HashMap<Integer,WorldDetailLeague> leagueMap = new HashMap<Integer,WorldDetailLeague>();
+	private int totalUsers;
+	
 	public static WorldDetailsManager instance(){
 		if(WMANAGER == null){
 			WMANAGER = new WorldDetailsManager();
@@ -23,10 +25,17 @@ public class WorldDetailsManager {
 	
 	private void initialize() {
 		leagues = DBManager.instance().getAllWorldDetailLeagues();
+		leagueMap.clear();
+		countryMap.clear();
 		for (int i = 0; i < leagues.length; i++) {
+			totalUsers += leagues[i].getActiveUsers();
 			countryMap.put(Integer.valueOf(leagues[i].getCountryId()),leagues[i]);
 			leagueMap.put(Integer.valueOf(leagues[i].getLeagueId()),leagues[i]);
 		}
+	}
+	
+	public void refresh(){
+		initialize();
 	}
 	
 	public int size(){
@@ -45,6 +54,8 @@ public class WorldDetailsManager {
 		return leagues;
 	}
 	
-	
+	public final int getTotalUsers(){
+		return totalUsers;
+	}
 	
 }
