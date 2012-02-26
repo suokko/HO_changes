@@ -7,10 +7,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-/**
- * @author viktor
- */
-
 public class SortedTableModel extends AbstractTableModel {
 	DefaultTableModel model;
 	int sortColumn;

@@ -10,6 +10,7 @@ package ho.core.rating;
 import ho.core.db.DBManager;
 import ho.core.file.xml.MatchExporter;
 import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 
@@ -98,10 +99,10 @@ public class RatingOptimizer {
 					
 		IMatchLineupTeam lineupTeam = null;
 		IMatchDetails details = matchData.getDetails();
-		if (details.getHeimId() == HOMiniModel.instance().getBasics().getTeamId()) {
-			lineupTeam = HOMiniModel.instance().getMatchLineup(details.getMatchID()).getHeim();
+		if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
+			lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
 		} else {
-			lineupTeam = HOMiniModel.instance().getMatchLineup(details.getMatchID()).getGast();
+			lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getGast();
 		}
 		
 		// Both teams have WO values, no diff if home/away match
@@ -127,7 +128,7 @@ public class RatingOptimizer {
 		}
 		
 		IMatchDetails det = matchData.getDetails();
-		if (HOMiniModel.instance().getBasics().getTeamId() == matchData.getInfo().getHeimID()) {
+		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == matchData.getInfo().getHeimID()) {
 			lineup.setAttitude(det.getHomeEinstellung());
 			lineup.setHeimspiel((short) 1);
 			lineup.setTacticType(det.getHomeTacticType());
@@ -140,7 +141,7 @@ public class RatingOptimizer {
 		int hrfID = DBManager.instance().getHrfIDSameTraining(matchData.getInfo().getMatchDateAsTimestamp());
 		RatingPredictionManager rpm = new RatingPredictionManager(lineup, DBManager.instance().getTeam(hrfID), (short) DBManager.instance().getTrainerType(hrfID), RatingPredictionConfig.getInstance() );
 		double[] offset = new double[7];		
-		if (details.getHeimId() == HOMiniModel.instance().getBasics().getTeamId()) {
+		if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 					offset[0] = 0.875d + det.getHomeRightDef() / 4.0d - rpm.getRightDefenseRatings();                    
                     offset[1] = 0.875d + det.getHomeMidDef() / 4.0d - rpm.getCentralDefenseRatings();
 					offset[2] = 0.875d + det.getHomeLeftDef() / 4.0d - rpm.getLeftDefenseRatings();
@@ -172,7 +173,7 @@ public class RatingOptimizer {
 
 	private static void debugDiffs (String type, IMatchDetails det, RatingPredictionManager rpm, ITeam team) {
 		boolean home = false;
-		if (HOMiniModel.instance().getBasics().getTeamId() == det.getHeimId()) {
+		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == det.getHeimId()) {
 			home = true;
 		}
 		int attitude = 0;

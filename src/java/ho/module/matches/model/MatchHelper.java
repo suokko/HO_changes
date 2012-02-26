@@ -1,5 +1,6 @@
 package ho.module.matches.model;
 
+import ho.core.db.DBManager;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 
@@ -43,7 +44,7 @@ public class MatchHelper implements IMatchHelper {
 	 * @param matchId	match Id
 	 */
 	public short getLocation(int matchId) {
-		IMatchLineup ml = HOMiniModel.instance().getMatchLineup(matchId);
+		IMatchLineup ml = DBManager.instance().getMatchLineup(matchId);
 		return getLocation(ml.getHeimId(), ml.getGastId(), matchId, ml.getMatchTyp());
 	}
 
@@ -79,7 +80,7 @@ public class MatchHelper implements IMatchHelper {
 			return FOREIGN_MATCH; // foreign match
 		}
 
-   		IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
+   		IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
 
    		// For a league/qualification/cup game, the home team always has the home advantage (no neutral grounds) 
    		// (exception for cup finals, see below)

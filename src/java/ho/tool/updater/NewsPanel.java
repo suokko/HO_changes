@@ -6,8 +6,8 @@
  */
 package ho.tool.updater;
 
-import ho.core.model.HOMiniModel;
 import ho.core.model.News;
+import ho.core.util.HelperWrapper;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -77,7 +77,7 @@ class NewsPanel extends JPanel {
 		b3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (linkEnabled) {
-					HOMiniModel.instance().getHelper().openUrlInUserBRowser(b3.getText());
+					HelperWrapper.instance().openUrlInUserBRowser(b3.getText());
 				}
 			}
 		});

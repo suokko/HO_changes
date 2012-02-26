@@ -4,6 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.file.hrf.HRF;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.MatchKurzInfo;
@@ -158,7 +159,7 @@ public class DBCleanupTool {
 				+ ", removeDateOtherFriendlies="+removeDateOtherFriendlies);
 		MatchKurzInfo[] kurzInfos = DBManager.instance().getMatchesKurzInfo(-1);
 		int counter = 0;
-		int myTeamId = HOMiniModel.instance().getBasics().getTeamId();
+		int myTeamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		for (MatchKurzInfo curKurzInfo : kurzInfos) {
 			Timestamp curMatchDate = curKurzInfo.getMatchDateAsTimestamp();
 			int curMatchId = curKurzInfo.getMatchID();
