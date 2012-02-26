@@ -42,7 +42,7 @@ final class SingleTrainingBlock extends JPanel {
 	private JButton m_jbRemove = new JButton(ThemeManager.getIcon(HOIconName.REMOVE)); 
     //~ Constructors -------------------------------------------------------------------------------
 	protected SingleTrainingBlock(SpielerTrainingBlockDialog parent) {
-		this (parent, HOMiniModel.instance().getBasics().getDatum());
+		this (parent, HOVerwaltung.instance().getModel().getBasics().getDatum());
 	}
 
 	protected SingleTrainingBlock(SpielerTrainingBlockDialog parent, Date startDate) {

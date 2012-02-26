@@ -27,7 +27,6 @@ import ho.module.lineup.LineupPanel;
 import ho.module.matches.SpielePanel;
 import ho.module.playerOverview.SpielerUebersichtsPanel;
 import ho.module.playeranalysis.PlayerAnalysisPanel;
-import ho.module.teamAnalyzer.ui.component.TAMenu;
 import ho.module.transfer.TransfersPanel;
 import ho.tool.ToolManager;
 import ho.tool.updater.UpdateController;
@@ -94,19 +93,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private static HOMainFrame m_clHOMainFrame;
 
 
-	// ---------Konstanten----------------------
-//	public static final int SPIELERUEBERSICHT = 0; // player overview
-//	public static final int AUFSTELLUNG = 1; // lineup
-//	public static final int LIGATABELLE = 2; // league table
-//	public static final int SPIELE = 3; // matches
-//	public static final int SPIELERANALYSE = 4; // player analysis
-//	public static final int STATISTIK = 5; // statistics
-//	public static final int TRANSFERS = 6;
-//	public static final int TRAINING = 7;
-//	public static final int INFORMATIONEN = 8;
-//	public static final int TEAM_ANALYZER = 9;
-//	public static final int TSFORECAST = 10;
-
 	public static final int BUSY = 0;
 	public static final int READY = 1;
 
@@ -116,13 +102,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	
 	private InfoPanel m_jpInfoPanel;
 
-	
-	
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	// Top level Menu
 	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
 	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
-	private final JMenu m_jmPluginMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Module"));
 	
@@ -427,13 +410,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		addWindowListener(listener);
 	}
 
-	/**
-	 * Add plugin menu.
-	 */
-	public void addMenu(JMenu menu) {
-		m_jmPluginMenu.add(menu);
-	}
-
 	public void addTopLevelMenu(JMenu menu) {
 		m_jmMenuBar.add(menu);
 	}
@@ -564,7 +540,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmPluginsRefresh.add(m_jmiPluginsLibrary);
 		m_jmPluginsRefresh.add(m_jmiPluginsDelete);
 
-		m_jmUpdating.add(m_jmPluginsRefresh);
+		//m_jmUpdating.add(m_jmPluginsRefresh);
 		m_jmUpdating.add(m_jmiHO);
 		m_jmUpdating.add(m_jmiHObeta);
 		m_jmUpdating.add(m_jmiEPV);
@@ -657,9 +633,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		
 		// add Top Level Menus
 		m_jmMenuBar.add(m_jmVerschiedenes);
-		m_jmMenuBar.add(m_jmModuleMenu);
 		m_jmMenuBar.add(new ToolManager().getToolMenu());
-		m_jmMenuBar.add(m_jmPluginMenu);
+		m_jmMenuBar.add(m_jmModuleMenu);
+
 		m_jmMenuBar.add(m_jmAbout);
 		
 		if (DeveloperMode.DEVELOPER_MODE) {
@@ -894,81 +870,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			HOLogger.instance().log(HOMainFrame.class, e);
 		}
 	}
-
-//	/**
-//	 * Remove all temporary tabs.
-//	 */
-//	private void checkTabs() {
-//		int index;
-//
-//		m_jtpTabbedPane.removeChangeListener(this);
-//
-//		if (UserParameter.instance().tempTabSpieleruebersicht) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Spieleruebersicht"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabAufstellung) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Aufstellung"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabLigatabelle) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Ligatabelle"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabSpiele) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Spiele"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabSpieleranalyse) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("SpielerAnalyse"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabStatistik) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Statistik"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabTransferscout) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Transfers"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		if (UserParameter.instance().tempTabInformation) {
-//			index = m_jtpTabbedPane.indexOfTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"));
-//
-//			if ((index > 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				m_jtpTabbedPane.removeTabAt(index);
-//			}
-//		}
-//
-//		m_jtpTabbedPane.addChangeListener(this);
-//	}
 
 	/**
 	 * Holt die Parameter aus den Dialogen und speichert sie in der DB

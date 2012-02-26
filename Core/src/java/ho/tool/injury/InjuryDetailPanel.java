@@ -4,6 +4,7 @@ package ho.tool.injury;
 
 import plugins.ISpieler;
 
+import ho.core.db.DBManager;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
@@ -158,7 +159,7 @@ class InjuryDetailPanel extends JPanel {
                     String tsi = "";
 
                     try {
-                        ResultSet rs = HOMiniModel.instance().getAdapter().executeQuery("select marktwert, hrf_id from SPIELER where spielerid="
+                        ResultSet rs = DBManager.instance().getAdapter().executeQuery("select marktwert, hrf_id from SPIELER where spielerid="
                                                                                         + spieler
                                                                                           .getSpielerID()
                                                                                         + " and verletzt=-1 order by hrf_id desc");
@@ -172,7 +173,7 @@ class InjuryDetailPanel extends JPanel {
                     tsiPre.setText(tsi);
 
                     try {
-                        ResultSet rs = HOMiniModel.instance().getAdapter().executeQuery("select marktwert from SPIELER where spielerid="
+                        ResultSet rs = DBManager.instance().getAdapter().executeQuery("select marktwert from SPIELER where spielerid="
                                                                                         + spieler
                                                                                           .getSpielerID()
                                                                                         + " and verletzt>-1 order by hrf_id desc");

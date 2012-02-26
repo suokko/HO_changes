@@ -61,7 +61,7 @@ public class GUIPluginWrapper implements plugins.IGUI {
     }
 
     public void addMenu(javax.swing.JMenu menu) {
-        HOMainFrame.instance().addMenu(menu);
+        //HOMainFrame.instance().addMenu(menu);
     }
 
     public void addOptionPanel(String name, javax.swing.JPanel optionpanel) {
