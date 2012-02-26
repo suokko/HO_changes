@@ -111,7 +111,7 @@
 		<mkdir dir="${export.dmg.targetdir}" />
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${debug.dir}" />
-		<loadfile property="hoversion" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+		<loadfile property="hoversion" srcfile="${src.dir}/java/ho/core/gui/HOMainFrame.java">
 			<filterchain>
 				<linecontains>
 					<contains value=" VERSION =" />
@@ -122,7 +122,7 @@
 				<striplinebreaks />
 			</filterchain>
 		</loadfile>
-		<loadfile property="dev" srcfile="${src.dir}/java/de/hattrickorganizer/gui/HOMainFrame.java">
+		<loadfile property="dev" srcfile="${src.dir}/java/ho/core/gui/HOMainFrame.java">
 			<filterchain>
 				<linecontains>
 					<contains value=" DEVELOPMENT =" />
@@ -175,12 +175,12 @@
 		<property name="svninfo.rev" value="" />
 		<!-- ${svninfo.url} defaults to "" -->
 		<property name="svninfo.url" value="" />
-		
+
 		<!-- store svn revision into a file (delete, if already exists) -->
 		<echo>Store revision number ${svninfo.revnum} into new file: ${bin.dir}/revision.num</echo>
 		<delete file="${bin.dir}/revision.num" failonerror="false"/>
 		<echo file="${bin.dir}/revision.num">${svninfo.revnum}</echo>
-		 
+
 
 		<tstamp>
 			<format property="curDate" pattern="yyyyMMdd" />
