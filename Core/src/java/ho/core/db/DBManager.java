@@ -1560,7 +1560,7 @@ public class DBManager {
 		 return ((WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME)).getAllWorldDetailLeagues();
 	 }
 	 
-	 void saveWorldDetailLeagues(WorldDetailLeague[] leagues){
+	 public void saveWorldDetailLeagues(WorldDetailLeague[] leagues){
 		 WorldDetailsTable table = (WorldDetailsTable)getTable(WorldDetailsTable.TABLENAME);
 		 table.truncateTable();
 		 for (int i = 0; i < leagues.length; i++) {

@@ -1,6 +1,11 @@
 package ho.module.ifa;
 
+import ho.core.db.DBManager;
+import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailLeague;
+import ho.core.model.WorldDetailsManager;
+import ho.core.net.MyConnector;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -79,6 +85,17 @@ public class PluginIfaPanel extends JPanel {
 			refreshButton.addActionListener(new ActionListener() {
 				
 				public void actionPerformed(ActionEvent e) {
+					String worldDetails;
+					try {
+						worldDetails = MyConnector.instance().getWorldDetails(0);
+						WorldDetailLeague[] leagues =XMLManager.instance().parseWorldDetails(worldDetails);
+						DBManager.instance().saveWorldDetailLeagues(leagues);
+						WorldDetailsManager.instance().refresh();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 					PluginIfaUtils.updateMatchesTable();
 					getImageDesignPanel().refreshFlagPanel();
 					getStatisticScrollPanelHome().refresh();
