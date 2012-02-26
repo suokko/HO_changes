@@ -310,7 +310,7 @@ public final class UpdateController {
 
 	public static void updateHO(final String urlString) {
 		File tmp = new File("update.zip");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
 		HOLogger.instance().debug(UpdateController.class, "Try to download: " + urlString);
 		if (!UpdateHelper.instance().download(urlString, tmp)) {
@@ -385,7 +385,7 @@ public final class UpdateController {
 
 	public static void updateEPV(float release) {
 		File tmp = new File("tmp.dat");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
 		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/epvWeights.mlp",
 				tmp)) {
@@ -429,7 +429,7 @@ public final class UpdateController {
 
 	public static void updateRatings(float release) {
 		File tmp = new File("tmp.dat");
-		LoginWaitDialog wait = new LoginWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
 		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/prediction.zip",
 				tmp)) {

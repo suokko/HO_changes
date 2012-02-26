@@ -27,6 +27,7 @@ import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 import ho.module.matches.statistics.MatchesOverviewTable;
 import ho.tool.matchPrediction.MatchEnginePanel;
 import ho.tool.matchPrediction.MatchPredictionDialog;
+import ho.tool.matchPrediction.engine.MatchPredictionManager;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -44,7 +45,6 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -212,7 +212,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         } else if (e.getSource() == m_jbSimMatch) {
         	if (matchShortInfo != null) {
         		final Matchdetails details = DBManager.instance().getMatchDetails(matchShortInfo.getMatchID());
-        		final IMatchPredictionManager manager = HOMiniModel.instance().getMatchPredictionManager();
+        		final IMatchPredictionManager manager = MatchPredictionManager.instance();
         		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
         		boolean homeMatch = false;
         		if (teamId == matchShortInfo.getHeimID()) {
@@ -256,7 +256,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         		}
         		
                 String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
-                MatchEnginePanel matchPredictionPanel = (MatchEnginePanel)HOMiniModel.instance().getGUI().createMatchPredictionPanel(homeTeamValues, awayTeamValues);
+                MatchEnginePanel matchPredictionPanel = new MatchEnginePanel(homeTeamValues, awayTeamValues);
 
                 MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel);
                 d.setTitle(match);
@@ -288,7 +288,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      * Get the team data for the own team (current linep).
      */
     private IMPTeamData getOwnLineupRatings(IMatchPredictionManager manager) {
-    	ILineUp lineup = HOMiniModel.instance().getLineUP();
+    	ILineUp lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	IMPTeamRatings teamRatings = manager.generateTeamRatings(
     			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
     			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftDefenseRating())),
@@ -299,7 +299,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 				getRatingValue(lineup.getIntValue4Rating(lineup.getRightAttackRating())));
     	
     	int tactic = lineup.getTacticType();
-    	return manager.generateTeamData(HOMiniModel.instance().getBasics().getTeamName(),
+    	return manager.generateTeamData(HOVerwaltung.instance().getModel().getBasics().getTeamName(),
     			teamRatings, tactic, getTacticStrength(lineup, tactic));
     }
 
