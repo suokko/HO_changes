@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -29,7 +30,8 @@ public class EmblemPanel extends JPanel {
 	private String imagePath = "";
 
 	public EmblemPanel(PluginIfaPanel pluginIfaPanel, FlagLabel[] flagLabels,
-			int countriesPlayedIn) {
+			int countriesPlayedIn,String key) {
+		setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString(key)));
 		this.pluginIfaPanel = pluginIfaPanel;
 		this.flagPanel = new FlagPanel(flagLabels, countriesPlayedIn);
 		initialize();
