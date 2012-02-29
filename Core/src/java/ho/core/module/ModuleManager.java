@@ -81,13 +81,13 @@ public final class ModuleManager {
 		return all_modules.values().toArray(new IModule[all_modules.size()]);
 	}
 	
-	public IModule[] getTempModules(boolean isActive){
+	public IModule[] getTempModules(){
 		if(tmpModules == null){
 			tmpModules = new HashMap<Integer,IModule>();
 			initMap(tmpModules);
 			copy(all_modules,tmpModules);
 		}
-		return getModules(tmpModules, isActive);
+		return tmpModules.values().toArray(new IModule[all_modules.size()]);
 	}
 	
 	public IModule[] getModules(boolean isActive){

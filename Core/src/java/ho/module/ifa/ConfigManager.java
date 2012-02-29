@@ -47,7 +47,7 @@ public class ConfigManager {
 
 	public static void saveConfig(ImageDesignPanel imageDesignPanel)
 			throws Exception {
-		EmblemPanel visitedEmblemPanel = imageDesignPanel.getEmblemPanel(0);
+		EmblemPanel visitedEmblemPanel = imageDesignPanel.getVisitedEmblemPanel();
 		ModuleConfig config = ModuleConfig.instance();
 		config.setInteger(IFA_WIDTH, Integer.valueOf(visitedEmblemPanel.getFlagWidth()));
 		config.setBoolean(IFA_HEADERSHOW, visitedEmblemPanel.isHeader());
@@ -57,7 +57,7 @@ public class ConfigManager {
 		config.setString(IFA_VISITEDHEADER, visitedEmblemPanel.getHeaderText());
 		config.setString(IFA_VISITEDPATHEMBLEM,visitedEmblemPanel.getImagePath());
 
-		visitedEmblemPanel = imageDesignPanel.getEmblemPanel(1);
+		visitedEmblemPanel = imageDesignPanel.getHostedEmblemPanel();
 		config.setString(IFA_HOSTEDHEADER,visitedEmblemPanel.getHeaderText());
 		config.setString(IFA_HOSTEDPATHEMBLEM,visitedEmblemPanel.getImagePath());
 

@@ -69,7 +69,7 @@ public class IfaMatchTable extends AbstractTable {
 		select.append("SELECT MAX(").append("PLAYEDDATE").append(") FROM ");
 		select.append(getTableName());
 		ResultSet rs = adapter.executeQuery(select.toString());
-		String s = null;
+		String s = "2000-01-01";
 		try {
 			if ((rs != null) && (rs.next())) {
 				String tmp = rs.getString(1);
@@ -132,6 +132,6 @@ public class IfaMatchTable extends AbstractTable {
 		statement.append(match.getAwayTeamGoals()).append(",");
 		statement.append(match.getHomeLeagueId()).append(",");
 		statement.append(match.getAwayLeagueId()).append(")");
-		adapter.equals(statement.toString());
+		adapter.executeUpdate(statement.toString());
 	}
 }
