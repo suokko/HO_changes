@@ -1,10 +1,11 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
 import ho.core.util.HelperWrapper;
 import ho.core.util.StringUtilities;
+import ho.module.ifa.IfaMatch;
 
 import java.util.HashMap;
 import java.util.Set;

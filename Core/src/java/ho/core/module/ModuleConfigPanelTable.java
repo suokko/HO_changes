@@ -1,5 +1,6 @@
 package ho.core.module;
 
+import gui.HOColorName;
 import gui.HOIconName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
@@ -13,16 +14,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
 
 class ModuleConfigPanelTable extends JTable implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	protected String[] columnNames = {HOVerwaltung.instance().getLanguageString("Aktiviert"),HOVerwaltung.instance().getLanguageString("Name"),HOVerwaltung.instance().getLanguageString("TabManagement"),HOVerwaltung.instance().getLanguageString("Optionen")};
+	private static String[] stateDescriptions = {HOVerwaltung.instance().getLanguageString("Deactivated"),HOVerwaltung.instance().getLanguageString("Activated"),HOVerwaltung.instance().getLanguageString("Autostart")};
+	protected String[] columnNames = {HOVerwaltung.instance().getLanguageString("Status"),HOVerwaltung.instance().getLanguageString("Name"),HOVerwaltung.instance().getLanguageString("Optionen")};
 	private TableEditor editor = new TableEditor();
 
 	
@@ -45,10 +46,11 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 		Object[][] value = new Object[modules.length][columnNames.length];
 
 		for (int i = 0; i < modules.length; i++) {
-			value[i][0] = getCheckbox(modules[i],modules[i].isActive(),"active");
-			value[i][1] = new ColorLabelEntry(modules[i].getDescription() );
-			value[i][2] = getCheckbox(modules[i],modules[i].isStartup(),"startup");
-			value[i][3] = modules[i].hasConfigPanel()?getButton(modules[i]):"";
+			value[i][0] = getComboBox(modules[i]);
+			value[i][1] = new ColorLabelEntry(modules[i].getDescription());
+			if(modules[i].getStatus() == IModule.STATUS_DEACTIVATED)
+				((ColorLabelEntry)value[i][1]).setFGColor(ThemeManager.getColor("dark_gray"));
+			value[i][2] = modules[i].hasConfigPanel()?getButton(modules[i]):"";
 		}
 
 		TableModel model = new TableModel(value, columnNames);
@@ -61,34 +63,41 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 //		return tmp;
 //	}
 
-	private JCheckBox getCheckbox(IModule module, boolean value, String name) {
-	    JCheckBox tmp = new JCheckBox();
-	    tmp.setName(name);
-	    tmp.putClientProperty("MODULE", module);
-	    tmp.setOpaque(false);
-	    tmp.setSelected(value);
-	    tmp.addActionListener(this);
-	    tmp.setHorizontalAlignment(SwingConstants.CENTER);
-    return tmp;
+	private JComboBox getComboBox(IModule module){
+		JComboBox cBox = new JComboBox(stateDescriptions);
+		cBox.putClientProperty("MODULE", module);
+		cBox.setSelectedIndex(module.getStatus());
+		cBox.addActionListener(this);
+		return cBox;
 	}
+	
+//	private JCheckBox getCheckbox(IModule module, boolean value, String name) {
+//	    JCheckBox tmp = new JCheckBox();
+//	    tmp.setName(name);
+//	    tmp.putClientProperty("MODULE", module);
+//	    tmp.setOpaque(false);
+//	    tmp.setSelected(value);
+//	    tmp.addActionListener(this);
+//	    tmp.setHorizontalAlignment(SwingConstants.CENTER);
+//    return tmp;
+//	}
 	
 	private JButton getButton(IModule module) {
 		JButton tmp = new JButton(ThemeManager.getIcon(HOIconName.INFO));
 		tmp.putClientProperty("MODULE", module);
 		//tmp.setOpaque(false);
+		tmp.setEnabled(module.getStatus()>IModule.STATUS_DEACTIVATED);
 		tmp.addActionListener(this);
 		return tmp;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() instanceof JCheckBox){
-			JCheckBox box = (JCheckBox)e.getSource();
+		if(e.getSource()instanceof JComboBox){
+			JComboBox box = (JComboBox)e.getSource();
 			IModule module = (IModule)box.getClientProperty("MODULE");
-			if(box.getName().equals("startup"))
-				module.setStartup(box.isSelected());
-			else if(box.getName().equals("active"))
-				module.setActive(box.isSelected());
-			return;
+			int index = box.getSelectedIndex();
+			module.setStatus(index);
+			refresh();
 		} else if(e.getSource() instanceof JButton){
 			JButton button = (JButton)e.getSource();
 			IModule module = (IModule)button.getClientProperty("MODULE");
@@ -102,14 +111,11 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 		setModel(getTableModel());
 		TableColumn c = getColumn(columnNames[0]);
 		c.setCellEditor(editor);
-		c.setMinWidth(50);
-		c.setMaxWidth(70);
+		c.setMinWidth(120);
+		c.setMaxWidth(150);
 		c = getColumn(columnNames[2]);
 		c.setCellEditor(editor);
 		c.setMinWidth(50);
-		c.setMaxWidth(70);
-		c =	getColumn(columnNames[3]);
-		c.setCellEditor(editor);
 		c.setMaxWidth(60);
 	}
 

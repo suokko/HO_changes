@@ -1,6 +1,8 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import ho.core.model.WorldDetailLeague;
+import ho.module.ifa.DateHelper;
+import ho.module.ifa.IfaMatch;
 
 import java.util.Date;
 

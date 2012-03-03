@@ -1,6 +1,8 @@
 package ho.module.ifa;
 
+import ho.core.file.ExampleFileFilter;
 import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -8,17 +10,19 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EmblemPanel extends JPanel {
-	private EmblemPanel emblemPanel;
+public class EmblemPanel extends JPanel implements MouseListener{
+//	private EmblemPanel emblemPanel;
 	private GridBagConstraints constraints = new GridBagConstraints();
-	private PluginIfaPanel pluginIfaPanel;
 	private FlagPanel flagPanel;
 	private JLabel logo;
 	private int flagWidth = 8;
@@ -29,13 +33,11 @@ public class EmblemPanel extends JPanel {
 	private int brightness = 50;
 	private String imagePath = "";
 
-	public EmblemPanel(PluginIfaPanel pluginIfaPanel, FlagLabel[] flagLabels,
-			int countriesPlayedIn,String key) {
+	public EmblemPanel( FlagLabel[] flagLabels,int countriesPlayedIn,String key) {
+		setOpaque(false);
 		setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString(key)));
-		this.pluginIfaPanel = pluginIfaPanel;
 		this.flagPanel = new FlagPanel(flagLabels, countriesPlayedIn);
 		initialize();
-		this.emblemPanel = this;
 	}
 
 	private void initialize() {
@@ -47,8 +49,7 @@ public class EmblemPanel extends JPanel {
 			this.logo.setVerticalAlignment(0);
 			this.logo.setHorizontalAlignment(0);
 			this.logo.setBackground(Color.white);
-			this.logo.addMouseListener(new GlobalActionsListener(
-					this.pluginIfaPanel));
+			this.logo.addMouseListener(this);
 		}
 
 		this.constraints.fill = 1;
@@ -104,7 +105,7 @@ public class EmblemPanel extends JPanel {
 	public JComponent getImage() {
 		if (this.logo.getIcon() == null)
 			return this.flagPanel;
-		return this.emblemPanel;
+		return this;
 	}
 
 
@@ -166,5 +167,57 @@ public class EmblemPanel extends JPanel {
 
 	public void setRoundly(boolean roundly) {
 		this.roundly = roundly;
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+	try {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg",
+				"gif" }));
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setMultiSelectionEnabled(false);
+		if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
+			String path = fileChooser.getSelectedFile().getPath();
+			setImagePath(path);
+			ImageIcon image = createImageIcon(path);
+			setLogo(image);
+			this.getParent().validate();
+			this.getParent().repaint();
+		} else {
+			setLogo(null);
+			this.getParent().validate();
+			this.getParent().repaint();
+		}
+	} catch (Exception ex) {
+		HOLogger.instance().error(GlobalActionsListener.class, ex);
+	}
+		
+	}
+
+	private ImageIcon createImageIcon(String path) {
+		if (path != null) {
+			return new ImageIcon(path);
+		}
+		HOLogger.instance().debug(this.getClass(), "Couldn't find file: " + path);
+		return null;
+	}
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

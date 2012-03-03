@@ -1,4 +1,4 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.WorldDetailLeague;
