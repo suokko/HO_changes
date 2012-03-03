@@ -1,4 +1,4 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import gui.HOIconName;
 import ho.core.gui.theme.ThemeManager;

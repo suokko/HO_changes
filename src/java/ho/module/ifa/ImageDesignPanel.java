@@ -162,7 +162,7 @@ public class ImageDesignPanel extends JPanel {
 					if (flags[i].isEnabled())
 						enabled++;
 				}
-				EmblemPanel emblemPanel = new EmblemPanel(this.pluginIfaPanel,flags, enabled,"AutoFilterPanel.Away_Games");
+				EmblemPanel emblemPanel = new EmblemPanel(flags, enabled,"AutoFilterPanel.Away_Games");
 				emblemPanel.setFlagWidth(FLAG_WIDTH);
 				emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 				emblemPanel.setGrey(FlagLabel.GREY);
@@ -216,7 +216,7 @@ public class ImageDesignPanel extends JPanel {
 					if (flags[i].isEnabled())
 						enabled++;
 				}
-				EmblemPanel emblemPanel = new EmblemPanel(this.pluginIfaPanel,flags, enabled,"AutoFilterPanel.Home_Games");
+				EmblemPanel emblemPanel = new EmblemPanel(flags, enabled,"AutoFilterPanel.Home_Games");
 				emblemPanel.setFlagWidth(FLAG_WIDTH);
 				emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 				emblemPanel.setGrey(FlagLabel.GREY);

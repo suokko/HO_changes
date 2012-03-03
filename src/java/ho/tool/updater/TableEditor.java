@@ -17,6 +17,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -116,6 +117,10 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
                     return (JTextField) value;
                 }
 
+                if (value instanceof JComboBox) {
+                    return (JComboBox) value;
+                }
+                
                 if (value instanceof JButton) {
                     return (JButton) value;
                 }

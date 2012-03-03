@@ -1,4 +1,4 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

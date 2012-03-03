@@ -59,4 +59,23 @@ public abstract class DefaultModule implements IModule {
 		return null;
 	}
 	
+	public int getStatus(){
+		if(isStartup())
+			return STATUS_STARTUP;
+		if(isActive())
+			return STATUS_ACTIVATED;
+		return STATUS_DEACTIVATED;
+	}
+	
+	
+	public void setStatus(int statusId){
+		setStartup(false);
+		setActive(false);
+		if(statusId > STATUS_DEACTIVATED)
+			setActive(true);
+		if(statusId > STATUS_ACTIVATED)
+			setStartup(true);
+	}
+	
+	
 }

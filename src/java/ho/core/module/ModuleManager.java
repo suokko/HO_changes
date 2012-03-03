@@ -27,6 +27,7 @@ import java.util.Iterator;
 
 public final class ModuleManager {
 
+	private static final int factor = 10000;
 	private HashMap<Integer,IModule> all_modules = new HashMap<Integer,IModule>();
 	private HashMap<Integer,IModule> tmpModules;
 
@@ -68,8 +69,7 @@ public final class ModuleManager {
 	
 	private void copy(HashMap<Integer,IModule> from, HashMap<Integer,IModule> to){
 		for (Integer key : to.keySet()) {
-			to.get(key).setActive(from.get(key).isActive());
-			to.get(key).setStartup(from.get(key).isStartup());
+			to.get(key).setStatus(from.get(key).getStatus());
 		}
 	}
 	
@@ -105,27 +105,34 @@ public final class ModuleManager {
 		return tmp.toArray(new IModule[tmp.size()]);
 	}
 	
-	public void saveActivatedModules(){
-		IModule[] modules = getModules(true);
-		int[] activeIds = new int[modules.length];
-		for (int i = 0; i < activeIds.length; i++) {
-			activeIds[i] = modules[i].getModuleId();
-			if( !modules[i].isStartup())
-				activeIds[i] = activeIds[i] * -1;
+	public void savedModules(){
+		IModule[] modules = getAllModules();
+		int[] ids = new int[modules.length];
+		for (int i = 0; i < ids.length; i++) {
+			ids[i] = modules[i].getStatus()*factor+modules[i].getModuleId();
 		}
-		ModuleConfig.instance().setIntArray("MM_activeModuleIds",activeIds);
+		ModuleConfig.instance().setIntArray("MM_Modules",ids);
 	}
 	
 	private void loadModuleInfos(){
-		int[] activModuleIds =ModuleConfig.instance().getIntArray("MM_activeModuleIds");
+		int[] activModuleIds =ModuleConfig.instance().getIntArray("MM_Modules");
 		if(activModuleIds.length == 0){
 			firstStart();
 			return;
 		}
 		for (int i = 0; i < activModuleIds.length; i++) {
-			IModule module = all_modules.get(Integer.valueOf(Math.abs(activModuleIds[i])));
-			module.setActive(true);
-			module.setStartup(activModuleIds[i] >= 0);
+			int id = 0;
+			int status = IModule.STATUS_DEACTIVATED;
+			if(activModuleIds[i]>IModule.STATUS_STARTUP*factor){
+				id= activModuleIds[i] - (IModule.STATUS_STARTUP*factor);
+				status = IModule.STATUS_STARTUP;
+			}else if(activModuleIds[i]>IModule.STATUS_ACTIVATED*factor && activModuleIds[i]<IModule.STATUS_STARTUP*factor){
+				id= activModuleIds[i] - (IModule.STATUS_ACTIVATED*factor);
+				status = IModule.STATUS_ACTIVATED;
+			}else if(activModuleIds[i]<IModule.STATUS_ACTIVATED*factor)
+				id= activModuleIds[i];
+			IModule module = all_modules.get(Integer.valueOf(id));
+			module.setStatus(status);
 		}
 	}
 	
@@ -133,35 +140,35 @@ public final class ModuleManager {
 		UserParameter p = UserParameter.instance();
 		
 		if(!p.tempTabAufstellung)
-			getModule(IModule.LINEUP).setStartup(true);
+			getModule(IModule.LINEUP).setStatus(IModule.STATUS_STARTUP);
 		
 		if(!p.tempTabInformation)
-			getModule(IModule.MISC).setStartup(true);
+			getModule(IModule.MISC).setStatus(IModule.STATUS_STARTUP);
 		
 		if(!p.tempTabLigatabelle)
-			getModule(IModule.SERIES).setStartup(true);
+			getModule(IModule.SERIES).setStatus(IModule.STATUS_STARTUP);
 		
 		if(!p.tempTabSpiele)
-			getModule(IModule.MATCHES).setStartup(true);
+			getModule(IModule.MATCHES).setStatus(IModule.STATUS_STARTUP);
 		
 		if(!p.tempTabSpieleranalyse)
-			getModule(IModule.PLAYERANALYSIS).setStartup(true);
+			getModule(IModule.PLAYERANALYSIS).setStatus(IModule.STATUS_STARTUP);
 
 		if(!p.tempTabSpieleruebersicht)
-			getModule(IModule.PLAYEROVERVIEW).setStartup(true);
+			getModule(IModule.PLAYEROVERVIEW).setStatus(IModule.STATUS_STARTUP);
 		
 		if(!p.tempTabStatistik)
-			getModule(IModule.STATISTICS).setStartup(true);
+			getModule(IModule.STATISTICS).setStatus(IModule.STATUS_STARTUP);
 
-		getModule(IModule.TRANSFERS).setStartup(true);
-		getModule(IModule.TRAINING).setStartup(true);
-		getModule(IModule.TEAMANALYZER).setStartup(true);
+		getModule(IModule.TRANSFERS).setStatus(IModule.STATUS_STARTUP);
+		getModule(IModule.TRAINING).setStatus(IModule.STATUS_STARTUP);
+		getModule(IModule.TEAMANALYZER).setStatus(IModule.STATUS_STARTUP);
 	}
 	
 	public void saveTemp(){
 		if(tmpModules != null)
-		copy(tmpModules,all_modules);
-		saveActivatedModules();
+			copy(tmpModules,all_modules);
+		savedModules();
 		ModuleConfig.instance().save();
 	}
 	
