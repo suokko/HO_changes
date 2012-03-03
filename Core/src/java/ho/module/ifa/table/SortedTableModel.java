@@ -1,6 +1,7 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
@@ -99,6 +100,12 @@ public class SortedTableModel extends AbstractTableModel {
 	 */
 	int compareObjects(Object obj1, Object obj2) 
     {
+		if(obj1 instanceof Integer){
+			return ((Integer)obj1).compareTo((Integer)obj2);
+		}
+		if(obj1 instanceof Date){
+			return ((Date)obj1).compareTo((Date)obj2);
+		}
         if(obj1 instanceof JLabel)
         {
             String tmp1 = ((JLabel)obj1).getText();

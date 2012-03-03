@@ -6,6 +6,10 @@ import javax.swing.KeyStroke;
 
 public interface IModule {
 
+	public static final int STATUS_DEACTIVATED 	=	0;
+	public static final int STATUS_ACTIVATED 	=	1;
+	public static final int STATUS_STARTUP 		=	2;
+	
 	public static final int PLAYEROVERVIEW 	= 1; 
 	public static final int LINEUP 			= 2;
 	public static final int SERIES 			= 3;
@@ -32,11 +36,11 @@ public interface IModule {
 	public boolean hasConfigPanel();
 	public JPanel createConfigPanel();
 	public boolean isStartup();
-	public void setStartup(boolean value);
 	public boolean isActive();
-	public void setActive(boolean value);
 	public KeyStroke getKeyStroke();
 	public boolean hasMenu();
 	public JMenu getMenu();
+	public int getStatus();
+	public void setStatus(int statusId);
 	
 }

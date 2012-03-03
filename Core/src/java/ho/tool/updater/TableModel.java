@@ -3,6 +3,7 @@ package ho.tool.updater;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -43,6 +44,6 @@ public final class TableModel extends DefaultTableModel {
      */
     @Override
 	public boolean isCellEditable(int row, int col) {
-        return getValueAt(row, col) instanceof JCheckBox || getValueAt(row, col) instanceof JButton;
+        return getValueAt(row, col) instanceof JCheckBox || getValueAt(row, col) instanceof JButton || getValueAt(row, col) instanceof JComboBox ;
     }
 }

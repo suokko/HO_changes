@@ -6,6 +6,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
+import ho.module.ifa.table.StatisticScrollPanel;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -25,6 +26,7 @@ public class PluginIfaPanel extends JPanel {
 	private StatisticScrollPanel statisticScrollPanelHome;
 	private JPanel toolbarPanel;
 	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
+	private JButton imageBuilderButton = new JButton(HOVerwaltung.instance().getLanguageString("Imagebuilder"));
 	private JTabbedPane tabbedPane;
 	
 	public PluginIfaPanel() {
@@ -85,6 +87,16 @@ public class PluginIfaPanel extends JPanel {
 				}
 			});
 			toolbarPanel.add(refreshButton);
+			
+			imageBuilderButton.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					ImageBuilderDialog dialog = new ImageBuilderDialog();
+					dialog.setVisible(true);
+					
+				}
+			});
+			//SStoolbarPanel.add(imageBuilderButton);
 		}
 		return toolbarPanel;
 		}

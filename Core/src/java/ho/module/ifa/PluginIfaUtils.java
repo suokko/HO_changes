@@ -11,10 +11,6 @@ import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -27,18 +23,9 @@ import javax.swing.JWindow;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IDebugWindow;
-
 public class PluginIfaUtils {
 	public static final boolean HOME = true;
 	public static final boolean AWAY = false;
-
-	protected static void showDebugWindow(String exception) {
-		IDebugWindow debugWindow = GUIPluginWrapper.instance()
-				.createDebugWindow(new Point(0, 0), new Dimension(400, 500));
-		debugWindow.append(exception);
-		debugWindow.setVisible(true);
-	}
 
 	private static Document getMatchesArchive(String from, String to)
 			throws Exception {
@@ -51,13 +38,7 @@ public class PluginIfaUtils {
 		return XMLManager.instance().parseString(teamDetails);
 	}
 
-	private static String parseXmlElement(Document doc, String element,
-			int i, String eleText) {
-		return parseXmlElement(doc, element, i, eleText, true);
-	}
-
-	private static String parseXmlElement(Document doc, String element,
-			int i, String eleText, boolean showDebugWindow) {
+	private static String parseXmlElement(Document doc, String element,	int i, String eleText) {
 		String value = "";
 		try {
 			Element ele = doc.getDocumentElement();
@@ -74,23 +55,6 @@ public class PluginIfaUtils {
 
 	private static int getTeamID() {
 		return HOVerwaltung.instance().getModel().getBasics().getTeamId();
-	}
-
-	static int getLeagueCount() {
-		StringBuffer count = new StringBuffer(100);
-		count.append("SELECT COUNT(*) FROM ");
-		count.append("HT_WORLDDETAILS");
-		ResultSet rsCount = DBManager.instance().getAdapter().executeQuery(
-				count.toString());
-		int rowCount = 0;
-		try {
-			if (rsCount.next())
-				rowCount = rsCount.getInt(1);
-		} catch (Exception e) {
-			cleanRessources(rsCount);
-			return 0;
-		}
-		return rowCount;
 	}
 
 	static FlagLabel[] getAllCountries(boolean homeAway) {
@@ -167,20 +131,14 @@ public class PluginIfaUtils {
 		for (int i = 0; i < matchesCount; i++) {
 			IfaMatch match = new IfaMatch();
 			
-			int matchType = Integer.parseInt(parseXmlElement(doc, "MatchType",
-					i, "Match"));
+			int matchType = Integer.parseInt(parseXmlElement(doc, "MatchType",i, "Match"));
 			matchDate = parseXmlElement(doc, "MatchDate", i, "Match");
 			if ((matchType == 8) || (matchType == 9)) {
-				int homeTeamID = Integer.parseInt(parseXmlElement(doc,
-						"HomeTeamID", i, "HomeTeam"));
-				int awayTeamID = Integer.parseInt(parseXmlElement(doc,
-						"AwayTeamID", i, "AwayTeam"));
-				int matchID = Integer.parseInt(parseXmlElement(doc, "MatchID",
-						i, "Match"));
-				int homeTeamGoals = Integer.parseInt(parseXmlElement(doc,
-						"HomeGoals", i, "Match"));
-				int awayTeamGoals = Integer.parseInt(parseXmlElement(doc,
-						"AwayGoals", i, "Match"));
+				int homeTeamID = Integer.parseInt(parseXmlElement(doc,"HomeTeamID", i, "HomeTeam"));
+				int awayTeamID = Integer.parseInt(parseXmlElement(doc,"AwayTeamID", i, "AwayTeam"));
+				int matchID = Integer.parseInt(parseXmlElement(doc, "MatchID",i, "Match"));
+				int homeTeamGoals = Integer.parseInt(parseXmlElement(doc,"HomeGoals", i, "Match"));
+				int awayTeamGoals = Integer.parseInt(parseXmlElement(doc,"AwayGoals", i, "Match"));
 				try {
 					Document docHomeTeam = getTeamDetails(homeTeamID);
 					Document docAwayTeam = getTeamDetails(awayTeamID);
@@ -193,10 +151,8 @@ public class PluginIfaUtils {
 								+ homeTeamID + " vs. AwayTeam " + awayTeamID
 								+ ")<br>");
 					} else {
-						int homeLeagueIndex = Integer.parseInt(parseXmlElement(
-								docHomeTeam, "LeagueID", 0, "League", false));
-						int awayLeagueIndex = Integer.parseInt(parseXmlElement(
-								docAwayTeam, "LeagueID", 0, "League", false));
+						int homeLeagueIndex = Integer.parseInt(parseXmlElement(docHomeTeam, "LeagueID", 0, "League"));
+						int awayLeagueIndex = Integer.parseInt(parseXmlElement(docAwayTeam, "LeagueID", 0, "League"));
 						
 						
 						match.setMatchId(matchID);
@@ -220,7 +176,7 @@ public class PluginIfaUtils {
 		}
 
 		if (errors.length() > 0) {
-			showDebugWindow(errors.toString());
+			HOLogger.instance().error(PluginIfaUtils.class,errors.toString());
 		}
 
 		if (matchesCount == 50)
@@ -254,13 +210,5 @@ public class PluginIfaUtils {
 			tmpF.setTime(tmpT.getTime());
 		}
 		return ret;
-	}
-
-	private static void cleanRessources(ResultSet rs) {
-		try {
-			if (rs != null)
-				rs.close();
-		} catch (SQLException localSQLException) {
-		}
 	}
 }
