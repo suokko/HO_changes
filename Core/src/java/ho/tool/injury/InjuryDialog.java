@@ -21,9 +21,9 @@ import javax.swing.JPanel;
  * @author draghetto
  */
 public class InjuryDialog extends JDialog implements WindowListener {
-	
+
 	private static final long serialVersionUID = 5194730460165995230L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	/** TODO Missing Parameter Documentation */
@@ -49,7 +49,7 @@ public class InjuryDialog extends JDialog implements WindowListener {
 
         initComponents();
 
-        setSize(600, 300);
+        setSize(700, 300);
         reload();
         //setResizable(false);
         addWindowListener(this);
@@ -156,15 +156,15 @@ public class InjuryDialog extends JDialog implements WindowListener {
         p.add(tsiPanel);
         getContentPane().add(p, BorderLayout.SOUTH);
     }
-    
+
 	@Override
-	public void setSize(int width, int height) {  
-	   super.setSize(width, height);  
-		    
-	   Dimension screenSize = getParent().getSize();  
-	   int x = (screenSize.width - getWidth()) / 2;  
-	   int y = (screenSize.height - getHeight()) / 2;  
-	    
-	   setLocation(getParent().getX()+x, getParent().getY()+y);     
+	public void setSize(int width, int height) {
+	   super.setSize(width, height);
+
+	   Dimension screenSize = getParent().getSize();
+	   int x = (screenSize.width - getWidth()) / 2;
+	   int y = (screenSize.height - getHeight()) / 2;
+
+	   setLocation(getParent().getX()+x, getParent().getY()+y);
 	}
 }
