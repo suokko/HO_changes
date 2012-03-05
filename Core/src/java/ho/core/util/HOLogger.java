@@ -1,6 +1,8 @@
 // %3619247323:de.hattrickorganizer.tools%
 package ho.core.util;
 
+import ho.core.file.ExampleFileFilter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
@@ -51,6 +53,7 @@ public class HOLogger {
 			File dir = new File(dirName);
 			dir.mkdirs();
 
+			deleteOldLogs(dir);
 			File logFile = new File(dir, fileName);
 
 			if (logFile.exists()) {
@@ -65,6 +68,19 @@ public class HOLogger {
 		}
 	}
 
+	
+	private void deleteOldLogs(File dir){
+		ExampleFileFilter filter = new ExampleFileFilter("log");
+		 filter.setIgnoreDirectories(true);
+		 File[] files = dir.listFiles(filter);
+		 for (int i = 0; i < files.length; i++) {
+			 long diff = System.currentTimeMillis() - files[i].lastModified();
+			 long days = (diff / (1000 * 60 * 60 * 24));
+			 if( days > 90)
+				 files[i].delete(); 
+		}
+	}
+	
 	// ~ Methods
 	// ------------------------------------------------------------------------------------
 
