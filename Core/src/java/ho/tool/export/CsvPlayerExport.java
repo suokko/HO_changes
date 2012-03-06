@@ -1,9 +1,11 @@
 package ho.tool.export;
 
 import ho.core.file.ExampleFileFilter;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;
+import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
 
 import java.io.File;
@@ -15,7 +17,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JWindow;
 
-import plugins.IHOMiniModel;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 
@@ -28,11 +29,9 @@ import plugins.ISpielerPosition;
  */
 public class CsvPlayerExport {
 	private static String NAME = "CSV PlayerExport";
-	private static IHOMiniModel miniModel;
 	private static final String defaultFilename = "playerexport.csv";
 
 	public CsvPlayerExport() {
-		miniModel = HOMiniModel.instance();
 	}
 
 	public void showSaveDialog() {
@@ -50,21 +49,19 @@ public class CsvPlayerExport {
 		fileChooser.setFileFilter(filter);
 		fileChooser.setSelectedFile(file);
 
-		int returnVal = fileChooser.showSaveDialog(HOMiniModel.instance()
-				.getGUI().getOwner4Dialog());
+		int returnVal = fileChooser.showSaveDialog(HOMainFrame.instance());
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile();
 			if (file.exists() && JOptionPane.showConfirmDialog(
-					HOMiniModel.instance().getGUI().getOwner4Dialog(), 
+					HOMainFrame.instance(), 
 					HOVerwaltung.instance().getLanguageString("overwrite"), NAME,
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				// Cancel
 				return;		
             }
 
-			waitDialog =
-				HOMiniModel.instance().getGUI().createWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+			waitDialog = new LoginWaitDialog(HOMainFrame.instance());
 			waitDialog.setVisible(true);
 			doExport (file);
 			waitDialog.setVisible(false);
@@ -74,7 +71,7 @@ public class CsvPlayerExport {
 	private void doExport (File file) {
 		HOLogger.instance().info(getClass(),
 				"Exporting all players as CSV to " + file.getName() + "...");
-		List<ISpieler> list = miniModel.getAllSpieler();
+		List<ISpieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 		try {
 			FileWriter writer = new FileWriter(file);
 			writer.write("id,shirtno,name,age,agedays,form,stamina,"
@@ -102,7 +99,7 @@ public class CsvPlayerExport {
 						"" + (curPlayer.getStandards() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS)),
 						"" + curPlayer.getSpezialitaet(),
 						"" + curPlayer.getTSI(),
-						"" + (int)(curPlayer.getGehalt() / miniModel.getXtraDaten().getCurrencyRate()),
+						"" + (int)(curPlayer.getGehalt() / HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate()),
 						"" + curPlayer.getErfahrung(),
 						"" + curPlayer.getFuehrung(),
 						"" + curPlayer.getAnsehen(),

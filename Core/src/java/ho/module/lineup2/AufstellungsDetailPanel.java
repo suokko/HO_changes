@@ -98,11 +98,11 @@ final class AufstellungsDetailPanel extends JPanel implements Refreshable, ItemL
 			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben), ITeam.TS_auf_Wolke_sieben),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch), ITeam.TS_paradiesisch) };
 	private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
-	private CBItem[] SUBSTIMM = { new CBItem(HOMiniModel.instance().getLanguageString("verylow"), 0),
-			new CBItem(HOMiniModel.instance().getLanguageString("low"), 1),
-			new CBItem(HOMiniModel.instance().getLanguageString("Durchschnitt"), 2),
-			new CBItem(HOMiniModel.instance().getLanguageString("high"), 3),
-			new CBItem(HOMiniModel.instance().getLanguageString("veryhigh"), 4) };
+	private CBItem[] SUBSTIMM = { new CBItem(HOVerwaltung.instance().getLanguageString("verylow"), 0),
+			new CBItem(HOVerwaltung.instance().getLanguageString("low"), 1),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Durchschnitt"), 2),
+			new CBItem(HOVerwaltung.instance().getLanguageString("high"), 3),
+			new CBItem(HOVerwaltung.instance().getLanguageString("veryhigh"), 4) };
 	private JComboBox m_jcbSubStimmung = new JComboBox(SUBSTIMM);
 	private CBItem[] TAKTIK = {
 			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL),
