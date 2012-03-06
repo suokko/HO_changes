@@ -5,7 +5,6 @@ import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -31,9 +30,10 @@ public final class SplashFrame extends JFrame {
 	private String m_sVersionText = HOMainFrame.getVersionString();
 	private int step;
 	private int subStep = 0;
-	private int maxStep = 8;
+	private int maxStep = 9;
 	private FontUIResource fontText = new FontUIResource("SansSerif", Font.PLAIN, 10);
-	private FontUIResource fontVersion = new FontUIResource("SansSerif", Font.PLAIN, 14);
+	private FontUIResource fontVersion = new FontUIResource("SansSerif", Font.PLAIN, 16);
+	private Color progressColor = new Color(8,115,10);
 
     /**
      * Creates a new InterruptionWindow object.
@@ -99,9 +99,10 @@ public final class SplashFrame extends JFrame {
 
 
 
-        GradientPaint pat= new GradientPaint(5, 136, Color.LIGHT_GRAY, getSize().width - 10, 14, Color.WHITE);
-        g2d.setPaint(pat);
-        g2d.fillRect(5, 136, Math.min((step * (getSize().width/(maxStep)))+subStep,getSize().width - 10) , 14);
+        //GradientPaint pat= new GradientPaint(5, 136, Color.LIGHT_GRAY, getSize().width - 10, 14, Color.WHITE);
+        //g2d.setPaint(pat);
+        g2d.setColor(progressColor);
+        g2d.fillRect(10, 150, Math.min((step * (getSize().width/(maxStep)))+subStep,getSize().width ) , 5);
 
         //infotext / progress
         g2d.setColor(Color.black);
