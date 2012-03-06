@@ -4,8 +4,12 @@ import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.SpielerPosition;
+import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
+import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
+import ho.core.util.PlayerHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -83,7 +87,7 @@ public class PlayerCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			Vector<ITrainingWeek> l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+			Vector<ITrainingWeek> l = TrainingsManager.instance().getTrainingsVector();
 			int oldWeek = 0;
 			for (int index = l.size(); index > 0; index--) {
 				TrainingPerWeek tpw = (TrainingPerWeek) l.get(index - 1);
@@ -168,12 +172,12 @@ public class PlayerCreator extends XMLCreator {
 
 		Element bestposition = doc.createElement("bestposition");
 		playerTag.appendChild(bestposition);
-		bestposition.appendChild(createNode(doc,"role", HOMiniModel.instance().getHelper().getNameForPosition(player.getIdealPosition())+""));
+		bestposition.appendChild(createNode(doc,"role", SpielerPosition.getNameForPosition(player.getIdealPosition())+""));
 		bestposition.appendChild(createNode(doc,"value", player.calcPosValue(player.getIdealPosition(), true)+""));
 		bestposition.appendChild(createNode(doc,"code", player.getIdealPosition() +""));
 
-		IEPVData data = HOMiniModel.instance().getEPV().getEPVData(player);
-		double price = HOMiniModel.instance().getEPV().getPrice(data);
+		IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
+		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		playerTag.appendChild(createNode(doc,"epv", df.format(price)));
 
 		Element skill = doc.createElement("skill");
@@ -194,11 +198,11 @@ public class PlayerCreator extends XMLCreator {
 			Element skillups = doc.createElement("skillups");
 			playerTag.appendChild(skillups);
 
-			int coTrainer = HOMiniModel.instance().getVerein().getCoTrainer();
-			int trainer = HOMiniModel.instance().getTrainer().getTrainer();
-			List<IFutureTrainingWeek> futures = HOMiniModel.instance().getFutureTrainingWeeks();
+			int coTrainer = HOVerwaltung.instance().getModel().getVerein().getCoTrainer();
+			int trainer = HOVerwaltung.instance().getModel().getTrainer().getTrainer();
+			List<IFutureTrainingWeek> futures =DBManager.instance().getFutureTrainingsVector();
 
-			IFutureTrainingManager ftm = HOMiniModel.instance().getFutureTrainingManager(player, futures, coTrainer,  trainer);
+			IFutureTrainingManager ftm = new FutureTrainingManager(player, futures, coTrainer,  trainer);
 
 			List<ISkillup> futureSkillups = ftm.getFutureSkillups();
 
@@ -210,7 +214,7 @@ public class PlayerCreator extends XMLCreator {
 				skillupTag.appendChild(createNode(doc,"skill", skillup.getType()+""));
 				skillupTag.appendChild(createNode(doc,"skillDesc", getSkillDescription(skillup.getType())));
 				skillupTag.appendChild(createNode(doc,"value", skillup.getValue()+""));
-				skillupTag.appendChild(createNode(doc,"valueDesc", HOMiniModel.instance().getHelper().getNameForSkill(skillup.getValue(), false)));
+				skillupTag.appendChild(createNode(doc,"valueDesc", PlayerHelper.getNameForSkill(skillup.getValue(), false)));
 			}
 		}
 	}
@@ -219,31 +223,31 @@ public class PlayerCreator extends XMLCreator {
 		// Based on the code returns the proper ho property
 		switch (skillIndex) {
 			case ISpieler.SKILL_TORWART :
-				return HOMiniModel.instance().getLanguageString("skill.keeper"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.keeper"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_SPIELAUFBAU :
-				return HOMiniModel.instance().getLanguageString("skill.playmaking"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.playmaking"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_PASSSPIEL :
-				return HOMiniModel.instance().getLanguageString("skill.passing"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.passing"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_FLUEGEL :
-				return HOMiniModel.instance().getLanguageString("skill.winger"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.winger"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_VERTEIDIGUNG :
-				return HOMiniModel.instance().getLanguageString("skill.defending"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.defending"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_TORSCHUSS :
-				return HOMiniModel.instance().getLanguageString("skill.scoring"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.scoring"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_STANDARDS :
-				return HOMiniModel.instance().getLanguageString("skill.set_pieces"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.set_pieces"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_KONDITION :
-				return HOMiniModel.instance().getLanguageString("skill.stamina"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.stamina"); //$NON-NLS-1$
 
 			case ISpieler.SKILL_EXPIERIENCE :
-				return HOMiniModel.instance().getLanguageString("skill.experience"); //$NON-NLS-1$
+				return HOVerwaltung.instance().getLanguageString("skill.experience"); //$NON-NLS-1$
 		}
 
 		return ""; //$NON-NLS-1$

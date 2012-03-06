@@ -3,9 +3,9 @@ package ho.core.file.extension;
 import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
+import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 
 import java.io.BufferedWriter;
@@ -40,7 +40,7 @@ public class EconomyCreator extends XMLCreator {
 
 
 		try {
-			Vector<ITrainingWeek> l = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+			Vector<ITrainingWeek> l = TrainingsManager.instance().getTrainingsVector();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

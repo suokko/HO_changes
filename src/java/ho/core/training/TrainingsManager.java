@@ -4,7 +4,6 @@ package ho.core.training;
 import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -21,7 +20,6 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import plugins.IHOMiniModel;
 import plugins.IHTCalendar;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
@@ -60,8 +58,6 @@ public class TrainingsManager implements ITrainingsManager {
     
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** HO Model */
-    private IHOMiniModel p_IHMM_HOMiniModel;
     private Map<String,Map<Integer,Integer>> matchMap;
 
     private TrainingsWeekManager weekManager;
@@ -73,7 +69,6 @@ public class TrainingsManager implements ITrainingsManager {
      * Creates a new instance of TrainingsManager
      */
     private TrainingsManager() {
-        this.p_IHMM_HOMiniModel = HOMiniModel.instance();
         this.weekManager = TrainingsWeekManager.instance();
         this.matchMap = new HashMap<String,Map<Integer,Integer>>();
     }
@@ -314,7 +309,7 @@ public class TrainingsManager implements ITrainingsManager {
      */
     public void recalcSubskills(boolean showBar) {
     	HOMainFrame.setHOStatus(HOMainFrame.BUSY);
-        if (JOptionPane.showConfirmDialog(p_IHMM_HOMiniModel.getGUI().getOwner4Dialog(),
+        if (JOptionPane.showConfirmDialog(HOMainFrame.instance(),
                                           "Depending on database volume this process takes several minutes. Start recalculation ?",
                                           "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             HOVerwaltung.instance().recalcSubskills(showBar, null);
@@ -364,7 +359,7 @@ public class TrainingsManager implements ITrainingsManager {
     			posId == PLAYERSTATUS_SUBSTITUTED_OUT ||
     			posId == PLAYERSTATUS_TACTIC_CHANGE )
     		return 0;
-       	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
+       	IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
         Vector<IMatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
         	IMatchHighlight curHighlight = highlights.get(i);
@@ -392,7 +387,7 @@ public class TrainingsManager implements ITrainingsManager {
        			case IMatchHighlight.HIGHLIGHT_SUB_WALKOVER_HOMETEAM_WINS:
        			case IMatchHighlight.HIGHLIGHT_SUB_WALKOVER_AWAYTEAM_WINS:
        				boolean home = false;
-       				if (details.getHeimId() == p_IHMM_HOMiniModel.getBasics().getTeamId())
+       				if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId())
        					home = true;
        				// Check if our team has fielded at least 9 players
        				if (details.getLineup(home).size() >= 9)
@@ -441,7 +436,7 @@ public class TrainingsManager implements ITrainingsManager {
         List<Integer> matches = new ArrayList<Integer>();
 
         try {
-        	final ResultSet matchRS = p_IHMM_HOMiniModel.getAdapter().executeQuery(createQuery(trainingDate));
+        	final ResultSet matchRS = DBManager.instance().getAdapter().executeQuery(createQuery(trainingDate));
 
         	if (matchRS == null) {
         		//Falls nichts geliefert wurde // in case of no return values
@@ -472,7 +467,7 @@ public class TrainingsManager implements ITrainingsManager {
     	// No Lineup for this match
     	if (matchData == null)
     		return PLAYERSTATUS_NO_MATCHDATA;
-       	IMatchDetails details = HOMiniModel.instance().getMatchDetails(matchId);
+       	IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
     	if (details == null)
     		// No Matchdetails found, probably not downloaded...
     		return PLAYERSTATUS_NO_MATCHDETAILS;
@@ -565,7 +560,7 @@ public class TrainingsManager implements ITrainingsManager {
 
     		Vector<IMatchLineupPlayer> playerVec = 
     			DBManager.instance().getMatchLineupPlayers(matchId, 
-    					p_IHMM_HOMiniModel.getBasics().getTeamId());	
+    					HOVerwaltung.instance().getModel().getBasics().getTeamId());	
 
     		for (int i = 0 ; i < playerVec.size() ; i++) {
     			player = playerVec.get(i);
@@ -598,7 +593,7 @@ public class TrainingsManager implements ITrainingsManager {
         old.add(Calendar.WEEK_OF_YEAR, -1);
 
         final Timestamp ots = new Timestamp(old.getTimeInMillis());
-        final int teamId = p_IHMM_HOMiniModel.getBasics().getTeamId();
+        final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
         final String sdbquery = "SELECT MATCHID FROM MATCHDETAILS WHERE " + "( HEIMID=" + teamId
                                 + " OR GASTID=" + teamId + " ) " + "AND SPIELDATUM BETWEEN '"
                                 + ots.toString() + "' AND '" + ts.toString() + "' "

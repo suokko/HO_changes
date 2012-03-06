@@ -1,5 +1,6 @@
 package ho.core.file.extension;
 
+import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
@@ -41,12 +42,11 @@ public class StandingCreator extends XMLCreator{
 			Document doc = builder.newDocument();
 			Element root = doc.createElement("standing");
 			doc.appendChild(root);
-						
-			for (int i = 0; i < HOMiniModel.instance().getSpielplaene().length; i++) {
-				ISpielplan spielPlan = HOMiniModel.instance().getSpielplaene()[i];
-				if (spielPlan.getLigaName().equalsIgnoreCase(HOMiniModel.instance().getLiga().getLiga())
-					&& spielPlan.getSaison() == HOMiniModel.instance().getBasics().getSeason()) {
-					extractTabelle(root,spielPlan.getTabelle().getEintraege());
+			ISpielplan[] spielPlaene = DBManager.instance().getAllSpielplaene(true);
+			for (int i = 0; i < spielPlaene.length; i++) {
+				if (spielPlaene[i].getLigaName().equalsIgnoreCase(HOVerwaltung.instance().getModel().getLiga().getLiga())
+					&& spielPlaene[i].getSaison() == HOVerwaltung.instance().getModel().getBasics().getSeason()) {
+					extractTabelle(root,spielPlaene[i].getTabelle().getEintraege());
 				}
 			}
 

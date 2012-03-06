@@ -3,6 +3,7 @@ package ho.core.file.xml;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
 
@@ -60,13 +61,13 @@ public class MatchExporter {
 	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict, boolean skipPullBack) {		
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
 		List<IExportMatchData> export = new ArrayList<IExportMatchData>();
-
-		IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(HOMiniModel.instance().getBasics().getTeamId());
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId);
 
 		//Alle matches prï¿½fen        
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
-			IMatchDetails details = HOMiniModel.instance().getMatchDetails(matches[i].getMatchID());
+			IMatchDetails details = DBManager.instance().getMatchDetails(matches[i].getMatchID());
 			boolean isFriendly = (matches[i].getMatchTyp() == IMatchLineup.TESTSPIEL
 					|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTSPIEL 
 					|| matches[i].getMatchTyp() == IMatchLineup.TESTPOKALSPIEL
@@ -75,7 +76,7 @@ public class MatchExporter {
 					|| isValidMatch(matches[i], details, startingDate, strict, skipPullBack) && !isFriendly ) {				
 
 				//Nun lineup durchlaufen und Spielerdaten holen
-				Vector<IMatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),HOMiniModel.instance().getBasics().getTeamId());
+				Vector<IMatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),teamId);
 				Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
 
 				boolean dataOK = true;
@@ -93,7 +94,7 @@ public class MatchExporter {
 					}
 
 					formerPlayerData =
-						HOMiniModel.instance().getSpielerAtDate(player.getSpielerId(),matches[i].getMatchDateAsTimestamp());
+						DBManager.instance().getSpielerAtDate(player.getSpielerId(),matches[i].getMatchDateAsTimestamp());
 
 
 					//Keine Daten verfï¿½gbar ?
@@ -122,6 +123,7 @@ public class MatchExporter {
 	}
 
 	private static boolean isValidMatch(IMatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict, boolean skipPullBack) {
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		if ((info.getMatchStatus() != IMatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": not finished");
 			return false;
@@ -144,7 +146,7 @@ public class MatchExporter {
 		{
 			//Highlights prüfen auf Verletzung, Rote Karte, Verwirrung, Unterschätzung
 			// Check Highlights for our team only
-			int teamId = HOMiniModel.instance().getBasics().getTeamId();
+			
 			if (MatchHelper.instance().hasRedCard(highlights, teamId)) {
 				//Karten check
 				HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Got a red card");
@@ -173,7 +175,7 @@ public class MatchExporter {
 			}
 
 		}
-		if (skipPullBack && MatchHelper.instance().hasPullBack(highlights, HOMiniModel.instance().getBasics().getTeamId())) {
+		if (skipPullBack && MatchHelper.instance().hasPullBack(highlights, teamId)) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Pull Back");
 			return false;
 		}

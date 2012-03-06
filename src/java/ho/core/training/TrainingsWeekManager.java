@@ -2,6 +2,7 @@
 package ho.core.training;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
@@ -28,11 +29,6 @@ public class TrainingsWeekManager {
 
     private static TrainingsWeekManager m_clInstance;
 
-    //~ Instance fields ----------------------------------------------------------------------------
-
-    /** HO Model */
-    private IHOMiniModel p_IHMM_HOMiniModel;
-
     /** TrainingWeeks */
     private Vector<ITrainingWeek> m_vTrainings;
 
@@ -42,9 +38,6 @@ public class TrainingsWeekManager {
      * Creates a new instance of TrainingsManager
      */
     private TrainingsWeekManager() {
-        this.p_IHMM_HOMiniModel = ho.core.model.HOMiniModel.instance();
-
-        //initialize();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -80,7 +73,7 @@ public class TrainingsWeekManager {
 
         Calendar calendar;
         calendar = HelperWrapper.instance().getLastTrainingDate(new Date(tStamp.getTime()),
-                                                                p_IHMM_HOMiniModel.getXtraDaten()
+        		HOVerwaltung.instance().getModel().getXtraDaten()
                                                                                   .getTrainingDate());
 
         final int trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
@@ -133,7 +126,7 @@ public class TrainingsWeekManager {
 
         //datenbankverbindung holen
         //get database connection
-        final IJDBCAdapter ijdbca = p_IHMM_HOMiniModel.getAdapter();
+        final IJDBCAdapter ijdbca = DBManager.instance().getAdapter();
 
         //zeitzone schaffen, die update um 9.30 am vormittag entspricht
         //make timezone
@@ -165,7 +158,7 @@ public class TrainingsWeekManager {
                     try {
                         calendar = HelperWrapper.instance().getLastTrainingDate(new Date(tStamp
                                                                                          .getTime()),
-                                                                                p_IHMM_HOMiniModel.getXtraDaten()
+                                                                                         HOVerwaltung.instance().getModel().getXtraDaten()
                                                                                                   .getTrainingDate());
                     } catch (Exception e) {
                         return output;
@@ -284,9 +277,9 @@ public class TrainingsWeekManager {
                 msg = msg + "\n" + aste[j];
             }
 
-            p_IHMM_HOMiniModel.getHelper().showMessage(null, e.getMessage(), "DatenreiheA",
+           HelperWrapper.instance().showMessage(null, e.getMessage(), "DatenreiheA",
                                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            p_IHMM_HOMiniModel.getHelper().showMessage(null, msg, "DatenreiheB",
+            HelperWrapper.instance().showMessage(null, msg, "DatenreiheB",
                                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -302,13 +295,13 @@ public class TrainingsWeekManager {
      * @return TODO Missing Return Method Documentation
      */
     private Vector<ITrainingWeek> getUpdateTraining(Vector<ITrainingWeek> output) {
-        int actaulSeason = p_IHMM_HOMiniModel.getBasics().getSeason();
-        int actualWeek = p_IHMM_HOMiniModel.getBasics().getSpieltag();
+        int actaulSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
+        int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
         final int trainNumber = output.size();
 
         try {
             // We are in the middle where season has not been updated!
-            if (p_IHMM_HOMiniModel.getXtraDaten().getTrainingDate().after(p_IHMM_HOMiniModel.getXtraDaten()
+            if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate().after(HOVerwaltung.instance().getModel().getXtraDaten()
                                                                                             .getSeriesMatchDate())) {
                 actualWeek++;
 
