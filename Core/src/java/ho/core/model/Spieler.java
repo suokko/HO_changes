@@ -531,7 +531,7 @@ public final class Spieler implements plugins.ISpieler {
      * 			i.e. age + (agedays+offset)/112
      */
     public double getAlterWithAgeDays() {
-      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+      	long hrftime = HOVerwaltung.instance().getModel().getBasics().getDatum().getTime();
     	long now = new Date().getTime();
     	long diff = (now - hrftime) / (1000*60*60*24);
     	int years = getAlter();
@@ -548,7 +548,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public String getAlterWithAgeDaysAsString() {
     	// format = yy.ddd
-      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+      	long hrftime = HOVerwaltung.instance().getModel().getBasics().getDatum().getTime();
     	long now = new Date().getTime();
     	long diff = (now - hrftime) / (1000*60*60*24);
     	int years = getAlter();
@@ -568,7 +568,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return the full i18n'd string represention the players age
      */
     public String getAgeStringFull() {
-      	long hrftime = HOMiniModel.instance().getBasics().getDatum().getTime();
+      	long hrftime = HOVerwaltung.instance().getModel().getBasics().getDatum().getTime();
     	long now = new Date().getTime();
     	long diff = (now - hrftime) / (1000*60*60*24);
     	int years = getAlter();
