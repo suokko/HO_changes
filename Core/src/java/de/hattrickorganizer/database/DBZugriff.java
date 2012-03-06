@@ -58,7 +58,7 @@ public class DBZugriff {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** database version */
-	private static final int DBVersion = 11;
+	private static final int DBVersion = 12;
 
 	/** 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -1771,11 +1771,6 @@ public class DBZugriff {
 		version =
 			((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).getDBVersion();
 
-		// If development always force to rebuild latest DB
-		if (version == DBVersion && HOMainFrame.isDevelopment()) {
-			version = DBVersion - 1;
-		}
-
 		// We may now update depending on the version identifier!
 		if (version != DBVersion) {
 			try {
@@ -1803,7 +1798,9 @@ public class DBZugriff {
 					case 9 : 
 						updateDBv10();
 					case 10: 
-						updateDBv11();
+						updateDBv11(version);
+					case 11:
+						updateDBv12(version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -2045,10 +2042,16 @@ public class DBZugriff {
 		saveUserParameter("DBVersion", 10);
 	}
 
+	private void updateDBv11(int version) throws Exception {
+		// Problems in 1.431 release has shifted contents here to v12.
+		saveUserParameter("DBVersion", 11);
+		return;
+	}
+	
 	/**
-	 * Update database to version 11.
+	 * Update database to version 12.
 	 */
-	private void updateDBv11() throws Exception {
+	private void updateDBv12(int version) throws Exception {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
 		
@@ -2078,10 +2081,14 @@ public class DBZugriff {
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
 		
 		
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		saveUserParameter("DBVersion", 11);
+		// Follow this pattern in the future. Only set db version if not development, or
+		// if the current db is more than one version old. The last update should be made
+		// during first run of a non development version.
+		
+		if ((version == (DBVersion - 1) && !HOMainFrame.isDevelopment()) ||
+			(version < (DBVersion - 1))) {
+			saveUserParameter("DBVersion", 12);
+		}
 	}
 	
 	private void changeColumnType(String table,String oldName, String newName, String type) {
