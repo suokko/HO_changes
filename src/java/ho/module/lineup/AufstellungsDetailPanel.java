@@ -98,9 +98,11 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben), ITeam.SV_voellig_uebertrieben),
 			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben), ITeam.SV_voellig_abgehoben) };
 	private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
-	private CBItem[] TRAINERTYPE = { new CBItem(HOMiniModel.instance().getLanguageString("coach.defensive"), 0),
-			new CBItem(HOMiniModel.instance().getLanguageString("coach.normal"), 2),
-			new CBItem(HOMiniModel.instance().getLanguageString("coach.offensive"), 1), };
+	
+	private CBItem[] TRAINERTYPE = { new CBItem(HOVerwaltung.instance().getLanguageString("coach.defensive"), 0),
+			new CBItem(HOVerwaltung.instance().getLanguageString("coach.normal"), 2),
+			new CBItem(HOVerwaltung.instance().getLanguageString("coach.offensive"), 1), };
+	
 	private JComboBox m_jcbTrainerType = new JComboBox(TRAINERTYPE);
 
 	private CBItem[] PREDICTIONTYPE = getPredictionItems();
@@ -118,11 +120,11 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben), ITeam.TS_auf_Wolke_sieben),
 			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch), ITeam.TS_paradiesisch) };
     private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
-	private CBItem[] SUBSTIMM = { new CBItem(HOMiniModel.instance().getLanguageString("verylow"), 0),
-			new CBItem(HOMiniModel.instance().getLanguageString("low"), 1),
-			new CBItem(HOMiniModel.instance().getLanguageString("Durchschnitt"), 2),
-			new CBItem(HOMiniModel.instance().getLanguageString("high"), 3),
-			new CBItem(HOMiniModel.instance().getLanguageString("veryhigh"), 4) };
+	private CBItem[] SUBSTIMM = { new CBItem(HOVerwaltung.instance().getLanguageString("verylow"), 0),
+			new CBItem(HOVerwaltung.instance().getLanguageString("low"), 1),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Durchschnitt"), 2),
+			new CBItem(HOVerwaltung.instance().getLanguageString("high"), 3),
+			new CBItem(HOVerwaltung.instance().getLanguageString("veryhigh"), 4) };
 	private JComboBox m_jcbSubStimmung = new JComboBox(SUBSTIMM);
 	private CBItem[] TAKTIK = { new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL), IMatchDetails.TAKTIK_NORMAL),
 			new CBItem(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING), IMatchDetails.TAKTIK_PRESSING),

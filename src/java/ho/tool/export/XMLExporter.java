@@ -7,8 +7,12 @@ import ho.core.file.ExampleFileFilter;
 import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.file.xml.XMLManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.model.Team;
+import ho.core.net.MyConnector;
+import ho.core.net.login.LoginWaitDialog;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 
@@ -74,7 +78,7 @@ public class XMLExporter  {
             ((JSpinner.DateEditor) m_jsSpinner.getEditor()).getFormat().applyPattern("dd.MM.yyyy");
             m_clSpinnerModel.setValue(RatingPredictionManager.LAST_CHANGE);
 	
-            JFrame owner = HOMiniModel.instance().getGUI().getOwner4Dialog();
+            JFrame owner = HOMainFrame.instance();
             final JDialog dialog = new JDialog(owner, "Export starts at date:");
             dialog.getContentPane().setLayout(new BorderLayout());
             dialog.getContentPane().add(m_jsSpinner, BorderLayout.CENTER);
@@ -95,7 +99,7 @@ public class XMLExporter  {
             dialog.setVisible(true);
             
             // File
-            java.io.File file = new java.io.File(HOMiniModel.instance().getBasics().getTeamName() + ".zip");
+            java.io.File file = new java.io.File(HOVerwaltung.instance().getModel().getBasics().getTeamName() + ".zip");
 
             javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
@@ -107,11 +111,11 @@ public class XMLExporter  {
             fileChooser.setFileFilter(filter);
             fileChooser.setSelectedFile(file);
 
-            int returnVal = fileChooser.showSaveDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+            int returnVal = fileChooser.showSaveDialog(HOMainFrame.instance());
 
             if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
                 file = fileChooser.getSelectedFile();
-                waitDialog = HOMiniModel.instance().getGUI().createWaitDialog(HOMiniModel.instance().getGUI().getOwner4Dialog());
+                waitDialog =new LoginWaitDialog(HOMainFrame.instance());
                 waitDialog.setVisible(true);
 				saveXML(file.getAbsolutePath(),new Timestamp(m_clSpinnerModel.getDate().getTime()));
             }
@@ -521,16 +525,13 @@ public class XMLExporter  {
 					m_sUserRegionID = "" + HOMiniModel.instance().getBasics().getRegionId();
 				} else {
 					//saugen
-					m_sUserRegionID = HOMiniModel.instance().getDownloadHelper().fetchRegionID(teamID);
+					m_sUserRegionID = MyConnector.instance().fetchRegionID(teamID);
 				}
 				return m_sUserRegionID;
-			} else {
-				return m_sUserRegionID;
 			}
-		} else {
-			return HOMiniModel.instance().getDownloadHelper().fetchRegionID(teamID);
-		}
-		//return "S";
+			return m_sUserRegionID;
+		} 
+		return MyConnector.instance().fetchRegionID(teamID);
 	}
 
 	/**

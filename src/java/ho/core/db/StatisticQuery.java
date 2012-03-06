@@ -5,6 +5,7 @@ import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
+import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class StatisticQuery {
 
 	public static double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 
-		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 16;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
@@ -252,7 +253,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
-		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 15;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 		double[][] returnWerte = new double[0][0];
@@ -371,7 +372,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getFinanzen4Statistik(int anzahlHRF) {
-		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings =TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 17;
 
 		final double[][] marktwerte = getMarktwert4Statistik(anzahlHRF);
@@ -483,7 +484,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
-		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 3;
 		final float faktor = gui.UserParameter.instance().faktorGeld;
 
@@ -532,7 +533,7 @@ public class StatisticQuery {
 
 	private static double[][] getMarktwert4Statistik(int anzahlHRF) {
 
-		Vector<ITrainingWeek> trainings = HOMiniModel.instance().getTrainingsManager().getTrainingsVector();
+		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 2;
 
 		double[][] returnWerte = new double[0][0];
