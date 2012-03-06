@@ -41,8 +41,8 @@ public class TeamCreator extends XMLCreator {
 			Document doc = builder.newDocument();
 			Element root = doc.createElement("team");
 			doc.appendChild(root);			
-			IBasics basics = HOMiniModel.instance().getBasics();
-			IXtraData xtra = HOMiniModel.instance().getXtraDaten();
+			IBasics basics = HOVerwaltung.instance().getModel().getBasics();
+			IXtraData xtra = HOVerwaltung.instance().getModel().getXtraDaten();
 						
 			root.appendChild(createNode(doc,"teamid", basics.getTeamId()+""));
 			root.appendChild(createNode(doc,"teamname", basics.getTeamName()+""));

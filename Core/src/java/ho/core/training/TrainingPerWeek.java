@@ -1,7 +1,7 @@
 // %531033194:de.hattrickorganizer.model%
 package ho.core.training;
 
-import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 
 import java.util.Calendar;
@@ -243,7 +243,7 @@ public class TrainingPerWeek implements plugins.ITrainingWeek {
 		 * the training date is is in the same week
 		 */
         Calendar trainingDate = HelperWrapper.instance().getLastTrainingDate(cal.getTime(),
-        				HOMiniModel.instance().getXtraDaten().getTrainingDate());
+        		HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate());
 
         return trainingDate;
 	}

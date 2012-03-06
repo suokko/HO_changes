@@ -15,6 +15,7 @@ import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -189,10 +190,10 @@ public class XMLExporter  {
 			///Team  Info + ManagerName adden
 			tmpEle = doc.createElement("TeamName");
 			root.appendChild(tmpEle);
-			tmpEle.appendChild(doc.createTextNode("" + HOMiniModel.instance().getBasics().getTeamName()));
+			tmpEle.appendChild(doc.createTextNode("" + HOVerwaltung.instance().getModel().getBasics().getTeamName()));
 			tmpEle = doc.createElement("ManagerName");
 			root.appendChild(tmpEle);
-			tmpEle.appendChild(doc.createTextNode("" + HOMiniModel.instance().getBasics().getManager()));
+			tmpEle.appendChild(doc.createTextNode("" + HOVerwaltung.instance().getModel().getBasics().getManager()));
 
 			//Exporter Version adden
 			tmpEle = doc.createElement("XMLExporterVersion");
@@ -227,7 +228,7 @@ public class XMLExporter  {
 				tmpEle.appendChild(ele);
 
 				boolean heimspiel = true;
-				if (matchData.getInfo().getHeimID() == HOMiniModel.instance().getBasics().getTeamId()) {
+				if (matchData.getInfo().getHeimID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 					ele.appendChild(doc.createTextNode("1"));
 					heimspiel = true;
 				} else {
@@ -253,10 +254,10 @@ public class XMLExporter  {
 
 				IMatchLineupTeam lineupTeam = null;
 				IMatchDetails details = matchData.getDetails();
-				if (details.getHeimId() == HOMiniModel.instance().getBasics().getTeamId()) {
-					lineupTeam = HOMiniModel.instance().getMatchLineup(details.getMatchID()).getHeim();
+				if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
+					lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
 				} else {
-					lineupTeam = HOMiniModel.instance().getMatchLineup(details.getMatchID()).getGast();
+					lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getGast();
 				}
 
 				Team team = DBManager.instance().getTeam(hrfID);
@@ -264,7 +265,7 @@ public class XMLExporter  {
 				//Daten schreiben
 				ele = doc.createElement("TeamID");
 				tmpEle.appendChild(ele);
-				ele.appendChild(doc.createTextNode("" + HOMiniModel.instance().getBasics().getTeamId()));
+				ele.appendChild(doc.createTextNode("" + HOVerwaltung.instance().getModel().getBasics().getTeamId()));
 				ele = doc.createElement("System");
 				tmpEle.appendChild(ele);
 				ele.appendChild(doc.createTextNode("" + lineupTeam.determinateSystem()));
@@ -359,8 +360,8 @@ public class XMLExporter  {
 
 				//Spieler schreiben
 				for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
-					IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
-					ISpieler playerData = (ISpieler) matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
+					IMatchLineupPlayer playerMatch = lineupTeam.getAufstellung().get(k);
+					ISpieler playerData = matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 
 					//Bank + verletzte überspringen
 					if (playerMatch.getId() >= ISpielerPosition.startReserves) {
@@ -484,7 +485,7 @@ public class XMLExporter  {
 			//Fertig -> saven
 			String xml = XMLManager.instance().getXML(doc);
 			HOZip zip = new HOZip(filename);
-			String xmlfile = HOMiniModel.instance().getBasics().getTeamName() + ".xml";
+			String xmlfile = HOVerwaltung.instance().getModel().getBasics().getTeamName() + ".xml";
 			zip.addStringEntry(xmlfile,xml);
 			zip.closeArchive();
 		} catch (Exception e) {
@@ -493,8 +494,8 @@ public class XMLExporter  {
 		}
 
 		//        HOMiniModel.instance().getGUI ().getInfoPanel ().clearAll ();   
-		HOMiniModel.instance().getHelper().showMessage(
-			HOMiniModel.instance().getGUI().getOwner4Dialog(),
+		HelperWrapper.instance().showMessage(
+			HOMainFrame.instance(),
 			"" + matches.size() + " Matches exportet.\n Regarding to CHPP rules: Any App that uses this XML-File has to be CHPP approved!",
 			"Finished",
 			javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -518,11 +519,11 @@ public class XMLExporter  {
 	// -------------------------------- Helper -----------------------------------------------------------
 
 	private String getRegionID4Team(int teamID) {
-		if (teamID == HOMiniModel.instance().getBasics().getTeamId()) {
+		if (teamID == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 			if (m_sUserRegionID.equals("-1")) {
-				if (HOMiniModel.instance().getBasics().getRegionId() > 0) {
+				if (HOVerwaltung.instance().getModel().getBasics().getRegionId() > 0) {
 					// Since HO 1.401, the regionId exists in Basics
-					m_sUserRegionID = "" + HOMiniModel.instance().getBasics().getRegionId();
+					m_sUserRegionID = "" + HOVerwaltung.instance().getModel().getBasics().getRegionId();
 				} else {
 					//saugen
 					m_sUserRegionID = MyConnector.instance().fetchRegionID(teamID);
