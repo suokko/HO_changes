@@ -1,8 +1,8 @@
 package ho.core.training;
 
 import ho.core.model.FuturePlayer;
-import ho.core.model.HOMiniModel;
 import ho.core.model.PlayerSkillup;
+import ho.core.util.HelperWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,13 +74,13 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		}
 
 		weeksPassed = 0;
-		int position = HOMiniModel.instance().getHelper().getPosition(player.getIdealPosition());
+		int position = HelperWrapper.instance().getPosition(player.getIdealPosition());
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
 			IFutureTrainingWeek tw = this.futureTrainings.get(index-1);
 			
-			double point = HOMiniModel.instance().getTrainingsManager().getTrainingPoint().getTrainingPoint(tw.getTyp(), Integer.valueOf(position)).doubleValue();
+			double point = TrainingsManager.instance().getTrainingPoint().getTrainingPoint(tw.getTyp(), Integer.valueOf(position)).doubleValue();
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
 			switch (tw.getTyp()) {

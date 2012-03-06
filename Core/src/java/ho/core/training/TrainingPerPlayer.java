@@ -1,7 +1,7 @@
 // %2751235623:de.hattrickorganizer.model%
 package ho.core.training;
 
-import ho.core.model.HOMiniModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
-
 
 import plugins.ISpieler;
 import plugins.ITeam;
@@ -435,7 +434,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
                 if ((tmpTime.before(trainTime)) && (tmpTime.after(skilluptime))) {
                     skilluptime = HelperWrapper.instance()
                     					.getLastTrainingDate(tmpTime,
-                    							HOMiniModel.instance().getXtraDaten()
+                    							HOVerwaltung.instance().getModel().getXtraDaten()
                     							.getTrainingDate())
                     							.getTime();
                 }
