@@ -337,7 +337,7 @@ public class ConvertXml2Hrf {
 			m_sHRFBuffer.append("behinsideBack1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getTaktik() + "\n");
 			m_sHRFBuffer.append("behinsideBack2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getTaktik() + "\n");
 			m_sHRFBuffer.append("behinsideBack3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getTaktik() + "\n");
-			m_sHRFBuffer.append("behleftBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getTaktik() + "\n");
+			m_sHRFBuffer.append("behleftBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getTaktik() + "\n");
 			m_sHRFBuffer.append("behrightWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getTaktik() + "\n");
 			m_sHRFBuffer.append("behinsideMid1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getTaktik() + "\n");
 			m_sHRFBuffer.append("behinsideMid2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getTaktik() + "\n");
