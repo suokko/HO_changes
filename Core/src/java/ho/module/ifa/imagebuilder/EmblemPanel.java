@@ -1,8 +1,10 @@
-package ho.module.ifa;
+package ho.module.ifa.imagebuilder;
 
 import ho.core.file.ExampleFileFilter;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.ifa.FlagLabel;
+import ho.module.ifa.GlobalActionsListener;
 
 import java.awt.Color;
 import java.awt.Component;

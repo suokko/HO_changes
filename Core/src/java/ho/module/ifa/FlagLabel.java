@@ -12,9 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class FlagLabel extends JLabel {
+	private static final long serialVersionUID = 3960081673874595876L;
+	
 	public static int BRIGHTNESS;
 	public static boolean GREY = true;
 	public static boolean ROUNDFLAG = false;
+	
 	private String countryName;
 	private int countryId;
 	private boolean homeCountry;
@@ -70,7 +73,6 @@ public class FlagLabel extends JLabel {
 	}
 
 	private class TransparentFilter extends RGBImageFilter {
-//		private static final int MAX_BRIGHTNESS = 255;
 		private int percent;
 
 		public TransparentFilter(int percent) {
