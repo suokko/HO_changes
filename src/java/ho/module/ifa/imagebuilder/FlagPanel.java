@@ -1,6 +1,7 @@
-package ho.module.ifa;
+package ho.module.ifa.imagebuilder;
 
 import ho.core.model.WorldDetailsManager;
+import ho.module.ifa.FlagLabel;
 
 import java.awt.Color;
 import java.awt.Component;

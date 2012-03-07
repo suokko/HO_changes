@@ -6,24 +6,26 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
-import ho.module.ifa.table.StatisticScrollPanel;
+import ho.module.ifa.imagebuilder.ImageBuilderDialog;
+import ho.module.ifa.imagebuilder.ImageDesignPanel;
+import ho.module.ifa.table.FriendlyStatisticsPanel;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 public class PluginIfaPanel extends JPanel {
 	private static final long serialVersionUID = 6250843484613905192L;
 	private ImageDesignPanel imageDesignPanel;
-	private StatisticScrollPanel statisticScrollPanelAway;
-	private StatisticScrollPanel statisticScrollPanelHome;
+	private FriendlyStatisticsPanel statisticScrollPanelAway;
+	private FriendlyStatisticsPanel statisticScrollPanelHome;
 	private JPanel toolbarPanel;
 	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private JButton imageBuilderButton = new JButton(HOVerwaltung.instance().getLanguageString("Imagebuilder"));
@@ -35,8 +37,8 @@ public class PluginIfaPanel extends JPanel {
 
 	private void initialize() {
 		imageDesignPanel = new ImageDesignPanel(this);
-		this.statisticScrollPanelAway = new StatisticScrollPanel(false);
-		this.statisticScrollPanelHome = new StatisticScrollPanel(true);
+		this.statisticScrollPanelAway = new FriendlyStatisticsPanel(false);
+		this.statisticScrollPanelHome = new FriendlyStatisticsPanel(true);
 		setLayout(new BorderLayout());
 		add(getToolbar(),BorderLayout.NORTH);
 		add(getTabbedPane(),BorderLayout.CENTER);
@@ -47,6 +49,7 @@ public class PluginIfaPanel extends JPanel {
 	private JTabbedPane getTabbedPane(){
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
+			
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), statisticScrollPanelHome);
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), statisticScrollPanelAway);
 			//tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ImageBuilder"), imageDesignPanel);
@@ -55,11 +58,11 @@ public class PluginIfaPanel extends JPanel {
 	}
 	
 
-	public StatisticScrollPanel getStatisticScrollPanelAway() {
+	public FriendlyStatisticsPanel getStatisticScrollPanelAway() {
 		return this.statisticScrollPanelAway;
 	}
 
-	public StatisticScrollPanel getStatisticScrollPanelHome() {
+	public FriendlyStatisticsPanel getStatisticScrollPanelHome() {
 		return this.statisticScrollPanelHome;
 	}
 	
@@ -96,7 +99,7 @@ public class PluginIfaPanel extends JPanel {
 					
 				}
 			});
-			//SStoolbarPanel.add(imageBuilderButton);
+			//toolbarPanel.add(imageBuilderButton);
 		}
 		return toolbarPanel;
 		}

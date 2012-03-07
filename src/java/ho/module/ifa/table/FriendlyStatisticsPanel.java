@@ -7,50 +7,65 @@ import ho.core.util.HelperWrapper;
 import ho.core.util.StringUtilities;
 import ho.module.ifa.IfaMatch;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class StatisticScrollPanel extends JScrollPane {
+public class FriendlyStatisticsPanel extends JPanel {
 	private static final long serialVersionUID = 6444247701541392477L;
 	private JTable table;
 	private SortedTableModel model;
 	private String[] columnNames;
 	private boolean home;
+	private int sumCoolness;
 
-	public StatisticScrollPanel(boolean home) {
+	public FriendlyStatisticsPanel(boolean home) {
 		this.home = home;
 		initialize();
 	}
 
 	public void initialize() {
+		setLayout(new BorderLayout());
+		
+		
 		this.columnNames = new String[] { HOVerwaltung.instance().getLanguageString("Country"), HOVerwaltung.instance().getLanguageString("tooltip.MatchCount"), HOVerwaltung.instance().getLanguageString("Gewonnen"),
 		HOVerwaltung.instance().getLanguageString("Unendschieden"), HOVerwaltung.instance().getLanguageString("Verloren"),HOVerwaltung.instance().getLanguageString("Tore"),HOVerwaltung.instance().getLanguageString("Coolness"), HOVerwaltung.instance().getLanguageString("LastMatch") };
 		try {
-			this.model = new SortedTableModel(new DefaultTableModel(
-					getTableData(), this.columnNames));
+			this.model = new SortedTableModel(new DefaultTableModel(getTableData(), this.columnNames));
 			this.model.setAlfa(true);
 			this.model.sort(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.table = new JTable(this.model);
-		this.table.setDefaultRenderer(Object.class,
-				new StatisticTableCellRenderer());
+		this.table.setDefaultRenderer(Object.class,new StatisticTableCellRenderer());
 		for (int i = 0; i < this.columnNames.length; i++) {
 			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(
 					new RendererDecorator());
 		}
-		this.table.getTableHeader().addMouseListener(
-				new RendererSorter(this.table, this.model, 0));
-		setViewportView(this.table);
+		this.table.getTableHeader().addMouseListener(new RendererSorter(this.table, this.model, 0));
+		
+		add(getTopPanel(),BorderLayout.NORTH);
+		JScrollPane pane1 = new JScrollPane();
+		pane1.setViewportView(table);
+		add(pane1,BorderLayout.CENTER);
 	}
 
+	private JPanel getTopPanel(){
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(new JLabel(HOVerwaltung.instance().getLanguageString(home?"Hosted":"Visited")+"  "+table.getRowCount()+" / "+WorldDetailsManager.instance().size()));
+		panel.add(new JLabel("      "));
+		panel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Coolness")+":  "+sumCoolness));
+		return panel;
+	}
 	private Object[][] getTableData() {
 		IfaMatch[] matches = DBManager.instance().getIfaMatches( home);
 		if (matches.length == 0) 
@@ -82,7 +97,9 @@ public class StatisticScrollPanel extends JScrollPane {
 			objects[counter][3] = 	Integer.valueOf(stat.getDraw());
 			objects[counter][4] = 	Integer.valueOf(home?stat.getHomeLost():stat.getHomeWon());
 			objects[counter][5] =  	StringUtilities.getResultString(stat.getHomeGoals(),stat.getAwayGoals());
-			objects[counter][6] = 	 Integer.valueOf(WorldDetailsManager.instance().getTotalUsers()/stat.getLeague().getActiveUsers());
+			Integer tmpCoolness =  Integer.valueOf(WorldDetailsManager.instance().getTotalUsers()/stat.getLeague().getActiveUsers());
+			sumCoolness += tmpCoolness.intValue();
+			objects[counter][6] = 	tmpCoolness;
 			objects[counter][7] =  	stat.getLastPlayedDate();
 			counter++;
 		}
@@ -92,20 +109,16 @@ public class StatisticScrollPanel extends JScrollPane {
 
 	public void refresh() {
 		try {
-			this.model = new SortedTableModel(new DefaultTableModel(
-					getTableData(), this.columnNames));
+			this.model = new SortedTableModel(new DefaultTableModel(getTableData(), this.columnNames));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.table = new JTable(this.model);
-		this.table.setDefaultRenderer(Object.class,
-				new StatisticTableCellRenderer());
+		this.table.setDefaultRenderer(Object.class,new StatisticTableCellRenderer());
 		for (int i = 0; i < this.columnNames.length; i++) {
-			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(
-					new RendererDecorator());
+			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(new RendererDecorator());
 		}
-		this.table.getTableHeader().addMouseListener(
-				new RendererSorter(this.table, this.model, 0));
-		setViewportView(this.table);
+		this.table.getTableHeader().addMouseListener(new RendererSorter(this.table, this.model, 0));
+		revalidate();
 	}
 }
