@@ -1,7 +1,15 @@
-package ho.module.ifa;
+package ho.module.ifa.imagebuilder;
 
+import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailLeague;
+import ho.core.model.WorldDetailsManager;
 import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
+import ho.module.ifa.FlagLabel;
+import ho.module.ifa.GlobalActionsListener;
+import ho.module.ifa.PluginIfaPanel;
+import ho.module.ifa.PluginIfaUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -14,6 +22,7 @@ import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -157,7 +166,7 @@ public class ImageDesignPanel extends JPanel {
 				FlagLabel.BRIGHTNESS = Integer
 						.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_BRIGHTNESS));
 				FlagLabel.GREY = new Boolean(ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY)).booleanValue();
-				FlagLabel[] flags = PluginIfaUtils.getAllCountries(true);
+				FlagLabel[] flags = getAllCountries(true);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
 						enabled++;
@@ -187,7 +196,7 @@ public class ImageDesignPanel extends JPanel {
 				FlagLabel.BRIGHTNESS = visitedEmblemPanel.getBrightness();
 				FlagLabel.GREY = visitedEmblemPanel.isGrey();
 				FlagLabel.ROUNDFLAG = visitedEmblemPanel.isRoundly();
-				FlagLabel[] flags = PluginIfaUtils.getAllCountries(true);
+				FlagLabel[] flags = getAllCountries(true);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
 						enabled++;
@@ -211,7 +220,7 @@ public class ImageDesignPanel extends JPanel {
 				FlagLabel.BRIGHTNESS = Integer
 						.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_BRIGHTNESS));
 				FlagLabel.GREY = new Boolean(ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY)).booleanValue();
-				FlagLabel[] flags = PluginIfaUtils.getAllCountries(false);
+				FlagLabel[] flags = getAllCountries(false);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
 						enabled++;
@@ -240,7 +249,7 @@ public class ImageDesignPanel extends JPanel {
 				FlagLabel.BRIGHTNESS =hostedEmblemPanel.getBrightness();
 				FlagLabel.GREY =hostedEmblemPanel.isGrey();
 				FlagLabel.ROUNDFLAG =hostedEmblemPanel.isRoundly();
-				FlagLabel[] flags = PluginIfaUtils.getAllCountries(false);
+				FlagLabel[] flags = getAllCountries(false);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
 						enabled++;
@@ -352,5 +361,44 @@ public class ImageDesignPanel extends JPanel {
 			toolbar.setLayout(new FlowLayout(FlowLayout.LEADING));
 		}
 		return toolbar;
+	}
+	
+	private FlagLabel[] getAllCountries(boolean homeAway) {
+		WorldDetailLeague[] leagues =WorldDetailsManager.instance().getLeagues();
+		FlagLabel[] flagLabels = null;
+		// ArrayList ret = new ArrayList();
+		flagLabels = new FlagLabel[leagues.length];
+		try {
+			for (int i = 0; i < leagues.length; i++) {
+				FlagLabel flagLabel = new FlagLabel();
+				flagLabel.setCountryId(leagues[i].getCountryId());
+				flagLabel.setCountryName(leagues[i].getCountryName());
+				try {
+					flagLabel.setIcon(HelperWrapper.instance()
+							.getImageIcon4Country(flagLabel.getCountryId()));
+				} catch (Exception e) {
+					System.out.println("Error getting image icon for country "
+							+ flagLabel.getCountryId() + " "
+							+ flagLabel.getCountryName() + "\n"
+							+ e.getMessage());
+					flagLabel.setIcon(HelperWrapper.instance()
+							.getImageIcon4Country(-1));
+				}
+				flagLabel.setToolTipText(flagLabel.getCountryName());
+				int flagLeagueID = leagues[i].getLeagueId();
+				if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga())
+					flagLabel.setHomeCountry(true);
+				else {
+					flagLabel.setEnabled(DBManager.instance().isLeagueIDinDB(flagLeagueID, homeAway));
+				}
+				flagLabels[i] = flagLabel;
+			}
+
+			Arrays.sort(flagLabels, new UniversalComparator(1));
+
+		} catch (Exception e) {
+			return new FlagLabel[0];
+		} 
+		return flagLabels;
 	}
 }

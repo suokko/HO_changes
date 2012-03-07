@@ -1,4 +1,4 @@
-package ho.module.ifa;
+package ho.module.ifa.imagebuilder;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;

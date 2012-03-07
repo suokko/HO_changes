@@ -4,15 +4,11 @@ import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.WorldDetailLeague;
-import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,12 +22,6 @@ import org.w3c.dom.Element;
 public class PluginIfaUtils {
 	public static final boolean HOME = true;
 	public static final boolean AWAY = false;
-
-	private static Document getMatchesArchive(String from, String to)
-			throws Exception {
-		String matchesArchive = MyConnector.instance().getMatchArchiv(0,from,to);
-		return XMLManager.instance().parseString(matchesArchive);
-	}
 
 	private static Document getTeamDetails(int teamID) throws Exception {
 		String teamDetails = MyConnector.instance().getTeamdetails(teamID);
@@ -52,50 +42,6 @@ public class PluginIfaUtils {
 		}
 		return value;
 	}
-
-	private static int getTeamID() {
-		return HOVerwaltung.instance().getModel().getBasics().getTeamId();
-	}
-
-	static FlagLabel[] getAllCountries(boolean homeAway) {
-		WorldDetailLeague[] leagues =WorldDetailsManager.instance().getLeagues();
-		FlagLabel[] flagLabels = null;
-		// ArrayList ret = new ArrayList();
-		flagLabels = new FlagLabel[leagues.length];
-		try {
-			for (int i = 0; i < leagues.length; i++) {
-				FlagLabel flagLabel = new FlagLabel();
-				flagLabel.setCountryId(leagues[i].getCountryId());
-				flagLabel.setCountryName(leagues[i].getCountryName());
-				try {
-					flagLabel.setIcon(HelperWrapper.instance()
-							.getImageIcon4Country(flagLabel.getCountryId()));
-				} catch (Exception e) {
-					System.out.println("Error getting image icon for country "
-							+ flagLabel.getCountryId() + " "
-							+ flagLabel.getCountryName() + "\n"
-							+ e.getMessage());
-					flagLabel.setIcon(HelperWrapper.instance()
-							.getImageIcon4Country(-1));
-				}
-				flagLabel.setToolTipText(flagLabel.getCountryName());
-				int flagLeagueID = leagues[i].getLeagueId();
-				if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga())
-					flagLabel.setHomeCountry(true);
-				else {
-					flagLabel.setEnabled(DBManager.instance().isLeagueIDinDB(flagLeagueID, homeAway));
-				}
-				flagLabels[i] = flagLabel;
-			}
-
-			Arrays.sort(flagLabels, new UniversalComparator(1));
-
-		} catch (Exception e) {
-			return new FlagLabel[0];
-		} 
-		return flagLabels;
-	}
-
 
 	static boolean updateMatchesTable() {
 		JWindow waitWindow = GUIPluginWrapper.instance().createWaitDialog(HOMainFrame.instance());
@@ -124,7 +70,9 @@ public class PluginIfaUtils {
 	private static void insertMatches(String from, String to) throws Exception {
 		StringBuilder errors = new StringBuilder();
 		String matchDate = from;
-		Document doc = getMatchesArchive(from, to);
+		String matchesArchive = MyConnector.instance().getMatchArchiv(0,from,to);
+		Document doc =  XMLManager.instance().parseString(matchesArchive);
+		
 		int matchesCount = ((Element) doc.getDocumentElement()
 				.getElementsByTagName("MatchList").item(0))
 				.getElementsByTagName("Match").getLength();

@@ -39,26 +39,10 @@ public final class DateHelper {
 	}
 
 	public static String getDateString(Date date) {
-		return convert(date, "2003-01-01", "yyyy-MM-dd");
-	}
-
-	public static String displayDateString(Date date) {
-		return convert(date, "01.01.2003", "dd.MM.yyyy");
-	}
-
-	public static String getTimestampString(Date date) {
-		return convert(date, "2003-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss");
-	}
-
-	public static String getTimeString(Date date) {
-		return convert(date, "00:00", "HH:mm");
-	}
-
-	private static String convert(Date date, String defaultValue, String pattern) {
 		if (date == null)
-			return defaultValue;
+			return "2003-01-01";
 		synchronized (dateFormatter) {
-			dateFormatter.applyPattern(pattern);
+			dateFormatter.applyPattern("yyyy-MM-dd");
 			return dateFormatter.format(date);
 		}
 	}
