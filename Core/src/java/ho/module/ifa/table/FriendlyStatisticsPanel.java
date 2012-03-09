@@ -61,7 +61,7 @@ public class FriendlyStatisticsPanel extends JPanel {
 
 	private JPanel getTopPanel(){
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel(HOVerwaltung.instance().getLanguageString(home?"Hosted":"Visited")+"  "+table.getRowCount()+" / "+WorldDetailsManager.instance().size()));
+		panel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Gesamt")+"  "+table.getRowCount()+" / "+(WorldDetailsManager.instance().size()-1)));
 		panel.add(new JLabel("      "));
 		panel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Coolness")+":  "+sumCoolness));
 		return panel;
