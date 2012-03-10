@@ -2,6 +2,7 @@
 package ho.tool.keepertool;
 
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.PlayerHelper;
 
@@ -67,7 +68,7 @@ class ManualPanel extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        final JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel buttonPanel = new ImagePanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new GridLayout(6, 2));
         buttonPanel.add(label(""));

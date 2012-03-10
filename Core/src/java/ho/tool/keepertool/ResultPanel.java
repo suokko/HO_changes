@@ -4,6 +4,7 @@ package ho.tool.keepertool;
 
 import plugins.ISpieler;
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 
@@ -100,7 +101,7 @@ class ResultPanel extends JPanel {
         setOpaque(false);
         setLayout(new BorderLayout());
 
-        final JPanel panel = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel panel = new ImagePanel();
         add(panel, BorderLayout.CENTER);
         result.setOpaque(false);
         panel.setLayout(new GridLayout(2, 1));

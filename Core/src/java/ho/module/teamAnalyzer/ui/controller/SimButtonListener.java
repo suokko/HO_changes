@@ -1,9 +1,7 @@
 // %3491987323:hoplugins.teamAnalyzer.ui.controller%
 package ho.module.teamAnalyzer.ui.controller;
 
-import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
@@ -12,12 +10,9 @@ import ho.tool.matchPrediction.MatchEnginePanel;
 import ho.tool.matchPrediction.MatchPredictionDialog;
 import ho.tool.matchPrediction.engine.MatchPredictionManager;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -107,12 +102,10 @@ public class SimButtonListener implements ActionListener {
         String match = "";
 
         if (HOVerwaltung.instance().getModel().getAufstellung().getHeimspiel() == 1) {
-            matchPredictionPanel = (MatchEnginePanel)
-            	GUIPluginWrapper.instance().createMatchPredictionPanel(myTeamValues, opponentTeamValues);
+            matchPredictionPanel = new MatchEnginePanel(myTeamValues, opponentTeamValues);
             match = myTeamValues.getTeamName() + " - " + opponentTeamValues.getTeamName();
         } else {
-            matchPredictionPanel = (MatchEnginePanel)
-            		GUIPluginWrapper.instance().createMatchPredictionPanel(opponentTeamValues, myTeamValues);
+            matchPredictionPanel = 	new MatchEnginePanel(opponentTeamValues, myTeamValues);
             match = opponentTeamValues.getTeamName() + " - " + myTeamValues.getTeamName();
         }
 

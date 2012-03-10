@@ -188,8 +188,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
         spielerdetails.setLayout(new BorderLayout());
         spielerdetails.add(spielername, BorderLayout.NORTH);
         spielerdetails.add(teamname, BorderLayout.SOUTH);
-
-        JPanel sternzahl = GUIPluginWrapper.instance().createStarPanel(toInt(mlp.getRating()), true);
+        JPanel sternzahl = (JPanel) new ho.core.gui.comp.entry.RatingTableEntry(toInt(mlp.getRating()), true).getComponent(false);
         sternzahl.setOpaque(false);
         sternzahl.setBorder(BorderFactory.createEtchedBorder());
 

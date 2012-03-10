@@ -3,14 +3,13 @@ package ho.tool.injury;
 
 
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
@@ -136,7 +135,7 @@ public abstract class AbstractInjuryPanel extends JPanel {
         header.setOpaque(false);
         add(header, BorderLayout.NORTH);
 
-        final JPanel pan = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel pan = new ImagePanel();
         pan.setLayout(new GridLayout(1, 4));
 
         final JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Calculate"));
