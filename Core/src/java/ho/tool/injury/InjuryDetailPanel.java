@@ -5,6 +5,7 @@ package ho.tool.injury;
 import plugins.ISpieler;
 
 import ho.core.db.DBManager;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
@@ -215,7 +216,7 @@ class InjuryDetailPanel extends JPanel {
      * @return the GUI Component
      */
     private Component createPanel(Component field) {
-        final JPanel p = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel p = new ImagePanel();
         p.add(field);
         return p;
     }
@@ -231,7 +232,7 @@ class InjuryDetailPanel extends JPanel {
         setOpaque(false);
         setLayout(new BorderLayout());
 
-        final JPanel config = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel config = new ImagePanel();
         config.setOpaque(false);
         config.setLayout(new GridLayout(4, 3));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("Spieler")));

@@ -1,8 +1,8 @@
 package ho.core.module.config;
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.IModule;
-import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -51,7 +51,7 @@ public class ModuleConfigDialog extends JDialog implements ActionListener{
 	
 	
     private JPanel createButtons() {
-        JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
+        JPanel buttonPanel = new ImagePanel();
         ((FlowLayout) buttonPanel.getLayout()).setAlignment(FlowLayout.CENTER);
 
         okButton = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));

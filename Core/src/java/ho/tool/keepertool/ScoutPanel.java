@@ -3,7 +3,7 @@ package ho.tool.keepertool;
 
 
 import ho.core.gui.HOMainFrame;
-import ho.core.plugins.GUIPluginWrapper;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.module.transfer.scout.TransferTableModel;
 
@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.util.Iterator;
 
 import javax.swing.JComboBox;
@@ -100,7 +99,7 @@ class ScoutPanel extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        final JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel buttonPanel = new ImagePanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new GridLayout(6, 2));
         buttonPanel.add(label(""));
