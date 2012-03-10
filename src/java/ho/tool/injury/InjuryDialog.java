@@ -2,8 +2,8 @@
 package ho.tool.injury;
 
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -143,7 +143,7 @@ public class InjuryDialog extends JDialog implements WindowListener {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(detail, BorderLayout.CENTER);
 
-        final JPanel p = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel p = new ImagePanel();
         p.setLayout(new GridLayout(3, 1));
 
         doctorPanel = new DoctorPanel(this);

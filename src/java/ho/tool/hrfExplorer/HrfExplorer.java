@@ -6,6 +6,7 @@ package ho.tool.hrfExplorer;
 import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -1238,7 +1239,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
    					DBManager.instance().deleteHRF(deleteHRF_ID);
         		}
         	}
-			GUIPluginWrapper.instance().doRefresh();
+			RefreshManager.instance().doReInit();
 		}
 		/*
 		 * Button Select_All

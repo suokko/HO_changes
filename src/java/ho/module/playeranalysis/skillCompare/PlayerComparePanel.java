@@ -1007,7 +1007,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         	}
         	resetPlayer();
         	setDummyPlayerDetails();
-        	GUIPluginWrapper.instance().doRefresh();
+        	RefreshManager.instance().doReInit();
         }
     } 
     /**

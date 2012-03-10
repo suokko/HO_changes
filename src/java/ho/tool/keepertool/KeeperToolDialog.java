@@ -2,6 +2,7 @@
 package ho.tool.keepertool;
 
 
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 
@@ -185,7 +186,7 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         groupRadio.add(scoutButton);
         groupRadio.add(manualButton);
 
-        final JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
+        final JPanel buttonPanel = new ImagePanel();
         buttonPanel.setLayout(new GridLayout(3, 1));
         buttonPanel.add(rosterButton);
         buttonPanel.add(scoutButton);

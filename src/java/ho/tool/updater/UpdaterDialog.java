@@ -7,10 +7,10 @@ package ho.tool.updater;
 
 import gui.HOColorName;
 import gui.HOIconName;
-import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,8 +18,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -32,7 +30,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import plugins.IDebugWindow;
-import plugins.IOfficialPlugin;
 
 
 /**
@@ -66,7 +63,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
     //~ Constructors -------------------------------------------------------------------------------
 
 	protected UpdaterDialog(Object data, String title) {
-		super(GUIPluginWrapper.instance().getOwner4Dialog(), title);
+		super(HOMainFrame.instance(), title);
 
 		int dialogWidth = 500;
 		int dialogHeight = 400;
@@ -127,7 +124,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
 
     protected JPanel createButtons() {
-        JPanel buttonPanel = GUIPluginWrapper.instance().createImagePanel();
+        JPanel buttonPanel = new ImagePanel();
         ((FlowLayout) buttonPanel.getLayout()).setAlignment(FlowLayout.RIGHT);
 
         JButton okButton = new JButton(okButtonLabel);
@@ -187,7 +184,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
     }
 
     protected void showException(Exception ex, String itxt) {
-        IDebugWindow debugWindow = GUIPluginWrapper.instance().createDebugWindow(new Point(100, 200),
+        IDebugWindow debugWindow =  new ho.core.plugins.DebugWindow(new Point(100, 200),
                                                                                  new Dimension(700,
                                                                                                400));
         debugWindow.setVisible(true);
