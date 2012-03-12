@@ -29,11 +29,6 @@ final class DBUpdater {
 		
 		version = 	((UserConfigurationTable) dbZugriff.getTable(UserConfigurationTable.TABLENAME)).getDBVersion();
 
-		// If development always force to rebuild latest DB
-		if (version == DBVersion && HO.isDevelopment()) {
-			version = DBVersion - 1;
-		}
-
 		// We may now update depending on the version identifier!
 		if (version != DBVersion) {
 			try {
@@ -62,6 +57,8 @@ final class DBUpdater {
 						updateDBv11();
 					case 11:
 						updateDBv12();
+					case 12:
+						updateDBv13(DBVersion, version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -175,11 +172,18 @@ final class DBUpdater {
 		// do version checking again before applying!
 		dbZugriff.saveUserParameter("DBVersion", 10);
 	}
-
+	/** 
+	* Update database to version 11. 
+	*/ 
+	private void updateDBv11() throws Exception { 
+	 	// Problems in 1.431 release has shifted contents here to v12. 
+		dbZugriff.saveUserParameter("DBVersion", 11); 
+	 	return; 
+	} 
 	/**
-	 * Update database to version 11.
+	 * Update database to version 12.
 	 */
-	private void updateDBv11() throws Exception {
+	private void updateDBv12() throws Exception {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
 		
@@ -207,15 +211,11 @@ final class DBUpdater {
 		dbZugriff.getTable(MatchSubstitutionTable.TABLENAME).createTable();
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
-		
-		
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
-		dbZugriff.saveUserParameter("DBVersion", 11);
+
+		dbZugriff.saveUserParameter("DBVersion", 12); 
 	}
 	
-	private void updateDBv12() {
+	private void updateDBv13(int DBVersion, int version) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSteh");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSitz");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteDach");
@@ -266,8 +266,13 @@ final class DBUpdater {
 		if(rs == null)
 			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
 		else
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "+IfaMatchTable.TABLENAME);	
-		dbZugriff.saveUserParameter("DBVersion", 12);
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "+IfaMatchTable.TABLENAME);
+		// Always set field DBVersion to the new value as last action.
+		// Do not use DBVersion but the value, as update packs might
+		// do version checking again before applying!
+		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) { 
+			 dbZugriff.saveUserParameter("DBVersion", 13); 
+		} 
 	}
 
 //	private void changeColumnType(String table,String oldName, String newName, String type) {
