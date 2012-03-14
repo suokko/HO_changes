@@ -1,6 +1,6 @@
 package ho.module.playerOverview;
 
-import gui.HOIconName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOMiniModel;

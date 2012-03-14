@@ -6,8 +6,8 @@
  */
 package ho.tool.matchPrediction;
 
-import gui.HOIconName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;

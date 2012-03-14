@@ -1,10 +1,10 @@
 // %1126721330823:hoplugins.transfers.ui%
 package ho.module.transfer.transfertype;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;

@@ -1,6 +1,5 @@
 package ho.core.gui.theme;
 
-import gui.HOBooleanName;
 
 import java.awt.Color;
 import java.util.Enumeration;

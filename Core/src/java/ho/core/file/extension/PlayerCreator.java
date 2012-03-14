@@ -164,7 +164,7 @@ public class PlayerCreator extends XMLCreator {
 		playersTag.appendChild(playerTag);
 		playerTag.appendChild(createNode(doc,"id", player.getSpielerID()+""));
 		playerTag.appendChild(createNode(doc,"name", player.getName()+""));
-		final int salary = (int) (player.getGehalt() / gui.UserParameter.instance().faktorGeld);
+		final int salary = (int) (player.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
 		playerTag.appendChild(createNode(doc,"salary", salary+""));
 		playerTag.appendChild(createNode(doc,"nationality", player.getNationalitaet()+""));
 		playerTag.appendChild(createNode(doc,"match", player.getBewertung()+""));

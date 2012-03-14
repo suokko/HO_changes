@@ -359,7 +359,7 @@ public class HOVerwaltung {
     	if (temp != null)
     		return temp;
     	//Search in english.properties if nothing found and active language not english
-    	if (!gui.UserParameter.instance().sprachDatei.equalsIgnoreCase("english")) {
+    	if (!ho.core.model.UserParameter.instance().sprachDatei.equalsIgnoreCase("english")) {
     		Properties tempResource = new Properties();
 	    	final ClassLoader loader =new ImagePanel().getClass().getClassLoader();
 	        try {

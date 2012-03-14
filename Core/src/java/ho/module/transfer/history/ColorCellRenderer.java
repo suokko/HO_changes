@@ -1,7 +1,7 @@
 // %1126721330135:hoplugins.transfers.ui%
 package ho.module.transfer.history;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;

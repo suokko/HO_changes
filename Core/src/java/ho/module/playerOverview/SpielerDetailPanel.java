@@ -1,8 +1,6 @@
 // %3484484869:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -14,6 +12,8 @@ import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.renderer.SmilieListCellRenderer;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -391,7 +391,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jcbUserBestPosition.removeItemListener(this);
         Helper.markierenComboBox(m_jcbUserBestPosition, m_clPlayer.getUserPosFlag());
         m_jcbUserBestPosition.addItemListener(this);
-        final int salary = (int)(m_clPlayer.getGehalt() / gui.UserParameter.instance().faktorGeld);
+        final int salary = (int)(m_clPlayer.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
 		final String salarytext = Helper.getNumberFormat(true, 0).format(salary);
 		final String tsitext = Helper.getNumberFormat(false, 0).format(m_clPlayer.getTSI());
         if (m_clComparisonPlayer == null) {
@@ -436,7 +436,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
             m_jpLoyaltyChange.clear();
             m_jpBestPosition.setText(SpielerPosition.getNameForPosition(m_clPlayer.getIdealPosition())
                                 + " ("
-                                + Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen).format(
+                                + Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen).format(
                                 		m_clPlayer.calcPosValue(m_clPlayer.getIdealPosition(), true))
                                 + ")");
             for (int i = 0; i < playerPositionValues.length; i++) {
@@ -445,7 +445,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
 
         } else {
             String bonus = "";
-            final int gehalt2 = (int)(m_clComparisonPlayer.getGehalt() / gui.UserParameter.instance().faktorGeld);
+            final int gehalt2 = (int)(m_clComparisonPlayer.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
             if (m_clPlayer.getBonus() > 0) {
                 bonus = " (" + m_clPlayer.getBonus() + "% "
                         + HOVerwaltung.instance().getLanguageString("Bonus") + ")";
@@ -560,13 +560,13 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     }
 
     private void showNormal(DoppelLabelEntry labelEntry,byte playerPosition){
-    	labelEntry.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance()
+    	labelEntry.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance()
     			.anzahlNachkommastellen).format(m_clPlayer.calcPosValue(playerPosition, true)));
     	labelEntry.getRechts().clear();
     }
 
     private void showWithCompare(DoppelLabelEntry labelEntry,byte playerPosition){
-    	labelEntry.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance()
+    	labelEntry.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance()
     			.anzahlNachkommastellen).format(m_clPlayer.calcPosValue(playerPosition,true)));
     	labelEntry.getRechts().setSpezialNumber(m_clPlayer.calcPosValue(playerPosition,true)
     			- m_clComparisonPlayer.calcPosValue(playerPosition,true),false);

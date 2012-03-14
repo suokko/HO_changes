@@ -1,9 +1,9 @@
 // %3087735495:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOIconName;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.matches.model.MatchKurzInfo;

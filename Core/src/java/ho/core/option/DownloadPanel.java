@@ -42,9 +42,9 @@ public final class DownloadPanel extends ImagePanel
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {        
-        gui.UserParameter.temp().xmlDownload = m_jchXMLDownload.isSelected();
-        gui.UserParameter.temp().fixtures = m_jchFixtures.isSelected();
-        gui.UserParameter.temp().currentMatchlist = m_jchCurrentMatchlist.isSelected();
+        ho.core.model.UserParameter.temp().xmlDownload = m_jchXMLDownload.isSelected();
+        ho.core.model.UserParameter.temp().fixtures = m_jchFixtures.isSelected();
+        ho.core.model.UserParameter.temp().currentMatchlist = m_jchCurrentMatchlist.isSelected();
     }
 
 	public void stateChanged(ChangeEvent arg0) {
@@ -61,14 +61,14 @@ public final class DownloadPanel extends ImagePanel
 		m_jchXMLDownload = new JCheckBox(ho.core.model.HOVerwaltung.instance().getLanguageString("HRFDownload"));
 		m_jchXMLDownload.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Download_XML"));
 		m_jchXMLDownload.setOpaque(false);
-		m_jchXMLDownload.setSelected(gui.UserParameter.temp().xmlDownload);
+		m_jchXMLDownload.setSelected(ho.core.model.UserParameter.temp().xmlDownload);
 		m_jchXMLDownload.addItemListener(this);
 		add(m_jchXMLDownload);
 
 		m_jchCurrentMatchlist = new JCheckBox(ho.core.model.HOVerwaltung.instance().getLanguageString("AktuellerSpielplanDownload"));
 		m_jchCurrentMatchlist.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Download_AktuellerSpielplan"));
 		m_jchCurrentMatchlist.setOpaque(false);
-		m_jchCurrentMatchlist.setSelected(gui.UserParameter.temp().currentMatchlist);
+		m_jchCurrentMatchlist.setSelected(ho.core.model.UserParameter.temp().currentMatchlist);
 		m_jchCurrentMatchlist.addItemListener(this);
 		add(m_jchCurrentMatchlist);
 
@@ -76,7 +76,7 @@ public final class DownloadPanel extends ImagePanel
         m_jchFixtures = new JCheckBox(ho.core.model.HOVerwaltung.instance().getLanguageString("FixturesDownload"));
         m_jchFixtures.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Download_Ligatabelle"));
         m_jchFixtures.setOpaque(false);
-        m_jchFixtures.setSelected(gui.UserParameter.temp().fixtures);
+        m_jchFixtures.setSelected(ho.core.model.UserParameter.temp().fixtures);
         m_jchFixtures.addItemListener(this);
         add(m_jchFixtures);
 

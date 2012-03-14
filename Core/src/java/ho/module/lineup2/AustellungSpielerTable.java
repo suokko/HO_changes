@@ -173,20 +173,20 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
      * @return TODO Missing Return Method Documentation
      */
     protected int getSortSpalte() {
-    	switch (gui.UserParameter.instance().standardsortierung) {
-        case gui.UserParameter.SORT_NAME:
+    	switch (ho.core.model.UserParameter.instance().standardsortierung) {
+        case ho.core.model.UserParameter.SORT_NAME:
             return m_clTableModel.getPositionInArray( UserColumnFactory.NAME );
 
-        case gui.UserParameter.SORT_BESTPOS:
+        case ho.core.model.UserParameter.SORT_BESTPOS:
             return m_clTableModel.getPositionInArray( UserColumnFactory.BEST_POSITION );
 
-        case gui.UserParameter.SORT_AUFGESTELLT:
+        case ho.core.model.UserParameter.SORT_AUFGESTELLT:
             return m_clTableModel.getPositionInArray( UserColumnFactory.LINUP );
 
-        case gui.UserParameter.SORT_GRUPPE:
+        case ho.core.model.UserParameter.SORT_GRUPPE:
             return m_clTableModel.getPositionInArray( UserColumnFactory.GROUP );
 
-        case gui.UserParameter.SORT_BEWERTUNG:
+        case ho.core.model.UserParameter.SORT_BEWERTUNG:
             return m_clTableModel.getPositionInArray( UserColumnFactory.RATING );
 
         default:

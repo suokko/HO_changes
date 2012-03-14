@@ -3,11 +3,11 @@
  */
 package ho.tool.hrfExplorer;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;

@@ -1,12 +1,12 @@
 // %4201738339:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.table.TableSorter;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
@@ -249,7 +249,7 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
 
         add(verticalSplitPane, BorderLayout.CENTER);
 
-        verticalSplitPane.setDividerLocation(gui.UserParameter.instance().transferScoutPanel_horizontalSplitPane);
+        verticalSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().transferScoutPanel_horizontalSplitPane);
 
         //Thread mit Wecker starten
         m_clScoutThread = ScoutThread.start(DBManager.instance().getScoutList());

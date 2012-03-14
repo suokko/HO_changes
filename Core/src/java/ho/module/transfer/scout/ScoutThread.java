@@ -19,7 +19,7 @@ public class ScoutThread implements Runnable {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private Vector<ScoutEintrag> m_vScoutEintraege = new Vector<ScoutEintrag>();
-    private int difference = gui.UserParameter.instance().TimeZoneDifference * 3600000;
+    private int difference = ho.core.model.UserParameter.instance().TimeZoneDifference * 3600000;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ public class ScoutThread implements Runnable {
                  (m_vScoutEintraege != null) && !m_vScoutEintraege.isEmpty()
                  && (i < m_vScoutEintraege.size()); ++i) {
                 se = m_vScoutEintraege.elementAt(i);
-                ts2.setTime(se.getDeadline().getTime() - gui.UserParameter.instance().deadlineFrist
+                ts2.setTime(se.getDeadline().getTime() - ho.core.model.UserParameter.instance().deadlineFrist
                             + difference);
 
                 //übersehene abgelaufen entfernen

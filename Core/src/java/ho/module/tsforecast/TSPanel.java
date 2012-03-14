@@ -24,10 +24,10 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
-import gui.HOIconName;
-import gui.UserParameter;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 
 import java.awt.Color;

@@ -146,7 +146,7 @@ public class Helper {
      *
      */
     public static int calcCellWidth(int width) {
-        return (int) (((float) width) * gui.UserParameter.instance().zellenbreitenFaktor);
+        return (int) (((float) width) * ho.core.model.UserParameter.instance().zellenbreitenFaktor);
     }
 
     /**

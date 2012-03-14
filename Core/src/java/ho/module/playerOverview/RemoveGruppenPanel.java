@@ -1,9 +1,9 @@
 // %3482096464:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import gui.HOIconName;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.LightGrayFilter;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;

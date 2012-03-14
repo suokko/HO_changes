@@ -1,8 +1,8 @@
 // %1645621351:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
-import gui.HOColorName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.Finanzen;
 import ho.core.model.HOVerwaltung;
@@ -58,7 +58,7 @@ final class FinanzenPanel extends JPanel {
 
     void setLabels() {
         final Finanzen finanzen = HOVerwaltung.instance().getModel().getFinanzen();
-        final float faktor = gui.UserParameter.instance().faktorGeld;
+        final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
         if (m_bAktuelleFinanzen) {
             m_jpKontostand.setSpezialNumber((finanzen.getFinanzen() / faktor)

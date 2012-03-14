@@ -5,7 +5,6 @@
  */
 package ho.tool.updater;
 
-import gui.UserParameter;
 import ho.HO;
 import ho.core.file.ZipHelper;
 import ho.core.file.xml.Extension;
@@ -14,6 +13,7 @@ import ho.core.model.HOMiniModel;
 import ho.core.model.HOParameter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
+import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;

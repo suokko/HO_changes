@@ -1,9 +1,6 @@
 // %393632151:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
@@ -12,9 +9,12 @@ import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.MatchesColumnModel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.module.IModule;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
@@ -478,9 +478,9 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                                            horizontalLeftSplitPane,
                                            new JScrollPane(linupPanel));
 
-        horizontalLeftSplitPane.setDividerLocation(gui.UserParameter.instance().spielePanel_horizontalLeftSplitPane);
+        horizontalLeftSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().spielePanel_horizontalLeftSplitPane);
 
-        verticalSplitPane.setDividerLocation(gui.UserParameter.instance().spielePanel_verticalSplitPane);
+        verticalSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().spielePanel_verticalSplitPane);
 
         add(verticalSplitPane, BorderLayout.CENTER);
 

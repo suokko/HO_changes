@@ -1,6 +1,6 @@
 package ho.module.playeranalysis.skillCompare;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 

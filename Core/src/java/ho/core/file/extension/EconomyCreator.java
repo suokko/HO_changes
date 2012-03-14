@@ -1,9 +1,9 @@
 package ho.core.file.extension;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;

@@ -1,7 +1,6 @@
 // %80307481:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
-import gui.HOIconName;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.Refreshable;
 import ho.core.gui.Updateable;
@@ -9,6 +8,7 @@ import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.print.ComponentPrintObject;
 import ho.core.gui.print.PrintController;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;
@@ -115,8 +115,8 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         super.setVisible(sichtbar);
 
         if (!sichtbar && !m_bPrint) {
-            gui.UserParameter.instance().miniscout_PositionX = this.getLocation().x;
-            gui.UserParameter.instance().miniscout_PositionY = this.getLocation().y;
+            ho.core.model.UserParameter.instance().miniscout_PositionX = this.getLocation().x;
+            ho.core.model.UserParameter.instance().miniscout_PositionY = this.getLocation().y;
             ho.core.gui.RefreshManager.instance().unregisterRefreshable(this);
         }
     }
@@ -504,8 +504,8 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
         setSize(getSize().width + 20, getSize().height + 30);
 
         if (!m_bPrint) {
-            setLocation(gui.UserParameter.instance().miniscout_PositionX,
-                        gui.UserParameter.instance().miniscout_PositionY);
+            setLocation(ho.core.model.UserParameter.instance().miniscout_PositionX,
+                        ho.core.model.UserParameter.instance().miniscout_PositionY);
             ho.core.gui.HOMainFrame.instance().setVisible(false);
         } else {
             try {

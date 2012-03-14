@@ -3,7 +3,7 @@ package ho.module.training.ui.comp;
 
 
 
-import gui.UserParameter;
+import ho.core.model.UserParameter;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -1,7 +1,7 @@
 // %3942717939:de.hattrickorganizer.gui.matchprediction%
 package ho.tool.matchPrediction;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HOLogger;
 

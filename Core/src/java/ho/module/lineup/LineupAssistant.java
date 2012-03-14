@@ -206,11 +206,11 @@ public class LineupAssistant {
         //nur spieler auf idealpos aufstellen
         if (idealPosFirst) {
             //Wert speichern
-            float backup = gui.UserParameter.instance().MinIdealPosStk;
+            float backup = ho.core.model.UserParameter.instance().MinIdealPosStk;
 
             //Maimum von beiden für Berechnung verwenden
-            gui.UserParameter.instance().MinIdealPosStk = Math.max(calcAveragePosValue(spieler),
-                                                                   gui.UserParameter.instance().MinIdealPosStk);
+            ho.core.model.UserParameter.instance().MinIdealPosStk = Math.max(calcAveragePosValue(spieler),
+                                                                   ho.core.model.UserParameter.instance().MinIdealPosStk);
 
             doSpielerAufstellenIdealPos(ISpielerPosition.KEEPER,
                                         mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
@@ -252,7 +252,7 @@ public class LineupAssistant {
                     				    mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
 
             //Wert wieder zurücksetzen
-            gui.UserParameter.instance().MinIdealPosStk = backup;
+            ho.core.model.UserParameter.instance().MinIdealPosStk = backup;
         }
 
         //falls tw unbesetzt
@@ -597,7 +597,7 @@ public class LineupAssistant {
                 && ((bestSpieler == null) || (bestStk < aktuStk))
                 && ((ignoreSperre) || (!spieler.isGesperrt()))
                 && ((ignoreVerletzung) || (spieler.getVerletzt() < 1))
-                && (aktuStk > gui.UserParameter.instance().MinIdealPosStk)
+                && (aktuStk > ho.core.model.UserParameter.instance().MinIdealPosStk)
                 && (!spieler.isTrainer())
                 && (spieler.isSpielberechtigt())) {
                 bestSpieler = spieler;

@@ -1,7 +1,5 @@
 package ho.core.gui.theme;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.model.SpielerPosition;
 
 import java.awt.AlphaComposite;

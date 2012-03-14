@@ -121,7 +121,7 @@ class PlayerSkillColumn extends PlayerColumn {
 	 */
 	@Override
 	public void setSize(TableColumn column){
-		final int breite = (int) (55d * (1d + ((gui.UserParameter.instance().anzahlNachkommastellen - 1) / 4.5d)));
+		final int breite = (int) (55d * (1d + ((ho.core.model.UserParameter.instance().anzahlNachkommastellen - 1) / 4.5d)));
 		column.setMinWidth(20);
 		column.setPreferredWidth((preferredWidth == 0)?Helper.calcCellWidth(breite):preferredWidth);
 	}

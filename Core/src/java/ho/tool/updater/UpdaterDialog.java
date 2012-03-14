@@ -5,12 +5,13 @@
  */
 package ho.tool.updater;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -179,17 +180,8 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         showException(e, txt);
     }
 
-    protected void show(String key) {
-        JOptionPane.showMessageDialog(null, key);
-    }
-
     protected void showException(Exception ex, String itxt) {
-        IDebugWindow debugWindow =  new ho.core.plugins.DebugWindow(new Point(100, 200),
-                                                                                 new Dimension(700,
-                                                                                               400));
-        debugWindow.setVisible(true);
-        debugWindow.append(itxt);
-        debugWindow.append(ex);
+       HOLogger.instance().error(this.getClass(), ex);
     }
 
     private void setAll(boolean value) {

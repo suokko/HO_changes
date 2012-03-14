@@ -1,9 +1,9 @@
 // %1942107811:de.hattrickorganizer.menu.option%
 package ho.core.option;
 
-import gui.UserParameter;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.rating.RatingOptimizer;
 import ho.core.util.Helper;
 
@@ -236,7 +236,7 @@ public final class RatingOffsetPanel
 				slider[i].setValue((int) (100 * offset[i][0]));
 				double value = offset[i][1];
 				if (value>0) {				
-					if (gui.UserParameter.temp().anzahlNachkommastellen == 1) {
+					if (ho.core.model.UserParameter.temp().anzahlNachkommastellen == 1) {
 						err[i].setText(Helper.DEFAULTDEZIMALFORMAT.format(value));
 					} else {
 						err[i].setText(Helper.DEZIMALFORMAT_2STELLEN.format(value));
