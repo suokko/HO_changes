@@ -2,8 +2,8 @@
 package ho.core.gui.comp.entry;
 
 
-import gui.HOColorName;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.Helper;
@@ -94,7 +94,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
             //Keine negativen Subskills, Kann beim Skillup passieren
             final double zahl2 = intzahl + Math.max(0d, zahl);
             setValueAsText(zahl2, background, false, false, 
-            		gui.UserParameter.instance().anzahlNachkommastellen, true);
+            		ho.core.model.UserParameter.instance().anzahlNachkommastellen, true);
         }
     }
 
@@ -255,7 +255,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
      */
     private final void setGraphicalChangeValue(double number){
     	setValueAsText(number, null, false, false, 
-    			gui.UserParameter.instance().anzahlNachkommastellen, 
+    			ho.core.model.UserParameter.instance().anzahlNachkommastellen, 
     			true);
     }
  
@@ -286,7 +286,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
 
     public final void setSpezialNumber(float zahl, boolean currencyformat) {
     	setValueAsText(zahl, null, currencyformat, false, 
-    			gui.UserParameter.instance().anzahlNachkommastellen, 
+    			ho.core.model.UserParameter.instance().anzahlNachkommastellen, 
     			true);
     }
 

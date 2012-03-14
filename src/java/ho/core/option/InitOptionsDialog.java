@@ -46,7 +46,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbOK)) {
             if (m_jcbSprachdatei.getSelectedItem() != null) {
-                gui.UserParameter.instance().sprachDatei = ((String) m_jcbSprachdatei
+                ho.core.model.UserParameter.instance().sprachDatei = ((String) m_jcbSprachdatei
                                                             .getSelectedItem());
 
                 setVisible(false);
@@ -73,7 +73,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
         }
 
         m_jcbSprachdatei = new JComboBox(sprachdateien);
-        m_jcbSprachdatei.setSelectedItem(gui.UserParameter.instance().sprachDatei);
+        m_jcbSprachdatei.setSelectedItem(ho.core.model.UserParameter.instance().sprachDatei);
         optionspanel.add(m_jcbSprachdatei);
 
         getContentPane().add(optionspanel, BorderLayout.CENTER);

@@ -315,7 +315,7 @@ public class AufstellungsSternePanel extends RasenPanel {
         m_jlTeamName.setOpaque(false);
         m_jlTeamName.setForeground(Color.white);
         m_jlTeamName.setFont(m_jlTeamName.getFont().deriveFont(Font.BOLD,
-                                                               gui.UserParameter.instance().schriftGroesse
+                                                               ho.core.model.UserParameter.instance().schriftGroesse
                                                                + 3));
         layout.setConstraints(m_jlTeamName, constraints);
         centerPanel.add(m_jlTeamName);

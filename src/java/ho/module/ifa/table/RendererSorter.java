@@ -1,6 +1,6 @@
 package ho.module.ifa.table;
 
-import gui.HOIconName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.event.MouseAdapter;

@@ -1,8 +1,8 @@
 package ho.core.gui.theme.ho;
 
-import gui.UserParameter;
 import ho.HO;
 import ho.core.gui.theme.FontUtil;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 
 import java.awt.Font;

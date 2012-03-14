@@ -6,7 +6,6 @@
  */
 package ho.core.net;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
 import ho.core.file.extension.FileExtensionManager;
@@ -23,6 +22,7 @@ import ho.core.gui.InfoPanel;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
@@ -87,7 +87,7 @@ public class OnlineWorker {
         int value;
         HOMainFrame homf = HOMainFrame.instance();
         HOVerwaltung hov = HOVerwaltung.instance();
-        UserParameter up = gui.UserParameter.instance();
+        UserParameter up = ho.core.model.UserParameter.instance();
         InfoPanel info = homf.getInfoPanel();
         HOModel homodel = null;
         // Show wait dialog

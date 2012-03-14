@@ -41,10 +41,10 @@ public class HRFImport {
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 
-        final java.io.File pfad = new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath);
+        final java.io.File pfad = new java.io.File(ho.core.model.UserParameter.instance().hrfImport_HRFPath);
 
         if (pfad.exists() && pfad.isDirectory()) {
-            fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.instance().hrfImport_HRFPath));
+            fileChooser.setCurrentDirectory(new java.io.File(ho.core.model.UserParameter.instance().hrfImport_HRFPath));
         }
 
         final ExampleFileFilter filter = new ExampleFileFilter();
@@ -82,7 +82,7 @@ public class HRFImport {
                     }
 
                     //Pfad speichern
-                    gui.UserParameter.instance().hrfImport_HRFPath = files[i].getParentFile()
+                    ho.core.model.UserParameter.instance().hrfImport_HRFPath = files[i].getParentFile()
                                                                              .getAbsolutePath();
 
                     //Info

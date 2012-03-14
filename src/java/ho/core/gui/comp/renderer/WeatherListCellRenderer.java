@@ -1,10 +1,10 @@
 // %1968012293:de.hattrickorganizer.gui.model%
 package ho.core.gui.comp.renderer;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.ListCellRenderer;

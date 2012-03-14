@@ -1,6 +1,6 @@
 package ho.core.module;
 
-import gui.UserParameter;
+import ho.core.model.UserParameter;
 import ho.core.module.config.ModuleConfig;
 import ho.module.evilcard.EvilCardModule;
 import ho.module.ifa.IfaModule;

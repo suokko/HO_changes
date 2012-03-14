@@ -1,8 +1,8 @@
 // %3969157412:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup2;
 
-import gui.HOIconName;
 import ho.core.file.extension.FileExtensionManager;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
@@ -92,11 +92,11 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 				this.aufstellungsPositionsPanel), horizontalRightSplitPane);
 
 		verticalSplitPaneLow
-				.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_verticalSplitPaneLow);
+				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPaneLow);
 		horizontalRightSplitPane
-				.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_horizontalRightSplitPane);
+				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_horizontalRightSplitPane);
 		verticalSplitPane
-				.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_verticalSplitPane);
+				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPane);
 
 		add(verticalSplitPane, BorderLayout.CENTER);
 	}

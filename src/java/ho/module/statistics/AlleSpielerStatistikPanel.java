@@ -1,17 +1,17 @@
 // %3661143817:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.StatistikModel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
@@ -65,7 +65,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     private Color TSIColor 			= ThemeManager.getColor(HOColorName.STAT_MARKETVALUE);
     private Color wageColor 		= ThemeManager.getColor(HOColorName.STAT_WAGE);
     //~ Instance fields ----------------------------------------------------------------------------
-    private UserParameter gup = gui.UserParameter.instance();
+    private UserParameter gup = ho.core.model.UserParameter.instance();
     private HOVerwaltung hov = HOVerwaltung.instance();
     private ImageCheckbox m_jchExperience = new ImageCheckbox(hov.getLanguageString("Erfahrung"), 
     		experienceColor, gup.statistikAlleErfahrung);

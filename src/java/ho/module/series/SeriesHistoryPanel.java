@@ -1,7 +1,7 @@
 // %3066887473:de.hattrickorganizer.gui.league%
 package ho.module.series;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 

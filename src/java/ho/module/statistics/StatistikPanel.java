@@ -323,7 +323,7 @@ public class StatistikPanel extends JPanel {
 			g.fillRect(1, 1, b - 1, h - 1);
 			g.setColor(Color.darkGray);
 
-			int schriftgroesse = gui.UserParameter.instance().schriftGroesse + 2;
+			int schriftgroesse = ho.core.model.UserParameter.instance().schriftGroesse + 2;
 
 			if (print) {
 				schriftgroesse /= 2;
@@ -380,7 +380,7 @@ public class StatistikPanel extends JPanel {
 
 				// Abstand der einzelnen Striche voneinander
 				final double yAbstand = (((double) (h - SU - SO)) / yStriche);
-				int smallschriftgroesse = gui.UserParameter.instance().schriftGroesse;
+				int smallschriftgroesse = ho.core.model.UserParameter.instance().schriftGroesse;
 
 				if (print) {
 					smallschriftgroesse /= 2;

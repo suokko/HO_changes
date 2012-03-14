@@ -6,8 +6,8 @@
  */
 package ho.core.gui.comp.entry;
 
-import gui.HOColorName;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.Helper;
 
@@ -208,10 +208,10 @@ public class SkillEntry implements IHOTableEntry {
     public final void createText() {
         m_sText = Integer.toString((int) m_dZahl);
 
-        if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
-            m_sNachkomma = Helper.DEFAULTDEZIMALFORMAT.format(Helper.round(m_dZahl - (int) m_dZahl,gui.UserParameter.instance().anzahlNachkommastellen));
+        if (ho.core.model.UserParameter.instance().anzahlNachkommastellen == 1) {
+            m_sNachkomma = Helper.DEFAULTDEZIMALFORMAT.format(Helper.round(m_dZahl - (int) m_dZahl,ho.core.model.UserParameter.instance().anzahlNachkommastellen));
         } else {
-            m_sNachkomma = Helper.DEZIMALFORMAT_2STELLEN.format(Helper.round(m_dZahl - (int) m_dZahl,  gui.UserParameter.instance().anzahlNachkommastellen));
+            m_sNachkomma = Helper.DEZIMALFORMAT_2STELLEN.format(Helper.round(m_dZahl - (int) m_dZahl,  ho.core.model.UserParameter.instance().anzahlNachkommastellen));
         }
 
         int index = m_sNachkomma.indexOf(',');

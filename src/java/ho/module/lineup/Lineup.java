@@ -6,11 +6,11 @@
  */
 package ho.module.lineup;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
+import ho.core.model.UserParameter;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;

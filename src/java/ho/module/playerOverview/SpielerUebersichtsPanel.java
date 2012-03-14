@@ -158,10 +158,10 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
 				tabelle, horizontalRightSplitPane);
 
-		horizontalRightSplitPane.setDividerLocation(gui.UserParameter
+		horizontalRightSplitPane.setDividerLocation(ho.core.model.UserParameter
 				.instance().spielerUebersichtsPanel_horizontalRightSplitPane);
 		verticalSplitPane
-				.setDividerLocation(gui.UserParameter.instance().spielerUebersichtsPanel_verticalSplitPane);
+				.setDividerLocation(ho.core.model.UserParameter.instance().spielerUebersichtsPanel_verticalSplitPane);
 
 		add(verticalSplitPane, BorderLayout.CENTER);
 	}

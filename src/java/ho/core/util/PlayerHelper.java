@@ -153,7 +153,7 @@ public class PlayerHelper {
      * @return TODO Missing Return Method Documentation
      */
     public static String getNameForSkill(float bewertung) {
-        return getNameForSkill(bewertung, gui.UserParameter.instance().zahlenFuerSkill);
+        return getNameForSkill(bewertung, ho.core.model.UserParameter.instance().zahlenFuerSkill);
     }
 
     /**
@@ -177,7 +177,7 @@ public class PlayerHelper {
      * @return TODO Missing Return Method Documentation
      */
     public static String getNameForSkill(boolean isMatch, float bewertungwert) {
-        return getNameForSkill(bewertungwert, gui.UserParameter.instance().zahlenFuerSkill, isMatch);
+        return getNameForSkill(bewertungwert, ho.core.model.UserParameter.instance().zahlenFuerSkill, isMatch);
     }
 
     /**
@@ -329,13 +329,13 @@ public class PlayerHelper {
         if (zahlen) {
             if (isMatch) {
                 bewertung += (" ("
-                +  Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+                +  Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(Helper.round(bewertungwert + getValue4Sublevel(sublevel), 2))
                  + ")");
             } else {
                 bewertung += (" ("
-                		+ Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
-                 		.format(Helper.round(bewertungwertfloat, gui.UserParameter.instance().anzahlNachkommastellen)) + ")");
+                		+ Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
+                 		.format(Helper.round(bewertungwertfloat, ho.core.model.UserParameter.instance().anzahlNachkommastellen)) + ")");
             }
         }
 

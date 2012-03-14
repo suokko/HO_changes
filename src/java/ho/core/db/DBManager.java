@@ -1,7 +1,6 @@
 // %2522043834:de.hattrickorganizer.database%
 package ho.core.db;
 
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.db.backup.BackupDialog;
 import ho.core.file.hrf.HRF;
@@ -15,6 +14,7 @@ import ho.core.model.HOModel;
 import ho.core.model.HOParameter;
 import ho.core.model.Spieler;
 import ho.core.model.Team;
+import ho.core.model.UserParameter;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.XtraData;
 import ho.core.training.TrainingPerWeek;

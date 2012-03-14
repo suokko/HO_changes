@@ -5,9 +5,9 @@
  */
 package ho.tool.updater;
 
-import gui.HOIconName;
 import ho.core.file.ZipHelper;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
@@ -189,7 +189,7 @@ final class RefreshDialog extends UpdaterDialog {
         boolean ok = false;
 
         if (count > 1) {
-            show(INSTALLATIONCANCELLEDTEXT + "\n" + INSTALLATIONCANCELLED);
+        	JOptionPane.showMessageDialog(null,INSTALLATIONCANCELLEDTEXT + "\n" + INSTALLATIONCANCELLED);
             return;
         }
 
@@ -208,7 +208,7 @@ final class RefreshDialog extends UpdaterDialog {
 
                     if (result == -1) {
 						if (pluginInfo == null) {
-							show(UNKNOWNPLUGIN.replaceAll("xxx", currentplugin.getName()) + "\n" + CORRUPTEDPLUGIN);
+							JOptionPane.showMessageDialog(null,UNKNOWNPLUGIN.replaceAll("xxx", currentplugin.getName()) + "\n" + CORRUPTEDPLUGIN);
 							continue;
 						}
 

@@ -1,6 +1,6 @@
 package ho.module.training;
 
-import gui.UserParameter;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.module.training.ui.MainPanel;
 import ho.module.training.ui.PlayerDetailPanel;

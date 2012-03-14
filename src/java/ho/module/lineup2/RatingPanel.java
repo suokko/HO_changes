@@ -1,6 +1,6 @@
 package ho.module.lineup2;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
@@ -27,7 +27,7 @@ public class RatingPanel extends JPanel {
 	private double rating;
 
 	public RatingPanel() {
-		if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
+		if (ho.core.model.UserParameter.instance().anzahlNachkommastellen == 1) {
 			numberFormat = Helper.DEFAULTDEZIMALFORMAT;
 		} else {
 			numberFormat = Helper.DEZIMALFORMAT_2STELLEN;

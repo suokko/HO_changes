@@ -712,43 +712,43 @@ public final class Spieler implements plugins.ISpieler {
     	switch (trTyp) {
             case TORWART:
             	// Blaghaid sends coTrainer rather than the never present twTrainers
-                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingsManager.BASE_DURATION_GOALKEEPING, 
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingsManager.BASE_DURATION_GOALKEEPING, 
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
             case SPIELAUFBAU:
-                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingsManager.BASE_DURATION_PLAYMAKING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingsManager.BASE_DURATION_PLAYMAKING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
 
             case FLUEGELSPIEL:
-                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             case CHANCENVERWERTUNG:
-                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_SCORING + TrainingsManager.BASE_DURATION_SCORING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_SCORING + TrainingsManager.BASE_DURATION_SCORING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorschuss());
 
             case VERTEIDIGUNG:
-                return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
             case PASSPIEL:
-				return calcTraining(gui.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING,
+				return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING,
 						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case TA_STEILPAESSE:
-                return calcTraining((100d/85d)*(gui.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING), 
+                return calcTraining((100d/85d)*(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING), 
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case STANDARDS:
-                return calcTraining(gui.UserParameter.instance ().TRAINING_OFFSET_SETPIECES + TrainingsManager.BASE_DURATION_SET_PIECES,
+                return calcTraining(ho.core.model.UserParameter.instance ().TRAINING_OFFSET_SETPIECES + TrainingsManager.BASE_DURATION_SET_PIECES,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());
 
             case TA_ABWEHRVERHALTEN:
-                return calcTraining(2 * (gui.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING),
+                return calcTraining(2 * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING),
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
 			case TA_EXTERNALATTACK:
-				return calcTraining((100d/60d) * (gui.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER),
+				return calcTraining((100d/60d) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER),
 						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             default:
@@ -2527,7 +2527,7 @@ public final class Spieler implements plugins.ISpieler {
     	 }
 
         return ho.core.util.Helper.round(es / 2.0f,
-                                                       gui.UserParameter.instance().anzahlNachkommastellen);
+                                                       ho.core.model.UserParameter.instance().anzahlNachkommastellen);
     }
 
     /**
@@ -2625,16 +2625,16 @@ public final class Spieler implements plugins.ISpieler {
     protected static double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
-    	double ageFactor = Math.pow(1.0404, age-17) * (gui.UserParameter.instance().TRAINING_OFFSET_AGE + TrainingsManager.BASE_AGE_FACTOR);
+    	double ageFactor = Math.pow(1.0404, age-17) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_AGE + TrainingsManager.BASE_AGE_FACTOR);
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
     	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
     	if (skillFactor < 0)
     		skillFactor = 0;
-    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * (gui.UserParameter.instance().TrainerFaktor + TrainingsManager.BASE_COACH_FACTOR);
-    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * (gui.UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingsManager.BASE_ASSISTANT_COACH_FACTOR);
+    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * (ho.core.model.UserParameter.instance().TrainerFaktor + TrainingsManager.BASE_COACH_FACTOR);
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingsManager.BASE_ASSISTANT_COACH_FACTOR);
     	double tiFactor = Double.MAX_VALUE;
     	if (intensitaet > 0)
-    		tiFactor = (1 / (intensitaet/100d)) * (gui.UserParameter.instance().TRAINING_OFFSET_INTENSITY + TrainingsManager.BASE_INTENSITY_FACTOR);
+    		tiFactor = (1 / (intensitaet/100d)) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_INTENSITY + TrainingsManager.BASE_INTENSITY_FACTOR);
     	double staminaFactor = Double.MAX_VALUE;
     	if (staminaTrainingPart < 100)
     		staminaFactor = 1 / (1 - staminaTrainingPart/100d);

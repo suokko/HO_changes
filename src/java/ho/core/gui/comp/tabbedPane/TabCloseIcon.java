@@ -1,7 +1,7 @@
 package ho.core.gui.comp.tabbedPane;
 
 
-import gui.HOIconName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Component;

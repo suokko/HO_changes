@@ -85,7 +85,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
      */
     public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
     	
-    	gui.UserParameter.saveTempParameter();
+    	ho.core.model.UserParameter.saveTempParameter();
     	ModuleConfig.instance().save();
 		if (OptionManager.instance().isRestartNeeded()) {
 	            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
@@ -229,7 +229,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(m_jbSave)) {
-			gui.UserParameter.saveTempParameter();
+			ho.core.model.UserParameter.saveTempParameter();
 			ModuleManager.instance().saveTemp();
 			if (OptionManager.instance().isRestartNeeded()) {
 		            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
@@ -246,7 +246,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 			//}
 		}
 		else if (e.getSource().equals(m_jbCancel)) {
-			gui.UserParameter.deleteTempParameter();
+			ho.core.model.UserParameter.deleteTempParameter();
 			ModuleManager.instance().clearTemp();
 		}
 		OptionManager.deleteInstance();

@@ -54,11 +54,11 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	private JButton m_jbProxy = new JButton(hov.getLanguageString("ConfigureProxy"));
 	private JCheckBox m_jchOldFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), false);
 	private JCheckBox m_jchOwnFixtures = new JCheckBox(hov.getLanguageString("AktuellerSpielplanDownload"),
-			gui.UserParameter.instance().currentMatchlist);
+			ho.core.model.UserParameter.instance().currentMatchlist);
 	private JCheckBox m_jchHRF = new JCheckBox(hov.getLanguageString("HRFDownload"),
-			gui.UserParameter.instance().xmlDownload);
+			ho.core.model.UserParameter.instance().xmlDownload);
 	private JCheckBox m_jchMatchArchive = new JCheckBox(hov.getLanguageString("Matcharchiv"), false);
-	private JCheckBox m_jchFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), gui.UserParameter
+	private JCheckBox m_jchFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), ho.core.model.UserParameter
 			.instance().fixtures);
 	private JList m_jlOldSeasons = new JList();
 	private SpinnerDateModel m_clSpinnerModel = new SpinnerDateModel();

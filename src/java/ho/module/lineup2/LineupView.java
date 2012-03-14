@@ -1,8 +1,8 @@
 package ho.module.lineup2;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.module.lineup.Lineup;
 
 import java.awt.GridBagConstraints;

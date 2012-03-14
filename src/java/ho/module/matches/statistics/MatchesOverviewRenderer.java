@@ -1,7 +1,7 @@
 package ho.module.matches.statistics;
 
-import gui.HOColorName;
-import gui.HOIconName;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.matches.model.MatchesHighlightsStat;
 import ho.module.matches.model.MatchesOverviewRow;

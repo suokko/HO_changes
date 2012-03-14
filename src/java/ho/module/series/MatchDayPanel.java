@@ -1,12 +1,12 @@
 // %3815329211:de.hattrickorganizer.gui.league%
 package ho.module.series;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;

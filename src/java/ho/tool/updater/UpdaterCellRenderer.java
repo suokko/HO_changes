@@ -1,7 +1,7 @@
 // %2709500570:de.hattrickorganizer.tools.updater%
 package ho.tool.updater;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Component;

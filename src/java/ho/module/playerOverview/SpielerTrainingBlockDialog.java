@@ -1,9 +1,9 @@
 // %2759382947:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import gui.HOColorName;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;

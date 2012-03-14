@@ -1,9 +1,9 @@
 // %534638504:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
-import gui.HOIconName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.ProgressbarTableEntry;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.Finanzen;

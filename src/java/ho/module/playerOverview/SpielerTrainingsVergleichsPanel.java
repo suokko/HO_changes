@@ -1,7 +1,6 @@
 // %2054665773:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
@@ -10,6 +9,7 @@ import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungsListRenderer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

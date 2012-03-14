@@ -1,8 +1,7 @@
 // %844311304:gui%
-package gui;
+package ho.core.model;
 
 import ho.core.db.DBManager;
-import ho.core.model.Configuration;
 
 import java.awt.Color;
 import java.util.HashMap;

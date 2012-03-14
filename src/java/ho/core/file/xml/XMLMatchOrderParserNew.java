@@ -1,8 +1,8 @@
 package ho.core.file.xml;
 
-import gui.UserParameter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.SpielerPosition;
+import ho.core.model.UserParameter;
 import ho.module.lineup.substitution.Substitution;
 
 import java.io.File;

@@ -69,15 +69,15 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         //Um den Focus weiterzusetzen        
         addWindowListener(this);
 
-        m_jtfProxyPort.setText(gui.UserParameter.instance().ProxyPort);
-        m_jtfProxyHost.setText(gui.UserParameter.instance().ProxyHost);
-        m_jchProxyAktiv.setSelected(gui.UserParameter.instance().ProxyAktiv);
+        m_jtfProxyPort.setText(ho.core.model.UserParameter.instance().ProxyPort);
+        m_jtfProxyHost.setText(ho.core.model.UserParameter.instance().ProxyHost);
+        m_jchProxyAktiv.setSelected(ho.core.model.UserParameter.instance().ProxyAktiv);
         m_jtfProxyHost.setEnabled(m_jchProxyAktiv.isSelected());
         m_jtfProxyPort.setEnabled(m_jchProxyAktiv.isSelected());
-        m_jtfProxyAuthName.setText(gui.UserParameter.instance().ProxyAuthName);
-        m_jpfProxyAuthPasswort.setText(gui.UserParameter.instance().ProxyAuthPassword);
-        m_jchProxyAuthAktiv.setSelected(gui.UserParameter.instance().ProxyAuthAktiv);
-        m_jchProxyAuthAktiv.setEnabled(gui.UserParameter.instance().ProxyAktiv);
+        m_jtfProxyAuthName.setText(ho.core.model.UserParameter.instance().ProxyAuthName);
+        m_jpfProxyAuthPasswort.setText(ho.core.model.UserParameter.instance().ProxyAuthPassword);
+        m_jchProxyAuthAktiv.setSelected(ho.core.model.UserParameter.instance().ProxyAuthAktiv);
+        m_jchProxyAuthAktiv.setEnabled(ho.core.model.UserParameter.instance().ProxyAktiv);
         m_jtfProxyAuthName.setEnabled(m_jchProxyAuthAktiv.isSelected()
                                       && m_jchProxyAuthAktiv.isEnabled());
         m_jpfProxyAuthPasswort.setEnabled(m_jchProxyAuthAktiv.isSelected()
@@ -353,12 +353,12 @@ public class ProxyDialog extends JDialog implements ActionListener, FocusListene
         MyConnector.instance().setProxyUserName(m_jtfProxyAuthName.getText());
         MyConnector.instance().setProxyUserPWD(new String(m_jpfProxyAuthPasswort.getPassword()));
         MyConnector.instance().enableProxy();
-        gui.UserParameter.instance().ProxyAktiv = m_jchProxyAktiv.isSelected();
-        gui.UserParameter.instance().ProxyHost = m_jtfProxyHost.getText();
-        gui.UserParameter.instance().ProxyPort = m_jtfProxyPort.getText();
-        gui.UserParameter.instance().ProxyAuthAktiv = m_jchProxyAuthAktiv.isSelected();
-        gui.UserParameter.instance().ProxyAuthName = m_jtfProxyAuthName.getText();
-        gui.UserParameter.instance().ProxyAuthPassword = new String(m_jpfProxyAuthPasswort
+        ho.core.model.UserParameter.instance().ProxyAktiv = m_jchProxyAktiv.isSelected();
+        ho.core.model.UserParameter.instance().ProxyHost = m_jtfProxyHost.getText();
+        ho.core.model.UserParameter.instance().ProxyPort = m_jtfProxyPort.getText();
+        ho.core.model.UserParameter.instance().ProxyAuthAktiv = m_jchProxyAuthAktiv.isSelected();
+        ho.core.model.UserParameter.instance().ProxyAuthName = m_jtfProxyAuthName.getText();
+        ho.core.model.UserParameter.instance().ProxyAuthPassword = new String(m_jpfProxyAuthPasswort
                                                                     .getPassword());
     }
 

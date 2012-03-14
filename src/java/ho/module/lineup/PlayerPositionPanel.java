@@ -1,7 +1,6 @@
 // %2927626437:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
-import gui.HOColorName;
 import ho.core.datatype.CBItem;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.Updateable;
@@ -9,6 +8,7 @@ import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.model.SpielerCBItemRenderer;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -687,7 +687,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 item.setValues(spielerName,
                                Helper.round(
                             		   HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(spieler.getSpielerID()), 
-                            		   gui.UserParameter.instance().anzahlNachkommastellen),
+                            		   ho.core.model.UserParameter.instance().anzahlNachkommastellen),
                                spieler);
                 return item;
             } else {

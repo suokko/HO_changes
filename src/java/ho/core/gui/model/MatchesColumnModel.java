@@ -1,8 +1,8 @@
 package ho.core.gui.model;
 
-import gui.HOColorName;
 import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.matches.model.MatchKurzInfo;
 

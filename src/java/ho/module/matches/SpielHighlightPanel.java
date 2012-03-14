@@ -1,10 +1,10 @@
 // %4112883594:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.matches.model.MatchHighlight;
@@ -365,10 +365,10 @@ public class SpielHighlightPanel extends ImagePanel {
 	public static Color getColor4SpielHighlight(int typ, int subtyp) {
 		if (typ == IMatchHighlight.HIGHLIGHT_KARTEN) {
 			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR)) {
-				return gui.UserParameter.instance().FG_ZWEIKARTEN;
+				return ho.core.model.UserParameter.instance().FG_ZWEIKARTEN;
 			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_ROT) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR)) {
-				return gui.UserParameter.instance().FG_GESPERRT;
+				return ho.core.model.UserParameter.instance().FG_GESPERRT;
 			}
 		} else if (typ == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
 			return ThemeManager.getColor(HOColorName.LABEL_FG);
@@ -376,14 +376,14 @@ public class SpielHighlightPanel extends ImagePanel {
 			return ThemeManager.getColor(HOColorName.MATCHHIGHLIGHT_FAILED_FG);
 		} else if (typ == IMatchHighlight.HIGHLIGHT_INFORMATION) {
 			if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER) || (subtyp == IMatchHighlight.HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
-				return gui.UserParameter.instance().FG_ANGESCHLAGEN;
+				return ho.core.model.UserParameter.instance().FG_ANGESCHLAGEN;
 			} else if ((subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_LEICHT)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)
 					|| (subtyp == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_TORWART_FELDSPIELER)) {
-				return gui.UserParameter.instance().FG_VERLETZT;
+				return ho.core.model.UserParameter.instance().FG_VERLETZT;
 			}
 		}
 	

@@ -1,7 +1,7 @@
 package ho.module.lineup.substitution;
 
-import gui.HOColorName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;

@@ -1,8 +1,8 @@
 // %222653727:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
-import gui.HOIconName;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.BorderLayout;
@@ -86,7 +86,7 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
             m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         }
 
-        gui.UserParameter.instance().spieleranalyseVertikal = !gui.UserParameter.instance().spieleranalyseVertikal;
+        ho.core.model.UserParameter.instance().spieleranalyseVertikal = !ho.core.model.UserParameter.instance().spieleranalyseVertikal;
     }
 
     /**
@@ -111,10 +111,10 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
         m_jspSpielerAnalyseSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                                       m_jpSpielerAnalysePanel1,
                                                       m_jpSpielerAnalysePanel2);
-        m_jspSpielerAnalyseSplitPane.setDividerLocation(gui.UserParameter.instance().spielerAnalysePanel_horizontalSplitPane);
+        m_jspSpielerAnalyseSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().spielerAnalysePanel_horizontalSplitPane);
         add(m_jspSpielerAnalyseSplitPane, BorderLayout.CENTER);
 
-        if (!gui.UserParameter.instance().spieleranalyseVertikal) {
+        if (!ho.core.model.UserParameter.instance().spieleranalyseVertikal) {
             m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         } else {
             m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);

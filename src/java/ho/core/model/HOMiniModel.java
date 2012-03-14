@@ -377,8 +377,8 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return Value of property m_clUserSettings.
      */
-    public gui.UserParameter getUserSettings() {
-        return gui.UserParameter.instance();
+    public ho.core.model.UserParameter getUserSettings() {
+        return ho.core.model.UserParameter.instance();
     }
 
     //----------Verein----------------------------------------

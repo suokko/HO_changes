@@ -3,9 +3,9 @@
  */
 package ho.core.gui.theme.ho;
 
-import gui.HOBooleanName;
-import gui.HOColorName;
-import gui.HOIconName;
+import ho.core.gui.theme.HOBooleanName;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.Schema;
 import ho.core.util.HOLogger;
 

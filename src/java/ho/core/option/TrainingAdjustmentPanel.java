@@ -1,8 +1,8 @@
 // %1839835436:de.hattrickorganizer.gui.menu.option%
 package ho.core.option;
 
-import gui.HOColorName;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Dimension;

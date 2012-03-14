@@ -1,13 +1,13 @@
 // %1374340947:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -267,8 +267,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
         pack();
         setSize(getSize().width + Helper.calcCellWidth(30),getSize().height + 10);
-        setLocation(gui.UserParameter.instance().spielerDetails_PositionX,
-                    gui.UserParameter.instance().spielerDetails_PositionY);
+        setLocation(ho.core.model.UserParameter.instance().spielerDetails_PositionX,
+                    ho.core.model.UserParameter.instance().spielerDetails_PositionY);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
@@ -283,8 +283,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
 
     public final void windowClosing(WindowEvent e) {
-        gui.UserParameter.instance().spielerDetails_PositionX = this.getLocation().x;
-        gui.UserParameter.instance().spielerDetails_PositionY = this.getLocation().y;
+        ho.core.model.UserParameter.instance().spielerDetails_PositionX = this.getLocation().x;
+        ho.core.model.UserParameter.instance().spielerDetails_PositionY = this.getLocation().y;
         setVisible(false);
     }
 
@@ -343,7 +343,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
          */
         if (m_clVergleichsSpieler == null) {
             String bonus = "";
-            final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
+            final int gehalt = (int) (m_clSpieler.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
             final String gehalttext = NumberFormat.getCurrencyInstance().format(gehalt);
 
             if (m_clSpieler.getBonus() > 0) {
@@ -407,8 +407,8 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 			}
         } else {
             String bonus = "";
-            final int gehalt = (int) (m_clSpieler.getGehalt() / gui.UserParameter.instance().faktorGeld);
-            final int gehalt2 = (int) (m_clVergleichsSpieler.getGehalt() / gui.UserParameter
+            final int gehalt = (int) (m_clSpieler.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
+            final int gehalt2 = (int) (m_clVergleichsSpieler.getGehalt() / ho.core.model.UserParameter
                                                                            .instance().faktorGeld);
             final String gehalttext = NumberFormat.getCurrencyInstance().format(gehalt);
 
@@ -1426,14 +1426,14 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
     }
     private void showNormal(DoppelLabelEntry labelEntry,byte playerPosition,Spieler m_clSpieler){
     	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
-                gui.UserParameter.instance().anzahlNachkommastellen)+ "");
+                ho.core.model.UserParameter.instance().anzahlNachkommastellen)+ "");
     	labelEntry.getRechts().clear();
     }
     
     
     private void showWithCompare(DoppelLabelEntry labelEntry,byte playerPosition,Spieler m_clSpieler,Spieler m_clVergleichsSpieler){
     	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
-                gui.UserParameter.instance().anzahlNachkommastellen)+ "");
+                ho.core.model.UserParameter.instance().anzahlNachkommastellen)+ "");
     	
     	labelEntry.getRechts().setSpezialNumber(m_clSpieler.calcPosValue(playerPosition,true)
     					- m_clVergleichsSpieler.calcPosValue(playerPosition,true),false);

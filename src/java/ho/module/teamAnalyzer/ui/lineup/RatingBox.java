@@ -55,6 +55,6 @@ class RatingBox extends JPanel {
         opponentValue.setForeground(Color.BLACK);
         setForeground(Color.BLACK);
         setOpaque(false);
-        setFont(getFont().deriveFont(Font.BOLD, gui.UserParameter.instance().schriftGroesse + 3));
+        setFont(getFont().deriveFont(Font.BOLD, ho.core.model.UserParameter.instance().schriftGroesse + 3));
     }
 }

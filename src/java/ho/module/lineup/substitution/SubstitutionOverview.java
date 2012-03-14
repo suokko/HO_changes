@@ -1,8 +1,8 @@
 package ho.module.lineup.substitution;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.GUIUtilities;
 import ho.module.lineup.Lineup;
 import ho.module.lineup2.Helper;

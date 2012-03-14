@@ -369,46 +369,46 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
         jpBestPosition.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
         		+ " (" + 
-        		Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true))
         		 + ")");
-        jpRatingKeeper.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingKeeper.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)) + "");
-        jpRatingDefender.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingDefender.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER, true)) + "");
-        jpRatingDefenderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingDefenderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)) + "");
-        jpRatingDefenderOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingDefenderOffensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)) + "");
-        jpRatingWingback.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingback.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)) + "");
-        jpRatingWingbackTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingbackTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)) + "");
-        jpRatingWingbackOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingbackOffensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)) + "");
-        jpRatingWingbackDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingbackDefensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)) + "");
-        jpRatingMidfielder.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingMidfielder.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)) + "");
-        jpRatingMidfielderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingMidfielderTowardsWing.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)) + "");
-        jpRatingMidfielderOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingMidfielderOffensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)) + "");
-        jpRatingMidfielderDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingMidfielderDefensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)) + "");
-        jpRatingWinger.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWinger.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)) + "");
-        jpRatingWingerTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingerTowardsMiddle.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)) + "");
-        jpRatingWingerOffensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingerOffensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)) + "");
-        jpRatingWingerDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingWingerDefensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)) + "");
-        jpRatingForward.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingForward.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)) + "");
-        jpRatingForwardTowardsWing.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingForwardTowardsWing.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)) + "");
-        jpRatingForwardDefensive.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        jpRatingForwardDefensive.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)) + "");
         clScoutEntry.setSpeciality(((CBItem) jcbSpeciality.getSelectedItem()).getId());
         clScoutEntry.setErfahrung(((CBItem) jcbExperience.getSelectedItem()).getId());

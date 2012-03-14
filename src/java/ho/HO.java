@@ -1,6 +1,5 @@
 package ho;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
@@ -12,6 +11,7 @@ import ho.core.gui.SplashFrame;
 import ho.core.gui.model.UserColumnController;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;

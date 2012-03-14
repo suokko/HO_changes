@@ -3,11 +3,11 @@
  */
 package ho.module.playeranalysis.skillCompare;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;

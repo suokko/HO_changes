@@ -1,19 +1,19 @@
 // %3852537837:de.hattrickorganizer.gui%
 package ho.core.gui;
 
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.HO;
 import ho.core.db.DBManager;
 import ho.core.file.hrf.HRFImport;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.tabbedPane.HOTabbedPane;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.gui.theme.ho.HOTheme;
 import ho.core.gui.theme.jgoodies.JGoodiesTheme;
 import ho.core.gui.theme.nimbus.NimbusTheme;
 import ho.core.model.FormulaFactors;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.module.IModule;
 import ho.core.module.ModuleManager;
 import ho.core.net.DownloadDialog;

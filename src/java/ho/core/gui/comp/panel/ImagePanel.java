@@ -1,8 +1,8 @@
 // %556564099:de.hattrickorganizer.gui.templates%
 package ho.core.gui.comp.panel;
 
-import gui.HOBooleanName;
-import gui.HOIconName;
+import ho.core.gui.theme.HOBooleanName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 

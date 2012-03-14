@@ -1,10 +1,10 @@
 // %127697663:de.hattrickorganizer.gui.matchprediction%
 package ho.tool.matchPrediction;
 
-import gui.UserParameter;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.tool.matchPrediction.engine.MatchPredictionManager;
 import ho.tool.matchPrediction.engine.MatchResult;
 import ho.tool.matchPrediction.engine.TeamData;

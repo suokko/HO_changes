@@ -96,8 +96,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 		m_OAService = new ServiceBuilder().provider(HattrickAPI.class)
 				.apiKey(Helper.decryptString(CONSUMER_KEY)).apiSecret(Helper.decryptString(CONSUMER_SECRET))
 				.signatureType(SignatureType.Header).build();
-		m_OAAccessToken = new Token(Helper.decryptString(gui.UserParameter.instance().AccessToken),
-				Helper.decryptString(gui.UserParameter.instance().TokenSecret));
+		m_OAAccessToken = new Token(Helper.decryptString(ho.core.model.UserParameter.instance().AccessToken),
+				Helper.decryptString(ho.core.model.UserParameter.instance().TokenSecret));
 	}
 
 	// ~ Methods
@@ -699,8 +699,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 					m_OAAccessToken = authDialog.getAccessToken();
 					if (m_OAAccessToken == null)
 						m_OAAccessToken = new Token(
-								Helper.decryptString(gui.UserParameter.instance().AccessToken),
-								Helper.decryptString(gui.UserParameter.instance().TokenSecret));
+								Helper.decryptString(ho.core.model.UserParameter.instance().AccessToken),
+								Helper.decryptString(ho.core.model.UserParameter.instance().TokenSecret));
 					break;
 				case 407:
 					throw new RuntimeException("HTTP Response Code 407: Proxy authentication required.");
@@ -801,8 +801,8 @@ public class MyConnector implements plugins.IDownloadHelper {
 					m_OAAccessToken = authDialog.getAccessToken();
 					if (m_OAAccessToken == null)
 						m_OAAccessToken = new Token(
-								Helper.decryptString(gui.UserParameter.instance().AccessToken),
-								Helper.decryptString(gui.UserParameter.instance().TokenSecret));
+								Helper.decryptString(ho.core.model.UserParameter.instance().AccessToken),
+								Helper.decryptString(ho.core.model.UserParameter.instance().TokenSecret));
 					// Try again...
 					break;
 				case 407:

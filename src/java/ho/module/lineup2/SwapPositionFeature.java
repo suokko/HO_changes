@@ -1,7 +1,7 @@
 package ho.module.lineup2;
 
-import gui.HOIconName;
 import ho.core.gui.model.SpielerCBItem;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.lineup.Lineup;

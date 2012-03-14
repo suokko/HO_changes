@@ -1,8 +1,8 @@
 // %3969157412:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
-import gui.HOIconName;
 import ho.core.file.extension.FileExtensionManager;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.playerOverview.SpielerUebersichtNamenTable;
@@ -313,10 +313,10 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
         verticalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false,
                                            horizontalLeftSplitPane, horizontalRightSplitPane);
   
-        verticalSplitPaneLow.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_verticalSplitPaneLow);
-        horizontalLeftSplitPane.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_horizontalLeftSplitPane);
-        horizontalRightSplitPane.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_horizontalRightSplitPane);
-        verticalSplitPane.setDividerLocation(gui.UserParameter.instance().aufstellungsPanel_verticalSplitPane);
+        verticalSplitPaneLow.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPaneLow);
+        horizontalLeftSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_horizontalLeftSplitPane);
+        horizontalRightSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_horizontalRightSplitPane);
+        verticalSplitPane.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPane);
 
         add(verticalSplitPane, BorderLayout.CENTER);		       
     }
