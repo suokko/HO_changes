@@ -1,8 +1,8 @@
 // %3338167864:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
-import gui.HOColorName;
 import ho.core.gui.model.MatchesColumnModel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;

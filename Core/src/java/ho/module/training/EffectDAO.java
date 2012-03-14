@@ -1,9 +1,9 @@
 // %1641442024:hoplugins.trainingExperience.dao%
 package ho.module.training;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;

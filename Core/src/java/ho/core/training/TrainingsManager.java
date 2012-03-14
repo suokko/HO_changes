@@ -1,10 +1,10 @@
 // %2732728450:de.hattrickorganizer.logik%
 package ho.core.training;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 

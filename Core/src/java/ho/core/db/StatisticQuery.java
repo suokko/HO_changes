@@ -24,7 +24,7 @@ public class StatisticQuery {
 
 		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 16;
-		final float faktor = gui.UserParameter.instance().faktorGeld;
+		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
 		final Vector<double[]> vWerte = new Vector<double[]>();
@@ -255,7 +255,7 @@ public class StatisticQuery {
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
 		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 15;
-		final float faktor = gui.UserParameter.instance().faktorGeld;
+		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 		double[][] returnWerte = new double[0][0];
 		final Vector<double[]> vWerte = new Vector<double[]>();
 
@@ -376,7 +376,7 @@ public class StatisticQuery {
 		final int anzahlSpalten = 17;
 
 		final double[][] marktwerte = getMarktwert4Statistik(anzahlHRF);
-		final float faktor = gui.UserParameter.instance().faktorGeld;
+		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
 		Vector<double[]> vWerte = new Vector<double[]>();
@@ -486,7 +486,7 @@ public class StatisticQuery {
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
 		Vector<ITrainingWeek> trainings = TrainingsManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 3;
-		final float faktor = gui.UserParameter.instance().faktorGeld;
+		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
 		double[][] returnWerte = new double[0][0];
 		final Vector<double[]> vWerte = new Vector<double[]>();

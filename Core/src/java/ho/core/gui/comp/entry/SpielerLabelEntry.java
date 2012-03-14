@@ -1,14 +1,14 @@
 // %2768837177:de.hattrickorganizer.gui.templates%
 package ho.core.gui.comp.entry;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.SpielerPosition;
+import ho.core.model.UserParameter;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
 
@@ -354,7 +354,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
 	//--------------static------------------------------
 	public static Color getForegroundForSpieler(plugins.ISpieler spieler) {
 	    Color color;
-	    UserParameter userParameter = gui.UserParameter.instance();
+	    UserParameter userParameter = ho.core.model.UserParameter.instance();
 	    
 	    //Auf Transfermarkt
 	    if (spieler.getTransferlisted() > 0) {

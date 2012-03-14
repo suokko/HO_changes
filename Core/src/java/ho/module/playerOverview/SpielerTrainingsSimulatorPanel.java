@@ -305,81 +305,81 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jlHomeGrown.setIcon(ImageUtilities.getImageIcon4Veraenderung(hg, true));
         
         m_jpBestPos.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
-        		+ " (" + Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        		+ " (" + Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true)) + ")");
-        m_jpWertTor.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen).
+        m_jpWertTor.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen).
         		format(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)));
         m_jpWertTor.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.KEEPER, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.KEEPER,true), false);
-        m_jpWertInnenVert.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertInnenVert.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER, true)));
         m_jpWertInnenVert.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER,true), false);
-        m_jpWertInnenVertAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertInnenVertAus.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)));
         m_jpWertInnenVertAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_TOWING, true), false);
-        m_jpWertInnenVertOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertInnenVertOff.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)));
         m_jpWertInnenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.CENTRAL_DEFENDER_OFF, true), false);
-        m_jpWertAussenVert.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertAussenVert.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)));
         m_jpWertAussenVert.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.BACK, true), false);
-        m_jpWertAussenVertIn.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen).
+        m_jpWertAussenVertIn.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen).
         		format(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)));
         m_jpWertAussenVertIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_TOMID, true), false);
-        m_jpWertAussenVertOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertAussenVertOff.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)));
         m_jpWertAussenVertOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_OFF, true), false);
-        m_jpWertAussenVertDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertAussenVertDef.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)));
         m_jpWertAussenVertDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.BACK_DEF, true), false);
-        m_jpWertMittelfeld.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertMittelfeld.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)));
         m_jpWertMittelfeld.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER, true), false);
-        m_jpWertMittelfeldAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertMittelfeldAus.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)));
         m_jpWertMittelfeldAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_TOWING, true), false);
-        m_jpWertMittelfeldOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertMittelfeldOff.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)));
         m_jpWertMittelfeldOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_OFF, true), false);
-        m_jpWertMittelfeldDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertMittelfeldDef.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)));
         m_jpWertMittelfeldDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.MIDFIELDER_DEF, true), false);
-        m_jpWertFluegel.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertFluegel.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)));
         m_jpWertFluegel.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER, true), false);
-        m_jpWertFluegelIn.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertFluegelIn.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)));
         m_jpWertFluegelIn.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_TOMID, true), false);
-        m_jpWertFluegelOff.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertFluegelOff.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)));
         m_jpWertFluegelOff.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_OFF, true), false);
-        m_jpWertFluegelDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertFluegelDef.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)));
         m_jpWertFluegelDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.WINGER_DEF, true), false);
-        m_jpWertSturm.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertSturm.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)));
         m_jpWertSturm.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD, true), false);
-        m_jpWertSturmAus.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertSturmAus.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)));
         m_jpWertSturmAus.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_TOWING, true), false);
-        m_jpWertSturmDef.getLinks().setText(Helper.getNumberFormat(false, gui.UserParameter.instance().anzahlNachkommastellen)
+        m_jpWertSturmDef.getLinks().setText(Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)));
         m_jpWertSturmDef.getRechts().setSpezialNumber(tempSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true)
         		- m_clSpieler.calcPosValue(ISpielerPosition.FORWARD_DEF, true), false);

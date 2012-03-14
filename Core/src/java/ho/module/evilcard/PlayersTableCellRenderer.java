@@ -1,7 +1,7 @@
 package ho.module.evilcard;
 
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;

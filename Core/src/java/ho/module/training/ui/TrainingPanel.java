@@ -1,9 +1,9 @@
 // %1126721451963:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import gui.UserParameter;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;

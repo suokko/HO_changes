@@ -1,7 +1,6 @@
 // %715342267:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
@@ -11,6 +10,7 @@ import ho.core.gui.model.PlayerOverviewModel;
 import ho.core.gui.model.UserColumnController;
 import ho.core.gui.model.UserColumnFactory;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.Helper;
 
 import javax.swing.JTable;

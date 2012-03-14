@@ -1,7 +1,6 @@
 // %651501138:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
-import gui.UserParameter;
 import ho.core.db.DBManager;
 import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
@@ -11,6 +10,7 @@ import ho.core.gui.model.AufstellungCBItem;
 import ho.core.gui.model.AufstellungsListRenderer;
 import ho.core.gui.model.LineupListRenderer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;

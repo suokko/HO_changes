@@ -1,16 +1,16 @@
 // %3860481451:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungCBItem;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
@@ -54,19 +54,19 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
 	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
 	private final JCheckBox m_jchForm 	= new JCheckBox(HOVerwaltung.instance().getLanguageString("Form_beruecksichtigen"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_form);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_form);
 	private final JCheckBox m_jchGesperrte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Gesperrte_aufstellen"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_gesperrt);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_gesperrt);
 	private final JCheckBox m_jchIdealPosition = new JCheckBox(HOVerwaltung.instance().getLanguageString("Idealposition_zuerst"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_idealPosition);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_idealPosition);
 	private final JCheckBox m_jchLast		= new JCheckBox(HOVerwaltung.instance().getLanguageString("NotLast_aufstellen"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_notLast);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_notLast);
 	private final JCheckBox m_jchListBoxGruppenFilter = new JCheckBox(HOVerwaltung.instance().getLanguageString("ListBoxGruppenFilter"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_cbfilter);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_cbfilter);
 	private final JCheckBox m_jchNot 		= new JCheckBox(HOVerwaltung.instance().getLanguageString("Not"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_not);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_not);
 	private final JCheckBox m_jchVerletzte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Verletze_aufstellen"),
-			gui.UserParameter.instance().aufstellungsAssistentPanel_verletzt);
+			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_verletzt);
 	private final JComboBox m_jcbGruppe 	= new JComboBox(HOIconName.TEAMSMILIES);
 	private final JComboBox m_jcbWetter 	= new JComboBox(Helper.WETTER);
 	private final CBItem[] REIHENFOLGE = {
@@ -276,7 +276,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						m_jchIdealPosition.isSelected(),
 						m_jchVerletzte.isSelected(),
 						m_jchGesperrte.isSelected(),
-						gui.UserParameter.instance().WetterEffektBonus,
+						ho.core.model.UserParameter.instance().WetterEffektBonus,
 						getWetter());
 		mainFrame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
 		mainFrame.getAufstellungsPanel().update();
@@ -295,9 +295,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			if (entry.getValue() == null) {
 				boolean selected = true;
 				LineupAssistantSelectorOverlay laso = new LineupAssistantSelectorOverlay();
-				HashMap <String, String> upValues = gui.UserParameter.instance().getValues();
+				HashMap <String, String> upValues = ho.core.model.UserParameter.instance().getValues();
 				if (UserParameter.instance().assistantSaved) {
-					selected = gui.UserParameter.instance().getBooleanValue(upValues, "assistant" + entry.getKey().getPositionsID());
+					selected = ho.core.model.UserParameter.instance().getBooleanValue(upValues, "assistant" + entry.getKey().getPositionsID());
 				} else {
 					int posId = entry.getKey().getPositionsID();
 					if (( posId == ISpielerPosition.centralForward) ||
@@ -456,7 +456,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jchNot.addActionListener(this);
 		panel2.add(m_jchNot, BorderLayout.WEST);
 		m_jcbGruppe.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Gruppe"));
-		m_jcbGruppe.setSelectedItem(gui.UserParameter.instance().aufstellungsAssistentPanel_gruppe);
+		m_jcbGruppe.setSelectedItem(ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_gruppe);
 		m_jcbGruppe.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 		m_jcbGruppe.setRenderer(new ho.core.gui.comp.renderer.SmilieListCellRenderer());
 		m_jcbGruppe.addActionListener(this);
@@ -470,7 +470,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		m_jcbReihenfolge.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Reihenfolge"));
 		ho.core.util.Helper.markierenComboBox(m_jcbReihenfolge,
-				gui.UserParameter.instance().aufstellungsAssistentPanel_reihenfolge);
+				ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_reihenfolge);
 		panel.add(m_jcbReihenfolge);
 		m_jchIdealPosition.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Idealposition"));
 		m_jchIdealPosition.setOpaque(false);

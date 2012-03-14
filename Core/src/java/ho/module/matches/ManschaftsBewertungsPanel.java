@@ -1,9 +1,9 @@
 // %2517784300:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -342,7 +342,7 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             String temp;
             temp = PlayerHelper.getNameForSkill(details.getHomeGesamtstaerke(false), false, true);
 
-            if (gui.UserParameter.instance().zahlenFuerSkill) {
+            if (ho.core.model.UserParameter.instance().zahlenFuerSkill) {
                 temp += (" ("
                 + Helper.round((((details.getHomeGesamtstaerke(false)- 1) / 4) + 1), 2) + ")");
             }
@@ -350,7 +350,7 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             m_clHeimGesamt.setText(temp);
             temp = PlayerHelper.getNameForSkill(details.getGuestGesamtstaerke(false), false, true);
 
-            if (gui.UserParameter.instance().zahlenFuerSkill) {
+            if (ho.core.model.UserParameter.instance().zahlenFuerSkill) {
                 temp += (" ("
                 + Helper.round((((details.getGuestGesamtstaerke(false) - 1) / 4) + 1), 2) + ")");
             }

@@ -36,8 +36,8 @@ class NthrfUtil {
             JFileChooser fileChooser = new JFileChooser();
 
             final String fname = "/nt_"+teamId+"_"+new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".hrf";
-            final File path = new File(gui.UserParameter.instance().hrfImport_HRFPath);
-            File file = new File(gui.UserParameter.instance().hrfImport_HRFPath + File.separator + fname);
+            final File path = new File(ho.core.model.UserParameter.instance().hrfImport_HRFPath);
+            File file = new File(ho.core.model.UserParameter.instance().hrfImport_HRFPath + File.separator + fname);
             fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("Speichern"));
 
@@ -68,7 +68,7 @@ class NthrfUtil {
                 x2h.writeHRF(file);
                 debug("wrote file " + (file != null ? file.getAbsolutePath() : "null"));
                 // save folder setting
-                gui.UserParameter.instance().hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
+                ho.core.model.UserParameter.instance().hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
             } else {
                 debug("Could not write file, nothing selected!");
                 return false;

@@ -1,16 +1,16 @@
 // %119582289:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import gui.HOColorName;
-import gui.HOIconName;
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.StatistikModel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;

@@ -1,8 +1,8 @@
 // %2208660911:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import gui.HOColorName;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HOLogger;
 
@@ -71,7 +71,7 @@ class MatchberichtEditorPanel extends ImagePanel {
 
         final StyleSheet style = new StyleSheet();
         style.addRule("a { color:#006400; font-weight:bold; }");
-        style.addRule("BODY, P {font: " + gui.UserParameter.instance().schriftGroesse
+        style.addRule("BODY, P {font: " + ho.core.model.UserParameter.instance().schriftGroesse
                       + "pt sans-serif; color:#000000}");
         String hexColor = Integer.toHexString(ThemeManager.getColor(HOColorName.PANEL_BG).getRGB());
         style.addRule("body { background: "+hexColor.substring(2)+" }");

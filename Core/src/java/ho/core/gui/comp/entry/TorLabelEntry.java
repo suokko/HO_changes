@@ -2,8 +2,8 @@
 package ho.core.gui.comp.entry;
 
 //import java.awt.Color;
-import gui.HOIconName;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 

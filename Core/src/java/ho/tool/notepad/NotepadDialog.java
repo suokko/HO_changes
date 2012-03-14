@@ -1,8 +1,8 @@
 package ho.tool.notepad;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;

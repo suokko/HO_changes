@@ -66,11 +66,11 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 	// ----------------------------------------------------------------------------
 
 	// Nicht Statik, da es sonst zu früh initialisiert wird
-	public CBItem[] SORTIERUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("Name"), gui.UserParameter.SORT_NAME),
-			new CBItem(HOVerwaltung.instance().getLanguageString("BestePosition"), gui.UserParameter.SORT_BESTPOS),
-			new CBItem(HOVerwaltung.instance().getLanguageString("Aufgestellt"), gui.UserParameter.SORT_AUFGESTELLT),
-			new CBItem(HOVerwaltung.instance().getLanguageString("Gruppe"), gui.UserParameter.SORT_GRUPPE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("Bewertung"), gui.UserParameter.SORT_BEWERTUNG), };
+	public CBItem[] SORTIERUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("Name"), ho.core.model.UserParameter.SORT_NAME),
+			new CBItem(HOVerwaltung.instance().getLanguageString("BestePosition"), ho.core.model.UserParameter.SORT_BESTPOS),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Aufgestellt"), ho.core.model.UserParameter.SORT_AUFGESTELLT),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Gruppe"), ho.core.model.UserParameter.SORT_GRUPPE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("Bewertung"), ho.core.model.UserParameter.SORT_BEWERTUNG), };
 
 	private ComboBoxPanel m_jcbNachkomma;
 	private ComboBoxPanel m_jcbSortierung;
@@ -118,38 +118,38 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 
 	public final void itemStateChanged(ItemEvent itemEvent) {
 		// Kein Selected Event!
-		gui.UserParameter.temp().zahlenFuerSkill = m_jchZahlenBewertung.isSelected();
+		ho.core.model.UserParameter.temp().zahlenFuerSkill = m_jchZahlenBewertung.isSelected();
 		if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-			gui.UserParameter.temp().faktorGeld = ((GeldFaktorCBItem) m_jcbWaehrung.getSelectedItem()).getFaktor();
-			gui.UserParameter.temp().TimeZoneDifference = ((CBItem) m_jcbTimeZoneDifference.getSelectedItem()).getId();
-			gui.UserParameter.temp().anzahlNachkommastellen = ((CBItem) m_jcbNachkomma.getSelectedItem()).getId();
-			gui.UserParameter.temp().sprachDatei = ((String) m_jcbSprachdatei.getSelectedItem());
-			gui.UserParameter.temp().standardsortierung = ((CBItem) m_jcbSortierung.getSelectedItem()).getId();
-			gui.UserParameter.temp().skin = ((String) m_jcbSkin.getSelectedItem());
+			ho.core.model.UserParameter.temp().faktorGeld = ((GeldFaktorCBItem) m_jcbWaehrung.getSelectedItem()).getFaktor();
+			ho.core.model.UserParameter.temp().TimeZoneDifference = ((CBItem) m_jcbTimeZoneDifference.getSelectedItem()).getId();
+			ho.core.model.UserParameter.temp().anzahlNachkommastellen = ((CBItem) m_jcbNachkomma.getSelectedItem()).getId();
+			ho.core.model.UserParameter.temp().sprachDatei = ((String) m_jcbSprachdatei.getSelectedItem());
+			ho.core.model.UserParameter.temp().standardsortierung = ((CBItem) m_jcbSortierung.getSelectedItem()).getId();
+			ho.core.model.UserParameter.temp().skin = ((String) m_jcbSkin.getSelectedItem());
 		}
-		if ((!gui.UserParameter.temp().sprachDatei.equals(gui.UserParameter.instance().sprachDatei))
-				|| (gui.UserParameter.temp().TimeZoneDifference != gui.UserParameter.instance().TimeZoneDifference))
+		if ((!ho.core.model.UserParameter.temp().sprachDatei.equals(ho.core.model.UserParameter.instance().sprachDatei))
+				|| (ho.core.model.UserParameter.temp().TimeZoneDifference != ho.core.model.UserParameter.instance().TimeZoneDifference))
 			OptionManager.instance().setRestartNeeded();
-		if (gui.UserParameter.temp().zahlenFuerSkill != gui.UserParameter.instance().zahlenFuerSkill)
+		if (ho.core.model.UserParameter.temp().zahlenFuerSkill != ho.core.model.UserParameter.instance().zahlenFuerSkill)
 			OptionManager.instance().setReInitNeeded();
-		if (!gui.UserParameter.temp().skin.equals(gui.UserParameter.instance().skin)) {
+		if (!ho.core.model.UserParameter.temp().skin.equals(ho.core.model.UserParameter.instance().skin)) {
 			OptionManager.instance().setSkinChanged();
 			OptionManager.instance().setRestartNeeded();
 		}
 	}
 
 	public final void stateChanged(ChangeEvent changeEvent) {
-		gui.UserParameter.temp().deadlineFrist = (int) m_jslDeadline.getValue();
-		gui.UserParameter.temp().MinIdealPosStk = m_jslMinStaerke.getValue();
-		gui.UserParameter.temp().WetterEffektBonus = m_jslWetterEffekt.getValue();
-		gui.UserParameter.temp().futureWeeks = (int) m_jslFutureWeeks.getValue();
-		gui.UserParameter.temp().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
+		ho.core.model.UserParameter.temp().deadlineFrist = (int) m_jslDeadline.getValue();
+		ho.core.model.UserParameter.temp().MinIdealPosStk = m_jslMinStaerke.getValue();
+		ho.core.model.UserParameter.temp().WetterEffektBonus = m_jslWetterEffekt.getValue();
+		ho.core.model.UserParameter.temp().futureWeeks = (int) m_jslFutureWeeks.getValue();
+		ho.core.model.UserParameter.temp().schriftGroesse = (int) m_jslSchriftgroesse.getValue();
 
-		if (gui.UserParameter.temp().schriftGroesse != gui.UserParameter.instance().schriftGroesse) {
+		if (ho.core.model.UserParameter.temp().schriftGroesse != ho.core.model.UserParameter.instance().schriftGroesse) {
 			OptionManager.instance().setSkinChanged();
 			OptionManager.instance().setRestartNeeded();
 		}
-		if (gui.UserParameter.temp().futureWeeks != gui.UserParameter.instance().futureWeeks) {
+		if (ho.core.model.UserParameter.temp().futureWeeks != ho.core.model.UserParameter.instance().futureWeeks) {
 			OptionManager.instance().setRestartNeeded();
 		}
 	}
@@ -162,37 +162,37 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 
 		m_jslDeadline = new SliderPanel(HOVerwaltung.instance().getLanguageString("TransferWecker"), 60, 0, 1f / 60000f, 1.0f, 120);
 		m_jslDeadline.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_TransferWecker"));
-		m_jslDeadline.setValue((float) gui.UserParameter.temp().deadlineFrist);
+		m_jslDeadline.setValue((float) ho.core.model.UserParameter.temp().deadlineFrist);
 		m_jslDeadline.addChangeListener(this);
 		add(m_jslDeadline);
 
 		m_jslMinStaerke = new SliderPanel(HOVerwaltung.instance().getLanguageString("MinStaerkeIdealPos"), 100, 0, 10, 0.1f, 120);
 		m_jslMinStaerke.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_MinStaerkeIdealPos"));
-		m_jslMinStaerke.setValue(gui.UserParameter.temp().MinIdealPosStk);
+		m_jslMinStaerke.setValue(ho.core.model.UserParameter.temp().MinIdealPosStk);
 		m_jslMinStaerke.addChangeListener(this);
 		add(m_jslMinStaerke);
 
 		m_jslWetterEffekt = new SliderPanel(HOVerwaltung.instance().getLanguageString("Wettereffekt"), 100, 0, 100, 1f, 120);
 		m_jslWetterEffekt.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Wettereffekt"));
-		m_jslWetterEffekt.setValue(gui.UserParameter.temp().WetterEffektBonus);
+		m_jslWetterEffekt.setValue(ho.core.model.UserParameter.temp().WetterEffektBonus);
 		m_jslWetterEffekt.addChangeListener(this);
 		add(m_jslWetterEffekt);
 
 		m_jslFutureWeeks = new SliderPanel(HOVerwaltung.instance().getLanguageString("futureWeeks"), 80, 0, 1, 1f, 120);
 		m_jslFutureWeeks.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_futureWeeks"));
-		m_jslFutureWeeks.setValue(gui.UserParameter.temp().futureWeeks);
+		m_jslFutureWeeks.setValue(ho.core.model.UserParameter.temp().futureWeeks);
 		m_jslFutureWeeks.addChangeListener(this);
 		add(m_jslFutureWeeks);
 
 		m_jslSchriftgroesse = new SliderPanel(HOVerwaltung.instance().getLanguageString("Schriftgroesse"), 12, 8, 1, 1.0f, 120);
 		m_jslSchriftgroesse.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Schriftgroesse"));
-		m_jslSchriftgroesse.setValue(gui.UserParameter.temp().schriftGroesse);
+		m_jslSchriftgroesse.setValue(ho.core.model.UserParameter.temp().schriftGroesse);
 		m_jslSchriftgroesse.addChangeListener(this);
 		add(m_jslSchriftgroesse);
 
 		m_jcbSkin = new ComboBoxPanel("Skin", new String[] { "Nimbus", "Classic", "JGoodies Green", // 
 				"JGoodies Silver", "JGoodies Sky", "JGoodies Blue", "JGoodies Royale", "System" }, 120);
-		m_jcbSkin.setSelectedItem(gui.UserParameter.temp().skin);
+		m_jcbSkin.setSelectedItem(ho.core.model.UserParameter.temp().skin);
 		m_jcbSkin.addItemListener(this);
 		add(m_jcbSkin);
 
@@ -203,31 +203,31 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		}
 		m_jcbSprachdatei = new ComboBoxPanel(HOVerwaltung.instance().getLanguageString("Sprachdatei"), sprachdateien, 120);
 		m_jcbSprachdatei.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Sprachdatei"));
-		m_jcbSprachdatei.setSelectedItem(gui.UserParameter.temp().sprachDatei);
+		m_jcbSprachdatei.setSelectedItem(ho.core.model.UserParameter.temp().sprachDatei);
 		m_jcbSprachdatei.addItemListener(this);
 		add(m_jcbSprachdatei);
 
 		m_jcbTimeZoneDifference = new ComboBoxPanel(HOVerwaltung.instance().getLanguageString("options_TimeZone"), TIMEZONES, 120);
 		m_jcbTimeZoneDifference.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Options_TimeZone"));
-		m_jcbTimeZoneDifference.setSelectedId(gui.UserParameter.temp().TimeZoneDifference);
+		m_jcbTimeZoneDifference.setSelectedId(ho.core.model.UserParameter.temp().TimeZoneDifference);
 		m_jcbTimeZoneDifference.addItemListener(this);
 		add(m_jcbTimeZoneDifference);
 
 		java.util.Arrays.sort(WAEHRUNGEN);
 		m_jcbWaehrung = new ComboBoxPanel(HOVerwaltung.instance().getLanguageString("Waehrungsfaktor"), WAEHRUNGEN, 120);
-		m_jcbWaehrung.setSelectedId(gui.UserParameter.temp().waehrungsID);
+		m_jcbWaehrung.setSelectedId(ho.core.model.UserParameter.temp().waehrungsID);
 		m_jcbWaehrung.addItemListener(this);
 
 		// add( m_jcbWaehrung );
 		m_jcbSortierung = new ComboBoxPanel(HOVerwaltung.instance().getLanguageString("Defaultsortierung"), SORTIERUNG, 120);
 		m_jcbSortierung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Defaultsortierung"));
-		m_jcbSortierung.setSelectedId(gui.UserParameter.temp().standardsortierung);
+		m_jcbSortierung.setSelectedId(ho.core.model.UserParameter.temp().standardsortierung);
 		m_jcbSortierung.addItemListener(this);
 		add(m_jcbSortierung);
 
 		m_jcbNachkomma = new ComboBoxPanel(HOVerwaltung.instance().getLanguageString("Nachkommastellen"), NACHKOMMASTELLEN, 120);
 		m_jcbNachkomma.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Nachkommastellen"));
-		m_jcbNachkomma.setSelectedId(gui.UserParameter.temp().anzahlNachkommastellen);
+		m_jcbNachkomma.setSelectedId(ho.core.model.UserParameter.temp().anzahlNachkommastellen);
 		m_jcbNachkomma.addItemListener(this);
 		add(m_jcbNachkomma);
 
@@ -235,7 +235,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 				+ HOVerwaltung.instance().getLanguageString("passabel") + " (6)");
 		m_jchZahlenBewertung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_SkillZahlen"));
 		m_jchZahlenBewertung.setOpaque(false);
-		m_jchZahlenBewertung.setSelected(gui.UserParameter.temp().zahlenFuerSkill);
+		m_jchZahlenBewertung.setSelected(ho.core.model.UserParameter.temp().zahlenFuerSkill);
 		m_jchZahlenBewertung.addItemListener(this);
 		add(m_jchZahlenBewertung);
 

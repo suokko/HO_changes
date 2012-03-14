@@ -260,7 +260,7 @@ public interface IHOMiniModel {
      *
      * @return Value of property m_clUserSettings.
      */
-    public gui.UserParameter getUserSettings();
+    public ho.core.model.UserParameter getUserSettings();
 
     //----------Verein----------------------------------------
 

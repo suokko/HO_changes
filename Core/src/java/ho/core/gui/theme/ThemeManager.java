@@ -4,7 +4,6 @@
 package ho.core.gui.theme;
 
 
-import gui.HOIconName;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.gui.theme.ho.HOClassicSchema;

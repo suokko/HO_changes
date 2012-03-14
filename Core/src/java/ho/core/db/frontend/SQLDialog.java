@@ -1,8 +1,8 @@
 package ho.core.db.frontend;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HelperWrapper;
 

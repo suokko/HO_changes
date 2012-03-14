@@ -6,10 +6,10 @@
  */
 package ho.module.lineup;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.panel.RasenPanel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.Helper;
@@ -112,7 +112,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
     protected AufstellungsRatingPanel() {
         initComponents();
 
-        if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
+        if (ho.core.model.UserParameter.instance().anzahlNachkommastellen == 1) {
             m_clFormat = Helper.DEFAULTDEZIMALFORMAT;
         } else {
             m_clFormat = Helper.DEZIMALFORMAT_2STELLEN;

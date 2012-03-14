@@ -1,7 +1,7 @@
 package ho.module.specialEvents;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;

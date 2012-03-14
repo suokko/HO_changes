@@ -34,7 +34,7 @@ public class DoppelLabelEntry implements IHOTableEntry {
         super();
         m_clLinks = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, color,
                                         SwingConstants.RIGHT);
-        m_clRechts = new ColorLabelEntry("", gui.UserParameter.instance().FG_VERLETZT, color,
+        m_clRechts = new ColorLabelEntry("", ho.core.model.UserParameter.instance().FG_VERLETZT, color,
                                          SwingConstants.CENTER);
         createComponent();
     }

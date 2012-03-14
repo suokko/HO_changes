@@ -1,8 +1,8 @@
 // %1301807047:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
-import gui.HOColorName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;

@@ -1,6 +1,6 @@
 package plugins;
 
-import gui.UserParameter;
+import ho.core.model.UserParameter;
 
 import java.util.List;
 

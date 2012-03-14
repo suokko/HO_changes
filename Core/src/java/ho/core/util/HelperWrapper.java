@@ -6,10 +6,10 @@
  */
 package ho.core.util;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.file.hrf.HRFImport;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOMiniModel;

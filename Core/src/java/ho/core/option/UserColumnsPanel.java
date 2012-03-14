@@ -1,10 +1,10 @@
 package ho.core.option;
 
-import gui.HOIconName;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnController;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.tool.updater.TableEditor;

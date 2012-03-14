@@ -1,13 +1,13 @@
 package ho.core.gui.model;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.entry.SmilieEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
@@ -602,7 +602,7 @@ final public class UserColumnFactory {
 			@Override
 			public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 				final String bonus = "";
-				final int gehalt = (int) (player.getGehalt() / gui.UserParameter.instance().faktorGeld);
+				final int gehalt = (int) (player.getGehalt() / ho.core.model.UserParameter.instance().faktorGeld);
 				final String gehalttext = Helper.getNumberFormat(true, 0).format(gehalt);
 				if(playerCompare == null){
 					return new DoppelLabelEntry(new ColorLabelEntry(gehalt,
@@ -616,7 +616,7 @@ final public class UserColumnFactory {
                         SwingConstants.RIGHT));
 				}
 
-                final int gehalt2 = (int) (playerCompare.getGehalt() / gui.UserParameter
+                final int gehalt2 = (int) (playerCompare.getGehalt() / ho.core.model.UserParameter
                                                                            .instance().faktorGeld);
 				return new DoppelLabelEntry(new ColorLabelEntry(gehalt,
 									                        gehalttext + bonus,

@@ -1,10 +1,10 @@
 // %3459649550:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import gui.UserParameter;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -1,11 +1,11 @@
 // %3889649867:de.hattrickorganizer.gui.menu.option%
 package ho.core.option;
 
-import gui.HOColorName;
-import gui.UserParameter;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -37,7 +37,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
     private JButton twoCardsButton = new JButton();
     private JComboBox themeComboBox;
 
-    private UserParameter temp = gui.UserParameter.temp();
+    private UserParameter temp = ho.core.model.UserParameter.temp();
     /**
      * Creates a new FarbPanel object.
      */
@@ -133,7 +133,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         panel.add(label);
 
         themeComboBox = new JComboBox(ThemeManager.instance().getAvailableThemeNames());
-        themeComboBox.setSelectedItem(gui.UserParameter.temp().theme);
+        themeComboBox.setSelectedItem(ho.core.model.UserParameter.temp().theme);
         themeComboBox.addActionListener(this);
         panel.add(themeComboBox);
         

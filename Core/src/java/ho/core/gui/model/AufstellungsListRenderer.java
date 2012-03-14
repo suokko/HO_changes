@@ -1,7 +1,7 @@
 // %2449251406:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
-import gui.HOColorName;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Color;

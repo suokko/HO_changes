@@ -1,13 +1,13 @@
 // %4061149036:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.model.SpielerCBItemRenderer;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
@@ -274,7 +274,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
 
         //horizontalSplitPane.setDividerLocation( gui.UserParameter.instance ().spielerAnalysePanel_horizontalSplitPane );
         //1/4 Höhe des Frames
-        horizontalSplitPane.setDividerLocation((gui.UserParameter.instance().hoMainFrame_height * 1) / 3);
+        horizontalSplitPane.setDividerLocation((ho.core.model.UserParameter.instance().hoMainFrame_height * 1) / 3);
 
         add(horizontalSplitPane, BorderLayout.CENTER);
     }

@@ -1,9 +1,9 @@
 // %3802060737:de.hattrickorganizer.gui.menu.option%
 package ho.core.option;
 
-import gui.HOColorName;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.FactorObject;
 import ho.core.model.FormulaFactors;
@@ -81,10 +81,10 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("FormelwertImport"));
 
-            final java.io.File pfad = new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath);
+            final java.io.File pfad = new java.io.File(ho.core.model.UserParameter.temp().hrfImport_HRFPath);
 
             if (pfad.exists() && pfad.isDirectory()) {
-                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
+                fileChooser.setCurrentDirectory(new java.io.File(ho.core.model.UserParameter.temp().hrfImport_HRFPath));
             }
 
             final ho.core.file.ExampleFileFilter filter = new ho.core.file.ExampleFileFilter();
@@ -105,10 +105,10 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
             fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("FormelwertExport"));
 
-            final java.io.File pfad = new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath);
+            final java.io.File pfad = new java.io.File(ho.core.model.UserParameter.temp().hrfImport_HRFPath);
 
             if (pfad.exists() && pfad.isDirectory()) {
-                fileChooser.setCurrentDirectory(new java.io.File(gui.UserParameter.temp().hrfImport_HRFPath));
+                fileChooser.setCurrentDirectory(new java.io.File(ho.core.model.UserParameter.temp().hrfImport_HRFPath));
             }
 
             final ho.core.file.ExampleFileFilter filter = new ho.core.file.ExampleFileFilter();

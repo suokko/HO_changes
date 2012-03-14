@@ -54,7 +54,7 @@ public class HomegrownEntry implements IHOTableEntry{
 	public final void updateComponent() {
 		if (spieler != null) {
 			if (spieler.isHomeGrown()) {
-				icon.setIcon(ho.core.gui.theme.ThemeManager.getIcon(gui.HOIconName.HOMEGROWN));
+				icon.setIcon(ho.core.gui.theme.ThemeManager.getIcon(ho.core.gui.theme.HOIconName.HOMEGROWN));
 			} else {
 				icon.clear();
 			}

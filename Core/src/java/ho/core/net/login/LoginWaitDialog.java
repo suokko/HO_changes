@@ -1,8 +1,8 @@
 // %106548303:de.hattrickorganizer.gui.login%
 package ho.core.net.login;
 
-import gui.HOColorName;
 import ho.core.gui.comp.panel.RasenPanel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 

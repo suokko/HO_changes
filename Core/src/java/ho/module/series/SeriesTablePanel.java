@@ -1,11 +1,11 @@
 // %3862884693:de.hattrickorganizer.gui.league%
 package ho.module.series;
 
-import gui.HOColorName;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.VAPTableModel;
+import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
@@ -339,7 +339,7 @@ class SeriesTablePanel extends ImagePanel {
         try {
             if (SeriesPanel.getAktuellerSpielPlan() != null) {
                 final Font monospacedFont = new Font("monospaced", Font.PLAIN,
-                                                     gui.UserParameter.instance().schriftGroesse
+                                                     ho.core.model.UserParameter.instance().schriftGroesse
                                                      + 1);
 
                 final Vector<ILigaTabellenEintrag> tabelleneintraege = SeriesPanel.getAktuellerSpielPlan()

@@ -59,7 +59,7 @@ final class AufstellungsRatingPanel extends JPanel {
 		this.lineup = lineup;
 		initComponents();
 
-		if (gui.UserParameter.instance().anzahlNachkommastellen == 1) {
+		if (ho.core.model.UserParameter.instance().anzahlNachkommastellen == 1) {
 			numberFormat = Helper.DEFAULTDEZIMALFORMAT;
 		} else {
 			numberFormat = Helper.DEZIMALFORMAT_2STELLEN;

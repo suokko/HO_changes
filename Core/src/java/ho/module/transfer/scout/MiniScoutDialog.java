@@ -105,8 +105,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 	public final void setVisible(boolean isVisible) {
         super.setVisible(isVisible);
         if (!isVisible) {
-            gui.UserParameter.instance().miniscout_PositionX = this.getLocation().x;
-            gui.UserParameter.instance().miniscout_PositionY = this.getLocation().y;
+            ho.core.model.UserParameter.instance().miniscout_PositionX = this.getLocation().x;
+            ho.core.model.UserParameter.instance().miniscout_PositionY = this.getLocation().y;
         }
     }
 
@@ -495,8 +495,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         spielervalueChanged();
         pack();
 
-        setLocation(gui.UserParameter.instance().miniscout_PositionX,
-                    gui.UserParameter.instance().miniscout_PositionY);
+        setLocation(ho.core.model.UserParameter.instance().miniscout_PositionX,
+                    ho.core.model.UserParameter.instance().miniscout_PositionY);
         HOMainFrame.instance().setVisible(false);
         setVisible(true);
     }

@@ -1,8 +1,6 @@
 // %634087379:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import gui.HOColorName;
-import gui.HOIconName;
 import ho.core.db.DBManager;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -10,6 +8,8 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.model.SpielerCBItemRenderer;
 import ho.core.gui.model.StatistikModel;
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
@@ -73,43 +73,43 @@ class SpielerStatistikPanel extends ImagePanel
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Bewertung"),
-                                                             ratingColor,gui.UserParameter.instance().statistikBewertung);
+                                                             ratingColor,ho.core.model.UserParameter.instance().statistikBewertung);
     private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.experience"),
-                                                             experienceColor,gui.UserParameter.instance().statistikErfahrung);
+                                                             experienceColor,ho.core.model.UserParameter.instance().statistikErfahrung);
     private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.winger"),
-                                                           wingerColor,gui.UserParameter.instance().statistikFluegel);
+                                                           wingerColor,ho.core.model.UserParameter.instance().statistikFluegel);
     private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
-                                                        formColor,gui.UserParameter.instance().statistikForm);
+                                                        formColor,ho.core.model.UserParameter.instance().statistikForm);
     private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
-    		leadershipColor,gui.UserParameter.instance().statistikFuehrung);
+    		leadershipColor,ho.core.model.UserParameter.instance().statistikFuehrung);
     private ImageCheckbox m_jchLoyalty = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Loyalty"),
-    		loyaltyColor, gui.UserParameter.instance().statistikLoyalty);
+    		loyaltyColor, ho.core.model.UserParameter.instance().statistikLoyalty);
     private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
-                                                          wageColor,gui.UserParameter.instance().statistikSpielerFinanzenGehalt);
+                                                          wageColor,ho.core.model.UserParameter.instance().statistikSpielerFinanzenGehalt);
     private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.stamina"),
-                                                             staminaColor,gui.UserParameter.instance().statistikKondition);
+                                                             staminaColor,ho.core.model.UserParameter.instance().statistikKondition);
     private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",marketValueColor,
-                                                             gui.UserParameter.instance().statistikSpielerFinanzenMarktwert);
+                                                             ho.core.model.UserParameter.instance().statistikSpielerFinanzenMarktwert);
     private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.passing"),
-                                                            passingColor,gui.UserParameter.instance().statistikPasspiel);
+                                                            passingColor,ho.core.model.UserParameter.instance().statistikPasspiel);
     private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.playmaking"),
-                                                               playmakingColor,gui.UserParameter.instance().statistikSpielaufbau);
+                                                               playmakingColor,ho.core.model.UserParameter.instance().statistikSpielaufbau);
     private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
-                                                             setPiecesColor,gui.UserParameter.instance().statistikStandards);
+                                                             setPiecesColor,ho.core.model.UserParameter.instance().statistikStandards);
     private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
-                                                             scoringColor,gui.UserParameter.instance().statistikTorschuss);
+                                                             scoringColor,ho.core.model.UserParameter.instance().statistikTorschuss);
     private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
-                                                           keeperColor,gui.UserParameter.instance().statistikTorwart);
+                                                           keeperColor,ho.core.model.UserParameter.instance().statistikTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
-                                                               defendingColor,gui.UserParameter.instance().statistikVerteidigung);
+                                                               defendingColor,ho.core.model.UserParameter.instance().statistikVerteidigung);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
-                                                        gui.UserParameter.instance().statistikBeschriftung);
+                                                        ho.core.model.UserParameter.instance().statistikBeschriftung);
     private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
-                                                      gui.UserParameter.instance().statistikHilfslinien);
+                                                      ho.core.model.UserParameter.instance().statistikHilfslinien);
     private JComboBox m_jcbSpieler = new JComboBox();
-    private JTextField m_jtfAnzahlHRF = new JTextField(gui.UserParameter.instance().statistikAnzahlHRF
+    private JTextField m_jtfAnzahlHRF = new JTextField(ho.core.model.UserParameter.instance().statistikAnzahlHRF
                                                        + "");
     private StatistikPanel m_clStatistikPanel;
     private boolean m_bInitialisiert;
@@ -176,56 +176,56 @@ class SpielerStatistikPanel extends ImagePanel
             }
         } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
             m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
-            gui.UserParameter.instance().statistikHilfslinien = m_jchHilflinien.isSelected();
+            ho.core.model.UserParameter.instance().statistikHilfslinien = m_jchHilflinien.isSelected();
         } else if (actionEvent.getSource().equals(m_jchBeschriftung)) {
             m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
-            gui.UserParameter.instance().statistikBeschriftung = m_jchBeschriftung.isSelected();
+            ho.core.model.UserParameter.instance().statistikBeschriftung = m_jchBeschriftung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchFuehrung.getCheckbox())) {
             m_clStatistikPanel.setShow("Fuehrung", m_jchFuehrung.isSelected());
-            gui.UserParameter.instance().statistikFuehrung = m_jchFuehrung.isSelected();
+            ho.core.model.UserParameter.instance().statistikFuehrung = m_jchFuehrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchErfahrung.getCheckbox())) {
             m_clStatistikPanel.setShow("Erfahrung", m_jchErfahrung.isSelected());
-            gui.UserParameter.instance().statistikErfahrung = m_jchErfahrung.isSelected();
+            ho.core.model.UserParameter.instance().statistikErfahrung = m_jchErfahrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
             m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
-            gui.UserParameter.instance().statistikLoyalty = m_jchLoyalty.isSelected();
+            ho.core.model.UserParameter.instance().statistikLoyalty = m_jchLoyalty.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
             m_clStatistikPanel.setShow("Form", m_jchForm.isSelected());
-            gui.UserParameter.instance().statistikForm = m_jchForm.isSelected();
+            ho.core.model.UserParameter.instance().statistikForm = m_jchForm.isSelected();
         } else if (actionEvent.getSource().equals(m_jchKondition.getCheckbox())) {
             m_clStatistikPanel.setShow("Kondition", m_jchKondition.isSelected());
-            gui.UserParameter.instance().statistikKondition = m_jchKondition.isSelected();
+            ho.core.model.UserParameter.instance().statistikKondition = m_jchKondition.isSelected();
         } else if (actionEvent.getSource().equals(m_jchTorwart.getCheckbox())) {
             m_clStatistikPanel.setShow("Torwart", m_jchTorwart.isSelected());
-            gui.UserParameter.instance().statistikTorwart = m_jchTorwart.isSelected();
+            ho.core.model.UserParameter.instance().statistikTorwart = m_jchTorwart.isSelected();
         } else if (actionEvent.getSource().equals(m_jchVerteidigung.getCheckbox())) {
             m_clStatistikPanel.setShow("Verteidigung", m_jchVerteidigung.isSelected());
-            gui.UserParameter.instance().statistikVerteidigung = m_jchVerteidigung.isSelected();
+            ho.core.model.UserParameter.instance().statistikVerteidigung = m_jchVerteidigung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSpielaufbau.getCheckbox())) {
             m_clStatistikPanel.setShow("Spielaufbau", m_jchSpielaufbau.isSelected());
-            gui.UserParameter.instance().statistikSpielaufbau = m_jchSpielaufbau.isSelected();
+            ho.core.model.UserParameter.instance().statistikSpielaufbau = m_jchSpielaufbau.isSelected();
         } else if (actionEvent.getSource().equals(m_jchPasspiel.getCheckbox())) {
             m_clStatistikPanel.setShow("Passpiel", m_jchPasspiel.isSelected());
-            gui.UserParameter.instance().statistikPasspiel = m_jchPasspiel.isSelected();
+            ho.core.model.UserParameter.instance().statistikPasspiel = m_jchPasspiel.isSelected();
         } else if (actionEvent.getSource().equals(m_jchFluegel.getCheckbox())) {
             m_clStatistikPanel.setShow("Fluegelspiel", m_jchFluegel.isSelected());
-            gui.UserParameter.instance().statistikFluegel = m_jchFluegel.isSelected();
+            ho.core.model.UserParameter.instance().statistikFluegel = m_jchFluegel.isSelected();
         } else if (actionEvent.getSource().equals(m_jchTorschuss.getCheckbox())) {
             m_clStatistikPanel.setShow("Torschuss", m_jchTorschuss.isSelected());
-            gui.UserParameter.instance().statistikTorschuss = m_jchTorschuss.isSelected();
+            ho.core.model.UserParameter.instance().statistikTorschuss = m_jchTorschuss.isSelected();
         } else if (actionEvent.getSource().equals(m_jchStandards.getCheckbox())) {
             m_clStatistikPanel.setShow("Standards", m_jchStandards.isSelected());
-            gui.UserParameter.instance().statistikStandards = m_jchStandards.isSelected();
+            ho.core.model.UserParameter.instance().statistikStandards = m_jchStandards.isSelected();
         } else if (actionEvent.getSource().equals(m_jchBewertung.getCheckbox())) {
             m_clStatistikPanel.setShow("Bewertung", m_jchBewertung.isSelected());
-            gui.UserParameter.instance().statistikBewertung = m_jchBewertung.isSelected();
+            ho.core.model.UserParameter.instance().statistikBewertung = m_jchBewertung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchMarktwert.getCheckbox())) {
             m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
-            gui.UserParameter.instance().statistikSpielerFinanzenMarktwert = m_jchMarktwert
+            ho.core.model.UserParameter.instance().statistikSpielerFinanzenMarktwert = m_jchMarktwert
                                                                              .isSelected();
         } else if (actionEvent.getSource().equals(m_jchGehalt.getCheckbox())) {
             m_clStatistikPanel.setShow("Gehalt", m_jchGehalt.isSelected());
-            gui.UserParameter.instance().statistikSpielerFinanzenGehalt = m_jchGehalt.isSelected();
+            ho.core.model.UserParameter.instance().statistikSpielerFinanzenGehalt = m_jchGehalt.isSelected();
         }
     }
 
@@ -559,7 +559,7 @@ class SpielerStatistikPanel extends ImagePanel
                 anzahlHRF = 1;
             }
 
-            gui.UserParameter.instance().statistikAnzahlHRF = anzahlHRF;
+            ho.core.model.UserParameter.instance().statistikAnzahlHRF = anzahlHRF;
 
             final java.text.NumberFormat format = Helper.DEFAULTDEZIMALFORMAT;
             final java.text.NumberFormat format2 = NumberFormat.getCurrencyInstance();

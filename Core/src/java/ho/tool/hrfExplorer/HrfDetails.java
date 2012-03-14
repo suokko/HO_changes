@@ -6,8 +6,8 @@
  */
 package ho.tool.hrfExplorer;
 
-import gui.HOIconName;
 import ho.core.db.DBManager;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HelperWrapper;
 

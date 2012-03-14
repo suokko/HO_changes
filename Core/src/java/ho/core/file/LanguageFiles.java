@@ -6,9 +6,9 @@
  */
 package ho.core.file;
 
-import gui.UserParameter;
 import ho.HO;
 import ho.core.gui.HOMainFrame;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 
 import java.util.Vector;

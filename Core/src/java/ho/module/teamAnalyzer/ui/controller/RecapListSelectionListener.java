@@ -1,6 +1,6 @@
 package ho.module.teamAnalyzer.ui.controller;
 
-import gui.UserParameter;
+import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
