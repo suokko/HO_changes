@@ -439,6 +439,15 @@ public class MyConnector implements plugins.IDownloadHelper {
 
 		return getCHPPWebFile(url);
 	}
+	
+	/**
+	 * Get the transfer data for a player
+	 */
+	public String getTransfersForPlayer(int playerId) {
+		final String url = htUrl + "?file=transfersPlayer&playerID="+playerId;
+
+		return getCHPPWebFile(url);
+	}
 
 	// ///////////////////////////////////////////////////////////////////////////////
 	// get-HTML-Files

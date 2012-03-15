@@ -54,9 +54,8 @@ public class HattrickManager {
     		String url;
 
     		while (download) {
-    			url = "/chppxml.axd?file=matchesarchive&teamID=" + teamId + "&FirstMatchDate=" + sdf.format(start.getTime()) + "&LastMatchDate=" + sdf.format(end.getTime());
-    			log(url + " / " + matches.size());
-    			xml = MyConnector.instance().getHattrickXMLFile(url);
+    			xml = MyConnector.instance().getMatchArchiv(teamId, sdf.format(start.getTime()), sdf.format(end.getTime()));
+    			
     			if (xml.length() == 0){
     				download = false;
     				return;
