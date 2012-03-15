@@ -53,9 +53,8 @@ public final class XMLParser {
      * @throws IOException If something goes wrong.
      */
     public static List<PlayerTransfer> getAllPlayerTransfers(int playerId) throws IOException {
-        //final String url = "/common/transferHistory.asp?outputType=XML&actionType=player&playerID="+playerId;
-    	final String url = "/common/chppxml.axd?file=transfersPlayer&playerID="+playerId;
-        final String xml = MyConnector.instance().getHattrickXMLFile(url);
+        
+    	final String xml = MyConnector.instance().getTransfersForPlayer(playerId);
 
         final IXMLParser parser = ho.core.file.xml.XMLManager.instance();
 
