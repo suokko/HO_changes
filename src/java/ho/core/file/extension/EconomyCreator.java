@@ -24,7 +24,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.ITrainingWeek;
-import plugins.IXtraData;
 
 public class EconomyCreator extends XMLCreator {
 
@@ -51,10 +50,10 @@ public class EconomyCreator extends XMLCreator {
 			doc.appendChild(root);
 
 			int latestId = DBManager.instance().getLatestHrfId();
-			IXtraData d1 = DBManager.instance().getXtraDaten(latestId);
+			XtraData d1 = DBManager.instance().getXtraDaten(latestId);
 
 			int lastTrainingId = ((TrainingPerWeek) l.get(l.size() - 1)).getHrfId();
-			IXtraData d2 = DBManager.instance().getXtraDaten(lastTrainingId);
+			XtraData d2 = DBManager.instance().getXtraDaten(lastTrainingId);
 
 			if (!d2.getEconomyDate().equals(d1.getEconomyDate())) {
 				addEconomy(root, latestId);

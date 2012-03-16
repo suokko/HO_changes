@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import plugins.IHTCalendar;
-
 /**
  * <code>HTCalendar</code> is a class for calculating the Hattrick season and week number for a
  * given date. Dates before October 15, 2000 can not be calculated using this calendar and will
@@ -43,7 +41,7 @@ import plugins.IHTCalendar;
  *
  * @author <a href=mailto:nethyperon@users.sourceforge.net>Boy van der Werf</a>
  */
-public class HTCalendar implements IHTCalendar {
+public class HTCalendar {
     /** Number of weeks in a HT season */
     private static final int WEEK_IN_SEASON = 16;
 

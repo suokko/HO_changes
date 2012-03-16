@@ -72,12 +72,6 @@ public interface IHOMiniModel {
      */
     public plugins.IDownloadHelper getDownloadHelper();
 
-    /**
-     * Access the HO! GUI
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public plugins.IGUI getGUI();
 
     /**
      * Returns the HO! Version
@@ -225,13 +219,7 @@ public interface IHOMiniModel {
      */
     public plugins.IXMLParser getXMLParser();
 
-    /**
-     * gets XtraData Object
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IXtraData getXtraDaten();
-
+ 
     /**
      * deletes HRF from DB a refresh is needed after this func is called! IGUI->doRefresh();
      *

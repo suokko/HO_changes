@@ -28,7 +28,6 @@ import plugins.ISpieler;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
-import plugins.IXtraData;
 
 
 /**
@@ -128,17 +127,6 @@ public class HOMiniModel implements IHOMiniModel {
      */
     public plugins.IDownloadHelper getDownloadHelper() {
         return ho.core.net.MyConnector.instance();
-    }
-
-    //-------Finanzen---------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public plugins.IGUI getGUI() {
-        return ho.core.plugins.GUIPluginWrapper.instance();
     }
 
     /**
@@ -336,14 +324,6 @@ public class HOMiniModel implements IHOMiniModel {
         return ho.core.file.xml.XMLManager.instance();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IXtraData getXtraDaten() {
-        return getModel().getXtraDaten();
-    }
 
     /**
      * TODO Missing Method Documentation

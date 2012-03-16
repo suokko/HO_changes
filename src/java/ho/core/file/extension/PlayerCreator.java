@@ -2,9 +2,10 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.HOMiniModel;
+import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.SpielerPosition;
+import ho.core.model.XtraData;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
@@ -28,14 +29,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IBasics;
 import plugins.IEPVData;
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
-import plugins.IXtraData;
 
 public class PlayerCreator extends XMLCreator {
 
@@ -110,8 +109,8 @@ public class PlayerCreator extends XMLCreator {
 	private static int addRoster(Element root, int hrfId, boolean extended, int oldWeek) throws IOException {
 
 		List<ISpieler> players = DBManager.instance().getSpieler(hrfId);
-		IBasics basics = DBManager.instance().getBasics(hrfId);
-		IXtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
+		Basics basics = DBManager.instance().getBasics(hrfId);
+		XtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
 
 		int actualSeason = basics.getSeason();
 		int actualWeek = basics.getSpieltag();

@@ -8,7 +8,6 @@ package ho.tool.updater;
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;

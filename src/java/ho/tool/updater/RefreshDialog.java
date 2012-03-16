@@ -10,7 +10,6 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.plugins.PluginManager;
 import ho.core.util.HelperWrapper;
 
