@@ -5,7 +5,6 @@
 package ho.module.training.ui;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.DebugWindow;
 import ho.core.util.HOLogger;
 
 import javax.swing.JTable;

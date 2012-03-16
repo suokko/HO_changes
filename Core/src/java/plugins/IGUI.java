@@ -14,14 +14,7 @@ import javax.swing.JWindow;
 public interface IGUI {
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * Get the information (status) barpanel at the bottom of the MainFrame
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IInfoPanel getInfoPanel();
-
-    /**
+     /**
      * Get the HO!-Mainframe as the owner for a Dialog
      *
      * @return TODO Missing Return Method Documentation
@@ -90,17 +83,6 @@ public interface IGUI {
      * @return TODO Missing Return Method Documentation
      */
     public JPanel createBallPanel(int ballcount);
-
-    /**
-     * Returns a DebugWindow for the Debuginformations. System.out can not be used so use this
-     * Window instead
-     *
-     * @param position Position, where the DebugWindow shall be shown
-     * @param size Size of the DebugWindow
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IDebugWindow createDebugWindow(java.awt.Point position, java.awt.Dimension size);
 
     /**
      * Returns a panel with the grass-background, used for the lineup

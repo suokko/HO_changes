@@ -166,7 +166,7 @@ final class RefreshDialog extends UpdaterDialog {
                 }// for
 
 				checkPlugins(0);
-				GUIPluginWrapper.instance().getInfoPanel().clearLangInfo();
+				HOMainFrame.instance().getInfoPanel().clearLangInfo();
 
 				JOptionPane.showMessageDialog(null, PROP_NEW_START, "", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {

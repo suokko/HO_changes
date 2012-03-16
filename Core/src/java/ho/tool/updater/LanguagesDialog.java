@@ -6,6 +6,7 @@
 package ho.tool.updater;
 
 import ho.core.file.ExampleFileFilter;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
@@ -160,7 +161,7 @@ public final class LanguagesDialog extends UpdaterDialog {
                 }
                  // for
 
-                GUIPluginWrapper.instance().getInfoPanel().clearLangInfo();
+                HOMainFrame.instance().getInfoPanel().clearLangInfo();
                 JOptionPane.showMessageDialog(null, PROP_NEW_START, PROP_LANGUAGEFILE,
                                               JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
