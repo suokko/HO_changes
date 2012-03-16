@@ -6,8 +6,6 @@ import ho.core.util.HOLogger;
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import plugins.IVerein;
-
 final class VereinTable extends AbstractTable {
 	final static String TABLENAME = "VEREIN";
 
@@ -43,7 +41,7 @@ final class VereinTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveVerein(int hrfId, IVerein verein) {
+	void saveVerein(int hrfId, Verein verein) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };

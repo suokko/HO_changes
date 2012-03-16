@@ -29,8 +29,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import plugins.ILigaTabellenEintrag;
-
 
 /**
  * A panel with a league table
@@ -342,7 +340,7 @@ class SeriesTablePanel extends ImagePanel {
                                                      ho.core.model.UserParameter.instance().schriftGroesse
                                                      + 1);
 
-                final Vector<ILigaTabellenEintrag> tabelleneintraege = SeriesPanel.getAktuellerSpielPlan()
+                final Vector<LigaTabellenEintrag> tabelleneintraege = SeriesPanel.getAktuellerSpielPlan()
                                                                  .getTabelle().getEintraege();
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 int j = -1;

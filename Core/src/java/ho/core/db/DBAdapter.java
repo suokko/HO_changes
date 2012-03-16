@@ -1,9 +1,10 @@
 package ho.core.db;
 
+import ho.core.model.Verein;
+
 import java.sql.Timestamp;
 
 import plugins.ITeam;
-import plugins.IVerein;
 
 /**
  * Adapter to make some basic DBZugriff functions accessible for plugins.
@@ -48,7 +49,7 @@ public class DBAdapter {
 	 * @param hrfID
 	 * @return
 	 */
-	public IVerein getVerein(int hrfID) {
+	public Verein getVerein(int hrfID) {
 		return DBManager.instance().getVerein(hrfID);
 	}
 

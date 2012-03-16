@@ -4,6 +4,7 @@ package ho.module.teamAnalyzer.manager;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.series.Spielplan;
+import ho.module.series.model.LigaTabellenEintrag;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import plugins.ILigaTabellenEintrag;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IPaarung;
@@ -273,7 +273,7 @@ public class TeamManager {
             List<?> eintraege = league.getTabelle().getEintraege();
 
             for (Iterator<?> iter = eintraege.iterator(); iter.hasNext();) {
-                ILigaTabellenEintrag element = (ILigaTabellenEintrag) iter.next();
+                LigaTabellenEintrag element = (LigaTabellenEintrag) iter.next();
                 Team t = new Team();
 
                 t.setName(element.getTeamName());

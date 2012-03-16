@@ -24,7 +24,6 @@ import plugins.IHTCalendar;
 import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
-import plugins.IVerein;
 
 
 /**
@@ -45,7 +44,7 @@ public class HOModel {
     private Team m_clTeam;
     private Vector<ISpieler> m_vOldSpieler = new Vector<ISpieler>();
     private Vector<ISpieler> m_vSpieler = new Vector<ISpieler>();
-    private IVerein m_clVerein;
+    private Verein m_clVerein;
     private XtraData m_clXtraDaten;
     private int m_iID = -1;
 
@@ -348,7 +347,7 @@ public class HOModel {
      *
      * @param verein TODO Missing Constructuor Parameter Documentation
      */
-    public final void setVerein(IVerein verein) {
+    public final void setVerein(Verein verein) {
         m_clVerein = verein;
     }
 
@@ -359,7 +358,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final IVerein getVerein() {
+    public final Verein getVerein() {
         return m_clVerein;
     }
 

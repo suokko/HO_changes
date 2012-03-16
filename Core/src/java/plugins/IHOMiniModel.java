@@ -73,13 +73,6 @@ public interface IHOMiniModel {
     public plugins.IDownloadHelper getDownloadHelper();
 
     /**
-     * Returns economics
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IFinanzen getFinanzen();
-
-    /**
      * Access the HO! GUI
      *
      * @return TODO Missing Return Method Documentation
@@ -99,15 +92,6 @@ public interface IHOMiniModel {
      * @return Value of property m_clHelper.
      */
     public plugins.IHelper getHelper();
-
-    //----------Liga----------------------------------------
-
-    /**
-     * Returns the league
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public ILiga getLiga();
 
     /**
      * Get the Lineup shown in HO!
@@ -234,14 +218,7 @@ public interface IHOMiniModel {
 
     //----------Verein----------------------------------------
 
-    /**
-     * Gibt den Verein zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IVerein getVerein();
-
-    /**
+     /**
      * Getter for property m_clXMLParser.
      *
      * @return Value of property m_clXMLParser.
