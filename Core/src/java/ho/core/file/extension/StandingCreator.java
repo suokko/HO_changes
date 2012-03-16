@@ -5,6 +5,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.series.Spielplan;
+import ho.module.series.model.LigaTabellenEintrag;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,8 +18,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.ILigaTabellenEintrag;
 
 
 public class StandingCreator extends XMLCreator{
@@ -60,13 +59,13 @@ public class StandingCreator extends XMLCreator{
 
 	}
 
-	private static void extractTabelle(Element root, Vector<ILigaTabellenEintrag> vector)
+	private static void extractTabelle(Element root, Vector<LigaTabellenEintrag> vector)
 		throws IOException {
 			
 		Document doc = root.getOwnerDocument();
 						
 		for (int i = 0; i < vector.size(); i++) {
-			final ILigaTabellenEintrag eintrag = vector.get(i);
+			final LigaTabellenEintrag eintrag = vector.get(i);
 
 			if (eintrag.getPunkte() > -1) {
 

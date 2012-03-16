@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 /**
  * Enthält alle Informationen zu den Finanzen
  */
-public class Finanzen implements plugins.IFinanzen {
+public class Finanzen  {
     //~ Static fields/initializers -----------------------------------------------------------------
 	/*
 	 * level constants for the fan mood (SupportersPopularity)

@@ -8,6 +8,7 @@ import ho.core.file.xml.MatchExporter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
+import ho.module.series.model.Liga;
 
 import java.util.Date;
 import java.util.List;
@@ -15,11 +16,9 @@ import java.util.Vector;
 
 import plugins.IBasics;
 import plugins.IExportMatchData;
-import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
-import plugins.ILiga;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
@@ -29,7 +28,6 @@ import plugins.ISpieler;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
-import plugins.IVerein;
 import plugins.IXtraData;
 
 
@@ -135,15 +133,6 @@ public class HOMiniModel implements IHOMiniModel {
     //-------Finanzen---------------------------------------
 
     /**
-     * Gibt die Finanzen zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IFinanzen getFinanzen() {
-        return getModel().getFinanzen();
-    }
-
-    /**
      * TODO Missing Method Documentation
      *
      * @return TODO Missing Return Method Documentation
@@ -177,7 +166,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public ILiga getLiga() {
+    public Liga getLiga() {
         return getModel().getLiga();
     }
 
@@ -338,16 +327,7 @@ public class HOMiniModel implements IHOMiniModel {
 
     //----------Verein----------------------------------------
 
-    /**
-     * Gibt den Verein zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IVerein getVerein() {
-        return getModel().getVerein();
-    }
-
-    /**
+     /**
      * Getter for property m_clXMLParser.
      *
      * @return Value of property m_clXMLParser.

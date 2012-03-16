@@ -2,8 +2,11 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
+import ho.core.model.Basics;
+import ho.core.model.Finanzen;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.XtraData;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
@@ -20,8 +23,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IBasics;
-import plugins.IFinanzen;
 import plugins.ITrainingWeek;
 import plugins.IXtraData;
 
@@ -77,9 +78,9 @@ public class EconomyCreator extends XMLCreator {
 
 	private static void addEconomy(Element root, int hrfId) throws IOException {
 
-		IBasics basics = DBManager.instance().getBasics(hrfId);
-		IFinanzen finance = DBManager.instance().getFinanzen(hrfId);
-		IXtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
+		Basics basics = DBManager.instance().getBasics(hrfId);
+		Finanzen finance = DBManager.instance().getFinanzen(hrfId);
+		XtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
 
 		double rate = UserParameter.instance().faktorGeld;
 		int actualSeason = basics.getSeason();
@@ -138,9 +139,9 @@ public class EconomyCreator extends XMLCreator {
 		try {
 
 			int latestId = DBManager.instance().getLatestHrfId();
-			IBasics basics = DBManager.instance().getBasics(latestId);
-			IFinanzen finance = DBManager.instance().getFinanzen(latestId);
-			IXtraData xtradata = DBManager.instance().getXtraDaten(latestId);
+			Basics basics = DBManager.instance().getBasics(latestId);
+			Finanzen finance = DBManager.instance().getFinanzen(latestId);
+			XtraData xtradata = DBManager.instance().getXtraDaten(latestId);
 
 			double rate = UserParameter.instance().faktorGeld;
 			int actualSeason = basics.getSeason();

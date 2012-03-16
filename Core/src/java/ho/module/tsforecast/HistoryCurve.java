@@ -1,6 +1,7 @@
 package ho.module.tsforecast;
 
 import ho.core.model.HOVerwaltung;
+import ho.module.series.model.Liga;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-
 
 import plugins.IBasics;
 import plugins.IMatchLineup;
@@ -83,7 +83,7 @@ public class HistoryCurve extends Curve {
 
   private void readPastMatches() throws SQLException  {
     IBasics ibasics =HOVerwaltung.instance().getModel().getBasics();
-    plugins.ILiga iliga = HOVerwaltung.instance().getModel().getLiga();
+    Liga iliga = HOVerwaltung.instance().getModel().getLiga();
     
     Curve.Point pLastLeagueMatch = null;
     GregorianCalendar dateOfLastLeagueMatch = new GregorianCalendar();

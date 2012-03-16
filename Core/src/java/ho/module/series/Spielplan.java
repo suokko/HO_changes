@@ -16,8 +16,6 @@ import ho.module.series.model.Tabellenverlauf;
 import java.sql.Timestamp;
 import java.util.Vector;
 
-import plugins.ILigaTabelle;
-import plugins.ILigaTabellenEintrag;
 import plugins.IPaarung;
 
 
@@ -201,7 +199,7 @@ public class Spielplan  {
     ////////////////////////////////////////////////////////////////////////////////
     //Liga Tabelle
     ////////////////////////////////////////////////////////////////////////////////
-    public final ILigaTabelle getTabelle() {
+    public final LigaTabelle getTabelle() {
         if (m_clTabelle == null) {
             m_clTabelle = berechneTabelle(14);
         }
@@ -277,7 +275,7 @@ public class Spielplan  {
     protected final void berechneAltePositionen(LigaTabelle tabelle) {
         LigaTabelle compare = null;
         LigaTabellenEintrag tmp = null;
-        ILigaTabellenEintrag tmp2 = null;
+        LigaTabellenEintrag tmp2 = null;
 
         int spieltag = 1;
 
@@ -379,7 +377,7 @@ public class Spielplan  {
                     //Sieg
                     if (spiele[i].getToreHeim() > spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.H_SIEG);
+                                                 LigaTabellenEintrag.H_SIEG);
                         hPunkte += 3;
                         hSieg += 1;
                         hToreGegen += spiele[i].getToreGast();
@@ -388,7 +386,7 @@ public class Spielplan  {
                     //Unentschieden
                     else if (spiele[i].getToreHeim() == spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.H_UN);
+                                                 LigaTabellenEintrag.H_UN);
                         hPunkte += 1;
                         hUn += 1;
                         hToreGegen += spiele[i].getToreGast();
@@ -397,7 +395,7 @@ public class Spielplan  {
                     //Niederlage
                     else if (spiele[i].getToreHeim() < spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.H_NIED);
+                                                 LigaTabellenEintrag.H_NIED);
                         hNied += 1;
                         hToreGegen += spiele[i].getToreGast();
                         hToreFuer += spiele[i].getToreHeim();
@@ -408,7 +406,7 @@ public class Spielplan  {
                     //Niederlage
                     if (spiele[i].getToreHeim() > spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.A_NIED);
+                                                 LigaTabellenEintrag.A_NIED);
 
                         aNied += 1;
                         aToreGegen += spiele[i].getToreHeim();
@@ -417,7 +415,7 @@ public class Spielplan  {
                     //Unentschieden
                     else if (spiele[i].getToreHeim() == spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.A_UN);
+                                                 LigaTabellenEintrag.A_UN);
 
                         aPunkte += 1;
                         aUn += 1;
@@ -427,7 +425,7 @@ public class Spielplan  {
                     //Sieg
                     else if (spiele[i].getToreHeim() < spiele[i].getToreGast()) {
                         eintrag.addSerienEintrag(spiele[i].getSpieltag() - 1,
-                                                 ILigaTabellenEintrag.A_SIEG);
+                                                 LigaTabellenEintrag.A_SIEG);
 
                         aPunkte += 3;
                         aSieg += 1;
@@ -490,7 +488,7 @@ public class Spielplan  {
 
             //VerlaufEinträge erstellen
             if (tabelle.length > 0) {
-                ILigaTabellenEintrag tmp = null;
+                LigaTabellenEintrag tmp = null;
 
                 eintraege = new TabellenVerlaufEintrag[tabelle[spieltag - 1].getEintraege().size()];
 

@@ -5,6 +5,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Verein;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -14,8 +15,6 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import plugins.IVerein;
 
 
 /**
@@ -43,7 +42,7 @@ final class StaffPanel extends JPanel {
      }
 
     void setLabels() {
-        final IVerein verein = HOVerwaltung.instance().getModel().getVerein();
+        final Verein verein = HOVerwaltung.instance().getModel().getVerein();
         if(verein != null){
 	        assistantCoachesLabel.setText(verein.getCoTrainer() + "");
 	        psychologistsLabel.setText(verein.getPsychologen() + "");
