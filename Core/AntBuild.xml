@@ -268,13 +268,12 @@
 	<!-- =================================
           target: copy2build
          ================================= -->
-	<target name="copy2build" depends="makeJar,buildAllPlugins" description="Copy conf files to builddir">
+	<target name="copy2build" depends="makeJar" description="Copy conf files to builddir">
 		<mkdir dir="${build.dir}" />
 		<copy todir="${build.dir}" overwrite="true">
 			<fileset dir="${src.dir}/conf/addToZip" />
 			<fileset file="${tmp.target}/HOLauncher.class" />
 		</copy>
-		<antcall target="copyAllPlugins" />
 		<antcall target="copyBuild2debug" />
 	</target>
 
@@ -288,49 +287,6 @@
 		</copy>
 	</target>
 
-	<!-- =================================
-          target: buildSinglePlugin
-         ================================= -->
-	<target name="buildSinglePlugin" description="Build a single ho plugin">
-		<property name="plugin.basedir" value="${basedir}/../Plugin-${PLUGINNAME}" />
-		<echo>Building plugin ${PLUGINNAME}</echo>
-		<mkdir dir="${plugin.basedir}/bin"/>
-		<javac srcdir="${plugin.basedir}/src" destdir="${plugin.basedir}/bin" debug="on" verbose="off" encoding="UTF-8" source="1.5" target="1.5">
-			<compilerarg value="${javac.args}" />
-			<classpath path="${bin.dir}:${basedir}/../Plugin-Commons/bin" />
-		</javac>
-	</target>
-
-	<!-- =================================
-          target: buildAllPlugins
-         ================================= -->
-	<target name="buildAllPlugins" depends="init" description="Build all hoplugins">
-		<echo>Building the following plugins: ${includePlugins}</echo>
-		<foreach list="${includePlugins}" target="buildSinglePlugin" param="PLUGINNAME" />
-	</target>
-
-	<!-- =================================
-          target: copySinglePlugin
-         ================================= -->
-	<target name="copySinglePlugin" description="Copy a single ho plugin to build/hoplugins">
-		<echo>Copy plugin: ${PLUGINNAME} (${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins to ${build.dir}/hoplugins)</echo>
-		<!-- Copy class files -->
-		<copy todir="${build.dir}/hoplugins" preservelastmodified="yes">
-			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/bin/hoplugins" />
-		</copy>
-		<!-- Copy conf files if available -->
-		<copy todir="${build.dir}/hoplugins" preservelastmodified="yes" failonerror="false">
-			<fileset dir="${basedir}/../Plugin-${PLUGINNAME}/src/conf/hoplugins" />
-		</copy>
-	</target>
-
-	<!-- =================================
-          target: copyAllPlugins
-         ================================= -->
-	<target name="copyAllPlugins" depends="init" description="Copy all hoplugins to builddir">
-		<echo>Installing the following plugins: ${includePlugins}</echo>
-		<foreach list="${includePlugins}" target="copySinglePlugin" param="PLUGINNAME" />
-	</target>
 
 	<!-- =================================
           target: deployNightly
