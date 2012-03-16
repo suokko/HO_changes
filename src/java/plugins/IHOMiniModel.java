@@ -49,14 +49,6 @@ public interface IHOMiniModel {
      */
     public Vector<ISpieler> getAllSpieler();
 
-    //----------Basics----------------------------------------
-
-    /**
-     * Returns Basics
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IBasics getBasics();
 
     /**
      * gets manual added/changed Trainingsweeks from DB
@@ -64,14 +56,6 @@ public interface IHOMiniModel {
      * @return TODO Missing Return Method Documentation
      */
     public Vector<TrainingPerWeek> getDBManualTrainingsVector();
-
-    /**
-     * Getter for property m_lcDownloadHelper.
-     *
-     * @return Value of property m_lcDownloadHelper.
-     */
-    public plugins.IDownloadHelper getDownloadHelper();
-
 
     /**
      * Returns the HO! Version

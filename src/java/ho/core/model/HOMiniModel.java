@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.IBasics;
 import plugins.IExportMatchData;
 import plugins.IHOMiniModel;
 import plugins.IMatchDetails;
@@ -97,17 +96,7 @@ public class HOMiniModel implements IHOMiniModel {
         return getModel().getAllSpieler();
     }
 
-    //----------Basics----------------------------------------
-
-    /**
-     * Gibt die Basics zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IBasics getBasics() {
-        return getModel().getBasics();
-    }
-
+   
     /**
      * TODO Missing Method Documentation
      *
@@ -115,15 +104,6 @@ public class HOMiniModel implements IHOMiniModel {
      */
     public Vector<TrainingPerWeek> getDBManualTrainingsVector() {
         return DBManager.instance().getTrainingsVector();
-    }
-
-    /**
-     * Getter for property m_lcDownloadHelper.
-     *
-     * @return Value of property m_lcDownloadHelper.
-     */
-    public plugins.IDownloadHelper getDownloadHelper() {
-        return ho.core.net.MyConnector.instance();
     }
 
     /**

@@ -1,5 +1,7 @@
 package ho.module.nthrf;
 
+import ho.core.net.MyConnector;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IDownloadHelper;
 import plugins.IXMLParser;
 
 class NtPlayersParser {
@@ -24,13 +25,13 @@ class NtPlayersParser {
 	/**
 	 * Parse player details and store the IDs and Players in local objects.
 	 */
-	NtPlayersParser(IXMLParser xm, String xmlData, IDownloadHelper dh, HashMap<Integer, Integer> countryMapping) {
+	NtPlayersParser(IXMLParser xm, String xmlData, MyConnector dh, HashMap<Integer, Integer> countryMapping) {
 		Document doc = xm.parseString(xmlData);
 	    parseBasics(xm, doc);
 	    parsePlayerDetails(xm, dh, countryMapping);
 	}
 
-	private void parsePlayerDetails(IXMLParser xm, IDownloadHelper dh, HashMap<Integer, Integer> countryMapping) {
+	private void parsePlayerDetails(IXMLParser xm, MyConnector dh, HashMap<Integer, Integer> countryMapping) {
 		try {
 			for (Iterator<Long> i = playerIds.iterator(); i.hasNext(); ) {
 				Long playerId = i.next();

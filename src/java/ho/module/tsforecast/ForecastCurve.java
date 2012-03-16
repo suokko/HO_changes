@@ -22,6 +22,7 @@ package ho.module.tsforecast;
  */
 
 
+import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.module.series.model.Liga;
 
@@ -34,7 +35,6 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
-import plugins.IBasics;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
 
@@ -147,7 +147,7 @@ public void addPoint(int i, Curve.Point point) {
   //-- private ------------------------------------------------------------------------
 
   private void readFutureMatches() throws SQLException {
-    IBasics ibasics =HOVerwaltung.instance().getModel().getBasics();
+    Basics ibasics =HOVerwaltung.instance().getModel().getBasics();
     Liga iliga = HOVerwaltung.instance().getModel().getLiga();
     
     // MASTERS_MATCH 7 ???
@@ -237,7 +237,7 @@ public void addPoint(int i, Curve.Point point) {
 
 
   private void readPastMatches() throws SQLException {
-    IBasics ibasics = HOVerwaltung.instance().getModel().getBasics();
+    Basics ibasics = HOVerwaltung.instance().getModel().getBasics();
     Liga iliga = HOVerwaltung.instance().getModel().getLiga();
     
     GregorianCalendar gregoriancalendar = new GregorianCalendar();

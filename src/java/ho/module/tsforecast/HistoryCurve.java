@@ -1,5 +1,6 @@
 package ho.module.tsforecast;
 
+import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.module.series.model.Liga;
 
@@ -10,7 +11,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
-import plugins.IBasics;
 import plugins.IMatchLineup;
 
 /*
@@ -55,7 +55,7 @@ public class HistoryCurve extends Curve {
   //-- private ------------------------------------------------------------------------
 
   private void readSpiritHistory() throws SQLException  {
-    IBasics ibasics = HOVerwaltung.instance().getModel().getBasics();
+    Basics ibasics = HOVerwaltung.instance().getModel().getBasics();
     GregorianCalendar startDate = new GregorianCalendar();
     startDate.setTime( ibasics.getDatum());
     startDate.add( Calendar.WEEK_OF_YEAR, -WEEKS_BACK);
@@ -82,7 +82,7 @@ public class HistoryCurve extends Curve {
   }  
 
   private void readPastMatches() throws SQLException  {
-    IBasics ibasics =HOVerwaltung.instance().getModel().getBasics();
+    Basics ibasics =HOVerwaltung.instance().getModel().getBasics();
     Liga iliga = HOVerwaltung.instance().getModel().getLiga();
     
     Curve.Point pLastLeagueMatch = null;
