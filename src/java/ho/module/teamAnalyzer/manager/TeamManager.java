@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.series.Spielplan;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;
@@ -13,13 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
 import plugins.ILigaTabellenEintrag;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IPaarung;
 import plugins.ISpielePanel;
-import plugins.ISpielplan;
 
 
 /**
@@ -81,7 +80,7 @@ public class TeamManager {
      * @return TODO Missing Return Method Documentation
      */
     public static Team getNextLeagueOpponent() {
-        ISpielplan league = getDivisionMatches();
+        Spielplan league = getDivisionMatches();
 
         if (league != null) {
             List<?> matches = league.getPaarungenBySpieltag(HOVerwaltung.instance().getModel().getBasics().getSpieltag());
@@ -215,8 +214,8 @@ public class TeamManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private static ISpielplan getDivisionMatches() {
-        ISpielplan league = DBManager.instance().getSpielplan(HOVerwaltung.instance().getModel().getXtraDaten()
+    private static Spielplan getDivisionMatches() {
+        Spielplan league = DBManager.instance().getSpielplan(HOVerwaltung.instance().getModel().getXtraDaten()
                                                                    .getLeagueLevelUnitID(),
                                                                    HOVerwaltung.instance().getModel().getBasics()
                                                                    .getSeason());
@@ -268,7 +267,7 @@ public class TeamManager {
      */
     private static List<Team> loadDivisionTeams() {
         List<Team> loadedTeams = new ArrayList<Team>();
-        ISpielplan league = getDivisionMatches();
+        Spielplan league = getDivisionMatches();
 
         if (league != null) {
             List<?> eintraege = league.getTabelle().getEintraege();

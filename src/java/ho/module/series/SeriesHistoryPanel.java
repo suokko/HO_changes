@@ -4,6 +4,7 @@ package ho.module.series;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.series.model.TabellenVerlaufEintrag;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,7 +38,7 @@ final class SeriesHistoryPanel extends JPanel {
                                         };
     
     private Color STANDARD_FOREGROUND = ThemeManager.getColor(HOColorName.LEAGUE_FG);
-    private plugins.ITabellenVerlaufEintrag[] m_clVerlaufeintraege;
+    private TabellenVerlaufEintrag[] m_clVerlaufeintraege;
 
 
     private final int VEREINSNAMENBREITE = 180;

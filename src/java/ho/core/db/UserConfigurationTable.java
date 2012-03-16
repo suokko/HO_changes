@@ -1,5 +1,6 @@
 package ho.core.db;
 
+import ho.core.model.Configuration;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -8,8 +9,6 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-
-import plugins.IUserConfiguration;
 /**
  * The Table UserConfiguration contain all User properties.
  * CONFIG_KEY = Primary Key, fieldname of the class
@@ -153,7 +152,7 @@ final class UserConfigurationTable extends AbstractTable {
 	 * update/ insert method
 	 * @param obj
 	 */
-	void store(IUserConfiguration obj) {
+	void store(Configuration obj) {
 		final HashMap<String, String> values = obj.getValues();
 		final Set<String> keys = values.keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
@@ -166,7 +165,7 @@ final class UserConfigurationTable extends AbstractTable {
 	 * 
 	 * @param obj
 	 */
-	void load(IUserConfiguration obj) {
+	void load(Configuration obj) {
 		final HashMap<String,String> values = new HashMap<String,String>();
 		final Set<String> keys = obj.getValues().keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {

@@ -2,9 +2,9 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.series.Spielplan;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.ILigaTabellenEintrag;
-import plugins.ISpielplan;
 
 
 public class StandingCreator extends XMLCreator{
@@ -42,7 +41,7 @@ public class StandingCreator extends XMLCreator{
 			Document doc = builder.newDocument();
 			Element root = doc.createElement("standing");
 			doc.appendChild(root);
-			ISpielplan[] spielPlaene = DBManager.instance().getAllSpielplaene(true);
+			Spielplan[] spielPlaene = DBManager.instance().getAllSpielplaene(true);
 			for (int i = 0; i < spielPlaene.length; i++) {
 				if (spielPlaene[i].getLigaName().equalsIgnoreCase(HOVerwaltung.instance().getModel().getLiga().getLiga())
 					&& spielPlaene[i].getSaison() == HOVerwaltung.instance().getModel().getBasics().getSeason()) {
