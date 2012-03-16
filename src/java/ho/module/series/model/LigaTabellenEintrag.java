@@ -6,16 +6,35 @@
  */
 package ho.module.series.model;
 
-import plugins.ILigaTabellenEintrag;
 
 /**
  * DOCUMENT ME!
  *
  * @author thomas.werth
  */
-public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
+public class LigaTabellenEintrag  {
     //~ Instance fields ----------------------------------------------------------------------------
+    /** TODO Missing Parameter Documentation */
+    public static final byte H_SIEG = 1;
 
+    /** TODO Missing Parameter Documentation */
+    public static final byte A_SIEG = 2;
+
+    /** HOME DRAW */
+    public static final byte H_UN = 3;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte A_UN = 4;
+
+    /** Home Loose */
+    public static final byte H_NIED = 5;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte A_NIED = 6;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte UNKOWN = 0;
+    
     /** TODO Missing Parameter Documentation */
     protected String m_sTeamName = "";
 
@@ -664,7 +683,7 @@ public class LigaTabellenEintrag implements plugins.ILigaTabellenEintrag {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(ILigaTabellenEintrag obj) {
+    public final int compareTo(LigaTabellenEintrag obj) {
         if (obj instanceof LigaTabellenEintrag) {
             final LigaTabellenEintrag lte = (LigaTabellenEintrag) obj;
 

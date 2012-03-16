@@ -6,6 +6,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.Finanzen;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Verein;
 import ho.core.util.PlayerHelper;
 
 import java.awt.Component;
@@ -17,8 +18,6 @@ import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import plugins.IVerein;
 
 
 /**
@@ -57,7 +56,7 @@ final class MiscPanel extends JPanel {
 
 
     void setLabels() {
-        final IVerein verein = HOVerwaltung.instance().getModel().getVerein();
+        final Verein verein = HOVerwaltung.instance().getModel().getVerein();
         final Finanzen finanzen = HOVerwaltung.instance().getModel().getFinanzen();
 
         DecimalFormat df = new DecimalFormat("###,###,###,##0");

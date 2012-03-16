@@ -9,16 +9,12 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.Vector;
-
-import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**
  * Allgemeine Informationen über den Verein
  */
-public final class Verein implements plugins.IVerein {
+public final class Verein {
 	// for locale indepemdent parsing of input with commas
     final DecimalFormat DF = new DecimalFormat("0", new DecimalFormatSymbols(Locale.GERMANY));
 	

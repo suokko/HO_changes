@@ -15,6 +15,7 @@ import ho.core.model.HOParameter;
 import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.model.UserParameter;
+import ho.core.model.Verein;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.XtraData;
 import ho.core.training.TrainingPerWeek;
@@ -52,7 +53,6 @@ import plugins.IPaarung;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-import plugins.IVerein;
 
 /**
  * DOCUMENT ME!
@@ -1342,7 +1342,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public IVerein getVerein(int hrfID) {
+	public Verein getVerein(int hrfID) {
 		return ((VereinTable) getTable(VereinTable.TABLENAME)).getVerein(hrfID);
 	}
 
@@ -1352,7 +1352,7 @@ public class DBManager {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveVerein(int hrfId, IVerein verein) {
+	public void saveVerein(int hrfId, Verein verein) {
 		((VereinTable) getTable(VereinTable.TABLENAME)).saveVerein(hrfId, verein);
 	}
 

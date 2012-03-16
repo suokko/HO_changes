@@ -7,9 +7,6 @@
 package ho.module.series.model;
 
 
-import plugins.ILigaTabelle;
-import plugins.ILigaTabellenEintrag;
-
 import ho.core.util.Helper;
 
 import java.util.Vector;
@@ -20,7 +17,7 @@ import java.util.Vector;
  *
  * @author thomas.werth
  */
-public class LigaTabelle implements ILigaTabelle {
+public class LigaTabelle  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -30,7 +27,7 @@ public class LigaTabelle implements ILigaTabelle {
     protected String m_sLigaName = "";
 
     /** TODO Missing Parameter Documentation */
-    protected Vector<ILigaTabellenEintrag> m_vEintraege = new Vector<ILigaTabellenEintrag>();
+    protected Vector<LigaTabellenEintrag> m_vEintraege = new Vector<LigaTabellenEintrag>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
@@ -61,7 +58,7 @@ public class LigaTabelle implements ILigaTabelle {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<ILigaTabellenEintrag> getEintraege() {
+    public final Vector<LigaTabellenEintrag> getEintraege() {
         return m_vEintraege;
     }
 
@@ -72,7 +69,7 @@ public class LigaTabelle implements ILigaTabelle {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final ILigaTabellenEintrag getEintragByTeamId(int teamId) {
+    public final LigaTabellenEintrag getEintragByTeamId(int teamId) {
         LigaTabellenEintrag tmp = null;
 
         for (int i = 0; (teamId >= 0) && (i < m_vEintraege.size()); i++) {
@@ -207,9 +204,9 @@ public class LigaTabelle implements ILigaTabelle {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final byte getTeamPlatzTendenz(int teamId, ILigaTabelle compare) {
-        ILigaTabellenEintrag aktu = null;
-        ILigaTabellenEintrag vergleich = null;
+    public final byte getTeamPlatzTendenz(int teamId, LigaTabelle compare) {
+        LigaTabellenEintrag aktu = null;
+        LigaTabellenEintrag vergleich = null;
 
         if (compare != null) {
             aktu = getEintragByTeamId(teamId);

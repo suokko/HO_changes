@@ -6,7 +6,7 @@ import ho.core.util.HOLogger;
 /**
  * Enthält alle Ligadaten
  */
-public final class Liga implements plugins.ILiga {
+public final class Liga {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Liganame */
