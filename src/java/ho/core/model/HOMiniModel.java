@@ -1,25 +1,26 @@
 // %1056836646:de.hattrickorganizer.model%
 package ho.core.model;
 
+import ho.core.db.DBAdapter;
 import ho.core.db.DBManager;
+import ho.core.db.JDBCAdapter;
 import ho.core.file.xml.MatchExporter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
+import ho.tool.arenasizer.Stadium;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import plugins.IBasics;
-import plugins.IDBAdapter;
 import plugins.IEPV;
 import plugins.IExportMatchData;
 import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
 import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
-import plugins.IJDBCAdapter;
 import plugins.ILiga;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
@@ -28,7 +29,6 @@ import plugins.IMatchPredictionManager;
 import plugins.IPlayerData;
 import plugins.ISpieler;
 import plugins.ISpielplan;
-import plugins.IStadium;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
@@ -73,7 +73,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return Value of property m_clDBAdapter.
      */
-    public IJDBCAdapter getAdapter() {
+    public JDBCAdapter getAdapter() {
         return ho.core.db.DBManager.instance().getAdapter();
     }
 
@@ -82,7 +82,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return a valid IDBAdapter instance
      */
-    public IDBAdapter getDBAdapter() {
+    public DBAdapter getDBAdapter() {
         return ho.core.db.DBManager.instance().getDBAdapter();
     }
 
@@ -339,7 +339,7 @@ public class HOMiniModel implements IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IStadium getStadium() {
+    public Stadium getStadium() {
         return getModel().getStadium();
     }
 

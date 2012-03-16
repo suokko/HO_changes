@@ -10,7 +10,7 @@ import plugins.IVerein;
  *
  * @author aik
  */
-public class DBAdapter implements plugins.IDBAdapter {
+public class DBAdapter {
 
 	/**
 	 * Returns an HRF before the matchData and after previous TrainingTime.
