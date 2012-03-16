@@ -1,7 +1,10 @@
 // %612514260:plugins%
 package plugins;
 
+import ho.core.db.DBAdapter;
+import ho.core.db.JDBCAdapter;
 import ho.core.training.TrainingPerWeek;
+import ho.tool.arenasizer.Stadium;
 
 import java.util.Date;
 import java.util.List;
@@ -22,14 +25,14 @@ public interface IHOMiniModel {
      *
      * @return Value of property m_clDBAdapter.
      */
-    public IJDBCAdapter getAdapter();
+    public JDBCAdapter getAdapter();
 
     /**
      * Get the the IDBAdapter instance
      *
      * @return a valid IDBAdapter instance
      */
-    public IDBAdapter getDBAdapter();
+    public DBAdapter getDBAdapter();
 
     /**
      * Returns all Player, you have ever had, but not the actual player. To get all player, you
@@ -230,7 +233,7 @@ public interface IHOMiniModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IStadium getStadium();
+    public Stadium getStadium();
 
     //----------Team----------------------------------------
 

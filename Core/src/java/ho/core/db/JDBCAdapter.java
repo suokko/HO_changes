@@ -14,7 +14,7 @@ import java.sql.Statement;
 /**
  *	Provides the connection functions to the database
  */
-public class JDBCAdapter implements plugins.IJDBCAdapter {
+public class JDBCAdapter {
     private Connection m_clConnection;
     private Statement m_clStatement;
     private DBInfo m_clDBInfo;

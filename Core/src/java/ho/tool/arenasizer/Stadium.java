@@ -5,7 +5,7 @@ package ho.tool.arenasizer;
 /**
  * Enthält die Stadiendaten
  */
-public class Stadium implements plugins.IStadium {
+public class Stadium {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Stadienname */
