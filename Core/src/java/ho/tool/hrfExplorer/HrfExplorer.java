@@ -10,7 +10,6 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;

@@ -6,6 +6,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
+import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
@@ -20,7 +21,6 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import plugins.IHTCalendar;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
@@ -247,8 +247,8 @@ public class TrainingsManager implements ITrainingsManager {
         	output.setTimestamp(timestamp);
 
         if (TRAININGDEBUG) {
-        	IHTCalendar htc1 = HelperWrapper.instance().createTrainingCalendar();
-        	IHTCalendar htc2 = HelperWrapper.instance().createTrainingCalendar();
+        	HTCalendar htc1 = HelperWrapper.instance().createTrainingCalendar();
+        	HTCalendar htc2 = HelperWrapper.instance().createTrainingCalendar();
         	String c1s = "";
         	String c2s = "";
         	if (timestamp != null) {

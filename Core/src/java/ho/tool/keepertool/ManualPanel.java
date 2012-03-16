@@ -3,7 +3,6 @@ package ho.tool.keepertool;
 
 
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.PlayerHelper;
 
 import java.awt.BorderLayout;

@@ -6,15 +6,12 @@ import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.model.HOVerwaltung;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JList;
 
-import plugins.ISpielerComboboxItem;
 
-
-public class SpielerCBItem implements plugins.ISpielerComboboxItem {
+public class SpielerCBItem  {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     public static javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
@@ -104,9 +101,9 @@ public class SpielerCBItem implements plugins.ISpielerComboboxItem {
         m_fPositionsBewertung = poswert;
     }
 
-    public final int compareTo(ISpielerComboboxItem obj) {
+    public final int compareTo(SpielerCBItem obj) {
         
-        final ISpielerComboboxItem cbitem =  obj;
+        final SpielerCBItem cbitem =  obj;
 
         if ((cbitem.getSpieler() != null) && (getSpieler() != null)) {
             if (getPositionsBewertung() > cbitem.getPositionsBewertung()) {

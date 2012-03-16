@@ -3,10 +3,8 @@ package ho.module.ifa;
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
-import ho.core.plugins.GUIPluginWrapper;
 import ho.core.util.HOLogger;
 
 import java.util.ArrayList;

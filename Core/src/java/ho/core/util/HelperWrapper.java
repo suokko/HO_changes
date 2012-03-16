@@ -12,7 +12,6 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
@@ -53,8 +52,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import plugins.IHOMiniModel;
-import plugins.IHTCalendar;
 import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
 import plugins.IPlugin;
@@ -610,33 +607,8 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @see return a HTCalendar.
      */
-    public IHTCalendar createEconomyCalendar() {
-    	return HTCalendarFactory.createEconomyCalendar(HOMiniModel.instance());
-    }
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
-     * over to the next week.
-     *
-     * @param model HO data model
-     *
-     * @see return a HTCalendar.
-     */
-    public IHTCalendar createEconomyCalendar(IHOMiniModel model) {
-    	return HTCalendarFactory.createEconomyCalendar(model);
-    }
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
-     * over to the next week.
-     *
-     * @param date Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public IHTCalendar createEconomyCalendar(Date date) {
-    	return HTCalendarFactory.createEconomyCalendar(HOMiniModel.instance(), date);
-
+    public HTCalendar createEconomyCalendar() {
+    	return HTCalendarFactory.createEconomyCalendar();
     }
 
     /**
@@ -647,7 +619,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createEconomyCalendar(Timestamp timestamp) {
+    public HTCalendar createEconomyCalendar(Timestamp timestamp) {
     	return createEconomyCalendar(new Date(timestamp.getTime()));
 
     }
@@ -660,8 +632,8 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createEconomyCalendar(IHOMiniModel model, Date date) {
-    	return HTCalendarFactory.createEconomyCalendar(model, date);
+    public HTCalendar createEconomyCalendar(Date date) {
+    	return HTCalendarFactory.createEconomyCalendar(date);
 
     }
 
@@ -670,7 +642,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createGlobalCalendar() {
+    public HTCalendar createGlobalCalendar() {
     	return HTCalendarFactory.createGlobalCalendar();
     }
 
@@ -682,7 +654,7 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createGlobalCalendar(Date date) {
+    public HTCalendar createGlobalCalendar(Date date) {
     	return HTCalendarFactory.createGlobalCalendar(date);
     }
 
@@ -692,21 +664,11 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createTrainingCalendar() {
-    	return HTCalendarFactory.createTrainingCalendar(HOMiniModel.instance());
+    public HTCalendar createTrainingCalendar() {
+    	return HTCalendarFactory.createTrainingCalendar();
     }
 
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the training date to
-     * flip over to the next week.
-     *
-     * @param model HO data model
-     *
-     * @return a HTCalendar.
-     */
-    public IHTCalendar createTrainingCalendar(IHOMiniModel model) {
-    	return HTCalendarFactory.createTrainingCalendar(model);
-    }
+
 
     /**
      * Creates a HTCalendar to calculate local values for a league,  using the training date to
@@ -716,8 +678,8 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createTrainingCalendar(Date date) {
-    	return HTCalendarFactory.createTrainingCalendar(HOMiniModel.instance(), date);
+    public HTCalendar createTrainingCalendar(Date date) {
+    	return HTCalendarFactory.createTrainingCalendar(date);
     }
 
     /**
@@ -728,22 +690,10 @@ public class HelperWrapper implements plugins.IHelper {
      *
      * @return a HTCalendar.
      */
-    public IHTCalendar createTrainingCalendar(Timestamp timestamp) {
+    public HTCalendar createTrainingCalendar(Timestamp timestamp) {
     	return createTrainingCalendar(new Date(timestamp.getTime()));
     }
 
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the training date to
-     * flip over to the next week.
-     *
-     * @param model HO data model
-     * @param date Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public IHTCalendar createTrainingCalendar(IHOMiniModel model, Date date) {
-    	return HTCalendarFactory.createTrainingCalendar(model, date);
-    }
 
 	/**
 	 * Get HT-Season of a given date (using the economy calendar)
@@ -763,7 +713,7 @@ public class HelperWrapper implements plugins.IHelper {
 	 * @return	HT-Season
 	 */
 	public int getHTSeason (Date date, boolean useTrainingCalendar) {
-		IHTCalendar cal;
+		HTCalendar cal;
 		if (useTrainingCalendar)
 			cal = createTrainingCalendar(date);
 		else
@@ -792,7 +742,7 @@ public class HelperWrapper implements plugins.IHelper {
 	 * @return	HT-Week
 	 */
 	public int getHTWeek (Date date, boolean useTrainingCalendar) {
-		IHTCalendar cal;
+		HTCalendar cal;
 		if (useTrainingCalendar)
 			cal = createTrainingCalendar(date);
 		else
