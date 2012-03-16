@@ -5,7 +5,6 @@ import ho.core.db.DBAdapter;
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.file.xml.MatchExporter;
-import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.series.model.Liga;
@@ -16,8 +15,6 @@ import java.util.Vector;
 
 import plugins.IBasics;
 import plugins.IExportMatchData;
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.IHOMiniModel;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
@@ -351,23 +348,6 @@ public class HOMiniModel implements IHOMiniModel {
     private HOModel getModel() {
         return HOVerwaltung.instance().getModel();
     }
-
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl) {
-		return getFutureTrainingManager(p, trainings, cotrainer, trainerLvl);
-	}
-
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
-		FutureTrainingManager ftm = new FutureTrainingManager(p,trainings,cotrainer,trainerLvl);
-		return ftm;
-	}
-
-	public List<IFutureTrainingWeek> getFutureTrainingWeeks() {
-		return DBManager.instance().getFutureTrainingsVector();
-	}
-
-	public void saveFutureTraining(IFutureTrainingWeek training) {
-		DBManager.instance().saveFutureTraining(training);
-	}
 
 	public ISpieler createPlayer(IPlayerData data) {
 		final Spieler tempSpieler = new Spieler();

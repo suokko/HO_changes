@@ -234,33 +234,6 @@ public interface IHOMiniModel {
      */
     public void saveTraining(ITrainingWeek training);
 
-	/**
-	 * gets IFutureTrainingManager
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int keeper, int trainerLvl);
-
-	/**
-	 * gets IFutureTrainingManager
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public IFutureTrainingManager getFutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl);
-
-	/**
-	 * gets future Trainingsweeks from DB
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public List<IFutureTrainingWeek> getFutureTrainingWeeks();
-
-	/**
-	 * stores FutureTrainingWeek in database
-	 *
-	 * @param training TODO Missing Constructuor Parameter Documentation
-	 */
-	public void saveFutureTraining(IFutureTrainingWeek training);
 
 	/**
 	 * Creates a ISpieler instance for external use

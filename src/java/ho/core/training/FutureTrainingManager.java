@@ -2,14 +2,13 @@ package ho.core.training;
 
 import ho.core.model.FuturePlayer;
 import ho.core.model.PlayerSkillup;
+import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
+import ho.module.training.FutureTrainingWeek;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import plugins.IFuturePlayer;
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITeam;
@@ -19,7 +18,7 @@ import plugins.ITeam;
  *
  * @author Draghetto
  */
-public class FutureTrainingManager implements IFutureTrainingManager {
+public class FutureTrainingManager {
 	/** Actual Training sub */
 	public double[] actual = new double[8];
 		
@@ -31,7 +30,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 
 	/** Active player */
 	private ISpieler player;
-	private List<IFutureTrainingWeek> futureTrainings;
+	private List<FutureTrainingWeek> futureTrainings;
 	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
 
@@ -44,16 +43,16 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* @param p The active player
 	* @param trainings The future trainings
 	*/
-	public FutureTrainingManager(ISpieler p, List<IFutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
+	public FutureTrainingManager(ISpieler p, List<FutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
 		this.player = p;
 		this.futureSkillups = new ArrayList<ISkillup>();
 		this.coTrainer = cotrainer;
 		this.trainer = trainerLvl;
 		this.futureTrainings = trainings;
-		previewPlayer(FUTUREWEEKS);
+		previewPlayer(UserParameter.instance().futureWeeks);
 	}
 
-	public IFuturePlayer previewPlayer(int startWeekNumber,int finalWeekNumber) {
+	public FuturePlayer previewPlayer(int startWeekNumber,int finalWeekNumber) {
 
 		this.futureSkillups = new ArrayList<ISkillup>();
 				
@@ -78,7 +77,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
-			IFutureTrainingWeek tw = this.futureTrainings.get(index-1);
+			FutureTrainingWeek tw = this.futureTrainings.get(index-1);
 			
 			double point = TrainingsManager.instance().getTrainingPoint().getTrainingPoint(tw.getTyp(), Integer.valueOf(position)).doubleValue();
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
@@ -238,7 +237,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 	* @param point The points to be added
 	* @param tw the training week settings for the considered week
 	*/
-	private void processTraining(int skillIndex, double point, IFutureTrainingWeek tw) {
+	private void processTraining(int skillIndex, double point, FutureTrainingWeek tw) {
 		// number of weeks necessary to have a skillup
 		double trainLength = getTrainingLength(skillIndex, tw.getIntensitaet(), tw.getStaminaTrainingPart());
 
@@ -376,7 +375,7 @@ public class FutureTrainingManager implements IFutureTrainingManager {
 
 	}
 
-	public IFuturePlayer previewPlayer(int weekNumber) {
+	public FuturePlayer previewPlayer(int weekNumber) {
 		return previewPlayer(1,weekNumber);
 	}
 
