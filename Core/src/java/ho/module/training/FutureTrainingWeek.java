@@ -1,14 +1,13 @@
 // %68286616:hoplugins.trainingExperience.vo%
 package ho.module.training;
 
-import plugins.IFutureTrainingWeek;
 
 
 /**
  * Training week object, different than the ITrainingWeek since we want to use HT season and week
  * instead of datum, year and solar week
  */
-public class FutureTrainingWeek implements IFutureTrainingWeek {
+public class FutureTrainingWeek  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Training staminaTrainingPart */

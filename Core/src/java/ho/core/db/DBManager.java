@@ -32,6 +32,7 @@ import ho.module.matches.model.MatchesOverviewRow;
 import ho.module.series.Spielplan;
 import ho.module.series.model.Liga;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.tool.arenasizer.Stadium;
@@ -46,7 +47,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-import plugins.IFutureTrainingWeek;
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
 import plugins.IPaarung;
@@ -1318,7 +1318,7 @@ public class DBManager {
 
 	//	------------------------------- FutureTrainingTable -------------------------------------------------
 
-	public List<IFutureTrainingWeek> getFutureTrainingsVector() {
+	public List<FutureTrainingWeek> getFutureTrainingsVector() {
 		return ((FutureTrainingTable) getTable(FutureTrainingTable.TABLENAME))
 			.getFutureTrainingsVector();
 	}
@@ -1328,7 +1328,7 @@ public class DBManager {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	public void saveFutureTraining(IFutureTrainingWeek training) {
+	public void saveFutureTraining(FutureTrainingWeek training) {
 		((FutureTrainingTable) getTable(FutureTrainingTable.TABLENAME)).saveFutureTraining(
 			training);
 	}

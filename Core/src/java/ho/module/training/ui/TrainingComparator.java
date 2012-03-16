@@ -7,7 +7,7 @@
  */
 package ho.module.training.ui;
 
-import plugins.IFutureTrainingManager;
+import ho.core.model.UserParameter;
 
 import java.util.Comparator;
 import java.util.Vector;
@@ -29,7 +29,7 @@ public class TrainingComparator implements Comparator<Vector<String>> {
         Vector<String> v1 =  arg0;
         Vector<String> v2 =  arg1;
 
-        for (int i = 1; i < (IFutureTrainingManager.FUTUREWEEKS + 1); i++) {
+        for (int i = 1; i < (UserParameter.instance().futureWeeks + 1); i++) {
             String s1 = "" + v1.get(i); //$NON-NLS-1$
             String s2 = "" + v2.get(i); //$NON-NLS-1$
 

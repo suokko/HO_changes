@@ -4,13 +4,13 @@ package ho.module.training.ui;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,8 +24,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 
@@ -71,7 +69,7 @@ public class TrainingRecapPanel extends JPanel {
         Vector<String> columns = getColumns();
 
         //playerRef = new HashMap();
-        List<IFutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+        List<FutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
 
         Vector<ISpieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
 
@@ -79,7 +77,7 @@ public class TrainingRecapPanel extends JPanel {
 
         for (Iterator<ISpieler> iter = v.iterator(); iter.hasNext();) {
             ISpieler player = iter.next();
-            IFutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
+            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
                                                                                      ho.module.training.TrainingPanel.getStaffPanel()
                                                                                                        .getCoTrainerNumber(),
                                                                                                        ho.module.training.TrainingPanel.getStaffPanel()
@@ -104,7 +102,7 @@ public class TrainingRecapPanel extends JPanel {
             row.add(player.getName());
             row.add(player.getAlterWithAgeDaysAsString());
 
-            for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
+            for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
                 ISkillup s = (ISkillup) maps.get(columns.get(i + 2));
 
                 if (s == null) {
@@ -167,7 +165,7 @@ public class TrainingRecapPanel extends JPanel {
             // Null when first time HO is launched		
         }
 
-        for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
+        for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
             // calculate the week and season of the future training
             int week = (actualWeek + i) - 1;
             int season = actualSeason + (week / 16);

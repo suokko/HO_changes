@@ -3,6 +3,7 @@ package ho.module.training.ui.comp;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -15,8 +16,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-
-import plugins.IFutureTrainingWeek;
 
 
 /**
@@ -55,10 +54,10 @@ public class FutureSettingPanel extends JPanel {
      * Populate the Future training table with the future training
      */
     protected void resetFutureTrainings() {
-        List<IFutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
+        List<FutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
 
-        for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
-            IFutureTrainingWeek train = iter.next();
+        for (Iterator<FutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+            FutureTrainingWeek train = iter.next();
             train.setIntensitaet(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
             train.setTyp(((CBItem)training.getSelectedItem()).getId());
@@ -75,8 +74,8 @@ public class FutureSettingPanel extends JPanel {
      */
     private void jbInit() {
 
-        List<IFutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
-    	IFutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
+        List<FutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
+    	FutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
         final int ttyp = firstFutureTraining.getTyp();
         training.setSelectedItem(new CBItem(Trainings.getTrainingDescription(ttyp), ttyp));

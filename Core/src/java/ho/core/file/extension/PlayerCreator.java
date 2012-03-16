@@ -11,6 +11,7 @@ import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 import ho.core.util.PlayerHelper;
+import ho.module.training.FutureTrainingWeek;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,8 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.IEPVData;
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
@@ -199,9 +198,9 @@ public class PlayerCreator extends XMLCreator {
 
 			int coTrainer = HOVerwaltung.instance().getModel().getVerein().getCoTrainer();
 			int trainer = HOVerwaltung.instance().getModel().getTrainer().getTrainer();
-			List<IFutureTrainingWeek> futures =DBManager.instance().getFutureTrainingsVector();
+			List<FutureTrainingWeek> futures =DBManager.instance().getFutureTrainingsVector();
 
-			IFutureTrainingManager ftm = new FutureTrainingManager(player, futures, coTrainer,  trainer);
+			FutureTrainingManager ftm = new FutureTrainingManager(player, futures, coTrainer,  trainer);
 
 			List<ISkillup> futureSkillups = ftm.getFutureSkillups();
 

@@ -2,6 +2,7 @@
 package ho.module.training.ui.model;
 
 import ho.core.db.DBManager;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
 import ho.module.training.ui.comp.CBItem;
@@ -10,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.IFutureTrainingWeek;
 import plugins.ITeam;
 
 
@@ -50,7 +50,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 
         aobj[col] = value;
 
-        IFutureTrainingWeek train = (IFutureTrainingWeek) p_V_trainingsVector.get(row);
+        FutureTrainingWeek train = (FutureTrainingWeek) p_V_trainingsVector.get(row);
 
         if (col == 2) {
             CBItem sel = (CBItem)value;
@@ -80,12 +80,12 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 
         Object[] aobj;
 
-        IFutureTrainingWeek oldTrain = null;
+        FutureTrainingWeek oldTrain = null;
 
-        List<IFutureTrainingWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
+        List<FutureTrainingWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
 
-        for (Iterator<IFutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
-            IFutureTrainingWeek train = iter.next();
+        for (Iterator<FutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+            FutureTrainingWeek train = iter.next();
 
             // if not found create it and saves it
             if (train.getIntensitaet() == -1) {
