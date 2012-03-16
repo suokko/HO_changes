@@ -72,14 +72,6 @@ public interface IHOMiniModel {
      */
     public plugins.IDownloadHelper getDownloadHelper();
 
-	/**
-	 * Returns the EPV Manager
-	 *
-	 * @return The EPV Manager
-	 */
-    public IEPV getEPV();
-    //-------Finanzen---------------------------------------
-
     /**
      * Returns economics
      *

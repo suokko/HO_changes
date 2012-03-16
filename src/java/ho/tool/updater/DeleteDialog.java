@@ -5,6 +5,7 @@
  */
 package ho.tool.updater;
 
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.plugins.GUIPluginWrapper;
 import ho.core.plugins.PluginManager;
@@ -96,7 +97,7 @@ final class DeleteDialog extends UpdaterDialog {
                 }
                  // for
 
-                GUIPluginWrapper.instance().getInfoPanel().clearLangInfo();
+                HOMainFrame.instance().getInfoPanel().clearLangInfo();
                 JOptionPane.showMessageDialog(null, PROP_NEW_START, PROP_DELETE,
                                               JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

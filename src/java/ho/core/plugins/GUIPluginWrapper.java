@@ -42,10 +42,6 @@ public class GUIPluginWrapper implements plugins.IGUI {
         return m_clInstance;
     }
 
-    public plugins.IInfoPanel getInfoPanel() {
-        return HOMainFrame.instance().getInfoPanel();
-    }
-
     public javax.swing.JFrame getOwner4Dialog() {
         return HOMainFrame.instance();
     }
@@ -83,10 +79,6 @@ public class GUIPluginWrapper implements plugins.IGUI {
     public JPanel createBallPanel(int ballcount) {
         return (JPanel) new ho.core.gui.comp.entry.TorLabelEntry(ballcount)
                .getComponent(false);
-    }
-
-    public plugins.IDebugWindow createDebugWindow(java.awt.Point location, java.awt.Dimension size) {
-        return new ho.core.plugins.DebugWindow(location, size);
     }
 
     public javax.swing.JPanel createGrassPanel() {
