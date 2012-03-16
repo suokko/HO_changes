@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 /**
  * Panel als Information unter dem MainFrame
  */
-public class InfoPanel extends ImagePanel implements plugins.IInfoPanel {
+public class InfoPanel extends ImagePanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = 4902186890362152556L;

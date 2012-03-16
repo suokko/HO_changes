@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Vector;
 
 import plugins.IBasics;
-import plugins.IEPV;
 import plugins.IExportMatchData;
 import plugins.IFinanzen;
 import plugins.IFutureTrainingManager;
@@ -133,15 +132,6 @@ public class HOMiniModel implements IHOMiniModel {
      */
     public plugins.IDownloadHelper getDownloadHelper() {
         return ho.core.net.MyConnector.instance();
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public IEPV getEPV() {
-        return getModel().getEPV();
     }
 
     //-------Finanzen---------------------------------------

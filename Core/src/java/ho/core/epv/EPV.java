@@ -12,7 +12,7 @@ import plugins.ISpieler;
  *
  * @author draghetto
  */
-public class EPV implements plugins.IEPV {
+public class EPV {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
