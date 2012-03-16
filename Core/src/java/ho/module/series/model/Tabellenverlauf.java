@@ -6,7 +6,6 @@
  */
 package ho.module.series.model;
 
-import plugins.ITabellenVerlaufEintrag;
 
 
 /**
@@ -14,7 +13,7 @@ import plugins.ITabellenVerlaufEintrag;
  *
  * @author thomas.werth
  */
-public class Tabellenverlauf implements plugins.ITabellenverlauf {
+public class Tabellenverlauf {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -44,7 +43,7 @@ public class Tabellenverlauf implements plugins.ITabellenverlauf {
      *
      * @return Value of property m_aEintraege.
      */
-    public final ITabellenVerlaufEintrag[] getEintraege() {
+    public final TabellenVerlaufEintrag[] getEintraege() {
         return this.m_aEintraege;
     }
 }

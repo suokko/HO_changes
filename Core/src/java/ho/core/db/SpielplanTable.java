@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import plugins.ISpielplan;
-
 
 final class SpielplanTable extends AbstractTable {
 	final static String TABLENAME = "SPIELPLAN";
@@ -36,7 +34,7 @@ final class SpielplanTable extends AbstractTable {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
-		final Vector<ISpielplan> vec = new Vector<ISpielplan>();
+		final Vector<Spielplan> vec = new Vector<Spielplan>();
 		Spielplan plan = null;
 		Spielplan[] plaene = null;
 		String sql = null;

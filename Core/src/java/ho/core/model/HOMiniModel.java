@@ -8,7 +8,6 @@ import ho.core.file.xml.MatchExporter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
-import ho.tool.arenasizer.Stadium;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,6 @@ import plugins.IMatchLineup;
 import plugins.IMatchPredictionManager;
 import plugins.IPlayerData;
 import plugins.ISpieler;
-import plugins.ISpielplan;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
 import plugins.ITrainingsManager;
@@ -299,39 +297,6 @@ public class HOMiniModel implements IHOMiniModel {
         return ho.core.db.DBManager.instance().getSpielerAtDate(spielerid, time);
     }
 
-    /**
-     * get ALL League Fixtures stored in DB
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public ISpielplan[] getSpielplaene() {
-        return ho.core.db.DBManager.instance().getAllSpielplaene(true);
-    }
-
-    /**
-     * get League Fixtures for specified league and season
-     *
-     * @param ligaId LeagueLevelUnitID -> XtraData
-     * @param saison Season If both params are set to -1 latestet downloaded league Fixtures is
-     *        fetched. This must not be the actual one! that can be a former season or a league
-     *        not of user Team , just the latest downloaded by User!
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public ISpielplan getSpielplan(int ligaId, int saison) {
-        return ho.core.db.DBManager.instance().getSpielplan(ligaId, saison);
-    }
-
-    //--------Stadium----------------------------------------
-
-    /**
-     * Gibt das Stadium zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public Stadium getStadium() {
-        return getModel().getStadium();
-    }
 
     //----------Team----------------------------------------
 

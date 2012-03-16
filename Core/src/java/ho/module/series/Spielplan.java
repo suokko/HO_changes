@@ -19,7 +19,6 @@ import java.util.Vector;
 import plugins.ILigaTabelle;
 import plugins.ILigaTabellenEintrag;
 import plugins.IPaarung;
-import plugins.ITabellenverlauf;
 
 
 /**
@@ -27,7 +26,7 @@ import plugins.ITabellenverlauf;
  *
  * @author thomas.werth
  */
-public class Spielplan implements plugins.ISpielplan {
+public class Spielplan  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /*LigaTabellen Member für Schnellzugriff nach Berechnung*/
@@ -219,7 +218,7 @@ public class Spielplan implements plugins.ISpielplan {
      *
      * @return Value of property m_clVerlauf.
      */
-    public final ITabellenverlauf getVerlauf() {
+    public final Tabellenverlauf getVerlauf() {
         if (m_clVerlauf == null) {
             m_clVerlauf = generateTabellenVerlauf();
         }
