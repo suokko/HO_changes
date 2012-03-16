@@ -2,24 +2,24 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.HOMiniModel;
+import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.XtraData;
 import ho.core.util.HOLogger;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.Timestamp;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IBasics;
 import plugins.IMatchKurzInfo;
 import plugins.ISpielePanel;
-import plugins.IXtraData;
 
 public class TeamCreator extends XMLCreator {
 
@@ -41,8 +41,8 @@ public class TeamCreator extends XMLCreator {
 			Document doc = builder.newDocument();
 			Element root = doc.createElement("team");
 			doc.appendChild(root);			
-			IBasics basics = HOVerwaltung.instance().getModel().getBasics();
-			IXtraData xtra = HOVerwaltung.instance().getModel().getXtraDaten();
+			Basics basics = HOVerwaltung.instance().getModel().getBasics();
+			XtraData xtra = HOVerwaltung.instance().getModel().getXtraDaten();
 						
 			root.appendChild(createNode(doc,"teamid", basics.getTeamId()+""));
 			root.appendChild(createNode(doc,"teamname", basics.getTeamName()+""));

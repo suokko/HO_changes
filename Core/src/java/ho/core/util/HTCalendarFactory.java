@@ -1,10 +1,10 @@
 package ho.core.util;
 
+import ho.core.model.HOModel;
+import ho.core.model.HOVerwaltung;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import plugins.IHOMiniModel;
-import plugins.IHTCalendar;
 
 /**
  * Factory for creating HTCalendar instances.
@@ -26,7 +26,8 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createEconomyCalendar(IHOMiniModel model) {
+    public static HTCalendar createEconomyCalendar() {
+    	HOModel model = HOVerwaltung.instance().getModel();
     	final Calendar calMark = Calendar.getInstance();
     	if (model == null || model.getXtraDaten() == null || model.getXtraDaten().getEconomyDate() == null) {
     		return new HTCalendar();
@@ -51,8 +52,8 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createEconomyCalendar(IHOMiniModel model, Date date) {
-        final IHTCalendar calendar = createEconomyCalendar(model);
+    public static HTCalendar createEconomyCalendar( Date date) {
+        final HTCalendar calendar = createEconomyCalendar();
 
         calendar.setTime(date);
 
@@ -64,7 +65,7 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createGlobalCalendar() {
+    public static HTCalendar createGlobalCalendar() {
         return new HTCalendar();
     }
 
@@ -76,8 +77,8 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createGlobalCalendar(Date date) {
-        final IHTCalendar calendar = createGlobalCalendar();
+    public static HTCalendar createGlobalCalendar(Date date) {
+        final HTCalendar calendar = createGlobalCalendar();
 
         calendar.setTime(date);
 
@@ -92,12 +93,13 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createTrainingCalendar(IHOMiniModel model) {
+    public static HTCalendar createTrainingCalendar() {
+    	HOModel model = HOVerwaltung.instance().getModel();
         final Calendar calMark = Calendar.getInstance();
 
         calMark.setTimeInMillis(model.getXtraDaten().getTrainingDate().getTime());
 
-        final IHTCalendar calendar = new HTCalendar();
+        final HTCalendar calendar = new HTCalendar();
 
         calendar.initialize(calMark);
         calendar.setTime(model.getBasics().getDatum());
@@ -119,10 +121,8 @@ public final class HTCalendarFactory {
      *
      * @return a HTCalendar.
      */
-    public static IHTCalendar createTrainingCalendar(IHOMiniModel model,
-        Date date) {
-        final IHTCalendar calendar = createTrainingCalendar(model);
-
+    public static HTCalendar createTrainingCalendar(Date date) {
+        final HTCalendar calendar = createTrainingCalendar();
         calendar.setTime(date);
 
         return calendar;

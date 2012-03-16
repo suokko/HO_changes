@@ -13,7 +13,7 @@ import ho.core.util.HOLogger;
  *
  * @author thetom
  */
-public class XtraData implements plugins.IXtraData {
+public class XtraData  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private String m_sCurrencyName;

@@ -8,6 +8,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.XtraData;
 import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
@@ -22,8 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
-
-import plugins.IXtraData;
 
 class MyTableCellRenderer  implements TableCellRenderer{
 
@@ -256,7 +255,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			label.validate();
 		}
 		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Gehalt")))	{
-			IXtraData extraData = HOVerwaltung.instance().getModel().getXtraDaten();
+			XtraData extraData = HOVerwaltung.instance().getModel().getXtraDaten();
 			String curr = "" + df.format(Double.parseDouble(value.toString())) + " " + extraData.getCurrencyName();
 			label.setText(curr);
 			

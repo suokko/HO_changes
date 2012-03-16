@@ -4,7 +4,6 @@ package ho.tool.keepertool;
 
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.plugins.GUIPluginWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
