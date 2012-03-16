@@ -22,6 +22,7 @@ package ho.module.tsforecast;
 
 
 import ho.core.db.DBManager;
+import ho.core.db.JDBCAdapter;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
-import plugins.IJDBCAdapter;
 import plugins.IMatchDetails;
 
 
@@ -51,7 +51,7 @@ class Curve {
   static final int TRAINER_DOWN_PT  = 11;
   static final int START_TRAINER_PT = 12;
   
-  protected IJDBCAdapter m_clJDBC  = null;
+  protected JDBCAdapter m_clJDBC  = null;
   
   protected ArrayList<Point> m_clPoints   = new ArrayList<Point>();
   

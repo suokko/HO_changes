@@ -1,12 +1,10 @@
 package ho.module.tsforecast;
 
-import ho.core.db.DBManager;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -18,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 
 import javax.swing.BoxLayout;
@@ -28,7 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import plugins.IJDBCAdapter;
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
 import plugins.IRefreshable;

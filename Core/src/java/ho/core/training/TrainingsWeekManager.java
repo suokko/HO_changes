@@ -2,6 +2,7 @@
 package ho.core.training;
 
 import ho.core.db.DBManager;
+import ho.core.db.JDBCAdapter;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -13,8 +14,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import plugins.IHOMiniModel;
-import plugins.IJDBCAdapter;
 import plugins.ITrainingWeek;
 
 
@@ -126,7 +125,7 @@ public class TrainingsWeekManager {
 
         //datenbankverbindung holen
         //get database connection
-        final IJDBCAdapter ijdbca = DBManager.instance().getAdapter();
+        final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
 
         //zeitzone schaffen, die update um 9.30 am vormittag entspricht
         //make timezone
