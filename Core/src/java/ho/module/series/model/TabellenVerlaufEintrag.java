@@ -11,7 +11,7 @@ package ho.module.series.model;
  *
  * @author thomas.werth
  */
-public class TabellenVerlaufEintrag implements plugins.ITabellenVerlaufEintrag {
+public class TabellenVerlaufEintrag {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */

@@ -3,10 +3,8 @@ package ho.core.model;
 import java.awt.Color;
 import java.util.HashMap;
 
-import plugins.IUserConfiguration;
 
-
-public abstract class Configuration implements IUserConfiguration {
+public abstract class Configuration {
 
 	public String getStringValue(HashMap<String, String> values,String key) {
 		return String.valueOf(values.get(key)); 
@@ -44,6 +42,19 @@ public abstract class Configuration implements IUserConfiguration {
 		} catch (NumberFormatException e) {
 		}
 		return new Color(0);		
-	}	
+	}
+	
+	/**
+	 * Values for saving in db.
+	 * 
+	 * @return HashMap
+	 */
+	public abstract HashMap<String, String> getValues();
+	
+	/**
+	 * load values to set properties in object
+	 * @param values
+	 */
+	public abstract void setValues(HashMap<String, String> values);
 
 }

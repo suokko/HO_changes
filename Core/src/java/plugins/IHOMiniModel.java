@@ -201,31 +201,6 @@ public interface IHOMiniModel {
      */
     public ISpieler getSpielerAtDate(int spielerid, java.sql.Timestamp time);
 
-    /**
-     * get ALL League Fixtures stored in DB
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public ISpielplan[] getSpielplaene();
-
-    /**
-     * get League Fixtures for specified league and season
-     *
-     * @param ligaId TODO Missing Constructuor Parameter Documentation
-     * @param saison TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public ISpielplan getSpielplan(int ligaId, int saison);
-
-    //--------Stadium----------------------------------------
-
-    /**
-     * Gibt das Stadium zurück
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public Stadium getStadium();
 
     //----------Team----------------------------------------
 
