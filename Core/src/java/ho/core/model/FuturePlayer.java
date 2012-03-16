@@ -1,9 +1,8 @@
 package ho.core.model;
 
-import plugins.IFuturePlayer;
 
 
-public class FuturePlayer implements IFuturePlayer {
+public class FuturePlayer {
 
 	private double passing;
 	private double playmaking;

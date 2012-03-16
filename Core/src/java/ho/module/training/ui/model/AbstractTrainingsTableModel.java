@@ -2,14 +2,11 @@
 package ho.module.training.ui.model;
 
 import ho.core.model.HOVerwaltung;
+import ho.module.training.FutureTrainingWeek;
 
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
-
-
-import plugins.IFutureTrainingWeek;
-import plugins.IHOMiniModel;
 
 
 /**
@@ -39,7 +36,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      */
     public AbstractTrainingsTableModel() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector<IFutureTrainingWeek>();
+        p_V_trainingsVector = new Vector<FutureTrainingWeek>();
         columnNames = new String[5];
         HOVerwaltung hoV = HOVerwaltung.instance();
         columnNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$

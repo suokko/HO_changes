@@ -1,8 +1,9 @@
 package ho.core.db;
 
-import ho.core.model.FutureTrainingWeek;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
+import ho.module.training.FutureTrainingWeek;
 
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -10,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 
 public final class FutureTrainingTable extends AbstractTable {
 
@@ -33,8 +31,8 @@ public final class FutureTrainingTable extends AbstractTable {
 		columns[4] = new ColumnDescriptor("STAMINATRAININGPART",Types.INTEGER,false);
 	}
 	
-	List<IFutureTrainingWeek> getFutureTrainingsVector() {
-		final Vector<IFutureTrainingWeek> vTrainings = new Vector<IFutureTrainingWeek>();
+	List<FutureTrainingWeek> getFutureTrainingsVector() {
+		final Vector<FutureTrainingWeek> vTrainings = new Vector<FutureTrainingWeek>();
 		String query = "select * from "+getTableName();
 		ResultSet rs = adapter.executeQuery(query);
 
@@ -56,7 +54,7 @@ public final class FutureTrainingTable extends AbstractTable {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getTraining " + e);
 		}
 		
-		List<IFutureTrainingWeek> futures = new ArrayList<IFutureTrainingWeek>();
+		List<FutureTrainingWeek> futures = new ArrayList<FutureTrainingWeek>();
 
 		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
 		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
@@ -77,7 +75,7 @@ public final class FutureTrainingTable extends AbstractTable {
 			// Null when first time HO is launched		
 		}
 
-		for (int i = 0; i < IFutureTrainingManager.FUTUREWEEKS; i++) {
+		for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
 			
 			// calculate the week and season of the future training
 			int week = (actualWeek + i) - 1;
@@ -85,9 +83,9 @@ public final class FutureTrainingTable extends AbstractTable {
 			week = (week % 16) + 1;
 	
 			// load the training from DB
-			IFutureTrainingWeek train = null;
+			FutureTrainingWeek train = null;
 
-			for (Iterator<IFutureTrainingWeek> iter = vTrainings.iterator(); iter.hasNext();) {
+			for (Iterator<FutureTrainingWeek> iter = vTrainings.iterator(); iter.hasNext();) {
 				FutureTrainingWeek tmp = (FutureTrainingWeek) iter.next();
 				if ((tmp.getWeek() == week) && (tmp.getSeason() == season)) {
 					train = tmp;
@@ -116,7 +114,7 @@ public final class FutureTrainingTable extends AbstractTable {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	void saveFutureTraining(IFutureTrainingWeek training) {
+	void saveFutureTraining(FutureTrainingWeek training) {
 		if (training != null) {
 			String statement =
 				"update "+getTableName()+" set TYPE= " + training.getTyp() + ", INTENSITY=" + training.getIntensitaet() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();

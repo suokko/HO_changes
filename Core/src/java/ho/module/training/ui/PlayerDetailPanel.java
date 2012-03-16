@@ -3,9 +3,12 @@ package ho.module.training.ui;
 
 import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.FuturePlayer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.util.HelperWrapper;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
 
@@ -18,9 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IFuturePlayer;
-import plugins.IFutureTrainingManager;
-import plugins.IFutureTrainingWeek;
 import plugins.ISkillup;
 import plugins.ISpieler;
 
@@ -74,10 +74,10 @@ public class PlayerDetailPanel extends JPanel {
         playerLabel.setText(spieler.getName());
 
         // gets the list of user defined future trainings
-        List<IFutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+        List<FutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
 
         // instantiate a future train manager to calculate the previsions */ 
-        IFutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
+        FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
                                                                                  ho.module.training.TrainingPanel.getStaffPanel()
                                                                                                    .getCoTrainerNumber(),
                                                                                                    ho.module.training.TrainingPanel.getStaffPanel()
@@ -97,7 +97,7 @@ public class PlayerDetailPanel extends JPanel {
                                                                                                 skillIndex),
                                                                                  true));
 
-            IFuturePlayer fp = ftm.previewPlayer(IFutureTrainingManager.FUTUREWEEKS);
+            FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
             double finalValue = getSkillValue(fp, skillIndex);
             levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
         }
@@ -128,7 +128,7 @@ public class PlayerDetailPanel extends JPanel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private double getSkillValue(IFuturePlayer spieler, int skillIndex) {
+    private double getSkillValue(FuturePlayer spieler, int skillIndex) {
         switch (skillIndex) {
             case ISpieler.SKILL_TORWART:
                 return spieler.getGoalkeeping();

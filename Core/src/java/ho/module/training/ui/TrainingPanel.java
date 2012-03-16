@@ -4,6 +4,7 @@ package ho.module.training.ui;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.module.training.FutureTrainingWeek;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -27,7 +28,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
-import plugins.IFutureTrainingWeek;
 import plugins.ITrainingWeek;
 
 
@@ -65,7 +65,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return future trainings list
      */
-    public List<IFutureTrainingWeek> getFutureTrainings() {
+    public List<FutureTrainingWeek> getFutureTrainings() {
         return futureModel.getTrainingsData();
     }
 
