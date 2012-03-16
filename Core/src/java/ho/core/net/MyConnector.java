@@ -52,7 +52,7 @@ import sun.misc.BASE64Encoder;
  * 
  * @author thomas.werth
  */
-public class MyConnector implements plugins.IDownloadHelper {
+public class MyConnector  {
 	// ~ Static fields/initializers
 	// -----------------------------------------------------------------
 	static final private int chppID = 3330;

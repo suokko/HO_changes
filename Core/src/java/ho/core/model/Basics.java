@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Benutzerdaten
  */
-public final class Basics implements plugins.IBasics {
+public final class Basics  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Manager */
