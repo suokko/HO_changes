@@ -4,28 +4,28 @@ public interface HOIconName {
 
 	public static final String IMAGEPANEL_BACKGROUND = "imagePanel.background";
 	public static final String GRASSPANEL_BACKGROUND = "grassPanel.background";
-	
-	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12"};
+
+	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12","MatchType13","MatchType14"};
 	public static final String[] WEATHER 		= { "weather0","weather1","weather2","weather3"};
 	public static final String[] SPECIAL 		= { "","special1","special2","special3","special4","special5", "special6"};
 	public static final String[] TEAMSMILIES 	= { "", "A-Team.png","B-Team.png", "C-Team.png", "D-Team.png", "E-Team.png", "F-Team.png" };
 	public static final String[] MANUELLSMILIES = { "", "1bigsmile.png","2smile.png", "3normal.png", "4sad.png", "5verysad.png","6clown.png", "7trainer.png", "8dollar.png", "9coach.png" };
-	
+
 	public static final String NO_TEAM 			= "No-Team.png";
 	public static final String TOOTHEDWHEEL 	= "toothedWheel";
 	public static final String HAND 			= "hand";
-	
+
 	public static final String NO_MATCH 		= "noMatch";
 	public static final String SHOW_MATCH 		= "showMatch";
 	public static final String DOWNLOAD_MATCH 	= "downloadMatch";
-	
+
 	public static final String WEATHER_RAIN_POS = "weather.rain.pos";
 	public static final String WEATHER_RAIN_NEG = "weather.rain.neg";
 	public static final String WEATHER_SUN_POS 	= "weather.sun.pos";
 	public static final String WEATHER_SUN_NEG 	= "weather.sun.neg";
 	public static final String WEATHER_EFFECT_GOOD 	= "weather.effect.1";
 	public static final String WEATHER_EFFECT_BAD 	= "weather.effect.-1";
-	
+
 	public static final String REDCARD 			= "redCard";
 	public static final String YELLOWCARD 		= "yellowCard";
 	public static final String TWOCARDS 		= "twoCards";
@@ -33,10 +33,8 @@ public interface HOIconName {
 	public static final String INJURED 			= "injured";
 	public static final String PATCHSMALL 		= "patch.small";
 	public static final String INJUREDSMALL 	= "injured.small";
-	
+
 	public static final String PRINTER 			= "printer";
-	public static final String CHECKBOXSELECTED = "checkBoxSelected";
-	public static final String CHECKBOXNOTSELECTED = "checkBoxNotSelected";
 	public static final String DISK 			= "disk";
 	public static final String LOCKED 			= "locked";
 	public static final String EMPTY 			= "empty";
@@ -46,7 +44,7 @@ public interface HOIconName {
 	public static final String OFFSET 			= "offset";
 	public static final String GOTOSTATISTIK 	= "gotoStatistik";
 	public static final String TRAININGBLOCK 	= "trainingblock";
-	
+
 	public static final String MAXLINEUP		 = "maxLineup";
 	public static final String RELOAD 			= "reload";
 	public static final String SIMULATEMATCH 	= "simulateMatch";
@@ -56,11 +54,11 @@ public interface HOIconName {
 	public static final String SWAP 			= "swap";
 	public static final String SWAPPRESSED 		= "swapPressed";
 	public static final String TURN 			= "turn";
-	
+
 	public static final String CLEARASSIST 		= "clearAssist";
 	public static final String STARTASSIST 		= "startAssist";
 	public static final String CLEARRESERVE 	= "clearReserve";
-	
+
 	public static final String LOGO16 			= "logo16";
 	public static final String TRICKOT 			= "trickot";
 
@@ -93,16 +91,16 @@ public interface HOIconName {
 	public static final String REMOVE	= "remove";
 	public static final String BALL = "ball";
 	public static final String BUTTON_BALL = "button.ball";
-	
+
 	public static final String TRANSFER_IN = "transfer.in";
 	public static final String TRANSFER_OUT = "transfer.out";
 	public static final String TABBEDPANE_CLOSE = "tabbedPane.close";
-	
+
 	public static final String ARROW_LEFT1 = "arrow_left1";
 	public static final String ARROW_LEFT2 = "arrow_left2";
 	public static final String ARROW_RIGHT1 = "arrow_right1";
 	public static final String ARROW_RIGHT2= "arrow_right2";
 	public static final String ARROW_UP= "arrow_up";
 	public static final String ARROW_DOWN= "arrow_down";
-	
+
 }
