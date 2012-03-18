@@ -4,16 +4,12 @@ package ho.core.model;
 import ho.core.db.DBAdapter;
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
-import ho.core.file.xml.MatchExporter;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.series.model.Liga;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Vector;
 
-import plugins.IExportMatchData;
 import plugins.IHOMiniModel;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
@@ -365,30 +361,6 @@ public class HOMiniModel implements IHOMiniModel {
 		return tempSpieler;
 	}
 
-	/**
-	 * List of useful data for export
-	 *
-	 * @param startingDate starting data to export from (for non friendlies)
-	 * @param startingDateForFriendlies starting data to export from (for friendlies)
-	 *
-	 * @return List of ExportMatchData objects
-	 */
-	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
-		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies);
-	}
-
-	/**
-	 * List of useful data for export
-	 *
-	 * @param startingDate starting data to export from (for non friendlies)
-	 * @param startingDateForFriendlies starting data to export from (for friendlies)
-	 * @param strict is true, export only matches *without* tactical problems / overconfidence / weather SE
-	 *
-	 * @return List of IExportMatchData objects
-	 */
-	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {
-		return MatchExporter.getDataUsefullMatches(startingDate, startingDateForFriendlies, strict);
-	}
 
 	/**
 	 * Log something in HOs debug log.

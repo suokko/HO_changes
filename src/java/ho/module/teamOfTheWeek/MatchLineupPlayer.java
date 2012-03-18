@@ -2,13 +2,12 @@
 package ho.module.teamOfTheWeek;
 
 import ho.core.db.DBManager;
+import ho.module.series.Paarung;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
-
-import plugins.IPaarung;
 
 
 class MatchLineupPlayer {
@@ -39,7 +38,7 @@ class MatchLineupPlayer {
         //        nname = "";
     }
 
-    MatchLineupPlayer(ResultSet rs,Vector<IPaarung> matches) {
+    MatchLineupPlayer(ResultSet rs,Vector<Paarung> matches) {
         try {
             rs.next();
             TeamID = rs.getInt("TEAMID");
@@ -57,9 +56,9 @@ class MatchLineupPlayer {
     }
 
     
-    private String getTeamName(Vector<IPaarung> matches,int teamId){
-    	for (Iterator<IPaarung> iterator = matches.iterator(); iterator.hasNext();) {
-			IPaarung iPaarung = iterator.next();
+    private String getTeamName(Vector<Paarung> matches,int teamId){
+    	for (Iterator<Paarung> iterator = matches.iterator(); iterator.hasNext();) {
+			Paarung iPaarung = iterator.next();
 			if(teamId == iPaarung.getHeimId())
             	return iPaarung.getHeimName();
             else if(teamId == iPaarung.getGastId())

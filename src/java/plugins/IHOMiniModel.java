@@ -229,27 +229,6 @@ public interface IHOMiniModel {
 	public ISpieler createPlayer(IPlayerData data);
 
 	/**
-	 * List of useful data for export
-	 *
-	 * @param startingDate starting data to export from (for non friendlies)
-	 * @param startingDateForFriendlies starting data to export from (for friendlies)
-	 *
-	 * @return List of IExportMatchData objects
-	 */
-	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies);
-
-	/**
-	 * List of useful data for export
-	 *
-	 * @param startingDate starting data to export from (for non friendlies)
-	 * @param startingDateForFriendlies starting data to export from (for friendlies)
-	 * @param strict is true, export only matches *without* cards, injuries, tactical problems / overconfidence / weather SE...
-	 *
-	 * @return List of IExportMatchData objects
-	 */
-	public List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict);
-
-	/**
 	 * Log something in HOs debug log.
 	 *
 	 * @param caller the logging class

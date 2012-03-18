@@ -12,7 +12,7 @@ package ho.module.series.model;
  *
  * @author thomas.werth
  */
-public class LigaTabellenEintrag  {
+public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
     //~ Instance fields ----------------------------------------------------------------------------
     /** TODO Missing Parameter Documentation */
     public static final byte H_SIEG = 1;
