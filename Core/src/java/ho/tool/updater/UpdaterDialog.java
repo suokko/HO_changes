@@ -7,13 +7,10 @@ package ho.tool.updater;
 
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.theme.HOColorName;
-import ho.core.gui.theme.HOIconName;
-import ho.core.gui.theme.ThemeManager;
+
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -51,11 +48,9 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
     protected String[] columnNames;
     protected Object[] object;
     protected boolean defaultSelected;
-    
+
     private String ACT_CANCEL = "CANCEL";
     private String ACT_FIND = "FIND";
-    private String ACT_SET_ALL = "SET_ALL";
-    private String ACT_SET_NONE = "SET_NONE";
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -79,14 +74,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
         if (comand.equals(ACT_CANCEL)) {
             dialog.dispose();
-        }
-
-        if (comand.equals(ACT_SET_NONE)) {
-            dialog.setAll(false);
-        }
-
-        if (comand.equals(ACT_SET_ALL)) {
-            dialog.setAll(true);
         }
 
         if (comand.equals(ACT_FIND)) {
@@ -132,21 +119,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         cancelButton.setActionCommand(ACT_CANCEL);
         cancelButton.addActionListener(this);
 
-        JButton selectAllButton = new JButton(ThemeManager.getIcon(HOIconName.CHECKBOXSELECTED));
-        selectAllButton.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
-        selectAllButton.setPreferredSize(new Dimension(23, 23));
-        selectAllButton.setActionCommand(ACT_SET_ALL);
-        selectAllButton.addActionListener(this);
-
-        JButton selectNoneButton = new JButton(ThemeManager.getIcon(HOIconName.CHECKBOXNOTSELECTED));
-
-        selectNoneButton.setBackground(selectAllButton.getBackground());
-        selectNoneButton.setPreferredSize(new Dimension(23, 23));
-        selectNoneButton.setActionCommand(ACT_SET_NONE);
-        selectNoneButton.addActionListener(this);
-
-        buttonPanel.add(selectAllButton);
-        buttonPanel.add(selectNoneButton);
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         return buttonPanel;

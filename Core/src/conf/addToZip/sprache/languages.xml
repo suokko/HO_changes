@@ -3,7 +3,7 @@
   <property>
     <datei>languages.properties</datei>
     <lang_id>-1</lang_id>
-    <version>1.7</version>
+    <version>1.8</version>
   </property>
   <property>
     <datei>Deutsch.properties</datei>
@@ -192,5 +192,9 @@
   	<datei>Hebrew.properties</datei>
   	<lang_id>38</lang_id>
   	<version>2.3</version></property>
-  
+  <property>
+  	<datei>Japanese.properties</datei>
+  	<lang_id>39</lang_id>
+  	<version>2.0</version></property>
+
 </languages>
