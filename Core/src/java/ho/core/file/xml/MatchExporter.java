@@ -2,7 +2,6 @@
 package ho.core.file.xml;
 
 import ho.core.db.DBManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
@@ -13,7 +12,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.IMatchKurzInfo;
@@ -36,15 +34,15 @@ public class MatchExporter {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List<IExportMatchData> getDataUsefullMatches (Date startingDate) {
+	public static List<ExportMatchData> getDataUsefullMatches (Date startingDate) {
 		return getDataUsefullMatches(startingDate, startingDate);
 	}
 
-	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
+	public static List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies) {
 		return getDataUsefullMatches(startingDate, startingDateForFriendlies, true);
 	}
 
-	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {
+	public static List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict) {
 		return getDataUsefullMatches(startingDate, startingDateForFriendlies, strict, false);
 	}
 	
@@ -58,9 +56,9 @@ public class MatchExporter {
 	 *
 	 * @return List of ExportMatchData objects
 	 */
-	public static List<IExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict, boolean skipPullBack) {		
+	public static List<ExportMatchData> getDataUsefullMatches(Date startingDate, Date startingDateForFriendlies, boolean strict, boolean skipPullBack) {		
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
-		List<IExportMatchData> export = new ArrayList<IExportMatchData>();
+		List<ExportMatchData> export = new ArrayList<ExportMatchData>();
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId);
 

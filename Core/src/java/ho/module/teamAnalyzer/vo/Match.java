@@ -2,13 +2,13 @@
 package ho.module.teamAnalyzer.vo;
 
 import ho.core.util.HelperWrapper;
+import ho.module.series.Paarung;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;
 
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.IPaarung;
 
 
 /**
@@ -81,7 +81,7 @@ public class Match {
      *
      * @param matchInfo IPaarung from which a match object has to be created
      */
-    public Match(IPaarung matchInfo) {
+    public Match(Paarung matchInfo) {
         homeId = matchInfo.getHeimId();
         awayId = matchInfo.getGastId();
         matchId = matchInfo.getMatchId();

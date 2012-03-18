@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import plugins.IPaarung;
-
 
 public final class PaarungTable extends AbstractTable {
 
@@ -43,7 +41,7 @@ public final class PaarungTable extends AbstractTable {
 	 * @param ligaId TODO Missing Constructuor Parameter Documentation
 	 * @param saison TODO Missing Constructuor Parameter Documentation
 	 */
-	void storePaarung(Vector<IPaarung> paarungen, int ligaId, int saison) {
+	void storePaarung(Vector<Paarung> paarungen, int ligaId, int saison) {
 		Paarung match = null;
 		String sql = null;
 

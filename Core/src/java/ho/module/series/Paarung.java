@@ -7,14 +7,13 @@
 package ho.module.series;
 
 import ho.core.util.HOLogger;
-import plugins.IPaarung;
 
 /**
  * DOCUMENT ME!
  *
  * @author thomas.werth
  */
-public class Paarung implements plugins.IPaarung {
+public class Paarung implements Comparable<Paarung>{
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
@@ -294,9 +293,8 @@ public class Paarung implements plugins.IPaarung {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int compareTo(IPaarung obj) {
-        IPaarung tmp = null;
-        tmp = obj;
+    public final int compareTo(Paarung obj) {
+        Paarung tmp = obj;
 
         if (m_iSpieltag > tmp.getSpieltag()) {
             return 1;

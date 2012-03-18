@@ -11,7 +11,7 @@ import java.awt.Component;
 import javax.swing.JList;
 
 
-public class SpielerCBItem  {
+public class SpielerCBItem  implements Comparable<SpielerCBItem>{
     //~ Static fields/initializers -----------------------------------------------------------------
 
     public static javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
