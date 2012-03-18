@@ -6,8 +6,6 @@ import ho.core.util.Helper;
 import java.util.HashMap;
 import java.util.Map;
 
-import plugins.IEPVData;
-
 class EPVCalculator
 {
 
@@ -32,7 +30,7 @@ class EPVCalculator
     	inputMap.put("age", new Double(age-17));
     }
 
-    final double getPrice (IEPVData iepvdata, int week, double currencyRate) {
+    final double getPrice (EPVData iepvdata, int week, double currencyRate) {
     	Map<String,Double> inputMap = new HashMap<String,Double>();
     	inputMap.put("age", new Double(iepvdata.getAge() + iepvdata.getAgeDays()/112d));
     	inputMap.put("fo", new Double(iepvdata.getForm()));
