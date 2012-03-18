@@ -5,6 +5,10 @@ Changelist HO! 1.432
 ====================
 - ArenaSizer become a extra tool
 
+Language updates:
+-----------------
+- Added Japanese as new HO language (thx nomad331)
+
 ThemeManager:
 ------------
 - add new keys:
@@ -107,7 +111,7 @@ Themes:
 ---------------
 - Fatcow
   - Added first version (thanks Werder0405)
-  
+
 Changelist HO! 1.430
 ====================
 - Publishing a proper release based on 1.429
