@@ -29,6 +29,7 @@ import ho.module.matches.model.MatchLineupTeam;
 import ho.module.matches.model.Matchdetails;
 import ho.module.matches.model.MatchesHighlightsStat;
 import ho.module.matches.model.MatchesOverviewRow;
+import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 import ho.module.series.model.Liga;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
@@ -49,7 +50,6 @@ import java.util.Vector;
 
 import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
-import plugins.IPaarung;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
@@ -1453,7 +1453,7 @@ public class DBManager {
 	 * @param ligaId TODO Missing Constructuor Parameter Documentation
 	 * @param saison TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void storePaarung(Vector<IPaarung> paarungen, int ligaId, int saison) {
+	protected void storePaarung(Vector<Paarung> paarungen, int ligaId, int saison) {
 		((PaarungTable) getTable(PaarungTable.TABLENAME)).storePaarung(paarungen, ligaId, saison);
 	}
 

@@ -6,6 +6,7 @@ import ho.core.db.JDBCAdapter;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
+import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 
 import java.awt.BorderLayout;
@@ -30,7 +31,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import plugins.IPaarung;
 import plugins.ISpielerPosition;
 import plugins.LineupPanel;
 
@@ -316,7 +316,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
      */
     private Map<String,MatchLineupPlayer> getPlayers(int week, Spielplan plan, boolean isBest) {
         JDBCAdapter db = DBManager.instance().getAdapter();
-        Vector<IPaarung> matchIDs =plan.getPaarungenBySpieltag(week);
+        Vector<Paarung> matchIDs =plan.getPaarungenBySpieltag(week);
         // TODO For match of year attention of doubles
         Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
         List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.KEEPER, 1, isBest);
@@ -350,7 +350,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
      *
      * @return Missing Return Method Documentation
      */
-    private List<MatchLineupPlayer> getPlayetAt(JDBCAdapter db, Vector<IPaarung> matchIDs, int position, int number,
+    private List<MatchLineupPlayer> getPlayetAt(JDBCAdapter db, Vector<Paarung> matchIDs, int position, int number,
                                     boolean isBest) {
         ResultSet rs;
         String posClase = "";

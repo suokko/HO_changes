@@ -34,7 +34,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchKurzInfo;
-import plugins.IPaarung;
 
 
 /**
@@ -185,7 +184,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
 
     private void fillLabels() {
         int spieltag = matchround;
-        Vector<IPaarung> paarungen = null;
+        Vector<Paarung> paarungen = null;
         final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
         if (SeriesPanel.getAktuellerSpielPlan() == null) {

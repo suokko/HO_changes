@@ -8,8 +8,8 @@
 package ho.core.rating;
 
 import ho.core.db.DBManager;
+import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
@@ -17,7 +17,6 @@ import ho.module.lineup.Lineup;
 import java.text.NumberFormat;
 import java.util.List;
 
-import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
@@ -41,12 +40,12 @@ public class RatingOptimizer {
 		double[] linear = new double[7];
 		double[] quadratic = new double[7];
 		
-		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY, true, true);
+		List<ExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY, true, true);
 
 		int i = 0;
 		int count = 0;
 		while ((count < maxNumber) && (i < matches.size())) {
-			IExportMatchData matchData =  matches.get(i);
+			ExportMatchData matchData =  matches.get(i);
 			i++;
 			double[] diff = getOffset(matchData);
 //			System.out.print ("Diffs for Match "+matchData.getInfo().getMatchID()+": ");
@@ -88,7 +87,7 @@ public class RatingOptimizer {
 		return r;
 	}
 
-	private static double[] getOffset(IExportMatchData matchData) {
+	private static double[] getOffset(ExportMatchData matchData) {
 
 
 		// Check for season reset lost		

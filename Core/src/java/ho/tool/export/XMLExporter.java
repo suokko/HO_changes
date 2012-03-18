@@ -8,7 +8,6 @@ import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
@@ -35,7 +34,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IExportMatchData;
 import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
@@ -172,7 +170,7 @@ public class XMLExporter  {
 	public void saveXML(String filename, Timestamp startingDate) {
 				
 		//Alle Matches holen			
-		List<IExportMatchData> matches = MatchExporter.getDataUsefullMatches(startingDate);
+		List<ExportMatchData> matches = MatchExporter.getDataUsefullMatches(startingDate);
 		
 		//XML schreiben
 		try {
@@ -200,7 +198,7 @@ public class XMLExporter  {
 			root.appendChild(tmpEle);
 			tmpEle.appendChild(doc.createTextNode("1.05"));
 
-			for (Iterator<IExportMatchData> iter = matches.iterator(); iter.hasNext();) {
+			for (Iterator<ExportMatchData> iter = matches.iterator(); iter.hasNext();) {
 				ExportMatchData matchData = (ExportMatchData) iter.next();
 
 				//Matchdaten

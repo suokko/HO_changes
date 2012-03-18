@@ -2,13 +2,12 @@ package ho.core.file.xml;
 
 import java.util.Hashtable;
 
-import plugins.IExportMatchData;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 
 
-public class ExportMatchData implements IExportMatchData {
+public class ExportMatchData {
 	
 	private Hashtable<Integer,ISpieler> players;
 	private IMatchDetails details;

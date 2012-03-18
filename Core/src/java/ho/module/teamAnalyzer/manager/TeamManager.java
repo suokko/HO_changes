@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 import ho.module.series.model.LigaTabellenEintrag;
 import ho.module.teamAnalyzer.vo.Team;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.IPaarung;
 import plugins.ISpielePanel;
 
 
@@ -86,7 +86,7 @@ public class TeamManager {
             List<?> matches = league.getPaarungenBySpieltag(HOVerwaltung.instance().getModel().getBasics().getSpieltag());
 
             for (Iterator<?> iter = matches.iterator(); iter.hasNext();) {
-                IPaarung element = (IPaarung) iter.next();
+                Paarung element = (Paarung) iter.next();
 
                 if (element.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
                     Team t = new Team();

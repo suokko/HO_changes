@@ -16,8 +16,6 @@ import ho.module.series.model.Tabellenverlauf;
 import java.sql.Timestamp;
 import java.util.Vector;
 
-import plugins.IPaarung;
-
 
 /**
  * DOCUMENT ME!
@@ -42,7 +40,7 @@ public class Spielplan  {
     protected Timestamp m_clFetchDate;
 
     /** TODO Missing Parameter Documentation */
-    protected Vector<IPaarung> m_vEintraege = new Vector<IPaarung>();
+    protected Vector<Paarung> m_vEintraege = new Vector<Paarung>();
 
     /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
@@ -67,7 +65,7 @@ public class Spielplan  {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<IPaarung> getEintraege() {
+    public final Vector<Paarung> getEintraege() {
         return m_vEintraege;
     }
 
@@ -132,8 +130,8 @@ public class Spielplan  {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<IPaarung> getPaarungenBySpieltag(int spieltag) {
-        final Vector<IPaarung> spiele = new Vector<IPaarung>();
+    public final Vector<Paarung> getPaarungenBySpieltag(int spieltag) {
+        final Vector<Paarung> spiele = new Vector<Paarung>();
         Paarung tmp = null;
 
         for (int i = 0; i < m_vEintraege.size(); i++) {
@@ -158,9 +156,9 @@ public class Spielplan  {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final IPaarung[] getPaarungenByTeamId(int id) {
+    public final Paarung[] getPaarungenByTeamId(int id) {
         Paarung tmp = null;
-        final Vector<IPaarung> spiele = new Vector<IPaarung>();
+        final Vector<Paarung> spiele = new Vector<Paarung>();
         Paarung[] aSpiele = null;
 
         for (int i = 0; i < m_vEintraege.size(); i++) {
@@ -309,7 +307,7 @@ public class Spielplan  {
      */
     protected final LigaTabelle berechneTabelle(int maxSpieltag) {
         final LigaTabelle tmp = new LigaTabelle();
-        final Vector<IPaarung> spieltag = getPaarungenBySpieltag(maxSpieltag);
+        final Vector<Paarung> spieltag = getPaarungenBySpieltag(maxSpieltag);
 
         //vorabInfos
         tmp.setLigaId(m_iLigaId);
@@ -346,7 +344,7 @@ public class Spielplan  {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final LigaTabellenEintrag berechneTabellenEintrag(IPaarung[] spiele, int teamId,
+    protected final LigaTabellenEintrag berechneTabellenEintrag(Paarung[] spiele, int teamId,
                                                                 String name, int maxSpieltag) {
         final LigaTabellenEintrag eintrag = new LigaTabellenEintrag();
         int anzSpiele = 0;
