@@ -1,6 +1,5 @@
 package ho.core.epv;
 
-import plugins.IEPVData;
 import plugins.IPlayerData;
 import plugins.ISpieler;
 
@@ -10,8 +9,15 @@ import plugins.ISpieler;
  *
  * @author draghetto
  */
-public class EPVData implements Cloneable, IEPVData {
-    //~ Instance fields ----------------------------------------------------------------------------
+public class EPVData implements Cloneable {
+    
+	public static final int KEEPER = 1;
+	public static final int DEFENDER = 2;
+	public static final int MIDFIELDER = 3;
+	public static final int WINGER = 4;
+	public static final int ATTACKER = 5;
+	
+	//~ Instance fields ----------------------------------------------------------------------------
 	
 	private String playerName;
 	private int playerId;	

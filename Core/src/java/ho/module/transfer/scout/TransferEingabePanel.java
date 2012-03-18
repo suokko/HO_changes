@@ -42,7 +42,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
-import plugins.IEPVData;
 import plugins.ISpielerPosition;
 
 /**
@@ -364,7 +363,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         tempSpieler.setHomeGrown(jchHomegrown.isSelected());
         tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
         tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
-        IEPVData data = new EPVData(tempSpieler);
+        EPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
         jpBestPosition.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())

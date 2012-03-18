@@ -1,6 +1,7 @@
 package ho.core.file.extension;
 
 import ho.core.db.DBManager;
+import ho.core.epv.EPVData;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
@@ -30,7 +31,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IEPVData;
 import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
@@ -174,7 +174,7 @@ public class PlayerCreator extends XMLCreator {
 		bestposition.appendChild(createNode(doc,"value", player.calcPosValue(player.getIdealPosition(), true)+""));
 		bestposition.appendChild(createNode(doc,"code", player.getIdealPosition() +""));
 
-		IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
+		EPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		playerTag.appendChild(createNode(doc,"epv", df.format(price)));
 

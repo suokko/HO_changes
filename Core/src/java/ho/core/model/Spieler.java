@@ -7,6 +7,7 @@
 package ho.core.model;
 
 import ho.core.db.DBManager;
+import ho.core.epv.EPVData;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
@@ -19,7 +20,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import plugins.IEPVData;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITrainingWeek;
@@ -1175,7 +1175,7 @@ public final class Spieler implements plugins.ISpieler {
      * @return EPV
      */
     public double getEPV() {
-		IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(this);
+		EPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(this);
 		return HOVerwaltung.instance().getModel().getEPV().getPrice(data);
     }
 

@@ -1,5 +1,6 @@
 package ho.core.gui.model;
 
+import ho.core.epv.EPVData;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
@@ -27,7 +28,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import plugins.IEPVData;
 import plugins.IHOTableEntry;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
@@ -680,7 +680,7 @@ final public class UserColumnFactory {
 			playerAdditionalArray[10] = new PlayerColumn(436,"Marktwert",140){
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
-					IEPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
+					EPVData data = HOVerwaltung.instance().getModel().getEPV().getEPVData(player);
 					double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 					final String text = Helper.getNumberFormat(true, 0).format(price);
 
@@ -697,7 +697,7 @@ final public class UserColumnFactory {
                             SwingConstants.RIGHT));
 					
 					}
-					IEPVData comparedata = HOVerwaltung.instance().getModel().getEPV().getEPVData(playerCompare);
+					EPVData comparedata = HOVerwaltung.instance().getModel().getEPV().getEPVData(playerCompare);
 					int htweek = HelperWrapper.instance().getHTWeek(playerCompare.getHrfDate());
 					double compareepv = HOVerwaltung.instance().getModel().getEPV().getPrice(comparedata, htweek);
 					return new DoppelLabelEntry(new ColorLabelEntry(price,
