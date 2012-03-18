@@ -3,7 +3,6 @@ package ho.core.epv;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
-import plugins.IEPVData;
 import plugins.IPlayerData;
 import plugins.ISpieler;
 
@@ -30,12 +29,12 @@ public class EPV {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final IEPVData getEPVData(ISpieler spieler) {
+    public final EPVData getEPVData(ISpieler spieler) {
         final EPVData data = new EPVData(spieler);
         return data;
     }
 
-	public final IEPVData getEPVData(IPlayerData player) {
+	public final EPVData getEPVData(IPlayerData player) {
 		final EPVData data = new EPVData(player);
 		return data;
 	}
@@ -43,7 +42,7 @@ public class EPV {
     ////////////////////////////////////////////////////////////////////////////////    
     //Accessor
     ////////////////////////////////////////////////////////////////////////////////    
-    public final double getPrice(IEPVData data) {
+    public final double getPrice(EPVData data) {
         return getPrice(data, HOVerwaltung.instance().getModel().getBasics().getSpieltag());
     }
 
@@ -55,7 +54,7 @@ public class EPV {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final double getPrice(IEPVData data, int week) {
+    public final double getPrice(EPVData data, int week) {
     	try {
     		return EPVCalculator.getInstance().getPrice( data, week, HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate() );
     	} catch (Exception e) {

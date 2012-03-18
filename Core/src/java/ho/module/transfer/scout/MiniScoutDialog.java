@@ -16,13 +16,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
-import java.awt.event.ItemEvent;
-import java.awt.event.ActionEvent;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -35,8 +36,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
-
-import plugins.IEPVData;
 
 /**
  * MiniScout dialog
@@ -522,7 +521,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         tempSpieler.setHomeGrown(jchHomegrown.isSelected());
         tempSpieler.setAlter(Integer.parseInt(jtfAge.getText().replaceFirst("\\..*", "")));
         tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
-		IEPVData data = new EPVData(tempSpieler);
+		EPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));		
         jlRating.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition()) + " ("
