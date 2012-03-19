@@ -5,15 +5,11 @@ import ho.core.util.HOLogger;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
-
-import plugins.IOfficialPlugin;
-import plugins.IPlugin;
 
 
 public final class PluginManager {
 	private static String HOPLUGINS = "hoplugins";
-	private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
+	//private static Vector<IPlugin> m_vPlugins = new Vector<IPlugin>();
 	private static int[] deprecatedlist = {	1,  //MatchesOverview
 											14, // TeamAnalyzer
 											16, // ExperienceViewer
@@ -119,38 +115,31 @@ public final class PluginManager {
 //	}
 //	
 
-	/**
-	 * Returns the Vector with the started Plugins
-	 */
-	public static Vector<IPlugin> getPlugins() {
-		return m_vPlugins;
-	}
-	
-    public static void deletePlugin(Object plugin, boolean withTables) {
-        File[] unquenchableFiles = new File[0];
-        String pluginName = plugin.getClass().getName();
-        pluginName = pluginName.substring(pluginName.indexOf(".") + 1);
-
-        // nur beim richtiges Löschen und nicht beim Update
-        if (withTables) {
-            deletePluginTables(pluginName);
-        }
-
-        File classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName + ".class");
-
-        if (classFile.exists()) {
-            classFile.delete();
-
-            if (plugin instanceof IOfficialPlugin) {
-                unquenchableFiles = ((IOfficialPlugin) plugin).getUnquenchableFiles();
-            }
-
-            clearDirectory(HOPLUGINS_DIRECTORY + File.separator + pluginName, unquenchableFiles);
-            classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName);
-
-            classFile.delete();
-        }
-    }
+//    public static void deletePlugin(Object plugin, boolean withTables) {
+//        File[] unquenchableFiles = new File[0];
+//        String pluginName = plugin.getClass().getName();
+//        pluginName = pluginName.substring(pluginName.indexOf(".") + 1);
+//
+//        // nur beim richtiges Löschen und nicht beim Update
+//        if (withTables) {
+//            deletePluginTables(pluginName);
+//        }
+//
+//        File classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName + ".class");
+//
+//        if (classFile.exists()) {
+//            classFile.delete();
+//
+//            if (plugin instanceof IOfficialPlugin) {
+//                unquenchableFiles = ((IOfficialPlugin) plugin).getUnquenchableFiles();
+//            }
+//
+//            clearDirectory(HOPLUGINS_DIRECTORY + File.separator + pluginName, unquenchableFiles);
+//            classFile = new File(HOPLUGINS_DIRECTORY + File.separator + pluginName);
+//
+//            classFile.delete();
+//        }
+//    }
 
     private static void deletePluginTables(String pluginname) {
         try {

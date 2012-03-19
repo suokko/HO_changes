@@ -80,9 +80,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
             dialog.action();
         }
 
-        if (comand.equals(ACT_SHOW_INFO)) {
-            ((RefreshDialog) dialog).showInfo(((JButton) e.getSource()).getName());
-        }
+        
     }
 
     protected abstract TableModel getModel(boolean selected, String[] columnNames2);

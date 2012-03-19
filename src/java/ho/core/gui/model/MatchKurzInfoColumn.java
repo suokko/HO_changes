@@ -1,8 +1,8 @@
 package ho.core.gui.model;
 
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.table.UserColumn;
 import ho.module.matches.model.MatchKurzInfo;
-import plugins.IHOTableEntry;
 
 /**
  * column shows values from a matchKurzInfo

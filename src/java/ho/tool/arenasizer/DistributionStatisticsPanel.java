@@ -3,6 +3,7 @@ package ho.tool.arenasizer;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.theme.HOColorName;
@@ -21,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
-import plugins.IHOTableEntry;
 import plugins.ISpielePanel;
 
 class DistributionStatisticsPanel extends JPanel {

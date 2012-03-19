@@ -5,6 +5,7 @@ package ho.tool.hrfExplorer;
 
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
@@ -54,7 +55,6 @@ import javax.swing.table.TableColumn;
 
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.IRefreshable;
 
 /**
  * @author KickMuck

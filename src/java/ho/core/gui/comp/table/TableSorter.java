@@ -2,6 +2,7 @@
 package ho.core.gui.comp.table;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.model.PlayerOverviewModel;
 import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
@@ -17,7 +18,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import plugins.IHOTableEntry;
 
 
 

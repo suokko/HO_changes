@@ -15,7 +15,6 @@ import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchPredictionManager;
-import plugins.IPlayerData;
 import plugins.ISpieler;
 import plugins.ITeam;
 import plugins.ITrainingWeek;
@@ -111,16 +110,6 @@ public class HOMiniModel implements IHOMiniModel {
         return ho.core.gui.HOMainFrame.VERSION;
     }
 
-    /**
-     * Getter for property m_clHelper.
-     *
-     * @return Value of property m_clHelper.
-     */
-    public plugins.IHelper getHelper() {
-        return ho.core.util.HelperWrapper.instance();
-    }
-
-    //----------Liga----------------------------------------
 
     /**
      * Gibt die Basics zurück
@@ -325,41 +314,6 @@ public class HOMiniModel implements IHOMiniModel {
         return HOVerwaltung.instance().getModel();
     }
 
-	public ISpieler createPlayer(IPlayerData data) {
-		final Spieler tempSpieler = new Spieler();
-		tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
-		tempSpieler.setSpielerID(data.getPlayerId());
-		tempSpieler.setName(data.getPlayerName());
-		tempSpieler.setTSI(data.getTSI());
-		tempSpieler.setSpezialitaet(data.getSpeciality());
-		tempSpieler.setAlter(data.getAge());
-		tempSpieler.setErfahrung(data.getExperience());
-		tempSpieler.setForm(data.getForm());
-		tempSpieler.setKondition((int) data.getStamina());
-
-		tempSpieler.setVerteidigung((int) data.getDefense());
-		tempSpieler.setTrainingsOffsetVerteidigung(data.getDefense()%1);
-
-		tempSpieler.setTorschuss((int) data.getAttack());
-		tempSpieler.setTrainingsOffsetTorschuss(data.getAttack()%1);
-
-		tempSpieler.setTorwart((int) data.getGoalKeeping());
-		tempSpieler.setTrainingsOffsetTorwart(data.getAttack()%1);
-
-		tempSpieler.setFluegelspiel((int) data.getWing());
-		tempSpieler.setTrainingsOffsetFluegelspiel(data.getWing()%1);
-
-		tempSpieler.setPasspiel((int) data.getPassing());
-		tempSpieler.setTrainingsOffsetPasspiel(data.getPassing()%1);
-
-		tempSpieler.setStandards((int) data.getSetPieces());
-		tempSpieler.setTrainingsOffsetStandards(data.getSetPieces()%1);
-
-		tempSpieler.setSpielaufbau((int) data.getPlayMaking());
-		tempSpieler.setTrainingsOffsetSpielaufbau(data.getPlayMaking()%1);
-
-		return tempSpieler;
-	}
 
 
 	/**

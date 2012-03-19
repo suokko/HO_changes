@@ -3,6 +3,7 @@ package ho.module.statistics;
 
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.StatistikModel;
@@ -40,7 +41,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchLineupPlayer;
-import plugins.IRefreshable;
 import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
 

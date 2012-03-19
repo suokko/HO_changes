@@ -17,7 +17,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import plugins.IHOTableEntry;
 
 
 public class TorLabelEntry implements IHOTableEntry {

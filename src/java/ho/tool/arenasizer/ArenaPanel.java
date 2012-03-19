@@ -3,6 +3,7 @@ package ho.tool.arenasizer;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
@@ -18,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
-import plugins.IHOTableEntry;
 
 
 /**

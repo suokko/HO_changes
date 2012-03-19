@@ -165,8 +165,7 @@ public final class LanguagesDialog extends UpdaterDialog {
                                               JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
-                                              PROP_FILE_NOT_FOUND + ": "
-                                              + ((HPPluginInfo) object[i]).getZipFileName(),
+                                              PROP_FILE_NOT_FOUND + ": ",
                                               PROP_LANGUAGEFILE, JOptionPane.ERROR_MESSAGE);
             }
         }

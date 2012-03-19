@@ -1,6 +1,5 @@
 package ho.core.epv;
 
-import plugins.IPlayerData;
 import plugins.ISpieler;
 
 
@@ -87,32 +86,7 @@ public class EPVData implements Cloneable {
         normalizeSkill();
     }
     
-	public EPVData(IPlayerData s) {
-		setPlayerName(s.getPlayerName());
-		setAge(s.getAge());
-		setAgeDays(s.getAgeDays());
-		setTSI(s.getTSI());
-		setForm(s.getForm());
-		setStamina(s.getStamina());
-		setGoalKeeping(s.getGoalKeeping() );
-		setPlayMaking(s.getPlayMaking());
-		setPassing(s.getPassing());
-		setWing(s.getWing() );
-		setDefense(s.getDefense() );
-		setAttack(s.getAttack() );
-		setSetPieces(s.getSetPieces() );
-
-		setExperience(s.getExperience());
-		setLeadership(s.getLeadership());
-        setAggressivity(s.getAggressivity());
-        setHonesty(s.getHonesty());
-        setPopularity(s.getPopularity());
-        setSpeciality(s.getSpeciality());
-
-		setPlayerId(s.getPlayerId());
-
-		normalizeSkill();
-	}    
+  
 
 
 	//~ Methods ------------------------------------------------------------------------------------

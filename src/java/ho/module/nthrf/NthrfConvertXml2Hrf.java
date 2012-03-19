@@ -19,13 +19,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IHelper;
 import plugins.IXMLParser;
 
 class NthrfConvertXml2Hrf {
 	private StringBuffer m_sHRFBuffer;
 	private long teamId = 0;
-	private IHelper helper;
+	private HelperWrapper helper;
 
 	/**
 	 * Create the HRF file.

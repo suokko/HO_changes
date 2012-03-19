@@ -4,7 +4,7 @@
  *
  * Created on 16. Oktober 2004, 10:15
  */
-package plugins;
+package ho.core.gui.comp.entry;
 
 /**
  * An Entry for a JTable, first set addHOTableRendere( javax.swing.JTable table ) so your table
