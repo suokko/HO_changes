@@ -7,13 +7,9 @@
 package ho.tool.matchPrediction.engine;
 
 
-import plugins.IMPActions;
-import plugins.IMPMatchData;
-import plugins.IMPTeamData;
-import plugins.IMPTeamRatings;
-import plugins.IMatchResult;
-
 import java.util.Vector;
+
+import plugins.IMatchResult;
 
 
 /**
@@ -57,7 +53,7 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPMatchData getMatchData(IMPTeamData home, IMPTeamData away) {
+    public MatchData getMatchData(TeamData home, TeamData away) {
         return new MatchData((TeamData) home, (TeamData) away);
     }
 
@@ -69,18 +65,17 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return Vector holding IMPActions for that match
      */
-    public Vector<IMPActions> calculateMatch(IMPTeamData home, IMPTeamData away) {
-        final Vector<IMPActions> actions = new Vector<IMPActions>();
+    public Vector<Action> calculateMatch(TeamData home, TeamData away) {
+        final Vector<Action> actions = new Vector<Action>();
         final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 
         for (int i = 0; i < 91; i++) {
-            ho.core.util.HelperWrapper.instance().copyArray2Vector(matchengine
-                                                                                 .advance(), actions);
+            ho.core.util.HelperWrapper.instance().copyArray2Vector(matchengine.advance(), actions);
         }
         return actions;
     }
     
-	public IMatchResult calculateMatchResult(IMPTeamData home, IMPTeamData away) {
+	public IMatchResult calculateMatchResult(TeamData home, TeamData away) {
 		final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 		MatchResult result = new MatchResult();
 		result.addActions(matchengine.simulate());
@@ -97,8 +92,8 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return vector contaning Vectors holding IMPActions for each match
      */
-    public IMatchResult calculateNMatches(int numberOfMatches, IMPTeamData home,
-                                              IMPTeamData away) {
+    public IMatchResult calculateNMatches(int numberOfMatches, TeamData home,
+                                              TeamData away) {
 		final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 		MatchResult result = new MatchResult();		
         for (int i = 0; i < numberOfMatches; i++) {			        	
@@ -118,7 +113,7 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPTeamData generateTeamData(String name, IMPTeamRatings _ratings, int _tactic,
+    public TeamData generateTeamData(String name, TeamRatings _ratings, int _tactic,
                                         int _level) {
         return new TeamData(name, (TeamRatings) _ratings, _tactic, _level);
     }
@@ -136,7 +131,7 @@ public class MatchPredictionManager implements plugins.IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPTeamRatings generateTeamRatings(double midfield, double leftDef, double middleDef,
+    public TeamRatings generateTeamRatings(double midfield, double leftDef, double middleDef,
                                               double rightDef, double leftAttack,
                                               double middleAttack, double rightAttack) {
         return new TeamRatings(midfield, leftDef, middleDef, rightDef, leftAttack, middleAttack,

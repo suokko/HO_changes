@@ -6,6 +6,11 @@
  */
 package plugins;
 
+import ho.tool.matchPrediction.engine.Action;
+import ho.tool.matchPrediction.engine.MatchData;
+import ho.tool.matchPrediction.engine.TeamData;
+import ho.tool.matchPrediction.engine.TeamRatings;
+
 import java.util.Vector;
 
 
@@ -25,7 +30,7 @@ public interface IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPMatchData getMatchData(IMPTeamData home, IMPTeamData away);
+    public MatchData getMatchData(TeamData home, TeamData away);
 
     /**
      * calculates a match ( 90 minutes ) and returns list of events for both teams.
@@ -35,7 +40,7 @@ public interface IMatchPredictionManager {
      *
      * @return Vector holding IMPActions for that match
      */
-    public Vector<IMPActions> calculateMatch(IMPTeamData home, IMPTeamData away);
+    public Vector<Action> calculateMatch(TeamData home, TeamData away);
 
     /**
      * calculates a number of matches match ( 90 minutes ) and returns list of events for both
@@ -47,7 +52,7 @@ public interface IMatchPredictionManager {
      *
      * @return IMatchResult object 
      */
-    public IMatchResult calculateNMatches(int numberOfMatches, IMPTeamData home, IMPTeamData away);
+    public IMatchResult calculateNMatches(int numberOfMatches, TeamData home, TeamData away);
 
     /**
      * DOCUMENT ME!
@@ -59,7 +64,7 @@ public interface IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPTeamData generateTeamData(String name, IMPTeamRatings _ratings, int _tactic,
+    public TeamData generateTeamData(String name, TeamRatings _ratings, int _tactic,
                                         int _level);
 
     /**
@@ -76,7 +81,7 @@ public interface IMatchPredictionManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public IMPTeamRatings generateTeamRatings(double midfield, double leftDef, double middleDef,
+    public TeamRatings generateTeamRatings(double midfield, double leftDef, double middleDef,
                                               double rightDef, double leftAttack,
                                               double middleAttack, double rightAttack);
 }

@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import ho.tool.matchPrediction.engine.TeamData;
+
 /**
  * DOCUMENT ME!
  *
@@ -19,14 +21,14 @@ public interface IMatchPredictionPanel {
      *
      * @param guestteam TODO Missing Constructuor Parameter Documentation
      */
-    public void setGuestteam(plugins.IMPTeamData guestteam);
+    public void setGuestteam(TeamData guestteam);
 
     /**
      * Change the hometeam
      *
      * @param hometeam TODO Missing Constructuor Parameter Documentation
      */
-    public void setHometeam(plugins.IMPTeamData hometeam);
+    public void setHometeam(TeamData hometeam);
 
     /**
      * Returns the Number of Matches the User has choose in the gui

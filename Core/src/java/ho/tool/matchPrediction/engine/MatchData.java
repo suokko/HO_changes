@@ -1,16 +1,14 @@
 package ho.tool.matchPrediction.engine;
 
 
-import plugins.IMPActions;
-import plugins.IMatchDetails;
-
-
 import ho.core.util.HOLogger;
 
 import java.util.List;
 
+import plugins.IMatchDetails;
 
-class MatchData implements plugins.IMPMatchData {
+
+public class MatchData {
 
     private ActionGenerator generator = new ActionGenerator();
     private TeamData awayTeam;
@@ -23,15 +21,15 @@ class MatchData implements plugins.IMPMatchData {
         generator.setTeams(homeTeam, awayTeam);
     }
 
-    public final List<IMPActions> getAwayTeamActionList() {
+    public final List<Action> getAwayTeamActionList() {
         return awayTeam.getActions();
     }
 
-    public final List<IMPActions> getHomeTeamActionList() {
+    public final List<Action> getHomeTeamActionList() {
         return homeTeam.getActions();
     }
 
-    public final plugins.IMPActions[] advance() {
+    public final Action[] advance() {
         final Action[] actions = generator.predict(minute);
 
         for (int i = 0; i < actions.length; i++) {
@@ -48,7 +46,7 @@ class MatchData implements plugins.IMPMatchData {
         return actions;
     }
 
-	public final plugins.IMPActions[] simulate() {
+	public final Action[] simulate() {
 		final Action[] actions = generator.simulate();
 		for (int i = 0; i < actions.length; i++) {
 			final Action action = actions[i];
@@ -79,7 +77,7 @@ class MatchData implements plugins.IMPMatchData {
     }
 
     private void printRecap(TeamData team) {
-        final List<IMPActions> actions = team.getActions();
+        final List<Action> actions = team.getActions();
         HOLogger.instance().log(getClass(),team.getTeamName());
 
         int c = 0;
