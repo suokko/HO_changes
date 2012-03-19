@@ -74,36 +74,7 @@ public class UpdateHelper {
         return builder.parse(file);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param elements TODO Missing Method Parameter Documentation
-     * @param list TODO Missing Method Parameter Documentation
-     * @param nonVisibles TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected ArrayList<HPPluginInfo> getWebPlugins(NodeList elements, ArrayList<HPPluginInfo> list, ArrayList<HPPluginInfo> nonVisibles) {
-        HPPluginInfo tmp = null;
-
-        for (int i = 0; i < elements.getLength(); i++) {
-            if (elements.item(i) instanceof Element) {
-                Element element = (Element) elements.item(i);
-
-                if (element.getTagName().equals("plugin")) {
-                    tmp = HPPluginInfo.getInstance(element.getChildNodes());
-
-                    if (tmp.isVisible()) {
-                        list.add(tmp);
-                    } else {
-                        nonVisibles.add(tmp);
-                    }
-                }
-            }
-        }
-        return list;
-    }
-
+ 
     /**
      * Download contents of a url into a target file.
      */

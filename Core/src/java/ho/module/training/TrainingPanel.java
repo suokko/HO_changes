@@ -1,5 +1,6 @@
 package ho.module.training;
 
+import ho.core.gui.IRefreshable;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.module.training.ui.MainPanel;
@@ -13,7 +14,6 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import plugins.IRefreshable;
 import plugins.ISpieler;
 
 public class TrainingPanel extends JPanel implements IRefreshable {

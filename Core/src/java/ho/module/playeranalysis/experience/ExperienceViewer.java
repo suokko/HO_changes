@@ -1,5 +1,6 @@
 package ho.module.playeranalysis.experience;
 
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 
@@ -9,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import plugins.IRefreshable;
 
 public class ExperienceViewer extends ImagePanel implements IRefreshable {
 

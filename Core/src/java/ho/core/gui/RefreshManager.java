@@ -6,7 +6,6 @@ import ho.core.util.HOLogger;
 
 import java.util.Vector;
 
-import plugins.IRefreshable;
 
 
 /**

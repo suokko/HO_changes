@@ -2,9 +2,9 @@ package ho.core.gui.model;
 
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.model.Spieler;
-import plugins.IHOTableEntry;
 
 /**
  * Column shows skill of a player

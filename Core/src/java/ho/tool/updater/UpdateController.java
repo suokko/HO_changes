@@ -9,7 +9,6 @@ import ho.HO;
 import ho.core.file.ZipHelper;
 import ho.core.file.xml.Extension;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOParameter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
@@ -17,15 +16,11 @@ import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Vector;
 import java.util.zip.ZipFile;
 
 import javax.swing.JOptionPane;
@@ -34,8 +29,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IOfficialPlugin;
-import plugins.IPlugin;
+
 
 /**
  * DOCUMENT ME!
@@ -56,18 +50,6 @@ public final class UpdateController {
 
 	// ~ Methods
 	// ------------------------------------------------------------------------------------
-
-	/**
-	 * Show the plugins dialog that allows to remove a plugin.
-	 */
-	public static void showDeletePluginDialog() {
-		try {
-			DeleteDialog dialog = new DeleteDialog();
-			dialog.setVisible(true);
-		} catch (Exception e1) {
-			HOLogger.instance().log(UpdateController.class, e1);
-		}
-	}
 
 	/**
 	 * Show the language file update dialog.
@@ -91,103 +73,9 @@ public final class UpdateController {
 		}
 	}
 
-	/**
-	 * Show the library update dialog.
-	 */
-	public static void showPluginUpdaterLibraries() {
-		try {
-			File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
 
-			if (file == null) {
-				JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
 
-			Document doc = UpdateHelper.instance().getDocument(file);
-			ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
-			ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
-			ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(
-					doc.getDocumentElement().getChildNodes(), new ArrayList<HPPluginInfo>(), tmp);
 
-			nonVisibles = list;
-			list = tmp;
-
-			Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
-			int listSize = list.size();
-
-			for (int i = 0; i < listSize; i++) {
-				HPPluginInfo hpp = (HPPluginInfo) list.get(i);
-
-				for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
-					IPlugin element = iter.next();
-
-					if (element instanceof IOfficialPlugin
-							&& (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
-						hpp.setOfficialPlugin((IOfficialPlugin) element);
-					}
-					// if
-				}
-				// for iter
-			}
-			// for list
-
-			RefreshDialog dialog = new RefreshDialog(list);
-			dialog.setOtherPlugins(nonVisibles);
-			dialog.setVisible(true);
-		} catch (Exception e1) {
-			HOLogger.instance().log(UpdateController.class, e1);
-		}
-	}
-
-	/**
-	 * Show the normal plugins update dialog.
-	 */
-	public static void showPluginUpdaterNormal() {
-		try {
-			File file = createXMLFile(WEB_PLUGINFILE, getLocalXMLFile());
-
-			if (file == null) {
-				JOptionPane.showMessageDialog(null, "Where is my xml file?", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			Document doc = UpdateHelper.instance().getDocument(file);
-			ArrayList<HPPluginInfo> tmp = new ArrayList<HPPluginInfo>();
-			ArrayList<HPPluginInfo> nonVisibles = new ArrayList<HPPluginInfo>();
-
-			ArrayList<HPPluginInfo> list = UpdateHelper.instance().getWebPlugins(
-					doc.getDocumentElement().getChildNodes(), new ArrayList<HPPluginInfo>(), tmp);
-
-			nonVisibles = tmp;
-
-			Vector<IPlugin> v = HelperWrapper.instance().getPlugins();
-			int listSize = list.size();
-
-			for (int i = 0; i < listSize; i++) {
-				HPPluginInfo hpp = list.get(i);
-
-				for (Iterator<IPlugin> iter = v.iterator(); iter.hasNext();) {
-					IPlugin element = iter.next();
-
-					if (element instanceof IOfficialPlugin
-							&& (hpp.getPluginId() == ((IOfficialPlugin) element).getPluginID())) {
-						hpp.setOfficialPlugin((IOfficialPlugin) element);
-					}
-					// if
-				}
-				// for iter
-			}
-			// for list
-
-			RefreshDialog dialog = new RefreshDialog(list);
-			dialog.setOtherPlugins(nonVisibles);
-			dialog.setVisible(true);
-		} catch (Exception e1) {
-			HOLogger.instance().log(UpdateController.class, e1);
-		}
-	}
 
 	/**
 	 * Download latest flags from the external space.

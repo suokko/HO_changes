@@ -1,7 +1,7 @@
 package ho.core.gui.model;
 
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.table.UserColumn;
-import plugins.IHOTableEntry;
 
 /**
  * show a value from a SpielerMatchCBItem

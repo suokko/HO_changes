@@ -47,7 +47,6 @@ import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import plugins.IHelper;
 import plugins.IMatchDetails;
 
 // Referenced classes of package hoplugins.tsforecast:
@@ -218,7 +217,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
       //byte byte0 = 40;
       int j1 = m_startDate.get(7) - 1;
       if(j1 < 0) j1 += 7;
-      IHelper ihelper = HelperWrapper.instance();
+      HelperWrapper ihelper = HelperWrapper.instance();
       for(; flag; flag = curve.next()) {
         gregoriancalendar.setTime(curve.getDate());
         if(j != gregoriancalendar.get(1)) {
@@ -266,7 +265,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
   private void drawCoordSystem( Graphics2D graphics2d) {
     FontRenderContext fontrendercontext = graphics2d.getFontRenderContext();
     Font font = new Font( "SansSerif", 1, UserParameter.instance().schriftGroesse);
-    IHelper ihelper = HelperWrapper.instance();
+    HelperWrapper ihelper = HelperWrapper.instance();
     Rectangle2D rectangle2d = null;
 
     drawSeason( graphics2d);
@@ -458,7 +457,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
   //Calculate longest string at y-axis
   private double getMaxTextWidth( Graphics2D graphics2d) {
     Font font = new Font( "SansSerif", 1, UserParameter.instance().schriftGroesse);
-    IHelper ihelper = HelperWrapper.instance();
+    HelperWrapper ihelper = HelperWrapper.instance();
 
     FontRenderContext fontrendercontext = graphics2d.getFontRenderContext();
     Rectangle2D rectangle2d = null;

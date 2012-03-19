@@ -3,7 +3,6 @@ package ho.core.gui.comp.entry;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
 
-import plugins.IHOTableEntry;
 
 
 public class HomegrownEntry implements IHOTableEntry{

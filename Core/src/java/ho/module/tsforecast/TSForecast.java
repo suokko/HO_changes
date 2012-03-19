@@ -1,5 +1,6 @@
 package ho.module.tsforecast;
 
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -26,7 +27,6 @@ import javax.swing.JRadioButton;
 
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
-import plugins.IRefreshable;
 
 /**
  * Tab_TSForecast -> „hinzugefügt“

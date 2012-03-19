@@ -65,13 +65,6 @@ public interface IHOMiniModel {
     public double getHOVersion();
 
     /**
-     * Getter for property m_clHelper.
-     *
-     * @return Value of property m_clHelper.
-     */
-    public plugins.IHelper getHelper();
-
-    /**
      * Get the Lineup shown in HO!
      *
      * @return TODO Missing Return Method Documentation
@@ -218,15 +211,6 @@ public interface IHOMiniModel {
      */
     public void saveTraining(ITrainingWeek training);
 
-
-	/**
-	 * Creates a ISpieler instance for external use
-	 *
-	 * @param data player data to be created
-	 *
-	 * @return Spieler instance
-	 */
-	public ISpieler createPlayer(IPlayerData data);
 
 	/**
 	 * Log something in HOs debug log.

@@ -3,7 +3,6 @@ package ho.core.epv;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
-import plugins.IPlayerData;
 import plugins.ISpieler;
 
 /**
@@ -34,10 +33,6 @@ public class EPV {
         return data;
     }
 
-	public final EPVData getEPVData(IPlayerData player) {
-		final EPVData data = new EPVData(player);
-		return data;
-	}
 
     ////////////////////////////////////////////////////////////////////////////////    
     //Accessor
