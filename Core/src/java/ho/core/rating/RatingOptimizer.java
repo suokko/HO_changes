@@ -20,7 +20,6 @@ import java.util.List;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
-import plugins.IRatingPredictionManager;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
@@ -40,7 +39,7 @@ public class RatingOptimizer {
 		double[] linear = new double[7];
 		double[] quadratic = new double[7];
 		
-		List<ExportMatchData> matches = MatchExporter.getDataUsefullMatches(IRatingPredictionManager.LAST_CHANGE, IRatingPredictionManager.LAST_CHANGE_FRIENDLY, true, true);
+		List<ExportMatchData> matches = MatchExporter.getDataUsefullMatches(RatingPredictionManager.LAST_CHANGE, RatingPredictionManager.LAST_CHANGE_FRIENDLY, true, true);
 
 		int i = 0;
 		int count = 0;

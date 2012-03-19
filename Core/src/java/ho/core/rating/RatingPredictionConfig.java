@@ -10,10 +10,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
-import plugins.IRatingPredictionConfig;
-import plugins.IRatingPredictionParameter;
-
-public class RatingPredictionConfig implements IRatingPredictionConfig {
+public class RatingPredictionConfig {
+	
+	public static final int THISSIDE = RatingPredictionParameter.THISSIDE;
+    public static final int OTHERSIDE = RatingPredictionParameter.OTHERSIDE;
+    public static final int ALLSIDES = RatingPredictionParameter.ALLSIDES;
+    public static final int MIDDLE = RatingPredictionParameter.MIDDLE;
+    
 	/* We check for changed rating parameter files regularily */
 	private static long lastCheck = new Date().getTime();
 	private static long checkInterval = 5000; // in millisecs
@@ -40,7 +43,7 @@ public class RatingPredictionConfig implements IRatingPredictionConfig {
     private RatingPredictionConfig() {
     }
 
-    public static IRatingPredictionConfig getInstance()
+    public static RatingPredictionConfig getInstance()
     {
     	if (config == null)
     		return getInstance (0);
@@ -48,7 +51,7 @@ public class RatingPredictionConfig implements IRatingPredictionConfig {
     		return getInstance(getInstancePredictionType());
     }
 
-    public static IRatingPredictionConfig getInstance (int type) {
+    public static RatingPredictionConfig getInstance (int type) {
     	if (getAllPredictionNames() != null) {
     		if (type < getAllPredictionNames().length) 
     			return getInstance (getAllPredictionNames()[type]);
@@ -58,7 +61,7 @@ public class RatingPredictionConfig implements IRatingPredictionConfig {
     		return null;    		
     }
     
-    public static IRatingPredictionConfig getInstance(String predictionName)
+    public static RatingPredictionConfig getInstance(String predictionName)
     {
     	if (config == null) {
         	config = new RatingPredictionConfig();
@@ -165,47 +168,47 @@ public class RatingPredictionConfig implements IRatingPredictionConfig {
     	tacticsParam.readFromFile(prefix + "tactics.dat");
     	
     	// Check all params for re-parsed files
-    	IRatingPredictionParameter allParams [] = 
+    	RatingPredictionParameter allParams [] = 
     		{sideDefenseParam, centralDefenseParam, midfieldParam, 
     			sideAttackParam, centralAttackParam, playerStrengthParam, tacticsParam};
     	
-    	for (IRatingPredictionParameter curParam : allParams) {
+    	for (RatingPredictionParameter curParam : allParams) {
         	if (curParam.getLastParse() > lastParse)
         		lastParse = curParam.getLastParse();    		
     	}
     }
 
-      public IRatingPredictionParameter getCentralAttackParameters()
+      public RatingPredictionParameter getCentralAttackParameters()
     {
         return centralAttackParam;
     }
 
-    public IRatingPredictionParameter getSideAttackParameters()
+    public RatingPredictionParameter getSideAttackParameters()
     {
         return sideAttackParam;
     }
 
-    public IRatingPredictionParameter getCentralDefenseParameters()
+    public RatingPredictionParameter getCentralDefenseParameters()
     {
         return centralDefenseParam;
     }
 
-    public IRatingPredictionParameter getSideDefenseParameters()
+    public RatingPredictionParameter getSideDefenseParameters()
     {
         return sideDefenseParam;
     }
 
-    public IRatingPredictionParameter getMidfieldParameters()
+    public RatingPredictionParameter getMidfieldParameters()
     {
         return midfieldParam;
     }
     
-    public IRatingPredictionParameter getPlayerStrengthParameters()
+    public RatingPredictionParameter getPlayerStrengthParameters()
     {
     	return playerStrengthParam;
     }
     
-    public IRatingPredictionParameter getTacticsParameters()
+    public RatingPredictionParameter getTacticsParameters()
     {
     	return tacticsParam;
     }
