@@ -1,5 +1,6 @@
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.IRefreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -17,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import plugins.IRefreshable;
 
 public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 

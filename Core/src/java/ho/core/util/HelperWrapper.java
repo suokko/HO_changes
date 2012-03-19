@@ -17,7 +17,6 @@ import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
-import ho.core.plugins.PluginManager;
 import ho.module.matches.SpielHighlightPanel;
 import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchHighlight;
@@ -54,7 +53,6 @@ import javax.swing.UIManager;
 
 import plugins.IMatchHelper;
 import plugins.IMatchKurzInfo;
-import plugins.IPlugin;
 import plugins.ISpielerPosition;
 
 
@@ -63,7 +61,7 @@ import plugins.ISpielerPosition;
  *
  * @author thomas.werth
  */
-public class HelperWrapper implements plugins.IHelper {
+public class HelperWrapper {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static HelperWrapper m_clInstance;
@@ -283,10 +281,7 @@ public class HelperWrapper implements plugins.IHelper {
         return Team.getNameForTraining(value);
     }
 
-    public Vector<IPlugin> getPlugins() {
-        return PluginManager.getPlugins();
-    }
-
+ 
     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
      * impossible to make difference between left and right so always the left position is

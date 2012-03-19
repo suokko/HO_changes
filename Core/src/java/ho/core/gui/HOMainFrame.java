@@ -393,13 +393,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			UpdateController.check4EPVUpdate();
 		} else if (source.equals(m_jmiRatings)) {
 			UpdateController.check4RatingsUpdate();
-		} else if (source.equals(m_jmiPluginsDelete)) {
-			UpdateController.showDeletePluginDialog();
-		} else if (source.equals(m_jmiPluginsNormal)) {
-			UpdateController.showPluginUpdaterNormal();
-		} else if (source.equals(m_jmiPluginsLibrary)) {
-			UpdateController.showPluginUpdaterLibraries();
-		}
+		} 
 		HOMainFrame.setHOStatus(HOMainFrame.READY);
 	}
 

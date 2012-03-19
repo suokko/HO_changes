@@ -2,6 +2,7 @@
 package ho.core.gui.comp.renderer;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
@@ -11,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-import plugins.IHOTableEntry;
 
 
 /**

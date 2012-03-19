@@ -5,7 +5,7 @@ package ho.core.gui;
  * Die Implementation kann sich beim MainFrame anmelden und wird dann bei Datenänderungen
  * aufgefordert sich neu zu zeichnen
  */
-public interface Refreshable extends plugins.IRefreshable {
+public interface Refreshable extends IRefreshable {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -13,8 +13,5 @@ public interface Refreshable extends plugins.IRefreshable {
      */
     public void reInit();
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public void refresh();
+
 }

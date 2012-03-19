@@ -3,13 +3,13 @@ package ho.module.playerOverview;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.Spieler;
 
 import javax.swing.SwingConstants;
 
-import plugins.IHOTableEntry;
 
 
 public class SpielerStatusLabelEntry extends DoppelLabelEntry {

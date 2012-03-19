@@ -6,7 +6,6 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
 
-import plugins.IHOTableEntry;
 
 /**
  * Ein Panel mit zwei Labels, um zwei Werte in einer Spalte anzuzeigen ( Wert, Verbesserung )

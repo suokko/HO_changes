@@ -21,7 +21,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 
-import plugins.IHelper;
 import plugins.ISpieler;
 import plugins.ITrainingWeek;
 

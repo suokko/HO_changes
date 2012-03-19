@@ -8,7 +8,6 @@ import java.text.NumberFormat;
 
 import javax.swing.JProgressBar;
 
-import plugins.IHOTableEntry;
 
 
 /**

@@ -9,8 +9,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import plugins.IOfficialPlugin;
-
 
 /**
  * Value-Object of information about the plugins on hoplugins.de
@@ -32,7 +30,6 @@ final class HPPluginInfo {
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private IOfficialPlugin officialPlugin;
     private String hoversion = "";
     private String name;
     private String updateText = "";
@@ -110,14 +107,6 @@ final class HPPluginInfo {
 
     protected String getName() {
         return name;
-    }
-
-    protected void setOfficialPlugin(IOfficialPlugin officialPlugin) {
-        this.officialPlugin = officialPlugin;
-    }
-
-    protected IOfficialPlugin getOfficialPlugin() {
-        return officialPlugin;
     }
 
     protected int getPluginId() {

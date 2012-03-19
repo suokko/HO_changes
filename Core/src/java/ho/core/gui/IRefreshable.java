@@ -1,5 +1,5 @@
 // %1127326956603:plugins%
-package plugins;
+package ho.core.gui;
 
 /**
  * An Object of this interface can be registered in the IGUI-Interface.  The method are called, if

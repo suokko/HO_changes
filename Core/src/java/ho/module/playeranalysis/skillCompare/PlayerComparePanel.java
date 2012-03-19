@@ -4,6 +4,7 @@
 package ho.module.playeranalysis.skillCompare;
 
 import ho.core.datatype.CBItem;
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -35,7 +36,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
-import plugins.IRefreshable;
 import plugins.ISpieler;
 
 /**

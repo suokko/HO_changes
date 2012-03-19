@@ -5,7 +5,6 @@ import ho.core.gui.theme.ThemeManager;
 
 import javax.swing.SwingConstants;
 
-import plugins.IHOTableEntry;
 
 
 /**

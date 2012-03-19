@@ -4,6 +4,7 @@ import ho.core.epv.EPVData;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
+import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.entry.SmilieEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
@@ -28,7 +29,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import plugins.IHOTableEntry;
 import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;

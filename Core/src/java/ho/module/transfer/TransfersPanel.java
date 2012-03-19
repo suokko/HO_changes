@@ -1,6 +1,7 @@
 package ho.module.transfer;
 
 import ho.core.db.DBManager;
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.transfer.history.HistoryPane;
@@ -15,7 +16,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import plugins.IRefreshable;
 import plugins.ISpieler;
 
 public class TransfersPanel extends JPanel implements IRefreshable{
