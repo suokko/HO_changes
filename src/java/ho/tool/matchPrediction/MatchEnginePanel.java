@@ -42,8 +42,8 @@ public class MatchEnginePanel extends ImagePanel implements
 	private TeamRatingPanel opponentTeamPanel;
 	private boolean isHomeMatch = true;
 
-	public MatchEnginePanel(plugins.IMPTeamData myTeamValues,
-			plugins.IMPTeamData opponentTeamValues) {
+	public MatchEnginePanel(TeamData myTeamValues,
+			TeamData opponentTeamValues) {
 		if (opponentTeamValues.getTeamName().startsWith(
 				HOVerwaltung.instance().getModel().getBasics().getTeamName())) {
 			isHomeMatch = false;
@@ -60,12 +60,12 @@ public class MatchEnginePanel extends ImagePanel implements
 		jbInit();
 	}
 
-	public final void setGuestteam(plugins.IMPTeamData guestteam) {
+	public final void setGuestteam(TeamData guestteam) {
 		opponentTeamPanel.setTeamData(guestteam);
 		predictPanel.setGuestTeamName(guestteam.getTeamName());
 	}
 
-	public final void setHometeam(plugins.IMPTeamData hometeam) {
+	public final void setHometeam(TeamData hometeam) {
 		myTeamPanel.setTeamData(hometeam);
 		predictPanel.setHomeTeamName(hometeam.getTeamName());
 	}

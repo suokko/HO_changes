@@ -1,7 +1,7 @@
 // %3040931838:de.hattrickorganizer.logik.matchengine%
 package ho.tool.matchPrediction.engine;
 
-public class TeamRatings implements plugins.IMPTeamRatings {
+public class TeamRatings {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private double leftAttack;
