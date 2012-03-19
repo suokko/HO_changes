@@ -6,28 +6,28 @@ import ho.module.matches.model.Matchdetails;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
 
 import plugins.ILineUp;
 import plugins.IMatchDetails;
-import plugins.IRatingPredictionConfig;
-import plugins.IRatingPredictionManager;
-import plugins.IRatingPredictionParameter;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
 
-public class RatingPredictionManager implements IRatingPredictionManager
-{
+public class RatingPredictionManager {
 	//~ Class constants ----------------------------------------------------------------------------
 	
-    private static final int THISSIDE = IRatingPredictionParameter.THISSIDE;
-    private static final int OTHERSIDE = IRatingPredictionParameter.OTHERSIDE;
-    private static final int ALLSIDES = IRatingPredictionParameter.ALLSIDES;
-    private static final int MIDDLE = IRatingPredictionParameter.MIDDLE;
-    private static final int LEFT = IRatingPredictionParameter.LEFT;
-    private static final int RIGHT = IRatingPredictionParameter.RIGHT;
+    private static final int THISSIDE = RatingPredictionParameter.THISSIDE;
+    private static final int OTHERSIDE = RatingPredictionParameter.OTHERSIDE;
+    private static final int ALLSIDES = RatingPredictionParameter.ALLSIDES;
+    private static final int MIDDLE = RatingPredictionParameter.MIDDLE;
+    private static final int LEFT = RatingPredictionParameter.LEFT;
+    private static final int RIGHT = RatingPredictionParameter.RIGHT;
+    
+    public static final Date LAST_CHANGE = (new GregorianCalendar(2009, 4, 18)).getTime(); //18.05.2009
+    public static final Date LAST_CHANGE_FRIENDLY = (new GregorianCalendar(2009, 4, 18)).getTime(); //18.05.2009
 
     private static final int SIDEDEFENSE = 0; 
     private static final int CENTRALDEFENSE = 1; 
@@ -60,7 +60,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     //~ Class fields -------------------------------------------------------------------------------
 
     // Initialize with default config
-    private static IRatingPredictionConfig config = RatingPredictionConfig.getInstance();
+    private static RatingPredictionConfig config = RatingPredictionConfig.getInstance();
 	
     /** Cache for player strength (Hashtable<String, Float>) */
     private static Hashtable<String, Double> playerStrengthCache = new Hashtable<String, Double>();
@@ -83,18 +83,18 @@ public class RatingPredictionManager implements IRatingPredictionManager
     		RatingPredictionManager.config = RatingPredictionConfig.getInstance();
     }
 
-    public RatingPredictionManager (IRatingPredictionConfig config) {
+    public RatingPredictionManager (RatingPredictionConfig config) {
     	RatingPredictionManager.config = config;
     }
     
-    public RatingPredictionManager(ILineUp lineup, int i, ITeam iteam, short trainerType, IRatingPredictionConfig config)
+    public RatingPredictionManager(ILineUp lineup, int i, ITeam iteam, short trainerType, RatingPredictionConfig config)
     {
         this.lineup = lineup;
         RatingPredictionManager.config = config;
         init(iteam, trainerType);
     }
 
-    public RatingPredictionManager(ILineUp lineup, ITeam team, short trainerType, IRatingPredictionConfig config)
+    public RatingPredictionManager(ILineUp lineup, ITeam team, short trainerType, RatingPredictionConfig config)
     {
         this(lineup, 0, team, trainerType, config);
     }
@@ -105,7 +105,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     
     private float calcRatings (int type, int side2calc) {
 //    	long startTime = new Date().getTime();
-    	IRatingPredictionParameter params;
+    	RatingPredictionParameter params;
     	switch (type) {
 		case SIDEDEFENSE:
 			params = config.getSideDefenseParameters();
@@ -134,7 +134,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
 //    		HOLogger.instance().debug(this.getClass(), "PartRating for type "+type+", section "+sectionName+" is "+curValue);
     		retVal += curValue;
     	}
-    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	retVal = applyCommonProps (retVal, params, RatingPredictionParameter.GENERAL);
 //    	HOLogger.instance().debug(this.getClass(), "Prediction ["+config.getPredictionName()+"] FullRating for type "+type+" is "+retVal);    	
 //    	long endTime = new Date().getTime();
 //    	HOLogger.instance().debug(RatingPredictionManager.class, "calcRatings (T=" + type + ",S=" + side2calc + ")"
@@ -142,7 +142,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return (float)retVal;
     }
 
-    private double calcPartialRating (IRatingPredictionParameter params, String sectionName, int side2calc) {
+    private double calcPartialRating (RatingPredictionParameter params, String sectionName, int side2calc) {
     	int skillType = sectionNameToSkillAndSide(sectionName)[0];
     	int sideType = sectionNameToSkillAndSide(sectionName)[1];
     	double retVal = 0;
@@ -244,7 +244,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	return stk * weight;
     }
 
-    public double applyCommonProps (double inVal, IRatingPredictionParameter params, String sectionName) {
+    public double applyCommonProps (double inVal, RatingPredictionParameter params, String sectionName) {
     	double retVal = inVal;
     	// TODO Reihenfolge ok?
         retVal += params.getParam(sectionName, "squareMod", 0) * Math.pow(retVal, 2); // Avoid if possible! 
@@ -485,22 +485,22 @@ public class RatingPredictionManager implements IRatingPredictionManager
     
     private double getCrowdingPenalty(int pos) {
     	double penalty;
-    	IRatingPredictionParameter  para = config.getPlayerStrengthParameters();
+    	RatingPredictionParameter  para = config.getPlayerStrengthParameters();
     	
 //    	HOLogger.instance().debug(getClass(), "Parameter file used: " + config.getPredictionName());
     	
     	switch (pos) {
     	case CENTRALDEFENSE :
     		// Central Defender
-    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumCDs() + "CdMulti");
+    		penalty = para.getParam(RatingPredictionParameter.GENERAL, getNumCDs() + "CdMulti");
     		break;
     	case MIDFIELD :
     		// Midfielder
-    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumIMs() + "MfMulti");
+    		penalty = para.getParam(RatingPredictionParameter.GENERAL, getNumIMs() + "MfMulti");
     		break;
     	case CENTRALATTACK :
     		// Forward
-    		penalty = para.getParam(IRatingPredictionParameter.GENERAL, getNumFWs() + "FwMulti");
+    		penalty = para.getParam(RatingPredictionParameter.GENERAL, getNumFWs() + "FwMulti");
     		break;
     	default :
     		penalty = 1;
@@ -509,9 +509,9 @@ public class RatingPredictionManager implements IRatingPredictionManager
     }
     
 
-    public static double[][] getAllPlayerWeights (IRatingPredictionParameter params, String sectionName) {
+    public static double[][] getAllPlayerWeights (RatingPredictionParameter params, String sectionName) {
     	double[][] weights = new double[ISpielerPosition.NUM_POSITIONS][NUM_SPEC];
-		double extraMulti = params.getParam(IRatingPredictionParameter.GENERAL, "extraMulti", 0);
+		double extraMulti = params.getParam(RatingPredictionParameter.GENERAL, "extraMulti", 0);
 		double modCD = params.getParam(sectionName, "allCDs", 1);
 		double modWB = params.getParam(sectionName, "allWBs", 1);
 		double modIM = params.getParam(sectionName, "allIMs", 1);
@@ -657,13 +657,13 @@ public class RatingPredictionManager implements IRatingPredictionManager
     public static float getLoyaltyHomegrownBonus(ISpieler spieler) {
     	float bonus = 0f;
     	 if (spieler.isHomeGrown()) {
-         	bonus += config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "homegrownbonus");
+         	bonus += config.getPlayerStrengthParameters().getParam(RatingPredictionParameter.GENERAL, "homegrownbonus");
          }
          
          // Loyalty bonus
-         bonus += (float)config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltyMax") 
+         bonus += (float)config.getPlayerStrengthParameters().getParam(RatingPredictionParameter.GENERAL, "loyaltyMax") 
          			* spieler.getLoyalty() 
-         			/ (float)config.getPlayerStrengthParameters().getParam(IRatingPredictionParameter.GENERAL, "loyaltySkillMax");
+         			/ (float)config.getPlayerStrengthParameters().getParam(RatingPredictionParameter.GENERAL, "loyaltySkillMax");
     	
     	
     	return bonus;
@@ -807,16 +807,16 @@ public class RatingPredictionManager implements IRatingPredictionManager
         return (float)retVal;    	
     }
 
-    private static float getSubDeltaFromConfig (IRatingPredictionParameter params, String sectionName, int skill) {
+    private static float getSubDeltaFromConfig (RatingPredictionParameter params, String sectionName, int skill) {
     	String useSection = sectionName;
     	if (!params.hasSection(sectionName))
-    		useSection = IRatingPredictionParameter.GENERAL;
+    		useSection = RatingPredictionParameter.GENERAL;
     	float delta = (float)params.getParam(useSection, "skillSubDeltaForLevel"+skill, 0);
 //    	System.out.println(delta);
     	return delta;    	
     }
     
-    public static double calcPlayerStrength (IRatingPredictionParameter params, 
+    public static double calcPlayerStrength (RatingPredictionParameter params, 
     		String sectionName, double stamina, double xp, double skill, double form, boolean useForm) {
 //    	long startTime = new Date().getTime();
     	// If config changed, we have to clear the cache
@@ -834,7 +834,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
     	double stk = 0;
     	String useSection = sectionName;
     	if (!params.hasSection(sectionName))
-    		useSection = IRatingPredictionParameter.GENERAL;
+    		useSection = RatingPredictionParameter.GENERAL;
     	
     	skill += params.getParam(useSection, "skillDelta", 0);
     	stamina += params.getParam(useSection, "staminaDelta", 0);
@@ -938,7 +938,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
      */
     public float getTacticLevelAowAim()
     {
-    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	RatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
     	float passing = 0;
         for(int i = ISpielerPosition.startLineup +1; i < ISpielerPosition.startReserves; i++)
@@ -957,7 +957,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         retVal *= params.getParam("aim_aow", "postMulti", 1.0);
         retVal += params.getParam("aim_aow", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "aim_aow");
-    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	retVal = applyCommonProps (retVal, params, RatingPredictionParameter.GENERAL);
     	return (float)retVal;
     }
 
@@ -971,7 +971,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         float deDefender = 0.0F;
         float psDefender = 0.0F;
         double playerContribution = 0d;
-    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	RatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
         for(int pos = ISpielerPosition.rightBack; pos <= ISpielerPosition.leftBack; pos++)
         {
@@ -988,7 +988,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         retVal *= params.getParam("counter", "postMulti", 1.0);
         retVal += params.getParam("counter", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "counter");
-    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	retVal = applyCommonProps (retVal, params, RatingPredictionParameter.GENERAL);
     	return (float)retVal;
     }
 
@@ -998,7 +998,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
      * @return tactic level
      */
     public final float getTacticLevelPressing() {
-    	IRatingPredictionParameter params = config.getTacticsParameters();
+    	RatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
         for(int pos = ISpielerPosition.startLineup + 1; pos < ISpielerPosition.startReserves; pos++)
         {
@@ -1016,7 +1016,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         retVal *= params.getParam("pressing", "postMulti", 1.0);
         retVal += params.getParam("pressing", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "pressing");
-    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	retVal = applyCommonProps (retVal, params, RatingPredictionParameter.GENERAL);
     	return (float)retVal;
     }
 
@@ -1026,7 +1026,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
      * @return tactic level
      */
     public final float getTacticLevelLongShots() {
-       	IRatingPredictionParameter params = config.getTacticsParameters();
+       	RatingPredictionParameter params = config.getTacticsParameters();
     	double retVal = 0;
         for(int pos = ISpielerPosition.startLineup +1; pos < ISpielerPosition.startReserves; pos++)
         {
@@ -1044,7 +1044,7 @@ public class RatingPredictionManager implements IRatingPredictionManager
         retVal *= params.getParam("longshots", "postMulti", 1.0);
         retVal += params.getParam("longshots", "postDelta", 0);
     	retVal = applyCommonProps (retVal, params, "longshots");
-    	retVal = applyCommonProps (retVal, params, IRatingPredictionParameter.GENERAL);
+    	retVal = applyCommonProps (retVal, params, RatingPredictionParameter.GENERAL);
     	return (float)retVal;
     }
 }
