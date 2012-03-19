@@ -11,9 +11,15 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import plugins.IRatingPredictionParameter;
+public class RatingPredictionParameter  {
+	public static final int THISSIDE = 0;
+    public static final int OTHERSIDE = 1;
+    public static final int ALLSIDES = 2;
+    public static final int MIDDLE = 3;
+    public static final int LEFT = 4;
+    public static final int RIGHT = 5;
 
-public class RatingPredictionParameter implements IRatingPredictionParameter {
+    public static final String GENERAL = "general";
     private Hashtable<String, Properties> allProps = new Hashtable<String, Properties>();
     private long lastParse;
     private String filename; 
