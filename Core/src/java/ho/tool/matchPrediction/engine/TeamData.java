@@ -1,9 +1,6 @@
 // %2070140242:de.hattrickorganizer.logik.matchengine%
 package ho.tool.matchPrediction.engine;
 
-import plugins.IMPActions;
-import plugins.IMPTeamRatings;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +10,10 @@ import java.util.List;
  *
  * @author TODO Author Name
  */
-public class TeamData implements plugins.IMPTeamData {
+public class TeamData  {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private List<IMPActions> actions;
+    private List<Action> actions;
     private String teamName;
     private TeamRatings ratings;
     private int tacticLevel;
@@ -33,7 +30,7 @@ public class TeamData implements plugins.IMPTeamData {
      * @param _level Tacticlevel from 1 to 20
      */
     public TeamData(String name, TeamRatings _ratings, int _tactic, int _level) {
-        actions = new ArrayList<IMPActions>();
+        actions = new ArrayList<Action>();
         ratings = _ratings;
         tacticLevel = _level;
         tacticType = _tactic;
@@ -47,7 +44,7 @@ public class TeamData implements plugins.IMPTeamData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final List<IMPActions> getActions() {
+    public final List<Action> getActions() {
         return actions;
     }
 
@@ -65,7 +62,7 @@ public class TeamData implements plugins.IMPTeamData {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final IMPTeamRatings getRatings() {
+    public final TeamRatings getRatings() {
         return ratings;
     }
 
@@ -119,7 +116,7 @@ public class TeamData implements plugins.IMPTeamData {
      *
      * @param action TODO Missing Method Parameter Documentation
      */
-    public final void addAction(IMPActions action) {
+    public final void addAction(Action action) {
         actions.add(action);
     }
 

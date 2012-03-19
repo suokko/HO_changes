@@ -9,6 +9,8 @@ import ho.module.teamAnalyzer.ui.TeamLineupData;
 import ho.tool.matchPrediction.MatchEnginePanel;
 import ho.tool.matchPrediction.MatchPredictionDialog;
 import ho.tool.matchPrediction.engine.MatchPredictionManager;
+import ho.tool.matchPrediction.engine.TeamData;
+import ho.tool.matchPrediction.engine.TeamRatings;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import plugins.IMPTeamData;
-import plugins.IMPTeamRatings;
 import plugins.IMatchDetails;
 import plugins.IMatchPredictionManager;
 
@@ -75,7 +75,7 @@ public class SimButtonListener implements ActionListener {
             return;
         }
 
-        IMPTeamRatings myTeamRatings = manager.generateTeamRatings(myTeam.getMidfield(),
+        TeamRatings myTeamRatings = manager.generateTeamRatings(myTeam.getMidfield(),
                                                                    myTeam.getLeftDefence(),
                                                                    myTeam.getMiddleDefence(),
                                                                    myTeam.getRightDefence(),
@@ -83,10 +83,10 @@ public class SimButtonListener implements ActionListener {
                                                                    myTeam.getMiddleAttack(),
                                                                    myTeam.getRightAttack());
 
-        IMPTeamData myTeamValues = manager.generateTeamData(myTeam.getTeamPanel().getText(),
+        TeamData myTeamValues = manager.generateTeamData(myTeam.getTeamPanel().getText(),
         		myTeamRatings, HOVerwaltung.instance().getModel().getAufstellung().getTacticType(), getTacticLevel());
 
-        IMPTeamRatings opponentTeamRatings = manager.generateTeamRatings(opponentTeam.getMidfield(),
+        TeamRatings opponentTeamRatings = manager.generateTeamRatings(opponentTeam.getMidfield(),
                                                                          opponentTeam.getLeftDefence(),
                                                                          opponentTeam.getMiddleDefence(),
                                                                          opponentTeam.getRightDefence(),
@@ -94,7 +94,7 @@ public class SimButtonListener implements ActionListener {
                                                                          opponentTeam.getMiddleAttack(),
                                                                          opponentTeam.getRightAttack());
 
-        IMPTeamData opponentTeamValues = manager.generateTeamData(opponentTeam.getTeamPanel().getText(),
+        TeamData opponentTeamValues = manager.generateTeamData(opponentTeam.getTeamPanel().getText(),
         		opponentTeamRatings, getTacticType(recapPanel.getSelectedTacticType()),
         		getTacticSkill(recapPanel.getSelectedTacticSkill()));
 

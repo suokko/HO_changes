@@ -36,7 +36,7 @@ class TeamRatingPanel extends JPanel implements ItemListener {
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    TeamRatingPanel(plugins.IMPTeamData team) {
+    TeamRatingPanel(TeamData team) {
         super();
         teamName = team.getTeamName();
         initLevel();
@@ -100,7 +100,7 @@ class TeamRatingPanel extends JPanel implements ItemListener {
         setOpaque(false);
     }
 
-    final void setTeamData(plugins.IMPTeamData teamdata) {
+    final void setTeamData(TeamData teamdata) {
         teamName = teamdata.getTeamName();
 
         final TeamRatings ratings = (TeamRatings) teamdata.getRatings();

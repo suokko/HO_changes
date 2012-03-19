@@ -1,6 +1,5 @@
 package ho.tool.matchPrediction.engine;
 
-import plugins.IMPActions;
 import plugins.IMatchResult;
 
 public class MatchResult implements IMatchResult {
@@ -22,7 +21,7 @@ public class MatchResult implements IMatchResult {
 	private final int[] guestSuccess = { 0, 0, 0 };
 	private final int[] guestFailed = { 0, 0, 0 };
 
-	public void addActions(IMPActions[] actions) {
+	public void addActions(Action[] actions) {
 
 		matchNumber++;
 		int matchHomeGoals = 0;

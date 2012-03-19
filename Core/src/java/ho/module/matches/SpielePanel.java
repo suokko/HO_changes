@@ -12,7 +12,6 @@ import ho.core.gui.model.MatchesColumnModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.module.IModule;
@@ -28,6 +27,8 @@ import ho.module.matches.statistics.MatchesOverviewTable;
 import ho.tool.matchPrediction.MatchEnginePanel;
 import ho.tool.matchPrediction.MatchPredictionDialog;
 import ho.tool.matchPrediction.engine.MatchPredictionManager;
+import ho.tool.matchPrediction.engine.TeamData;
+import ho.tool.matchPrediction.engine.TeamRatings;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -52,8 +53,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import plugins.ILineUp;
-import plugins.IMPTeamData;
-import plugins.IMPTeamRatings;
 import plugins.IMatchDetails;
 import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
@@ -219,7 +218,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         			homeMatch = true;
         		}
         		
-        		IMPTeamRatings homeTeamRatings = manager.generateTeamRatings(
+        		TeamRatings homeTeamRatings = manager.generateTeamRatings(
         				details != null ? getRatingValue(details.getHomeMidfield()) : 1,
 						details != null ? getRatingValue(details.getHomeLeftDef()) : 1,
 						details != null ? getRatingValue(details.getHomeMidDef()) : 1,
@@ -228,7 +227,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 						details != null ? getRatingValue(details.getHomeMidAtt()) : 1,
 						details != null ? getRatingValue(details.getHomeRightAtt()) : 1);
         		
-        		final IMPTeamData homeTeamValues;
+        		final TeamData homeTeamValues;
         		if (homeMatch && !ratingsAreKnown(homeTeamRatings)) {
         			homeTeamValues = getOwnLineupRatings(manager);
         		} else {
@@ -237,7 +236,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     						details != null ? getRatingValue(details.getHomeTacticSkill() - 1) : 1);
         		}
         		
-        		IMPTeamRatings awayTeamRatings = manager.generateTeamRatings(
+        		TeamRatings awayTeamRatings = manager.generateTeamRatings(
 						details != null ? getRatingValue(details.getGuestMidfield()) : 1,
 						details != null ? getRatingValue(details.getGuestLeftDef()) : 1,
 						details != null ? getRatingValue(details.getGuestMidDef()) : 1,
@@ -246,7 +245,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 						details != null ? getRatingValue(details.getGuestMidAtt()) : 1,
 						details != null ? getRatingValue(details.getGuestRightAtt()) : 1);
         		
-        		final IMPTeamData awayTeamValues;
+        		final TeamData awayTeamValues;
         		if (!homeMatch && !ratingsAreKnown(awayTeamRatings)) {
         			awayTeamValues = getOwnLineupRatings(manager);
         		} else {
@@ -278,7 +277,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * Check, if the ratings are ok/known or if all are at the default.
      */
-    private boolean ratingsAreKnown(IMPTeamRatings ratings) {
+    private boolean ratingsAreKnown(TeamRatings ratings) {
     	return (ratings != null && ratings.getMidfield() > 1d
     			&& ratings.getLeftDef() > 1d && ratings.getMiddleDef() > 1d && ratings.getRightDef() > 1d
     			&& ratings.getLeftAttack() > 1d && ratings.getMiddleAttack() > 1d && ratings.getRightAttack() > 1d);
@@ -287,9 +286,9 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * Get the team data for the own team (current linep).
      */
-    private IMPTeamData getOwnLineupRatings(IMatchPredictionManager manager) {
+    private TeamData getOwnLineupRatings(IMatchPredictionManager manager) {
     	ILineUp lineup = HOVerwaltung.instance().getModel().getAufstellung();
-    	IMPTeamRatings teamRatings = manager.generateTeamRatings(
+    	TeamRatings teamRatings = manager.generateTeamRatings(
     			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
     			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftDefenseRating())),
     			getRatingValue(lineup.getIntValue4Rating(lineup.getCentralDefenseRating())),
