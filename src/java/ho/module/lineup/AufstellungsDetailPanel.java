@@ -7,7 +7,6 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungCBItem;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Team;

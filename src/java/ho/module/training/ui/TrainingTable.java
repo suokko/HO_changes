@@ -12,8 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import plugins.IHOMiniModel;
-
 
 /**
  * JTable class for past and future trainings table

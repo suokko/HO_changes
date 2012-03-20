@@ -2,7 +2,6 @@ package ho.core.db;
 
 import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;

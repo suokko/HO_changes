@@ -1,19 +1,14 @@
 package ho.module.playerOverview;
 
 import ho.core.gui.theme.HOIconName;
-import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
