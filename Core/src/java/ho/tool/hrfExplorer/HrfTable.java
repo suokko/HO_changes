@@ -6,8 +6,6 @@ package ho.tool.hrfExplorer;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-import plugins.IHOMiniModel;
-
 /**
  * @author KickMuck
  */

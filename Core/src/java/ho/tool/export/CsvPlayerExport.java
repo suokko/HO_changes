@@ -2,7 +2,6 @@ package ho.tool.export;
 
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Spieler;
 import ho.core.net.login.LoginWaitDialog;
