@@ -2,7 +2,6 @@
 package ho.module.training;
 
 import ho.core.model.HOVerwaltung;
-import plugins.IHOMiniModel;
 import plugins.ITeam;
 
 

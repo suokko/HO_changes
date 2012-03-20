@@ -10,8 +10,6 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
-import plugins.IHOMiniModel;
-
 /**
  * @author KickMuck
  */

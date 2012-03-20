@@ -15,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import plugins.IHOMiniModel;
-
 
 /**
  * Panel where the user can specify a different number of assistant and coach level for testing

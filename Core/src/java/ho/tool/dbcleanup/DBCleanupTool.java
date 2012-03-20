@@ -3,7 +3,6 @@ package ho.tool.dbcleanup;
 import ho.core.db.DBManager;
 import ho.core.file.hrf.HRF;
 import ho.core.gui.RefreshManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;

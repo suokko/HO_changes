@@ -1,7 +1,6 @@
 package ho.module.matches.model;
 
 import ho.core.db.DBManager;
-import ho.core.model.HOMiniModel;
 import ho.core.model.HOVerwaltung;
 
 import java.util.Iterator;

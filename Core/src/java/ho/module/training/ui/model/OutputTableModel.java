@@ -12,8 +12,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
 
-
-import plugins.IHOMiniModel;
 import plugins.ISpieler;
 
 
