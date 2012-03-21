@@ -24,7 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchKurzInfo;
 
 
 /**
@@ -323,9 +322,9 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
-        if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+        if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
             //Sterne für Sieger!
-            if (info.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+            if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {

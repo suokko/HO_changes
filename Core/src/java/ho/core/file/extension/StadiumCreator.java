@@ -6,6 +6,7 @@ import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +19,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.ISpielePanel;
 
 public class StadiumCreator extends XMLCreator {
 
@@ -42,7 +42,7 @@ public class StadiumCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 						
-			ArenaStatistikTableModel model = StatisticQuery.getArenaStatistikModel(ISpielePanel.NUR_EIGENE_SPIELE);
+			ArenaStatistikTableModel model = StatisticQuery.getArenaStatistikModel(SpielePanel.NUR_EIGENE_SPIELE);
 
 			
 			for (int i = 0; i < model.getMatches().length; i++) {

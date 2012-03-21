@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,6 @@ import java.util.Vector;
 
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
@@ -60,7 +60,7 @@ public class MatchExporter {
 		HOLogger.instance().log(MatchExporter.class, "Collecting MatchData");		
 		List<ExportMatchData> export = new ArrayList<ExportMatchData>();
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId);
+		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId);
 
 		//Alle matches prï¿½fen        
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
@@ -120,9 +120,9 @@ public class MatchExporter {
 		return export;
 	}
 
-	private static boolean isValidMatch(IMatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict, boolean skipPullBack) {
+	private static boolean isValidMatch(MatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict, boolean skipPullBack) {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		if ((info.getMatchStatus() != IMatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
+		if ((info.getMatchStatus() != MatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": not finished");
 			return false;
 		}

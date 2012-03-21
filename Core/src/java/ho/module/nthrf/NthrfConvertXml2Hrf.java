@@ -1,5 +1,6 @@
 package ho.module.nthrf;
 
+import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
@@ -19,8 +20,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IXMLParser;
-
 class NthrfConvertXml2Hrf {
 	private StringBuffer m_sHRFBuffer;
 	private long teamId = 0;
@@ -29,7 +28,7 @@ class NthrfConvertXml2Hrf {
 	/**
 	 * Create the HRF file.
 	 */
-	final String createHrf(long teamId, MyConnector dh, IXMLParser xp) throws Exception {
+	final String createHrf(long teamId, MyConnector dh, XMLManager xp) throws Exception {
 		m_sHRFBuffer = new StringBuffer("");
 		helper = HelperWrapper.instance();
 		this.teamId = teamId;
@@ -468,7 +467,7 @@ class NthrfConvertXml2Hrf {
 	/**
 	 * Parse all leagues and (nativeLeagueId) and their countryId.
 	 */
-	HashMap<Integer, Integer> getCountryMapping(MyConnector dh, IXMLParser xp) {
+	HashMap<Integer, Integer> getCountryMapping(MyConnector dh, XMLManager xp) {
 		HashMap<Integer, Integer> ret = new HashMap<Integer, Integer>(100);
 		try {
 			String str = getWorldDetailString(dh);

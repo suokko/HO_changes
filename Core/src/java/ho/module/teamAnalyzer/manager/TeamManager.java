@@ -3,6 +3,8 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.SpielePanel;
+import ho.module.matches.model.MatchKurzInfo;
 import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 import ho.module.series.model.LigaTabellenEintrag;
@@ -16,9 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.ISpielePanel;
 
 
 /**
@@ -42,13 +42,13 @@ public class TeamManager {
     public static Team getNextCupOpponent() {
         Team team = new Team();
         int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        IMatchKurzInfo[] cupMatches =DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                            ISpielePanel.NUR_EIGENE_POKALSPIELE,
+        MatchKurzInfo[] cupMatches =DBManager.instance().getMatchesKurzInfo(teamId,
+                                                                            SpielePanel.NUR_EIGENE_POKALSPIELE,
                                                                             false);
-        IMatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                                 ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
+        MatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+                                                                                 SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
                                                                                  false);
-        List<IMatchKurzInfo> l = new ArrayList<IMatchKurzInfo>();
+        List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
 
         l.addAll(Arrays.asList(friendlyMatches));
         l.addAll(Arrays.asList(cupMatches));
@@ -56,9 +56,9 @@ public class TeamManager {
         Object[] matches = l.toArray();
 
         for (int i = 0; i < matches.length; i++) {
-            IMatchKurzInfo match = (IMatchKurzInfo) matches[i];
+            MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
-            if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+            if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 if (match.getHeimID() == teamId) {
                     team.setName(match.getGastName());
                     team.setTeamId(match.getGastID());
@@ -231,19 +231,19 @@ public class TeamManager {
     private static Team getNextQualificationOpponent() {
         Team team = new Team();
         int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        IMatchKurzInfo[] qualificationMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                                      ISpielePanel.NUR_EIGENE_PFLICHTSPIELE,
+        MatchKurzInfo[] qualificationMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+                                                                                      SpielePanel.NUR_EIGENE_PFLICHTSPIELE,
                                                                                       false);
-        List<IMatchKurzInfo> l = new ArrayList<IMatchKurzInfo>();
+        List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
 
         l.addAll(Arrays.asList(qualificationMatches));
 
         Object[] matches = l.toArray();
 
         for (int i = 0; i < matches.length; i++) {
-            IMatchKurzInfo match = (IMatchKurzInfo) matches[i];
+            MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
-            if ((match.getMatchStatus() != IMatchKurzInfo.FINISHED)
+            if ((match.getMatchStatus() != MatchKurzInfo.FINISHED)
                 && (match.getMatchTyp() == IMatchLineup.QUALISPIEL)) {
                 if (match.getHeimID() == teamId) {
                     team.setName(match.getGastName());

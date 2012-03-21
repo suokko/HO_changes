@@ -4,15 +4,13 @@ package ho.module.matches.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import plugins.ITeamLineup;
-
 
 /**
  * Hattrick Lineup Object
  *
  * @author Draghetto HO
  */
-public class TeamLineup implements ITeamLineup {
+public class TeamLineup {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** List of players divided by area */

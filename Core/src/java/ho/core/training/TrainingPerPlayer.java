@@ -13,8 +13,6 @@ import java.util.Vector;
 
 import plugins.ISpieler;
 import plugins.ITeam;
-import plugins.ITrainingPerPlayer;
-import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
 
 
@@ -23,7 +21,7 @@ import plugins.ITrainingWeek;
  *
  * @author
  */
-public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
+public class TrainingPerPlayer  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ISpieler spieler;
@@ -59,7 +57,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
     //variable for adjusting amount of set pieces when training scoring
     private static final float p_f_schusstraining_Standard = 0.6f;
 
-    private ITrainingPoint trainPoint;
+    private TrainingPoint trainPoint;
     
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -272,7 +270,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
      * add sub values of another ITrainingPerPlayer instance to this instance
      * @param values	the instance we take the values from
      */
-    public void addValues (ITrainingPerPlayer values) {
+    public void addValues (TrainingPerPlayer values) {
     	setFL(this.getFL() + values.getFL());
     	setKO(this.getKO() + values.getKO());
     	setPS(this.getPS() + values.getPS());
@@ -448,7 +446,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
      * get the training point for this instance
      * @return	training point
      */
-	public ITrainingPoint getTrainPoint() {
+	public TrainingPoint getTrainPoint() {
 		return trainPoint;
 	}
 
@@ -459,7 +457,7 @@ public class TrainingPerPlayer implements plugins.ITrainingPerPlayer {
 	 *  
 	 * @param trainPoint	training point
 	 */
-	public void setTrainPoint(ITrainingPoint trainPoint) {
+	public void setTrainPoint(TrainingPoint trainPoint) {
 		this.trainPoint = trainPoint;
 		calculateTrainingResults(trainPoint.getTrainWeek());
 	}

@@ -1,5 +1,7 @@
 package plugins;
 
+import ho.module.matches.model.MatchKurzInfo;
+
 import java.util.Vector;
 
 /**
@@ -28,7 +30,7 @@ public interface IMatchHelper {
 	 * 
 	 * @param match		match short info
 	 */
-	public short getLocation(IMatchKurzInfo match);
+	public short getLocation(MatchKurzInfo match);
 	
 	/**
 	 * Get the match location.

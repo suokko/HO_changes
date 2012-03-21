@@ -6,15 +6,15 @@ import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.ISpielePanel;
 import plugins.ITrainingWeek;
 
 public class StatisticQuery {
@@ -123,30 +123,30 @@ public class StatisticQuery {
 			sql += MatchesKurzInfoTable.TABLENAME + ".MatchTyp, ";
 			sql += MatchesKurzInfoTable.TABLENAME + ".status ";
 			sql += " FROM " + MatchesKurzInfoTable.TABLENAME + " INNER JOIN  " + MatchDetailsTable.TABLENAME + " on " + MatchesKurzInfoTable.TABLENAME + ".matchid = " + MatchDetailsTable.TABLENAME + ".matchid ";
-			sql += " WHERE  Arenaname in (SELECT DISTINCT Stadionname as Arenaname FROM " + StadionTable.TABLENAME + ") AND " + MatchDetailsTable.TABLENAME + ".HeimID = " + teamId + " AND Status=" + IMatchKurzInfo.FINISHED;
+			sql += " WHERE  Arenaname in (SELECT DISTINCT Stadionname as Arenaname FROM " + StadionTable.TABLENAME + ") AND " + MatchDetailsTable.TABLENAME + ".HeimID = " + teamId + " AND Status=" + MatchKurzInfo.FINISHED;
 
 			//Matchtypen
 			switch (matchtyp) {
-				case ISpielePanel.NUR_EIGENE_SPIELE :
+				case SpielePanel.NUR_EIGENE_SPIELE :
 
 					//Nix zu tun, da die teamId die einzige Einschränkung ist
 					break;
 
-				case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
+				case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
 					sql += (" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
 					sql += (" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
 					sql += (" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
 					break;
 
-				case ISpielePanel.NUR_EIGENE_POKALSPIELE :
+				case SpielePanel.NUR_EIGENE_POKALSPIELE :
 					sql += (" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
 					break;
 
-				case ISpielePanel.NUR_EIGENE_LIGASPIELE :
+				case SpielePanel.NUR_EIGENE_LIGASPIELE :
 					sql += (" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
 					break;
 
-				case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
+				case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
 					sql += (" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
 					sql += (" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
 					sql += (" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);

@@ -27,7 +27,7 @@ import plugins.IMatchLineup;
  *
  * @author thomas.werth
  */
-public class XMLManager implements plugins.IXMLParser {
+public class XMLManager  {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static XMLManager m_clInstance;

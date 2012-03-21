@@ -1,9 +1,9 @@
 package ho.module.nthrf;
 
+import ho.core.file.xml.XMLManager;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.IXMLParser;
 
 class NtTeamDetailsParser {
 
@@ -32,12 +32,12 @@ class NtTeamDetailsParser {
 	private String fetchedDate;
 	private boolean parsingSuccess;
 
-	NtTeamDetailsParser(IXMLParser xm, String xmlData) {
+	NtTeamDetailsParser(XMLManager xm, String xmlData) {
 		Document doc = xm.parseString(xmlData);
 	    parseDetails(xm, doc);
 	}
 
-	private void parseDetails(IXMLParser xm, Document doc) {
+	private void parseDetails(XMLManager xm, Document doc) {
         if (doc == null) {
             return;
         }

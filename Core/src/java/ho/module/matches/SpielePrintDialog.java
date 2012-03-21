@@ -17,7 +17,6 @@ import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import plugins.IMatchKurzInfo;
 
 
 /**
@@ -165,7 +164,7 @@ public class SpielePrintDialog extends JDialog {
                 m_jpManschaftsBewertungsPanel.refresh(info,details);
                 m_jpSpielHighlightPanel.refresh(info,details);
 
-                if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+                if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
                 } else {

@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import ho.module.matches.model.TeamLineup;
+
 import java.util.List;
 import java.util.Vector;
 
@@ -320,7 +322,7 @@ public interface IMatchDetails {
      *
      * @return The Lineup object
      */
-    public ITeamLineup getTeamLineup(boolean home);
+    public TeamLineup getTeamLineup(boolean home);
 
     /**
      * ID of Weather

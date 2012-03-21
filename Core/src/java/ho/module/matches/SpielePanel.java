@@ -54,15 +54,13 @@ import javax.swing.JTabbedPane;
 
 import plugins.ILineUp;
 import plugins.IMatchDetails;
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
-import plugins.IMatchPredictionManager;
 import plugins.ISpielerPosition;
 
 
 public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,
                                                              Refreshable, 
-                                                             ActionListener, plugins.ISpielePanel {
+                                                             ActionListener {
 	private static final long serialVersionUID = -6337569355347545083L;
 	
     //~ Instance fields ----------------------------------------------------------------------------
@@ -95,13 +93,34 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
     private CBItem[] SPIELEFILTER = {
 			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),SpielePanel.ALLE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), NUR_EIGENE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), NUR_EIGENE_PFLICHTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), NUR_EIGENE_POKALSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), NUR_EIGENE_LIGASPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),NUR_EIGENE_FREUNDSCHAFTSSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"), NUR_FREMDE_SPIELE)
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), SpielePanel.NUR_EIGENE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), SpielePanel.NUR_EIGENE_POKALSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), SpielePanel.NUR_EIGENE_LIGASPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"), SpielePanel.NUR_FREMDE_SPIELE)
 	};
+
+	/** Only played Matches of suplied team (unsupported for now) */
+	public static final int NUR_GESPIELTEN_SPIELE = 10;
+
+	/** Only Matches without suplied team */
+	public static final int NUR_FREMDE_SPIELE = 6;
+
+	/** Only friendly Matches of suplied team */
+	public static final int NUR_EIGENE_FREUNDSCHAFTSSPIELE = 5;
+
+	/** Only league Matches of suplied team */
+	public static final int NUR_EIGENE_LIGASPIELE = 4;
+
+	/** Only cup Matches of suplied team */
+	public static final int NUR_EIGENE_POKALSPIELE = 3;
+
+	/** Only cup +league + quali Matches of suplied team */
+	public static final int NUR_EIGENE_PFLICHTSPIELE = 2;
+
+	/** Only Matches of suplied team */
+	public static final int NUR_EIGENE_SPIELE = 1;
 
 	/** TODO Missing Parameter Documentation */
 	public static final int ALLE_SPIELE = 0;
@@ -184,7 +203,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
         } else if (e.getSource() == m_jbAufstellungUebernehmen) {
             if ((matchShortInfo != null)
-            		&& (matchShortInfo.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
+            		&& (matchShortInfo.getMatchStatus() == MatchKurzInfo.FINISHED)) {
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
                 final Vector<IMatchLineupPlayer> vteamspieler = DBManager.instance().getMatchLineupPlayers(matchShortInfo.getMatchID(),
                                                                                        teamid);
@@ -214,7 +233,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         } else if (e.getSource() == m_jbSimMatch) {
         	if (matchShortInfo != null) {
         		final Matchdetails details = DBManager.instance().getMatchDetails(matchShortInfo.getMatchID());
-        		final IMatchPredictionManager manager = MatchPredictionManager.instance();
+        		final MatchPredictionManager manager = MatchPredictionManager.instance();
         		final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
         		boolean homeMatch = false;
         		if (teamId == matchShortInfo.getHeimID()) {
@@ -289,7 +308,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * Get the team data for the own team (current linep).
      */
-    private TeamData getOwnLineupRatings(IMatchPredictionManager manager) {
+    private TeamData getOwnLineupRatings(MatchPredictionManager manager) {
     	ILineUp lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	TeamRatings teamRatings = manager.generateTeamRatings(
     			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
@@ -631,7 +650,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	                m_jpAufstellungHeimPanel.clearAll();
 	                m_jpAufstellungGastPanel.clearAll();
 	            }
-                if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+                if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
                     m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
                     m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
                 } else {
@@ -670,7 +689,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     	matchShortInfo = info;
     	deleteButton.setEnabled(true);
     	m_jbSimMatch.setEnabled(true);
-    	if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+    	if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
     		m_jbReloadMatch.setEnabled(true);
     		final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 	    	if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
