@@ -17,8 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IMatchKurzInfo;
-
 
 
 /**
@@ -95,11 +93,11 @@ public class XMLMatchesParser {
      */
     protected final int getStatus(String status) {
         if (status.equalsIgnoreCase("FINISHED")) {
-            return IMatchKurzInfo.FINISHED;
+            return MatchKurzInfo.FINISHED;
         } else if (status.equalsIgnoreCase("ONGOING")) {
-            return IMatchKurzInfo.ONGOING;
+            return MatchKurzInfo.ONGOING;
         } else if (status.equalsIgnoreCase("UPCOMING")) {
-            return IMatchKurzInfo.UPCOMING;
+            return MatchKurzInfo.UPCOMING;
         }
 
         return -1;
@@ -122,7 +120,7 @@ public class XMLMatchesParser {
         Element tmp = null;
         MatchKurzInfo[] matches = new MatchKurzInfo[0];
         MatchKurzInfo spiel = null;
-        final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
+        final Vector<MatchKurzInfo> liste = new Vector<MatchKurzInfo>();
         NodeList list = null;
 
         if (doc == null) {
@@ -159,12 +157,12 @@ public class XMLMatchesParser {
                 tmp = (Element) ele.getElementsByTagName("Status").item(0);
                 spiel.setMatchStatus(getStatus(tmp.getFirstChild().getNodeValue()));
 
-                if (spiel.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+                if (spiel.getMatchStatus() == MatchKurzInfo.FINISHED) {
                     tmp = (Element) ele.getElementsByTagName("HomeGoals").item(0);
                     spiel.setHeimTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                     tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                     spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                } else if (spiel.getMatchStatus() == IMatchKurzInfo.UPCOMING) {
+                } else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
                     tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
                     spiel.setAufstellung(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
                 }

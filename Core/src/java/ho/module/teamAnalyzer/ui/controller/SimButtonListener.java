@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import plugins.IMatchDetails;
-import plugins.IMatchPredictionManager;
 
 
 /**
@@ -32,7 +31,7 @@ public class SimButtonListener implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** The match prediction Manager */
-    IMatchPredictionManager manager = MatchPredictionManager.instance();
+    MatchPredictionManager manager = MatchPredictionManager.instance();
 
     /** The user team */
     TeamLineupData myTeam;

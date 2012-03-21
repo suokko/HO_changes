@@ -52,7 +52,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import plugins.IMatchHelper;
-import plugins.IMatchKurzInfo;
 import plugins.ISpielerPosition;
 
 
@@ -469,7 +468,7 @@ public class HelperWrapper {
                         info.setHeimTore(details.getHomeGoals());
                         info.setMatchDate(lineup.getStringSpielDate());
                         info.setMatchID(matchID);
-                        info.setMatchStatus(IMatchKurzInfo.FINISHED);
+                        info.setMatchStatus(MatchKurzInfo.FINISHED);
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};

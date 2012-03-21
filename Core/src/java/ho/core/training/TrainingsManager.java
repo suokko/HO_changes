@@ -26,8 +26,6 @@ import plugins.IMatchHighlight;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import plugins.ITrainingPerPlayer;
-import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
 
 
@@ -99,14 +97,14 @@ public class TrainingsManager {
     /**
      * returns an empty ITrainingPerPlayer instance
      */
-	public ITrainingPerPlayer getTrainingPerPlayer() {
+	public TrainingPerPlayer getTrainingPerPlayer() {
 		return (new TrainingPerPlayer());
 	}
 
     /**
      * returns a ITrainingPerPlayer instance for a specific player
      */
-	public ITrainingPerPlayer getTrainingPerPlayer(ISpieler player) {
+	public TrainingPerPlayer getTrainingPerPlayer(ISpieler player) {
 		return (new TrainingPerPlayer(player));
 	}
 
@@ -126,7 +124,7 @@ public class TrainingsManager {
      *
      * @return new training point
      */
-    public ITrainingPoint getTrainingPoint() {
+    public TrainingPoint getTrainingPoint() {
     	return new TrainingPoint();
     }
 
@@ -136,7 +134,7 @@ public class TrainingsManager {
      *
      * @return new training point
      */
-    public ITrainingPoint getTrainingPoint(ITrainingWeek trainWeek) {
+    public TrainingPoint getTrainingPoint(ITrainingWeek trainWeek) {
     	return new TrainingPoint(trainWeek);
     }
 
@@ -147,7 +145,7 @@ public class TrainingsManager {
      * @return new training point
      * @
      */
-    public ITrainingPoint getTrainingPoint(int year, int week, int type, int intensity, int staminaTrainingPart) {
+    public TrainingPoint getTrainingPoint(int year, int week, int type, int intensity, int staminaTrainingPart) {
     	return new TrainingPoint(year, week, type, intensity, staminaTrainingPart);
     }
 
@@ -169,7 +167,7 @@ public class TrainingsManager {
      *
      * @return TrainingPerPlayer
      */
-    public ITrainingPerPlayer calculateFullTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateFullTrainingForPlayer(ISpieler inputSpieler,
                                                              Vector<ITrainingWeek> inputTrainings,
                                                              Timestamp timestamp) {
         //playerID HIER SETZEN
@@ -181,7 +179,7 @@ public class TrainingsManager {
             timestamp = new Timestamp(c.getTimeInMillis());
         }
 
-        ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
+        TrainingPerPlayer output = getTrainingPerPlayer(spieler);
 
         if (TRAININGDEBUG)
         	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+spieler.getName()+", output="+output);
@@ -227,7 +225,7 @@ public class TrainingsManager {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
-    public ITrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
             ITrainingWeek train) {
     	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
     }
@@ -242,14 +240,14 @@ public class TrainingsManager {
      *
      * @return TrainingPerPlayer
      */
-    public ITrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
                                                                ITrainingWeek train,
                                                                Timestamp timestamp) {
         //playerID HIER SETZEN
         final ISpieler spieler = inputSpieler;
         final int playerID = spieler.getSpielerID();
 
-        ITrainingPerPlayer output = getTrainingPerPlayer(spieler);
+        TrainingPerPlayer output = getTrainingPerPlayer(spieler);
         if (timestamp != null)
         	output.setTimestamp(timestamp);
 
@@ -273,7 +271,7 @@ public class TrainingsManager {
             return output;
         }
 
-        ITrainingPoint trainPoints = getTrainingPoint(train);
+        TrainingPoint trainPoints = getTrainingPoint(train);
         Calendar trainingDate = train.getTrainingDate();
 
         try {

@@ -11,9 +11,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
-import plugins.ISpielePanel;
 
 final class MatchesKurzInfoTable extends AbstractTable {
 	final static String TABLENAME = "MATCHESKURZINFO";
@@ -97,7 +95,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
 		StringBuilder sql = new StringBuilder(100);
 		ResultSet rs = null;
-		final ArrayList<IMatchKurzInfo> liste = new ArrayList<IMatchKurzInfo>();
+		final ArrayList<MatchKurzInfo> liste = new ArrayList<MatchKurzInfo>();
 
 		//Ohne Matchid nur AlleSpiele möglich!
 		if ((teamId < 0) && (matchtyp != SpielePanel.ALLE_SPIELE)) {
@@ -107,11 +105,11 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		try {
 			sql.append("SELECT * FROM ").append(getTableName());
 
-			if ((teamId > -1) && (matchtyp != SpielePanel.ALLE_SPIELE) && (matchtyp != ISpielePanel.NUR_FREMDE_SPIELE)) {
+			if ((teamId > -1) && (matchtyp != SpielePanel.ALLE_SPIELE) && (matchtyp != SpielePanel.NUR_FREMDE_SPIELE)) {
 				sql.append(" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + " )");
 			}
 
-			if ((teamId > -1) && (matchtyp == ISpielePanel.NUR_FREMDE_SPIELE)) {
+			if ((teamId > -1) && (matchtyp == SpielePanel.NUR_FREMDE_SPIELE)) {
 				sql.append(" WHERE ( GastID != " + teamId + " AND HeimID != " + teamId + " )");
 			}
 
@@ -119,7 +117,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 			if (matchtyp >= 10) {
 				matchtyp = matchtyp - 10;
 
-				sql.append(" AND Status=" + IMatchKurzInfo.FINISHED);
+				sql.append(" AND Status=" + MatchKurzInfo.FINISHED);
 			}
 			sql.append( getMatchTypWhereClause(matchtyp));
 
@@ -151,22 +149,22 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	private StringBuilder getMatchTypWhereClause(int matchtype){
 		StringBuilder sql = new StringBuilder(50);
 		switch (matchtype) {
-			case ISpielePanel.NUR_EIGENE_SPIELE :
+			case SpielePanel.NUR_EIGENE_SPIELE :
 
 				//Nix zu tun, da die teamId die einzige Einschränkung ist
 				break;
-			case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
+			case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
 				sql.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
 				break;
-			case ISpielePanel.NUR_EIGENE_POKALSPIELE :
+			case SpielePanel.NUR_EIGENE_POKALSPIELE :
 				sql.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
 				break;
-			case ISpielePanel.NUR_EIGENE_LIGASPIELE :
+			case SpielePanel.NUR_EIGENE_LIGASPIELE :
 				sql.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
 				break;
-			case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
+			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
 				sql.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
@@ -228,7 +226,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		String sql = null;
 		ResultSet rs = null;
-		final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
+		final Vector<MatchKurzInfo> liste = new Vector<MatchKurzInfo>();
 
 		try {
 			sql = "SELECT * FROM "+getTableName();

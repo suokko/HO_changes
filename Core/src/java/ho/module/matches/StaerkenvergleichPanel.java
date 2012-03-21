@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
@@ -409,14 +408,14 @@ class StaerkenvergleichPanel extends ImagePanel {
  
     final void refresh(MatchKurzInfo info,Matchdetails details) {
         m_clZuschauer.setText(details.getZuschauer() + "");
-        if(info.getMatchStatus() == IMatchKurzInfo.FINISHED)
+        if(info.getMatchStatus() == MatchKurzInfo.FINISHED)
         	m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
         else
         	m_clWetter.setIcon(null);
         m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp()]));
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
-        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == IMatchKurzInfo.FINISHED)) {
+        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED)) {
             name4matchtyp += (" ( "
             + HOVerwaltung.instance().getLanguageString("Reload_Match")
             + " )");
@@ -446,7 +445,7 @@ class StaerkenvergleichPanel extends ImagePanel {
             m_clGastTeamName.setForeground(ThemeManager.getColor(HOColorName.LABEL_FG));
         }
 
-        if (info.getMatchStatus() == IMatchKurzInfo.FINISHED) {
+        if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
             final Vector<IMatchLineupPlayer> heimteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
                                                                                info.getHeimID());
             final Vector<IMatchLineupPlayer> gastteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
@@ -483,7 +482,7 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             //--updaten--
             //Sterne für Sieger!
-            if (info.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+            if (info.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 m_clHeimTeamName.setIcon(null);
                 m_clGastTeamName.setIcon(null);
             } else if (info.getHeimTore() > info.getGastTore()) {

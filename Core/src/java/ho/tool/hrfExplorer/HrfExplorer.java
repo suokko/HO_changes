@@ -12,6 +12,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,7 +54,6 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumn;
 
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 
 /**
@@ -63,7 +63,7 @@ import plugins.IMatchLineup;
 public class HrfExplorer extends ImagePanel implements ActionListener,ItemListener,MouseListener,IRefreshable,TableColumnModelListener
 {
 
-	private IMatchKurzInfo[] m_kurzInfo;				// Adapter für Spieleinfos, u.a. ob Friendly oder Liga
+	private MatchKurzInfo[] m_kurzInfo;				// Adapter für Spieleinfos, u.a. ob Friendly oder Liga
 	// Members für Farben
 	private Color gruen = new Color (220,255,220);
 	private Color hellblau = new Color (235,235,255);

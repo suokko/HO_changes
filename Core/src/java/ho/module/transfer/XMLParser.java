@@ -2,6 +2,7 @@
 package ho.module.transfer;
 
 
+import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.net.MyConnector;
 import ho.core.util.HelperWrapper;
@@ -17,8 +18,6 @@ import java.util.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import plugins.IXMLParser;
 
 
 /**
@@ -56,7 +55,7 @@ public final class XMLParser {
         
     	final String xml = MyConnector.instance().getTransfersForPlayer(playerId);
 
-        final IXMLParser parser = ho.core.file.xml.XMLManager.instance();
+        final XMLManager parser = ho.core.file.xml.XMLManager.instance();
 
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
@@ -157,7 +156,7 @@ public final class XMLParser {
         while (stop == false) {
 	        final String xml = MyConnector.instance().getHattrickXMLFile(url+page); 
 
-	        final IXMLParser parser = ho.core.file.xml.XMLManager.instance();
+	        final XMLManager parser = ho.core.file.xml.XMLManager.instance();
 	        final Document doc = parser.parseString(xml);
 
 	        //get Root element ('HattrickData') :

@@ -1,5 +1,7 @@
 package ho.module.nthrf;
 
+import ho.core.file.xml.XMLManager;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,8 +9,6 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import plugins.IXMLParser;
 
 class NtLineupParser {
 	private String fetchedDate;
@@ -24,7 +24,7 @@ class NtLineupParser {
 	private List<NtPlayerPosition> players = new ArrayList<NtPlayerPosition>(); // <NtPlayerPosition>
 	private boolean parsingSuccess;
 
-	NtLineupParser(IXMLParser xm, String xmlData) {
+	NtLineupParser(XMLManager xm, String xmlData) {
 		Document doc = xm.parseString(xmlData);
 		parseDetails(xm, doc);
 	}
@@ -53,7 +53,7 @@ class NtLineupParser {
 		return pp;
 	}
 
-	private void parseDetails(IXMLParser xm, Document doc) {
+	private void parseDetails(XMLManager xm, Document doc) {
         if (doc == null) {
             return;
         }

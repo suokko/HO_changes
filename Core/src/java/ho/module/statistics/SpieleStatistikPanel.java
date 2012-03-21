@@ -15,6 +15,7 @@ import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.Matchdetails;
@@ -41,7 +42,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchLineupPlayer;
-import plugins.ISpielePanel;
 import plugins.ISpielerPosition;
 
 /**
@@ -122,23 +122,23 @@ public class SpieleStatistikPanel extends ImagePanel
 	private StatistikPanel m_clStatistikPanel;
 	private CBItem[] SPIELEFILTER = {
 			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigeneSpiele"), ISpielePanel.NUR_EIGENE_SPIELE
-					+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+					"NurEigeneSpiele"), SpielePanel.NUR_EIGENE_SPIELE
+					+ SpielePanel.NUR_GESPIELTEN_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString(
 					"NurEigenePflichtspiele"),
-					ISpielePanel.NUR_EIGENE_PFLICHTSPIELE
-							+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+					SpielePanel.NUR_EIGENE_PFLICHTSPIELE
+							+ SpielePanel.NUR_GESPIELTEN_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString(
 					"NurEigenePokalspiele"),
-					ISpielePanel.NUR_EIGENE_POKALSPIELE
-							+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+					SpielePanel.NUR_EIGENE_POKALSPIELE
+							+ SpielePanel.NUR_GESPIELTEN_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString(
-					"NurEigeneLigaspiele"), ISpielePanel.NUR_EIGENE_LIGASPIELE
-					+ ISpielePanel.NUR_GESPIELTEN_SPIELE),
+					"NurEigeneLigaspiele"), SpielePanel.NUR_EIGENE_LIGASPIELE
+					+ SpielePanel.NUR_GESPIELTEN_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString(
 					"NurEigeneFreundschaftsspiele"),
-					ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
-							+ ISpielePanel.NUR_GESPIELTEN_SPIELE) };
+					SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
+							+ SpielePanel.NUR_GESPIELTEN_SPIELE) };
 	private boolean m_bInitialisiert;
 
     // ~ Constructors

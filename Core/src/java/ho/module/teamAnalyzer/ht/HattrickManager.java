@@ -22,8 +22,6 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import plugins.IXMLParser;
-
 
 /**
  * Hattrick Download Helper class
@@ -61,7 +59,7 @@ public class HattrickManager {
     				return;
     			}
     				
-    			IXMLParser parser = XMLManager.instance();
+    			XMLManager parser = XMLManager.instance();
     			Document dom = parser.parseString(xml);
     			Node matchesList = dom.getElementsByTagName("MatchList").item(0);
 
@@ -112,7 +110,7 @@ public class HattrickManager {
         }
 
         List<PlayerInfo> players = new ArrayList<PlayerInfo>();
-        IXMLParser parser = XMLManager.instance();
+        XMLManager parser = XMLManager.instance();
         Document dom = parser.parseString(xml);
         Node matchesList = dom.getElementsByTagName("PlayerList").item(0);
 
@@ -172,7 +170,7 @@ public class HattrickManager {
      */
     public static String downloadTeam(int teamId) throws Exception {
 		String xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=team&teamID=" + teamId);
-        IXMLParser parser = XMLManager.instance();
+		XMLManager parser = XMLManager.instance();
         Document dom = parser.parseString(xml);
         Document teamDocument = dom.getElementsByTagName("Team").item(0).getOwnerDocument();
         String teamName = teamDocument.getElementsByTagName("TeamName").item(0).getFirstChild().getNodeValue();

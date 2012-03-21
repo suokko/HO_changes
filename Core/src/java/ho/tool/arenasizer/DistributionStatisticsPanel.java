@@ -11,6 +11,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.Helper;
+import ho.module.matches.SpielePanel;
 import ho.tool.updater.TableModel;
 
 import java.awt.BorderLayout;
@@ -22,7 +23,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 
-import plugins.ISpielePanel;
 
 class DistributionStatisticsPanel extends JPanel {
 
@@ -59,7 +59,7 @@ class DistributionStatisticsPanel extends JPanel {
 					hoV.getLanguageString("Sitzplaetze")+" ( %)",hoV.getLanguageString("Ueberdachteplaetze")+" ( %)",hoV.getLanguageString("Logen")+" ( %)",
 					hoV.getLanguageString("Fans")+" ( )"};
 
-		ArenaStatistikModel[] matches=  DBManager.instance().getArenaStatistikModel(ISpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
+		ArenaStatistikModel[] matches=  DBManager.instance().getArenaStatistikModel(SpielePanel.NUR_EIGENE_LIGASPIELE).getMatches();
 		IHOTableEntry[][] value = new IHOTableEntry[matches.length][columnNames.length];
         for (int i = 0; i < matches.length; i++) {
         	 value[i][0] = new ColorLabelEntry(matches[i].getMatchID()+"",

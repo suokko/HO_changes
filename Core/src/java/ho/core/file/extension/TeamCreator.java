@@ -6,6 +6,8 @@ import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.XtraData;
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,9 +19,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.IMatchKurzInfo;
-import plugins.ISpielePanel;
 
 public class TeamCreator extends XMLCreator {
 
@@ -64,8 +63,8 @@ public class TeamCreator extends XMLCreator {
 	}
 
 	public static Timestamp getNextCupDate() {
-		IMatchKurzInfo[] cupMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-																			ISpielePanel.NUR_EIGENE_POKALSPIELE,
+		MatchKurzInfo[] cupMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+																			SpielePanel.NUR_EIGENE_POKALSPIELE,
 																			false);
 																			
 		Timestamp time = getFirstUnplayed(cupMatches);
@@ -73,19 +72,19 @@ public class TeamCreator extends XMLCreator {
 			return time;																			
 		}
 		
-		IMatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-																				 ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
+		MatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+																				 SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
 																				 false);
 
 		return getFirstUnplayed(friendlyMatches);
 	}
 	
-	public static Timestamp getFirstUnplayed(IMatchKurzInfo[] matches) {
+	public static Timestamp getFirstUnplayed(MatchKurzInfo[] matches) {
 
 		for (int i = 0; i < matches.length; i++) {
-			IMatchKurzInfo match = matches[i];
+			MatchKurzInfo match = matches[i];
 
-			if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+			if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
 				return match.getMatchDateAsTimestamp();
 			}
 		}

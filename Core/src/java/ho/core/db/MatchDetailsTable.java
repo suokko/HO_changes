@@ -1,19 +1,13 @@
 package ho.core.db;
 
-import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.Matchdetails;
-import ho.module.matches.model.MatchesOverviewRow;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineup;
-import plugins.ISpielePanel;
 
 final class MatchDetailsTable extends AbstractTable {
 

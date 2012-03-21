@@ -3,6 +3,8 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.module.config.ModuleConfig;
+import ho.module.matches.SpielePanel;
+import ho.module.matches.model.MatchKurzInfo;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.vo.Match;
@@ -17,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import plugins.IMatchKurzInfo;
-import plugins.ISpielePanel;
 
 
 /**
@@ -99,15 +98,15 @@ public class MatchManager {
         List<Match> teamMatches = new ArrayList<Match>();
         String oldName = SystemManager.getActiveTeamName();
 
-        IMatchKurzInfo[] matchKurtzInfo = DBManager.instance().getMatchesKurzInfo(SystemManager
+        MatchKurzInfo[] matchKurtzInfo = DBManager.instance().getMatchesKurzInfo(SystemManager
                                                                                 .getActiveTeamId(),
-                                                                                ISpielePanel.NUR_EIGENE_SPIELE,
+                                                                                SpielePanel.NUR_EIGENE_SPIELE,
                                                                                 false);
 
         for (int i = 0; i < matchKurtzInfo.length; i++) {
-            IMatchKurzInfo matchInfo = matchKurtzInfo[i];
+            MatchKurzInfo matchInfo = matchKurtzInfo[i];
 
-            if (matchInfo.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+            if (matchInfo.getMatchStatus() != MatchKurzInfo.FINISHED) {
                 continue;
             }
 

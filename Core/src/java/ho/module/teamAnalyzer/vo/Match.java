@@ -2,12 +2,12 @@
 package ho.module.teamAnalyzer.vo;
 
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.MatchKurzInfo;
 import ho.module.series.Paarung;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;
 
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 
 
@@ -59,7 +59,7 @@ public class Match {
      *
      * @param matchInfo IMatckKurtzInfo from which a match object has to be created
      */
-    public Match(IMatchKurzInfo matchInfo) {
+    public Match(MatchKurzInfo matchInfo) {
         homeId = matchInfo.getHeimID();
         awayId = matchInfo.getGastID();
         matchId = matchInfo.getMatchID();
