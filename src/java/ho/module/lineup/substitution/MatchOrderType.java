@@ -1,4 +1,4 @@
-package plugins;
+package ho.module.lineup.substitution;
 
 /**
  * Enum for the three order types used in substitutions/orders for the lineup.

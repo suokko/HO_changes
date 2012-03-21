@@ -4,6 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.StringUtilities;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
 
 import java.awt.GridBagConstraints;
@@ -102,7 +103,7 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 	
 	
 	public void refresh(int matchtypes) {
-		 if(matchtypes == ISpielePanel.ALLE_SPIELE || matchtypes == ISpielePanel.NUR_FREMDE_SPIELE){
+		 if(matchtypes == SpielePanel.ALLE_SPIELE || matchtypes == ISpielePanel.NUR_FREMDE_SPIELE){
 			 clear();
 			 return;
 		 }

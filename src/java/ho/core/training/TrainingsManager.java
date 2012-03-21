@@ -29,7 +29,6 @@ import plugins.ISpielerPosition;
 import plugins.ITrainingPerPlayer;
 import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
-import plugins.ITrainingsManager;
 
 
 /**
@@ -38,9 +37,17 @@ import plugins.ITrainingsManager;
  *
  * @author humorlos, Dragettho, thetom
  */
-public class TrainingsManager implements ITrainingsManager {
+public class TrainingsManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
+	static final int PLAYERSTATUS_OK = 0;
+	static final int PLAYERSTATUS_NO_MATCHDATA = -1;
+	static final int PLAYERSTATUS_NO_MATCHDETAILS = -2;
+	static final int PLAYERSTATUS_NOT_IN_LINEUP = -3;
+	static final int PLAYERSTATUS_RED_CARD = -4;
+	static final int PLAYERSTATUS_SUBSTITUTED_IN = -5;
+	static final int PLAYERSTATUS_SUBSTITUTED_OUT = -6;
+	static final int PLAYERSTATUS_TACTIC_CHANGE = -7;
     private static TrainingsManager m_clInstance;
 
     /** Base values for training duration */

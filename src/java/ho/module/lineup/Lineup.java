@@ -15,6 +15,7 @@ import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
+import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
 import java.sql.Timestamp;
@@ -33,7 +34,6 @@ import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 /**
  * DOCUMENT ME!

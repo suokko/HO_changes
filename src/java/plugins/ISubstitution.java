@@ -1,5 +1,7 @@
 package plugins;
 
+import ho.module.lineup.substitution.MatchOrderType;
+
 public interface ISubstitution {
 
 	// See the match order API for meanings
