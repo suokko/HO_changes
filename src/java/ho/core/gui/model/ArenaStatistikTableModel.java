@@ -11,6 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.StringUtilities;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.awt.Color;
 import java.text.DateFormat;
@@ -18,7 +19,6 @@ import java.text.DateFormat;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-import plugins.IMatchKurzInfo;
 
 
 /**
@@ -260,7 +260,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 
 			    //Sterne für Sieger!
-			    if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) {
+			    if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
 			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ImageUtilities.NOIMAGEICON);
 			    } else if (match.getHeimTore() > match.getGastTore()) {
 			        ((ColorLabelEntry) m_clData[i][3]).setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));

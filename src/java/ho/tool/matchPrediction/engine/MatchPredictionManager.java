@@ -17,7 +17,7 @@ import plugins.IMatchResult;
  *
  * @author thomas.werth
  */
-public class MatchPredictionManager implements plugins.IMatchPredictionManager {
+public class MatchPredictionManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static MatchPredictionManager m_clInstance;

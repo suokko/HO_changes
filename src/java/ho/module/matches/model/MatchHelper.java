@@ -9,7 +9,6 @@ import java.util.Vector;
 import plugins.IMatchDetails;
 import plugins.IMatchHelper;
 import plugins.IMatchHighlight;
-import plugins.IMatchKurzInfo;
 import plugins.IMatchLineup;
 
 /**
@@ -32,7 +31,7 @@ public class MatchHelper implements IMatchHelper {
 	 * 
 	 * @param match		match short info
 	 */
-	public short getLocation(IMatchKurzInfo match) {
+	public short getLocation(MatchKurzInfo match) {
 		return getLocation(match.getHeimID(), match.getGastID(), match.getMatchID(), match.getMatchTyp());
 	}
 

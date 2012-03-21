@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.ITeamLineup;
 
 
 public class Matchdetails implements plugins.IMatchDetails {
@@ -952,7 +951,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @return The Lineup object
      */
-    public final ITeamLineup getTeamLineup(boolean home) {
+    public final TeamLineup getTeamLineup(boolean home) {
         final TeamLineup lineup = new TeamLineup();
 
         try {

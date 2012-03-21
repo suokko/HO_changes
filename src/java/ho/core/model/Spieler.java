@@ -9,6 +9,7 @@ package ho.core.model;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.rating.RatingPredictionManager;
+import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
 import ho.core.util.HOLogger;
@@ -2147,7 +2148,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void calcFullSubskills(ISpieler old, int coTrainer, int trainerlevel,
                                   int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
-        final plugins.ITrainingPerPlayer trainingPerPlayer = ho.core.training.TrainingsManager.instance()
+        final TrainingPerPlayer trainingPerPlayer = ho.core.training.TrainingsManager.instance()
         		.calculateFullTrainingForPlayer(this, ho.core.training.TrainingsManager.instance().getTrainingsVector(), hrftimestamp);
 
         //TODO Training pro Woche berechenen
@@ -2292,7 +2293,7 @@ public final class Spieler implements plugins.ISpieler {
     public void calcIncrementalSubskills(ISpieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
     	final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
-        final plugins.ITrainingPerPlayer trainingPerPlayer =
+        final TrainingPerPlayer trainingPerPlayer =
         	ho.core.training.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 
         if (!check4SkillUp(SKILL_TORWART, old)) {

@@ -17,6 +17,7 @@ import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -27,10 +28,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-
 import plugins.ILineUp;
 import plugins.IMatchDetails;
-import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
@@ -697,9 +696,9 @@ public class Lineup implements plugins.ILineUp {
 		if (m_sLocation < 0) {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				final IMatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId,
-						IMatchKurzInfo.UPCOMING);
-				IMatchKurzInfo match;
+				final MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId,
+						MatchKurzInfo.UPCOMING);
+				MatchKurzInfo match;
 
 				if ((matches == null) || (matches.length < 1)) {
 					m_sLocation = IMatchDetails.LOCATION_AWAY;
@@ -708,7 +707,7 @@ public class Lineup implements plugins.ILineUp {
 				}
 
 				if (matches.length > 1) {
-					final List<IMatchKurzInfo> sMatches = orderMatches(matches);
+					final List<MatchKurzInfo> sMatches = orderMatches(matches);
 					match = sMatches.get(0);
 				} else {
 					match = matches[0];
@@ -739,24 +738,24 @@ public class Lineup implements plugins.ILineUp {
 	 * 
 	 * This method also returns the matches in order of the newest first.
 	 */
-	private List<IMatchKurzInfo> orderMatches(IMatchKurzInfo[] inMatches) {
-		final List<IMatchKurzInfo> matches = new ArrayList<IMatchKurzInfo>();
+	private List<MatchKurzInfo> orderMatches(MatchKurzInfo[] inMatches) {
+		final List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
 		if (inMatches != null && inMatches.length > 1) {
-			for (IMatchKurzInfo m : inMatches) {
+			for (MatchKurzInfo m : inMatches) {
 				matches.add(m);
 			}
 
 			// Flipped the sign of the return value to get newest first -
 			// blaghaid
-			Collections.sort(matches, new Comparator<IMatchKurzInfo>() {
-				public int compare(IMatchKurzInfo o1, IMatchKurzInfo o2) {
+			Collections.sort(matches, new Comparator<MatchKurzInfo>() {
+				public int compare(MatchKurzInfo o1, MatchKurzInfo o2) {
 					return (o1.getMatchDateAsTimestamp().compareTo(o2.getMatchDateAsTimestamp()));
 				}
 			});
 
 			Timestamp checkDate = null;
-			for (Iterator<IMatchKurzInfo> i = matches.iterator(); i.hasNext();) {
-				IMatchKurzInfo m = i.next();
+			for (Iterator<MatchKurzInfo> i = matches.iterator(); i.hasNext();) {
+				MatchKurzInfo m = i.next();
 				if (checkDate == null) {
 					checkDate = m.getMatchDateAsTimestamp();
 					continue;

@@ -15,7 +15,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import plugins.ISpielePanel;
 
 
 public class MatchesOverviewCommonPanel extends ImagePanel {
@@ -103,7 +102,7 @@ public class MatchesOverviewCommonPanel extends ImagePanel {
 	
 	
 	public void refresh(int matchtypes) {
-		 if(matchtypes == SpielePanel.ALLE_SPIELE || matchtypes == ISpielePanel.NUR_FREMDE_SPIELE){
+		 if(matchtypes == SpielePanel.ALLE_SPIELE || matchtypes == SpielePanel.NUR_FREMDE_SPIELE){
 			 clear();
 			 return;
 		 }

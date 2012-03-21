@@ -5,6 +5,7 @@ import ho.core.datatype.CBItem;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.module.matches.SpielePanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -18,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
-import plugins.ISpielePanel;
 
 
 /**
@@ -34,11 +34,11 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
 	final private ArenaStatistikTable m_jtArenaStatistikTable;
 	final private JComboBox m_jcbSpieleFilter;
 	final private CBItem[] SPIELEFILTER = {
-    		new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), ISpielePanel.NUR_EIGENE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), ISpielePanel.NUR_EIGENE_PFLICHTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), ISpielePanel.NUR_EIGENE_POKALSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), ISpielePanel.NUR_EIGENE_LIGASPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"), ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
+    		new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), SpielePanel.NUR_EIGENE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), SpielePanel.NUR_EIGENE_POKALSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), SpielePanel.NUR_EIGENE_LIGASPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"), SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
     };
 	private boolean m_bInitialisiert;
 

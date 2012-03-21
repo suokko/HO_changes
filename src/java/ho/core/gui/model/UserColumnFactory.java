@@ -29,7 +29,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import plugins.IMatchKurzInfo;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 
@@ -356,7 +355,7 @@ final public class UserColumnFactory {
 				entry.setFGColor((match.getHeimID() == HOVerwaltung.instance().getModel().getBasics()
                         .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				
-				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
+				if (match.getMatchStatus() != MatchKurzInfo.FINISHED) 
 					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else if (match.getHeimTore() > match.getGastTore())
 					entry.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR, Color.WHITE));
@@ -394,7 +393,7 @@ final public class UserColumnFactory {
 				entry.setFGColor((match.getGastID() == HOVerwaltung.instance().getModel().getBasics()
                         .getTeamId())?ThemeManager.getColor(HOColorName.TEAM_FG):ThemeManager.getColor(HOColorName.LABEL_FG));
 				
-				if (match.getMatchStatus() != IMatchKurzInfo.FINISHED) 
+				if (match.getMatchStatus() != MatchKurzInfo.FINISHED) 
 					entry.setIcon(ImageUtilities.NOIMAGEICON);
 				else if (match.getHeimTore() > match.getGastTore())
 					entry.setIcon(ImageUtilities.NOIMAGEICON);

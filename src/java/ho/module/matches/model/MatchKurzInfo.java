@@ -13,7 +13,7 @@ import ho.core.util.HOLogger;
  *
  * @author thomas.werth
  */
-public class MatchKurzInfo implements plugins.IMatchKurzInfo {
+public class MatchKurzInfo implements Comparable<Object> {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Name des Teams zu dem die Matchinfo gehört */
@@ -48,6 +48,15 @@ public class MatchKurzInfo implements plugins.IMatchKurzInfo {
 
     /** Typ des Spiels */
     private int m_iMatchTyp = -1;
+
+	/** TODO Missing Parameter Documentation */
+	public static final int ONGOING = 3;
+
+	/** TODO Missing Parameter Documentation */
+	public static final int UPCOMING = 2;
+
+	/** TODO Missing Parameter Documentation */
+	public static final int FINISHED = 1;
 
     //~ Constructors -------------------------------------------------------------------------------
 

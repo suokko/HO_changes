@@ -17,8 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IMatchKurzInfo;
-
 
 
 /**
@@ -86,7 +84,7 @@ public class xmlMatchArchivParser {
      * @return TODO Missing Return Method Documentation
      */
     protected final int getStatus(String status) {
-        return IMatchKurzInfo.FINISHED;
+        return MatchKurzInfo.FINISHED;
     }
 
     /////////////////////////////////////////////////////////////////////////////////    
@@ -106,7 +104,7 @@ public class xmlMatchArchivParser {
         Element tmp = null;
         MatchKurzInfo[] matches = new MatchKurzInfo[0];
         MatchKurzInfo spiel = null;
-        final Vector<IMatchKurzInfo> liste = new Vector<IMatchKurzInfo>();
+        final Vector<MatchKurzInfo> liste = new Vector<MatchKurzInfo>();
         NodeList list = null;
 
         if (doc == null) {
@@ -145,7 +143,7 @@ public class xmlMatchArchivParser {
                 tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                 spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 spiel.setAufstellung(true);
-                spiel.setMatchStatus(IMatchKurzInfo.FINISHED);
+                spiel.setMatchStatus(MatchKurzInfo.FINISHED);
 
                 //In Vector adden
                 liste.add(spiel);

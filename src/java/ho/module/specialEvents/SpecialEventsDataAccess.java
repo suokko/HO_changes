@@ -2,6 +2,7 @@ package ho.module.specialEvents;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -9,15 +10,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-
-import plugins.IMatchKurzInfo;
-
 class SpecialEventsDataAccess {
 
 	private static final SpecialEventsDataAccess CURRENT = new SpecialEventsDataAccess();
 	private static int saveSeasons = 0;
-	private static Vector<IMatchKurzInfo> kurzInfos = null;
-	private static Vector<IMatchKurzInfo> aktKurzInfos = null;
+	private static Vector<MatchKurzInfo> kurzInfos = null;
+	private static Vector<MatchKurzInfo> aktKurzInfos = null;
 
 	public static SpecialEventsDataAccess getCurrent() {
 		return CURRENT;
@@ -26,22 +24,22 @@ class SpecialEventsDataAccess {
 	private SpecialEventsDataAccess() {
 	}
 
-	Vector<IMatchKurzInfo> getAktMatchKurzInfos(int saisons, boolean friendlies) {
+	Vector<MatchKurzInfo> getAktMatchKurzInfos(int saisons, boolean friendlies) {
 		if (saisons != saveSeasons) {
 			getMatchKurzInfosForSaisons(saisons);
 		}
 		return filterMatches(friendlies);
 	}
 
-	private Vector<IMatchKurzInfo> filterMatches(boolean friendlies) {
+	private Vector<MatchKurzInfo> filterMatches(boolean friendlies) {
 		if (friendlies) {
 			aktKurzInfos = kurzInfos;
 			return kurzInfos;
 		}
-		aktKurzInfos = new Vector<IMatchKurzInfo>();
-		for (Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter
+		aktKurzInfos = new Vector<MatchKurzInfo>();
+		for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter
 				.hasNext();) {
-			IMatchKurzInfo element = iter.next();
+			MatchKurzInfo element = iter.next();
 			if (element.getMatchTyp() != 4 && element.getMatchTyp() != 5
 					&& element.getMatchTyp() != 8 && element.getMatchTyp() != 9) {
 				aktKurzInfos.add(element);
@@ -53,11 +51,11 @@ class SpecialEventsDataAccess {
 
 	private void getMatchKurzInfosForSaisons(int saisons) {
 		Timestamp datumAb = getDatumAb(saisons);
-		IMatchKurzInfo modelKurzInfos[] = DBManager.instance()
+		MatchKurzInfo modelKurzInfos[] = DBManager.instance()
 				.getMatchesKurzInfo(
 						HOVerwaltung.instance().getModel().getBasics()
 								.getTeamId());
-		kurzInfos = new Vector<IMatchKurzInfo>();
+		kurzInfos = new Vector<MatchKurzInfo>();
 		for (int i = 0; i < modelKurzInfos.length; i++) {
 			if (datumAb != null) {
 				Timestamp spDate = modelKurzInfos[i].getMatchDateAsTimestamp();

@@ -2,6 +2,7 @@ package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.Matchdetails;
 import ho.module.matches.model.MatchesHighlightsStat;
 import ho.module.matches.model.MatchesOverviewRow;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 
 import plugins.IMatchDetails;
 import plugins.IMatchLineup;
-import plugins.ISpielePanel;
 
 class MatchesOverviewQuery  {
 	final static String KEY = "MatchesOverviewQuery";
@@ -166,22 +166,22 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 	private static StringBuilder getMatchTypWhereClause(int matchtype){
 		StringBuilder sql = new StringBuilder(50);
 		switch (matchtype) {
-			case ISpielePanel.NUR_EIGENE_SPIELE :
+			case SpielePanel.NUR_EIGENE_SPIELE :
 
 				//Nix zu tun, da die teamId die einzige Einschränkung ist
 				break;
-			case ISpielePanel.NUR_EIGENE_PFLICHTSPIELE :
+			case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
 				sql.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
 				break;
-			case ISpielePanel.NUR_EIGENE_POKALSPIELE :
+			case SpielePanel.NUR_EIGENE_POKALSPIELE :
 				sql.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
 				break;
-			case ISpielePanel.NUR_EIGENE_LIGASPIELE :
+			case SpielePanel.NUR_EIGENE_LIGASPIELE :
 				sql.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
 				break;
-			case ISpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
+			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
 				sql.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
 				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);

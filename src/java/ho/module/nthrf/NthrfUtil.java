@@ -18,8 +18,6 @@ import javax.swing.JFileChooser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IXMLParser;
-
 class NthrfUtil {
 
     /**
@@ -28,7 +26,7 @@ class NthrfUtil {
      */
     static boolean createNthrf(long teamId) {
         try {
-            IXMLParser xp = XMLManager.instance();
+        	XMLManager xp = XMLManager.instance();
             MyConnector dh = MyConnector.instance();
             NthrfConvertXml2Hrf x2h = new NthrfConvertXml2Hrf();
             x2h.createHrf(teamId, dh, xp);

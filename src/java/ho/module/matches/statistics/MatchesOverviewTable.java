@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
-import plugins.ISpielePanel;
 
 public class MatchesOverviewTable extends JTable {
 	private static final long serialVersionUID = -8724051830928497450L;
@@ -34,7 +33,7 @@ public class MatchesOverviewTable extends JTable {
 
         if (tableModel == null) {
         	tableModel = UserColumnController.instance().getMatchesOverview1ColumnModel();
-        	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
+        	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == SpielePanel.NUR_FREMDE_SPIELE){
             	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
             	tableModel.setValues(tmp);
             } else {
@@ -104,7 +103,7 @@ public class MatchesOverviewTable extends JTable {
     }
     
     public void refresh(int matchtypen) {
-        if(matchtypen == SpielePanel.ALLE_SPIELE || matchtypen == ISpielePanel.NUR_FREMDE_SPIELE){
+        if(matchtypen == SpielePanel.ALLE_SPIELE || matchtypen == SpielePanel.NUR_FREMDE_SPIELE){
         	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
         	tableModel.setValues(tmp);
         } else {

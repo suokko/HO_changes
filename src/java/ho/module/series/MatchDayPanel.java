@@ -33,7 +33,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchKurzInfo;
 
 
 /**
@@ -110,7 +109,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                         info.setHeimTore(matchdata[3]);
                         info.setMatchDate(lineup.getStringSpielDate());
                         info.setMatchID(matchdata[0]);
-                        info.setMatchStatus(IMatchKurzInfo.FINISHED);
+                        info.setMatchStatus(MatchKurzInfo.FINISHED);
                         info.setMatchTyp(lineup.getMatchTyp());
 
                         final MatchKurzInfo[] infos = {info};

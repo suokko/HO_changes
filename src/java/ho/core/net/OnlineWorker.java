@@ -45,7 +45,6 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import plugins.IMatchKurzInfo;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
@@ -341,7 +340,7 @@ public class OnlineWorker {
             //Match noch nicht in der DB
             if ((DBManager.instance().isMatchVorhanden(matches[i].getMatchID()))
                 && (!DBManager.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
-                && (matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED)) {
+                && (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
                 getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
                                matches[i].getGastID());
                 if (getMatchDetails(matches[i].getMatchID())) {
@@ -444,7 +443,7 @@ public class OnlineWorker {
 	        	Matchdetails curDetails = DBManager.instance().getMatchDetails(curMatchId); 
 	            // No match in DB
 	        	if (DBManager.instance().isMatchVorhanden(curMatchId)
-	            		&& matches[i].getMatchStatus() == IMatchKurzInfo.FINISHED
+	            		&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
 	            		&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId) ||
 	            				curDetails == null ||
 	            				curDetails.getMatchreport() == null ||
@@ -810,7 +809,7 @@ public class OnlineWorker {
 			if (!DBManager.instance().isMatchLineupVorhanden(curMatchId)) 
 			{
 				// Check if the lineup is available
-				if (infos[i].getMatchStatus() == IMatchKurzInfo.FINISHED) 
+				if (infos[i].getMatchStatus() == MatchKurzInfo.FINISHED) 
 				{
 					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);
 					bOK = ow.getMatchlineup(curMatchId, infos[i].getHeimID(), infos[i].getGastID());

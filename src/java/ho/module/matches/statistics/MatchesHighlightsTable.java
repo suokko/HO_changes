@@ -10,7 +10,6 @@ import ho.tool.updater.TableModel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import plugins.ISpielePanel;
 
 
 public class MatchesHighlightsTable extends JTable {
@@ -33,7 +32,7 @@ public class MatchesHighlightsTable extends JTable {
     }
     
     private Object[][] getValues(int matchtyp){
-    	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
+    	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == SpielePanel.NUR_FREMDE_SPIELE){
          	return new Object[0][0];
          }
     	MatchesHighlightsStat[] rows = DBManager.instance().getChancesStat(true,matchtyp);

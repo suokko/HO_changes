@@ -6,10 +6,8 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import plugins.ITrainingPoint;
 import plugins.ITrainingWeek;
 
 
@@ -21,7 +19,7 @@ import plugins.ITrainingWeek;
  *
  * @author Draghetto HO
  */
-class TrainingPoint implements ITrainingPoint {
+class TrainingPoint {
 	/**
 	 * Private class to represent a single match for the training,
 	 * it consists of a minutes/value pair

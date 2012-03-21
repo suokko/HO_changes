@@ -6,6 +6,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -17,7 +18,6 @@ import javax.swing.ImageIcon;
 
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchKurzInfo;
 
 class SpecialEventsDM
 {
@@ -81,11 +81,11 @@ class SpecialEventsDM
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 		highlightText = new Vector<String>();
 		try {
-			Vector<IMatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getCurrent().getAktMatchKurzInfos(saisonAnz, friendlies);
+			Vector<MatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getCurrent().getAktMatchKurzInfos(saisonAnz, friendlies);
 			int zInd = 1;
-			for (Iterator<IMatchKurzInfo> iter = kurzInfos.iterator(); iter
+			for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter
 					.hasNext();) {
-				IMatchKurzInfo element = iter.next();
+				MatchKurzInfo element = iter.next();
 				Vector<Vector<Object>> v = getMatchlines(element, allMatches);
 				if (v != null && v.size() > 0) {
 					for (int j = 0; j < v.size(); j++) {
@@ -107,7 +107,7 @@ class SpecialEventsDM
 		return data;
 	}
 
-    private Vector<Vector<Object>> getMatchlines(IMatchKurzInfo kurzInfos, boolean allMatches) {
+    private Vector<Vector<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
     	IMatchDetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
         String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
         Integer matchId = new Integer(kurzInfos.getMatchID());
