@@ -5,6 +5,7 @@ import ho.core.gui.comp.table.ToolTipHeader;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnController;
 import ho.core.util.Helper;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchesOverviewRow;
 
 import javax.swing.JTable;
@@ -33,7 +34,7 @@ public class MatchesOverviewTable extends JTable {
 
         if (tableModel == null) {
         	tableModel = UserColumnController.instance().getMatchesOverview1ColumnModel();
-        	if(matchtyp == ISpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
+        	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
             	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
             	tableModel.setValues(tmp);
             } else {
@@ -103,7 +104,7 @@ public class MatchesOverviewTable extends JTable {
     }
     
     public void refresh(int matchtypen) {
-        if(matchtypen == ISpielePanel.ALLE_SPIELE || matchtypen == ISpielePanel.NUR_FREMDE_SPIELE){
+        if(matchtypen == SpielePanel.ALLE_SPIELE || matchtypen == ISpielePanel.NUR_FREMDE_SPIELE){
         	MatchesOverviewRow[] tmp = new MatchesOverviewRow[0];
         	tableModel.setValues(tmp);
         } else {

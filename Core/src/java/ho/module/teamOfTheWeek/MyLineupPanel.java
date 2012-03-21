@@ -11,7 +11,6 @@ import ho.core.gui.comp.panel.RasenPanel;
 
 import java.awt.BorderLayout;
 
-import plugins.LineupPanel;
 
 
 

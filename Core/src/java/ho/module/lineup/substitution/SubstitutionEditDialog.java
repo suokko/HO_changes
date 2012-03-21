@@ -19,7 +19,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 public class SubstitutionEditDialog extends JDialog {
 

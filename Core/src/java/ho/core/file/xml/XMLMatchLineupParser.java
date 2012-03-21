@@ -8,6 +8,7 @@ package ho.core.file.xml;
 
 
 import ho.core.util.HOLogger;
+import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -21,7 +22,6 @@ import org.w3c.dom.NodeList;
 
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 
 /**

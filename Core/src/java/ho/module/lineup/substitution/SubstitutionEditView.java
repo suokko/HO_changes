@@ -27,7 +27,6 @@ import javax.swing.event.ChangeListener;
 
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 public class SubstitutionEditView extends JPanel {
 

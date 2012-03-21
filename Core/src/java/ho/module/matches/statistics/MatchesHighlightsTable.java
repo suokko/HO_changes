@@ -2,6 +2,7 @@ package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchesHighlightsStat;
 import ho.module.matches.model.MatchesOverviewRow;
 import ho.tool.updater.TableModel;
@@ -32,7 +33,7 @@ public class MatchesHighlightsTable extends JTable {
     }
     
     private Object[][] getValues(int matchtyp){
-    	if(matchtyp == ISpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
+    	if(matchtyp == SpielePanel.ALLE_SPIELE || matchtyp == ISpielePanel.NUR_FREMDE_SPIELE){
          	return new Object[0][0];
          }
     	MatchesHighlightsStat[] rows = DBManager.instance().getChancesStat(true,matchtyp);

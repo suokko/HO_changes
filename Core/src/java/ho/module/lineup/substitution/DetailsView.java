@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 public class DetailsView extends JPanel {
 

@@ -3,6 +3,7 @@ package ho.core.file.xml;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
+import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
 import java.io.File;
@@ -16,7 +17,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import plugins.MatchOrderType;
 
 public class XMLMatchOrderParserNew {
 
