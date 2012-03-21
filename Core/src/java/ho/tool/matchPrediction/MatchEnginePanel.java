@@ -27,8 +27,7 @@ import javax.swing.event.ChangeListener;
 
 import plugins.IMatchResult;
 
-public class MatchEnginePanel extends ImagePanel implements
-		plugins.IMatchPredictionPanel, ActionListener {
+public class MatchEnginePanel extends ImagePanel implements	 ActionListener {
 	private static final long serialVersionUID = 4911590394636764762L;
 
 	JButton m_jbButton = new JButton(HOVerwaltung.instance().getLanguageString("Simulate"));

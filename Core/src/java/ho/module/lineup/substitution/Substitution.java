@@ -1,7 +1,6 @@
 package ho.module.lineup.substitution;
 
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 /**
  * A class holding information about substitutions and order changes

@@ -1,5 +1,5 @@
 // %2956927164:plugins%
-package plugins;
+package ho.module.teamOfTheWeek;
 
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;

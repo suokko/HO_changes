@@ -1,6 +1,7 @@
 package ho.core.db;
 
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
@@ -99,14 +100,14 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		final ArrayList<IMatchKurzInfo> liste = new ArrayList<IMatchKurzInfo>();
 
 		//Ohne Matchid nur AlleSpiele möglich!
-		if ((teamId < 0) && (matchtyp != ISpielePanel.ALLE_SPIELE)) {
+		if ((teamId < 0) && (matchtyp != SpielePanel.ALLE_SPIELE)) {
 			return new MatchKurzInfo[0];
 		}
 
 		try {
 			sql.append("SELECT * FROM ").append(getTableName());
 
-			if ((teamId > -1) && (matchtyp != ISpielePanel.ALLE_SPIELE) && (matchtyp != ISpielePanel.NUR_FREMDE_SPIELE)) {
+			if ((teamId > -1) && (matchtyp != SpielePanel.ALLE_SPIELE) && (matchtyp != ISpielePanel.NUR_FREMDE_SPIELE)) {
 				sql.append(" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + " )");
 			}
 

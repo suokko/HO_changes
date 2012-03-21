@@ -2,7 +2,6 @@ package ho.module.lineup.substitution;
 
 import ho.core.model.HOVerwaltung;
 import plugins.ISpielerPosition;
-import plugins.MatchOrderType;
 
 public class Lookup {
 

@@ -32,7 +32,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import plugins.ISpielerPosition;
-import plugins.LineupPanel;
 
 
 /**

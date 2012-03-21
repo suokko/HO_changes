@@ -94,7 +94,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private StaerkenvergleichPanel teamsComparePanel;
 
     private CBItem[] SPIELEFILTER = {
-			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),ALLE_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),SpielePanel.ALLE_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), NUR_EIGENE_SPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), NUR_EIGENE_PFLICHTSPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), NUR_EIGENE_POKALSPIELE),
@@ -102,6 +102,9 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),NUR_EIGENE_FREUNDSCHAFTSSPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"), NUR_FREMDE_SPIELE)
 	};
+
+	/** TODO Missing Parameter Documentation */
+	public static final int ALLE_SPIELE = 0;
 
     public SpielePanel() {
         RefreshManager.instance().registerRefreshable(this);

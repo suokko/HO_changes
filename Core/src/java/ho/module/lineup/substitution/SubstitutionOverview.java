@@ -39,7 +39,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import plugins.ISubstitution;
-import plugins.MatchOrderType;
 
 public class SubstitutionOverview extends JPanel {
 
