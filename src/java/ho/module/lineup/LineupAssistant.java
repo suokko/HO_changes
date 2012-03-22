@@ -13,13 +13,29 @@ import ho.core.model.SpielerPosition;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 
 
 public class LineupAssistant {
-   
+ 
+    /** Order for lineup assistent */
+    public static final byte AW_MF_ST = 0;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte AW_ST_MF = 1;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte MF_ST_AW = 2;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte MF_AW_ST = 3;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte ST_AW_MF = 4;
+
+    /** TODO Missing Parameter Documentation */
+    public static final byte ST_MF_AW = 5;
     //~ Instance fields ----------------------------------------------------------------------------
 
     /*gibt die mindeststärke für einen Spieler an für seine Idealpos*/
@@ -263,7 +279,7 @@ public class LineupAssistant {
         byte [] order = null;
         //nun reihenfolge beachten und unbesetzte füllen
         switch (reihenfolge) {
-            case ILineUp.AW_MF_ST:
+            case AW_MF_ST:
 
             	order = new byte[18];
             	// DEFENCE
@@ -289,7 +305,7 @@ public class LineupAssistant {
             	order[17]=ISpielerPosition.FORWARD_TOWING;
                 break;
 
-            case ILineUp.AW_ST_MF:
+            case AW_ST_MF:
 
             	order = new byte[18];
 //				 DEFENCE
@@ -317,7 +333,7 @@ public class LineupAssistant {
                	
                 break;
 
-            case ILineUp.MF_AW_ST:
+            case MF_AW_ST:
 
             	order = new byte[18];
             	
@@ -344,7 +360,7 @@ public class LineupAssistant {
             	order[17]=ISpielerPosition.FORWARD_TOWING;
                 break;
 
-            case ILineUp.MF_ST_AW:
+            case MF_ST_AW:
 
            	order = new byte[18];
             	
@@ -372,7 +388,7 @@ public class LineupAssistant {
 
                 break;
 
-            case ILineUp.ST_MF_AW:
+            case ST_MF_AW:
 
             	order = new byte[18];
 
@@ -400,7 +416,7 @@ public class LineupAssistant {
                 order[17]=ISpielerPosition.BACK_TOMID;
                 break;
 
-            case ILineUp.ST_AW_MF:
+            case ST_AW_MF:
 
             	order = new byte[18];
 //            	 FORWARD
