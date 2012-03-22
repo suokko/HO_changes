@@ -1,6 +1,7 @@
 package ho.core.rating;
 
 import ho.core.util.HOLogger;
+import ho.module.lineup.Lineup;
 import ho.module.matches.model.Matchdetails;
 
 import java.sql.Timestamp;
@@ -10,7 +11,6 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
@@ -74,7 +74,7 @@ public class RatingPredictionManager {
     private short substimmung;
     private short taktikType;
     private short trainerType;
-    private ILineUp lineup;
+    private Lineup lineup;
     private int pullBackMinute;
     private boolean pullBackOverride;
 
@@ -87,14 +87,14 @@ public class RatingPredictionManager {
     	RatingPredictionManager.config = config;
     }
     
-    public RatingPredictionManager(ILineUp lineup, int i, ITeam iteam, short trainerType, RatingPredictionConfig config)
+    public RatingPredictionManager(Lineup lineup, int i, ITeam iteam, short trainerType, RatingPredictionConfig config)
     {
         this.lineup = lineup;
         RatingPredictionManager.config = config;
         init(iteam, trainerType);
     }
 
-    public RatingPredictionManager(ILineUp lineup, ITeam team, short trainerType, RatingPredictionConfig config)
+    public RatingPredictionManager(Lineup lineup, ITeam team, short trainerType, RatingPredictionConfig config)
     {
         this(lineup, 0, team, trainerType, config);
     }

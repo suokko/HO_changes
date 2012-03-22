@@ -15,6 +15,7 @@ import ho.core.net.login.LoginWaitDialog;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
+import ho.module.lineup.Lineup;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -34,7 +35,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
@@ -541,37 +541,37 @@ public class XMLExporter  {
 			return -1;
 		}
 		switch (system) {
-			case ILineUp.SYS_MURKS :
+			case Lineup.SYS_MURKS :
 				return -1;
 
-			case ILineUp.SYS_451 :
+			case Lineup.SYS_451 :
 				return team.getFormationExperience451();
 
-			case ILineUp.SYS_352 :
+			case Lineup.SYS_352 :
 				return team.getFormationExperience352();
 
-			case ILineUp.SYS_442 :
+			case Lineup.SYS_442 :
 				return team.getFormationExperience442();
 
-			case ILineUp.SYS_343 :
+			case Lineup.SYS_343 :
 				return team.getFormationExperience343();
 
-			case ILineUp.SYS_433 :
+			case Lineup.SYS_433 :
 				return team.getFormationExperience433();
 
-			case ILineUp.SYS_532 :
+			case Lineup.SYS_532 :
 				return team.getFormationExperience532();
 
-			case ILineUp.SYS_541 :
+			case Lineup.SYS_541 :
 				return team.getFormationExperience541();
 				
-			case ILineUp.SYS_523 :
+			case Lineup.SYS_523 :
 				return team.getFormationExperience523();
 				
-			case ILineUp.SYS_550 :
+			case Lineup.SYS_550 :
 				return team.getFormationExperience550();
 				
-			case ILineUp.SYS_253 :
+			case Lineup.SYS_253 :
 				return team.getFormationExperience253();
 
 		}

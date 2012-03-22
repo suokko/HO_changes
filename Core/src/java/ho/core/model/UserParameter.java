@@ -2,11 +2,10 @@
 package ho.core.model;
 
 import ho.core.db.DBManager;
+import ho.module.lineup.LineupAssistant;
 
 import java.awt.Color;
 import java.util.HashMap;
-
-import plugins.ILineUp;
 
 
 /**
@@ -221,7 +220,7 @@ public final class UserParameter extends Configuration {
 
     //Anzahl Nachkommastellen
     public int anzahlNachkommastellen = 2;
-    public int aufstellungsAssistentPanel_reihenfolge = ILineUp.AW_MF_ST;
+    public int aufstellungsAssistentPanel_reihenfolge = LineupAssistant.AW_MF_ST;
     public int aufstellungsPanel_horizontalLeftSplitPane = 450;
     public int aufstellungsPanel_horizontalRightSplitPane = 200;
     public int aufstellungsPanel_verticalSplitPane = 800;
