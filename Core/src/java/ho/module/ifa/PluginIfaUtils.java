@@ -47,7 +47,7 @@ public class PluginIfaUtils {
 		try {
 			waitWindow.setVisible(true);
 
-			String from = DBManager.instance().getLastIfaMatchDate();
+			String from = DBManager.instance().getLastIFAMatchDate();
 			try {
 				ArrayList<String[]> times = getTimeIntervalsForRetrieval(from);
 				for (Iterator<String[]> i = times.iterator(); i.hasNext();) {
@@ -111,7 +111,7 @@ public class PluginIfaUtils {
 						match.setHomeTeamGoals(homeTeamGoals);
 						match.setAwayTeamGoals(awayTeamGoals);
 						
-						DBManager.instance().insertMatch(match);
+						DBManager.instance().insertIFAMatch(match);
 					}
 				} catch (Exception e) {
 					errors.append("Error 1 getting data for match " + matchID

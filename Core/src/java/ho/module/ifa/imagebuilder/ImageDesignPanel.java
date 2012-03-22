@@ -389,7 +389,7 @@ public class ImageDesignPanel extends JPanel {
 				if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga())
 					flagLabel.setHomeCountry(true);
 				else {
-					flagLabel.setEnabled(DBManager.instance().isLeagueIDinDB(flagLeagueID, homeAway));
+					flagLabel.setEnabled(DBManager.instance().isIFALeagueIDinDB(flagLeagueID, homeAway));
 				}
 				flagLabels[i] = flagLabel;
 			}
