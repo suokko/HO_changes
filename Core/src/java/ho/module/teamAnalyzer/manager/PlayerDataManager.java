@@ -39,10 +39,10 @@ public class PlayerDataManager {
      * @return TODO Missing Return Method Documentation
      */
     public static PlayerInfo getLatestPlayerInfo(int playerId) {
-        PlayerInfo info = DBManager.instance().getPlayerInfo(playerId);
+        PlayerInfo info = DBManager.instance().getTAPlayerInfo(playerId);
 
         if (info.getPlayerId() == 0) {
-            info = DBManager.instance().getPreviousPlayeInfo(playerId);
+            info = DBManager.instance().getTAPreviousPlayerInfo(playerId);
         }
 
         return info;
@@ -58,7 +58,7 @@ public class PlayerDataManager {
      * @return TODO Missing Return Method Documentation
      */
     public static PlayerInfo getPlayerInfo(int id, int week, int season) {
-        return DBManager.instance().getPlayerInfo(id, week, season);
+        return DBManager.instance().getTAPlayerInfo(id, week, season);
     }
 
     /**
@@ -69,7 +69,7 @@ public class PlayerDataManager {
      * @return TODO Missing Return Method Documentation
      */
     public static PlayerInfo getPlayerInfo(int id) {
-        return DBManager.instance().getPlayerInfo(id);
+        return DBManager.instance().getTAPlayerInfo(id);
     }
 
     /**
@@ -80,7 +80,7 @@ public class PlayerDataManager {
      * @return TODO Missing Return Method Documentation
      */
     public static PlayerInfo getPreviousPlayerInfo(int playerId) {
-        return DBManager.instance().getPreviousPlayeInfo(playerId);
+        return DBManager.instance().getTAPreviousPlayerInfo(playerId);
     }
 
     /**
@@ -105,12 +105,12 @@ public class PlayerDataManager {
             return;
         }
 
-        PlayerInfo actual = DBManager.instance().getPlayerInfo(info.getPlayerId());
+        PlayerInfo actual = DBManager.instance().getTAPlayerInfo(info.getPlayerId());
 
         if (actual.getPlayerId() == 0) {
-        	DBManager.instance().addPlayerInfo(info);
+        	DBManager.instance().addTAPlayerInfo(info);
         } else {
-        	DBManager.instance().updatePlayerInfo(info);
+        	DBManager.instance().updateTAPlayerInfo(info);
         }
     }
 }

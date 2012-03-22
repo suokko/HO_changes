@@ -67,7 +67,7 @@ public class FriendlyStatisticsPanel extends JPanel {
 		return panel;
 	}
 	private Object[][] getTableData() {
-		IfaMatch[] matches = DBManager.instance().getIfaMatches( home);
+		IfaMatch[] matches = DBManager.instance().getIFAMatches( home);
 		if (matches.length == 0) 
 			return new Object[0][0];
 
