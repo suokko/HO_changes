@@ -52,7 +52,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
@@ -309,7 +308,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
      * Get the team data for the own team (current linep).
      */
     private TeamData getOwnLineupRatings(MatchPredictionManager manager) {
-    	ILineUp lineup = HOVerwaltung.instance().getModel().getAufstellung();
+    	Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	TeamRatings teamRatings = manager.generateTeamRatings(
     			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
     			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftDefenseRating())),
@@ -327,7 +326,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * Get the tactic strength of the given lineup.
      */
-    private int getTacticStrength(ILineUp lineup, int tacticType) {
+    private int getTacticStrength(Lineup lineup, int tacticType) {
 		double tacticLevel = 1d;
 		switch (tacticType) {
 		case IMatchDetails.TAKTIK_KONTER:

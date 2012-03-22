@@ -35,7 +35,6 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import plugins.ILineUp;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 
@@ -45,6 +44,8 @@ import plugins.ISpielerPosition;
  */
 public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener {
 
+
+    
 	private static final long serialVersionUID = 5271343329674809429L;
 
 	//~ Instance fields ----------------------------------------------------------------------------
@@ -71,22 +72,22 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	private final JComboBox m_jcbWetter 	= new JComboBox(Helper.WETTER);
 	private final CBItem[] REIHENFOLGE = {
 			new CBItem(HOVerwaltung.instance().getLanguageString("AW-MF-ST"),
-					ILineUp.AW_MF_ST),
+					LineupAssistant.AW_MF_ST),
 
 					new CBItem(HOVerwaltung.instance().getLanguageString("AW-ST-MF"),
-							ILineUp.AW_ST_MF),
+							LineupAssistant.AW_ST_MF),
 
 							new CBItem(HOVerwaltung.instance().getLanguageString("MF-AW-ST"),
-									ILineUp.MF_AW_ST),
+									LineupAssistant.MF_AW_ST),
 
 									new CBItem(HOVerwaltung.instance().getLanguageString("MF-ST-AW"),
-											ILineUp.MF_ST_AW),
+											LineupAssistant.MF_ST_AW),
 
 											new CBItem(HOVerwaltung.instance().getLanguageString("ST-AW-MF"),
-													ILineUp.ST_AW_MF),
+													LineupAssistant.ST_AW_MF),
 
 													new CBItem(HOVerwaltung.instance().getLanguageString("ST-MF-AW"),
-															ILineUp.ST_MF_AW)
+															LineupAssistant.ST_MF_AW)
 	};
 	private JComboBox m_jcbReihenfolge = new JComboBox(REIHENFOLGE);
 	private HashMap<PlayerPositionPanel, LineupAssistantSelectorOverlay> positions = new HashMap<PlayerPositionPanel, LineupAssistantSelectorOverlay>();

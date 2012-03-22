@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-import plugins.ILineUp;
 import plugins.IMatchDetails;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
@@ -42,8 +41,20 @@ import plugins.ISubstitution;
  * 
  * @author thomas.werth
  */
-public class Lineup implements plugins.ILineUp {
-
+public class Lineup {
+    
+	public static final byte SYS_433 = 0;
+    public static final byte SYS_442 = 1;
+    public static final byte SYS_532 = 2;
+    public static final byte SYS_541 = 3;
+    public static final byte SYS_352 = 4;
+    public static final byte SYS_343 = 5;
+    public static final byte SYS_451 = 6;
+    public static final byte SYS_MURKS = 7; // unknown / invalid system
+    public static final byte SYS_523 = 8;
+    public static final byte SYS_550 = 9;
+    public static final byte SYS_253 = 10;
+    
 	public static final String DEFAULT_NAME = "HO!";
 	public static final String DEFAULT_NAMELAST = "HO!LastLineup";
 	public static final int NO_HRF_VERBINDUNG = -1;
@@ -1264,7 +1275,7 @@ public class Lineup implements plugins.ILineUp {
 		if (defenders == 2) {
 			// 253
 			if (midfielders == 5) {
-				return ILineUp.SYS_253;
+				return SYS_253;
 			}
 			// MURKS
 			else {
@@ -1306,10 +1317,10 @@ public class Lineup implements plugins.ILineUp {
 				return SYS_541;
 			} // 523
 			else if (midfielders == 2) {
-				return ILineUp.SYS_523;
+				return SYS_523;
 			} // 550
 			else if (midfielders == 5) {
-				return ILineUp.SYS_550;
+				return SYS_550;
 			}
 			// MURKS
 			else {

@@ -6,12 +6,13 @@
  */
 package ho.module.matches.model;
 
+import ho.module.lineup.Lineup;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-import plugins.ILineUp;
 import plugins.IMatchLineupPlayer;
 import plugins.IMatchLineupTeam;
 import plugins.ISpielerPosition;
@@ -289,60 +290,60 @@ public class MatchLineupTeam implements IMatchLineupTeam {
         if (abw == 2) {
         	//253
         	if (mf == 5) {
-        		return ILineUp.SYS_253;
+        		return Lineup.SYS_253;
         	}
         	//MURKS
             else {
-                return ILineUp.SYS_MURKS;
+                return Lineup.SYS_MURKS;
             }
         } else if (abw == 3) {
         	//343
             if (mf == 4) {
-                return ILineUp.SYS_343;
+                return Lineup.SYS_343;
             } //352
             else if ((mf == 5) && (st == 2)) {
-                return ILineUp.SYS_352;
+                return Lineup.SYS_352;
             }
             //MURKS
             else {
-                return ILineUp.SYS_MURKS;
+                return Lineup.SYS_MURKS;
             }
         } else if (abw == 4) {
             //433
             if ((mf == 3) && (st == 3)) {
-                return ILineUp.SYS_433;
+                return Lineup.SYS_433;
             } //442
             else if ((mf == 4) && (st == 2)) {
-                return ILineUp.SYS_442;
+                return Lineup.SYS_442;
             } //451
             else if ((mf == 5) && (st == 1)) {
-                return ILineUp.SYS_451;
+                return Lineup.SYS_451;
             }
             //MURKS
             else {
-                return ILineUp.SYS_MURKS;
+                return Lineup.SYS_MURKS;
             }
         } else if (abw == 5) {
             //532
             if ((mf == 3) && (st == 2)) {
-                return ILineUp.SYS_532;
+                return Lineup.SYS_532;
             } //541
             else if ((mf == 4) && (st == 1)) {
-                return ILineUp.SYS_541;
+                return Lineup.SYS_541;
             } //523
             else if ((mf == 2) && (st == 3)) {
-                return ILineUp.SYS_523;
+                return Lineup.SYS_523;
             } //550
             else if ((mf == 5) && (st == 0)) {
-                return ILineUp.SYS_550;
+                return Lineup.SYS_550;
             }
             //MURKS
             else {
-                return ILineUp.SYS_MURKS;
+                return Lineup.SYS_MURKS;
             }
         } //MURKS
         else {
-            return ILineUp.SYS_MURKS;
+            return Lineup.SYS_MURKS;
         }
     }
 }
