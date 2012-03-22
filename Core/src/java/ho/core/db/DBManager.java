@@ -1886,49 +1886,49 @@ public class DBManager {
 	}
 	
 	
-    public PlayerInfo getPlayerInfo(int playerId, int week, int season) {
+    public PlayerInfo getTAPlayerInfo(int playerId, int week, int season) {
     	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo( playerId, week, season);
     }
 
-    public PlayerInfo getPlayerInfo(int playerId) {
+    public PlayerInfo getTAPlayerInfo(int playerId) {
     	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo(playerId);
     }
     
-    public PlayerInfo getPreviousPlayeInfo(int playerId) {
+    public PlayerInfo getTAPreviousPlayerInfo(int playerId) {
     	return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPreviousPlayeInfo(playerId);
     }
     
-    public void addPlayerInfo(PlayerInfo info) {
+    public void addTAPlayerInfo(PlayerInfo info) {
     	((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).addPlayer(info);
     }
     
-	public void updatePlayerInfo(PlayerInfo info) {
+	public void updateTAPlayerInfo(PlayerInfo info) {
 		((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).updatePlayer(info);
 	}
 	
-	public void deleteOldPlayerInfos() {
+	public void deleteTAOldPlayerInfos() {
 		((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).deleteOldPlayers();
 	}
 	
 	
-	public boolean isLeagueIDinDB(int leagueID, boolean homeAway) {
+	public boolean isIFALeagueIDinDB(int leagueID, boolean homeAway) {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isLeagueIDinDB(leagueID, homeAway);
 	}
 	
-	public boolean isMatchinDB(int matchId) {
+	public boolean isIFAMatchinDB(int matchId) {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isMatchinDB(matchId);
 	}
 	
-	public String getLastIfaMatchDate() {
+	public String getLastIFAMatchDate() {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getLastMatchDate();
 	}
 	
-	public IfaMatch[] getIfaMatches(boolean home) {
+	public IfaMatch[] getIFAMatches(boolean home) {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getMatches(home);
 	}
 	
 	
-	public void insertMatch(IfaMatch match){
+	public void insertIFAMatch(IfaMatch match){
 		((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).insertMatch(match);
 	}
 	
