@@ -3,6 +3,7 @@ package ho.module.playeranalysis.experience;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineup;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import plugins.IMatchLineup;
 import plugins.ISpieler;
 
 final class Spieler {
@@ -236,7 +236,7 @@ final class Spieler {
 			rs.close();
 			for (Iterator<Integer> it = matchIds.iterator(); it.hasNext();) {
 				Integer mId = it.next();
-				IMatchLineup lu = DBManager.instance().getMatchLineup(mId.intValue());
+				MatchLineup lu = DBManager.instance().getMatchLineup(mId.intValue());
 				int matchtyp = lu.getMatchTyp();
 				Integer iMatchtyp = new Integer(matchtyp);
 				Timestamp spieldatum = lu.getSpielDatum();

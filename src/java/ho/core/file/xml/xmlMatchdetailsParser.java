@@ -10,6 +10,7 @@ import ho.core.db.DBManager;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.Matchdetails;
 
 import java.util.Vector;
@@ -19,7 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import plugins.IMatchHighlight;
-import plugins.IMatchLineupPlayer;
 
 
 /**
@@ -491,9 +491,9 @@ public class xmlMatchdetailsParser {
      *
      * @param lineup (of MatchLineupPlayer)		team lineup
      */
-    private final Vector<Vector<String>> parseLineup (Vector<IMatchLineupPlayer> lineup) {
+    private final Vector<Vector<String>> parseLineup (Vector<MatchLineupPlayer> lineup) {
     	Vector<Vector<String>> players = new Vector<Vector<String>>();
-        IMatchLineupPlayer player = null;
+        MatchLineupPlayer player = null;
 
         for (int i = 0; (lineup != null) && (i < lineup.size()); i++) {
             player = lineup.elementAt(i);

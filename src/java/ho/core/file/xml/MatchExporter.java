@@ -6,6 +6,8 @@ import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
+import ho.module.matches.model.MatchLineupPlayer;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +17,6 @@ import java.util.Vector;
 
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineup;
-import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 
@@ -66,22 +66,22 @@ public class MatchExporter {
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
 			IMatchDetails details = DBManager.instance().getMatchDetails(matches[i].getMatchID());
-			boolean isFriendly = (matches[i].getMatchTyp() == IMatchLineup.TESTSPIEL
-					|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTSPIEL 
-					|| matches[i].getMatchTyp() == IMatchLineup.TESTPOKALSPIEL
-					|| matches[i].getMatchTyp() == IMatchLineup.INT_TESTCUPSPIEL);
+			boolean isFriendly = (matches[i].getMatchTyp() == MatchLineup.TESTSPIEL
+					|| matches[i].getMatchTyp() == MatchLineup.INT_TESTSPIEL 
+					|| matches[i].getMatchTyp() == MatchLineup.TESTPOKALSPIEL
+					|| matches[i].getMatchTyp() == MatchLineup.INT_TESTCUPSPIEL);
 			if (isValidMatch(matches[i], details, startingDateForFriendlies, strict, skipPullBack) && isFriendly
 					|| isValidMatch(matches[i], details, startingDate, strict, skipPullBack) && !isFriendly ) {				
 
 				//Nun lineup durchlaufen und Spielerdaten holen
-				Vector<IMatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),teamId);
+				Vector<MatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),teamId);
 				Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
 
 				boolean dataOK = true;
 
 				for (int k = 0;(aufstellung != null) && (k < aufstellung.size()); k++) {
 					//MatchDaten zum Spieler holen
-					plugins.IMatchLineupPlayer player = aufstellung.get(k);
+					MatchLineupPlayer player = aufstellung.get(k);
 
 					//Alte Werte zum Spieler holen fï¿½r das Matchdate
 					plugins.ISpieler formerPlayerData = null;

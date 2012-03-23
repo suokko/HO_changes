@@ -24,6 +24,7 @@ package ho.module.tsforecast;
 
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchLineup;
 import ho.module.series.model.Liga;
 
 import java.sql.ResultSet;
@@ -36,7 +37,6 @@ import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineup;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve
@@ -159,9 +159,9 @@ public void addPoint(int i, Curve.Point point) {
                                                  + "  and MATCHDATE = select MAX(MATCHDATE) "
                                                  + "    from MATCHESKURZINFO "
                                                  + "    where (HEIMID=" + ibasics.getTeamId() + " or GASTID=" + ibasics.getTeamId() + ") "
-                                                 + "      and (MATCHTYP=" + IMatchLineup.LIGASPIEL 
-                                                 + "        or MATCHTYP=" + IMatchLineup.QUALISPIEL
-                                                 + "        or MATCHTYP=" + IMatchLineup.POKALSPIEL + ")"
+                                                 + "      and (MATCHTYP=" + MatchLineup.LIGASPIEL 
+                                                 + "        or MATCHTYP=" + MatchLineup.QUALISPIEL
+                                                 + "        or MATCHTYP=" + MatchLineup.POKALSPIEL + ")"
                                                  + "      and STATUS=1" );
     /*
       select MATCHDATE, MATCHTYP from MATCHESKURZINFO
@@ -184,7 +184,7 @@ public void addPoint(int i, Curve.Point point) {
                                  ibasics.getSpieltag(), lastMatchType);
         m_clPoints.add(point);
         addUpdatePoints( point);
-        if( lastMatchType == IMatchLineup.LIGASPIEL) {
+        if( lastMatchType == MatchLineup.LIGASPIEL) {
           start = -1;          
         }
         
@@ -197,7 +197,7 @@ public void addPoint(int i, Curve.Point point) {
 
         for( short s = start; s < m_iNoWeeksForecast; s++) { //16 weeks ahead
          
-          if( lastMatchType == IMatchLineup.POKALSPIEL) { //add League Match
+          if( lastMatchType == MatchLineup.POKALSPIEL) { //add League Match
             // SUNDAY = 0
             calendar.add( Calendar.DATE, Calendar.SATURDAY - Calendar.TUESDAY -1);
             switch( ibasics.getSpieltag()+s ) {
@@ -206,12 +206,12 @@ public void addPoint(int i, Curve.Point point) {
                 break;
               case 15:
                 point = new Curve.Point( calendar.getTime(), IMatchDetails.EINSTELLUNG_NORMAL, 
-                                         ibasics.getSpieltag()+s, IMatchLineup.QUALISPIEL);
+                                         ibasics.getSpieltag()+s, MatchLineup.QUALISPIEL);
                 point.m_strTooltip = new String( HOVerwaltung.instance().getLanguageString("QualifikationSpiel"));
                 break;
               default:
                 point = new Curve.Point( calendar.getTime(), IMatchDetails.EINSTELLUNG_NORMAL, 
-                                         ibasics.getSpieltag()+s, IMatchLineup.LIGASPIEL);
+                                         ibasics.getSpieltag()+s, MatchLineup.LIGASPIEL);
                 point.m_strTooltip = new String( (ibasics.getSpieltag()+s) + ". "
                                                + HOVerwaltung.instance().getLanguageString( "LigaSpiel"));
                 break;
@@ -222,12 +222,12 @@ public void addPoint(int i, Curve.Point point) {
           // add Cup Match
           calendar.add( Calendar.DATE, Calendar.TUESDAY +1);
           point = new Curve.Point( calendar.getTime(), IMatchDetails.EINSTELLUNG_NORMAL, 
-                                   ibasics.getSpieltag()+s, IMatchLineup.POKALSPIEL);
+                                   ibasics.getSpieltag()+s, MatchLineup.POKALSPIEL);
           point.m_strTooltip = new String( (ibasics.getSpieltag()+s) + ". "
                                          + HOVerwaltung.instance().getLanguageString( "PokalSpiel"));
           m_clPoints.add(point);
           addUpdatePoints( point);
-          lastMatchType = IMatchLineup.POKALSPIEL;
+          lastMatchType = MatchLineup.POKALSPIEL;
 
         }
       }
@@ -253,11 +253,11 @@ public void addPoint(int i, Curve.Point point) {
                                                  + "from MATCHESKURZINFO, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
                                                  +       " OR MATCHDETAILS.GASTID=" + ibasics.getTeamId() + ") "
-                                                 +   "and MATCHESKURZINFO.MATCHTYP=" + IMatchLineup.POKALSPIEL
+                                                 +   "and MATCHESKURZINFO.MATCHTYP=" + MatchLineup.POKALSPIEL
                                                  +   "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID " 
                                                  +   "and SORTDATE < '" + ibasics.getDatum() + "' and SORTDATE > '" + start + "' "
                                                  + "union "
-                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ IMatchLineup.LIGASPIEL + " as MATCHTYP, "
+                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchLineup.LIGASPIEL + " as MATCHTYP, "
                                                  +        "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
                                                  + "from PAARUNG, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
@@ -307,7 +307,7 @@ public void addPoint(int i, Curve.Point point) {
       int iEnd = m_clPoints.size();
       for( int i = 0; i < iEnd; i++) {
         point =  m_clPoints.get( i);
-        if( point.m_iMatchType == IMatchLineup.LIGASPIEL) {
+        if( point.m_iMatchType == MatchLineup.LIGASPIEL) {
           addUpdatePoints( point, true);
           if( point.m_iMatchDay == 14) {
             addEndOfSeasonPoints( point, maxDate);
@@ -327,8 +327,8 @@ public void addPoint(int i, Curve.Point point) {
     
     // League game ?
     if( bAllPoints 
-      || point.m_iMatchType == IMatchLineup.LIGASPIEL 
-      || point.m_iMatchType == IMatchLineup.QUALISPIEL
+      || point.m_iMatchType == MatchLineup.LIGASPIEL 
+      || point.m_iMatchType == MatchLineup.QUALISPIEL
       || point.m_iPointType == RESET_PT ) {
       gregoriancalendar.add( Calendar.HOUR_OF_DAY, 21); //Sunday 15:00
       m_clPoints.add( new Curve.Point( gregoriancalendar.getTime(), TEAM_SPIRIT_UNKNOWN));
@@ -337,7 +337,7 @@ public void addPoint(int i, Curve.Point point) {
       gregoriancalendar.add( Calendar.HOUR_OF_DAY, 21);  //Tuesday 09:00
       m_clPoints.add( new Curve.Point( gregoriancalendar.getTime(), TEAM_SPIRIT_UNKNOWN));
     }
-    if( bAllPoints || point.m_iMatchType == IMatchLineup.POKALSPIEL ) {
+    if( bAllPoints || point.m_iMatchType == MatchLineup.POKALSPIEL ) {
       gregoriancalendar.add( Calendar.HOUR_OF_DAY, 21);  // Wednesday 06:00
       m_clPoints.add(new Curve.Point( gregoriancalendar.getTime(), TEAM_SPIRIT_UNKNOWN));
       gregoriancalendar.add( Calendar.HOUR_OF_DAY, 21);  // Thursday 03:00 
@@ -358,7 +358,7 @@ public void addPoint(int i, Curve.Point point) {
     cal.add( Calendar.DATE, 7); //Matchday 15
 
     if( maxDate != null && maxDate.after( cal.getTime()) ) { 
-      Curve.Point p = new Curve.Point( cal.getTime(), IMatchDetails.EINSTELLUNG_UNBEKANNT, 15, IMatchLineup.QUALISPIEL);
+      Curve.Point p = new Curve.Point( cal.getTime(), IMatchDetails.EINSTELLUNG_UNBEKANNT, 15, MatchLineup.QUALISPIEL);
       //don't add point only update points, real point come from database if at all
       addUpdatePoints( p, true);
       

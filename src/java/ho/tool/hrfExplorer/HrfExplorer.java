@@ -13,6 +13,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -54,7 +55,6 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumn;
 
-import plugins.IMatchLineup;
 
 /**
  * @author KickMuck
@@ -773,23 +773,23 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 					String strDatum = datum.toString().substring(0,19);
 					int matchTyp = ((Integer)m_HashTable_MatchTyp.get(new Integer(match_id))).intValue();
 
-					if(matchTyp == IMatchLineup.LIGASPIEL)
+					if(matchTyp == MatchLineup.LIGASPIEL)
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"L");
 					}
-					else if(matchTyp == IMatchLineup.POKALSPIEL)
+					else if(matchTyp == MatchLineup.POKALSPIEL)
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"P");
 					}
-					else if(matchTyp == IMatchLineup.TESTSPIEL || matchTyp == IMatchLineup.TESTPOKALSPIEL)
+					else if(matchTyp == MatchLineup.TESTSPIEL || matchTyp == MatchLineup.TESTPOKALSPIEL)
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"F");
 					}
-					else if(matchTyp == IMatchLineup.INT_TESTSPIEL || matchTyp == IMatchLineup.INT_TESTCUPSPIEL)
+					else if(matchTyp == MatchLineup.INT_TESTSPIEL || matchTyp == MatchLineup.INT_TESTCUPSPIEL)
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"I");
 					}
-					else if(matchTyp == IMatchLineup.QUALISPIEL)
+					else if(matchTyp == MatchLineup.QUALISPIEL)
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"Q");
 					}
