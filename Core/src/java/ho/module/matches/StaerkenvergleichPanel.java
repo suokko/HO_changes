@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 
@@ -446,9 +445,9 @@ class StaerkenvergleichPanel extends ImagePanel {
         }
 
         if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-            final Vector<IMatchLineupPlayer> heimteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
+            final Vector<MatchLineupPlayer> heimteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
                                                                                info.getHeimID());
-            final Vector<IMatchLineupPlayer> gastteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
+            final Vector<MatchLineupPlayer> gastteam = DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
                                                                                info.getGastID());
 
             float heimSterne = 0;

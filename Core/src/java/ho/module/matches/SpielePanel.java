@@ -53,7 +53,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 
@@ -204,7 +203,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             if ((matchShortInfo != null)
             		&& (matchShortInfo.getMatchStatus() == MatchKurzInfo.FINISHED)) {
                 final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-                final Vector<IMatchLineupPlayer> vteamspieler = DBManager.instance().getMatchLineupPlayers(matchShortInfo.getMatchID(),
+                final Vector<MatchLineupPlayer> vteamspieler = DBManager.instance().getMatchLineupPlayers(matchShortInfo.getMatchID(),
                                                                                        teamid);
                 final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 

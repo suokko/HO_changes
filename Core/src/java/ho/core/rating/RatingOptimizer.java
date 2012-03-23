@@ -13,13 +13,13 @@ import ho.core.file.xml.MatchExporter;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
 
 import java.text.NumberFormat;
 import java.util.List;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineupPlayer;
-import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
@@ -95,7 +95,7 @@ public class RatingOptimizer {
 		//	return offset;
 		//}
 					
-		IMatchLineupTeam lineupTeam = null;
+		MatchLineupTeam lineupTeam = null;
 		IMatchDetails details = matchData.getDetails();
 		if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 			lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
@@ -113,7 +113,7 @@ public class RatingOptimizer {
 		// Switched from use of AufstellungOld to the use of Lineup. Bye, bye, hack. (blaghaid)
 		final Lineup lineup = new Lineup();
 		for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
-			IMatchLineupPlayer playerMatch = (IMatchLineupPlayer) lineupTeam.getAufstellung().get(k);
+			MatchLineupPlayer playerMatch = (MatchLineupPlayer) lineupTeam.getAufstellung().get(k);
 			ISpieler playerData = (ISpieler) matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 			
 			if (playerMatch.getId() == ISpielerPosition.setPieces) {

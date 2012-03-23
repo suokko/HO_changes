@@ -1,7 +1,7 @@
 // %272607020:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
-import plugins.IMatchLineupPlayer;
+import ho.module.matches.model.MatchLineupPlayer;
 
 
 /**
@@ -13,7 +13,7 @@ public class PlayerPerformance {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Wrapped object */
-    private IMatchLineupPlayer mlp;
+    private MatchLineupPlayer mlp;
 
     /** Status of the player on the team. injured, sold etc */
     private int status;
@@ -25,7 +25,7 @@ public class PlayerPerformance {
      *
      * @param _mlp The IMatchLineupPlayer object to be wrapped
      */
-    public PlayerPerformance(IMatchLineupPlayer _mlp) {
+    public PlayerPerformance(MatchLineupPlayer _mlp) {
         mlp = _mlp;
     }
 

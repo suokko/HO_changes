@@ -41,7 +41,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 /**
@@ -645,7 +644,7 @@ public class SpieleStatistikPanel extends ImagePanel
 				statistikWerte[13][i] = matchkurzinfos[matchkurzinfos.length
 						- i - 1].getMatchDateAsTimestamp().getTime();
 
-				final Vector<IMatchLineupPlayer> team = DBManager.instance()
+				final Vector<MatchLineupPlayer> team = DBManager.instance()
 						.getMatchLineupPlayers(
 								matchkurzinfos[matchkurzinfos.length - i - 1]
 										.getMatchID(), teamid);

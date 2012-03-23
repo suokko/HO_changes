@@ -7,8 +7,6 @@
 package ho.module.matches.model;
 
 import ho.core.util.HOLogger;
-import plugins.IMatchLineup;
-import plugins.IMatchLineupTeam;
 
 
 /**
@@ -16,7 +14,7 @@ import plugins.IMatchLineupTeam;
  *
  * @author thomas.werth
  */
-public class MatchLineup implements plugins.IMatchLineup {
+public class MatchLineup {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /////////////////////////////////////////////////////////////////////////////////    
@@ -58,6 +56,66 @@ public class MatchLineup implements plugins.IMatchLineup {
 
     /** TODO Missing Parameter Documentation */
     private int m_iGastId = -1;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	National teams friendly.
+	public static final int TESTLAENDERSPIEL = 12;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	National teams competition match (cup rules).	
+	public static final int LAENDERCUPSPIEL = 11;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	National teams competition match (normal rules).	
+	public static final int LAENDERSPIEL = 10;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	International friendly (cup rules).	
+	public static final int INT_TESTCUPSPIEL = 9;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	International friendly (normal rules).	
+	public static final int INT_TESTSPIEL = 8;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).	
+	public static final int INTCUPSPIEL = 7;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).	
+	public static final int INTSPIEL = 6;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Friendly (cup rules).	
+	public static final int TESTPOKALSPIEL = 5;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Friendly (normal rules).	
+	public static final int TESTSPIEL = 4;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Cup match (standard league cup).	
+	public static final int POKALSPIEL = 3;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	Qualification match.	
+	public static final int QUALISPIEL = 2;
+
+	/** TODO Missing Parameter Documentation */
+	
+	//	League match.	
+	public static final int LIGASPIEL = 1;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -161,7 +219,7 @@ public class MatchLineup implements plugins.IMatchLineup {
      *
      * @return Value of property m_clGast.
      */
-    public final IMatchLineupTeam getGast() {
+    public final MatchLineupTeam getGast() {
         return m_clGast;
     }
 
@@ -215,7 +273,7 @@ public class MatchLineup implements plugins.IMatchLineup {
      *
      * @return Value of property m_clHeim.
      */
-    public final IMatchLineupTeam getHeim() {
+    public final MatchLineupTeam getHeim() {
         return m_clHeim;
     }
 
@@ -300,40 +358,40 @@ public class MatchLineup implements plugins.IMatchLineup {
      */
     public static String getName4MatchTyp(int typ) {
         switch (typ) {
-            case IMatchLineup.LIGASPIEL:
+            case MatchLineup.LIGASPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("LigaSpiel");
 
-            case IMatchLineup.POKALSPIEL:
+            case MatchLineup.POKALSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("PokalSpiel");
 
-            case IMatchLineup.QUALISPIEL:
+            case MatchLineup.QUALISPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("QualifikationSpiel");
 
-            case IMatchLineup.LAENDERCUPSPIEL:
+            case MatchLineup.LAENDERCUPSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderCupSpiel");
 
-            case IMatchLineup.INTCUPSPIEL:
+            case MatchLineup.INTCUPSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("IntCupSpiel");
 
-            case IMatchLineup.LAENDERSPIEL:
+            case MatchLineup.LAENDERSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderSpiel");
 
-            case IMatchLineup.INTSPIEL:
+            case MatchLineup.INTSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("IntSpiel");
 
-            case IMatchLineup.INT_TESTCUPSPIEL:
+            case MatchLineup.INT_TESTCUPSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlyCupSpiel");
 
-            case IMatchLineup.INT_TESTSPIEL:
+            case MatchLineup.INT_TESTSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlySpiel");
 
-            case IMatchLineup.TESTLAENDERSPIEL:
+            case MatchLineup.TESTLAENDERSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderFriendlySpiel");
 
-            case IMatchLineup.TESTPOKALSPIEL:
+            case MatchLineup.TESTPOKALSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlyCupSpiel");
 
-            case IMatchLineup.TESTSPIEL:
+            case MatchLineup.TESTSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
 
             //Fehler?

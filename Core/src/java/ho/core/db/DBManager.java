@@ -49,7 +49,6 @@ import java.util.Locale;
 import java.util.Vector;
 
 import plugins.IMatchHighlight;
-import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
@@ -598,7 +597,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
+	public Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		return (
 			(MatchLineupPlayerTable) getTable(
 				MatchLineupPlayerTable.TABLENAME)).getMatchLineupPlayers(

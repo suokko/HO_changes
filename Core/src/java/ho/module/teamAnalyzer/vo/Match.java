@@ -3,12 +3,12 @@ package ho.module.teamAnalyzer.vo;
 
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 import ho.module.series.Paarung;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;
 
-import plugins.IMatchLineup;
 
 
 /**
@@ -91,7 +91,7 @@ public class Match {
         awayGoals = matchInfo.getToreGast();
         season = matchInfo.getSaison();
         week = matchInfo.getSpieltag();
-        matchType = IMatchLineup.LIGASPIEL;
+        matchType = MatchLineup.LIGASPIEL;
         matchDate = matchInfo.getDatum();
     }
 

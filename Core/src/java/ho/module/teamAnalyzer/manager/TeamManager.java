@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 import ho.module.series.model.LigaTabellenEintrag;
@@ -18,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import plugins.IMatchLineup;
 
 
 /**
@@ -244,7 +244,7 @@ public class TeamManager {
             MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
             if ((match.getMatchStatus() != MatchKurzInfo.FINISHED)
-                && (match.getMatchTyp() == IMatchLineup.QUALISPIEL)) {
+                && (match.getMatchTyp() == MatchLineup.QUALISPIEL)) {
                 if (match.getHeimID() == teamId) {
                     team.setName(match.getGastName());
                     team.setTeamId(match.getGastID());

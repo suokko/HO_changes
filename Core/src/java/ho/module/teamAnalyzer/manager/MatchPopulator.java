@@ -3,6 +3,8 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;
@@ -15,8 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineupPlayer;
-import plugins.IMatchLineupTeam;
 import plugins.ISpielerPosition;
 
 
@@ -178,7 +178,7 @@ public class MatchPopulator {
 
         MatchDetail matchDetail = new MatchDetail(aMatch);
 
-        IMatchLineupTeam tmpLineupTeam = null;
+        MatchLineupTeam tmpLineupTeam = null;
 
         if (isHome(tmpMatch)) {
             tmpLineupTeam =  DBManager.instance().getMatchLineup(aMatch.getMatchId()).getHeim();
@@ -189,7 +189,7 @@ public class MatchPopulator {
         double totStars = 0;
 
         for (int spot = ISpielerPosition.startLineup; spot < ISpielerPosition.startReserves; spot++) {
-            IMatchLineupPlayer mlp = tmpLineupTeam.getPlayerByPosition(spot);
+            MatchLineupPlayer mlp = tmpLineupTeam.getPlayerByPosition(spot);
 
             if (mlp != null && mlp.getSpielerId() > 0) {
                 totStars += mlp.getRating();

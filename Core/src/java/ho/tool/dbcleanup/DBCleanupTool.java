@@ -7,6 +7,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -14,7 +15,6 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
 
-import plugins.IMatchLineup;
 
 /**
  * HO Database Cleanup Tool
@@ -203,10 +203,10 @@ public class DBCleanupTool {
 	
 	private boolean isFriendlyType (int matchType) {
 		switch (matchType) {
-		case IMatchLineup.TESTSPIEL:
-		case IMatchLineup.TESTPOKALSPIEL:
-		case IMatchLineup.INT_TESTSPIEL:
-		case IMatchLineup.INT_TESTCUPSPIEL:
+		case MatchLineup.TESTSPIEL:
+		case MatchLineup.TESTPOKALSPIEL:
+		case MatchLineup.INT_TESTSPIEL:
+		case MatchLineup.INT_TESTCUPSPIEL:
 			return true;
 			
 		default:

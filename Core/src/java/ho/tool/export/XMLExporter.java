@@ -16,6 +16,8 @@ import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 import ho.module.lineup.Lineup;
+import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.MatchLineupTeam;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -36,8 +38,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import plugins.IMatchDetails;
-import plugins.IMatchLineupPlayer;
-import plugins.IMatchLineupTeam;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITeam;
@@ -250,7 +250,7 @@ public class XMLExporter  {
 				tmpEle.appendChild(ele);
 				ele.appendChild(doc.createTextNode("" + hrfID));
 
-				IMatchLineupTeam lineupTeam = null;
+				MatchLineupTeam lineupTeam = null;
 				IMatchDetails details = matchData.getDetails();
 				if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 					lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
@@ -358,7 +358,7 @@ public class XMLExporter  {
 
 				//Spieler schreiben
 				for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
-					IMatchLineupPlayer playerMatch = lineupTeam.getAufstellung().get(k);
+					MatchLineupPlayer playerMatch = lineupTeam.getAufstellung().get(k);
 					ISpieler playerData = matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 
 					//Bank + verletzte überspringen

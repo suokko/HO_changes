@@ -3,6 +3,7 @@ package ho.core.file.xml;
 
 import ho.core.model.WorldDetailLeague;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchLineup;
 
 import java.io.File;
 import java.io.InputStream;
@@ -18,8 +19,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.IMatchLineup;
 
 
 /**
@@ -292,7 +291,7 @@ public class XMLManager  {
 	/**
 	 * Parse the match lineup from the given xml string.
 	 */
-	public IMatchLineup parseMatchLineup(String lineup) {
+	public MatchLineup parseMatchLineup(String lineup) {
 		return new XMLMatchLineupParser().parseMatchLineupFromString(lineup);
 	}
 }

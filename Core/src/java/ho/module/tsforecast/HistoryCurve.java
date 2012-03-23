@@ -2,6 +2,7 @@ package ho.module.tsforecast;
 
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.MatchLineup;
 import ho.module.series.model.Liga;
 
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
-import plugins.IMatchLineup;
 
 /*
  * HistoryCurve.java
@@ -103,9 +103,9 @@ public class HistoryCurve extends Curve {
                                                  +      " OR MATCHDETAILS.GASTID=" + ibasics.getTeamId() + ") "
                                                  +   "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID "
                                                  +   "and SORTDATE < '" + ibasics.getDatum() + "' and SORTDATE > '" + start + "' "
-                                                 +   "and MATCHTYP <> " + IMatchLineup.LIGASPIEL
+                                                 +   "and MATCHTYP <> " + MatchLineup.LIGASPIEL
                                                  + "union "
-                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ IMatchLineup.LIGASPIEL + " as MATCHTYP, "
+                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchLineup.LIGASPIEL + " as MATCHTYP, "
                                                  +        "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
                                                  + "from PAARUNG, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
