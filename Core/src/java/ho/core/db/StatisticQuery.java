@@ -8,13 +8,13 @@ import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchLineup;
 import plugins.ITrainingWeek;
 
 public class StatisticQuery {
@@ -133,24 +133,24 @@ public class StatisticQuery {
 					break;
 
 				case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-					sql += (" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
+					sql += (" AND ( MatchTyp=" + MatchLineup.QUALISPIEL);
+					sql += (" OR MatchTyp=" + MatchLineup.LIGASPIEL);
+					sql += (" OR MatchTyp=" + MatchLineup.POKALSPIEL + " )");
 					break;
 
 				case SpielePanel.NUR_EIGENE_POKALSPIELE :
-					sql += (" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
+					sql += (" AND MatchTyp=" + MatchLineup.POKALSPIEL);
 					break;
 
 				case SpielePanel.NUR_EIGENE_LIGASPIELE :
-					sql += (" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
+					sql += (" AND MatchTyp=" + MatchLineup.LIGASPIEL);
 					break;
 
 				case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-					sql += (" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
-					sql += (" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
+					sql += (" AND ( MatchTyp=" + MatchLineup.TESTSPIEL);
+					sql += (" OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL);
+					sql += (" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
+					sql += (" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
 					break;
 			}
 

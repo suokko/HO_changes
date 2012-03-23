@@ -8,6 +8,7 @@ import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.MatchLineupPlayer;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -23,7 +24,6 @@ import javax.swing.JOptionPane;
 
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineupPlayer;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
 import plugins.ITrainingWeek;
@@ -561,9 +561,9 @@ public class TrainingsManager {
 
     	if (matchData == null) {
     		matchData = new HashMap<Integer,Integer>();
-    		IMatchLineupPlayer player;
+    		MatchLineupPlayer player;
 
-    		Vector<IMatchLineupPlayer> playerVec = 
+    		Vector<MatchLineupPlayer> playerVec = 
     			DBManager.instance().getMatchLineupPlayers(matchId, 
     					HOVerwaltung.instance().getModel().getBasics().getTeamId());	
 

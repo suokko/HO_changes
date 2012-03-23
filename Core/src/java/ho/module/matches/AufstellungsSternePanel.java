@@ -21,7 +21,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 
@@ -143,7 +142,7 @@ public class AufstellungsSternePanel extends RasenPanel {
 		if (lineupteam != null) {
 			m_jlTeamName.setText(lineupteam.getTeamName() + " (" + lineupteam.getTeamID() + ")");
 
-			final Vector<IMatchLineupPlayer> aufstellung = lineupteam.getAufstellung();
+			final Vector<MatchLineupPlayer> aufstellung = lineupteam.getAufstellung();
 
 			for (int i = 0; i < aufstellung.size(); i++) {
 				final MatchLineupPlayer player = (MatchLineupPlayer) aufstellung.get(i);

@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import plugins.IMatchLineupPlayer;
 import plugins.ISpielerPosition;
 
 
@@ -338,9 +337,9 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<IMatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
+	Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		MatchLineupPlayer player = null;
-		final Vector<IMatchLineupPlayer> vec = new Vector<IMatchLineupPlayer>();
+		final Vector<MatchLineupPlayer> vec = new Vector<MatchLineupPlayer>();
 		String sql = null;
 		ResultSet rs = null;
 		int roleID;

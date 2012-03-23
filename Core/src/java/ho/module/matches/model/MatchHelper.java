@@ -9,7 +9,6 @@ import java.util.Vector;
 import plugins.IMatchDetails;
 import plugins.IMatchHelper;
 import plugins.IMatchHighlight;
-import plugins.IMatchLineup;
 
 /**
  * Helper class to retrieve match related information.
@@ -42,7 +41,7 @@ public class MatchHelper implements IMatchHelper {
 	 * @param matchId	match Id
 	 */
 	public short getLocation(int matchId) {
-		IMatchLineup ml = DBManager.instance().getMatchLineup(matchId);
+		MatchLineup ml = DBManager.instance().getMatchLineup(matchId);
 		return getLocation(ml.getHeimId(), ml.getGastId(), matchId, ml.getMatchTyp());
 	}
 
@@ -82,16 +81,16 @@ public class MatchHelper implements IMatchHelper {
 
    		// For a league/qualification/cup game, the home team always has the home advantage (no neutral grounds) 
    		// (exception for cup finals, see below)
-   		if (matchType == IMatchLineup.LIGASPIEL || matchType == IMatchLineup.POKALSPIEL || matchType == IMatchLineup.QUALISPIEL) {
+   		if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.POKALSPIEL || matchType == MatchLineup.QUALISPIEL) {
    			if (homeTeamId == userTeamId)
    				location = HOME_MATCH;
    		}
    		
    		// For friendlies, also check the stadium name, because we may play on neutral ground
-   		if (matchType == IMatchLineup.TESTSPIEL 
-   				|| matchType == IMatchLineup.TESTPOKALSPIEL 
-   				|| matchType == IMatchLineup.INT_TESTSPIEL
-   				|| matchType == IMatchLineup.INT_TESTCUPSPIEL) {
+   		if (matchType == MatchLineup.TESTSPIEL 
+   				|| matchType == MatchLineup.TESTPOKALSPIEL 
+   				|| matchType == MatchLineup.INT_TESTSPIEL
+   				|| matchType == MatchLineup.INT_TESTCUPSPIEL) {
    			if (homeTeamId == userTeamId) {
    				// TODO: For now, we check the arena name and the id
    				// because old users don't have the arena id in the DB (new since 1.401)
@@ -109,8 +108,8 @@ public class MatchHelper implements IMatchHelper {
    		}
    		
    		// Don't check home matches, exept for the cup (because the cup finals are on neutral ground)
-   		if (location != HOME_MATCH || matchType == IMatchLineup.POKALSPIEL) {
-   			if (matchType == IMatchLineup.LIGASPIEL || matchType == IMatchLineup.QUALISPIEL || matchType == IMatchLineup.POKALSPIEL) {
+   		if (location != HOME_MATCH || matchType == MatchLineup.POKALSPIEL) {
+   			if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.QUALISPIEL || matchType == MatchLineup.POKALSPIEL) {
    	   			/**
    	   			 * league or cup match -> check highlights
    	   			 */

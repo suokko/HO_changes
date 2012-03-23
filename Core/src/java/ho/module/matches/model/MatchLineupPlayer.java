@@ -15,7 +15,7 @@ import plugins.ISpielerPosition;
  *
  * @author thomas.werth
  */
-public class MatchLineupPlayer extends SpielerPosition implements plugins.IMatchLineupPlayer {
+public class MatchLineupPlayer extends SpielerPosition {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**

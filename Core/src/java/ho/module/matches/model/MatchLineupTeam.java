@@ -13,8 +13,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-import plugins.IMatchLineupPlayer;
-import plugins.IMatchLineupTeam;
 import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
@@ -24,14 +22,14 @@ import plugins.ISubstitution;
  *
  * @author thomas.werth
  */
-public class MatchLineupTeam implements IMatchLineupTeam {
+public class MatchLineupTeam {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
     protected String m_sTeamName;
 
     /** TODO Missing Parameter Documentation */
-    protected Vector<IMatchLineupPlayer> m_vAufstellung = new Vector<IMatchLineupPlayer>();
+    protected Vector<MatchLineupPlayer> m_vAufstellung = new Vector<MatchLineupPlayer>();
     
     protected ArrayList<ISubstitution> m_vSubstitutions = new ArrayList<ISubstitution>();
   
@@ -65,7 +63,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @param m_vAufstellung New value of property m_vAufstellung.
      */
-    public final void setAufstellung(Vector<IMatchLineupPlayer> m_vAufstellung) {
+    public final void setAufstellung(Vector<MatchLineupPlayer> m_vAufstellung) {
         this.m_vAufstellung = m_vAufstellung;
     }
 
@@ -74,7 +72,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @return Value of property m_vAufstellung.
      */
-    public final Vector<IMatchLineupPlayer> getAufstellung() {
+    public final Vector<MatchLineupPlayer> getAufstellung() {
         return m_vAufstellung;
     }
     
@@ -158,9 +156,9 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @return The object matching the criteria, or null if none found
      */
-    public final IMatchLineupPlayer getPlayerByID(int id) {
+    public final MatchLineupPlayer getPlayerByID(int id) {
     	
-        for (IMatchLineupPlayer player : m_vAufstellung) {
+        for (MatchLineupPlayer player : m_vAufstellung) {
             if (player.getSpielerId() == id) {
             	if ((player.getId() == ISpielerPosition.captain)
             			|| (player.getId() == ISpielerPosition.setPieces)) {
@@ -181,7 +179,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final IMatchLineupPlayer getPlayerByPosition(int id) {
+    public final MatchLineupPlayer getPlayerByPosition(int id) {
         MatchLineupPlayer player = null;
 
         for (int i = 0; (m_vAufstellung != null) && (i < m_vAufstellung.size()); i++) {
@@ -235,7 +233,7 @@ public class MatchLineupTeam implements IMatchLineupTeam {
      *
      * @param player TODO Missing Method Parameter Documentation
      */
-    public final void add2Aufstellung(IMatchLineupPlayer player) {
+    public final void add2Aufstellung(MatchLineupPlayer player) {
         m_vAufstellung.add(player);
     }
 

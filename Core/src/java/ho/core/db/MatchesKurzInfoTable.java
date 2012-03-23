@@ -3,6 +3,7 @@ package ho.core.db;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.MatchLineup;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import plugins.IMatchLineup;
 
 final class MatchesKurzInfoTable extends AbstractTable {
 	final static String TABLENAME = "MATCHESKURZINFO";
@@ -154,21 +154,21 @@ final class MatchesKurzInfoTable extends AbstractTable {
 				//Nix zu tun, da die teamId die einzige Einschränkung ist
 				break;
 			case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-				sql.append(" AND ( MatchTyp=" + IMatchLineup.QUALISPIEL);
-				sql.append(" OR MatchTyp=" + IMatchLineup.LIGASPIEL);
-				sql.append(" OR MatchTyp=" + IMatchLineup.POKALSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchLineup.QUALISPIEL);
+				sql.append(" OR MatchTyp=" + MatchLineup.LIGASPIEL);
+				sql.append(" OR MatchTyp=" + MatchLineup.POKALSPIEL + " )");
 				break;
 			case SpielePanel.NUR_EIGENE_POKALSPIELE :
-				sql.append(" AND MatchTyp=" + IMatchLineup.POKALSPIEL);
+				sql.append(" AND MatchTyp=" + MatchLineup.POKALSPIEL);
 				break;
 			case SpielePanel.NUR_EIGENE_LIGASPIELE :
-				sql.append(" AND MatchTyp=" + IMatchLineup.LIGASPIEL);
+				sql.append(" AND MatchTyp=" + MatchLineup.LIGASPIEL);
 				break;
 			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-				sql.append(" AND ( MatchTyp=" + IMatchLineup.TESTSPIEL);
-				sql.append(" OR MatchTyp=" + IMatchLineup.TESTPOKALSPIEL);
-				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTCUPSPIEL);
-				sql.append(" OR MatchTyp=" + IMatchLineup.INT_TESTSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchLineup.TESTSPIEL);
+				sql.append(" OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL);
+				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
+				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
 				break;
 			}
 		return sql;
