@@ -4,6 +4,7 @@ package ho.module.training.ui;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.training.TrainingPerWeek;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
@@ -27,8 +28,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
-
-import plugins.ITrainingWeek;
 
 
 /**
@@ -74,7 +73,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return past trainings list
      */
-    public Vector<ITrainingWeek> getOldTrainings() {
+    public Vector<TrainingPerWeek> getOldTrainings() {
         return oldTableModel.getTrainingsData();
     }
 

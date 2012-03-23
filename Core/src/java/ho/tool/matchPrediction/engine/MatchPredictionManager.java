@@ -9,8 +9,6 @@ package ho.tool.matchPrediction.engine;
 
 import java.util.Vector;
 
-import plugins.IMatchResult;
-
 
 /**
  * DOCUMENT ME!
@@ -75,7 +73,7 @@ public class MatchPredictionManager {
         return actions;
     }
     
-	public IMatchResult calculateMatchResult(TeamData home, TeamData away) {
+	public MatchResult calculateMatchResult(TeamData home, TeamData away) {
 		final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 		MatchResult result = new MatchResult();
 		result.addActions(matchengine.simulate());
@@ -92,7 +90,7 @@ public class MatchPredictionManager {
      *
      * @return vector contaning Vectors holding IMPActions for each match
      */
-    public IMatchResult calculateNMatches(int numberOfMatches, TeamData home,
+    public MatchResult calculateNMatches(int numberOfMatches, TeamData home,
                                               TeamData away) {
 		final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 		MatchResult result = new MatchResult();		

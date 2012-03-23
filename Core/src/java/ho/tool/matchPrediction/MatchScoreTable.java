@@ -3,11 +3,10 @@ package ho.tool.matchPrediction;
 
 import ho.core.gui.comp.table.TableSorter;
 import ho.core.util.Helper;
+import ho.tool.matchPrediction.engine.MatchResult;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
-
-import plugins.IMatchResult;
 
 class MatchScoreTable extends JTable {
 	
@@ -16,7 +15,7 @@ class MatchScoreTable extends JTable {
 	private MatchScoreTableModel m_clTableModel;
 	private TableSorter m_clTableSorter;
 
-	MatchScoreTable(IMatchResult mr,boolean isHome) {
+	MatchScoreTable(MatchResult mr,boolean isHome) {
 		super();
 		initModel(mr,isHome);
 		setDefaultRenderer(java.lang.Object.class, new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
@@ -28,13 +27,13 @@ class MatchScoreTable extends JTable {
 		return m_clTableSorter;
 	}
 
-	public final void refresh(IMatchResult mr,boolean isHome) {
+	public final void refresh(MatchResult mr,boolean isHome) {
 		initModel(mr,isHome);
 
 		repaint();
 	}
 
-	private void initModel(IMatchResult mr,boolean isHome) {
+	private void initModel(MatchResult mr,boolean isHome) {
 		setOpaque(false);
 
 		if (m_clTableModel == null) {

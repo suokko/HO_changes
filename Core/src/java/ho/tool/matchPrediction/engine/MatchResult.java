@@ -1,8 +1,7 @@
 package ho.tool.matchPrediction.engine;
 
-import plugins.IMatchResult;
 
-public class MatchResult implements IMatchResult {
+public class MatchResult  {
 
 	private int[] resultDetail = new int[25];
 
@@ -125,7 +124,7 @@ public class MatchResult implements IMatchResult {
 		actions = null;
 	}
 
-	public void addMatchResult(IMatchResult result) {
+	public void addMatchResult(MatchResult result) {
 
 		matchNumber++;
 

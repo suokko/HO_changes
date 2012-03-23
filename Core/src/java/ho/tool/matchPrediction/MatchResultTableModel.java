@@ -11,12 +11,11 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.tool.matchPrediction.engine.MatchResult;
 
 import java.awt.Color;
 
 import javax.swing.SwingConstants;
-
-import plugins.IMatchResult;
 
 /**
  * DOCUMENT ME!
@@ -44,7 +43,7 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 	 *
 	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
-	public MatchResultTableModel(IMatchResult matchresults,boolean isHome) {
+	public MatchResultTableModel(MatchResult matchresults,boolean isHome) {
 		super(matchresults,isHome);
 	}
 

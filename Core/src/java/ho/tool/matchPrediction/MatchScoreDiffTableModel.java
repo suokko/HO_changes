@@ -8,10 +8,9 @@ package ho.tool.matchPrediction;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.model.HOVerwaltung;
+import ho.tool.matchPrediction.engine.MatchResult;
 
 import javax.swing.SwingConstants;
-
-import plugins.IMatchResult;
 
 
 /**
@@ -39,7 +38,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	 *
 	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
-	public MatchScoreDiffTableModel(IMatchResult matchresult,boolean ishome) {
+	public MatchScoreDiffTableModel(MatchResult matchresult,boolean ishome) {
 		super(matchresult,ishome);
 	}
 

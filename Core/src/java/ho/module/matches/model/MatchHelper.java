@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHelper;
 import plugins.IMatchHighlight;
 
 /**
@@ -15,10 +14,17 @@ import plugins.IMatchHighlight;
  *
  * @author aik
  */
-public class MatchHelper implements IMatchHelper {
-	private static IMatchHelper m_clInstance;
+public class MatchHelper {
 
-	public static IMatchHelper instance() {
+	public static final int UNKNOWN = -99;
+	/* Match on neutral ground (we should try to detect if it's AWAY/HOME, eventually) */
+	public static final int NEUTRAL_GROUND = -2;
+	/* Not a users match */
+	public static final int FOREIGN_MATCH = -1;
+	
+	private static MatchHelper m_clInstance;
+
+	public static MatchHelper instance() {
 		if (m_clInstance == null)
 			m_clInstance = new MatchHelper();
 		return m_clInstance;
@@ -83,7 +89,7 @@ public class MatchHelper implements IMatchHelper {
    		// (exception for cup finals, see below)
    		if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.POKALSPIEL || matchType == MatchLineup.QUALISPIEL) {
    			if (homeTeamId == userTeamId)
-   				location = HOME_MATCH;
+   				location = IMatchDetails.LOCATION_HOME;
    		}
    		
    		// For friendlies, also check the stadium name, because we may play on neutral ground
@@ -98,7 +104,7 @@ public class MatchHelper implements IMatchHelper {
    				if (details.getArenaName().equals(userStadiumName) 
    						|| (userStadiumId > 0 && details.getArenaID() == userStadiumId)) {
    					// our teamID and our stadium name/stadium Id -> home match
-   					location = HOME_MATCH;
+   					location = IMatchDetails.LOCATION_HOME;
    				} else {
    					// our teamID is home team, but not our stadium
    					// i.e. neutral ground
@@ -108,7 +114,7 @@ public class MatchHelper implements IMatchHelper {
    		}
    		
    		// Don't check home matches, exept for the cup (because the cup finals are on neutral ground)
-   		if (location != HOME_MATCH || matchType == MatchLineup.POKALSPIEL) {
+   		if (location != IMatchDetails.LOCATION_HOME || matchType == MatchLineup.POKALSPIEL) {
    			if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.QUALISPIEL || matchType == MatchLineup.POKALSPIEL) {
    	   			/**
    	   			 * league or cup match -> check highlights
@@ -118,7 +124,7 @@ public class MatchHelper implements IMatchHelper {
    					IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
    					if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION 
    							&& curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_DERBY) {
-   						location = AWAY_DERBY;
+   						location = IMatchDetails.LOCATION_AWAYDERBY;
    						break;
    					}
    					if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION 
@@ -132,8 +138,8 @@ public class MatchHelper implements IMatchHelper {
    					}
    				}
    				// No home match, no derby -> away match
-   				if (location != HOME_MATCH && location != AWAY_DERBY)
-   					location = AWAY_MATCH;
+   				if (location != IMatchDetails.LOCATION_HOME && location != IMatchDetails.LOCATION_AWAYDERBY)
+   					location = IMatchDetails.LOCATION_AWAY;
    			} else {
    				/**
    				 * Friendy match (not in our stadium)
@@ -142,9 +148,9 @@ public class MatchHelper implements IMatchHelper {
    				if (stadiumRegion > 0 && userRegion > 0) {
    					// Stadium region & user Region valid
    	   				if (userRegion == stadiumRegion)
-   	   					location = AWAY_DERBY;
+   	   					location = IMatchDetails.LOCATION_AWAYDERBY;
    	   				else
-   	   					location = AWAY_MATCH;
+   	   					location = IMatchDetails.LOCATION_AWAY;
    				} else {
    					// Stadium region or user region invalid 
    					// (old data, downloaded with HO<1.401)

@@ -6,10 +6,10 @@
  */
 package ho.tool.matchPrediction;
 
+import ho.tool.matchPrediction.engine.MatchResult;
+
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;
-
-import plugins.IMatchResult;
 
 /**
  * DOCUMENT ME!
@@ -26,7 +26,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	/** TODO Missing Parameter Documentation */
 	protected Object[][] m_clData;
 
-	protected IMatchResult matchResult;
+	protected MatchResult matchResult;
 
 	public abstract String[] getColumnNames();
 	protected abstract void initData();	
@@ -38,7 +38,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 *
 	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
-	public AbstractMatchTableModel(IMatchResult matchresults, boolean ishome) {
+	public AbstractMatchTableModel(MatchResult matchresults, boolean ishome) {
 		this.matchResult = matchresults;
 		isHomeMatch = ishome;
 		initData();
@@ -170,7 +170,7 @@ public abstract class AbstractMatchTableModel extends AbstractTableModel {
 	 *
 	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
-	public final void setValues(IMatchResult matchresults) {
+	public final void setValues(MatchResult matchresults) {
 		this.matchResult = matchresults;
 		initData();
 	}

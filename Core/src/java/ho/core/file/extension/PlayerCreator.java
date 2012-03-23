@@ -33,7 +33,6 @@ import org.w3c.dom.Element;
 
 import plugins.ISkillup;
 import plugins.ISpieler;
-import plugins.ITrainingWeek;
 
 public class PlayerCreator extends XMLCreator {
 
@@ -85,7 +84,7 @@ public class PlayerCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			Vector<ITrainingWeek> l = TrainingsManager.instance().getTrainingsVector();
+			Vector<TrainingPerWeek> l = TrainingsManager.instance().getTrainingsVector();
 			int oldWeek = 0;
 			for (int index = l.size(); index > 0; index--) {
 				TrainingPerWeek tpw = (TrainingPerWeek) l.get(index - 1);

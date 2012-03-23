@@ -23,8 +23,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.ITrainingWeek;
-
 public class EconomyCreator extends XMLCreator {
 
 	private static int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -40,7 +38,7 @@ public class EconomyCreator extends XMLCreator {
 
 
 		try {
-			Vector<ITrainingWeek> l = TrainingsManager.instance().getTrainingsVector();
+			Vector<TrainingPerWeek> l = TrainingsManager.instance().getTrainingsVector();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

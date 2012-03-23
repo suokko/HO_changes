@@ -3,6 +3,7 @@ package ho.core.model;
 
 import ho.core.db.DBManager;
 import ho.core.epv.EPV;
+import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
 import ho.core.util.HOLogger;
@@ -22,7 +23,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import plugins.ITrainingWeek;
 
 
 /**
@@ -500,7 +500,7 @@ public class HOModel {
 	                HTCalendar htcC = helper.createTrainingCalendar(calcDate);
 	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
-	            	ITrainingWeek trWeek = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
+	            	TrainingPerWeek trWeek = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
 	                HOLogger.instance().debug(HOModel.class,
 	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTyp())
 	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs
@@ -528,7 +528,7 @@ public class HOModel {
     private void logPlayerProgress (ISpieler before, ISpieler after) {
     	int playerID = after.getSpielerID();
     	String playerName = after.getName();
-    	ITrainingWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
+    	TrainingPerWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
     	int trLevel = train.getIntensitaet();
     	int trArt = train.getTyp();
     	String trArtString = HelperWrapper.instance().getNameForTraining(trArt);

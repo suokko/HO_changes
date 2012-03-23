@@ -2,11 +2,10 @@
 package ho.tool.matchPrediction;
 
 import ho.core.gui.comp.table.TableSorter;
+import ho.tool.matchPrediction.engine.MatchResult;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
-
-import plugins.IMatchResult;
 
 
 class MatchResultTable extends JTable {
@@ -16,7 +15,7 @@ class MatchResultTable extends JTable {
 	private MatchResultTableModel m_clTableModel;
 	private TableSorter m_clTableSorter;
 
-	MatchResultTable(IMatchResult matchresults,boolean isHome) {
+	MatchResultTable(MatchResult matchresults,boolean isHome) {
 		super();
 		initModel(matchresults,isHome);
 		setDefaultRenderer(java.lang.Object.class, new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
@@ -24,13 +23,13 @@ class MatchResultTable extends JTable {
 		setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 	}
 
-	public final void refresh(IMatchResult matchresults,boolean isHome) {
+	public final void refresh(MatchResult matchresults,boolean isHome) {
 		initModel(matchresults,isHome);
 
 		repaint();
 	}
 
-	private void initModel(IMatchResult matchresults,boolean isHome) {
+	private void initModel(MatchResult matchresults,boolean isHome) {
 		setOpaque(false);
 
 		if (m_clTableModel == null) {

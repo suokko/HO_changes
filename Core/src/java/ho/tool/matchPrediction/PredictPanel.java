@@ -4,6 +4,7 @@ package ho.tool.matchPrediction;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HOLogger;
+import ho.tool.matchPrediction.engine.MatchResult;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-
-import plugins.IMatchResult;
 
 
 class PredictPanel extends JPanel {
@@ -91,7 +90,7 @@ class PredictPanel extends JPanel {
     	return in;
     }
 
-	public final void refresh(IMatchResult mr) {
+	public final void refresh(MatchResult mr) {
 
         m_jlGewonnen.setText(mr.getHomeWin() + "");
         m_jlUnendschieden.setText(mr.getDraw() + "");
