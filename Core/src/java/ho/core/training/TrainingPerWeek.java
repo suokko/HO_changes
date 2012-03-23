@@ -19,7 +19,7 @@ import java.util.Locale;
  * @author Bernhard To change the template for this generated type comment go to
  *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class TrainingPerWeek implements plugins.ITrainingWeek {
+public class TrainingPerWeek  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private int hattrickSeason = -1;

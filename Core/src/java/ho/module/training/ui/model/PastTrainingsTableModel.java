@@ -10,8 +10,6 @@ import ho.module.training.ui.comp.CBItem;
 import java.util.Iterator;
 import java.util.Vector;
 
-import plugins.ITrainingWeek;
-
 
 /**
  * Customized table model for past trainings
@@ -49,7 +47,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
 
         aobj[col] = value;
 
-        ITrainingWeek train = (ITrainingWeek) p_V_trainingsVector.get(p_V_data.size() - row - 1);
+        TrainingPerWeek train = (TrainingPerWeek) p_V_trainingsVector.get(p_V_data.size() - row - 1);
         if (col == 2) {
             CBItem sel = (CBItem)value;
             train.setTyp(sel.getId());
@@ -80,8 +78,8 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         Object[] aobj;
 
         // for each training week
-        for (Iterator<ITrainingWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
-            ITrainingWeek train = it.next();
+        for (Iterator<TrainingPerWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
+        	TrainingPerWeek train = it.next();
             String selectedTrain = Trainings.getTrainingDescription(train.getTyp());
 
             aobj = (new Object[]{

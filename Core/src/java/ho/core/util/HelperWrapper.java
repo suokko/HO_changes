@@ -18,7 +18,6 @@ import ho.core.model.SpielerPosition;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.module.matches.SpielHighlightPanel;
-import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
@@ -51,7 +50,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import plugins.IMatchHelper;
 import plugins.ISpielerPosition;
 
 
@@ -83,14 +81,6 @@ public class HelperWrapper {
 
         return m_clInstance;
     }
-
-	/**
-	 * Returns a match helper instance
-	 * @return	an instance of the match helper class
-	 */
-	public IMatchHelper getMatchHelper() {
-		return MatchHelper.instance();
-	}
 
     public java.awt.Color getColor4SpielHighlight(int typ, int subtyp) {
         return SpielHighlightPanel.getColor4SpielHighlight(typ, subtyp);

@@ -109,7 +109,7 @@ public final class SplashFrame extends JFrame {
         g2d.setFont(fontText);
         g2d.drawString(m_sInfotext, 10,147);
         g2d.setFont(fontVersion);
-        g2d.drawString(m_sVersionText, 150, 30);
+        g2d.drawString(m_sVersionText, 125, 30);
     }
 
 }
