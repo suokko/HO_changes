@@ -13,7 +13,6 @@ import java.util.Vector;
 
 import plugins.ISpieler;
 import plugins.ITeam;
-import plugins.ITrainingWeek;
 
 
 /**
@@ -342,7 +341,7 @@ public class TrainingPerPlayer  {
     /**
      * Updates the training results
      */
-    private void calculateTrainingResults(ITrainingWeek train) {
+    private void calculateTrainingResults(TrainingPerWeek train) {
 		Calendar trainingDate = train.getTrainingDate();
     	if (spieler.hasTrainingBlock()) {
     		// Do nothing if the player has a training block

@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import plugins.ISpielerPosition;
 import plugins.ITeam;
-import plugins.ITrainingWeek;
 
 
 /**
@@ -103,7 +102,7 @@ class TrainingPoint {
     //Order is the same as in Data. As value only SpielerIDS (do i have to translate this?) -> same index for same players
     private Hashtable<Integer,Hashtable<Integer,Double>> p_Ht_trainPositionen = new Hashtable<Integer,Hashtable<Integer,Double>>();
 
-	private ITrainingWeek trainWeek;
+	private TrainingPerWeek trainWeek;
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -114,7 +113,7 @@ class TrainingPoint {
         init();
     }
 
-    public TrainingPoint(ITrainingWeek trainWeek) {
+    public TrainingPoint(TrainingPerWeek trainWeek) {
     	this.trainWeek = trainWeek;
         init();
     }
@@ -324,14 +323,14 @@ class TrainingPoint {
     /**
      * Returns the training week for this training point
      */
-	public ITrainingWeek getTrainWeek() {
+	public TrainingPerWeek getTrainWeek() {
 		return trainWeek;
 	}
 
     /**
      * Sets the training week for this training point
      */
-	public void setTrainWeek(ITrainingWeek trainWeek) {
+	public void setTrainWeek(TrainingPerWeek trainWeek) {
 		this.trainWeek = trainWeek;
 	}
 }

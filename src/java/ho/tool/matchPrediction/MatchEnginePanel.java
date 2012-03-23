@@ -25,8 +25,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import plugins.IMatchResult;
-
 public class MatchEnginePanel extends ImagePanel implements	 ActionListener {
 	private static final long serialVersionUID = 4911590394636764762L;
 
@@ -109,7 +107,7 @@ public class MatchEnginePanel extends ImagePanel implements	 ActionListener {
 	 * n matches use calculateNMatches
 	 * 
 	 */
-	public final void refresh(IMatchResult matchresults) {
+	public final void refresh(MatchResult matchresults) {
 
 		// Beide Tabellen anpassen
 		m_jtMatchResultTable.refresh(matchresults, isHomeMatch);

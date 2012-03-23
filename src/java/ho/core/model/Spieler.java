@@ -10,6 +10,7 @@ import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.training.TrainingPerPlayer;
+import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
 import ho.core.util.HOLogger;
@@ -23,7 +24,6 @@ import java.util.Vector;
 
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import plugins.ITrainingWeek;
 
 
 /**
@@ -2292,7 +2292,7 @@ public final class Spieler implements plugins.ISpieler {
      */
     public void calcIncrementalSubskills(ISpieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
-    	final ITrainingWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
+    	final TrainingPerWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
         final TrainingPerPlayer trainingPerPlayer =
         	ho.core.training.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 

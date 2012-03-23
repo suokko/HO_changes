@@ -26,7 +26,6 @@ import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
 import plugins.ISpielerPosition;
-import plugins.ITrainingWeek;
 
 
 /**
@@ -115,7 +114,7 @@ public class TrainingsManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public ITrainingWeek getLastTrainingWeek(int hrfId) {
+    public TrainingPerWeek getLastTrainingWeek(int hrfId) {
         return this.weekManager.getTrainingWeek(hrfId);
     }
 
@@ -134,7 +133,7 @@ public class TrainingsManager {
      *
      * @return new training point
      */
-    public TrainingPoint getTrainingPoint(ITrainingWeek trainWeek) {
+    public TrainingPoint getTrainingPoint(TrainingPerWeek trainWeek) {
     	return new TrainingPoint(trainWeek);
     }
 
@@ -150,7 +149,7 @@ public class TrainingsManager {
     }
 
     // ------------------------------ Training Week Calculation ----------------------------------------------------
-    public Vector<ITrainingWeek> getTrainingsVector() {
+    public Vector<TrainingPerWeek> getTrainingsVector() {
         return this.weekManager.getTrainingsVector();
     }
 
@@ -168,7 +167,7 @@ public class TrainingsManager {
      * @return TrainingPerPlayer
      */
     public TrainingPerPlayer calculateFullTrainingForPlayer(ISpieler inputSpieler,
-                                                             Vector<ITrainingWeek> inputTrainings,
+                                                             Vector<TrainingPerWeek> inputTrainings,
                                                              Timestamp timestamp) {
         //playerID HIER SETZEN
         final ISpieler spieler = inputSpieler;
@@ -186,12 +185,12 @@ public class TrainingsManager {
 
         //alle Trainings durchlaufen
         //run through all trainings
-        Iterator<ITrainingWeek> i = inputTrainings.iterator();
+        Iterator<TrainingPerWeek> i = inputTrainings.iterator();
         while (i.hasNext()) {
         	TrainingPerPlayer curTraining = new TrainingPerPlayer();
             //holen des gerade abzuarbeitenden trainings
             //get training to consider this round of the loop
-            final ITrainingWeek train = i.next();
+            final TrainingPerWeek train = i.next();
 
             if (train.getTyp() == -1) {
                 continue;
@@ -221,12 +220,12 @@ public class TrainingsManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<ITrainingWeek> calculateTrainings(Vector<?> inputTrainings) {
+    public Vector<TrainingPerWeek> calculateTrainings(Vector<?> inputTrainings) {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
     public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
-            ITrainingWeek train) {
+    		TrainingPerWeek train) {
     	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
     }
 
@@ -241,7 +240,7 @@ public class TrainingsManager {
      * @return TrainingPerPlayer
      */
     public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
-                                                               ITrainingWeek train,
+    		TrainingPerWeek train,
                                                                Timestamp timestamp) {
         //playerID HIER SETZEN
         final ISpieler spieler = inputSpieler;

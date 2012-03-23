@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import plugins.ITrainingWeek;
-
 
 /**
  * Class that extract data from Database and calculates TrainingWeek and TrainingPoints earned from
@@ -29,7 +27,7 @@ public class TrainingsWeekManager {
     private static TrainingsWeekManager m_clInstance;
 
     /** TrainingWeeks */
-    private Vector<ITrainingWeek> m_vTrainings;
+    private Vector<TrainingPerWeek> m_vTrainings;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -62,7 +60,7 @@ public class TrainingsWeekManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public ITrainingWeek getTrainingWeek(int hrfId) {
+    public TrainingPerWeek getTrainingWeek(int hrfId) {
         // TODO Load last valid training week!
         final Timestamp tStamp = DBManager.instance().getPreviousTrainingDate(hrfId);
 
@@ -78,8 +76,8 @@ public class TrainingsWeekManager {
         final int trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
         final int trainYear = calendar.get(Calendar.YEAR);
 
-        for (Iterator<ITrainingWeek> iter = m_vTrainings.iterator(); iter.hasNext();) {
-            final ITrainingWeek element = iter.next();
+        for (Iterator<TrainingPerWeek> iter = m_vTrainings.iterator(); iter.hasNext();) {
+            final TrainingPerWeek element = iter.next();
 
             if ((element.getYear() == trainYear) && (element.getWeek() == trainWeek)) {
                 return element;
@@ -94,7 +92,7 @@ public class TrainingsWeekManager {
      *
      * @param vector TODO Missing Method Parameter Documentation
      */
-    public void setTrainings(Vector<ITrainingWeek> vector) {
+    public void setTrainings(Vector<TrainingPerWeek> vector) {
         m_vTrainings = vector;
     }
 
@@ -103,7 +101,7 @@ public class TrainingsWeekManager {
      *
      * @return Training Vector, vector of ITrainingPerWeek
      */
-    public Vector<ITrainingWeek> getTrainingsVector() {
+    public Vector<TrainingPerWeek> getTrainingsVector() {
         if (m_vTrainings == null) {
             return calculateTrainings(ho.core.db.DBManager.instance()
                                                                              .getTrainingsVector());
@@ -118,10 +116,10 @@ public class TrainingsWeekManager {
      *
      * @return Vector of trainingweeks
      **/
-    public Vector<ITrainingWeek> calculateTrainings(Vector<?> inputTrainings) {
+    public Vector<TrainingPerWeek> calculateTrainings(Vector<?> inputTrainings) {
         //trainingsreseten:
         //reset trainings
-        Vector<ITrainingWeek> output = new Vector<ITrainingWeek>();
+        Vector<TrainingPerWeek> output = new Vector<TrainingPerWeek>();
 
         //datenbankverbindung holen
         //get database connection
@@ -185,7 +183,7 @@ public class TrainingsWeekManager {
                                 boolean traincalculated = false;
 
                                 for (Iterator<?> it = inputTrainings.iterator(); it.hasNext();) {
-                                    final ITrainingWeek storedTrain = (ITrainingWeek) it.next();
+                                    final TrainingPerWeek storedTrain = (TrainingPerWeek) it.next();
 
                                     //altes Training nehmen
                                     if ((storedTrain.getWeek() == i)
@@ -220,7 +218,7 @@ public class TrainingsWeekManager {
                             boolean traincalculated = false;
 
                             for (Iterator<?> it = inputTrainings.iterator(); it.hasNext();) {
-                                final ITrainingWeek storedTrain = (ITrainingWeek) it.next();
+                                final TrainingPerWeek storedTrain = (TrainingPerWeek) it.next();
 
                                 //altes Training nehmen
                                 if ((storedTrain.getWeek() == trainWeek)
@@ -282,7 +280,7 @@ public class TrainingsWeekManager {
                                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
 
-        m_vTrainings = new Vector<ITrainingWeek>();
+        m_vTrainings = new Vector<TrainingPerWeek>();
         return m_vTrainings;
     }
 
@@ -293,7 +291,7 @@ public class TrainingsWeekManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private Vector<ITrainingWeek> getUpdateTraining(Vector<ITrainingWeek> output) {
+    private Vector<TrainingPerWeek> getUpdateTraining(Vector<TrainingPerWeek> output) {
         int actaulSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
         int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
         final int trainNumber = output.size();
@@ -314,10 +312,10 @@ public class TrainingsWeekManager {
             return output;
         }
 
-        final Vector<ITrainingWeek> updatedTrainings = new Vector<ITrainingWeek>();
+        final Vector<TrainingPerWeek> updatedTrainings = new Vector<TrainingPerWeek>();
 
         for (int index = 0; index < trainNumber; index++) {
-            final ITrainingWeek train = output.get(index);
+            final TrainingPerWeek train = output.get(index);
             final HattrickDate htDate = calculateByDifference(actaulSeason, actualWeek,
                                                               trainNumber - index);
             final TrainingPerWeek newTrain = new TrainingPerWeek(train.getWeek(), train.getYear(),
