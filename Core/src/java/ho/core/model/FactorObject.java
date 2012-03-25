@@ -7,7 +7,6 @@
 package ho.core.model;
 
 import ho.core.util.HOLogger;
-import plugins.ISpielerPosition;
 
 /**
  * DOCUMENT ME!

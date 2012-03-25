@@ -2,6 +2,7 @@ package ho.core.file.extension;
 
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.SpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
@@ -17,7 +18,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.ISpielerPosition;
 
 public class LineupCreator extends XMLCreator {
 

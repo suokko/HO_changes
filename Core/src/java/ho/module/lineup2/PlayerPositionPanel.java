@@ -10,6 +10,7 @@ import ho.core.gui.model.SpielerCBItemRenderer;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.util.Helper;
@@ -33,7 +34,6 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 /**
  * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann

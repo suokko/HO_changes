@@ -3,6 +3,7 @@ package ho.module.lineup;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 

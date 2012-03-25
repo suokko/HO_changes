@@ -1,6 +1,7 @@
 package ho.core.training;
 
 import ho.core.model.FuturePlayer;
+import ho.core.model.ISkillup;
 import ho.core.model.PlayerSkillup;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
@@ -9,7 +10,6 @@ import ho.module.training.FutureTrainingWeek;
 import java.util.ArrayList;
 import java.util.List;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 import plugins.ITeam;
 

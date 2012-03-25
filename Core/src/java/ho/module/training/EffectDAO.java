@@ -4,6 +4,7 @@ package ho.module.training;
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 
@@ -18,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

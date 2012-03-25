@@ -5,6 +5,7 @@ import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.FuturePlayer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.util.HelperWrapper;
@@ -21,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

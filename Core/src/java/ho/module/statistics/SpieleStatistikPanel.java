@@ -11,6 +11,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
@@ -41,7 +42,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import plugins.ISpielerPosition;
 
 /**
  * Das StatistikPanel

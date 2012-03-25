@@ -4,6 +4,7 @@ package ho.module.training;
 
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.util.HelperWrapper;
 
 import java.text.ParseException;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Vector;
 
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

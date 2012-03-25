@@ -1,5 +1,6 @@
 package ho.core.gui.theme;
 
+import ho.core.model.ISpielerPosition;
 import ho.core.model.SpielerPosition;
 
 import java.awt.AlphaComposite;
@@ -22,7 +23,6 @@ import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
 
-import plugins.ISpielerPosition;
 
 public class ImageUtilities {
 

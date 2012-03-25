@@ -9,6 +9,7 @@ import ho.core.file.xml.MatchExporter;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -39,7 +40,6 @@ import org.w3c.dom.Element;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ITeam;
 
 //implement IPlugin for integration into HO

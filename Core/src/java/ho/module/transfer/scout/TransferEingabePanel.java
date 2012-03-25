@@ -9,6 +9,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.module.IModule;
@@ -42,7 +43,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
-import plugins.ISpielerPosition;
 
 /**
  * A player can be created and modified here.

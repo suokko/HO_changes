@@ -2,13 +2,13 @@
 package ho.module.training.ui;
 
 import ho.core.gui.model.BaseTableModel;
+import ho.core.model.ISkillup;
 
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import plugins.ISkillup;
 
 
 /**

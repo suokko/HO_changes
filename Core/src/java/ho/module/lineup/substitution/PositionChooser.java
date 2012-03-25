@@ -1,5 +1,6 @@
 package ho.module.lineup.substitution;
 
+import ho.core.model.ISpielerPosition;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 
 import java.awt.BorderLayout;
@@ -25,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 public class PositionChooser extends JPanel {
 

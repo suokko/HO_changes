@@ -7,6 +7,7 @@
  */
 package ho.module.training.ui.renderer;
 
+import ho.core.model.ISkillup;
 import ho.module.training.Skills;
 
 import java.awt.Color;
@@ -15,7 +16,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import plugins.ISkillup;
 
 
 /**

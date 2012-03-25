@@ -3,6 +3,7 @@ package ho.tool.export;
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
@@ -17,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JWindow;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 /**
  * CsvPlayerExport

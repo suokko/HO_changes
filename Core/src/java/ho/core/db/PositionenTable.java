@@ -1,12 +1,12 @@
 package ho.core.db;
 
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import plugins.ISpielerPosition;
 
 public final class PositionenTable extends AbstractTable {
 

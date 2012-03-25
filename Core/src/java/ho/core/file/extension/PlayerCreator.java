@@ -5,6 +5,7 @@ import ho.core.epv.EPVData;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.model.SpielerPosition;
 import ho.core.model.XtraData;
 import ho.core.training.FutureTrainingManager;
@@ -31,7 +32,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 public class PlayerCreator extends XMLCreator {

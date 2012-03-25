@@ -14,7 +14,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import plugins.ISpielerPosition;
 
 /**
  * DOCUMENT ME!
@@ -22,7 +21,7 @@ import plugins.ISpielerPosition;
  * @author thomas.werth
  */
 public class SpielerPosition implements java.io.Serializable, Comparable<ISpielerPosition>,
-		plugins.ISpielerPosition {
+		ho.core.model.ISpielerPosition {
 
 	private static final long serialVersionUID = -4822360078242315135L;
 
