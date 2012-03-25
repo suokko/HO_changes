@@ -5,6 +5,7 @@ import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
@@ -19,7 +20,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

@@ -6,8 +6,8 @@
  */
 package ho.module.playeranalysis.skillCompare;
 
+import ho.core.model.ISpielerPosition;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 /**
  * @author KickMuck
  *

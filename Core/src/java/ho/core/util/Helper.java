@@ -4,6 +4,7 @@ package ho.core.util;
 
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.SpielerPosition;
 
 import java.awt.Component;
@@ -20,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**

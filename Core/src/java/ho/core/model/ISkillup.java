@@ -1,4 +1,4 @@
-package plugins;
+package ho.core.model;
 
 import java.util.Date;
 

@@ -10,6 +10,7 @@ import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.module.IModule;
@@ -36,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**

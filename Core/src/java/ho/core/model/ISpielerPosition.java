@@ -4,7 +4,7 @@
  *
  * Created on 19. April 2004, 07:40
  */
-package plugins;
+package ho.core.model;
 
 /**
  * DOCUMENT ME!

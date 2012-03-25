@@ -2,6 +2,7 @@ package ho.module.lineup.substitution;
 
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 
@@ -25,7 +26,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 public class SubstitutionEditView extends JPanel {

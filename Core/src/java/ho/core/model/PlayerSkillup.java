@@ -3,7 +3,6 @@ package ho.core.model;
 
 import java.util.Date;
 
-import plugins.ISkillup;
 
 
 /**

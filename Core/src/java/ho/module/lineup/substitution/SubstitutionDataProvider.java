@@ -2,6 +2,7 @@ package ho.module.lineup.substitution;
 
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.module.lineup.Lineup;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 public class SubstitutionDataProvider {

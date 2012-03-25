@@ -11,6 +11,7 @@ import ho.core.db.DBManager;
 import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -21,7 +22,6 @@ import java.util.List;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ITeam;
 
 /**

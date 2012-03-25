@@ -8,6 +8,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -30,7 +31,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.ISpielerPosition;
 
 
 /**

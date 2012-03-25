@@ -1,5 +1,6 @@
 package ho.core.rating;
 
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.Matchdetails;
@@ -13,7 +14,6 @@ import java.util.Properties;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ITeam;
 
 public class RatingPredictionManager {

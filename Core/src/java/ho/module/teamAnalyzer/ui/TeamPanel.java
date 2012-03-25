@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.module.config.ModuleConfig;
 import ho.module.lineup.Lineup;
 import ho.module.teamAnalyzer.SystemManager;
@@ -22,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**

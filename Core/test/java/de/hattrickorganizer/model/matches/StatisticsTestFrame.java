@@ -2,6 +2,7 @@ package de.hattrickorganizer.model.matches;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.module.matches.model.MatchLineupTeam;
 import ho.module.matches.model.MatchStatistics;
 
@@ -21,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-import plugins.ISpielerPosition;
 
 public class StatisticsTestFrame extends JDialog implements ActionListener{
 
