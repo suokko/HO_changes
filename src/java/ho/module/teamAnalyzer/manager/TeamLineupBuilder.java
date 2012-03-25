@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.module.teamAnalyzer.report.PositionReport;
 import ho.module.teamAnalyzer.report.SpotReport;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -19,7 +20,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 
-import plugins.ISpielerPosition;
 
 
 /**

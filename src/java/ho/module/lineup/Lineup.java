@@ -8,6 +8,7 @@ package ho.module.lineup;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
@@ -30,7 +31,6 @@ import java.util.Vector;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 /**
@@ -1036,7 +1036,7 @@ public class Lineup {
 			return getPositionById(positionsid).getTaktik();
 		} catch (Exception e) {
 			HOLogger.instance().error(getClass(), "getTactic4PositionID: " + e);
-			return plugins.ISpielerPosition.UNKNOWN;
+			return ho.core.model.ISpielerPosition.UNKNOWN;
 		}
 	}
 

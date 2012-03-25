@@ -7,6 +7,7 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
@@ -20,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 

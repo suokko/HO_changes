@@ -4,6 +4,7 @@ package ho.core.training;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
@@ -25,7 +26,6 @@ import javax.swing.JOptionPane;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**

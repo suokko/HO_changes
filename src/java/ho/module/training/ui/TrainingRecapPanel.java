@@ -4,6 +4,7 @@ package ho.module.training.ui;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
 import ho.module.training.FutureTrainingWeek;
@@ -24,7 +25,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

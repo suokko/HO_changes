@@ -14,6 +14,7 @@ import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.util.Helper;
@@ -30,7 +31,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 /**
  * Create the userColumns

@@ -13,6 +13,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.module.IModule;
 import ho.core.util.HOLogger;
@@ -53,7 +54,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import plugins.IMatchDetails;
-import plugins.ISpielerPosition;
 
 
 public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,

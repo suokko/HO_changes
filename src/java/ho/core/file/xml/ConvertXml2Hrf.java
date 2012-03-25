@@ -7,6 +7,7 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -25,7 +26,6 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 

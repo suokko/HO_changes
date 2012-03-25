@@ -11,6 +11,7 @@ import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
@@ -44,7 +45,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 /**

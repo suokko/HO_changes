@@ -3,6 +3,7 @@ package ho.core.file.xml;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchKurzInfo;
@@ -18,7 +19,6 @@ import java.util.Vector;
 import plugins.IMatchDetails;
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 public class MatchExporter {
 	//~ Static fields/initializers -----------------------------------------------------------------

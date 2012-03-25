@@ -1,12 +1,13 @@
 // %1043029125:de.hattrickorganizer.logik%
 package ho.core.training;
 
+import ho.core.model.ISpielerPosition;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import plugins.ISpielerPosition;
 import plugins.ITeam;
 
 

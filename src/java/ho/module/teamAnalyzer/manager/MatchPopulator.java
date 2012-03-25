@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.MatchLineupTeam;
@@ -17,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import plugins.IMatchDetails;
-import plugins.ISpielerPosition;
 
 
 /**

@@ -6,6 +6,7 @@
  */
 package ho.module.matches.model;
 
+import ho.core.model.ISpielerPosition;
 import ho.module.lineup.Lineup;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 

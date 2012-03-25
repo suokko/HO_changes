@@ -12,6 +12,7 @@ import ho.core.model.FactorObject;
 import ho.core.model.Finanzen;
 import ho.core.model.HOModel;
 import ho.core.model.HOParameter;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.model.UserParameter;
@@ -50,7 +51,6 @@ import java.util.Vector;
 
 import plugins.IMatchHighlight;
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 /**

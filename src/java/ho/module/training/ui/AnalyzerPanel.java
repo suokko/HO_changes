@@ -4,6 +4,7 @@ package ho.module.training.ui;
 import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISkillup;
 import ho.core.util.HelperWrapper;
 import ho.module.training.OldTrainingManager;
 import ho.module.training.SkillChange;
@@ -38,7 +39,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import plugins.ISkillup;
 import plugins.ISpieler;
 
 

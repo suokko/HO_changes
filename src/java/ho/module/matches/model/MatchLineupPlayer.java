@@ -6,8 +6,8 @@
  */
 package ho.module.matches.model;
 
+import ho.core.model.ISpielerPosition;
 import ho.core.model.SpielerPosition;
-import plugins.ISpielerPosition;
 
 
 /**

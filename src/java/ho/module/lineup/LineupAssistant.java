@@ -7,6 +7,7 @@
 package ho.module.lineup;
 
 import ho.core.gui.HOMainFrame;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import plugins.ISpielerPosition;
 
 
 public class LineupAssistant {

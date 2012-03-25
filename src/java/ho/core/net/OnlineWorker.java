@@ -22,6 +22,7 @@ import ho.core.gui.InfoPanel;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingsManager;
@@ -45,7 +46,6 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import plugins.ISpielerPosition;
 import plugins.ISubstitution;
 
 /**

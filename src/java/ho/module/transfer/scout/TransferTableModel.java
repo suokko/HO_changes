@@ -6,6 +6,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 
@@ -15,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-import plugins.ISpielerPosition;
 
 
 /**

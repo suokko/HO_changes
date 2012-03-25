@@ -3,6 +3,7 @@ package ho.module.matches;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.RasenPanel;
+import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -21,7 +22,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
-import plugins.ISpielerPosition;
 
 
 

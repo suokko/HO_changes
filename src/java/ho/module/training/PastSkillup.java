@@ -1,7 +1,8 @@
 // %3874463565:hoplugins.trainingExperience.vo%
 package ho.module.training;
 
-import plugins.ISkillup;
+
+import ho.core.model.ISkillup;
 
 import java.util.Date;
 
