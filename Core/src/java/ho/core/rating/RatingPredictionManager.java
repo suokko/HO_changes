@@ -1,6 +1,8 @@
 package ho.core.rating;
 
 import ho.core.model.ISpielerPosition;
+import ho.core.model.ITeam;
+import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.Matchdetails;
@@ -14,7 +16,6 @@ import java.util.Properties;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ITeam;
 
 public class RatingPredictionManager {
 	//~ Class constants ----------------------------------------------------------------------------
@@ -87,14 +88,14 @@ public class RatingPredictionManager {
     	RatingPredictionManager.config = config;
     }
     
-    public RatingPredictionManager(Lineup lineup, int i, ITeam iteam, short trainerType, RatingPredictionConfig config)
+    public RatingPredictionManager(Lineup lineup, int i, Team iteam, short trainerType, RatingPredictionConfig config)
     {
         this.lineup = lineup;
         RatingPredictionManager.config = config;
         init(iteam, trainerType);
     }
 
-    public RatingPredictionManager(Lineup lineup, ITeam team, short trainerType, RatingPredictionConfig config)
+    public RatingPredictionManager(Lineup lineup, Team team, short trainerType, RatingPredictionConfig config)
     {
         this(lineup, 0, team, trainerType, config);
     }
@@ -902,7 +903,7 @@ public class RatingPredictionManager {
     	return stk;
     }
 
-    private void init(ITeam team, short trainerType)
+    private void init(Team team, short trainerType)
     {
         try
         {

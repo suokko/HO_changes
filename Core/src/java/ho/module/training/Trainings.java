@@ -2,7 +2,7 @@
 package ho.module.training;
 
 import ho.core.model.HOVerwaltung;
-import plugins.ITeam;
+import ho.core.model.ITeam;
 
 
 /**

@@ -2,6 +2,7 @@
 package ho.core.training;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ITeam;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
@@ -12,7 +13,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.ISpieler;
-import plugins.ITeam;
 
 
 /**
