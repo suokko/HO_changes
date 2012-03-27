@@ -1,11 +1,11 @@
 // %1126721451244:hoplugins.trainingExperience.ui.component%
 package ho.module.training.ui.comp;
 
+import ho.core.model.ITeam;
 import ho.module.training.Trainings;
 
 import javax.swing.JComboBox;
 
-import plugins.ITeam;
 
 /**
  * ComboBox to edit the TrainingType

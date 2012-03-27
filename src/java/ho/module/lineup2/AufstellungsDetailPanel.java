@@ -8,6 +8,7 @@ import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.ITeam;
 import ho.core.model.Team;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
@@ -34,7 +35,6 @@ import javax.swing.SwingConstants;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ITeam;
 
 /**
  * Create the lineup detail panel.

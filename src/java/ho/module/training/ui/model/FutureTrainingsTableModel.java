@@ -2,6 +2,7 @@
 package ho.module.training.ui.model;
 
 import ho.core.db.DBManager;
+import ho.core.model.ITeam;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.training.TrainingPanel;
 import ho.module.training.Trainings;
@@ -11,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.ITeam;
 
 
 /**
