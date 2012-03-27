@@ -1,10 +1,9 @@
 package ho.core.db;
 
+import ho.core.model.Team;
 import ho.core.model.Verein;
 
 import java.sql.Timestamp;
-
-import plugins.ITeam;
 
 /**
  * Adapter to make some basic DBZugriff functions accessible for plugins.
@@ -29,7 +28,7 @@ public class DBAdapter {
 	 * @param hrfID HRF for which to load Team
 	 * @return the team information for to the given hrf id
 	 */
-	public ITeam getTeam(int hrfID) {
+	public Team getTeam(int hrfID) {
 		return DBManager.instance().getTeam(hrfID);
 	}
 

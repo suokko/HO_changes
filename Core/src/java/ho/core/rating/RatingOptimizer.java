@@ -12,6 +12,7 @@ import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -22,7 +23,6 @@ import java.util.List;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ITeam;
 
 /**
  * @author mamato
@@ -169,7 +169,7 @@ public class RatingOptimizer {
 		return offset;
 	}
 
-	private static void debugDiffs (String type, IMatchDetails det, RatingPredictionManager rpm, ITeam team) {
+	private static void debugDiffs (String type, IMatchDetails det, RatingPredictionManager rpm, Team team) {
 		boolean home = false;
 		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == det.getHeimId()) {
 			home = true;

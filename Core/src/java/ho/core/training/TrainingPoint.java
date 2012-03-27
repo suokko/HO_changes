@@ -2,13 +2,13 @@
 package ho.core.training;
 
 import ho.core.model.ISpielerPosition;
+import ho.core.model.ITeam;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import plugins.ITeam;
 
 
 /**

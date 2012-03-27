@@ -10,6 +10,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.ITeam;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -40,7 +41,6 @@ import org.w3c.dom.Element;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ITeam;
 
 //implement IPlugin for integration into HO
 //Refreshable to get informed by data updates
@@ -536,7 +536,7 @@ public class XMLExporter  {
 	/**
 	 * Get the formation experience for the given system.
 	 */
-	private int getTeamErfahrung(ITeam team, byte system) {
+	private int getTeamErfahrung(Team team, byte system) {
 		if (team == null) {
 			return -1;
 		}
@@ -581,7 +581,7 @@ public class XMLExporter  {
 	/**
 	 * Get the confidence.
 	 */
-	private int getTeamSelbstvertrauen(ITeam team) {
+	private int getTeamSelbstvertrauen(Team team) {
 		if (team == null) {
 			return -1;
 		}
@@ -592,7 +592,7 @@ public class XMLExporter  {
 	/**
 	 * Get the team spirit.
 	 */
-	private int getTeamStimmung(ITeam team) {
+	private int getTeamStimmung(Team team) {
 		if (team == null) {
 			return -1;
 		}

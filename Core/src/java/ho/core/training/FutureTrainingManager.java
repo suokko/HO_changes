@@ -2,6 +2,7 @@ package ho.core.training;
 
 import ho.core.model.FuturePlayer;
 import ho.core.model.ISkillup;
+import ho.core.model.ITeam;
 import ho.core.model.PlayerSkillup;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import plugins.ISpieler;
-import plugins.ITeam;
 
 /**
  * Class that manages the prevision of training effect in the future

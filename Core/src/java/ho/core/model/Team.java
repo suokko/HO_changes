@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.util.Properties;
 
 
+
 /**
  * Enthält die Daten des Teams (nicht der Spieler!)
  */
-public final class Team implements plugins.ITeam {
+public final class Team  {
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
 
@@ -147,34 +148,34 @@ public final class Team implements plugins.ITeam {
 	 */
 	public static String getNameForSelbstvertrauen(int level) {
 		switch (level) {
-		case SV_voellig_abgehoben:
+		case ITeam.SV_voellig_abgehoben:
 			return HOVerwaltung.instance().getLanguageString("extremely_exaggerated");
 
-		case SV_voellig_uebertrieben:
+		case ITeam.SV_voellig_uebertrieben:
 			return HOVerwaltung.instance().getLanguageString("completely_exaggerated");
 
-		case SV_etwas_ueberheblich:
+		case ITeam.SV_etwas_ueberheblich:
 			return HOVerwaltung.instance().getLanguageString("slightly_exaggerated");
 
-		case SV_sehr_gross:
+		case ITeam.SV_sehr_gross:
 			return HOVerwaltung.instance().getLanguageString("wonderful");
 
-		case SV_stark:
+		case ITeam.SV_stark:
 			return HOVerwaltung.instance().getLanguageString("strong");
 
-		case SV_bescheiden:
+		case ITeam.SV_bescheiden:
 			return HOVerwaltung.instance().getLanguageString("decent");
 
-		case SV_gering:
+		case ITeam.SV_gering:
 			return HOVerwaltung.instance().getLanguageString("poor");
 
-		case SV_armselig:
+		case ITeam.SV_armselig:
 			return HOVerwaltung.instance().getLanguageString("wretched");
 
-		case SV_katastrophal:
+		case ITeam.SV_katastrophal:
 			return HOVerwaltung.instance().getLanguageString("disastrous");
 
-		case SV_nichtVorhanden:
+		case ITeam.SV_nichtVorhanden:
 			return HOVerwaltung.instance().getLanguageString("nonexisting");
 
 		default:
@@ -187,41 +188,41 @@ public final class Team implements plugins.ITeam {
 	 */
 	public static String getNameForStimmung(int level) {
 		switch (level) {
-		case TS_paradiesisch:
+		case ITeam.TS_paradiesisch:
 			return HOVerwaltung.instance().getLanguageString("ts_Paradise_on_Earth");
 
-		case TS_auf_Wolke_sieben:
+		case ITeam.TS_auf_Wolke_sieben:
 			return HOVerwaltung.instance().getLanguageString("ts_Walking_on_Clouds");
 
-		case TS_euphorisch:
+		case ITeam.TS_euphorisch:
 			return HOVerwaltung.instance().getLanguageString("ts_delirious");
 
-		case TS_ausgezeichnet:
+		case ITeam.TS_ausgezeichnet:
 			return HOVerwaltung.instance().getLanguageString("ts_satisfied");
 
-		case TS_gut:
+		case ITeam.TS_gut:
 			return HOVerwaltung.instance().getLanguageString("ts_content");
 
-		case TS_zufrieden:
+		case ITeam.TS_zufrieden:
 			return HOVerwaltung.instance().getLanguageString("ts_calm");
 
-		case TS_ruhig:
+		case ITeam.TS_ruhig:
 			return HOVerwaltung.instance().getLanguageString("ts_composed");
 
-		case TS_irritiert:
+		case ITeam.TS_irritiert:
 			return HOVerwaltung.instance().getLanguageString("ts_irritated");
 
-		case TS_wuetend:
+		case ITeam.TS_wuetend:
 			return HOVerwaltung.instance().getLanguageString("ts_furious");
 
-		case TS_blutruenstig:
+		case ITeam.TS_blutruenstig:
 			return HOVerwaltung.instance().getLanguageString("ts_murderous");
 
-		case TS_wie_im_kalten_Krieg:
+		case ITeam.TS_wie_im_kalten_Krieg:
 			return HOVerwaltung.instance().getLanguageString("ts_like_the_cold_War");
 
 		default: {
-			if (level > TS_paradiesisch) {
+			if (level > ITeam.TS_paradiesisch) {
 				return HOVerwaltung.instance().getLanguageString("ts_Paradise_on_Earth");
 			}
 
@@ -242,30 +243,30 @@ public final class Team implements plugins.ITeam {
 
 		// What about missing training types?
 		// Defensive Positions, Wing Attacks, Through Passes
-		case TA_TORWART:
+		case ITeam.TA_TORWART:
 			return HOVerwaltung.instance().getLanguageString("training.goalkeeping");
 
-		case TA_SPIELAUFBAU:
+		case ITeam.TA_SPIELAUFBAU:
 			return HOVerwaltung.instance().getLanguageString("training.playmaking");
 
-		case TA_PASSSPIEL:
+		case ITeam.TA_PASSSPIEL:
 			return HOVerwaltung.instance().getLanguageString("training.short_passes");
 
-		case TA_SCHUSSTRAINING:
+		case ITeam.TA_SCHUSSTRAINING:
 			return HOVerwaltung.instance().getLanguageString("training.shooting");
 
-		case TA_FLANKEN:
+		case ITeam.TA_FLANKEN:
 			return HOVerwaltung.instance().getLanguageString("training.crossing");
 
-		case TA_CHANCEN:
+		case ITeam.TA_CHANCEN:
 
 			// Fehlt
 			return HOVerwaltung.instance().getLanguageString("training.scoring");
 
-		case TA_VERTEIDIGUNG:
+		case ITeam.TA_VERTEIDIGUNG:
 			return HOVerwaltung.instance().getLanguageString("training.defending");
 
-		case TA_STANDARD:
+		case ITeam.TA_STANDARD:
 			return HOVerwaltung.instance().getLanguageString("training.set_pieces");
 
 		default:

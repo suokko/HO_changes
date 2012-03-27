@@ -6,6 +6,8 @@
  */
 package plugins;
 
+import ho.core.model.ITeam;
+
 /**
  * DOCUMENT ME!
  *
@@ -126,13 +128,6 @@ public interface ISpieler {
     //TR-Typen , unfortunatly doubled due desgin error, main defs ar ein ITeam
 
     public static final int TA_EXTERNALATTACK = ITeam.TA_EXTERNALATTACK;
-    /** TODO Missing Parameter Documentation */
-    @Deprecated
-    public static final int ALLGEMEIN = ITeam.TA_ALLGEMEIN;
-
-    /** TODO Missing Parameter Documentation */
-    @Deprecated
-    public static final int KONDITION = ITeam.TA_KONDITION;
 
     /** TODO Missing Parameter Documentation */
     public static final int STANDARDS = ITeam.TA_STANDARD;
