@@ -16,7 +16,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 
 
 public class Matchdetails implements plugins.IMatchDetails {
@@ -27,7 +26,7 @@ public class Matchdetails implements plugins.IMatchDetails {
     private String m_sMatchreport = "";
     private Timestamp m_clFetchDatum;
     private Timestamp m_clSpielDatum;
-    private Vector<IMatchHighlight> m_vHighlights = new Vector<IMatchHighlight>();
+    private Vector<MatchHighlight> m_vHighlights = new Vector<MatchHighlight>();
     private int m_iArenaID = -1;
     private int m_iGastId = -1;
 
@@ -156,8 +155,8 @@ public class Matchdetails implements plugins.IMatchDetails {
     }
 
     public final int getGuestHalfTimeGoals() {
-    	Vector<IMatchHighlight> highLights = getHighlights();
-    	for (IMatchHighlight iMatchHighlight : highLights) {
+    	Vector<MatchHighlight> highLights = getHighlights();
+    	for (MatchHighlight iMatchHighlight : highLights) {
 			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getGastTore();
 		}
@@ -165,8 +164,8 @@ public class Matchdetails implements plugins.IMatchDetails {
 	}
 
 	public final int getHomeHalfTimeGoals() {
-		Vector<IMatchHighlight> highLights = getHighlights();
-    	for (IMatchHighlight iMatchHighlight : highLights) {
+		Vector<MatchHighlight> highLights = getHighlights();
+    	for (MatchHighlight iMatchHighlight : highLights) {
 			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getHeimTore();
 		}
@@ -584,7 +583,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @param m_vHighlights New value of property m_vHighlights.
      */
-    public final void setHighlights(Vector<IMatchHighlight> m_vHighlights) {
+    public final void setHighlights(Vector<MatchHighlight> m_vHighlights) {
         this.m_vHighlights = m_vHighlights;
     }
 
@@ -593,7 +592,7 @@ public class Matchdetails implements plugins.IMatchDetails {
      *
      * @return Value of property m_vHighlights.
      */
-    public final Vector<IMatchHighlight> getHighlights() {
+    public final Vector<MatchHighlight> getHighlights() {
         return m_vHighlights;
     }
 

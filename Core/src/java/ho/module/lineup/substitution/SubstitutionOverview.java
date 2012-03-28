@@ -38,7 +38,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-import plugins.ISubstitution;
 
 public class SubstitutionOverview extends JPanel {
 

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 
 /**
  * Helper class to retrieve match related information.
@@ -119,9 +118,9 @@ public class MatchHelper {
    	   			/**
    	   			 * league or cup match -> check highlights
    	   			 */
-   		   		Vector<IMatchHighlight> highlights = details.getHighlights();
+   		   		Vector<MatchHighlight> highlights = details.getHighlights();
    				for (int i=0; i<highlights.size(); i++) {
-   					IMatchHighlight curHighlight = (IMatchHighlight)highlights.get(i);
+   					MatchHighlight curHighlight = (MatchHighlight)highlights.get(i);
    					if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION 
    							&& curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_DERBY) {
    						location = IMatchDetails.LOCATION_AWAYDERBY;
@@ -161,10 +160,10 @@ public class MatchHelper {
    		return (short)location;
 	}
 
-	public boolean hasOverConfidence (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasOverConfidence (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
 					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_UNTERSCHAETZT) { 
@@ -178,10 +177,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasTacticalProblems (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasTacticalProblems (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
 					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_TAKTISCHE_PROBLEME) { 
@@ -195,10 +194,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasRedCard (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasRedCard (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN) {
 					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ
@@ -212,10 +211,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasInjury (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasInjury (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
 					if (hlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_VERLETZT
@@ -235,10 +234,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasWeatherSE (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasWeatherSE (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
 					// Weather based SpecialEvents check (as this SE alters player ratings)
@@ -256,10 +255,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasManualSubstitution (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasManualSubstitution (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
 					// Weather based SpecialEvents check (as this SE alters player ratings)
@@ -277,10 +276,10 @@ public class MatchHelper {
 		return false;
 	}
 
-	public boolean hasPullBack (Vector<IMatchHighlight> highlights, int teamId) {
-		Iterator<IMatchHighlight> iter = highlights.iterator();
+	public boolean hasPullBack (Vector<MatchHighlight> highlights, int teamId) {
+		Iterator<MatchHighlight> iter = highlights.iterator();
 		while (iter.hasNext()) {
-			IMatchHighlight hlight = (IMatchHighlight) iter.next();
+			MatchHighlight hlight = (MatchHighlight) iter.next();
 			if (hlight.getTeamID() == teamId) {
 				// Pull back event
 				if (hlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION &&

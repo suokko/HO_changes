@@ -4,7 +4,7 @@
  *
  * Created on 6. September 2004, 09:04
  */
-package plugins;
+package ho.module.matches.model;
 
 /**
  * Const
@@ -519,99 +519,4 @@ public interface IMatchHighlight {
      */
     public static final int HIGHLIGHT_SUB_IFK_RATINGS = 50;
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Getter for property m_sEventText.
-     *
-     * @return Value of property m_sEventText.
-     */
-    public String getEventText();
-
-    /**
-     * Getter for property m_iGastTore.
-     *
-     * @return Value of property m_iGastTore.
-     */
-    public int getGastTore();
-
-    /**
-     * Getter for property m_sGehilfeHeim.
-     *
-     * @return Value of property m_sGehilfeHeim.
-     */
-    public boolean getGehilfeHeim();
-
-    /**
-     * Getter for property m_iGehilfeID.
-     *
-     * @return Value of property m_iGehilfeID.
-     */
-    public int getGehilfeID();
-
-    /**
-     * Getter for property m_sGehilfeName.
-     *
-     * @return Value of property m_sGehilfeName.
-     */
-    public String getGehilfeName();
-
-    /**
-     * Getter for property m_iHeimTore.
-     *
-     * @return Value of property m_iHeimTore.
-     */
-    public int getHeimTore();
-
-    /**
-     * Getter for property m_iHighlightSubTyp.
-     *
-     * @return Value of property m_iHighlightSubTyp.
-     */
-    public int getHighlightSubTyp();
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public int getHighlightTyp();
-
-    /**
-     * Getter for property m_iMinute.
-     *
-     * @return Value of property m_iMinute.
-     */
-    public int getMinute();
-
-    /**
-     * Getter for property m_sSpielerHeim.
-     *
-     * @return Value of property m_sSpielerHeim.
-     */
-    public boolean getSpielerHeim();
-
-    /**
-     * Getter for property m_iSpielerID.
-     *
-     * @return Value of property m_iSpielerID.
-     */
-    public int getSpielerID();
-
-    /**
-     * Getter for property m_sSpielerName.
-     *
-     * @return Value of property m_sSpielerName.
-     */
-    public String getSpielerName();
-
-    /**
-     * Getter for property m_iTeamID.
-     *
-     * @return Value of property m_iTeamID.
-     */
-    public int getTeamID();
-    
-    
-    public boolean isWeatherSEHighlight();
 }

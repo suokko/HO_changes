@@ -23,6 +23,8 @@ import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.ifa.IfaMatch;
 import ho.module.lineup.Lineup;
+import ho.module.lineup.substitution.ISubstitution;
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -49,9 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-import plugins.IMatchHighlight;
 import plugins.ISpieler;
-import plugins.ISubstitution;
 
 /**
  * DOCUMENT ME!
@@ -1505,7 +1505,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected Vector<IMatchHighlight> getMatchHighlights(int matchId) {
+	protected Vector<MatchHighlight> getMatchHighlights(int matchId) {
 		return (
 			(MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlights(
 			matchId);

@@ -1,6 +1,5 @@
 package ho.module.lineup.substitution;
 
-import plugins.ISubstitution;
 
 /**
  * A class holding information about substitutions and order changes
@@ -8,7 +7,7 @@ import plugins.ISubstitution;
  * @author blaghaid
  * 
  */
-public class Substitution implements plugins.ISubstitution {
+public class Substitution implements ho.module.lineup.substitution.ISubstitution {
 
 	private int playerOrderID = -1;
 	private int playerIn = -1;

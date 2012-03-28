@@ -9,6 +9,8 @@ import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchHighlight;
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchLineupPlayer;
 
 import java.sql.ResultSet;
@@ -24,7 +26,6 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 import plugins.ISpieler;
 
 
@@ -364,9 +365,9 @@ public class TrainingsManager {
     			posId == PLAYERSTATUS_TACTIC_CHANGE )
     		return 0;
        	IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
-        Vector<IMatchHighlight> highlights = details.getHighlights();
+        Vector<MatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
-        	IMatchHighlight curHighlight = highlights.get(i);
+        	MatchHighlight curHighlight = highlights.get(i);
        		if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_INFORMATION) {
        			// Player left the field because of an injury
        			switch (curHighlight.getHighlightSubTyp()) {
@@ -479,9 +480,9 @@ public class TrainingsManager {
     	// Player not in lineup
     	if (posId == null) {
     		// Check if he got a red card
-            Vector<IMatchHighlight> highlights = details.getHighlights();
+            Vector<MatchHighlight> highlights = details.getHighlights();
             for (int i=0; i<highlights.size(); i++) {
-            	IMatchHighlight curHighlight = highlights.get(i);
+            	MatchHighlight curHighlight = highlights.get(i);
            		if (curHighlight.getSpielerID() == playerId) {
            			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_KARTEN &&
            					(curHighlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ ||
@@ -496,9 +497,9 @@ public class TrainingsManager {
    			return PLAYERSTATUS_NOT_IN_LINEUP;
     	}
 
-        Vector<IMatchHighlight> highlights = details.getHighlights();
+        Vector<MatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
-        	IMatchHighlight curHighlight = highlights.get(i);
+        	MatchHighlight curHighlight = highlights.get(i);
         	// Check for manual substitutions (in)
        		if (curHighlight.getGehilfeID() == playerId) {
        			if (curHighlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL &&

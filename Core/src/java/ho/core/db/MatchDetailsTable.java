@@ -1,13 +1,12 @@
 package ho.core.db;
 
 import ho.core.util.HOLogger;
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.Matchdetails;
 
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
-
-import plugins.IMatchHighlight;
 
 final class MatchDetailsTable extends AbstractTable {
 
@@ -124,7 +123,7 @@ final class MatchDetailsTable extends AbstractTable {
 				details.setSoldRoof(rs.getInt("soldRoof"));
 				details.setSoldVIP(rs.getInt("soldVIP"));
 				details.setMatchreport(DBManager.deleteEscapeSequences(rs.getString("Matchreport")));
-				Vector<IMatchHighlight> vMatchHighlights = DBManager.instance().getMatchHighlights(matchId);
+				Vector<MatchHighlight> vMatchHighlights = DBManager.instance().getMatchHighlights(matchId);
 				//Alle Highlights in die Details packen
 				details.setHighlights(vMatchHighlights);
 			}
