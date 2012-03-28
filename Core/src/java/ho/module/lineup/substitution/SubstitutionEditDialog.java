@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import plugins.ISubstitution;
 
 public class SubstitutionEditDialog extends JDialog {
 

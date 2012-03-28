@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
 
-import plugins.IMatchHighlight;
-
 final class MatchHighlightsTable extends AbstractTable {
 	final static String TABLENAME = "MATCHHIGHLIGHTS";
 
@@ -51,7 +49,7 @@ final class MatchHighlightsTable extends AbstractTable {
 			
 			
 			try {
-				final Vector<IMatchHighlight> vHighlights = details.getHighlights();
+				final Vector<MatchHighlight> vHighlights = details.getHighlights();
 				HOLogger.instance().debug(getClass(),"count of highlights: " + vHighlights.size());
 				for (int i = 0; i < vHighlights.size(); i++) {
 					final MatchHighlight highlight = (MatchHighlight) vHighlights.get(i);
@@ -82,10 +80,10 @@ final class MatchHighlightsTable extends AbstractTable {
 		}
 	}
 
-	Vector<IMatchHighlight> getMatchHighlights(int matchId) {
+	Vector<MatchHighlight> getMatchHighlights(int matchId) {
 		try {
 			//Highlights holen
-			final Vector<IMatchHighlight> vMatchHighlights = new Vector<IMatchHighlight>();
+			final Vector<MatchHighlight> vMatchHighlights = new Vector<MatchHighlight>();
 
 			String sql =
 				"SELECT * FROM "+getTableName()+" WHERE MatchId="
@@ -120,6 +118,6 @@ final class MatchHighlightsTable extends AbstractTable {
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),e);
 		}
-		return new Vector<IMatchHighlight>();
+		return new Vector<MatchHighlight>();
 	}
 }

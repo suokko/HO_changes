@@ -29,6 +29,7 @@ import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
+import ho.module.lineup.substitution.ISubstitution;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupTeam;
@@ -46,7 +47,6 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import plugins.ISubstitution;
 
 /**
  * DOCUMENT ME!

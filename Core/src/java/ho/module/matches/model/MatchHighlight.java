@@ -9,7 +9,6 @@
 package ho.module.matches.model;
 
 import ho.core.model.HOVerwaltung;
-import plugins.IMatchHighlight;
 
 /**
  * DOCUMENT ME!
@@ -17,7 +16,7 @@ import plugins.IMatchHighlight;
  * @author thomas.werth extended by
  * @author Marco Senn, Tooldesign
  */
-public class MatchHighlight implements plugins.IMatchHighlight {
+public class MatchHighlight implements ho.module.matches.model.IMatchHighlight {
 
     private String m_sEventText = "";
 

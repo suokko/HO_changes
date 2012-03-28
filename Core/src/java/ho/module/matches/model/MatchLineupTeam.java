@@ -8,13 +8,13 @@ package ho.module.matches.model;
 
 import ho.core.model.ISpielerPosition;
 import ho.module.lineup.Lineup;
+import ho.module.lineup.substitution.ISubstitution;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-import plugins.ISubstitution;
 
 
 /**

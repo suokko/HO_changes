@@ -26,7 +26,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import plugins.ISubstitution;
 
 public class SubstitutionEditView extends JPanel {
 

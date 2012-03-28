@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import plugins.ISpieler;
-import plugins.ISubstitution;
 
 public class SubstitutionDataProvider {
 

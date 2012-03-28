@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import plugins.ISpieler;
-import plugins.ISubstitution;
 
 public class DetailsView extends JPanel {
 

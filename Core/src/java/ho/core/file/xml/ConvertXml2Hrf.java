@@ -13,6 +13,7 @@ import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
 import ho.core.util.PlayerHelper;
+import ho.module.lineup.substitution.ISubstitution;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupTeam;
@@ -26,7 +27,6 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
-import plugins.ISubstitution;
 
 
 /**

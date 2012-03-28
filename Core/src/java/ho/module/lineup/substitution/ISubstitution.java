@@ -1,6 +1,5 @@
-package plugins;
+package ho.module.lineup.substitution;
 
-import ho.module.lineup.substitution.MatchOrderType;
 
 public interface ISubstitution {
 

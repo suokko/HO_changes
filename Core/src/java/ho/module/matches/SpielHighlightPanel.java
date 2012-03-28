@@ -1,12 +1,12 @@
 // %4112883594:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
-import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.IMatchHighlight;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.Matchdetails;
@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchHighlight;
 
 
 /**
@@ -240,10 +239,10 @@ public class SpielHighlightPanel extends ImagePanel {
             JLabel playerlabel = null;
             JLabel resultlabel = null;
 
-            final Vector<IMatchHighlight> vMatchHighlights = details.getHighlights();
+            final Vector<MatchHighlight> vMatchHighlights = details.getHighlights();
 
             for (int i = 0; i < vMatchHighlights.size(); i++) {
-                final IMatchHighlight highlight =  vMatchHighlights.get(i);
+                final MatchHighlight highlight =  vMatchHighlights.get(i);
 
                 //Label vorbereiten
                 final ImageIcon icon = SpielHighlightPanel.getImageIcon4SpielHighlight(highlight.getHighlightTyp(),

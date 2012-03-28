@@ -1,13 +1,13 @@
 package ho.core.db;
 
 import ho.core.util.HOLogger;
+import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;
 
-import plugins.ISubstitution;
 
 public class MatchSubstitutionTable extends AbstractTable {
 	/** tablename **/

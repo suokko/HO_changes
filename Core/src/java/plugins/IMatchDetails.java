@@ -6,6 +6,7 @@
  */
 package plugins;
 
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.TeamLineup;
 
 import java.util.List;
@@ -206,7 +207,7 @@ public interface IMatchDetails {
      *
      * @return Value of property m_vHighlights.
      */
-    public Vector<IMatchHighlight> getHighlights();
+    public Vector<MatchHighlight> getHighlights();
 
     /**
      * Getter for property m_iHomeEinstellung.

@@ -2,11 +2,10 @@ package ho.module.matches.model;
 
 import ho.core.db.DBManager;
 import ho.core.util.HOLogger;
+import ho.module.lineup.substitution.ISubstitution;
 
 import java.util.Vector;
 
-import plugins.IMatchHighlight;
-import plugins.ISubstitution;
 
 public class MatchStatistics {
 
@@ -232,7 +231,7 @@ public class MatchStatistics {
 	 */
 	public int getMatchEndMinute() {
 		if (endMinute == -111) { 
-			Vector<IMatchHighlight> hls = DBManager.instance().getMatchDetails(matchId).getHighlights();
+			Vector<MatchHighlight> hls = DBManager.instance().getMatchDetails(matchId).getHighlights();
 			for (int i = 0; i < hls.size() ; i++) {
 				if ((hls.get(i).getHighlightTyp() == 0) && (hls.get(i).getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_BESTER_SPIELER)) {
 					endMinute = hls.get(i).getMinute();

@@ -16,6 +16,7 @@ import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
+import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.matches.model.MatchKurzInfo;
@@ -31,7 +32,6 @@ import java.util.Vector;
 
 import plugins.IMatchDetails;
 import plugins.ISpieler;
-import plugins.ISubstitution;
 
 /**
  * DOCUMENT ME!
