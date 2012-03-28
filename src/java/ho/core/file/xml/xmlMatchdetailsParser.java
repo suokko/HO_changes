@@ -8,6 +8,7 @@ package ho.core.file.xml;
 
 import ho.core.db.DBManager;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.IMatchHighlight;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -19,7 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.IMatchHighlight;
+
 
 
 /**
@@ -119,7 +120,7 @@ public class xmlMatchdetailsParser {
      *
      */
     private final void readHighlights(Document doc, Matchdetails md) {
-        final Vector<IMatchHighlight> myHighlights = new Vector<IMatchHighlight>();
+        final Vector<MatchHighlight> myHighlights = new Vector<MatchHighlight>();
         final Vector<Integer> broken = new Vector<Integer>();
         final MatchLineup lineup = DBManager.instance().getMatchLineup(md.getMatchID());
         Element ele = null;
@@ -511,7 +512,7 @@ public class xmlMatchdetailsParser {
      * @param md	match details
      */
     public final void parseMatchReport(Matchdetails md) {
-        Vector<IMatchHighlight> highlights = md.getHighlights();
+        Vector<MatchHighlight> highlights = md.getHighlights();
 
         final StringBuffer report = new StringBuffer();
 

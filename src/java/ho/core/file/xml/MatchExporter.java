@@ -6,6 +6,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.MatchHelper;
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Vector;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 import plugins.ISpieler;
 
 public class MatchExporter {
@@ -132,7 +132,7 @@ public class MatchExporter {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": Walk over");
 			return false;
 		}
-		Vector<IMatchHighlight> highlights = details.getHighlights();
+		Vector<MatchHighlight> highlights = details.getHighlights();
 		//Aussortieren starten...
 		if (info.getMatchDateAsTimestamp().before(startingDate)) { //Zu alt !!!
 			return false;

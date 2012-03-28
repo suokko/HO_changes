@@ -6,6 +6,8 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchHighlight;
+import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
@@ -17,7 +19,6 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 import plugins.IMatchDetails;
-import plugins.IMatchHighlight;
 
 class SpecialEventsDM
 {
@@ -118,12 +119,12 @@ class SpecialEventsDM
         String gastName = kurzInfos.getGastName();
         int gastId = kurzInfos.getGastID();
         String gastTaktik = getTaktik(details.getGuestTacticType());
-        Vector<IMatchHighlight> vHighlights = details.getHighlights();
-        Vector<IMatchHighlight> seHighlights = new Vector<IMatchHighlight>();
+        Vector<MatchHighlight> vHighlights = details.getHighlights();
+        Vector<MatchHighlight> seHighlights = new Vector<MatchHighlight>();
         int weather = details.getWetterId();
 
-        for (Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
-			IMatchHighlight highlight = iter.next();
+        for (Iterator<MatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
+			MatchHighlight highlight = iter.next();
 			if (checkForSE(highlight)) {
 				seHighlights.add(highlight);
 			}
@@ -151,8 +152,8 @@ class SpecialEventsDM
             highlightText.add("");
         } else {
             int lCounter = 0;
-            for(Iterator<IMatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
-                IMatchHighlight highlight = iter.next();
+            for(Iterator<MatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
+                MatchHighlight highlight = iter.next();
                 String se = format_Highlights(highlight);
                 if(se != null && !se.equals("")) {
                     Vector<Object> singleLine = new Vector<Object>();
@@ -204,7 +205,7 @@ class SpecialEventsDM
 		return DF.format(date);
 	}
 
-    private ImageIcon getEventTypIcon(IMatchHighlight highlight) {
+    private ImageIcon getEventTypIcon(MatchHighlight highlight) {
     	if (isPositiveWeatherSE(highlight)) {
     		return weatherPositiveIcon;
     	} else if (isNegativeWeatherSE(highlight)) {
@@ -271,7 +272,7 @@ class SpecialEventsDM
 
     }
 
-    private ImageIcon getOwnerIcon(IMatchHighlight highlight, boolean home, int heimId, int gastId)
+    private ImageIcon getOwnerIcon(MatchHighlight highlight, boolean home, int heimId, int gastId)
     {
         ImageIcon icon = null;
         if (home) {
@@ -317,7 +318,7 @@ class SpecialEventsDM
         return icon;
     }
 
-    public static boolean isNegativeSE(IMatchHighlight highlight)
+    public static boolean isNegativeSE(MatchHighlight highlight)
     {
     	if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
     			|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
@@ -335,7 +336,7 @@ class SpecialEventsDM
     }
 
   
-    private static int getEventType (IMatchHighlight highlight) {
+    private static int getEventType (MatchHighlight highlight) {
     	if (isWeatherSE(highlight)) {
     		return WEATHERSE;
     	} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
@@ -391,7 +392,7 @@ class SpecialEventsDM
     	return -1;
     }
 
-    private static boolean checkForSE(IMatchHighlight highlight)
+    private static boolean checkForSE(MatchHighlight highlight)
     {
     	int eventType = getEventType(highlight);
     	if (eventType < 0) {
@@ -414,11 +415,11 @@ class SpecialEventsDM
     	return true;
     }
 
-    private static boolean isWeatherSE (IMatchHighlight highlight) {
+    private static boolean isWeatherSE (MatchHighlight highlight) {
     	return (isPositiveWeatherSE(highlight) || isNegativeWeatherSE(highlight));
     }
 
-    private static boolean isPositiveWeatherSE (IMatchHighlight highlight) {
+    private static boolean isPositiveWeatherSE (MatchHighlight highlight) {
     	if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
     		if (highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
     				|| highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY) {
@@ -428,7 +429,7 @@ class SpecialEventsDM
     	return false;
     }
 
-    private static boolean isNegativeWeatherSE (IMatchHighlight highlight) {
+    private static boolean isNegativeWeatherSE (MatchHighlight highlight) {
     	if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
     		if (highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
     				|| highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
@@ -440,7 +441,7 @@ class SpecialEventsDM
     	return false;
     }
 
-    private String format_Highlights(IMatchHighlight highlight)
+    private String format_Highlights(MatchHighlight highlight)
     {
         String rString = "";
         if(checkForSE (highlight))
@@ -450,7 +451,7 @@ class SpecialEventsDM
         return rString;
     }
 
-    private String getSEText (IMatchHighlight highlight)
+    private String getSEText (MatchHighlight highlight)
     {
 
     	if (isWeatherSE(highlight)) {
@@ -590,7 +591,7 @@ class SpecialEventsDM
         }
     }
 
-    private String findName(IMatchHighlight highlight)
+    private String findName(MatchHighlight highlight)
     {
         if (isWeatherSE(highlight)) {
         	return highlight.getSpielerName();
@@ -659,7 +660,7 @@ class SpecialEventsDM
         return "?";
     }
 
-    private String getSpielerName(IMatchHighlight highlight)
+    private String getSpielerName(MatchHighlight highlight)
     {
     	String name = "";
     	//        if(highlight.getTeamID() == teamId && !isNegativeSE(highlight))

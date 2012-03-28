@@ -3,6 +3,7 @@ package ho.module.evilcard;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.IMatchHighlight;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,6 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import plugins.IMatchHighlight;
 
 
 class DetailsTableModel extends AbstractTableModel {
