@@ -1,6 +1,7 @@
 // %752552287:de.hattrickorganizer.tools%
 package ho.core.util;
 
+import ho.core.constants.PlayerAbilities;
 import ho.core.model.HOVerwaltung;
 import plugins.ISpieler;
 
@@ -204,123 +205,7 @@ public class PlayerHelper {
             bewertungwert = ((bewertungwert - 1) / 4) + 1;
         }
 
-        switch (bewertungwert) {
-        
-        	case ISpieler.nicht_vorhanden: {
-        		bewertung = HOVerwaltung.instance().getLanguageString("nonexisting");
-        		break;
-        	}
-            
-            case ISpieler.katastrophal: {
-                bewertung = HOVerwaltung.instance().getLanguageString("katastrophal");
-                break;
-            }
-
-            case ISpieler.erbaermlich: {
-                bewertung = HOVerwaltung.instance().getLanguageString("erbaermlich");
-                break;
-            }
-
-            case ISpieler.armselig: {
-                bewertung = HOVerwaltung.instance().getLanguageString("armselig");
-                break;
-            }
-
-            case ISpieler.schwach: {
-                bewertung = HOVerwaltung.instance().getLanguageString("schwach");
-                break;
-            }
-
-            case ISpieler.durchschnittlich: {
-                bewertung = HOVerwaltung.instance().getLanguageString("durchschnittlich");
-                break;
-            }
-
-            case ISpieler.passabel: {
-                bewertung = HOVerwaltung.instance().getLanguageString("passabel");
-                break;
-            }
-
-            case ISpieler.gut: {
-                bewertung = HOVerwaltung.instance().getLanguageString("gut");
-                break;
-            }
-
-            case ISpieler.sehr_gut: {
-                bewertung = HOVerwaltung.instance().getLanguageString("sehr_gut");
-                break;
-            }
-
-            case ISpieler.hervorragend: {
-                bewertung = HOVerwaltung.instance().getLanguageString("hervorragend");
-                break;
-            }
-
-            case ISpieler.grossartig: {
-                bewertung = HOVerwaltung.instance().getLanguageString("grossartig");
-                break;
-            }
-
-            case ISpieler.brilliant: {
-                bewertung = HOVerwaltung.instance().getLanguageString("brilliant");
-                break;
-            }
-
-            case ISpieler.fantastisch: {
-                bewertung = HOVerwaltung.instance().getLanguageString("fantastisch");
-                break;
-            }
-
-            case ISpieler.Weltklasse: {
-                bewertung = HOVerwaltung.instance().getLanguageString("Weltklasse");
-                break;
-            }
-
-            case ISpieler.uebernatuerlich: {
-                bewertung = HOVerwaltung.instance().getLanguageString("uebernatuerlich");
-                break;
-            }
-
-            case ISpieler.gigantisch: {
-                bewertung = HOVerwaltung.instance().getLanguageString("gigantisch");
-                break;
-            }
-
-            case ISpieler.ausserirdisch: {
-                bewertung = HOVerwaltung.instance().getLanguageString("ausserirdisch");
-                break;
-            }
-
-            case ISpieler.mythisch: {
-                bewertung = HOVerwaltung.instance().getLanguageString("mythisch");
-                break;
-            }
-
-            case ISpieler.maerchenhaft: {
-                bewertung = HOVerwaltung.instance().getLanguageString("maerchenhaft");
-                break;
-            }
-
-            case ISpieler.galaktisch: {
-                bewertung = HOVerwaltung.instance().getLanguageString("galaktisch");
-                break;
-            }
-
-            case ISpieler.goettlich: {
-                bewertung = HOVerwaltung.instance().getLanguageString("goettlich");
-                break;
-            }
-
-            default: {
-                if (bewertungwert > ISpieler.goettlich) {
-                    bewertung = HOVerwaltung.instance().getLanguageString("goettlich");
-                } else {
-                    bewertung = HOVerwaltung.instance().getLanguageString("Unbestimmt");
-                }
-
-                break;
-            }
-        }
+        bewertung = PlayerAbilities.toString(bewertungwert);
 
         if (isMatch) {
             bewertung += getName4Sublevel(sublevel);
