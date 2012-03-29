@@ -17,11 +17,11 @@ import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.Matchdetails;
 
 import java.text.NumberFormat;
 import java.util.List;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 /**
@@ -96,7 +96,7 @@ public class RatingOptimizer {
 		//}
 					
 		MatchLineupTeam lineupTeam = null;
-		IMatchDetails details = matchData.getDetails();
+		Matchdetails details = matchData.getDetails();
 		if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 			lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
 		} else {
@@ -125,7 +125,7 @@ public class RatingOptimizer {
 			}
 		}
 		
-		IMatchDetails det = matchData.getDetails();
+		Matchdetails det = matchData.getDetails();
 		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == matchData.getInfo().getHeimID()) {
 			lineup.setAttitude(det.getHomeEinstellung());
 			lineup.setHeimspiel((short) 1);
@@ -169,7 +169,7 @@ public class RatingOptimizer {
 		return offset;
 	}
 
-	private static void debugDiffs (String type, IMatchDetails det, RatingPredictionManager rpm, Team team) {
+	private static void debugDiffs (String type, Matchdetails det, RatingPredictionManager rpm, Team team) {
 		boolean home = false;
 		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == det.getHeimId()) {
 			home = true;

@@ -19,6 +19,7 @@ import ho.core.util.Helper;
 import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
@@ -30,7 +31,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 /**
@@ -1044,17 +1044,17 @@ public class Lineup {
 		float value = 0.0f;
 
 		switch (type) {
-		case plugins.IMatchDetails.TAKTIK_PRESSING:
+		case ho.module.matches.model.IMatchDetails.TAKTIK_PRESSING:
 			value = getTacticLevelPressing();
 			break;
-		case plugins.IMatchDetails.TAKTIK_KONTER:
+		case ho.module.matches.model.IMatchDetails.TAKTIK_KONTER:
 			value = getTacticLevelCounter();
 			break;
-		case plugins.IMatchDetails.TAKTIK_MIDDLE:
-		case plugins.IMatchDetails.TAKTIK_WINGS:
+		case ho.module.matches.model.IMatchDetails.TAKTIK_MIDDLE:
+		case ho.module.matches.model.IMatchDetails.TAKTIK_WINGS:
 			value = getTacticLevelAimAow();
 			break;
-		case plugins.IMatchDetails.TAKTIK_LONGSHOTS:
+		case ho.module.matches.model.IMatchDetails.TAKTIK_LONGSHOTS:
 			value = getTacticLevelLongShots();
 			break;
 		}

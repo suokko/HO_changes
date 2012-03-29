@@ -1,7 +1,7 @@
 // %2389243612:hoplugins.commons.vo%
 package ho.module.teamAnalyzer.vo;
 
-import plugins.IMatchDetails;
+import ho.module.matches.model.IMatchDetails;
 
 
 /**

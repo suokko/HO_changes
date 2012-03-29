@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.ui.controller;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
@@ -19,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import plugins.IMatchDetails;
 
 
 /**

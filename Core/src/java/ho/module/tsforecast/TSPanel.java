@@ -29,6 +29,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchDetails;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -47,7 +48,6 @@ import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import plugins.IMatchDetails;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve

@@ -4,6 +4,7 @@ package ho.module.teamAnalyzer.ui.component;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.Matchdetails;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 
 import java.awt.BorderLayout;
@@ -13,8 +14,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import plugins.IMatchDetails;
 
 
 /**
@@ -76,7 +75,7 @@ public class DownloadPanel extends JPanel {
 
                     if (HelperWrapper.instance().downloadMatchData(id)) {
 	
-	                    IMatchDetails md = DBManager.instance().getMatchDetails(id);
+                    	Matchdetails md = DBManager.instance().getMatchDetails(id);
 	
 	                    if (md.getFetchDatum() != null) {
 	                        status.setText(HOVerwaltung.instance().getLanguageString("ImportOK"));

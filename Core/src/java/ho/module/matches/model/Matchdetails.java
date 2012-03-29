@@ -15,10 +15,9 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import plugins.IMatchDetails;
 
 
-public class Matchdetails implements plugins.IMatchDetails {
+public class Matchdetails implements ho.module.matches.model.IMatchDetails {
 
 	private String m_sArenaName = "";
     private String m_sGastName = "";

@@ -3,6 +3,7 @@ package ho.tool.matchPrediction;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.PlayerHelper;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.Matchdetails;
 import ho.tool.matchPrediction.engine.TeamData;
 import ho.tool.matchPrediction.engine.TeamRatings;
@@ -19,7 +20,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import plugins.IMatchDetails;
 
 
 class TeamRatingPanel extends JPanel implements ItemListener {

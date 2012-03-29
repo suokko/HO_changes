@@ -6,6 +6,7 @@ import ho.core.model.ISpielerPosition;
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.Matchdetails;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;
@@ -16,8 +17,6 @@ import ho.module.teamAnalyzer.vo.PlayerPerformance;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import plugins.IMatchDetails;
 
 
 /**
@@ -101,7 +100,7 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private int getTacticLevel(IMatchDetails aMatchDetail) {
+    private int getTacticLevel(Matchdetails aMatchDetail) {
         if (isHome(aMatchDetail)) {
             return aMatchDetail.getHomeTacticSkill();
         } else {
@@ -116,7 +115,7 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private int getTacticType(IMatchDetails aMatchDetail) {
+    private int getTacticType(Matchdetails aMatchDetail) {
         if (isHome(aMatchDetail)) {
             return aMatchDetail.getHomeTacticType();
         } else {
@@ -131,7 +130,7 @@ public class MatchPopulator {
      *
      * @return Match ratings calculator
      */
-    private MatchRating buildMatchRating(IMatchDetails aMatchDetail) {
+    private MatchRating buildMatchRating(Matchdetails aMatchDetail) {
         MatchRating mr = new MatchRating();
 
         if (isHome(aMatchDetail)) {
@@ -174,7 +173,7 @@ public class MatchPopulator {
      * @return TODO Missing Return Method Documentation
      */
     private MatchDetail populateMatch(Match aMatch) {
-        IMatchDetails tmpMatch = DBManager.instance().getMatchDetails(aMatch.getMatchId());
+    	Matchdetails tmpMatch = DBManager.instance().getMatchDetails(aMatch.getMatchId());
 
         MatchDetail matchDetail = new MatchDetail(aMatch);
 
@@ -220,7 +219,7 @@ public class MatchPopulator {
         return matchDetail;
     }
     
-    private boolean isHome(IMatchDetails match) {
+    private boolean isHome(Matchdetails match) {
         boolean isHome = false;
 
         if (match.getHeimId() == SystemManager.getActiveTeamId()) {

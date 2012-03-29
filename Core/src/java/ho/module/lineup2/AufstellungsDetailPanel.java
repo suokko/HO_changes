@@ -15,6 +15,7 @@ import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.Matchdetails;
 
 import java.awt.BorderLayout;
@@ -33,7 +34,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 /**
