@@ -24,6 +24,7 @@ package ho.module.tsforecast;
 
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchLineup;
 import ho.module.series.model.Liga;
 
@@ -36,7 +37,6 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
-import plugins.IMatchDetails;
 
 // Referenced classes of package hoplugins.tsforecast:
 //            Curve

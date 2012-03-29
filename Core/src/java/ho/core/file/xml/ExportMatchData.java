@@ -1,20 +1,20 @@
 package ho.core.file.xml;
 
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.Matchdetails;
 
 import java.util.Hashtable;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 
 public class ExportMatchData {
 	
 	private Hashtable<Integer,ISpieler> players;
-	private IMatchDetails details;
+	private Matchdetails details;
 	private MatchKurzInfo info;
 
-	public IMatchDetails getDetails() {
+	public Matchdetails getDetails() {
 		return details;
 	}
 
@@ -26,7 +26,7 @@ public class ExportMatchData {
 		return players;
 	}
 
-	public void setDetails(IMatchDetails details) {
+	public void setDetails(Matchdetails details) {
 		this.details = details;
 	}
 

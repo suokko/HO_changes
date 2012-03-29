@@ -12,6 +12,7 @@ import ho.core.util.HelperWrapper;
 import ho.module.matches.model.IMatchHighlight;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.Matchdetails;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -25,7 +26,6 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 
@@ -364,7 +364,7 @@ public class TrainingsManager {
     			posId == PLAYERSTATUS_SUBSTITUTED_OUT ||
     			posId == PLAYERSTATUS_TACTIC_CHANGE )
     		return 0;
-       	IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
+    	Matchdetails details = DBManager.instance().getMatchDetails(matchId);
         Vector<MatchHighlight> highlights = details.getHighlights();
         for (int i=0; i<highlights.size(); i++) {
         	MatchHighlight curHighlight = highlights.get(i);
@@ -472,7 +472,7 @@ public class TrainingsManager {
     	// No Lineup for this match
     	if (matchData == null)
     		return PLAYERSTATUS_NO_MATCHDATA;
-       	IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
+    	Matchdetails details = DBManager.instance().getMatchDetails(matchId);
     	if (details == null)
     		// No Matchdetails found, probably not downloaded...
     		return PLAYERSTATUS_NO_MATCHDETAILS;

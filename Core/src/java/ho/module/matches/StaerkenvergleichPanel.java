@@ -11,6 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
@@ -29,7 +30,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.IMatchDetails;
 
 
 /**

@@ -2,8 +2,9 @@
 package ho.tool.matchPrediction.engine;
 
 
-import plugins.IMatchDetails;
 
+
+import ho.module.matches.model.IMatchDetails;
 
 import java.util.ArrayList;
 import java.util.List;

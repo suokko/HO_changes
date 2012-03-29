@@ -19,6 +19,7 @@ package ho.module.tsforecast;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchDetails;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +32,6 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 
-import plugins.IMatchDetails;
 
 final class FutureMatchBox extends JPanel {
 

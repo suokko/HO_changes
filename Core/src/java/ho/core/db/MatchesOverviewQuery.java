@@ -3,6 +3,7 @@ package ho.core.db;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.Matchdetails;
 import ho.module.matches.model.MatchesHighlightsStat;
@@ -13,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import plugins.IMatchDetails;
 
 class MatchesOverviewQuery  {
 	final static String KEY = "MatchesOverviewQuery";

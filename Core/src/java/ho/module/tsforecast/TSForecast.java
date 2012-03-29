@@ -6,6 +6,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchLineup;
 
 import java.awt.Color;
@@ -26,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import plugins.IMatchDetails;
 
 /**
  * Tab_TSForecast -> „hinzugefügt“
