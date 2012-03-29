@@ -6,9 +6,11 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.IMatchHighlight;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
+import ho.module.matches.model.Matchdetails;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -18,7 +20,6 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import plugins.IMatchDetails;
 
 class SpecialEventsDM
 {
@@ -109,7 +110,7 @@ class SpecialEventsDM
 	}
 
     private Vector<Vector<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
-    	IMatchDetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
+    	Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
         String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
         Integer matchId = new Integer(kurzInfos.getMatchID());
         String heimTaktik = getTaktik(details.getHomeTacticType());

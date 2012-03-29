@@ -19,6 +19,7 @@ import ho.core.module.IModule;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.Lineup;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.Matchdetails;
@@ -53,7 +54,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-import plugins.IMatchDetails;
 
 
 public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,

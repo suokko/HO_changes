@@ -5,11 +5,13 @@ import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
 import ho.core.util.HOLogger;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.MatchLineupPlayer;
+import ho.module.matches.model.Matchdetails;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +19,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 public class MatchExporter {
@@ -65,7 +66,7 @@ public class MatchExporter {
 		//Alle matches prï¿½fen        
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
-			IMatchDetails details = DBManager.instance().getMatchDetails(matches[i].getMatchID());
+			Matchdetails details = DBManager.instance().getMatchDetails(matches[i].getMatchID());
 			boolean isFriendly = (matches[i].getMatchTyp() == MatchLineup.TESTSPIEL
 					|| matches[i].getMatchTyp() == MatchLineup.INT_TESTSPIEL 
 					|| matches[i].getMatchTyp() == MatchLineup.TESTPOKALSPIEL
@@ -120,7 +121,7 @@ public class MatchExporter {
 		return export;
 	}
 
-	private static boolean isValidMatch(MatchKurzInfo info, IMatchDetails details, Date startingDate, boolean strict, boolean skipPullBack) {
+	private static boolean isValidMatch(MatchKurzInfo info, Matchdetails details, Date startingDate, boolean strict, boolean skipPullBack) {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		if ((info.getMatchStatus() != MatchKurzInfo.FINISHED) || (details.getMatchID() == -1)) {
 			HOLogger.instance().debug(MatchExporter.class, "Ignoring match " + info.getMatchID() + ": not finished");

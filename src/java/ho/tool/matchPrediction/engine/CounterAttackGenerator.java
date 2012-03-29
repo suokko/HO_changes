@@ -1,7 +1,7 @@
 package ho.tool.matchPrediction.engine;
 
 
-import plugins.IMatchDetails;
+import ho.module.matches.model.IMatchDetails;
 
 class CounterAttackGenerator extends BaseActionGenerator {
 

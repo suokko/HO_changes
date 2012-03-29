@@ -6,7 +6,6 @@ import ho.core.model.HOVerwaltung;
 import java.util.Iterator;
 import java.util.Vector;
 
-import plugins.IMatchDetails;
 
 /**
  * Helper class to retrieve match related information.
@@ -82,7 +81,7 @@ public class MatchHelper {
 			return FOREIGN_MATCH; // foreign match
 		}
 
-   		IMatchDetails details = DBManager.instance().getMatchDetails(matchId);
+		Matchdetails details = DBManager.instance().getMatchDetails(matchId);
 
    		// For a league/qualification/cup game, the home team always has the home advantage (no neutral grounds) 
    		// (exception for cup finals, see below)

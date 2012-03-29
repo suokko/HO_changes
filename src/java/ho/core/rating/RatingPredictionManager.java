@@ -5,6 +5,7 @@ import ho.core.model.ITeam;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
+import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.Matchdetails;
 
 import java.sql.Timestamp;
@@ -14,7 +15,6 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 public class RatingPredictionManager {

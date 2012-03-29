@@ -2,10 +2,10 @@ package ho.tool.matchPrediction.engine;
 
 
 import ho.core.util.HOLogger;
+import ho.module.matches.model.IMatchDetails;
 
 import java.util.List;
 
-import plugins.IMatchDetails;
 
 
 public class MatchData {

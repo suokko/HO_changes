@@ -10,7 +10,6 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
-import ho.core.model.ITeam;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -20,6 +19,7 @@ import ho.core.util.HelperWrapper;
 import ho.module.lineup.Lineup;
 import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.matches.model.MatchLineupTeam;
+import ho.module.matches.model.Matchdetails;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import plugins.IMatchDetails;
 import plugins.ISpieler;
 
 //implement IPlugin for integration into HO
@@ -251,7 +250,7 @@ public class XMLExporter  {
 				ele.appendChild(doc.createTextNode("" + hrfID));
 
 				MatchLineupTeam lineupTeam = null;
-				IMatchDetails details = matchData.getDetails();
+				Matchdetails details = matchData.getDetails();
 				if (details.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 					lineupTeam = DBManager.instance().getMatchLineup(details.getMatchID()).getHeim();
 				} else {
