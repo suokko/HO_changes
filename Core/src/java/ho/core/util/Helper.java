@@ -2,6 +2,7 @@
 package ho.core.util;
 
 
+import ho.core.constants.PlayerAbilities;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
@@ -20,7 +21,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import plugins.ISpieler;
 
 
 /**
@@ -30,63 +30,63 @@ public class Helper {
  
 	/** Gesamteinstufung */
 	public static final CBItem[] EINSTUFUNG = {
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend), ISpieler.hervorragend),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.grossartig), ISpieler.grossartig),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.brilliant), ISpieler.brilliant),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.fantastisch), ISpieler.fantastisch),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.Weltklasse), ISpieler.Weltklasse),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.uebernatuerlich), ISpieler.uebernatuerlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gigantisch), ISpieler.gigantisch),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.ausserirdisch), ISpieler.ausserirdisch),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.mythisch), ISpieler.mythisch),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.maerchenhaft), ISpieler.maerchenhaft),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.galaktisch), ISpieler.galaktisch),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.goettlich), ISpieler.goettlich) };
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.FORMIDABLE), PlayerAbilities.FORMIDABLE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.OUTSTANDING), PlayerAbilities.OUTSTANDING),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.BRILLIANT), PlayerAbilities.BRILLIANT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MAGNIFICENT), PlayerAbilities.MAGNIFICENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WORLD_CLASS), PlayerAbilities.WORLD_CLASS),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SUPERNATURAL), PlayerAbilities.SUPERNATURAL),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.TITANIC), PlayerAbilities.TITANIC),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXTRA_TERRESTRIAL), PlayerAbilities.EXTRA_TERRESTRIAL),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MYTHICAL), PlayerAbilities.MYTHICAL),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MAGICAL), PlayerAbilities.MAGICAL),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.UTOPIAN), PlayerAbilities.UTOPIAN),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DIVINE), PlayerAbilities.DIVINE) };
 
     /** Form */
 	public static final CBItem[] EINSTUFUNG_FORM = {
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut) };
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT) };
 
     /** Kondition */
 	public static final CBItem[] EINSTUFUNG_KONDITION = {
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.nicht_vorhanden), ISpieler.nicht_vorhanden),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.hervorragend), ISpieler.hervorragend) };
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.FORMIDABLE), PlayerAbilities.FORMIDABLE) };
 
     /** Form */
 	public static final CBItem[] EINSTUFUNG_TRAINER = {
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.katastrophal), ISpieler.katastrophal),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.erbaermlich), ISpieler.erbaermlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.armselig), ISpieler.armselig),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.schwach), ISpieler.schwach),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.durchschnittlich), ISpieler.durchschnittlich),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.passabel), ISpieler.passabel),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.gut), ISpieler.gut),
-			new CBItem(PlayerHelper.getNameForSkill(ISpieler.sehr_gut), ISpieler.sehr_gut) };
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
+			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT) };
 
     /** Speciality */
     public static final CBItem[] EINSTUFUNG_SPECIALITY = {
