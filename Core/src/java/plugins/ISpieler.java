@@ -6,7 +6,6 @@
  */
 package plugins;
 
-import ho.core.model.ITeam;
 
 /**
  * DOCUMENT ME!
@@ -60,40 +59,6 @@ public interface ISpieler {
 
     /** TODO Missing Parameter Documentation */
     public static final int REGEN = 4;
-
-    //TR-Typen , unfortunatly doubled due desgin error, main defs ar ein ITeam
-
-    public static final int TA_EXTERNALATTACK = ITeam.TA_EXTERNALATTACK;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int STANDARDS = ITeam.TA_STANDARD;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int VERTEIDIGUNG = ITeam.TA_VERTEIDIGUNG;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int CHANCENVERWERTUNG = ITeam.TA_CHANCEN;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int FLUEGELSPIEL = ITeam.TA_FLANKEN;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SCHUSSTRAINING = ITeam.TA_SCHUSSTRAINING;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int PASSPIEL = ITeam.TA_PASSSPIEL;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SPIELAUFBAU = ITeam.TA_SPIELAUFBAU;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TORWART = ITeam.TA_TORWART;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_ABWEHRVERHALTEN = ITeam.TA_ABWEHRVERHALTEN;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int TA_STEILPAESSE = ITeam.TA_STEILPAESSE;
 
     //Beliebtheit	
 

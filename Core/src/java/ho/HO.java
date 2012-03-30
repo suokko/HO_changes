@@ -197,16 +197,11 @@ public class HO {
 		// der manuellen DB Einträge
 		TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
 
-		// INIT + Dann Pluginsstarten , sonst endlos loop da instance() sich
-		// selbst aufruft!
-		//interuptionsWindow.setInfoText(8,"Starting Plugins");
-		//PluginManager.startPluginModuls(interuptionsWindow,8);
-
-		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
-				.exportOldLineup("Actual");
+		interuptionsWindow.setInfoText(8,"Initialize Lineup");
+		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
 		// Anzeigen
-		interuptionsWindow.setInfoText(8,"Prepare to show");
+		interuptionsWindow.setInfoText(9,"Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
 		// Startbild weg
