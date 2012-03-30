@@ -538,29 +538,29 @@ public class HOModel {
 		int beforeSkill = 0;
 		int afterSkill = 0;
     	switch (trArt) {
-    	case ISpieler.TA_EXTERNALATTACK:
-    	case ISpieler.FLUEGELSPIEL:
+    	case ITeam.TA_EXTERNALATTACK:
+    	case ITeam.TA_FLANKEN:
     		skill = ISpieler.SKILL_FLUEGEL;
     		break;
-    	case ISpieler.STANDARDS:
+    	case ITeam.TA_STANDARD:
     		skill = ISpieler.SKILL_STANDARDS;
     		break;
-    	case ISpieler.TA_ABWEHRVERHALTEN:
-    	case ISpieler.VERTEIDIGUNG:
+    	case ITeam.TA_ABWEHRVERHALTEN:
+    	case ITeam.TA_VERTEIDIGUNG:
     		skill = ISpieler.SKILL_VERTEIDIGUNG;
     		break;
-    	case ISpieler.CHANCENVERWERTUNG:
-    	case ISpieler.SCHUSSTRAINING:
+    	case ITeam.TA_CHANCEN:
+    	case ITeam.TA_SCHUSSTRAINING:
     		skill = ISpieler.SKILL_TORSCHUSS;
     		break;
-    	case ISpieler.PASSPIEL:
-    	case ISpieler.TA_STEILPAESSE:
+    	case ITeam.TA_PASSSPIEL:
+    	case ITeam.TA_STEILPAESSE:
     		skill = ISpieler.SKILL_PASSSPIEL;
     		break;
-    	case ISpieler.SPIELAUFBAU:
+    	case ITeam.TA_SPIELAUFBAU:
     		skill = ISpieler.SKILL_SPIELAUFBAU;
     		break;
-    	case ISpieler.TORWART:
+    	case ITeam.TA_TORWART:
     		skill = ISpieler.SKILL_TORWART;
     		break;
     	}

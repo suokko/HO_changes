@@ -30,7 +30,7 @@ public final class SplashFrame extends JFrame {
 	private String m_sVersionText = HOMainFrame.getVersionString();
 	private int step;
 	private int subStep = 0;
-	private int maxStep = 9;
+	private int maxStep = 10;
 	private FontUIResource fontText = new FontUIResource("SansSerif", Font.PLAIN, 10);
 	private FontUIResource fontVersion = new FontUIResource("SansSerif", Font.PLAIN, 16);
 	private Color progressColor = new Color(8,115,10);
