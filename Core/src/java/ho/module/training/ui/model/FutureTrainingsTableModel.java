@@ -1,12 +1,11 @@
 // %638597353:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.constants.TrainingType;
+import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
-import ho.core.model.ITeam;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.training.TrainingPanel;
-import ho.module.training.Trainings;
-import ho.module.training.ui.comp.CBItem;
 
 import java.util.Iterator;
 import java.util.List;
@@ -96,13 +95,13 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
                 } else {
                     train.setIntensitaet(100);
                     train.setStaminaTrainingPart(5);
-                    train.setTyp(ITeam.TA_STANDARD);
+                    train.setTyp(TrainingType.SET_PIECES);
                 }
 
                 DBManager.instance().saveFutureTraining(train);
             }
 
-            String selectedTrain = Trainings.getTrainingDescription(train.getTyp());
+            String selectedTrain = TrainingType.toString(train.getTyp());
 
             aobj = (new Object[]{
                        train.getWeek() + "", //$NON-NLS-1$

@@ -24,6 +24,8 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -282,7 +284,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
       // draw scale for teamspirit
       if( m_bShowTeamspiritScale) {
         graphics2d.setColor( Color.black);
-        str = ihelper.getNameForTeamspirit( i);
+        str = TeamSpirit.toString( i);
         rectangle2d = new TextLayout( str, font, fontrendercontext).getBounds();
         if( i < m_dValues-1)
           graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5,
@@ -296,7 +298,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
       // draw scale for confidence
 	if( m_bShowConfidenceScale && i < m_dValues-1) {
         graphics2d.setColor( Color.blue);
-        str = ihelper.getNameForConfidence( i);
+        str = TeamConfidence.toString( i);
         rectangle2d = new TextLayout( str, font, fontrendercontext).getBounds();
         graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5, 
                                (int)(m_iMaxY+DYFrame - (i+1)*m_iMaxY/m_dValues + 3));
@@ -463,9 +465,9 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     Rectangle2D rectangle2d = null;
     double maxWidth = 0D;
     for( int i = 0; i < m_dValues; i++) {
-      rectangle2d = ( new TextLayout( ihelper.getNameForTeamspirit( i), font, fontrendercontext)).getBounds();
+      rectangle2d = ( new TextLayout( TeamSpirit.toString( i), font, fontrendercontext)).getBounds();
       if(rectangle2d.getWidth() > maxWidth) maxWidth = rectangle2d.getWidth();
-      rectangle2d = ( new TextLayout( ihelper.getNameForConfidence( i), font, fontrendercontext)).getBounds();
+      rectangle2d = ( new TextLayout( TeamConfidence.toString( i), font, fontrendercontext)).getBounds();
       if(rectangle2d.getWidth() > maxWidth) maxWidth = rectangle2d.getWidth();
     }
     return maxWidth;

@@ -1,8 +1,7 @@
 // %1126721451244:hoplugins.trainingExperience.ui.component%
 package ho.module.training.ui.comp;
 
-import ho.core.model.ITeam;
-import ho.module.training.Trainings;
+import ho.core.constants.TrainingType;
 
 import javax.swing.JComboBox;
 
@@ -19,10 +18,10 @@ public class TrainingComboBox extends JComboBox {
      * Creates a new TrainingComboBox object.
      */
     public TrainingComboBox() {
-        super();
-        for (int i = ITeam.TA_STANDARD; i <= ITeam.TA_EXTERNALATTACK;  i++)
-        {
-        	addItem(new CBItem(Trainings.getTrainingDescription(i), i));
-        }
+        super(TrainingType.ITEMS);
+//        for (int i = ITeam.TA_STANDARD; i <= ITeam.TA_EXTERNALATTACK;  i++)
+//        {
+//        	addItem(new CBItem(Trainings.getTrainingDescription(i), i));
+//        }
     }
 }

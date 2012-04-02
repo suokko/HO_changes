@@ -1,11 +1,12 @@
 // %1956788941:hoplugins.trainingExperience.ui.component%
 package ho.module.training.ui.comp;
 
+import ho.core.constants.TrainingType;
+import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.training.TrainingPanel;
-import ho.module.training.Trainings;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
 
 import java.awt.event.ActionEvent;
@@ -78,7 +79,7 @@ public class FutureSettingPanel extends JPanel {
     	FutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
         final int ttyp = firstFutureTraining.getTyp();
-        training.setSelectedItem(new CBItem(Trainings.getTrainingDescription(ttyp), ttyp));
+        training.setSelectedItem(new CBItem(TrainingType.toString(ttyp), ttyp));
         intensity = new IntensityComboBox();
         intensity.setSelectedIndex(firstFutureTraining.getIntensitaet());
         staminaTrainingPart = new IntensityComboBox();

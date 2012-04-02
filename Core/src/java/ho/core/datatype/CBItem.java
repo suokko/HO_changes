@@ -36,28 +36,10 @@ public class CBItem {
     /**
      * TODO Missing Method Documentation
      *
-     * @param id TODO Missing Method Parameter Documentation
-     */
-    public final void setId(int id) {
-        m_iId = id;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
      * @return TODO Missing Return Method Documentation
      */
     public final int getId() {
         return m_iId;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
-    public final void setText(String text) {
-        m_sText = text;
     }
 
     /**
