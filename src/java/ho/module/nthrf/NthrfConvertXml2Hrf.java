@@ -1,5 +1,8 @@
 package ho.module.nthrf;
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
+import ho.core.constants.TrainingType;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
@@ -403,21 +406,21 @@ class NthrfConvertXml2Hrf {
 		m_sHRFBuffer.append("trLevel=100\n");			// TrainingLevel
 		m_sHRFBuffer.append("staminaTrainingPart=5\n"); //StaminaTrainingPart
 		m_sHRFBuffer.append("trTypeValue=8\n");			// TrainingType
-		m_sHRFBuffer.append("trType=" + helper.getNameForTraining(8) + "\n");
+		m_sHRFBuffer.append("trType=" +  TrainingType.toString(8) + "\n");
 
 		// TODO: imports de.hattrickorganizer.model.Team. (get though helper from Team)
 
 		if (details.getMorale()>-1 && details.getSelfConfidence()>-1) {
 			m_sHRFBuffer.append("stamningValue=" + details.getMorale() + "\n");
 			try {
-				m_sHRFBuffer.append("stamning=" + HOVerwaltung.instance().getModel().getTeam().getNameForTeamSpirit(details.getMorale()) + "\n");
+				m_sHRFBuffer.append("stamning=" + TeamSpirit.toString(details.getMorale()) + "\n");
 			} catch (Exception e) {
 				System.out.println("Cant get text for morale " + details.getMorale() + "\n" + e);
 				m_sHRFBuffer.append("stamning=\n");
 			}
 			m_sHRFBuffer.append("sjalvfortroendeValue=" + details.getSelfConfidence() + "\n");
 			try {
-				m_sHRFBuffer.append("sjalvfortroende="+  HOVerwaltung.instance().getModel().getTeam().getNameForSelfConfidence(details.getSelfConfidence()) + "\n");
+				m_sHRFBuffer.append("sjalvfortroende="+  TeamConfidence.toString(details.getSelfConfidence()) + "\n");
 			} catch (Exception e) {
 				System.out.println("Cant get text for self confidence " + details.getMorale() + "\n" + e);
 				m_sHRFBuffer.append("sjalvfortroende=\n");

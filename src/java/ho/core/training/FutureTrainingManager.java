@@ -1,8 +1,8 @@
 package ho.core.training;
 
+import ho.core.constants.TrainingType;
 import ho.core.model.FuturePlayer;
 import ho.core.model.ISkillup;
-import ho.core.model.ITeam;
 import ho.core.model.PlayerSkillup;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
@@ -83,19 +83,19 @@ public class FutureTrainingManager {
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
 			switch (tw.getTyp()) {
-				case ITeam.TA_TORWART :
-				case ITeam.TA_SPIELAUFBAU :
-				case ITeam.TA_PASSSPIEL :
-				case ITeam.TA_STEILPAESSE :
-				case ITeam.TA_FLANKEN :
-				case ITeam.TA_VERTEIDIGUNG :
-				case ITeam.TA_ABWEHRVERHALTEN :
-				case ITeam.TA_CHANCEN :
-				case ITeam.TA_STANDARD :
-				case ITeam.TA_EXTERNALATTACK :
+				case TrainingType.GOALKEEPING :
+				case TrainingType.PLAYMAKING :
+				case TrainingType.SHORT_PASSES :
+				case TrainingType.THROUGH_PASSES :
+				case TrainingType.CROSSING_WINGER :
+				case TrainingType.DEFENDING :
+				case TrainingType.DEF_POSITIONS :
+				case TrainingType.SCORING :
+				case TrainingType.SET_PIECES :
+				case TrainingType.WING_ATTACKS :
 					processTraining(getSkillForTraining(tw.getTyp()), point, tw);
 					break;
-				case ITeam.TA_SCHUSSTRAINING :
+				case TrainingType.SHOOTING :
 					processTraining(ISpieler.SKILL_TORSCHUSS, point, tw);
 					processTraining(ISpieler.SKILL_STANDARDS, 0.5d, tw);
 					break;
@@ -281,25 +281,25 @@ public class FutureTrainingManager {
 	private int getPrimaryTrainingForSkill (int skillIndex) {
 		switch (skillIndex) {
 			case ISpieler.SKILL_TORWART :
-				return ITeam.TA_TORWART;
+				return TrainingType.GOALKEEPING;
 
 			case ISpieler.SKILL_SPIELAUFBAU :
-				return ITeam.TA_SPIELAUFBAU;
+				return TrainingType.PLAYMAKING;
 
 			case ISpieler.SKILL_PASSSPIEL :
-				return ITeam.TA_PASSSPIEL;
+				return TrainingType.SHORT_PASSES;
 
 			case ISpieler.SKILL_FLUEGEL :
-				return ITeam.TA_FLANKEN;
+				return TrainingType.CROSSING_WINGER;
 
 			case ISpieler.SKILL_VERTEIDIGUNG :
-				return ITeam.TA_VERTEIDIGUNG;
+				return TrainingType.DEFENDING;
 
 			case ISpieler.SKILL_TORSCHUSS :
-				return ITeam.TA_CHANCEN;
+				return TrainingType.SCORING;
 
 			case ISpieler.SKILL_STANDARDS :
-				return ITeam.TA_STANDARD;
+				return TrainingType.SET_PIECES;
 
 		}
 
@@ -315,29 +315,29 @@ public class FutureTrainingManager {
 	 */
 	private int getSkillForTraining (int trType) {
 		switch (trType) {
-			case ITeam.TA_TORWART:
+			case TrainingType.GOALKEEPING:
 				return ISpieler.SKILL_TORWART;
 
-			case ITeam.TA_SPIELAUFBAU:
+			case TrainingType.PLAYMAKING:
 				return ISpieler.SKILL_SPIELAUFBAU;
 
-			case ITeam.TA_PASSSPIEL:
-			case ITeam.TA_STEILPAESSE:
+			case TrainingType.SHORT_PASSES:
+			case TrainingType.THROUGH_PASSES:
 				return ISpieler.SKILL_PASSSPIEL;
 
-			case ITeam.TA_FLANKEN:
-			case ITeam.TA_EXTERNALATTACK:
+			case TrainingType.CROSSING_WINGER:
+			case TrainingType.WING_ATTACKS:
 				return ISpieler.SKILL_FLUEGEL;
 
-			case ITeam.TA_VERTEIDIGUNG:
-			case ITeam.TA_ABWEHRVERHALTEN:
+			case TrainingType.DEFENDING:
+			case TrainingType.DEF_POSITIONS:
 				return ISpieler.SKILL_VERTEIDIGUNG;
 
-			case ITeam.TA_CHANCEN:
-			case ITeam.TA_SCHUSSTRAINING:
+			case TrainingType.SCORING:
+			case TrainingType.SHOOTING:
 				return ISpieler.SKILL_TORSCHUSS;
 
-			case ITeam.TA_STANDARD:
+			case TrainingType.SET_PIECES:
 				return ISpieler.SKILL_STANDARDS;
 
 		}

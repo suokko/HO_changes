@@ -6,6 +6,9 @@
  */
 package ho.tool.hrfExplorer;
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
+import ho.core.constants.TrainingType;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -496,7 +499,7 @@ class HrfDetails {
 	 *            The m_Selbstvertrauen to set.
 	 */
 	void setSelbstvertrauen(int selbstvertrauen) {
-		m_Selbstvertrauen = m_helper.getNameForConfidence(selbstvertrauen);
+		m_Selbstvertrauen =TeamConfidence.toString(selbstvertrauen);
 	}
 
 	/**
@@ -512,7 +515,7 @@ class HrfDetails {
 	 *            The m_Stimmung to set.
 	 */
 	void setStimmung(int stimmung) {
-		m_Stimmung = m_helper.getNameForTeamspirit(stimmung);
+		m_Stimmung = TeamSpirit.toString(stimmung);
 	}
 
 	/**
@@ -584,7 +587,7 @@ class HrfDetails {
 	 *            The m_TrArt to set.
 	 */
 	void setTrArt(int trArt) {
-		m_TrArt = m_helper.getNameForTraining(trArt);
+		m_TrArt = TrainingType.toString(trArt);
 	}
 
 	/**

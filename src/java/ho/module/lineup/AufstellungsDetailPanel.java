@@ -1,6 +1,8 @@
 // %3280892954:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
 import ho.core.datatype.CBItem;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -9,8 +11,6 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ITeam;
-import ho.core.model.Team;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
@@ -86,17 +86,8 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			new CBItem(HOVerwaltung.instance().getLanguageString("Normal"), IMatchDetails.EINSTELLUNG_NORMAL),
 			new CBItem(HOVerwaltung.instance().getLanguageString("MOTS"), IMatchDetails.EINSTELLUNG_MOTS) };
 	private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
-	private CBItem[] SELBSTVERTRAUEN = { new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_nichtVorhanden), ITeam.SV_nichtVorhanden),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_katastrophal), ITeam.SV_katastrophal),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_armselig), ITeam.SV_armselig),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_gering), ITeam.SV_gering),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_bescheiden), ITeam.SV_bescheiden),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_stark), ITeam.SV_stark),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_sehr_gross), ITeam.SV_sehr_gross),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_etwas_ueberheblich), ITeam.SV_etwas_ueberheblich),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_uebertrieben), ITeam.SV_voellig_uebertrieben),
-			new CBItem(Team.getNameForSelbstvertrauen(ITeam.SV_voellig_abgehoben), ITeam.SV_voellig_abgehoben) };
-	private JComboBox m_jcbSelbstvertrauen = new JComboBox(SELBSTVERTRAUEN);
+	
+	private JComboBox m_jcbSelbstvertrauen = new JComboBox(TeamConfidence.ITEMS);
 	
 	private CBItem[] TRAINERTYPE = { new CBItem(HOVerwaltung.instance().getLanguageString("coach.defensive"), 0),
 			new CBItem(HOVerwaltung.instance().getLanguageString("coach.normal"), 2),
@@ -107,18 +98,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private CBItem[] PREDICTIONTYPE = getPredictionItems();
 	private JComboBox m_jcbPredictionType= new JComboBox(PREDICTIONTYPE);
 
-	private CBItem[] STIMMUNG = { new CBItem(Team.getNameForStimmung(ITeam.TS_wie_im_kalten_Krieg), ITeam.TS_wie_im_kalten_Krieg),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_blutruenstig), ITeam.TS_blutruenstig),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_wuetend), ITeam.TS_wuetend),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_irritiert), ITeam.TS_irritiert),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_ruhig), ITeam.TS_ruhig),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_zufrieden), ITeam.TS_zufrieden),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_gut), ITeam.TS_gut),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_ausgezeichnet), ITeam.TS_ausgezeichnet),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_euphorisch), ITeam.TS_euphorisch),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_auf_Wolke_sieben), ITeam.TS_auf_Wolke_sieben),
-			new CBItem(Team.getNameForStimmung(ITeam.TS_paradiesisch), ITeam.TS_paradiesisch) };
-    private JComboBox m_jcbMainStimmung = new JComboBox(STIMMUNG);
+    private JComboBox m_jcbMainStimmung = new JComboBox(TeamSpirit.ITEMS);
 	private CBItem[] SUBSTIMM = { new CBItem(HOVerwaltung.instance().getLanguageString("verylow"), 0),
 			new CBItem(HOVerwaltung.instance().getLanguageString("low"), 1),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Durchschnitt"), 2),

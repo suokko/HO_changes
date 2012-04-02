@@ -1,6 +1,7 @@
 // %2418151228:de.hattrickorganizer.model%
 package ho.core.model;
 
+import ho.core.constants.TrainingType;
 import ho.core.db.DBManager;
 import ho.core.epv.EPV;
 import ho.core.training.TrainingPerWeek;
@@ -531,36 +532,36 @@ public class HOModel {
     	TrainingPerWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
     	int trLevel = train.getIntensitaet();
     	int trArt = train.getTyp();
-    	String trArtString = HelperWrapper.instance().getNameForTraining(trArt);
+    	String trArtString = TrainingType.toString(trArt);
     	int trStPart = train.getStaminaTrainingPart();
     	int age = after.getAlter();
     	int skill = -1;
 		int beforeSkill = 0;
 		int afterSkill = 0;
     	switch (trArt) {
-    	case ITeam.TA_EXTERNALATTACK:
-    	case ITeam.TA_FLANKEN:
+    	case TrainingType.WING_ATTACKS:
+    	case TrainingType.CROSSING_WINGER:
     		skill = ISpieler.SKILL_FLUEGEL;
     		break;
-    	case ITeam.TA_STANDARD:
+    	case TrainingType.SET_PIECES:
     		skill = ISpieler.SKILL_STANDARDS;
     		break;
-    	case ITeam.TA_ABWEHRVERHALTEN:
-    	case ITeam.TA_VERTEIDIGUNG:
+    	case TrainingType.DEF_POSITIONS:
+    	case TrainingType.DEFENDING:
     		skill = ISpieler.SKILL_VERTEIDIGUNG;
     		break;
-    	case ITeam.TA_CHANCEN:
-    	case ITeam.TA_SCHUSSTRAINING:
+    	case TrainingType.SHOOTING:
+    	case TrainingType.SCORING:
     		skill = ISpieler.SKILL_TORSCHUSS;
     		break;
-    	case ITeam.TA_PASSSPIEL:
-    	case ITeam.TA_STEILPAESSE:
+    	case TrainingType.SHORT_PASSES:
+    	case TrainingType.THROUGH_PASSES:
     		skill = ISpieler.SKILL_PASSSPIEL;
     		break;
-    	case ITeam.TA_SPIELAUFBAU:
+    	case TrainingType.PLAYMAKING:
     		skill = ISpieler.SKILL_SPIELAUFBAU;
     		break;
-    	case ITeam.TA_TORWART:
+    	case TrainingType.GOALKEEPING:
     		skill = ISpieler.SKILL_TORWART;
     		break;
     	}

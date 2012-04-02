@@ -1,7 +1,6 @@
 package ho.core.rating;
 
 import ho.core.model.ISpielerPosition;
-import ho.core.model.ITeam;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
