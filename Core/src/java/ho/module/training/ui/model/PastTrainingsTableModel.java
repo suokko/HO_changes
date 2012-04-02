@@ -1,11 +1,11 @@
 // %1126721451604:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.constants.TrainingType;
+import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
-import ho.module.training.Trainings;
-import ho.module.training.ui.comp.CBItem;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -80,7 +80,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         // for each training week
         for (Iterator<TrainingPerWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
         	TrainingPerWeek train = it.next();
-            String selectedTrain = Trainings.getTrainingDescription(train.getTyp());
+            String selectedTrain = TrainingType.toString(train.getTyp());
 
             aobj = (new Object[]{
                        train.getHattrickWeek() + "", //$NON-NLS-1$

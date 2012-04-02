@@ -1,12 +1,11 @@
 // %1283121044:hoplugins.trainingExperience.constants%
 package ho.module.training;
 
-import plugins.ISpieler;
-
-import ho.core.model.HOVerwaltung;
-import ho.core.model.ITeam;
+import ho.core.constants.TrainingType;
 
 import java.awt.Color;
+
+import plugins.ISpieler;
 
 
 
@@ -146,25 +145,25 @@ public class Skills {
     public static int getTrainedSkillCode(int skillIndex) {
         switch (skillIndex) {
             case ISpieler.SKILL_TORWART:
-                return ITeam.TA_TORWART;
+                return  TrainingType.GOALKEEPING;
 
             case ISpieler.SKILL_SPIELAUFBAU:
-                return ITeam.TA_SPIELAUFBAU;
+                return TrainingType.PLAYMAKING;
 
             case ISpieler.SKILL_PASSSPIEL:
-                return ITeam.TA_PASSSPIEL;
+                return TrainingType.SHORT_PASSES;
 
             case ISpieler.SKILL_FLUEGEL:
-                return ITeam.TA_FLANKEN;
+                return TrainingType.CROSSING_WINGER;
 
             case ISpieler.SKILL_VERTEIDIGUNG:
-                return ITeam.TA_VERTEIDIGUNG;
+                return TrainingType.DEFENDING;
 
             case ISpieler.SKILL_TORSCHUSS:
-                return ITeam.TA_CHANCEN;
+                return TrainingType.SCORING;
 
             case ISpieler.SKILL_STANDARDS:
-                return ITeam.TA_STANDARD;
+                return TrainingType.SET_PIECES;
 
           }
 

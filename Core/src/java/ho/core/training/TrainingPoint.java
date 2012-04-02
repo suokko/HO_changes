@@ -1,8 +1,8 @@
 // %1043029125:de.hattrickorganizer.logik%
 package ho.core.training;
 
+import ho.core.constants.TrainingType;
 import ho.core.model.ISpielerPosition;
-import ho.core.model.ITeam;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -261,17 +261,17 @@ class TrainingPoint {
 
         //die einzelnen Trainingsarten hinzuf?gen
         //add all traintypes to one hashtable with all trainingstypes
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SPIELAUFBAU), PLAYMAKING);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_FLANKEN), CROSSING);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_VERTEIDIGUNG), DEFENSE);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_PASSSPIEL), SHORTPASS);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_TORWART), KEEPER);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_CHANCEN), SCORING);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_SCHUSSTRAINING), SHOOTING);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_ABWEHRVERHALTEN), DEFPOS);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_STEILPAESSE), THROUGHPASS);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_EXTERNALATTACK), WINGATTACK);
-        p_Ht_trainPositionen.put(new Integer(ITeam.TA_STANDARD), SETPIECES);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.PLAYMAKING), PLAYMAKING);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.CROSSING_WINGER), CROSSING);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.DEFENDING), DEFENSE);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.SHORT_PASSES), SHORTPASS);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.GOALKEEPING), KEEPER);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.SCORING), SCORING);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.SHOOTING), SHOOTING);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.DEF_POSITIONS), DEFPOS);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.THROUGH_PASSES), THROUGHPASS);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.WING_ATTACKS), WINGATTACK);
+        p_Ht_trainPositionen.put(new Integer(TrainingType.SET_PIECES), SETPIECES);
     }
 
     /**

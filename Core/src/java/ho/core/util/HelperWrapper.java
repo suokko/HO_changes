@@ -230,10 +230,6 @@ public class HelperWrapper {
         return PlayerHelper.getNameForCharacter(value);
     }
 
-    public String getNameForConfidence(int value) {
-        return Team.getNameForSelbstvertrauen(value);
-    }
-
     public String getNameForGentleness(int value) {
         return PlayerHelper.getNameForGentleness(value);
     }
@@ -262,15 +258,6 @@ public class HelperWrapper {
         return Matchdetails.getNameForEinstellung(typ);
     }
 
-    public String getNameForTeamspirit(int value) {
-        return Team.getNameForStimmung(value);
-    }
-
-    public String getNameForTraining(int value) {
-        return Team.getNameForTraining(value);
-    }
-
- 
     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
      * impossible to make difference between left and right so always the left position is

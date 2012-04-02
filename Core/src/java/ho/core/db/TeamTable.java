@@ -1,5 +1,7 @@
 package ho.core.db;
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
 
@@ -104,8 +106,8 @@ final class TeamTable extends AbstractTable {
 					returnvalue[0] = rs.getString("sStimmung");
 					returnvalue[1] = rs.getString("sSelbstvertrauen");
 				} else {
-					returnvalue[0] = Team.getNameForStimmung(intvalue[0]);
-					returnvalue[1] = Team.getNameForSelbstvertrauen(intvalue[1]);
+					returnvalue[0] = TeamSpirit.toString(intvalue[0]);
+					returnvalue[1] = TeamConfidence.toString(intvalue[1]);
 				}
 			}
 		} catch (Exception e) {

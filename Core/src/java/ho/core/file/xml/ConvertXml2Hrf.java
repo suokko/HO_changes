@@ -7,8 +7,10 @@
 package ho.core.file.xml;
 
 
+import ho.core.constants.TeamConfidence;
+import ho.core.constants.TeamSpirit;
+import ho.core.constants.TrainingType;
 import ho.core.model.ISpielerPosition;
-import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
@@ -582,13 +584,13 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("trLevel=" + m_htTraining.get("TrainingLevel") + "\n");
         m_sHRFBuffer.append("staminaTrainingPart=" + m_htTraining.get("StaminaTrainingPart") + "\n");
         m_sHRFBuffer.append("trTypeValue=" + m_htTraining.get("TrainingType") + "\n");
-		m_sHRFBuffer.append("trType=" + Team.getNameForTraining(Integer.parseInt(m_htTraining.get("TrainingType").toString())) + "\n");
+		m_sHRFBuffer.append("trType=" + TrainingType.toString(Integer.parseInt(m_htTraining.get("TrainingType").toString())) + "\n");
 
 		if ((m_htTraining.get("Morale") != null) && (m_htTraining.get("SelfConfidence") != null)) {
 			m_sHRFBuffer.append("stamningValue=" + m_htTraining.get("Morale") + "\n");
-			m_sHRFBuffer.append("stamning=" + Team.getNameForStimmung(Integer.parseInt(m_htTraining.get("Morale").toString())) + "\n");
+			m_sHRFBuffer.append("stamning=" + TeamSpirit.toString(Integer.parseInt(m_htTraining.get("Morale").toString())) + "\n");
 			m_sHRFBuffer.append("sjalvfortroendeValue=" + m_htTraining.get("SelfConfidence") + "\n");
-			m_sHRFBuffer.append("sjalvfortroende=" + Team.getNameForSelbstvertrauen(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))+ "\n");
+			m_sHRFBuffer.append("sjalvfortroende=" + TeamConfidence.toString(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))+ "\n");
         } else {
             m_sHRFBuffer.append("playingMatch=true");
         }

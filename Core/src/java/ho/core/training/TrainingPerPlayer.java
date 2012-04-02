@@ -1,8 +1,8 @@
 // %2751235623:de.hattrickorganizer.model%
 package ho.core.training;
 
+import ho.core.constants.TrainingType;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ITeam;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
@@ -355,43 +355,43 @@ public class TrainingPerPlayer  {
     	double d = trainPoint.calcTrainingPoints(false);
     	int trainType = train.getTyp();
     	switch (trainType) {
-		case ITeam.TA_SPIELAUFBAU:
+		case TrainingType.PLAYMAKING:
 	        //Spielaufbau // playmaking
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_SPIELAUFBAU))
 				setSA (d);
 			break;
-		case ITeam.TA_VERTEIDIGUNG:
+		case TrainingType.DEFENDING:
             //Verteidigung //defense
-		case ITeam.TA_ABWEHRVERHALTEN:
+		case TrainingType.DEF_POSITIONS:
             //defensive positions
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_VERTEIDIGUNG))
 				setVE (d);
 			break;
-		case ITeam.TA_FLANKEN:
+		case TrainingType.CROSSING_WINGER:
             //Flankenlaeufe //wing
-		case ITeam.TA_EXTERNALATTACK:
+		case TrainingType.WING_ATTACKS:
 			// Fluegelangriff //Lateral offensive            
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_FLUEGEL))
 				setFL (d);
 			break;
-		case ITeam.TA_PASSSPIEL:
+		case TrainingType.SHORT_PASSES:
             //Passspiel //passing
-		case ITeam.TA_STEILPAESSE:
+		case TrainingType.THROUGH_PASSES:
             // through passes
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_PASSSPIEL))
 				setPS (d);
 			break;
-		case ITeam.TA_TORWART:
+		case TrainingType.GOALKEEPING:
             //Torwart //keeper
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORWART))
 				setTW (d);
 			break;
-		case ITeam.TA_CHANCEN:
+		case TrainingType.SCORING:
             //Chancenverwertung //Torschuss //scoring
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
 				setTS (d);
 			break;
-		case ITeam.TA_SCHUSSTRAINING:
+		case TrainingType.SHOOTING:
             //Schusstraining //shooting
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
 				setTS (d);
@@ -399,7 +399,7 @@ public class TrainingPerPlayer  {
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
 	            setST(p_f_schusstraining_Standard * trainPoint.calcTrainingPoints(true));
 			break;
-		case ITeam.TA_STANDARD:
+		case TrainingType.SET_PIECES:
             //Standardsituationen //set pieces
 			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
 				setST (d);
