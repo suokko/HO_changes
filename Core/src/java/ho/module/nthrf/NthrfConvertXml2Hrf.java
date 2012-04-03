@@ -3,9 +3,12 @@ package ho.module.nthrf;
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -361,13 +364,13 @@ class NthrfConvertXml2Hrf {
 			m_sHRFBuffer.append("CountryID=" + pl.getCountryId() + "\n");
 			m_sHRFBuffer.append("warnings=" + pl.getCards() + "\n");
 			m_sHRFBuffer.append("speciality=" + pl.getSpeciality() + "\n");
-			m_sHRFBuffer.append("specialityLabel="+ helper.getNameForSpeciality(pl.getSpeciality())+ "\n");
+			m_sHRFBuffer.append("specialityLabel="+ PlayerSpeciality.toString(pl.getSpeciality())+ "\n");
 			m_sHRFBuffer.append("gentleness=" + pl.getAgreeability() + "\n");
-			m_sHRFBuffer.append("gentlenessLabel="+ helper.getNameForGentleness(pl.getAgreeability())+ "\n");
+			m_sHRFBuffer.append("gentlenessLabel="+ PlayerAgreeability.toString(pl.getAgreeability())+ "\n");
 			m_sHRFBuffer.append("honesty=" + pl.getHonesty() + "\n");
-			m_sHRFBuffer.append("honestyLabel=" + helper.getNameForCharacter(pl.getHonesty())+ "\n");
+			m_sHRFBuffer.append("honestyLabel=" + PlayerHonesty.toString(pl.getHonesty())+ "\n");
 			m_sHRFBuffer.append("Aggressiveness=" + pl.getAggressiveness() + "\n");
-			m_sHRFBuffer.append("AggressivenessLabel="+ helper.getNameForAggressivness(pl.getAggressiveness())+ "\n");
+			m_sHRFBuffer.append("AggressivenessLabel="+ PlayerAggressiveness.toString(pl.getAggressiveness())+ "\n");
 
 			if (pl.isTrainer()) {
 				m_sHRFBuffer.append("TrainerType=" + pl.getTrainerType() + "\n");

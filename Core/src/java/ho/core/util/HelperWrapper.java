@@ -16,7 +16,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
-import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.module.matches.SpielHighlightPanel;
 import ho.module.matches.model.MatchHighlight;
@@ -218,20 +217,8 @@ public class HelperWrapper {
         return c;
     }
 
-    public String getNameForAggressivness(int value) {
-        return PlayerHelper.getNameForAggressivness(value);
-    }
-
     public String getNameForBewertung(int value, boolean showNumber, boolean isMatch) {
         return PlayerHelper.getNameForSkill(value, showNumber, isMatch);
-    }
-
-    public String getNameForCharacter(int value) {
-        return PlayerHelper.getNameForCharacter(value);
-    }
-
-    public String getNameForGentleness(int value) {
-        return PlayerHelper.getNameForGentleness(value);
     }
 
     public String getNameForMatchTyp(int typ) {
@@ -244,10 +231,6 @@ public class HelperWrapper {
 
     public String getNameForSkill(int value, boolean showNumber) {
         return PlayerHelper.getNameForSkill(value, showNumber);
-    }
-
-    public String getNameForSpeciality(int value) {
-        return PlayerHelper.getNameForSpeciality(value);
     }
 
     public String getNameForTaktik(int typ) {

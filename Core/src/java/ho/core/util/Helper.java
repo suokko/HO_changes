@@ -2,7 +2,7 @@
 package ho.core.util;
 
 
-import ho.core.constants.PlayerAbilities;
+import ho.core.constants.player.PlayerAbilities;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;

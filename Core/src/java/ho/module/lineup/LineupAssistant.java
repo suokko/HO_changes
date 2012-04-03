@@ -6,6 +6,7 @@
  */
 package ho.module.lineup;
 
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.ISpielerPosition;
 import ho.core.model.Spieler;
@@ -56,7 +57,7 @@ public class LineupAssistant {
     private float m_fWetterBonus = 0.2f;
 
     /** gibt das Wetter an */
-    private int m_iWetter = ISpieler.LEICHTBEWOELKT;
+    private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -94,7 +95,7 @@ public class LineupAssistant {
                        + (((spieler.getStandards() * 7.0f) / 10.0f)
                        + ((spieler.getTorschuss() * 3.0f) / 10.0f));
 
-            if (spieler.getSpezialitaet() == ISpieler.BALLZAUBERER) {
+            if (spieler.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
                 curValue *= 1.1;
             }
 

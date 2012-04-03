@@ -1,6 +1,7 @@
 // %1968012293:de.hattrickorganizer.gui.model%
 package ho.core.gui.comp.renderer;
 
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
@@ -10,8 +11,6 @@ import ho.module.matches.model.IMatchDetails;
 
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -34,18 +33,18 @@ public class WeatherListCellRenderer implements ListCellRenderer {
         if (obj instanceof CBItem && (obj != null)) {
         	int wert = 0;
             switch (((CBItem) obj).getId()) {
-                case ISpieler.SONNIG:
+                case PlayerSpeciality.SUN:
                     wert = IMatchDetails.WETTER_SONNE;
                     break;
-                case ISpieler.LEICHTBEWOELKT:
+                case PlayerSpeciality.PARTIALLY_CLOUDY:
                 	wert = IMatchDetails.WETTER_WOLKIG;
                     break;
 
-                case ISpieler.BEWOELKT:
+                case PlayerSpeciality.OVERCAST:
                 	wert = IMatchDetails.WETTER_BEWOELKT;
                     break;
 
-                case ISpieler.REGEN:
+                case PlayerSpeciality.RAIN:
                 	wert = IMatchDetails.WETTER_REGEN;
                     break;
             }

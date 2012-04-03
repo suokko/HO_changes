@@ -1,4 +1,4 @@
-package ho.core.constants;
+package ho.core.constants.player;
 
 import ho.core.model.HOVerwaltung;
 

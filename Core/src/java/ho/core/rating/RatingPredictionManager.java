@@ -1,5 +1,6 @@
 package ho.core.rating;
 
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.ISpielerPosition;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
@@ -47,13 +48,13 @@ public class RatingPredictionManager {
     //private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     //private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
     
-    public static final int SPEC_NONE = ISpieler.NO_SPECIALTY; // 0
-    public static final int SPEC_TECHNICAL = ISpieler.BALLZAUBERER; // 1
-    public static final int SPEC_QUICK = ISpieler.SCHNELL; // 2
-    public static final int SPEC_POWERFUL = ISpieler.DURCHSETZUGNSSTARK; // 3
-    public static final int SPEC_UNPREDICTABLE = ISpieler.UNBERECHENBAR; // 4
-    public static final int SPEC_HEADER = ISpieler.KOPFBALLSTARK; // 5
-    public static final int SPEC_REGAINER = ISpieler.REGAINER; // 6
+    public static final int SPEC_NONE = PlayerSpeciality.NO_SPECIALITY; // 0
+    public static final int SPEC_TECHNICAL = PlayerSpeciality.TECHNICAL; // 1
+    public static final int SPEC_QUICK = PlayerSpeciality.QUICK; // 2
+    public static final int SPEC_POWERFUL = PlayerSpeciality.POWERFUL; // 3
+    public static final int SPEC_UNPREDICTABLE = PlayerSpeciality.UNPREDICTABLE; // 4
+    public static final int SPEC_HEADER = PlayerSpeciality.HEAD; // 5
+    public static final int SPEC_REGAINER = PlayerSpeciality.REGAINER; // 6
     public static final int SPEC_ALL = ISpieler.NUM_SPECIALTIES; // 7
     public static final int NUM_SPEC = ISpieler.NUM_SPECIALTIES+1; // 8
 
@@ -1006,7 +1007,7 @@ public class RatingPredictionManager {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
             	defense = calcPlayerStrength(spieler, DEFENDING);
-                if (spieler.getSpezialitaet() == ISpieler.DURCHSETZUGNSSTARK) {
+                if (spieler.getSpezialitaet() == PlayerSpeciality.POWERFUL) {
                 	defense *= 2;
                 }
                 retVal += defense;

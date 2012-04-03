@@ -1,6 +1,7 @@
 // %2768837177:de.hattrickorganizer.gui.templates%
 package ho.core.gui.comp.entry;
 
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.HOColorName;
@@ -10,7 +11,6 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -331,7 +331,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
     	// weatherEffect
     	 m_jlWeatherEffect.setIcon(null);
     	if (m_bShowWeatherEffect) {
-    		int effect = PlayerHelper.getWeatherEffect(HOMainFrame.getWetter(),player.getSpezialitaet());
+    		int effect = PlayerSpeciality.getWeatherEffect(HOMainFrame.getWetter(),player.getSpezialitaet());
     		if(effect != 0){
     			final ImageIcon wettericon = ThemeManager.getIcon("weather.effect."+effect);
     			m_jlWeatherEffect.setIcon(wettericon);
