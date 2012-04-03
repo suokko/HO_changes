@@ -1,7 +1,7 @@
 // %857396099:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import ho.core.constants.PlayerAbilities;
+import ho.core.constants.player.PlayerAbilities;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;

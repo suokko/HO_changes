@@ -1,6 +1,10 @@
 // %3484484869:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -530,11 +534,11 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         m_jpGoalsCup.setText(m_clPlayer.getTorePokal() + "");
         m_jpGoalsTotal.setText(m_clPlayer.getToreGesamt() + "");
         m_jpHattricks.setText(m_clPlayer.getHattrick() + "");
-        m_jpSpeciality.setText(PlayerHelper.getNameForSpeciality(m_clPlayer.getSpezialitaet()));
+        m_jpSpeciality.setText(PlayerSpeciality.toString(m_clPlayer.getSpezialitaet()));
         m_jpSpeciality.setIcon( ThemeManager.getIcon(HOIconName.SPECIAL[m_clPlayer.getSpezialitaet()]));
-        m_jpAggressivity.setText(PlayerHelper.getNameForAggressivness(m_clPlayer.getAgressivitaet()));
-        m_jpHonesty.setText(PlayerHelper.getNameForGentleness(m_clPlayer.getCharakter()));
-        m_jpAgreeability.setText(PlayerHelper.getNameForCharacter(m_clPlayer.getAnsehen()));
+        m_jpAggressivity.setText(PlayerAggressiveness.toString(m_clPlayer.getAgressivitaet()));
+        m_jpHonesty.setText(PlayerAgreeability.toString(m_clPlayer.getCharakter()));
+        m_jpAgreeability.setText(PlayerHonesty.toString(m_clPlayer.getAnsehen()));
 
         String temp = "";
         final java.sql.Timestamp time = m_clPlayer.getTimestamp4FirstPlayerHRF();

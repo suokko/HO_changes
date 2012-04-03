@@ -1,6 +1,10 @@
 // %1374340947:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
@@ -526,13 +530,13 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         m_jpTorePokal.setText(m_clSpieler.getTorePokal() + "");
         m_jpToreGesamt.setText(m_clSpieler.getToreGesamt() + "");
         m_jpHattriks.setText(m_clSpieler.getHattrick() + "");
-        m_jpSpezialitaet.setText(PlayerHelper.getNameForSpeciality(m_clSpieler.getSpezialitaet()));
+        m_jpSpezialitaet.setText(PlayerSpeciality.toString(m_clSpieler.getSpezialitaet()));
        	m_jpSpezialitaet.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[m_clSpieler.getSpezialitaet()]));
-        m_jpAggressivitaet.setText(PlayerHelper.getNameForAggressivness(m_clSpieler.getAgressivitaet()));
+        m_jpAggressivitaet.setText(PlayerAggressiveness.toString(m_clSpieler.getAgressivitaet()));
        
         //Dreher!
-        m_jpAnsehen.setText(PlayerHelper.getNameForGentleness(m_clSpieler.getCharakter()));
-        m_jpCharakter.setText(PlayerHelper.getNameForCharacter(m_clSpieler.getAnsehen()));
+        m_jpAnsehen.setText(PlayerAgreeability.toString(m_clSpieler.getCharakter()));
+        m_jpCharakter.setText(PlayerHonesty.toString(m_clSpieler.getAnsehen()));
         
      }
 

@@ -10,6 +10,10 @@ package ho.core.file.xml;
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.ISpielerPosition;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -525,22 +529,22 @@ public class ConvertXml2Hrf {
             m_sHRFBuffer.append("warnings=" + ht.get("Cards").toString() + "\n");
             m_sHRFBuffer.append("speciality=" + ht.get("Specialty").toString() + "\n");
             m_sHRFBuffer.append("specialityLabel="
-                                + PlayerHelper.getNameForSpeciality(Integer.parseInt(ht.get("Specialty")
+                                + PlayerSpeciality.toString(Integer.parseInt(ht.get("Specialty")
                                                                                        .toString()))
                                 + "\n");
             m_sHRFBuffer.append("gentleness=" + ht.get("Agreeability").toString() + "\n");
             m_sHRFBuffer.append("gentlenessLabel="
-                                + PlayerHelper.getNameForGentleness(Integer.parseInt(ht.get("Agreeability")
+                                + PlayerAgreeability.toString(Integer.parseInt(ht.get("Agreeability")
                                                                                        .toString()))
                                 + "\n");
             m_sHRFBuffer.append("honesty=" + ht.get("Honesty").toString() + "\n");
             m_sHRFBuffer.append("honestyLabel="
-                                + PlayerHelper.getNameForCharacter(Integer.parseInt(ht.get("Honesty")
+                                + PlayerHonesty.toString(Integer.parseInt(ht.get("Honesty")
                                                                                       .toString()))
                                 + "\n");
             m_sHRFBuffer.append("Aggressiveness=" + ht.get("Aggressiveness").toString() + "\n");
             m_sHRFBuffer.append("AggressivenessLabel="
-                                + PlayerHelper.getNameForAggressivness(Integer.parseInt(ht.get("Aggressiveness")
+                                + PlayerAggressiveness.toString(Integer.parseInt(ht.get("Aggressiveness")
                                                                                           .toString()))
                                 + "\n");
 
