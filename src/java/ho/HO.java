@@ -197,11 +197,12 @@ public class HO {
 		// der manuellen DB Einträge
 		TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
 
-		interuptionsWindow.setInfoText(8,"Initialize Lineup");
-		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-		FileExtensionManager.extractLineup("Actual");
+//		version 1.432: seems to be dead code
+//		interuptionsWindow.setInfoText(8,"Initialize Lineup");
+//		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
+//		FileExtensionManager.extractLineup("Actual");
 		// Anzeigen
-		interuptionsWindow.setInfoText(9,"Prepare to show");
+		interuptionsWindow.setInfoText(8,"Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
 		// Startbild weg
