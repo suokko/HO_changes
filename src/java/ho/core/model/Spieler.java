@@ -7,6 +7,7 @@
 package ho.core.model;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.rating.RatingPredictionManager;
@@ -2132,7 +2133,7 @@ public final class Spieler implements plugins.ISpieler {
        -1 bei negativ
      */
     public int getWetterEffekt(int wetter) {
-        return PlayerHelper.getWeatherEffect(wetter, m_iSpezialitaet);
+        return PlayerSpeciality.getWeatherEffect(wetter, m_iSpezialitaet);
     }
 
     /**
@@ -2491,7 +2492,7 @@ public final class Spieler implements plugins.ISpieler {
         float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm);
 
         // Fix for new Defensive Attacker position
-		if (fo.getPosition()==ISpielerPosition.FORWARD_DEF && getSpezialitaet()==ISpieler.BALLZAUBERER) {
+		if (fo.getPosition()==ISpielerPosition.FORWARD_DEF && getSpezialitaet()==PlayerSpeciality.TECHNICAL) {
 			psValue *= 1.30f;
 		}
 

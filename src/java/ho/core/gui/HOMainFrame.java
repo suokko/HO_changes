@@ -2,6 +2,7 @@
 package ho.core.gui;
 
 import ho.HO;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.file.hrf.HRFImport;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -64,8 +65,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-
-import plugins.ISpieler;
 
 /**
  * The Main HO window
@@ -305,7 +304,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 */
 	public static int getWetter() {
 		if (m_clHOMainFrame == null) {
-			return ISpieler.LEICHTBEWOELKT;
+			return PlayerSpeciality.PARTIALLY_CLOUDY;
 		}
 		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWetter();
 
