@@ -3,14 +3,13 @@ package ho.module.lineup.substitution;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.module.lineup.Lineup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import plugins.ISpieler;
 
 public class SubstitutionDataProvider {
 
@@ -32,7 +31,7 @@ public class SubstitutionDataProvider {
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
 		for (int i = start; i <= end; i++) {
-			ISpieler player = lineup.getPlayerByPositionID(i);
+			Spieler player = lineup.getPlayerByPositionID(i);
 			if (player != null) {
 				positionMap.put(new Integer(i),
 						new PlayerPositionItem(Integer.valueOf(i), lineup.getPlayerByPositionID(i)));

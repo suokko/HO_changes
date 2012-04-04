@@ -4,8 +4,8 @@ package ho.core.file.xml;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.MatchHelper;
 import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
@@ -18,8 +18,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 public class MatchExporter {
 	//~ Static fields/initializers -----------------------------------------------------------------
@@ -76,7 +74,7 @@ public class MatchExporter {
 
 				//Nun lineup durchlaufen und Spielerdaten holen
 				Vector<MatchLineupPlayer> aufstellung = DBManager.instance().getMatchLineupPlayers(details.getMatchID(),teamId);
-				Hashtable<Integer,ISpieler> lineUpISpieler = new Hashtable<Integer,ISpieler>();
+				Hashtable<Integer,Spieler> lineUpISpieler = new Hashtable<Integer,Spieler>();
 
 				boolean dataOK = true;
 
@@ -85,7 +83,7 @@ public class MatchExporter {
 					MatchLineupPlayer player = aufstellung.get(k);
 
 					//Alte Werte zum Spieler holen fï¿½r das Matchdate
-					plugins.ISpieler formerPlayerData = null;
+					Spieler formerPlayerData = null;
 
 					//Bankl + verlketzte ï¿½berspringen
 					if (player.getId() >= ISpielerPosition.startReserves) {

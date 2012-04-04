@@ -18,8 +18,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JWindow;
 
-import plugins.ISpieler;
-
 /**
  * CsvPlayerExport
  * 
@@ -71,7 +69,7 @@ public class CsvPlayerExport {
 	private void doExport (File file) {
 		HOLogger.instance().info(getClass(),
 				"Exporting all players as CSV to " + file.getName() + "...");
-		List<ISpieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
+		List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 		try {
 			FileWriter writer = new FileWriter(file);
 			writer.write("id,shirtno,name,age,agedays,form,stamina,"
@@ -79,7 +77,7 @@ public class CsvPlayerExport {
 					+ "specialty,tsi,wage,xp,leadership,pop,agg,hon,cards,injury,"
 					+ "GK,CD,CD_off,CD_tw,WB,WB_off,WB_def,WB_tm,IM,IM_off,IM_def,IM_tw,WI,WI_off,WI_def,WI_tm,FW,FW_def,FW_tw"
 					+ "\n");
-			Iterator<ISpieler> iter = list.iterator();
+			Iterator<Spieler> iter = list.iterator();
 			while (iter.hasNext()) {
 				Spieler curPlayer = (Spieler)iter.next();
 				String [] outCols = {

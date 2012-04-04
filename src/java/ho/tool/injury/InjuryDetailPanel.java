@@ -5,6 +5,7 @@ package ho.tool.injury;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.tool.keepertool.PlayerItem;
 
 import java.awt.BorderLayout;
@@ -21,8 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -122,9 +121,9 @@ class InjuryDetailPanel extends JPanel {
         players.removeAllItems();
         players.addItem(new PlayerItem());
 
-        for (Iterator<ISpieler> iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
+        for (Iterator<Spieler> iter = HOVerwaltung.instance().getModel().getAllSpieler().iterator();
              iter.hasNext();) {
-            final ISpieler element = iter.next();
+            final Spieler element = iter.next();
 
             if (element.getVerletzt() > 0) {
                 players.addItem(new PlayerItem(element));
@@ -143,7 +142,7 @@ class InjuryDetailPanel extends JPanel {
                         return;
                     }
 
-                    final ISpieler spieler = HOVerwaltung.instance().getModel().getSpieler(selected
+                    final Spieler spieler = HOVerwaltung.instance().getModel().getSpieler(selected
                                                                                            .getId());
 
                     if (spieler == null) {

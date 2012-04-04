@@ -4,6 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.module.transfer.history.HistoryPane;
 import ho.module.transfer.scout.TransferScoutPanel;
 import ho.module.transfer.transfertype.TransferTypePane;
@@ -16,14 +17,12 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import plugins.ISpieler;
-
 public class TransfersPanel extends JPanel implements IRefreshable{
 
 	private static final long serialVersionUID = -5312017309355429020L;
     private HistoryPane historyPane;
-    private List<ISpieler> oldplayers;
-    private List<ISpieler> players;
+    private List<Spieler> oldplayers;
+    private List<Spieler> players;
     private TransferTypePane transferTypePane;
     private TransferScoutPanel scoutPanel;
     
@@ -58,10 +57,10 @@ public class TransfersPanel extends JPanel implements IRefreshable{
 //        final JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
 //        waitWindow.setVisible(true);
 
-        final List<ISpieler> allOutdated = new Vector<ISpieler>();
+        final List<Spieler> allOutdated = new Vector<Spieler>();
 
         // Check for outdated players.
-        final List<ISpieler> tmp = new Vector<ISpieler>();
+        final List<Spieler> tmp = new Vector<Spieler>();
         tmp.clear();
         tmp.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
         tmp.removeAll(this.players);
@@ -73,10 +72,10 @@ public class TransfersPanel extends JPanel implements IRefreshable{
         tmp.removeAll(this.oldplayers);
         allOutdated.addAll(tmp);
 
-        final List<ISpieler> outdated = allOutdated;
+        final List<Spieler> outdated = allOutdated;
 
-        for (Iterator<ISpieler> iter = allOutdated.iterator(); iter.hasNext();) {
-            final ISpieler player = iter.next();
+        for (Iterator<Spieler> iter = allOutdated.iterator(); iter.hasNext();) {
+            final Spieler player = iter.next();
 
             if (player.getSpielerID() < 0) {
                 outdated.remove(player);
@@ -87,8 +86,8 @@ public class TransfersPanel extends JPanel implements IRefreshable{
         	DBManager.instance().updateTeamTransfers(HOVerwaltung.instance().getModel().getBasics().getTeamId());
         }
 
-        for (Iterator<ISpieler> iter = outdated.iterator(); iter.hasNext();) {
-            final ISpieler player = iter.next();
+        for (Iterator<Spieler> iter = outdated.iterator(); iter.hasNext();) {
+            final Spieler player = iter.next();
             DBManager.instance().updatePlayerTransfers(player.getSpielerID());
         }
 

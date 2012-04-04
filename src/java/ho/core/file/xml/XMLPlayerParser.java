@@ -17,8 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import plugins.ISpieler;
-
 
 
 /**
@@ -40,8 +38,8 @@ public class XMLPlayerParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
-    public final Vector<ISpieler> parsePlayer(String dateiname) {
-        Vector<ISpieler> liste = null;
+    public final Vector<Spieler> parsePlayer(String dateiname) {
+        Vector<Spieler> liste = null;
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(dateiname);
@@ -57,7 +55,7 @@ public class XMLPlayerParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<ISpieler> parsePlayer(java.io.File datei) {
+    public final Vector<Spieler> parsePlayer(java.io.File datei) {
         Document doc = null;
 
         doc = XMLManager.instance().parseFile(datei);
@@ -186,10 +184,10 @@ public class XMLPlayerParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Vector<ISpieler> parseSpieler(Document doc) {
+    protected final Vector<Spieler> parseSpieler(Document doc) {
         Element ele = null;
         Element root = null;
-        final Vector<ISpieler> liste = new Vector<ISpieler>();
+        final Vector<Spieler> liste = new Vector<Spieler>();
         Timestamp fetchDate = null;
         NodeList list = null;
 

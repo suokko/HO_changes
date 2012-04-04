@@ -1,16 +1,15 @@
 package ho.core.file.xml;
 
+import ho.core.model.Spieler;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.Matchdetails;
 
 import java.util.Hashtable;
 
-import plugins.ISpieler;
-
 
 public class ExportMatchData {
 	
-	private Hashtable<Integer,ISpieler> players;
+	private Hashtable<Integer,Spieler> players;
 	private Matchdetails details;
 	private MatchKurzInfo info;
 
@@ -22,7 +21,7 @@ public class ExportMatchData {
 		return info;
 	}
 
-	public Hashtable<Integer,ISpieler> getPlayers() {
+	public Hashtable<Integer,Spieler> getPlayers() {
 		return players;
 	}
 
@@ -34,7 +33,7 @@ public class ExportMatchData {
 		this.info = info;
 	}
 
-	public void setPlayers(Hashtable<Integer,ISpieler> hashtable) {
+	public void setPlayers(Hashtable<Integer,Spieler> hashtable) {
 		players = hashtable;
 	}
 

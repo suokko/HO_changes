@@ -1,6 +1,7 @@
 package ho.module.training;
 
 import ho.core.gui.IRefreshable;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.module.training.ui.MainPanel;
@@ -14,11 +15,9 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import plugins.ISpieler;
-
 public class TrainingPanel extends JPanel implements IRefreshable {
     /** The currently selected player */
-    private static ISpieler activePlayer;
+    private static Spieler activePlayer;
 
     /** Class that keep track of the past skillup */
     private static OldTrainingManager manager;
@@ -169,7 +168,7 @@ public class TrainingPanel extends JPanel implements IRefreshable {
      *
      * @param player the new selected player
      */
-    public static void selectPlayer(ISpieler player) {
+    public static void selectPlayer(Spieler player) {
         activePlayer = player;
 
         // regenerate the past skillup using the manager

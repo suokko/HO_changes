@@ -1,12 +1,12 @@
 package ho.module.lineup.substitution;
 
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 
 public class PlayerPositionItem {
 	private Integer position;
-	private ISpieler player;
+	private Spieler player;
 
-	PlayerPositionItem(Integer pos, ISpieler player) {
+	PlayerPositionItem(Integer pos, Spieler player) {
 		this.player = player;
 		this.position = pos;
 	}
@@ -15,7 +15,7 @@ public class PlayerPositionItem {
 		return position;
 	}
 
-	public ISpieler getSpieler() {
+	public Spieler getSpieler() {
 		return this.player;
 	}
 

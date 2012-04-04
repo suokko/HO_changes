@@ -3,6 +3,7 @@ package ho.core.db;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -12,8 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 final class SpielerSkillupTable extends AbstractTable {
 
@@ -175,10 +174,10 @@ final class SpielerSkillupTable extends AbstractTable {
 	// -------------------------------- Importing PArt ----------------------------------------------
 
 	void importNewSkillup(HOModel homodel) {
-		Vector<ISpieler> players = homodel.getAllSpieler();
-		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
-			ISpieler nPlayer = iter.next();
-			ISpieler oPlayer = HOVerwaltung.instance().getModel().getSpieler(nPlayer.getSpielerID());
+		Vector<Spieler> players = homodel.getAllSpieler();
+		for (Iterator<Spieler> iter = players.iterator(); iter.hasNext();) {
+			Spieler nPlayer = iter.next();
+			Spieler oPlayer = HOVerwaltung.instance().getModel().getSpieler(nPlayer.getSpielerID());
 			if (oPlayer!=null) {
 				checkNewSkillup(nPlayer,nPlayer.getTorwart(),oPlayer.getTorwart(),PlayerSkill.KEEPER,homodel.getID());	
 				checkNewSkillup(nPlayer,nPlayer.getSpielaufbau(),oPlayer.getSpielaufbau(),PlayerSkill.PLAYMAKING,homodel.getID());
@@ -195,7 +194,7 @@ final class SpielerSkillupTable extends AbstractTable {
 		}
 	}
 		
-	private void checkNewSkillup(ISpieler nPlayer, int newValue, int oldValue, int skill, int hrf) {
+	private void checkNewSkillup(Spieler nPlayer, int newValue, int oldValue, int skill, int hrf) {
 		if (newValue>oldValue) {
 			storeSkillup(hrf,nPlayer.getSpielerID(),nPlayer.getHrfDate(),newValue,skill,true);
 		}

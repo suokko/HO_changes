@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import plugins.ISpieler;
-
 final class Spieler {
 	static double fehlerAbsolutZuSigma = 0.66;
 	private int id;
@@ -41,7 +39,7 @@ final class Spieler {
 	private HashMap<Integer,Integer> einsaetzeNachVorletzterAufwertung;
 	private HashMap<Integer,Integer> einsaetzeMitAktualisierungNachVorletzterAufwertung;
 
-	public Spieler(ISpieler inSpieler) {
+	public Spieler(ho.core.model.Spieler inSpieler) {
 		letzteErfahrungsAufwertung = null;
 		vorletzteErfahrungsAufwertung = null;
 		vorvorletzteErfahrungsAufwertung = null;

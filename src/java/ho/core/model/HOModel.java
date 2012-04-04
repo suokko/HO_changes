@@ -24,8 +24,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 
 /**
  * Die Klasse bündelt alle anderen Model, die zu einer HRF Datei gehören. Die Daten können
@@ -43,8 +41,8 @@ public class HOModel {
     private Spielplan m_clSpielplan;
     private Stadium m_clStadium;
     private Team m_clTeam;
-    private Vector<ISpieler> m_vOldSpieler = new Vector<ISpieler>();
-    private Vector<ISpieler> m_vSpieler = new Vector<ISpieler>();
+    private Vector<Spieler> m_vOldSpieler = new Vector<Spieler>();
+    private Vector<Spieler> m_vSpieler = new Vector<Spieler>();
     private Verein m_clVerein;
     private XtraData m_clXtraDaten;
     private int m_iID = -1;
@@ -68,7 +66,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setAllOldSpieler(Vector<ISpieler> spielerVector) {
+    public final void setAllOldSpieler(Vector<Spieler> spielerVector) {
         for (int i = 0; i < spielerVector.size(); i++) {
             //Auf alt setzen, die neuen werden gleich entfernt
             ((Spieler) spielerVector.get(i)).setOld(true);
@@ -93,7 +91,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<ISpieler> getAllOldSpieler() {
+    public final Vector<Spieler> getAllOldSpieler() {
         return m_vOldSpieler;
     }
 
@@ -104,7 +102,7 @@ public class HOModel {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Vector<ISpieler> getAllSpieler() {
+    public final Vector<Spieler> getAllSpieler() {
         return m_vSpieler;
     }
 
@@ -240,7 +238,7 @@ public class HOModel {
      *
      * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
-    public final void setSpieler(Vector<ISpieler> spielerVector) {
+    public final void setSpieler(Vector<Spieler> spielerVector) {
         m_vSpieler = spielerVector;
     }
 
@@ -394,7 +392,7 @@ public class HOModel {
      * berechnet die Subskills zu allen Spielern players calc subskill func
      */
     public final void calcSubskills() {
-        final Vector<ISpieler> vSpieler = getAllSpieler();
+        final Vector<Spieler> vSpieler = getAllSpieler();
         final java.sql.Timestamp calcDate = m_clBasics.getDatum();
 
         /*
@@ -435,18 +433,18 @@ public class HOModel {
             }
         }
 
-        final Map<String,ISpieler> players = new HashMap<String,ISpieler>();
+        final Map<String,Spieler> players = new HashMap<String,Spieler>();
 
-        for (Iterator<ISpieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
+        for (Iterator<Spieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
              iter.hasNext();) {
-            final ISpieler element = iter.next();
+            final Spieler element = iter.next();
             players.put(element.getSpielerID() + "", element);
         }
 
         for (int i = 0; i < vSpieler.size(); i++) {
             try {
                 final Spieler player = (ho.core.model.Spieler) vSpieler.get(i);
-                ISpieler old = players.get("" + player.getSpielerID());
+                Spieler old = players.get("" + player.getSpielerID());
 
                 if (old == null) {
                 	if (TrainingsManager.TRAININGDEBUG)
@@ -527,7 +525,7 @@ public class HOModel {
         DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
     }
 
-    private void logPlayerProgress (ISpieler before, ISpieler after) {
+    private void logPlayerProgress (Spieler before, Spieler after) {
     	int playerID = after.getSpielerID();
     	String playerName = after.getName();
     	TrainingPerWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);

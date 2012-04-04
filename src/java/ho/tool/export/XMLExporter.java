@@ -11,6 +11,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -39,8 +40,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.ISpieler;
 
 //implement IPlugin for integration into HO
 //Refreshable to get informed by data updates
@@ -359,7 +358,7 @@ public class XMLExporter  {
 				//Spieler schreiben
 				for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
 					MatchLineupPlayer playerMatch = lineupTeam.getAufstellung().get(k);
-					ISpieler playerData = matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
+					Spieler playerData = matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 
 					//Bank + verletzte überspringen
 					if (playerMatch.getId() >= ISpielerPosition.startReserves) {
@@ -502,7 +501,7 @@ public class XMLExporter  {
 	/**
 	 * Check for skillup.
 	 */
-	private String hadSkillup(int skill, ISpieler player, Timestamp matchdate) {
+	private String hadSkillup(int skill, Spieler player, Timestamp matchdate) {
 		Object[] value = player.getLastLevelUp(skill);
 
 		if ((value != null) && ((value[0] != null) && (value[1] != null))) {

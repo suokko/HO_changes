@@ -4,6 +4,7 @@ package ho.module.lineup;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,8 +14,6 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import plugins.ISpieler;
 
 
 /**
@@ -61,14 +60,14 @@ final class AufstellungsGruppenPanel extends JPanel implements ActionListener {
     }
 
     private void gruppenMarkierung(String gruppenName) {
-        final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final Lineup aufstellung = HOVerwaltung.instance()
                                                                                                           .getModel()
                                                                                                           .getAufstellung();
 
         //Alle Spieler auf der Gruppe entfernen und die neuen reinsetzen
         for (int i = 0; i < alleSpieler.size(); i++) {
-            final ISpieler spieler = alleSpieler.get(i);
+            final Spieler spieler = alleSpieler.get(i);
 
             //ein erste 11
             if (aufstellung.isSpielerInAnfangsElf(spieler.getSpielerID())) {

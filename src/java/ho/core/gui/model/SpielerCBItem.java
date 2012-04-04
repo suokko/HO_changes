@@ -5,6 +5,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 
 import java.awt.Component;
 
@@ -18,7 +19,7 @@ public class SpielerCBItem  implements Comparable<SpielerCBItem>{
 
     //~ Instance fields ----------------------------------------------------------------------------
     public SpielerLabelEntry m_clEntry = new SpielerLabelEntry(null, null, 0f, true, true);
-    private plugins.ISpieler m_clSpieler;
+    private Spieler m_clSpieler;
     private String m_sText;
     private float m_fPositionsBewertung;
 
@@ -28,14 +29,14 @@ public class SpielerCBItem  implements Comparable<SpielerCBItem>{
      * Creates a new SpielerCBItem object.
      *
      */
-    public SpielerCBItem(String text, float poswert, plugins.ISpieler spieler) {
+    public SpielerCBItem(String text, float poswert, Spieler spieler) {
         m_sText = text;
         m_clSpieler = spieler;
         m_fPositionsBewertung = poswert;
         m_clEntry = new SpielerLabelEntry(null, null, 0f, true, true);
     }
     
-    public SpielerCBItem(String text, float poswert, plugins.ISpieler spieler, boolean useCustomText) {
+    public SpielerCBItem(String text, float poswert, Spieler spieler, boolean useCustomText) {
         m_sText = text;
         m_clSpieler = spieler;
         m_fPositionsBewertung = poswert;
@@ -50,7 +51,7 @@ public class SpielerCBItem  implements Comparable<SpielerCBItem>{
     //------------------------------------------------------------------------------------------
     //------------------------------------CellRenderer-------------------------------------------    
     public final Component getListCellRendererComponent(JList jList, int index,boolean isSelected) {
-            final plugins.ISpieler spieler = getSpieler();
+            final Spieler spieler = getSpieler();
 
             //Kann für Tempspieler < 0 sein && spieler.getSpielerID () > 0 )
             if (spieler != null) {
@@ -78,12 +79,12 @@ public class SpielerCBItem  implements Comparable<SpielerCBItem>{
     }
 
 
-    public final void setSpieler(plugins.ISpieler spieler) {
+    public final void setSpieler(Spieler spieler) {
         m_clSpieler = spieler;
     }
 
 
-    public final plugins.ISpieler getSpieler() {
+    public final Spieler getSpieler() {
         return m_clSpieler;
     }
 
@@ -95,7 +96,7 @@ public class SpielerCBItem  implements Comparable<SpielerCBItem>{
         return m_sText;
     }
 
-    public final void setValues(String text, float poswert, plugins.ISpieler spieler) {
+    public final void setValues(String text, float poswert, Spieler spieler) {
         m_sText = text;
         m_clSpieler = spieler;
         m_fPositionsBewertung = poswert;

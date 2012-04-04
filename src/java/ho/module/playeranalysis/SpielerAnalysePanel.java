@@ -10,6 +10,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
@@ -29,8 +30,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -209,7 +208,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
      * TODO Missing Method Documentation
      */
     private void fillSpielerCB() {
-        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<Spieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
 
         for (int i = 0; i < spieler.size(); i++) {
@@ -219,7 +218,7 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable, Item
         java.util.Arrays.sort(spielerCBItems);
 
         //Alte Spieler
-        final Vector<ISpieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
+        final Vector<Spieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
         final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler
                                                                                                                                   .size()];
 

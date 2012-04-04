@@ -25,15 +25,13 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 
 /**
  * DOCUMENT ME!
  *
  * @author thomas.werth
  */
-public final class Spieler implements plugins.ISpieler {
+public final class Spieler {
     //~ Class fields -------------------------------------------------------------------------------
 
 	/** Cache for star ratings (Hashtable<String, Float>) */
@@ -43,15 +41,6 @@ public final class Spieler implements plugins.ISpieler {
 
     /** Spielberechtigt */
     private Boolean m_bSpielberechtigt;
-
-    /** AgressivitätName */
-    private String m_sAgressivitaet = "";
-
-    /** Ansehen Name */
-    private String m_sAnsehen = "";
-
-    /** charakterName */
-    private String m_sCharakter = "";
 
     /** ManuellerSmilie Dateiname */
     private String m_sManuellerSmilie;
@@ -274,11 +263,8 @@ public final class Spieler implements plugins.ISpieler {
             m_iSpezialitaet = rs.getInt("iSpezialitaet");
             m_sSpezialitaet = DBManager.deleteEscapeSequences(rs.getString("sSpezialitaet"));
             m_iCharakter = rs.getInt("iCharakter");
-            m_sCharakter = DBManager.deleteEscapeSequences(rs.getString("sCharakter"));
             m_iAnsehen = rs.getInt("iAnsehen");
-            m_sAnsehen = DBManager.deleteEscapeSequences(rs.getString("sAnsehen"));
             m_iAgressivitaet = rs.getInt("iAgressivitaet");
-            m_sAgressivitaet = DBManager.deleteEscapeSequences(rs.getString("sAgressivitaet"));
             m_iErfahrung = rs.getInt("Erfahrung");
             m_iLoyalty = rs.getInt("Loyalty");
             m_bHomeGrown = rs.getBoolean("HomeGrown");
@@ -364,11 +350,8 @@ public final class Spieler implements plugins.ISpieler {
         m_iSpezialitaet = Integer.parseInt(properties.getProperty("speciality", "0"));
         m_sSpezialitaet = properties.getProperty("specialitylabel", "");
         m_iCharakter = Integer.parseInt(properties.getProperty("gentleness", "0"));
-        m_sCharakter = properties.getProperty("gentlenesslabel", "");
         m_iAnsehen = Integer.parseInt(properties.getProperty("honesty", "0"));
-        m_sAnsehen = properties.getProperty("honestylabel", "");
         m_iAgressivitaet = Integer.parseInt(properties.getProperty("aggressiveness", "0"));
-        m_sAgressivitaet = properties.getProperty("aggressivenesslabel", "");
         m_iErfahrung = Integer.parseInt(properties.getProperty("rut", "0"));
         m_bHomeGrown = Boolean.parseBoolean(properties.getProperty("homegr", "FALSE"));
         m_iLoyalty = Integer.parseInt(properties.getProperty("loy", "0"));
@@ -459,24 +442,6 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getAgressivitaet() {
         return m_iAgressivitaet;
-    }
-
-    /**
-     * Setter for property m_sAgressivitaet.
-     *
-     * @param m_sAgressivitaet New value of property m_sAgressivitaet.
-     */
-    public void setAgressivitaetString(java.lang.String m_sAgressivitaet) {
-        this.m_sAgressivitaet = m_sAgressivitaet;
-    }
-
-    /**
-     * Getter for property m_sAgressivitaet.
-     *
-     * @return Value of property m_sAgressivitaet.
-     */
-    public java.lang.String getAgressivitaetString() {
-        return m_sAgressivitaet;
     }
 
     /**
@@ -618,24 +583,6 @@ public final class Spieler implements plugins.ISpieler {
     }
 
     /**
-     * Setter for property m_sAnsehen.
-     *
-     * @param m_sAnsehen New value of property m_sAnsehen.
-     */
-    public void setAnsehenString(java.lang.String m_sAnsehen) {
-        this.m_sAnsehen = m_sAnsehen;
-    }
-
-    /**
-     * Getter for property m_sAnsehen.
-     *
-     * @return Value of property m_sAnsehen.
-     */
-    public java.lang.String getAnsehenString() {
-        return m_sAnsehen;
-    }
-
-    /**
      * Setter for property m_iBewertung.
      *
      * @param m_iBewertung New value of property m_iBewertung.
@@ -686,25 +633,7 @@ public final class Spieler implements plugins.ISpieler {
         return m_iCharakter;
     }
 
-    /**
-     * Setter for property m_sCharakter.
-     *
-     * @param m_sCharakter New value of property m_sCharakter.
-     */
-    public void setCharakterString(java.lang.String m_sCharakter) {
-        this.m_sCharakter = m_sCharakter;
-    }
-
-    /**
-     * Getter for property m_sCharakter.
-     *
-     * @return Value of property m_sCharakter.
-     */
-    public java.lang.String getCharakterString() {
-        return m_sCharakter;
-    }
-
-    /////////////////////////////////////////////////7
+     /////////////////////////////////////////////////7
     //Training ( reflected to skills)
     //TORSCHUSS is skipped due it trains two skills, won't be displayed in gui. Real calc for this is done in Trainingsmanager
     //TA_EXTERNALATTACK skipped due it trains two skills, calc must be done in trainingmanager for each skill seperate like Torschuss.no display in options gui.
@@ -2148,7 +2077,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param staminaTrainingPart TODO Missing Constructuor Parameter Documentation
      * @param hrftimestamp TODO Missing Constructuor Parameter Documentation
      */
-    public void calcFullSubskills(ISpieler old, int coTrainer, int trainerlevel,
+    public void calcFullSubskills(Spieler old, int coTrainer, int trainerlevel,
                                   int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
         final TrainingPerPlayer trainingPerPlayer = ho.core.training.TrainingsManager.instance()
         		.calculateFullTrainingForPlayer(this, ho.core.training.TrainingsManager.instance().getTrainingsVector(), hrftimestamp);
@@ -2292,7 +2221,7 @@ public final class Spieler implements plugins.ISpieler {
      * @param intensitaet TODO Missing Constructuor Parameter Documentation
      * @param hrfID TODO Missing Constructuor Parameter Documentation
      */
-    public void calcIncrementalSubskills(ISpieler old, int coTrainer, 
+    public void calcIncrementalSubskills(Spieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
     	final TrainingPerWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
         final TrainingPerPlayer trainingPerPlayer =
@@ -2538,7 +2467,7 @@ public final class Spieler implements plugins.ISpieler {
      *
      * @param old
      */
-    public void copySubSkills(ISpieler old) {
+    public void copySubSkills(Spieler old) {
         if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
             m_dSubTorwart = old.getSubskill4Pos(PlayerSkill.KEEPER);
             m_dTrainingsOffsetTorwart = old.getTrainingsOffsetTorwart();
@@ -2656,7 +2585,7 @@ public final class Spieler implements plugins.ISpieler {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected boolean check4SkillUp(int skill, ISpieler oldPlayer) {
+    protected boolean check4SkillUp(int skill, Spieler oldPlayer) {
         return PlayerHelper.check4SkillUp(skill, oldPlayer, this);
     }
 

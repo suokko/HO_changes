@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 
@@ -18,8 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 
 /**
@@ -54,12 +53,12 @@ public class EffectDAO {
 
             // Loop through all player (also old players) to get all trained skillups.
             // Group these skillups by season and week.
-            List<ISpieler> players = new Vector<ISpieler>(HOVerwaltung.instance().getModel().getAllSpieler());
+            List<Spieler> players = new Vector<Spieler>(HOVerwaltung.instance().getModel().getAllSpieler());
 
             players.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
 
-            for (Iterator<ISpieler> iterPlayers = players.iterator(); iterPlayers.hasNext();) {
-                ISpieler player = (ISpieler) iterPlayers.next();
+            for (Iterator<Spieler> iterPlayers = players.iterator(); iterPlayers.hasNext();) {
+                Spieler player = (Spieler) iterPlayers.next();
                 OldTrainingManager otm = new OldTrainingManager(player);
                 List<ISkillup> skillups = otm.getTrainedSkillups();
 

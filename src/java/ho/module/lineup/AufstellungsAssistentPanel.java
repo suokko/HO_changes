@@ -11,6 +11,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
@@ -35,8 +36,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-
-import plugins.ISpieler;
 
 
 /**
@@ -239,8 +238,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 		
 
-		final Vector<ISpieler> vSpieler = new Vector<ISpieler>();
-		final Vector<ISpieler> alleSpieler = hoModel.getAllSpieler();
+		final Vector<Spieler> vSpieler = new Vector<Spieler>();
+		final Vector<Spieler> alleSpieler = hoModel.getAllSpieler();
 
 		for (int i = 0; i < alleSpieler.size(); i++) {
 			final ho.core.model.Spieler spieler = (ho.core.model.Spieler) alleSpieler

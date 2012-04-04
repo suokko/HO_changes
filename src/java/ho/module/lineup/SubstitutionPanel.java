@@ -1,16 +1,14 @@
 package ho.module.lineup;
 
 import ho.core.datatype.CBItem;
-import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.module.lineup.substitution.ISubstitution;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -23,8 +21,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import plugins.ISpieler;
 
 
 public class SubstitutionPanel extends JDialog implements ItemListener{
@@ -48,7 +44,7 @@ public class SubstitutionPanel extends JDialog implements ItemListener{
 	private JComboBox playerInCB;
 	private JComboBox playerOutCB;
 
-	private HashMap<Integer, ISpieler> positionMap; 
+	private HashMap<Integer, Spieler> positionMap; 
 	private Lineup lineup;
 
 	// Used for order changes
@@ -241,7 +237,7 @@ public class SubstitutionPanel extends JDialog implements ItemListener{
 
 		lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
-		positionMap = new HashMap<Integer, ISpieler>(22);
+		positionMap = new HashMap<Integer, Spieler>(22);
 		for (int i = ISpielerPosition.startLineup ; i <= ISpielerPosition.substForward; i++) {
 			positionMap.put(new Integer(i), lineup.getPlayerByPositionID(i));
 		}
@@ -389,10 +385,10 @@ public class SubstitutionPanel extends JDialog implements ItemListener{
 	private class SpielerItem {
 		int position;
 		String name = "";
-		ISpieler spieler;
+		Spieler spieler;
 		String text = "";
 
-		SpielerItem(int pos, ISpieler spieler) {
+		SpielerItem(int pos, Spieler spieler) {
 			this.spieler = spieler;
 			position = pos;
 			if (this.spieler != null) {
@@ -408,7 +404,7 @@ public class SubstitutionPanel extends JDialog implements ItemListener{
 			return position;
 		}
 
-		public ISpieler getSpieler() {
+		public Spieler getSpieler() {
 			return spieler;
 		}
 

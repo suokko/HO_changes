@@ -3,6 +3,7 @@ package ho.module.training.ui.renderer;
 
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.TrainingLegendPanel;
 
@@ -12,8 +13,6 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import plugins.ISpieler;
 
 
 /**
@@ -56,7 +55,7 @@ public class TrainingRecapRenderer extends DefaultTableCellRenderer {
             
             // fetch playerId (last column) from table
         	playerId = Integer.parseInt((String)table.getValueAt(row, table.getColumnCount()-1));
-        	ISpieler player =HOVerwaltung.instance().getModel().getSpieler(playerId);
+        	Spieler player =HOVerwaltung.instance().getModel().getSpieler(playerId);
         	realPlayerAge = player.getAlterWithAgeDays();
         	
         	/** If there is some kind of skillup information

@@ -1,9 +1,8 @@
 // %2775781217:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
+import ho.core.model.Spieler;
 import ho.module.transfer.scout.ScoutEintrag;
-
-import plugins.ISpieler;
 
 
 /**
@@ -26,7 +25,7 @@ public class PlayerItem {
      *
      * @param spieler the roster player to include in the Combo
      */
-    public PlayerItem(ISpieler spieler) {
+    public PlayerItem(Spieler spieler) {
         tsi = spieler.getTSI();
         form = spieler.getForm();
         id = spieler.getSpielerID();
