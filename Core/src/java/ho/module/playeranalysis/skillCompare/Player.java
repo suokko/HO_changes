@@ -7,7 +7,7 @@
 package ho.module.playeranalysis.skillCompare;
 
 import ho.core.model.ISpielerPosition;
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 /**
  * @author KickMuck
  *
@@ -16,7 +16,7 @@ import plugins.ISpieler;
  */
 public class Player
 {
-	private ISpieler m_Player;
+	private Spieler m_Player;
 	private String m_Name;
 	private int m_Age;
 	private int m_ID;
@@ -94,7 +94,7 @@ public class Player
 	private int m_Speciality;
 	
 	//Konstruktor
-	public Player(ISpieler player)
+	public Player(Spieler player)
 	{
 		m_Player = player;
 		setPlayerValues();

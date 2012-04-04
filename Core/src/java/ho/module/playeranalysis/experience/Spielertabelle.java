@@ -35,8 +35,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import plugins.ISpieler;
-
 class Spielertabelle extends JTable {
 	private static final long serialVersionUID = 3117625304079832033L;
 
@@ -544,11 +542,11 @@ Spielertabelle() {
 
 
 	void aktualisieren() {
-		Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		Vector<ho.core.model.Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
 		spielerSortierung = new SpielerSortierung[alleSpieler.size()];
 		spieler = new Vector<Spieler>(alleSpieler.size());
 		int pos = 0;
-		for (Enumeration<ISpieler> el = alleSpieler.elements(); el.hasMoreElements();) {
+		for (Enumeration<ho.core.model.Spieler> el = alleSpieler.elements(); el.hasMoreElements();) {
 			spieler.add(new Spieler(el.nextElement()));
 			spielerSortierung[pos] = new SpielerSortierung(pos);
 			pos++;

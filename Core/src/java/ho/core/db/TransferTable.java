@@ -1,6 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
@@ -10,13 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 public class TransferTable extends AbstractTable {
 	final static String TABLENAME = "TRANSFER";
@@ -124,7 +121,7 @@ public class TransferTable extends AbstractTable {
      */
     public void updateTeamTransfers(int teamid) {
         try {
-            final List<ISpieler> players = new Vector<ISpieler>();
+            final List<Spieler> players = new Vector<Spieler>();
 
             final Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -135,7 +132,7 @@ public class TransferTable extends AbstractTable {
                 PlayerTransfer transfer = iter.next();
                 addTransfer(transfer);
 
-                final ISpieler player = PlayerRetriever.getPlayer(transfer.getPlayerId());
+                final Spieler player = PlayerRetriever.getPlayer(transfer.getPlayerId());
 
                 if (player != null) {
                     players.add(player);
@@ -297,7 +294,7 @@ public class TransferTable extends AbstractTable {
 
         for (Iterator<PlayerTransfer> iter = results.iterator(); iter.hasNext();) {
             PlayerTransfer transfer = iter.next();
-            final ISpieler spieler = DBManager.instance().getSpielerAtDate(transfer.getPlayerId(),transfer.getDate());
+            final Spieler spieler = DBManager.instance().getSpielerAtDate(transfer.getPlayerId(),transfer.getDate());
 
             if (spieler != null) {
             	int transferSeason = HelperWrapper.instance().getHTSeason(transfer.getDate());

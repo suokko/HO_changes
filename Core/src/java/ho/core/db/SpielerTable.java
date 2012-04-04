@@ -1,5 +1,8 @@
 package ho.core.db;
 
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
@@ -8,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 final class SpielerTable extends AbstractTable {
 
@@ -184,15 +185,15 @@ final class SpielerTable extends AbstractTable {
 						+ "',"
 						+ player.getCharakter()
 						+ ",'"
-						+ DBManager.insertEscapeSequences(player.getCharakterString())
+						+ DBManager.insertEscapeSequences(PlayerHonesty.toString(player.getCharakter()))
 						+ "',"
 						+ player.getAnsehen()
 						+ ",'"
-						+ DBManager.insertEscapeSequences(player.getAnsehenString())
+						+ DBManager.insertEscapeSequences(PlayerAgreeability.toString(player.getAnsehen()))
 						+ "',"
 						+ player.getAgressivitaet()
 						+ ",'"
-						+ DBManager.insertEscapeSequences(player.getAgressivitaetString())
+						+ DBManager.insertEscapeSequences(PlayerAggressiveness.toString(player.getAgressivitaet()))
 						+ "',"
 						+ player.getFuehrung()
 						+ ","
@@ -253,7 +254,7 @@ final class SpielerTable extends AbstractTable {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
+	void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
 //		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };
@@ -311,11 +312,11 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<ISpieler> getSpieler(int hrfID) {
+	Vector<Spieler> getSpieler(int hrfID) {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
-		final Vector<ISpieler> ret = new Vector<ISpieler>();
+		final Vector<Spieler> ret = new Vector<Spieler>();
 
 		sql = "SELECT * from "+getTableName()+" WHERE HRF_ID = " + hrfID;
 		rs = adapter.executeQuery(sql);
@@ -343,11 +344,11 @@ final class SpielerTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<ISpieler> getAllSpieler() {
+	Vector<Spieler> getAllSpieler() {
 		ResultSet rs = null;
 		Spieler player = null;
 		String sql = null;
-		final Vector<ISpieler> ret = new Vector<ISpieler>();
+		final Vector<Spieler> ret = new Vector<Spieler>();
 
 		sql = "SELECT DISTINCT SpielerID from "+getTableName()+"";
 		rs = adapter.executeQuery(sql);

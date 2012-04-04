@@ -10,13 +10,11 @@ import ho.core.util.HOLogger;
 
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 public class LineupColumnModel extends HOColumnModel {
 
 	private static final long serialVersionUID = 6706783648812506363L;
 	
-	private Vector<ISpieler> m_vPlayers;
+	private Vector<Spieler> m_vPlayers;
 	
 	public LineupColumnModel(int id){
 		super(id,"Aufstellung");
@@ -132,7 +130,7 @@ public class LineupColumnModel extends HOColumnModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector<ISpieler> player) {
+    public final void setValues(Vector<Spieler> player) {
     	m_vPlayers = player;
         initData();
     }

@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 
 /**
  * DOCUMENT ME!
@@ -102,7 +100,7 @@ public class HOVerwaltung {
      */
     public float getDurchschnittsAlter() {
         float summe = 0;
-        final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
+        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
@@ -123,7 +121,7 @@ public class HOVerwaltung {
      */
     public float getDurchschnittsErfahrung() {
         float summe = 0;
-        final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
+        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
@@ -141,7 +139,7 @@ public class HOVerwaltung {
      */
     public float getDurchschnittsForm() {
         float summe = 0;
-        final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
+        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
@@ -159,7 +157,7 @@ public class HOVerwaltung {
      */
     public float getSumTSI() {
         float summe = 0;
-        final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
+        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen
@@ -177,7 +175,7 @@ public class HOVerwaltung {
      */
     public float getSumEPV() {
         float summe = 0;
-        final Vector<ISpieler> vSpieler = getModel().getAllSpieler();
+        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
 
         for (int i = 0; i < vSpieler.size(); i++) {
             //Trainer nicht berücksichtigen

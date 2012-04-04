@@ -2,9 +2,8 @@
 package ho.module.transfer;
 
 
-import plugins.ISpieler;
-
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 
 import java.util.Iterator;
 import java.util.List;
@@ -35,14 +34,14 @@ public final class PlayerRetriever {
      * @return ISpieler interface representing the foun player or <code>null</code> if no player
      *         could be found.
      */
-    public static ISpieler getPlayer(int id) {
-        final ISpieler player = HOVerwaltung.instance().getModel().getSpieler(id);
+    public static Spieler getPlayer(int id) {
+        final Spieler player = HOVerwaltung.instance().getModel().getSpieler(id);
 
         if (player == null) {
-            final List<ISpieler> oldPlayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
+            final List<Spieler> oldPlayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
 
-            for (final Iterator<ISpieler> iter = oldPlayers.iterator(); iter.hasNext();) {
-                final ISpieler oldPlayer = iter.next();
+            for (final Iterator<Spieler> iter = oldPlayers.iterator(); iter.hasNext();) {
+                final Spieler oldPlayer = iter.next();
 
                 if (oldPlayer.getSpielerID() == id) {
                     return oldPlayer;

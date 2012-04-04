@@ -15,8 +15,6 @@ import ho.core.model.SpielerPosition;
 import java.util.List;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 
 public class LineupAssistant {
  
@@ -78,7 +76,7 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int getBestFreeElferKicker(int[] liste, Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
+    public final int getBestFreeElferKicker(int[] liste, Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
         Spieler spieler = null;
         float maxValue = -1;
         float curValue = -1;
@@ -118,7 +116,7 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final int[] setElferKicker(Vector<ISpieler> vSpieler, Vector<ISpielerPosition> positionen) {
+    public final int[] setElferKicker(Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
         final int[] bestElfer = new int[11];
 //        int kicker = HOVerwaltung.instance().getModel().getAufstellung().getKicker();
 
@@ -208,7 +206,7 @@ public class LineupAssistant {
      * @param wetterBonus Schwellwert der angibt an wie auf WetterEffekte reagiert werden soll
      * @param wetter das aktuelle Wetter
      */
-    public final void doAufstellung(List<ISpielerPosition> positionen, List<ISpieler> spieler, byte reihenfolge,
+    public final void doAufstellung(List<ISpielerPosition> positionen, List<Spieler> spieler, byte reihenfolge,
                                     boolean mitForm, boolean idealPosFirst,
                                     boolean ignoreVerletzung, boolean ignoreSperre,
                                     float wetterBonus, int wetter) {
@@ -549,7 +547,7 @@ public class LineupAssistant {
                                                                       boolean mitForm,
                                                                       boolean ignoreVerletzung,
                                                                       boolean ignoreSperre,
-                                                                      List<ISpieler> vSpieler,
+                                                                      List<Spieler> vSpieler,
                                                                       List<ISpielerPosition> positionen) {
         ho.core.model.Spieler spieler = null;
         ho.core.model.Spieler bestSpieler = null;
@@ -593,7 +591,7 @@ public class LineupAssistant {
                                                                                   boolean mitForm,
                                                                                   boolean ignoreVerletzung,
                                                                                   boolean ignoreSperre,
-                                                                                  List<ISpieler> vSpieler,
+                                                                                  List<Spieler> vSpieler,
                                                                                   List<ISpielerPosition> positionen) {
         Spieler spieler = null;
         Spieler bestSpieler = null;
@@ -637,7 +635,7 @@ public class LineupAssistant {
      */
     protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
                                                     boolean ignoreVerletzung, boolean ignoreSperre,
-                                                    List<ISpieler> vSpieler, List<ISpielerPosition> positionen) {
+                                                    List<Spieler> vSpieler, List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
 
@@ -676,7 +674,7 @@ public class LineupAssistant {
      */
     protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                             boolean ignoreVerletzung,
-                                                            boolean ignoreSperre, List<ISpieler> vSpieler,
+                                                            boolean ignoreSperre, List<Spieler> vSpieler,
                                                             List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
@@ -716,7 +714,7 @@ public class LineupAssistant {
      */
     protected final void doSpielerAufstellen(byte position, boolean mitForm,
                                              boolean ignoreVerletzung, boolean ignoreSperre,
-                                             List<ISpieler> vSpieler, List<ISpielerPosition> positionen) {
+                                             List<Spieler> vSpieler, List<ISpielerPosition> positionen) {
         SpielerPosition pos = null;
         Spieler spieler = null;
         final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
@@ -787,7 +785,7 @@ public class LineupAssistant {
      */
     protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
                                                      boolean ignoreVerletzung,
-                                                     boolean ignoreSperre, List<ISpieler> vSpieler,
+                                                     boolean ignoreSperre, List<Spieler> vSpieler,
                                                      List<ISpielerPosition> positionen) {
        SpielerPosition pos = null;
         Spieler spieler = null;
@@ -854,7 +852,7 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private float calcAveragePosValue(List<ISpieler> spieler) {
+    private float calcAveragePosValue(List<Spieler> spieler) {
         float average = 0.0f;
         Spieler player = null;
 

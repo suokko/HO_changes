@@ -2,10 +2,10 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
-import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.OldTrainingManager;
 import ho.module.training.SkillChange;
@@ -39,8 +39,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import plugins.ISpieler;
 
 
 /**
@@ -197,11 +195,11 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
      *
      * @return Map of skillups
      */
-    private Map<Integer,List<SkillChange>> getSkillups(List<ISpieler> players) {
+    private Map<Integer,List<SkillChange>> getSkillups(List<Spieler> players) {
         Map<Integer,List<SkillChange>> skillupsByType = new HashMap<Integer,List<SkillChange>>();
 
-        for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
-            ISpieler player = (ISpieler) iter.next();
+        for (Iterator<Spieler> iter = players.iterator(); iter.hasNext();) {
+            Spieler player =  iter.next();
 
             OldTrainingManager otm = new OldTrainingManager(player);
 

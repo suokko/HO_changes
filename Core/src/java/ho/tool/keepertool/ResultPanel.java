@@ -5,6 +5,7 @@ package ho.tool.keepertool;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -16,8 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
-import plugins.ISpieler;
 
 
 /**
@@ -109,7 +108,7 @@ class ResultPanel extends JPanel {
 
         set.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    final ISpieler sp = HOVerwaltung.instance().getModel().getSpieler(id);
+                    final Spieler sp = HOVerwaltung.instance().getModel().getSpieler(id);
                     double decimals = average - sp.getTorwart()
                                       - sp.getSubskill4Pos(PlayerSkill.KEEPER);
 

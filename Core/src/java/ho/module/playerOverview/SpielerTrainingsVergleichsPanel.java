@@ -9,6 +9,7 @@ import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungsListRenderer;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 
 import java.awt.BorderLayout;
@@ -25,8 +26,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
-import plugins.ISpieler;
-
 
 
 /**
@@ -39,7 +38,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
 	//~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Vector<ISpieler> vergleichsSpieler = new Vector<ISpieler>();
+    private static Vector<Spieler> vergleichsSpieler = new Vector<Spieler>();
     private static boolean vergleichsMarkierung;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -74,7 +73,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static Vector<ISpieler> getVergleichsSpieler() {
+    public static Vector<Spieler> getVergleichsSpieler() {
         return vergleichsSpieler;
     }
 

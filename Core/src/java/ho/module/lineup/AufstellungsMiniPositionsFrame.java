@@ -38,8 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 
-import plugins.ISpieler;
-
 
 /**
  * Darstellung der Aufstellung in einem kleinen Frame
@@ -167,10 +165,10 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
         //Alle SpielerPositionen Informieren
         //erste 11
-        final Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
+        final Vector<Spieler> aufgestellteSpieler = new Vector<Spieler>();
 
-        final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-        final Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
+        final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<Spieler> gefilterteSpieler = new Vector<Spieler>();
         final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
         for (int i = 0; i < alleSpieler.size(); i++) {
@@ -573,7 +571,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		private static final long serialVersionUID = 8546453871916507058L;
 		
 		@Override
-		public void refresh(Vector<ISpieler> spieler) {
+		public void refresh(Vector<Spieler> spieler) {
 			super.refresh(spieler);
 			//HOLogger.instance().debug(getClass(), "Keeper: " + ((SpielerCBItem)m_clKeeper.getPlayerComboBox().getSelectedItem()).getSpieler());
 			

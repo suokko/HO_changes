@@ -1,6 +1,7 @@
 package ho.module.lineup.substitution;
 
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 
 import java.awt.BorderLayout;
@@ -24,8 +25,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
-import plugins.ISpieler;
 
 public class PositionChooser extends JPanel {
 
@@ -196,7 +195,7 @@ public class PositionChooser extends JPanel {
 
 		private static final long serialVersionUID = 6025107478898829134L;
 		private Integer position;
-		private ISpieler player;
+		private Spieler player;
 		private boolean selected = false;
 
 		public PositionPanel(Integer position) {
@@ -204,7 +203,7 @@ public class PositionChooser extends JPanel {
 			initComponents();
 		}
 
-		public void setPlayer(ISpieler player) {
+		public void setPlayer(Spieler player) {
 			this.player = player;
 			if (isOccupied()) {
 				setBackground(COLOR_POS_OCCUPIED);
@@ -215,7 +214,7 @@ public class PositionChooser extends JPanel {
 			}
 		}
 
-		public ISpieler getPlayer() {
+		public Spieler getPlayer() {
 			return this.player;
 		}
 

@@ -30,8 +30,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import plugins.ISpieler;
-
 /**
  * Enthält die einzelnen Positionen
  */
@@ -107,9 +105,9 @@ public class LineupPositionsPanel extends JPanel implements Updateable, ActionLi
 
 		// Alle SpielerPositionen Informieren
 		// erste 11
-		Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
-		List<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-		Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
+		Vector<Spieler> aufgestellteSpieler = new Vector<Spieler>();
+		List<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		Vector<Spieler> gefilterteSpieler = new Vector<Spieler>();
 
 		for (int i = 0; i < alleSpieler.size(); i++) {
 			Spieler spieler = (Spieler) alleSpieler.get(i);

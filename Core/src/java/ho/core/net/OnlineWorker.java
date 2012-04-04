@@ -23,6 +23,7 @@ import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingsManager;
@@ -657,7 +658,7 @@ public class OnlineWorker {
     	int id = 0;
     	int behaviour = 0;
     	
-    	plugins.ISpieler spieler = lineup.getPlayerByPositionID(roleId);
+    	Spieler spieler = lineup.getPlayerByPositionID(roleId);
     	if (spieler != null) {
     		id = spieler.getSpielerID();
     		behaviour = lineup.getTactic4PositionID(roleId);

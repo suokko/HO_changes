@@ -3,6 +3,7 @@ package ho.core.rating;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
@@ -15,8 +16,6 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Properties;
-
-import plugins.ISpieler;
 
 public class RatingPredictionManager {
 	//~ Class constants ----------------------------------------------------------------------------
@@ -581,7 +580,7 @@ public class RatingPredictionManager {
     public int getNumIMs () {
     	int retVal = 0;
     	for(int pos = ISpielerPosition.startLineup; pos < ISpielerPosition.startReserves; pos++) {
-    		ISpieler spieler = lineup.getPlayerByPositionID(pos);
+    		Spieler spieler = lineup.getPlayerByPositionID(pos);
             if (spieler != null) { 
             	if (pos == ISpielerPosition.rightInnerMidfield || pos == ISpielerPosition.leftInnerMidfield || 
             			pos == ISpielerPosition.centralInnerMidfield)
@@ -594,7 +593,7 @@ public class RatingPredictionManager {
     public int getNumFWs () {
     	int retVal = 0;
     	for(int pos = ISpielerPosition.startLineup; pos < ISpielerPosition.startReserves; pos++) {
-    		ISpieler spieler = lineup.getPlayerByPositionID(pos);
+    		Spieler spieler = lineup.getPlayerByPositionID(pos);
             if (spieler != null) { 
             	if (pos == ISpielerPosition.rightForward || pos == ISpielerPosition.leftForward || 
             			pos == ISpielerPosition.centralForward)
@@ -607,7 +606,7 @@ public class RatingPredictionManager {
     public int getNumCDs () {
     	int retVal = 0;
     	for(int pos = ISpielerPosition.startLineup; pos < ISpielerPosition.startReserves; pos++) {
-    		ISpieler spieler = lineup.getPlayerByPositionID(pos);
+    		Spieler spieler = lineup.getPlayerByPositionID(pos);
             if (spieler != null) { 
             	if (pos == ISpielerPosition.rightCentralDefender || pos == ISpielerPosition.leftCentralDefender || 
             			pos == ISpielerPosition.middleCentralDefender)
@@ -656,7 +655,7 @@ public class RatingPredictionManager {
 			return false;
     }
 
-    public static float getLoyaltyHomegrownBonus(ISpieler spieler) {
+    public static float getLoyaltyHomegrownBonus(Spieler spieler) {
     	float bonus = 0f;
     	 if (spieler.isHomeGrown()) {
          	bonus += config.getPlayerStrengthParameters().getParam(RatingPredictionParameter.GENERAL, "homegrownbonus");
@@ -675,7 +674,7 @@ public class RatingPredictionManager {
     	double[][] retArray = new double[ISpielerPosition.NUM_POSITIONS][SPEC_ALL];
 //    	System.out.println ("getAllPlayerStrength: st="+skillType+", l="+useLeft+", m="+useMiddle+", r="+useRight);
         for(int pos = ISpielerPosition.startLineup; pos < ISpielerPosition.startReserves; pos++) {
-            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            Spieler spieler = lineup.getPlayerByPositionID(pos);
             byte taktik = lineup.getTactic4PositionID(pos);
             if(spieler != null) {
 //            	System.out.println ("getAllPlayerStrength."+pos+", id="+spieler.getSpielerID()+", taktik="+taktik);
@@ -762,11 +761,11 @@ public class RatingPredictionManager {
     	return calcRatings(MIDFIELD);
     }
 
-    public static float calcPlayerStrength(ISpieler spieler, int skillType) {
+    public static float calcPlayerStrength(Spieler spieler, int skillType) {
     	return calcPlayerStrength(spieler, skillType, true);
     }
 
-    public static float calcPlayerStrength(ISpieler spieler, int skillType, boolean useForm) {
+    public static float calcPlayerStrength(Spieler spieler, int skillType, boolean useForm) {
         double retVal = 0.0F;
         try
         {
@@ -945,7 +944,7 @@ public class RatingPredictionManager {
     	float passing = 0;
         for(int i = ISpielerPosition.startLineup +1; i < ISpielerPosition.startReserves; i++)
         {
-            ISpieler ispieler = lineup.getPlayerByPositionID(i);
+            Spieler ispieler = lineup.getPlayerByPositionID(i);
             byte taktik = lineup.getTactic4PositionID(i);
             if(ispieler != null) {
             	passing =  calcPlayerStrength(ispieler, PASSING);
@@ -978,7 +977,7 @@ public class RatingPredictionManager {
         for(int pos = ISpielerPosition.rightBack; pos <= ISpielerPosition.leftBack; pos++)
         {
         	playerContribution = 0d;
-            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            Spieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
             		playerContribution = (params.getParam("counter", "multiPs", 1.0) * calcPlayerStrength(spieler, PASSING));
             		playerContribution += (params.getParam("counter", "multiDe", 1.0) * calcPlayerStrength(spieler, DEFENDING));
@@ -1005,7 +1004,7 @@ public class RatingPredictionManager {
         for(int pos = ISpielerPosition.startLineup + 1; pos < ISpielerPosition.startReserves; pos++)
         {
             float defense = 0.0F;
-            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            Spieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
             	defense = calcPlayerStrength(spieler, DEFENDING);
                 if (spieler.getSpezialitaet() == PlayerSpeciality.POWERFUL) {
@@ -1034,7 +1033,7 @@ public class RatingPredictionManager {
         {
             float scoring = 0.0F;
             float setpieces = 0.0F;
-            ISpieler spieler = lineup.getPlayerByPositionID(pos);
+            Spieler spieler = lineup.getPlayerByPositionID(pos);
             if(spieler != null) {
             	scoring = 3*calcPlayerStrength(spieler, SCORING);
             	setpieces = calcPlayerStrength(spieler, SETPIECES);

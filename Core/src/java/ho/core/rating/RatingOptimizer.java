@@ -12,6 +12,7 @@ import ho.core.file.xml.ExportMatchData;
 import ho.core.file.xml.MatchExporter;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
@@ -21,8 +22,6 @@ import ho.module.matches.model.Matchdetails;
 
 import java.text.NumberFormat;
 import java.util.List;
-
-import plugins.ISpieler;
 
 /**
  * @author mamato
@@ -114,7 +113,7 @@ public class RatingOptimizer {
 		final Lineup lineup = new Lineup();
 		for (int k = 0;(lineupTeam.getAufstellung() != null) && (k < lineupTeam.getAufstellung().size()); k++) {					
 			MatchLineupPlayer playerMatch = (MatchLineupPlayer) lineupTeam.getAufstellung().get(k);
-			ISpieler playerData = (ISpieler) matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
+			Spieler playerData = (Spieler) matchData.getPlayers().get(Integer.valueOf(playerMatch.getSpielerId()));
 			
 			if (playerMatch.getId() == ISpielerPosition.setPieces) {
 				lineup.setKicker(playerMatch.getSpielerId());

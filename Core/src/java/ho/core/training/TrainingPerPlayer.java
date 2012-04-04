@@ -4,6 +4,7 @@ package ho.core.training;
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 
@@ -12,8 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
-
-import plugins.ISpieler;
 
 
 /**
@@ -24,7 +23,7 @@ import plugins.ISpieler;
 public class TrainingPerPlayer  {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ISpieler spieler;
+    private Spieler spieler;
 
     //Flügespiel
     private double FL;
@@ -70,7 +69,7 @@ public class TrainingPerPlayer  {
     /**
      * Creates a new TrainingPerPlayer object initialized with a specific player
      */
-    public TrainingPerPlayer(ISpieler player) {
+    public TrainingPerPlayer(Spieler player) {
     	this.spieler = player; 
     }
 
@@ -171,7 +170,7 @@ public class TrainingPerPlayer  {
      *
      * @param spieler New value of property spieler.
      */
-    public final void setSpieler(plugins.ISpieler spieler) {
+    public final void setSpieler(Spieler spieler) {
         this.spieler = spieler;
     }
 
@@ -180,7 +179,7 @@ public class TrainingPerPlayer  {
      *
      * @return Value of property spieler.
      */
-    public final plugins.ISpieler getSpieler() {
+    public final Spieler getSpieler() {
         return spieler;
     }
 

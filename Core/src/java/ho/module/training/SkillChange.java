@@ -2,7 +2,7 @@
 package ho.module.training;
 
 import ho.core.model.ISkillup;
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 
 
 /**
@@ -14,7 +14,7 @@ public class SkillChange {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ISkillup skillup;
-    private ISpieler player;
+    private Spieler player;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ public class SkillChange {
      * @param player Player
      * @param skillup Skillup
      */
-    public SkillChange(ISpieler player, ISkillup skillup) {
+    public SkillChange(Spieler player, ISkillup skillup) {
         this.player = player;
         this.skillup = skillup;
     }
@@ -36,7 +36,7 @@ public class SkillChange {
      *
      * @return Player
      */
-    public ISpieler getPlayer() {
+    public Spieler getPlayer() {
         return player;
     }
 

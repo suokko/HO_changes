@@ -34,8 +34,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import plugins.ISpieler;
-
 /**
  * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann
  */
@@ -77,7 +75,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 
 	public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
 		if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
-			ISpieler spieler = getSelectedPlayer();
+			Spieler spieler = getSelectedPlayer();
 
 			// Spieler setzen
 			if (itemEvent.getSource().equals(this.playerComboBox)) {
@@ -121,7 +119,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * 
 	 * @param spieler
 	 */
-	public void refresh(Vector<ISpieler> spieler) {
+	public void refresh(Vector<Spieler> spieler) {
 		Spieler aktuellerSpieler = null;
 		playerId = -1;
 		if (this.positionID == ISpielerPosition.setPieces) {
@@ -134,9 +132,9 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 			// Filter keeper from the spieler vector (can't be sp taker)
 			// Make sure the incoming spieler list is not modified, it
 			// seems to visit the captain position later.
-			ISpieler keeper = this.lineup.getPlayerByPositionID(ISpielerPosition.keeper);
+			Spieler keeper = this.lineup.getPlayerByPositionID(ISpielerPosition.keeper);
 			if (keeper != null) {
-				Vector<ISpieler> tmpSpieler = new Vector<ISpieler>(spieler.size() - 1);
+				Vector<Spieler> tmpSpieler = new Vector<Spieler>(spieler.size() - 1);
 				for (int i = 0; i < spieler.size(); i++) {
 					if (keeper.getSpielerID() != spieler.get(i).getSpielerID()) {
 						tmpSpieler.add(spieler.get(i));
@@ -237,7 +235,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * 
 	 * @return
 	 */
-	private ISpieler getSelectedPlayer() {
+	private Spieler getSelectedPlayer() {
 		Object obj = this.playerComboBox.getSelectedItem();
 
 		if ((obj != null) && obj instanceof SpielerCBItem) {
@@ -321,7 +319,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * @param spielerListe
 	 * @param aktuellerSpieler
 	 */
-	private void setSpielerListe(Vector<ISpieler> spielerListe, Spieler aktuellerSpieler) {
+	private void setSpielerListe(Vector<Spieler> spielerListe, Spieler aktuellerSpieler) {
 		// Listener entfernen
 		this.playerComboBox.removeItemListener(this);
 
@@ -374,7 +372,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * @param taktik
 	 * @param aktuellerSpieler
 	 */
-	private void setTaktik(byte taktik, ISpieler aktuellerSpieler) {
+	private void setTaktik(byte taktik, Spieler aktuellerSpieler) {
 		// Listener entfernen
 		this.tacticComboBox.removeItemListener(this);
 		// Taktik neu füllen!
@@ -419,7 +417,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 	 * 
 	 * @param aktuellerSpieler
 	 */
-	private void initTaktik(ISpieler aktuellerSpieler) {
+	private void initTaktik(Spieler aktuellerSpieler) {
 		this.tacticComboBox.removeAllItems();
 
 		switch (this.positionID) {
@@ -494,7 +492,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 		}
 	}
 
-	private void addTactic(ISpieler player, byte playerPosition) {
+	private void addTactic(Spieler player, byte playerPosition) {
 		String text = null;
 		switch (playerPosition) {
 		case ISpielerPosition.OFFENSIVE:

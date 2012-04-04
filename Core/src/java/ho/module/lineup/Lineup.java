@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 /**
  * DOCUMENT ME!
  * 
@@ -260,7 +258,7 @@ public class Lineup {
 	/**
 	 * Calculates the total star rating for defense This is CA-rating?
 	 */
-	public final float getAWTeamStk(List<ISpieler> spieler, boolean mitForm) {
+	public final float getAWTeamStk(List<Spieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.CENTRAL_DEFENDER, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.CENTRAL_DEFENDER_OFF, mitForm);
@@ -295,7 +293,7 @@ public class Lineup {
 	/**
 	 * Auto-select the set best captain.
 	 */
-	public final void setAutoKapitaen(List<ISpieler> players) {
+	public final void setAutoKapitaen(List<Spieler> players) {
 		float maxValue = -1;
 
 		if (players == null) {
@@ -303,7 +301,7 @@ public class Lineup {
 		}
 
 		if (players != null) {
-			for (ISpieler player : players) {
+			for (Spieler player : players) {
 				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
 					int curPlayerId = player.getSpielerID();
 					float curCaptainsValue = HOVerwaltung.instance().getModel().getAufstellung()
@@ -320,7 +318,7 @@ public class Lineup {
 	/**
 	 * Auto-select the set best pieces taker.
 	 */
-	public final void setAutoKicker(List<ISpieler> players) {
+	public final void setAutoKicker(List<Spieler> players) {
 		int maxStandard = -1;
 		int form = -1;
 
@@ -329,7 +327,7 @@ public class Lineup {
 		}
 
 		if (players != null) {
-			for (ISpieler player : players) {
+			for (Spieler player : players) {
 				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
 					if (player.getStandards() > maxStandard) {
 						maxStandard = player.getStandards();
@@ -365,10 +363,10 @@ public class Lineup {
 		float value = 0;
 
 		Spieler captain = null;
-		List<ISpieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+		List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 
 		if (players != null) {
-			for (ISpieler player : players) {
+			for (Spieler player : players) {
 				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
 					value += player.getErfahrung();
 					if (captainsId > 0) {
@@ -442,7 +440,7 @@ public class Lineup {
 	/**
 	 * Total strength.
 	 */
-	public final float getGesamtStaerke(List<ISpieler> spieler, boolean useForm) {
+	public final float getGesamtStaerke(List<Spieler> spieler, boolean useForm) {
 		return Helper.round(getTWTeamStk(spieler, useForm) + getAWTeamStk(spieler, useForm) //
 				+ getMFTeamStk(spieler, useForm) + getSTTeamStk(spieler, useForm), 1);
 	}
@@ -582,7 +580,7 @@ public class Lineup {
 	/**
 	 * Midfield and winger total star rating.
 	 */
-	public final float getMFTeamStk(List<ISpieler> spieler, boolean mitForm) {
+	public final float getMFTeamStk(List<Spieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.MIDFIELDER, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.WINGER, mitForm);
@@ -802,7 +800,7 @@ public class Lineup {
 	/**
 	 * Get the player object by position id.
 	 */
-	public ISpieler getPlayerByPositionID(int positionId) {
+	public Spieler getPlayerByPositionID(int positionId) {
 		try {
 			return HOVerwaltung.instance().getModel().getSpieler(getPositionById(positionId).getSpielerId());
 		} catch (Exception e) {
@@ -923,7 +921,7 @@ public class Lineup {
 	/**
 	 * Team star rating for attackers
 	 */
-	public final float getSTTeamStk(List<ISpieler> spieler, boolean mitForm) {
+	public final float getSTTeamStk(List<Spieler> spieler, boolean mitForm) {
 		float stk = 0.0f;
 		stk += calcTeamStk(spieler, ISpielerPosition.FORWARD, mitForm);
 		stk += calcTeamStk(spieler, ISpielerPosition.FORWARD_DEF, mitForm);
@@ -1024,7 +1022,7 @@ public class Lineup {
 	/**
 	 * Star rating for the keeper.
 	 */
-	public final float getTWTeamStk(List<ISpieler> spieler, boolean mitForm) {
+	public final float getTWTeamStk(List<Spieler> spieler, boolean mitForm) {
 		return calcTeamStk(spieler, ISpielerPosition.KEEPER, mitForm);
 	}
 
@@ -1153,7 +1151,7 @@ public class Lineup {
 	/**
 	 * erstellt die automatische Aufstellung
 	 */
-	public final void doAufstellung(List<ISpieler> spieler, byte reihenfolge, boolean mitForm,
+	public final void doAufstellung(List<Spieler> spieler, byte reihenfolge, boolean mitForm,
 			boolean idealPosFirst, boolean ignoreVerletzung, boolean ignoreSperren, float wetterBonus,
 			int wetter) {
 		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst, ignoreVerletzung,
@@ -1545,9 +1543,9 @@ public class Lineup {
 	/**
 	 * Calculate player strength for the given position.
 	 */
-	private float calcPlayerStk(List<ISpieler> spieler, int spielerId, byte position, boolean mitForm) {
+	private float calcPlayerStk(List<Spieler> spieler, int spielerId, byte position, boolean mitForm) {
 		if (spieler != null) {
-			for (ISpieler current : spieler) {
+			for (Spieler current : spieler) {
 				Spieler player = (Spieler) current;
 				if (player.getSpielerID() == spielerId) {
 					return player.calcPosValue(position, mitForm);
@@ -1560,7 +1558,7 @@ public class Lineup {
 	/**
 	 * Calculate team strength for the given position.
 	 */
-	private float calcTeamStk(List<ISpieler> spieler, byte positionId, boolean useForm) {
+	private float calcTeamStk(List<Spieler> spieler, byte positionId, boolean useForm) {
 		float stk = 0.0f;
 		if (spieler != null) {
 			for (ISpielerPosition pos : m_vPositionen) {

@@ -4,6 +4,7 @@ package ho.module.transfer.transfertype;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.transfer.PlayerRetriever;
@@ -41,8 +42,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
-import plugins.ISpieler;
 
 
 /**
@@ -137,7 +136,7 @@ public class TransferTypePane extends JSplitPane implements ListSelectionListene
                 TransferredPlayer tt = players.get(pt.getPlayerId() + "");
 
                 if (tt == null) {
-                    ISpieler player = PlayerRetriever.getPlayer(pt.getPlayerId());
+                    Spieler player = PlayerRetriever.getPlayer(pt.getPlayerId());
 
                     if (player != null) {
                         tt = new TransferredPlayer(player);

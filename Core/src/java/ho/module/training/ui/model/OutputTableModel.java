@@ -3,6 +3,7 @@ package ho.module.training.ui.model;
 
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
@@ -12,8 +13,6 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
-
-import plugins.ISpieler;
 
 
 /**
@@ -34,7 +33,7 @@ public class OutputTableModel extends AbstractTableModel {
     private Vector<String> p_V_columnNames = null; 
 
     //data enthält die berechneten Werte aller Spieler, wieviel Training sie schon hattenn
-    private Vector<ISpieler> p_V_data = null; 
+    private Vector<Spieler> p_V_data = null; 
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -119,7 +118,7 @@ public class OutputTableModel extends AbstractTableModel {
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            ISpieler spieler = p_V_data.get(rowIndex);
+            Spieler spieler = p_V_data.get(rowIndex);
 
             switch (columnIndex) {
                 case 0:
@@ -185,7 +184,7 @@ public class OutputTableModel extends AbstractTableModel {
      * 
      * @return predicted training length
      */
-    private double getTrainingLength (ISpieler player, int skillIndex) {
+    private double getTrainingLength (Spieler player, int skillIndex) {
         return player.getTrainingLength(Skills.getTrainedSkillCode(skillIndex),
                 TrainingPanel.getStaffPanel()
                                   .getCoTrainerNumber(),
@@ -205,7 +204,7 @@ public class OutputTableModel extends AbstractTableModel {
      *
      * @return training point offset, if any
      */
-    private double getOffset(ISpieler player, int skill) {
+    private double getOffset(Spieler player, int skill) {
         double offset = player.getSubskill4SkillWithOffset(skill);
         double length = getTrainingLength(player, skill);
         return offset * length;
@@ -219,7 +218,7 @@ public class OutputTableModel extends AbstractTableModel {
      *
      * @return the VerticalIndicator object
      */
-    private VerticalIndicator createIcon(ISpieler spieler, int skillIndex) {
+    private VerticalIndicator createIcon(Spieler spieler, int skillIndex) {
         double point = getOffset(spieler, skillIndex);
         double trainingLength = getTrainingLength(spieler, skillIndex);
 

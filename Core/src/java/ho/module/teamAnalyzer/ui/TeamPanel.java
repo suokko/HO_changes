@@ -4,6 +4,7 @@ package ho.module.teamAnalyzer.ui;
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.module.config.ModuleConfig;
 import ho.module.lineup.Lineup;
 import ho.module.teamAnalyzer.SystemManager;
@@ -21,8 +22,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -207,7 +206,7 @@ public class TeamPanel extends JPanel {
     	Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
         for (int spot = ISpielerPosition.startLineup; spot < ISpielerPosition.startReserves; spot++) {
-            ISpieler spieler = lineup.getPlayerByPositionID(spot);
+            Spieler spieler = lineup.getPlayerByPositionID(spot);
             UserTeamPlayerPanel pp = new UserTeamPlayerPanel();
 
             if (spieler != null) {
