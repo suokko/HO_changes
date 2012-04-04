@@ -1,5 +1,6 @@
 package ho.core.gui.model;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.epv.EPVData;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
@@ -30,7 +31,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import plugins.ISpieler;
 
 /**
  * Create the userColumns
@@ -210,18 +210,18 @@ final public class UserColumnFactory {
 	 */
 	public static PlayerSkillColumn[] createPlayerSkillArray(){
 		final PlayerSkillColumn[] playerSkillArray = new PlayerSkillColumn[12];
-		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				ISpieler.SKILL_LEADERSHIP); 
-		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"Erfahrung",			ISpieler.SKILL_EXPIERIENCE); 
-		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"Form",					ISpieler.SKILL_FORM); 
-		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "KO",		"Kondition",			ISpieler.SKILL_KONDITION); 
-		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				ISpieler.SKILL_LOYALTY); 
-		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "TW",		"Torwart",				ISpieler.SKILL_TORWART); 
-		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "VE",		"Verteidigung",			ISpieler.SKILL_VERTEIDIGUNG); 
-		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "SA",		"Spielaufbau",			ISpieler.SKILL_SPIELAUFBAU); 
-		playerSkillArray[8]  = new PlayerSkillColumn( 	150, "PS",		"Passpiel",				ISpieler.SKILL_PASSSPIEL); 
-		playerSkillArray[9]  = new PlayerSkillColumn( 	160, "FL",		"Fluegelspiel",			ISpieler.SKILL_FLUEGEL); 
-		playerSkillArray[10]  = new PlayerSkillColumn( 	170, "TS",		"Torschuss",			ISpieler.SKILL_TORSCHUSS); 
-		playerSkillArray[11] = new PlayerSkillColumn( 	180, "ST",		"Standards",			ISpieler.SKILL_STANDARDS); 
+		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				PlayerSkill.LEADERSHIP); 
+		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"Erfahrung",			PlayerSkill.EXPERIENCE); 
+		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"Form",					PlayerSkill.FORM); 
+		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "KO",		"Kondition",			PlayerSkill.STAMINA); 
+		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				PlayerSkill.LOYALTY); 
+		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "TW",		"Torwart",				PlayerSkill.KEEPER); 
+		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "VE",		"Verteidigung",			PlayerSkill.DEFENDING); 
+		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "SA",		"Spielaufbau",			PlayerSkill.PLAYMAKING); 
+		playerSkillArray[8]  = new PlayerSkillColumn( 	150, "PS",		"Passpiel",				PlayerSkill.PASSING); 
+		playerSkillArray[9]  = new PlayerSkillColumn( 	160, "FL",		"Fluegelspiel",			PlayerSkill.WINGER); 
+		playerSkillArray[10]  = new PlayerSkillColumn( 	170, "TS",		"Torschuss",			PlayerSkill.SCORING); 
+		playerSkillArray[11] = new PlayerSkillColumn( 	180, "ST",		"Standards",			PlayerSkill.SET_PIECES); 
 
 		return playerSkillArray;
 	}

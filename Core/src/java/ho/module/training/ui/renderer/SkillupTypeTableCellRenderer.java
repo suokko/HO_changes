@@ -1,11 +1,10 @@
 // %3903747163:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
-import ho.core.file.extension.PlayerCreator;
+import ho.core.constants.player.PlayerSkill;
 import ho.module.training.Skills;
 import ho.module.training.ui.TrainingLegendPanel;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -33,7 +32,7 @@ public class SkillupTypeTableCellRenderer extends ChangeTableRenderer {
         try {
             int skill = Integer.parseInt((String) value);
 
-            setText(PlayerCreator.getSkillDescription(skill));
+            setText(PlayerSkill.toString(skill));
             setIcon(TrainingLegendPanel.getSkillupTypeIcon(skill, 1));
             setForeground(Skills.getSkillColor(skill));
         } catch (NumberFormatException e) {

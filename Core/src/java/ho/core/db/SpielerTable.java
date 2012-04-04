@@ -1,5 +1,6 @@
 package ho.core.db;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 
@@ -149,19 +150,19 @@ final class SpielerTable extends AbstractTable {
 						+ ","
 						+ player.getStandards()
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_TORWART)
+						+ player.getSubskill4Pos(PlayerSkill.KEEPER)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_VERTEIDIGUNG)
+						+ player.getSubskill4Pos(PlayerSkill.DEFENDING)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_SPIELAUFBAU)
+						+ player.getSubskill4Pos(PlayerSkill.PLAYMAKING)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_FLUEGEL)
+						+ player.getSubskill4Pos(PlayerSkill.WINGER)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_TORSCHUSS)
+						+ player.getSubskill4Pos(PlayerSkill.SCORING)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_PASSSPIEL)
+						+ player.getSubskill4Pos(PlayerSkill.PASSING)
 						+ ","
-						+ player.getSubskill4Pos(ISpieler.SKILL_STANDARDS)
+						+ player.getSubskill4Pos(PlayerSkill.SET_PIECES)
 						+ ","
 						+ player.getTrainingsOffsetTorwart()
 						+ ","

@@ -4,7 +4,7 @@
  */
 package ho.module.training.ui;
 
-import ho.core.file.extension.PlayerCreator;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
@@ -57,14 +57,14 @@ public class TrainingLegendPanel extends JPanel {
 
         for (int i = 0; i < 4; i++) {
             int skill = Skills.getSkillAtPosition(i);
-            this.add(getSkillupLabel(PlayerCreator.getSkillDescription(skill), skill));
+            this.add(getSkillupLabel(PlayerSkill.toString(skill), skill));
         }
 
         this.add(new JLabel(""));
 
         for (int i = 4; i < 8; i++) {
             int skill = Skills.getSkillAtPosition(i);
-            this.add(getSkillupLabel(PlayerCreator.getSkillDescription(skill), skill));
+            this.add(getSkillupLabel(PlayerSkill.toString(skill), skill));
         }
 
         this.setBorder(BorderFactory.createEtchedBorder(0));

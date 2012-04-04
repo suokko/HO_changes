@@ -2,6 +2,7 @@
 package ho.module.playerOverview;
 
 import ho.core.constants.player.PlayerAbilities;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -533,7 +534,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlKondition, eingabenconstraints);
         panel.add(m_jlKondition);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
+        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);

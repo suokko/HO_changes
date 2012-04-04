@@ -1,5 +1,6 @@
 package ho.core.gui.model;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.IHOTableEntry;
@@ -12,7 +13,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
-import plugins.ISpieler;
 
 
 /**
@@ -38,9 +38,9 @@ class PlayerSkillColumn extends PlayerColumn {
 	protected PlayerSkillColumn(int id,String name, String tooltip,int skill){
 		super(id,name,tooltip);
 		this.skill = skill;
-		background = (skill == ISpieler.SKILL_EXPIERIENCE
-				||  skill == ISpieler.SKILL_FORM
-				|| skill == ISpieler.SKILL_LEADERSHIP
+		background = (skill == PlayerSkill.EXPERIENCE
+				||  skill == PlayerSkill.FORM
+				|| skill == PlayerSkill.LEADERSHIP
 				)?ColorLabelEntry.BG_SPIELERSONDERWERTE:ColorLabelEntry.BG_SPIELEREINZELWERTE;
 	}
 	
@@ -53,11 +53,11 @@ class PlayerSkillColumn extends PlayerColumn {
 	}
 	
 	public  IHOTableEntry getSkillValue(Spieler player){
-		if(skill == ISpieler.SKILL_EXPIERIENCE
-				||  skill == ISpieler.SKILL_FORM
-				|| skill == ISpieler.SKILL_KONDITION
-				|| skill == ISpieler.SKILL_LEADERSHIP
-				|| skill == ISpieler.SKILL_LOYALTY){
+		if(skill == PlayerSkill.EXPERIENCE
+				||  skill == PlayerSkill.FORM
+				|| skill == PlayerSkill.STAMINA
+				|| skill == PlayerSkill.LEADERSHIP
+				|| skill == PlayerSkill.LOYALTY){
 		return new ColorLabelEntry(getSkill(player),
                 background,
                 false, 0);
@@ -99,18 +99,18 @@ class PlayerSkillColumn extends PlayerColumn {
 	 */
 	private int getSkill(Spieler player){
 		switch(skill){
-		case ISpieler.SKILL_TORWART: 		return player.getTorwart();
-		case ISpieler.SKILL_VERTEIDIGUNG: 	return player.getVerteidigung();
-		case ISpieler.SKILL_PASSSPIEL: 		return player.getPasspiel();
-		case ISpieler.SKILL_FLUEGEL: 		return player.getFluegelspiel();
-		case ISpieler.SKILL_SPIELAUFBAU: 	return player.getSpielaufbau();
-		case ISpieler.SKILL_STANDARDS: 		return player.getStandards();
-		case ISpieler.SKILL_TORSCHUSS: 		return player.getTorschuss();
-		case ISpieler.SKILL_EXPIERIENCE: 	return player.getErfahrung();
-		case ISpieler.SKILL_FORM: 			return player.getForm();
-		case ISpieler.SKILL_KONDITION: 		return player.getKondition();
-		case ISpieler.SKILL_LEADERSHIP:		return player.getFuehrung();
-		case ISpieler.SKILL_LOYALTY: 		return player.getLoyalty();
+		case PlayerSkill.KEEPER: 		return player.getTorwart();
+		case PlayerSkill.DEFENDING: 	return player.getVerteidigung();
+		case PlayerSkill.PASSING: 		return player.getPasspiel();
+		case PlayerSkill.WINGER: 		return player.getFluegelspiel();
+		case PlayerSkill.PLAYMAKING: 	return player.getSpielaufbau();
+		case PlayerSkill.SET_PIECES: 		return player.getStandards();
+		case PlayerSkill.SCORING: 		return player.getTorschuss();
+		case PlayerSkill.EXPERIENCE: 	return player.getErfahrung();
+		case PlayerSkill.FORM: 			return player.getForm();
+		case PlayerSkill.STAMINA: 		return player.getKondition();
+		case PlayerSkill.LEADERSHIP:		return player.getFuehrung();
+		case PlayerSkill.LOYALTY: 		return player.getLoyalty();
 		
 		}
 		return 0;

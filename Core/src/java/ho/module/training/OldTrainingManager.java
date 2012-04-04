@@ -3,6 +3,7 @@ package ho.module.training;
 
 
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
 import ho.core.util.HelperWrapper;
@@ -51,7 +52,7 @@ public class OldTrainingManager {
 
         for (int skill = 0; skill < 10; skill++) {
         	// Skip Form ups
-        	if (skill == ISpieler.SKILL_FORM)
+        	if (skill == PlayerSkill.FORM)
         		continue;
 
             Vector<Object[]> v = player.getAllLevelUp(skill);
@@ -76,13 +77,13 @@ public class OldTrainingManager {
                     su.setTrainType(ISkillup.SKILLUP_REAL);
                     allSkillups.add(su);
 
-                    if (skill == ISpieler.SKILL_TORWART ||
-                    		skill == ISpieler.SKILL_VERTEIDIGUNG ||
-                    		skill == ISpieler.SKILL_FLUEGEL ||
-                    		skill == ISpieler.SKILL_SPIELAUFBAU ||
-                    		skill == ISpieler.SKILL_TORSCHUSS ||
-                    		skill == ISpieler.SKILL_PASSSPIEL ||
-                    		skill == ISpieler.SKILL_STANDARDS) {
+                    if (skill == PlayerSkill.KEEPER ||
+                    		skill == PlayerSkill.DEFENDING ||
+                    		skill == PlayerSkill.WINGER ||
+                    		skill == PlayerSkill.PLAYMAKING ||
+                    		skill == PlayerSkill.SCORING ||
+                    		skill == PlayerSkill.PASSING ||
+                    		skill == PlayerSkill.SET_PIECES) {
                         trainSkillups.add(su);
                     }
                 } catch (ParseException e) {

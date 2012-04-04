@@ -1,6 +1,7 @@
 // %4263391236:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.FuturePlayer;
@@ -130,28 +131,28 @@ public class PlayerDetailPanel extends JPanel {
      */
     private double getSkillValue(FuturePlayer spieler, int skillIndex) {
         switch (skillIndex) {
-            case ISpieler.SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return spieler.getGoalkeeping();
 
-            case ISpieler.SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return spieler.getAttack();
 
-            case ISpieler.SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return spieler.getDefense();
 
-            case ISpieler.SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return spieler.getPassing();
 
-            case ISpieler.SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return spieler.getPlaymaking();
 
-            case ISpieler.SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return spieler.getSetpieces();
 
-            case ISpieler.SKILL_KONDITION:
+            case PlayerSkill.STAMINA:
                 return spieler.getStamina();
 
-            case ISpieler.SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return spieler.getCross();
         }
 
@@ -187,7 +188,7 @@ public class PlayerDetailPanel extends JPanel {
             int skillIndex = Skills.getSkillAtPosition(i);
             JPanel left = new JPanel(new GridLayout(1, 2));
             left.setOpaque(false);
-            left.add(new JLabel(PlayerCreator.getSkillDescription(skillIndex)));
+            left.add(new JLabel(PlayerSkill.toString(skillIndex)));
 
             skillLabel[i] = new JLabel(""); //$NON-NLS-1$
             skillLabel[i].setOpaque(false);

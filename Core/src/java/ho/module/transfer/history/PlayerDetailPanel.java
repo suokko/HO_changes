@@ -3,6 +3,7 @@ package ho.module.transfer.history;
 
 
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
@@ -44,7 +45,6 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6855218725568752692L;
 	//~ Instance fields ----------------------------------------------------------------------------
 	private static final HOVerwaltung hov = HOVerwaltung.instance();
-    private static final String SKILL_KEEPER = hov.getLanguageString("skill.keeper");
     private static final String SKILL_PLAYMAKING = hov.getLanguageString("skill.playmaking");
     private static final String SKILL_PASSING = hov.getLanguageString("skill.passing");
     private static final String SKILL_WING = hov.getLanguageString("skill.winger");
@@ -205,7 +205,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         income.setText("");
         currTSI.setText(HOVerwaltung.instance().getLanguageString("PlayerDetail.NotAvail"));
         
-        skill_keeper.setText(SKILL_KEEPER);
+        skill_keeper.setText(PlayerSkill.toString(PlayerSkill.KEEPER));
         skill_playmaking.setText(SKILL_PLAYMAKING);
         skill_passing.setText(SKILL_PASSING);
         skill_wing.setText(SKILL_WING);
@@ -256,7 +256,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                     currTSI.setText(Integer.toString(this.player.getTSI()));
                 }
 
-                skill_keeper.setText(SKILL_KEEPER + " (" + player.getTorwart() + ")");
+                skill_keeper.setText(PlayerSkill.toString(PlayerSkill.KEEPER) + " (" + player.getTorwart() + ")");
                 skill_playmaking.setText(SKILL_PLAYMAKING + " (" + player.getSpielaufbau() + ")");
                 skill_passing.setText(SKILL_PASSING + " (" + player.getPasspiel() + ")");
                 skill_wing.setText(SKILL_WING + " (" + player.getFluegelspiel() + ")");
@@ -267,15 +267,15 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                 skill_experience.setText(SKILL_EXPERIENCE + " (" + player.getErfahrung() + ")");
 
              
-                arrow_keeper.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_TORWART).size(),true));
-                arrow_playmaking.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_SPIELAUFBAU).size(),true));
-                arrow_passing.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_PASSSPIEL).size(),true));
-                arrow_wing.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_FLUEGEL).size(),true));
-                arrow_defense.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_VERTEIDIGUNG).size(),true));
-                arrow_scoring.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_TORSCHUSS).size(),true));
-                arrow_setpieces.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_STANDARDS).size(),true));
-                arrow_stamina.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_KONDITION).size(),true));
-                arrow_experience.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(ISpieler.SKILL_EXPIERIENCE).size(),true));
+                arrow_keeper.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.KEEPER).size(),true));
+                arrow_playmaking.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.PLAYMAKING).size(),true));
+                arrow_passing.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.PASSING).size(),true));
+                arrow_wing.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.WINGER).size(),true));
+                arrow_defense.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.DEFENDING).size(),true));
+                arrow_scoring.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.SCORING).size(),true));
+                arrow_setpieces.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.SET_PIECES).size(),true));
+                arrow_stamina.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.STAMINA).size(),true));
+                arrow_experience.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.EXPERIENCE).size(),true));
             }
 
             final List<PlayerTransfer> transfers = DBManager.instance().getTransfers(this.playerId, true);

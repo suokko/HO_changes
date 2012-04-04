@@ -16,53 +16,7 @@ package plugins;
  * Interface to access Player Data
  */
 public interface ISpieler {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //Konstanten
-    //////////////////////////////////////////////////////////////////////////////// 
-
-	/** Number of specialties */
-	public static final int NUM_SPECIALTIES = 7;
-
-    //Skills
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_TORWART = 0;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_VERTEIDIGUNG = 1;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_FLUEGEL = 2;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_SPIELAUFBAU = 3;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_TORSCHUSS = 4;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_PASSSPIEL = 5;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_KONDITION = 6;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_FORM = 7;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_STANDARDS = 8;
-
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_EXPIERIENCE = 9;
-    
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_LEADERSHIP = 10;
-    
-    /** TODO Missing Parameter Documentation */
-    public static final int SKILL_LOYALTY = 11;
-
+ 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
