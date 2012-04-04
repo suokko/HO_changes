@@ -8,6 +8,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.ui.layout.TableLayout;
@@ -33,8 +34,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 
-import plugins.ISpieler;
-
 
 /**
  * Panel for showing detailed information on a player.
@@ -54,7 +53,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     private static final String SKILL_STAMINA = hov.getLanguageString("skill.stamina");
     private static final String SKILL_EXPERIENCE = hov.getLanguageString("skill.experience");
 
-    private ISpieler player;
+    private Spieler player;
     private JButton updBtn = new JButton();
     private JLabel age = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     private JLabel currTSI = new JLabel(HOVerwaltung.instance().getLanguageString("PlayerDetail.NotAvail"),

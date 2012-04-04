@@ -5,6 +5,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
 import ho.module.training.FutureTrainingWeek;
@@ -24,8 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -71,12 +70,12 @@ public class TrainingRecapPanel extends JPanel {
         //playerRef = new HashMap();
         List<FutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
 
-        Vector<ISpieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
+        Vector<Spieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
 
         List<Vector<String>> players = new ArrayList<Vector<String>>();
 
-        for (Iterator<ISpieler> iter = v.iterator(); iter.hasNext();) {
-            ISpieler player = iter.next();
+        for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
+            Spieler player = iter.next();
             FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
                                                                                      ho.module.training.TrainingPanel.getStaffPanel()
                                                                                                        .getCoTrainerNumber(),

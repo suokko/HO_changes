@@ -2,11 +2,11 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
-import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.FuturePlayer;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.training.FutureTrainingManager;
 import ho.core.util.HelperWrapper;
@@ -22,8 +22,6 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -59,7 +57,7 @@ public class PlayerDetailPanel extends JPanel {
      *
      * @param spieler player
      */
-    public void reload(ISpieler spieler) {
+    public void reload(Spieler spieler) {
         if (spieler == null) {
             playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect")); //$NON-NLS-1$
 

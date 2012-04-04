@@ -5,14 +5,13 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.FuturePlayer;
 import ho.core.model.ISkillup;
 import ho.core.model.PlayerSkillup;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.HelperWrapper;
 import ho.module.training.FutureTrainingWeek;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import plugins.ISpieler;
 
 /**
  * Class that manages the prevision of training effect in the future
@@ -30,7 +29,7 @@ public class FutureTrainingManager {
 	public int[] finalSkillup = new int[8];
 
 	/** Active player */
-	private ISpieler player;
+	private Spieler player;
 	private List<FutureTrainingWeek> futureTrainings;
 	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
@@ -44,7 +43,7 @@ public class FutureTrainingManager {
 	* @param p The active player
 	* @param trainings The future trainings
 	*/
-	public FutureTrainingManager(ISpieler p, List<FutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
+	public FutureTrainingManager(Spieler p, List<FutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
 		this.player = p;
 		this.futureSkillups = new ArrayList<ISkillup>();
 		this.coTrainer = cotrainer;

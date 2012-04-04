@@ -7,6 +7,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.model.XtraData;
 import ho.core.training.FutureTrainingManager;
@@ -32,8 +33,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import plugins.ISpieler;
 
 public class PlayerCreator extends XMLCreator {
 
@@ -107,7 +106,7 @@ public class PlayerCreator extends XMLCreator {
 
 	private static int addRoster(Element root, int hrfId, boolean extended, int oldWeek) throws IOException {
 
-		List<ISpieler> players = DBManager.instance().getSpieler(hrfId);
+		List<Spieler> players = DBManager.instance().getSpieler(hrfId);
 		Basics basics = DBManager.instance().getBasics(hrfId);
 		XtraData xtradata = DBManager.instance().getXtraDaten(hrfId);
 
@@ -147,15 +146,15 @@ public class PlayerCreator extends XMLCreator {
 		Element playersTag = doc.createElement("players");
 		roster.appendChild(playersTag);
 
-		for (Iterator<ISpieler> iter = players.iterator(); iter.hasNext();) {
-			ISpieler element = iter.next();
+		for (Iterator<Spieler> iter = players.iterator(); iter.hasNext();) {
+			Spieler element = iter.next();
 			addPlayer(playersTag, element, extended);
 		}
 
 		return tmpWeek;
 	}
 
-	private static void addPlayer(Element playersTag, ISpieler player, boolean extended) throws IOException {
+	private static void addPlayer(Element playersTag, Spieler player, boolean extended) throws IOException {
 		Document doc = playersTag.getOwnerDocument();
 
 		Element playerTag = doc.createElement("player");

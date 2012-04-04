@@ -3,7 +3,7 @@ package ho.core.util;
 
 import ho.core.constants.player.PlayerAbilities;
 import ho.core.model.HOVerwaltung;
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 
 
 /**
@@ -172,7 +172,7 @@ public class PlayerHelper {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public static boolean check4SkillUp(int skill, ISpieler oldPlayer, ISpieler currentPlayer) {
+    public static boolean check4SkillUp(int skill, Spieler oldPlayer, Spieler currentPlayer) {
         if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) {
         	if (oldPlayer.getValue4Skill4(skill) < currentPlayer.getValue4Skill4(skill)) {
 //        		HOLogger.instance().debug(PlayerHelper.class, "Skillup for "+currentPlayer.getName()+" ("+currentPlayer.getSpielerID()+"), skill="+skill+", oldVal="+oldPlayer.getValue4Skill4(skill)+" < cur="+currentPlayer.getValue4Skill4(skill));

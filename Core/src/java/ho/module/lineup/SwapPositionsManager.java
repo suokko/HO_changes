@@ -3,7 +3,7 @@ package ho.module.lineup;
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 
 public class SwapPositionsManager {
 
@@ -53,8 +53,8 @@ public class SwapPositionsManager {
 
 		int positionA = swapPositionA.getPositionsID();
 		int positionB = swapPositionB.getPositionsID();
-		ISpieler playerA = lineup.getPlayerByPositionID(positionA);
-		ISpieler playerB = lineup.getPlayerByPositionID(positionB);
+		Spieler playerA = lineup.getPlayerByPositionID(positionA);
+		Spieler playerB = lineup.getPlayerByPositionID(positionB);
 		
 		// We don't want to swap a substitute into an empty position unless there is less
 		// than 11 players on the field.

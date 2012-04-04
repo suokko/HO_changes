@@ -5,6 +5,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.Helper;
 
 import java.awt.Color;
@@ -18,8 +19,6 @@ import java.text.MessageFormat;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 public class DetailsView extends JPanel {
 
@@ -125,10 +124,10 @@ public class DetailsView extends JPanel {
 			HOModel hoModel = HOVerwaltung.instance().getModel();
 			orderType = Lookup.getOrderType(this.substitution.getOrderType());
 
-			ISpieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
+			Spieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
 			playerOut = (out != null) ? out.getName() : "";
 			if (this.substitution.getPlayerOut() != this.substitution.getPlayerIn()) {
-				ISpieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
+				Spieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
 				playerIn = (in != null) ? in.getName() : "";
 			}
 

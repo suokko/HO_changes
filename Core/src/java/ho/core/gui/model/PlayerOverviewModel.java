@@ -7,8 +7,6 @@ import ho.module.playerOverview.SpielerTrainingsVergleichsPanel;
 
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 
 /**
  * 
@@ -20,7 +18,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
 	private static final long serialVersionUID = 5149408240369536138L;
 	
 	/** all players **/
-	private Vector<ISpieler> m_vPlayers;
+	private Vector<Spieler> m_vPlayers;
 	
 	/**
 	 * constructor
@@ -95,7 +93,7 @@ public final  class PlayerOverviewModel extends HOColumnModel {
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public final void setValues(Vector<ISpieler> player) {
+    public final void setValues(Vector<Spieler> player) {
     	m_vPlayers = player;
         initData();
     }

@@ -51,8 +51,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-import plugins.ISpieler;
-
 /**
  * DOCUMENT ME!
  *
@@ -336,7 +334,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<ISpieler> getAllSpieler() {
+	public Vector<Spieler> getAllSpieler() {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getAllSpieler();
 	}
 
@@ -359,7 +357,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<ISpieler> getSpieler(int hrfID) {
+	public Vector<Spieler> getSpieler(int hrfID) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpieler(hrfID);
 	}
 
@@ -437,7 +435,7 @@ public class DBManager {
 	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSpieler(int hrfId, Vector<ISpieler> spieler, Timestamp date) {
+	public void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
 		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
 	}
 

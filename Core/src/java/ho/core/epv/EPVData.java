@@ -1,7 +1,7 @@
 package ho.core.epv;
 
 import ho.core.constants.player.PlayerSkill;
-import plugins.ISpieler;
+import ho.core.model.Spieler;
 
 
 /**
@@ -59,7 +59,7 @@ public class EPVData implements Cloneable {
      *
      * @param s TODO Missing Constructuor Parameter Documentation
      */
-    public EPVData(ISpieler s) {
+    public EPVData(Spieler s) {
         setPlayerName(s.getName());
         setAge(s.getAlter());
         setAgeDays(s.getAgeDays());

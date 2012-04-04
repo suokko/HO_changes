@@ -2,11 +2,11 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
-import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
@@ -20,8 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -77,7 +75,7 @@ public class SkillupPanel extends JPanel {
      *
      * @param player the selected training situation
      */
-    public void reload(ISpieler player) {
+    public void reload(Spieler player) {
         // empty the table
         tableModel = new BaseTableModel(new Vector<Object>(), new Vector<String>(Arrays.asList(columns)));
         table.setModel(tableModel);

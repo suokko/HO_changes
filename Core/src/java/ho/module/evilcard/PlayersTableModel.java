@@ -1,7 +1,11 @@
 package ho.module.evilcard;
 
+import ho.core.constants.player.PlayerAggressiveness;
+import ho.core.constants.player.PlayerAgreeability;
+import ho.core.constants.player.PlayerHonesty;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 import ho.module.matches.model.IMatchHighlight;
 
@@ -10,8 +14,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
-
-import plugins.ISpieler;
 
 
 class PlayersTableModel extends AbstractTableModel {
@@ -143,7 +145,7 @@ class PlayersTableModel extends AbstractTableModel {
 
     private void generateData2() {
         // Get current players.
-        Vector<ISpieler> players = new Vector<ISpieler>();
+        Vector<Spieler> players = new Vector<Spieler>();
         players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
 
         // Add old players, when requested.
@@ -159,17 +161,17 @@ class PlayersTableModel extends AbstractTableModel {
 
         for (int row = 0; row < playersNumber; row++) {
             // giocatore
-            ISpieler player = (ISpieler) players.get(row);
+            Spieler player = (Spieler) players.get(row);
 
             int id = player.getSpielerID();
 
             data[row][COL_NAME] = player.getName();
             data[row][COL_ID] = new Integer(id);
             data[row][COL_AGGRESSIVITY] = "(" + player.getAgressivitaet() + ") "
-                                          + player.getAgressivitaetString();
-            data[row][COL_HONESTY] = "(" + player.getAnsehen() + ") " + player.getAnsehenString();
+                                          + PlayerAggressiveness.toString(player.getAgressivitaet());
+            data[row][COL_HONESTY] = "(" + player.getAnsehen() + ") " + PlayerAgreeability.toString(player.getAnsehen());
             data[row][COL_AGREEABILITY] = "(" + player.getCharakter() + ") "
-                                          + player.getCharakterString();
+                                          + PlayerHonesty.toString(player.getCharakter());
 
             for (int col = 5; col < cols; col++) {
                 data[row][col] = new Integer(0);

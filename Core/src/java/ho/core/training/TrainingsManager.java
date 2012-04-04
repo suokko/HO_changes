@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
@@ -25,8 +26,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
-
-import plugins.ISpieler;
 
 
 /**
@@ -104,7 +103,7 @@ public class TrainingsManager {
     /**
      * returns a ITrainingPerPlayer instance for a specific player
      */
-	public TrainingPerPlayer getTrainingPerPlayer(ISpieler player) {
+	public TrainingPerPlayer getTrainingPerPlayer(Spieler player) {
 		return (new TrainingPerPlayer(player));
 	}
 
@@ -167,11 +166,11 @@ public class TrainingsManager {
      *
      * @return TrainingPerPlayer
      */
-    public TrainingPerPlayer calculateFullTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputSpieler,
                                                              Vector<TrainingPerWeek> inputTrainings,
                                                              Timestamp timestamp) {
         //playerID HIER SETZEN
-        final ISpieler spieler = inputSpieler;
+        final Spieler spieler = inputSpieler;
 
         if (timestamp == null) {
         	Calendar c = Calendar.getInstance();
@@ -225,7 +224,7 @@ public class TrainingsManager {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
-    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(Spieler inputSpieler,
     		TrainingPerWeek train) {
     	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
     }
@@ -240,11 +239,11 @@ public class TrainingsManager {
      *
      * @return TrainingPerPlayer
      */
-    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(ISpieler inputSpieler,
+    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(Spieler inputSpieler,
     		TrainingPerWeek train,
                                                                Timestamp timestamp) {
         //playerID HIER SETZEN
-        final ISpieler spieler = inputSpieler;
+        final Spieler spieler = inputSpieler;
         final int playerID = spieler.getSpielerID();
 
         TrainingPerPlayer output = getTrainingPerPlayer(spieler);

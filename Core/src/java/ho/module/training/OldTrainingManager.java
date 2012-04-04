@@ -6,6 +6,7 @@ package ho.module.training;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISkillup;
+import ho.core.model.Spieler;
 import ho.core.util.HelperWrapper;
 
 import java.text.ParseException;
@@ -16,9 +17,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-
-import plugins.ISpieler;
 
 
 /**
@@ -40,7 +38,7 @@ public class OldTrainingManager {
      *
      * @param player
      */
-    public OldTrainingManager(ISpieler player) {
+    public OldTrainingManager(Spieler player) {
         if (player == null) {
             return;
         }

@@ -28,8 +28,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import plugins.ISpieler;
-
 
 /**
  * Enthält die einzelnen Positionen
@@ -146,10 +144,10 @@ public class LineupPositionsPanel extends ho.core.gui.comp.panel.RasenPanel
 
         //Alle SpielerPositionen Informieren
         //erste 11
-        final Vector<ISpieler> aufgestellteSpieler = new Vector<ISpieler>();
+        final Vector<Spieler> aufgestellteSpieler = new Vector<Spieler>();
 
-        final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
-        final Vector<ISpieler> gefilterteSpieler = new Vector<ISpieler>();
+        final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<Spieler> gefilterteSpieler = new Vector<Spieler>();
         final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
         for (int i = 0; i < alleSpieler.size(); i++) {

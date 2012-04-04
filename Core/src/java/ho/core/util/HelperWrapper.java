@@ -302,7 +302,7 @@ public class HelperWrapper {
       return false;
     }
 
-    public void addTempSpieler(plugins.ISpieler spieler) {
+    public void addTempSpieler(Spieler spieler) {
         final Spieler tempSpieler = new Spieler();
 
         tempSpieler.setNationalitaet(spieler.getNationalitaet());
@@ -343,7 +343,7 @@ public class HelperWrapper {
         return Helper.createListModel(vector);
     }
 
-    public plugins.ISpieler createSpielerFromText(String text) throws Exception {
+    public Spieler createSpielerFromText(String text) throws Exception {
         final Player player = new PlayerConverter().build(text);
 
         final Spieler tempSpieler = new Spieler();

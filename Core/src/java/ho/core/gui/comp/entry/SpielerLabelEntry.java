@@ -8,6 +8,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
 import ho.core.util.Helper;
@@ -26,8 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import plugins.ISpieler;
-
 
 /**
  *
@@ -39,7 +38,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
     /** Icon for playing creatively */
 
     //   private ImageIcon            m_clLeer                   =   new ImageIcon( new java.awt.image.BufferedImage( 14, 14, java.awt.image.BufferedImage.TYPE_INT_ARGB ) );
-    private plugins.ISpieler m_clPlayer;
+    private Spieler m_clPlayer;
     private JComponent m_clComponent;
     private final JLabel m_jlGroup 			= new JLabel();
     private final JLabel m_jlName			= new JLabel();
@@ -64,7 +63,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
      * @param showTrikot TODO Missing Constructuor Parameter Documentation
      * @param showWetterwarnung TODO Missing Constructuor Parameter Documentation
      */
-    public SpielerLabelEntry(plugins.ISpieler spieler, SpielerPosition positionAktuell,
+    public SpielerLabelEntry(Spieler spieler, SpielerPosition positionAktuell,
                              float positionsbewertung, boolean showTrikot, boolean showWetterwarnung) {
         m_clPlayer = spieler;
         m_clCurrentPlayerPosition = positionAktuell;
@@ -74,7 +73,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
         createComponent();
     }
     
-    public SpielerLabelEntry(plugins.ISpieler spieler, SpielerPosition positionAktuell,
+    public SpielerLabelEntry(Spieler spieler, SpielerPosition positionAktuell,
     		float positionsbewertung, boolean showTrikot, boolean showWetterwarnung, boolean customName, String customNameText) {
     	m_clPlayer = spieler;
     	m_clCurrentPlayerPosition = positionAktuell;
@@ -113,7 +112,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final plugins.ISpieler getSpieler() {
+    public final Spieler getSpieler() {
         return m_clPlayer;
     }
 
@@ -274,7 +273,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
      * @param positionAktuell TODO Missing Constructuor Parameter Documentation
      * @param positionsbewertung TODO Missing Constructuor Parameter Documentation
      */
-    public final void updateComponent(ISpieler spieler, SpielerPosition positionAktuell,
+    public final void updateComponent(Spieler spieler, SpielerPosition positionAktuell,
                                       float positionsbewertung, String nameText) {
         m_clPlayer = spieler;
         m_clCurrentPlayerPosition = positionAktuell;
@@ -327,7 +326,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
         m_jlSkill.setText("");
     }
     
-    private void updateDisplay(ISpieler player){
+    private void updateDisplay(Spieler player){
     	// weatherEffect
     	 m_jlWeatherEffect.setIcon(null);
     	if (m_bShowWeatherEffect) {
@@ -351,7 +350,7 @@ public final class SpielerLabelEntry implements IHOTableEntry {
     }
 
 	//--------------static------------------------------
-	public static Color getForegroundForSpieler(plugins.ISpieler spieler) {
+	public static Color getForegroundForSpieler(Spieler spieler) {
 	    Color color;
 	    UserParameter userParameter = ho.core.model.UserParameter.instance();
 	    

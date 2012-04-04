@@ -13,6 +13,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
@@ -40,8 +41,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -504,7 +503,7 @@ class SpielerStatistikPanel extends ImagePanel
     }
 
     private void initSpielerCB() {
-        final Vector<ISpieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+        final Vector<Spieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
         final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
 
         for (int i = 0; i < spieler.size(); i++) {
@@ -514,7 +513,7 @@ class SpielerStatistikPanel extends ImagePanel
         Arrays.sort(spielerCBItems);
 
         //Alte Spieler
-        final Vector<ISpieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
+        final Vector<Spieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
         final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler
                                                                                                                                   .size()];
 

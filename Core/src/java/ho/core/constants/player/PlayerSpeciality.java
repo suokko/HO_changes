@@ -1,6 +1,5 @@
 package ho.core.constants.player;
 
-import plugins.ISpieler;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 

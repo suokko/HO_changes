@@ -36,8 +36,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import plugins.ISpieler;
-
 
 /**
  * Panel, in dem die Spielerposition dargestellt wird und geändert werden kann
@@ -159,7 +157,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @return TODO Missing Return Method Documentation
      */
-    private plugins.ISpieler getSelectedPlayer() {
+    private Spieler getSelectedPlayer() {
         final Object obj = m_jcbPlayer.getSelectedItem();
 
         if ((obj != null) && obj instanceof SpielerCBItem) {
@@ -283,7 +281,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
             final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
-            final plugins.ISpieler spieler = getSelectedPlayer();
+            final Spieler spieler = getSelectedPlayer();
 
             //Spieler setzen
             if (itemEvent.getSource().equals(m_jcbPlayer)) {
@@ -338,7 +336,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void refresh(Vector<ISpieler> spieler) {
+    public void refresh(Vector<Spieler> spieler) {
         Spieler aktuellerSpieler = null;
 		playerId = -1;
         if (m_iPositionID == ISpielerPosition.setPieces) {
@@ -355,10 +353,10 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 			// Make sure the incoming spieler list is not modified, it 
 			// seems to visit the captain position later.
 			
-			ISpieler keeper = HOVerwaltung.instance().getModel().getAufstellung().
+			Spieler keeper = HOVerwaltung.instance().getModel().getAufstellung().
 					getPlayerByPositionID(ISpielerPosition.keeper); 
 			if (keeper != null) {
-				Vector<ISpieler> tmpSpieler = new Vector<ISpieler>(spieler.size() -1);
+				Vector<Spieler> tmpSpieler = new Vector<Spieler>(spieler.size() -1);
 				for (int i = 0; i < spieler.size(); i++) {
 					if ( keeper.getSpielerID() != spieler.get(i).getSpielerID()) {
 						tmpSpieler.add(spieler.get(i));
@@ -415,7 +413,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      * @param spielerListe TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    protected void setSpielerListe(Vector<ISpieler> spielerListe, Spieler aktuellerSpieler) {
+    protected void setSpielerListe(Vector<Spieler> spielerListe, Spieler aktuellerSpieler) {
         //Listener entfernen
         m_jcbPlayer.removeItemListener(this);
 
@@ -499,7 +497,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      * @param taktik TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    private void setTaktik(byte taktik, plugins.ISpieler aktuellerSpieler) {
+    private void setTaktik(byte taktik, Spieler aktuellerSpieler) {
         //Listener entfernen
         m_jcbTactic.removeItemListener(this);
 
@@ -563,7 +561,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    private void initTaktik(plugins.ISpieler aktuellerSpieler) {
+    private void initTaktik(Spieler aktuellerSpieler) {
         m_jcbTactic.removeAllItems();
 
         switch (m_iPositionID) {
@@ -653,7 +651,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
     }
 
     
-    private void addTactic(ISpieler currentPlayer, String text, byte playerPosition){
+    private void addTactic(Spieler currentPlayer, String text, byte playerPosition){
     	if (currentPlayer != null) {
             text += " ("
                     + currentPlayer.calcPosValue(SpielerPosition.getPosition(m_iPositionID,

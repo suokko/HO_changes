@@ -11,6 +11,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
@@ -33,8 +34,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -191,7 +190,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
     private void setLabels() {
         if (HOVerwaltung.instance().getModel().getTeam() != null) {
             final HOModel homodel = HOVerwaltung.instance().getModel();
-            final Vector<ISpieler> allSpieler = homodel.getAllSpieler();
+            final Vector<Spieler> allSpieler = homodel.getAllSpieler();
             final Lineup aufstellung = homodel.getAufstellung();
 
             //AufstellungCBItem   avergleich  = AufstellungsVergleichHistoryPanel.getVergleichsAufstellung ();

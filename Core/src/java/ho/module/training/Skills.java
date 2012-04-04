@@ -3,10 +3,9 @@ package ho.module.training;
 
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
+import ho.core.model.Spieler;
 
 import java.awt.Color;
-
-import plugins.ISpieler;
 
 
 
@@ -103,7 +102,7 @@ public class Skills {
      *
      * @return The Skill value or 0 if the index is incorrect
      */
-    public static int getSkillValue(ISpieler spieler, int skillIndex) {
+    public static int getSkillValue(Spieler spieler, int skillIndex) {
         switch (skillIndex) {
             case PlayerSkill.KEEPER:
                 return spieler.getTorwart();

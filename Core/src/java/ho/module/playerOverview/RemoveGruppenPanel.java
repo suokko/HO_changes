@@ -7,6 +7,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.LightGrayFilter;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.util.HOLogger;
 
 import java.awt.Color;
@@ -29,8 +30,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
-
-import plugins.ISpieler;
 
 
 /**
@@ -201,12 +200,12 @@ public class RemoveGruppenPanel extends ho.core.gui.comp.panel.ImagePanel
     private void gruppenMarkierung() {
         //Von beiden Gruppen ein Button selektiert
         if ((getSelectedButton(true) != null) && (getSelectedButton(false) != null)) {
-            final Vector<ISpieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+            final Vector<Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
             final String suchName = getName4Button(getSelectedButton(true));
             final String ersatzName = getName4Button(getSelectedButton(false));
 
             for (int i = 0; i < alleSpieler.size(); i++) {
-                final ISpieler spieler = alleSpieler.get(i);
+                final Spieler spieler = alleSpieler.get(i);
 
                 //Spieler in der Gruppe
                 if (spieler.getTeamInfoSmilie().equals(suchName)) {

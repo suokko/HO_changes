@@ -8,6 +8,7 @@ import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
 import ho.core.util.Helper;
 
@@ -35,8 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-
-import plugins.ISpieler;
 
 /**
  * @author KickMuck
@@ -112,7 +111,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	private JComboBox m_CB_Nr_Loyalty;
 	
 	private Vector<Player> m_V_setPlayers;
-	private Vector<ISpieler> m_V_allPlayers;
+	private Vector<Spieler> m_V_allPlayers;
 	private Player[] m_ar_allPlayers;
 	private Player[] m_ar_setPlayers;
 	
@@ -695,7 +694,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     	for(int i = 0; i < m_playerTableModelTop.getRowCount(); i++)
     	{
     		spielerID = ((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue();
-    		ISpieler spieler = HOVerwaltung.instance().getModel().getSpieler(spielerID);
+    		Spieler spieler = HOVerwaltung.instance().getModel().getSpieler(spielerID);
     		m_playerTableModelTop.setValueAt(spieler.getTeamInfoSmilie(),i,5);
     		if(spieler.getTeamInfoSmilie().equals("A-Team.png") && m_CB_type.getSelectedIndex() == 6
     			|| spieler.getTeamInfoSmilie().equals("B-Team.png") && m_CB_type.getSelectedIndex() == 7
