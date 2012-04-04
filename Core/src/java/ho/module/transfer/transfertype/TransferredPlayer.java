@@ -1,6 +1,7 @@
 // %368918737:hoplugins.transfers.vo%
 package ho.module.transfer.transfertype;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.module.transfer.PlayerTransfer;
@@ -43,16 +44,16 @@ class TransferredPlayer {
         experience = player.getErfahrung();
         leadership = player.getFuehrung();
         playerName = player.getName();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_TORWART).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_SPIELAUFBAU).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_PASSSPIEL).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_FLUEGEL).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_VERTEIDIGUNG).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_TORSCHUSS).size();
-        skillups += player.getAllLevelUp(ISpieler.SKILL_STANDARDS).size();
+        skillups += player.getAllLevelUp(PlayerSkill.KEEPER).size();
+        skillups += player.getAllLevelUp(PlayerSkill.PLAYMAKING).size();
+        skillups += player.getAllLevelUp(PlayerSkill.PASSING).size();
+        skillups += player.getAllLevelUp(PlayerSkill.WINGER).size();
+        skillups += player.getAllLevelUp(PlayerSkill.DEFENDING).size();
+        skillups += player.getAllLevelUp(PlayerSkill.SCORING).size();
+        skillups += player.getAllLevelUp(PlayerSkill.SET_PIECES).size();
 
         //player.getAllLevelUp(ISpieler.SKILL_KONDITION).size();
-        experienceSkillups = player.getAllLevelUp(ISpieler.SKILL_EXPIERIENCE).size();
+        experienceSkillups = player.getAllLevelUp(PlayerSkill.EXPERIENCE).size();
         officialMatch = DBManager.instance().getCountOfPlayedMatches(player.getSpielerID(), true);
 
         //testMatch = PlayerMatchesDAO.getAppearance(player.getSpielerID(), false);

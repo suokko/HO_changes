@@ -1,5 +1,6 @@
 package ho.tool.export;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
@@ -89,13 +90,13 @@ public class CsvPlayerExport {
 						"" + curPlayer.getAgeDays(),
 						"" + curPlayer.getForm(),
 						"" + curPlayer.getKondition(),
-						"" + (curPlayer.getTorwart() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART)),
-						"" + (curPlayer.getSpielaufbau() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU)),
-						"" + (curPlayer.getPasspiel() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL)),
-						"" + (curPlayer.getFluegelspiel() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL)),
-						"" + (curPlayer.getVerteidigung() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG)),
-						"" + (curPlayer.getTorschuss() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS)),
-						"" + (curPlayer.getStandards() + curPlayer.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS)),
+						"" + (curPlayer.getTorwart() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.KEEPER)),
+						"" + (curPlayer.getSpielaufbau() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING)),
+						"" + (curPlayer.getPasspiel() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.PASSING)),
+						"" + (curPlayer.getFluegelspiel() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.WINGER)),
+						"" + (curPlayer.getVerteidigung() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING)),
+						"" + (curPlayer.getTorschuss() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.SCORING)),
+						"" + (curPlayer.getStandards() + curPlayer.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES)),
 						"" + curPlayer.getSpezialitaet(),
 						"" + curPlayer.getTSI(),
 						"" + (int)(curPlayer.getGehalt() / HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate()),

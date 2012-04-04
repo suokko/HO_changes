@@ -1,6 +1,7 @@
 // %1303949933:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
@@ -61,7 +62,7 @@ public class SkillupPanel extends JPanel {
     public void addRow(ISkillup skillup) {
         Vector<Object> v = new Vector<Object>();
 
-        v.add(PlayerCreator.getSkillDescription(skillup.getType()) + ": " //$NON-NLS-1$
+        v.add(PlayerSkill.toString(skillup.getType()) + ": " //$NON-NLS-1$
               + HelperWrapper.instance().getNameForSkill(skillup.getValue(), true));
         v.add("" + skillup.getHtWeek()); //$NON-NLS-1$
         v.add("" + skillup.getHtSeason()); //$NON-NLS-1$

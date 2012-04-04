@@ -1,7 +1,7 @@
 // %36155679:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
-import ho.core.file.extension.PlayerCreator;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.TrainingLegendPanel;
@@ -72,7 +72,7 @@ public class TrainingRecapRenderer extends DefaultTableCellRenderer {
         		icon = TrainingLegendPanel.getSkillupTypeIcon(skillType, 1);
         		int val = Integer.parseInt(skills[1]);
         		String skillLevelName = HelperWrapper.instance().getNameForSkill(val, true);
-        		tooltip = PlayerCreator.getSkillDescription(skillType)+": " + skillLevelName;
+        		tooltip =PlayerSkill.toString(skillType)+": " + skillLevelName;
         		text = skillLevelName;
         	}
         	

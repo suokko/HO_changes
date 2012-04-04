@@ -1,5 +1,6 @@
 package ho.core.epv;
 
+import ho.core.constants.player.PlayerSkill;
 import plugins.ISpieler;
 
 
@@ -64,15 +65,15 @@ public class EPVData implements Cloneable {
         setAgeDays(s.getAgeDays());
         setTSI(s.getTSI());
         setForm(s.getForm());
-        setStamina(s.getKondition() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_KONDITION));
-        setGoalKeeping(s.getTorwart() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART));
+        setStamina(s.getKondition() + s.getSubskill4SkillWithOffset(PlayerSkill.STAMINA));
+        setGoalKeeping(s.getTorwart() + s.getSubskill4SkillWithOffset(PlayerSkill.KEEPER));
         setPlayMaking(s.getSpielaufbau()
-                      + s.getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU));
-        setPassing(s.getPasspiel() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL));
-        setWing(s.getFluegelspiel() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL));
-        setDefense(s.getVerteidigung() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG));
-        setAttack(s.getTorschuss() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS));
-        setSetPieces(s.getStandards() + s.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS));
+                      + s.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING));
+        setPassing(s.getPasspiel() + s.getSubskill4SkillWithOffset(PlayerSkill.PASSING));
+        setWing(s.getFluegelspiel() + s.getSubskill4SkillWithOffset(PlayerSkill.WINGER));
+        setDefense(s.getVerteidigung() + s.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING));
+        setAttack(s.getTorschuss() + s.getSubskill4SkillWithOffset(PlayerSkill.SCORING));
+        setSetPieces(s.getStandards() + s.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES));
 
         setExperience(s.getErfahrung());
         setLeadership(s.getFuehrung());

@@ -1,6 +1,7 @@
 // %634087379:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -98,7 +99,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                              setPiecesColor,ho.core.model.UserParameter.instance().statistikStandards);
     private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.scoring"),
                                                              scoringColor,ho.core.model.UserParameter.instance().statistikTorschuss);
-    private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.keeper"),
+    private ImageCheckbox m_jchTorwart = new ImageCheckbox(PlayerSkill.toString(PlayerSkill.KEEPER),
                                                            keeperColor,ho.core.model.UserParameter.instance().statistikTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.defending"),
                                                                defendingColor,ho.core.model.UserParameter.instance().statistikVerteidigung);

@@ -2,6 +2,7 @@
 package ho.module.transfer.scout;
 
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
@@ -57,7 +58,7 @@ public class TransferTableModel extends AbstractTableModel {
 	    // Homegrown
 	    HOVerwaltung.instance().getLanguageString("Motherclub"),
 	    //Torwart
-	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
+	    PlayerSkill.toString(PlayerSkill.KEEPER),
 	    //Verteidigung
 	    HOVerwaltung.instance().getLanguageString("skill.defending"),
 	    //Spielaufbau

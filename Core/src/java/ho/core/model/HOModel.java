@@ -2,6 +2,7 @@
 package ho.core.model;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.epv.EPV;
 import ho.core.training.TrainingPerWeek;
@@ -541,28 +542,28 @@ public class HOModel {
     	switch (trArt) {
     	case TrainingType.WING_ATTACKS:
     	case TrainingType.CROSSING_WINGER:
-    		skill = ISpieler.SKILL_FLUEGEL;
+    		skill = PlayerSkill.WINGER;
     		break;
     	case TrainingType.SET_PIECES:
-    		skill = ISpieler.SKILL_STANDARDS;
+    		skill = PlayerSkill.SET_PIECES;
     		break;
     	case TrainingType.DEF_POSITIONS:
     	case TrainingType.DEFENDING:
-    		skill = ISpieler.SKILL_VERTEIDIGUNG;
+    		skill = PlayerSkill.DEFENDING;
     		break;
     	case TrainingType.SHOOTING:
     	case TrainingType.SCORING:
-    		skill = ISpieler.SKILL_TORSCHUSS;
+    		skill = PlayerSkill.SCORING;
     		break;
     	case TrainingType.SHORT_PASSES:
     	case TrainingType.THROUGH_PASSES:
-    		skill = ISpieler.SKILL_PASSSPIEL;
+    		skill = PlayerSkill.PASSING;
     		break;
     	case TrainingType.PLAYMAKING:
-    		skill = ISpieler.SKILL_SPIELAUFBAU;
+    		skill = PlayerSkill.PLAYMAKING;
     		break;
     	case TrainingType.GOALKEEPING:
-    		skill = ISpieler.SKILL_TORWART;
+    		skill = PlayerSkill.KEEPER;
     		break;
     	}
     	if (skill >= 0) {

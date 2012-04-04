@@ -1,6 +1,7 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -617,7 +618,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jcbStamina.addItemListener(this);
         panel.add(jcbStamina);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
+        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
         panel.add(label);
         jcbKeeper.addItemListener(this);
         panel.add(jcbKeeper);

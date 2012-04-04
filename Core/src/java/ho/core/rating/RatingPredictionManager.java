@@ -1,5 +1,6 @@
 package ho.core.rating;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.ISpielerPosition;
 import ho.core.model.Team;
@@ -36,15 +37,15 @@ public class RatingPredictionManager {
     private static final int SIDEATTACK = 3; 
     private static final int CENTRALATTACK = 4; 
 
-    private static final int GOALKEEPING = ISpieler.SKILL_TORWART; // 0
-    private static final int DEFENDING = ISpieler.SKILL_VERTEIDIGUNG; // 1
-    private static final int WINGER = ISpieler.SKILL_FLUEGEL; // 2
-    private static final int PLAYMAKING = ISpieler.SKILL_SPIELAUFBAU; // 3
-    private static final int SCORING = ISpieler.SKILL_TORSCHUSS; // 4
-    private static final int PASSING = ISpieler.SKILL_PASSSPIEL; // 5
+    private static final int GOALKEEPING = PlayerSkill.KEEPER; // 0
+    private static final int DEFENDING = PlayerSkill.DEFENDING; // 1
+    private static final int WINGER = PlayerSkill.WINGER; // 2
+    private static final int PLAYMAKING = PlayerSkill.PLAYMAKING; // 3
+    private static final int SCORING = PlayerSkill.SCORING; // 4
+    private static final int PASSING = PlayerSkill.PASSING; // 5
 	//private static final int STAMINA = ISpieler.SKILL_KONDITION; // 6
     //private static final int FORM = ISpieler.SKILL_FORM; // 7
-    private static final int SETPIECES = ISpieler.SKILL_STANDARDS; // 8
+    private static final int SETPIECES = PlayerSkill.SET_PIECES; // 8
     //private static final int EXPERIENCE = ISpieler.SKILL_EXPIERIENCE; // 9
     //private static final int LEADERSHIP = ISpieler.SKILL_LEADERSHIP; // 10
     
@@ -55,8 +56,8 @@ public class RatingPredictionManager {
     public static final int SPEC_UNPREDICTABLE = PlayerSpeciality.UNPREDICTABLE; // 4
     public static final int SPEC_HEADER = PlayerSpeciality.HEAD; // 5
     public static final int SPEC_REGAINER = PlayerSpeciality.REGAINER; // 6
-    public static final int SPEC_ALL = ISpieler.NUM_SPECIALTIES; // 7
-    public static final int NUM_SPEC = ISpieler.NUM_SPECIALTIES+1; // 8
+    public static final int SPEC_ALL = PlayerSpeciality.REGAINER+1; // 7
+    public static final int NUM_SPEC = SPEC_ALL+1; // 8
 
     //~ Class fields -------------------------------------------------------------------------------
 
@@ -671,7 +672,7 @@ public class RatingPredictionManager {
     }
     
     public double[][] getAllPlayerStrength (int skillType, boolean useLeft, boolean useMiddle, boolean useRight) {
-    	double[][] retArray = new double[ISpielerPosition.NUM_POSITIONS][ISpieler.NUM_SPECIALTIES];
+    	double[][] retArray = new double[ISpielerPosition.NUM_POSITIONS][SPEC_ALL];
 //    	System.out.println ("getAllPlayerStrength: st="+skillType+", l="+useLeft+", m="+useMiddle+", r="+useRight);
         for(int pos = ISpielerPosition.startLineup; pos < ISpielerPosition.startReserves; pos++) {
             ISpieler spieler = lineup.getPlayerByPositionID(pos);

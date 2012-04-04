@@ -1,7 +1,7 @@
 // %951755279:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
-import ho.core.file.extension.PlayerCreator;
+import ho.core.constants.player.PlayerSkill;
 import ho.module.training.ui.TrainingLegendPanel;
 
 import java.awt.Color;
@@ -51,7 +51,7 @@ public class ChangeTableRenderer extends DefaultTableCellRenderer {
         if (column == 3) {
             try {
                 int skill = Integer.parseInt((String) table.getValueAt(row, 3));
-                setText(PlayerCreator.getSkillDescription(skill));
+                setText(PlayerSkill.toString(skill));
                 setIcon(TrainingLegendPanel.getSkillupTypeIcon(skill, 1));
             } catch (NumberFormatException e) {
             }

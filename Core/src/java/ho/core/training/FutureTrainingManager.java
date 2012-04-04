@@ -1,6 +1,7 @@
 package ho.core.training;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.FuturePlayer;
 import ho.core.model.ISkillup;
 import ho.core.model.PlayerSkillup;
@@ -57,14 +58,14 @@ public class FutureTrainingManager {
 		this.futureSkillups = new ArrayList<ISkillup>();
 				
 		// Sets the actual training levels
-		actual[0] = getOffset(ISpieler.SKILL_TORWART);
-		actual[1] = getOffset(ISpieler.SKILL_SPIELAUFBAU);
-		actual[2] = getOffset(ISpieler.SKILL_PASSSPIEL);
-		actual[3] = getOffset(ISpieler.SKILL_FLUEGEL);
-		actual[4] = getOffset(ISpieler.SKILL_VERTEIDIGUNG);
-		actual[5] = getOffset(ISpieler.SKILL_TORSCHUSS);
-		actual[6] = getOffset(ISpieler.SKILL_STANDARDS);
-		actual[7] = getOffset(ISpieler.SKILL_KONDITION);
+		actual[0] = getOffset(PlayerSkill.KEEPER);
+		actual[1] = getOffset(PlayerSkill.PLAYMAKING);
+		actual[2] = getOffset(PlayerSkill.PASSING);
+		actual[3] = getOffset(PlayerSkill.WINGER);
+		actual[4] = getOffset(PlayerSkill.DEFENDING);
+		actual[5] = getOffset(PlayerSkill.SCORING);
+		actual[6] = getOffset(PlayerSkill.SET_PIECES);
+		actual[7] = getOffset(PlayerSkill.STAMINA);
 		
 		// rest the other 4 arrays min and max level are equals to actual at beginning
 		for (int i = 0; i < 8; i++) {
@@ -96,20 +97,20 @@ public class FutureTrainingManager {
 					processTraining(getSkillForTraining(tw.getTyp()), point, tw);
 					break;
 				case TrainingType.SHOOTING :
-					processTraining(ISpieler.SKILL_TORSCHUSS, point, tw);
-					processTraining(ISpieler.SKILL_STANDARDS, 0.5d, tw);
+					processTraining(PlayerSkill.SCORING, point, tw);
+					processTraining(PlayerSkill.SET_PIECES, 0.5d, tw);
 					break;
 			}
 		}		
 		FuturePlayer fp = new FuturePlayer();				
-		fp.setAttack(getFinalValue(ISpieler.SKILL_TORSCHUSS));		
-		fp.setCross(getFinalValue(ISpieler.SKILL_FLUEGEL));
-		fp.setDefense(getFinalValue(ISpieler.SKILL_VERTEIDIGUNG));
-		fp.setGoalkeeping(getFinalValue(ISpieler.SKILL_TORWART));
-		fp.setPassing(getFinalValue(ISpieler.SKILL_PASSSPIEL));
-		fp.setPlaymaking(getFinalValue(ISpieler.SKILL_SPIELAUFBAU));
-		fp.setSetpieces(getFinalValue(ISpieler.SKILL_STANDARDS));
-		fp.setStamina(getFinalValue(ISpieler.SKILL_KONDITION));
+		fp.setAttack(getFinalValue(PlayerSkill.SCORING));		
+		fp.setCross(getFinalValue(PlayerSkill.WINGER));
+		fp.setDefense(getFinalValue(PlayerSkill.DEFENDING));
+		fp.setGoalkeeping(getFinalValue(PlayerSkill.KEEPER));
+		fp.setPassing(getFinalValue(PlayerSkill.PASSING));
+		fp.setPlaymaking(getFinalValue(PlayerSkill.PLAYMAKING));
+		fp.setSetpieces(getFinalValue(PlayerSkill.SET_PIECES));
+		fp.setStamina(getFinalValue(PlayerSkill.STAMINA));
 		fp.setAge(player.getAlter()+(int)(Math.floor((player.getAgeDays()+7*weeksPassed)/112d)));
 		fp.setPlayerId(player.getSpielerID());
 		return fp;
@@ -263,7 +264,7 @@ public class FutureTrainingManager {
 			su.setValue(player.getValue4Skill4(skillIndex) + finalSkillup[pos]);
 			su.setTrainType(ISkillup.SKILLUP_FUTURE);
 
-			if ((skillIndex == ISpieler.SKILL_KONDITION) && (su.getValue() > 9)) {
+			if ((skillIndex == PlayerSkill.STAMINA) && (su.getValue() > 9)) {
 				return;
 			}
 
@@ -280,25 +281,25 @@ public class FutureTrainingManager {
 	 */
 	private int getPrimaryTrainingForSkill (int skillIndex) {
 		switch (skillIndex) {
-			case ISpieler.SKILL_TORWART :
+			case PlayerSkill.KEEPER :
 				return TrainingType.GOALKEEPING;
 
-			case ISpieler.SKILL_SPIELAUFBAU :
+			case PlayerSkill.PLAYMAKING :
 				return TrainingType.PLAYMAKING;
 
-			case ISpieler.SKILL_PASSSPIEL :
+			case PlayerSkill.PASSING :
 				return TrainingType.SHORT_PASSES;
 
-			case ISpieler.SKILL_FLUEGEL :
+			case PlayerSkill.WINGER :
 				return TrainingType.CROSSING_WINGER;
 
-			case ISpieler.SKILL_VERTEIDIGUNG :
+			case PlayerSkill.DEFENDING :
 				return TrainingType.DEFENDING;
 
-			case ISpieler.SKILL_TORSCHUSS :
+			case PlayerSkill.SCORING :
 				return TrainingType.SCORING;
 
-			case ISpieler.SKILL_STANDARDS :
+			case PlayerSkill.SET_PIECES :
 				return TrainingType.SET_PIECES;
 
 		}
@@ -316,29 +317,29 @@ public class FutureTrainingManager {
 	private int getSkillForTraining (int trType) {
 		switch (trType) {
 			case TrainingType.GOALKEEPING:
-				return ISpieler.SKILL_TORWART;
+				return PlayerSkill.KEEPER;
 
 			case TrainingType.PLAYMAKING:
-				return ISpieler.SKILL_SPIELAUFBAU;
+				return PlayerSkill.PLAYMAKING;
 
 			case TrainingType.SHORT_PASSES:
 			case TrainingType.THROUGH_PASSES:
-				return ISpieler.SKILL_PASSSPIEL;
+				return PlayerSkill.PASSING;
 
 			case TrainingType.CROSSING_WINGER:
 			case TrainingType.WING_ATTACKS:
-				return ISpieler.SKILL_FLUEGEL;
+				return PlayerSkill.WINGER;
 
 			case TrainingType.DEFENDING:
 			case TrainingType.DEF_POSITIONS:
-				return ISpieler.SKILL_VERTEIDIGUNG;
+				return PlayerSkill.DEFENDING;
 
 			case TrainingType.SCORING:
 			case TrainingType.SHOOTING:
-				return ISpieler.SKILL_TORSCHUSS;
+				return PlayerSkill.SCORING;
 
 			case TrainingType.SET_PIECES:
-				return ISpieler.SKILL_STANDARDS;
+				return PlayerSkill.SET_PIECES;
 
 		}
 
@@ -347,28 +348,28 @@ public class FutureTrainingManager {
 
 	private int getSkillPosition(int skillIndex) {
 		switch (skillIndex) {
-			case ISpieler.SKILL_TORWART :
+			case PlayerSkill.KEEPER :
 				return 0;
 
-			case ISpieler.SKILL_SPIELAUFBAU :
+			case PlayerSkill.PLAYMAKING :
 				return 1;
 
-			case ISpieler.SKILL_PASSSPIEL :
+			case PlayerSkill.PASSING :
 				return 2;
 
-			case ISpieler.SKILL_FLUEGEL :
+			case PlayerSkill.WINGER :
 				return 3;
 
-			case ISpieler.SKILL_VERTEIDIGUNG :
+			case PlayerSkill.DEFENDING :
 				return 4;
 
-			case ISpieler.SKILL_TORSCHUSS :
+			case PlayerSkill.SCORING :
 				return 5;
 
-			case ISpieler.SKILL_STANDARDS :
+			case PlayerSkill.SET_PIECES :
 				return 6;
 
-			case ISpieler.SKILL_KONDITION :
+			case PlayerSkill.STAMINA :
 				return 7;
 		}
 		return 0;
