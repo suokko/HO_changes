@@ -2,6 +2,7 @@
 package ho.core.training;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -288,19 +289,19 @@ public class TrainingPerPlayer  {
      */
     public double getSkillValue (int skillType) {
     	switch (skillType) {
-    	case ISpieler.SKILL_TORWART:
+    	case PlayerSkill.KEEPER:
     		return this.getTW();
-    	case ISpieler.SKILL_VERTEIDIGUNG:
+    	case PlayerSkill.DEFENDING:
     		return this.getVE();
-    	case ISpieler.SKILL_FLUEGEL:
+    	case PlayerSkill.WINGER:
     		return this.getFL();
-    	case ISpieler.SKILL_SPIELAUFBAU:
+    	case PlayerSkill.PLAYMAKING:
     		return this.getSA();
-    	case ISpieler.SKILL_TORSCHUSS:
+    	case PlayerSkill.SCORING:
     		return this.getTS();
-    	case ISpieler.SKILL_PASSSPIEL:
+    	case PlayerSkill.PASSING:
     		return this.getPS();
-    	case ISpieler.SKILL_STANDARDS:
+    	case PlayerSkill.SET_PIECES:
     		return this.getST();
     	}
     	return 0;
@@ -357,51 +358,51 @@ public class TrainingPerPlayer  {
     	switch (trainType) {
 		case TrainingType.PLAYMAKING:
 	        //Spielaufbau // playmaking
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_SPIELAUFBAU))
+			if (isAfterSkillup(trainingDate, PlayerSkill.PLAYMAKING))
 				setSA (d);
 			break;
 		case TrainingType.DEFENDING:
             //Verteidigung //defense
 		case TrainingType.DEF_POSITIONS:
             //defensive positions
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_VERTEIDIGUNG))
+			if (isAfterSkillup(trainingDate, PlayerSkill.DEFENDING))
 				setVE (d);
 			break;
 		case TrainingType.CROSSING_WINGER:
             //Flankenlaeufe //wing
 		case TrainingType.WING_ATTACKS:
 			// Fluegelangriff //Lateral offensive            
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_FLUEGEL))
+			if (isAfterSkillup(trainingDate, PlayerSkill.WINGER))
 				setFL (d);
 			break;
 		case TrainingType.SHORT_PASSES:
             //Passspiel //passing
 		case TrainingType.THROUGH_PASSES:
             // through passes
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_PASSSPIEL))
+			if (isAfterSkillup(trainingDate, PlayerSkill.PASSING))
 				setPS (d);
 			break;
 		case TrainingType.GOALKEEPING:
             //Torwart //keeper
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORWART))
+			if (isAfterSkillup(trainingDate, PlayerSkill.KEEPER))
 				setTW (d);
 			break;
 		case TrainingType.SCORING:
             //Chancenverwertung //Torschuss //scoring
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
+			if (isAfterSkillup(trainingDate, PlayerSkill.SCORING))
 				setTS (d);
 			break;
 		case TrainingType.SHOOTING:
             //Schusstraining //shooting
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_TORSCHUSS))
+			if (isAfterSkillup(trainingDate, PlayerSkill.SCORING))
 				setTS (d);
             // Shooting gives some training in Set Pieces, too
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
+			if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES))
 	            setST(p_f_schusstraining_Standard * trainPoint.calcTrainingPoints(true));
 			break;
 		case TrainingType.SET_PIECES:
             //Standardsituationen //set pieces
-			if (isAfterSkillup(trainingDate, ISpieler.SKILL_STANDARDS))
+			if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES))
 				setST (d);
 			break;
 		}

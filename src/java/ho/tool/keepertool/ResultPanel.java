@@ -2,6 +2,7 @@
 package ho.tool.keepertool;
 
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 
@@ -110,7 +111,7 @@ class ResultPanel extends JPanel {
                 public void actionPerformed(ActionEvent arg0) {
                     final ISpieler sp = HOVerwaltung.instance().getModel().getSpieler(id);
                     double decimals = average - sp.getTorwart()
-                                      - sp.getSubskill4Pos(ISpieler.SKILL_TORWART);
+                                      - sp.getSubskill4Pos(PlayerSkill.KEEPER);
 
                     if (decimals > 1) {
                         decimals = 0.99;

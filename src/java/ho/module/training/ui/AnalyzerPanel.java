@@ -1,6 +1,7 @@
 // %2601556114:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.file.extension.PlayerCreator;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -261,7 +262,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
             }
         }
 
-        cBox.setText(PlayerCreator.getSkillDescription(skill));
+        cBox.setText(PlayerSkill.toString(skill));
         cBox.addActionListener(this);
 
         JPanel panel = new ImagePanel();
@@ -344,15 +345,15 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 
         filterPanel.add(Box.createVerticalStrut(20));
 
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_TORWART));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_SPIELAUFBAU));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_PASSSPIEL));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_FLUEGEL));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_VERTEIDIGUNG));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_TORSCHUSS));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_STANDARDS));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_KONDITION));
-        filterPanel.add(createSkillSelector(ISpieler.SKILL_EXPIERIENCE));
+        filterPanel.add(createSkillSelector(PlayerSkill.KEEPER));
+        filterPanel.add(createSkillSelector(PlayerSkill.PLAYMAKING));
+        filterPanel.add(createSkillSelector(PlayerSkill.PASSING));
+        filterPanel.add(createSkillSelector(PlayerSkill.WINGER));
+        filterPanel.add(createSkillSelector(PlayerSkill.DEFENDING));
+        filterPanel.add(createSkillSelector(PlayerSkill.SCORING));
+        filterPanel.add(createSkillSelector(PlayerSkill.SET_PIECES));
+        filterPanel.add(createSkillSelector(PlayerSkill.STAMINA));
+        filterPanel.add(createSkillSelector(PlayerSkill.EXPERIENCE));
 
         filterPanel.add(Box.createVerticalStrut(20));
 

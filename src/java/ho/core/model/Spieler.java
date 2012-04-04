@@ -7,6 +7,7 @@
 package ho.core.model;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
@@ -1447,25 +1448,25 @@ public final class Spieler implements plugins.ISpieler {
      */
     public float getSubskill4Pos(int skill) {
         switch (skill) {
-            case SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return Math.min(0.99f, (float) m_dSubTorwart);
 
-            case SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return Math.min(0.99f, (float) m_dSubSpielaufbau);
 
-            case SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return Math.min(0.99f, (float) m_dSubVerteidigung);
 
-            case SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return Math.min(0.99f, (float) m_dSubPasspiel);
 
-            case SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return Math.min(0.99f, (float) m_dSubFluegelspiel);
 
-            case SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return Math.min(0.99f, (float) m_dSubTorschuss);
 
-            case SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return Math.min(0.99f, (float) m_dSubStandards);
 
             default:
@@ -1484,42 +1485,42 @@ public final class Spieler implements plugins.ISpieler {
         float value = 0.0f;
 
         switch (skill) {
-            case SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 value = Math.min(0.99f, (float) m_dSubTorwart + (float) m_dTrainingsOffsetTorwart);
                 break;
 
-            case SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 value = Math.min(0.99f,
                                  (float) m_dSubSpielaufbau + (float) m_dTrainingsOffsetSpielaufbau);
                 break;
 
-            case SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 value = Math.min(0.99f,
                                  (float) m_dSubVerteidigung
                                  + (float) m_dTrainingsOffsetVerteidigung);
                 break;
 
-            case SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 value = Math.min(0.99f, (float) m_dSubPasspiel + (float) m_dTrainingsOffsetPasspiel);
                 break;
 
-            case SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 value = Math.min(0.99f,
                                  (float) m_dSubFluegelspiel
                                  + (float) m_dTrainingsOffsetFluegelspiel);
                 break;
 
-            case SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 value = Math.min(0.99f,
                                  (float) m_dSubTorschuss + (float) m_dTrainingsOffsetTorschuss);
                 break;
 
-            case SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 value = Math.min(0.99f,
                                  (float) m_dSubStandards + (float) m_dTrainingsOffsetStandards);
                 break;
 
-            case SKILL_LOYALTY:
+            case PlayerSkill.LOYALTY:
             	value = 0;
             
             default:
@@ -1737,25 +1738,25 @@ public final class Spieler implements plugins.ISpieler {
      */
     public double getTrainingOffset4Skill(int skill) {
         switch (skill) {
-            case SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return m_dTrainingsOffsetTorwart;
 
-            case SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return m_dTrainingsOffsetSpielaufbau;
 
-            case SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return m_dTrainingsOffsetVerteidigung;
 
-            case SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return m_dTrainingsOffsetPasspiel;
 
-            case SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return m_dTrainingsOffsetFluegelspiel;
 
-            case SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return m_dTrainingsOffsetTorschuss;
 
-            case SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return m_dTrainingsOffsetStandards;
 
             default:
@@ -1976,40 +1977,40 @@ public final class Spieler implements plugins.ISpieler {
      */
     public int getValue4Skill4(int skill) {
         switch (skill) {
-            case SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return m_iTorwart;
 
-            case SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return m_iSpielaufbau;
 
-            case SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return m_iVerteidigung;
 
-            case SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return m_iPasspiel;
 
-            case SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return m_iFluegelspiel;
 
-            case SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return m_iTorschuss;
 
-            case SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return m_iStandards;
 
-            case SKILL_KONDITION:
+            case PlayerSkill.STAMINA:
                 return m_iKondition;
 
-            case SKILL_EXPIERIENCE:
+            case PlayerSkill.EXPERIENCE:
                 return m_iErfahrung;
 
-            case SKILL_FORM:
+            case PlayerSkill.FORM:
                 return m_iForm;
 
-            case SKILL_LEADERSHIP:
+            case PlayerSkill.LEADERSHIP:
                 return m_iFuehrung;
                 
-            case SKILL_LOYALTY:
+            case PlayerSkill.LOYALTY:
             	return m_iLoyalty;
 
             default:
@@ -2025,51 +2026,51 @@ public final class Spieler implements plugins.ISpieler {
      */
 	public void setValue4Skill4(int skill, int value) {
 		switch (skill) {
-			case SKILL_TORWART :
+			case PlayerSkill.KEEPER :
 				setTorwart(value);
 				break;
 
-			case SKILL_SPIELAUFBAU :
+			case PlayerSkill.PLAYMAKING :
 				setSpielaufbau(value);
 				break;
 
-			case SKILL_PASSSPIEL :
+			case PlayerSkill.PASSING :
 				setPasspiel(value);
 				break;
 
-			case SKILL_FLUEGEL :
+			case PlayerSkill.WINGER :
 				setFluegelspiel(value);
 				break;
 
-			case SKILL_VERTEIDIGUNG :
+			case PlayerSkill.DEFENDING :
 				setVerteidigung(value);
 				break;
 
-			case SKILL_TORSCHUSS :
+			case PlayerSkill.SCORING :
 				setTorschuss(value);
 				break;
 
-			case SKILL_STANDARDS :
+			case PlayerSkill.SET_PIECES :
 				setStandards(value);
 				break;
 
-			case SKILL_KONDITION :
+			case PlayerSkill.STAMINA :
 				setKondition(value);
 				break;
 
-			case SKILL_EXPIERIENCE:
+			case PlayerSkill.EXPERIENCE:
 				setErfahrung(value);
 				break;
 
-			case SKILL_FORM:
+			case PlayerSkill.FORM:
 				setForm(value);
 				break;
 
-			case SKILL_LEADERSHIP:
+			case PlayerSkill.LEADERSHIP:
 				setFuehrung(value);
 				break;
 				
-			case SKILL_LOYALTY:
+			case PlayerSkill.LOYALTY:
 				setLoyalty(value);
 		}
 	}
@@ -2154,7 +2155,7 @@ public final class Spieler implements plugins.ISpieler {
 
         //TODO Training pro Woche berechenen
         //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
-        if (!check4SkillUp(SKILL_TORWART, old)) {
+        if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
             m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TrainingType.GOALKEEPING,
                                                                                                                           coTrainer,
                                                                                                                           trainerlevel,
@@ -2172,7 +2173,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetTorwart = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_VERTEIDIGUNG, old)) {
+        if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
             m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(TrainingType.DEFENDING,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
@@ -2190,7 +2191,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetVerteidigung = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_SPIELAUFBAU, old)) {
+        if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
             m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(TrainingType.PLAYMAKING,
                                                                                                                               coTrainer,
                                                                                                                               trainerlevel,
@@ -2208,7 +2209,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetSpielaufbau = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_PASSSPIEL, old)) {
+        if (!check4SkillUp(PlayerSkill.PASSING, old)) {
             m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(TrainingType.SHORT_PASSES,
                                                                                                                            coTrainer,
                                                                                                                            trainerlevel,
@@ -2226,7 +2227,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetPasspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_FLUEGEL, old)) {
+        if (!check4SkillUp(PlayerSkill.WINGER, old)) {
             m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(TrainingType.CROSSING_WINGER,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
@@ -2244,7 +2245,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetFluegelspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_TORSCHUSS, old)) {
+        if (!check4SkillUp(PlayerSkill.SCORING, old)) {
             m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(TrainingType.SCORING,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
@@ -2262,7 +2263,7 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetTorschuss = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_STANDARDS, old)) {
+        if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
             m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getST() / getTrainingLength(TrainingType.SET_PIECES,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
@@ -2297,14 +2298,14 @@ public final class Spieler implements plugins.ISpieler {
         final TrainingPerPlayer trainingPerPlayer =
         	ho.core.training.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 
-        if (!check4SkillUp(SKILL_TORWART, old)) {
+        if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
             m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TrainingType.GOALKEEPING,
                                                                                                                           coTrainer,
                                                                                                                           trainerlevel,
                                                                                                                           intensitaet,
                                                                                                                           staminaTrainingPart),
                                                                     2);
-            m_dSubTorwart = m_dSubTorwart + old.getSubskill4Pos(SKILL_TORWART);
+            m_dSubTorwart = m_dSubTorwart + old.getSubskill4Pos(PlayerSkill.KEEPER);
 
             if (m_dSubTorwart >= 1.0d) {
                 m_dSubTorwart = 0.99d;
@@ -2314,14 +2315,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetTorwart = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_VERTEIDIGUNG, old)) {
+        if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
             m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(TrainingType.DEFENDING,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
                                                                          2);
-            m_dSubVerteidigung = m_dSubVerteidigung + old.getSubskill4Pos(SKILL_VERTEIDIGUNG);
+            m_dSubVerteidigung = m_dSubVerteidigung + old.getSubskill4Pos(PlayerSkill.DEFENDING);
 
             if (m_dSubVerteidigung >= 1.0d) {
                 m_dSubVerteidigung = 0.99d;
@@ -2331,14 +2332,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetVerteidigung = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_SPIELAUFBAU, old)) {
+        if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
             m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(TrainingType.PLAYMAKING,
                                                                                                                               coTrainer,
                                                                                                                               trainerlevel,
                                                                                                                               intensitaet,
                                                                                                                               staminaTrainingPart),
                                                                         2);
-            m_dSubSpielaufbau = m_dSubSpielaufbau + old.getSubskill4Pos(SKILL_SPIELAUFBAU);
+            m_dSubSpielaufbau = m_dSubSpielaufbau + old.getSubskill4Pos(PlayerSkill.PLAYMAKING);
 
             if (m_dSubSpielaufbau >= 1.0d) {
                 m_dSubSpielaufbau = 0.99d;
@@ -2350,14 +2351,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetSpielaufbau = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_PASSSPIEL, old)) {
+        if (!check4SkillUp(PlayerSkill.PASSING, old)) {
             m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(TrainingType.SHORT_PASSES,
                                                                                                                            coTrainer,
                                                                                                                            trainerlevel,
                                                                                                                            intensitaet,
                                                                                                                            staminaTrainingPart),
                                                                      2);
-            m_dSubPasspiel = m_dSubPasspiel + old.getSubskill4Pos(SKILL_PASSSPIEL);
+            m_dSubPasspiel = m_dSubPasspiel + old.getSubskill4Pos(PlayerSkill.PASSING);
 
             if (m_dSubPasspiel >= 1.0d) {
                 m_dSubPasspiel = 0.99d;
@@ -2369,14 +2370,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetPasspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_FLUEGEL, old)) {
+        if (!check4SkillUp(PlayerSkill.WINGER, old)) {
             m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(TrainingType.CROSSING_WINGER,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
                                                                                                                                staminaTrainingPart),
                                                                          2);
-            m_dSubFluegelspiel = m_dSubFluegelspiel + old.getSubskill4Pos(SKILL_FLUEGEL);
+            m_dSubFluegelspiel = m_dSubFluegelspiel + old.getSubskill4Pos(PlayerSkill.WINGER);
 
             if (m_dSubFluegelspiel >= 1.0d) {
                 m_dSubFluegelspiel = 0.99d;
@@ -2388,14 +2389,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetFluegelspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_TORSCHUSS, old)) {
+        if (!check4SkillUp(PlayerSkill.SCORING, old)) {
             m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(TrainingType.SCORING,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),
                                                                       2);
-            m_dSubTorschuss = m_dSubTorschuss + old.getSubskill4Pos(SKILL_TORSCHUSS);
+            m_dSubTorschuss = m_dSubTorschuss + old.getSubskill4Pos(PlayerSkill.SCORING);
 
             if (m_dSubTorschuss >= 1.0d) {
                 m_dSubTorschuss = 0.99d;
@@ -2407,14 +2408,14 @@ public final class Spieler implements plugins.ISpieler {
             m_dTrainingsOffsetTorschuss = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_STANDARDS, old)) {
+        if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
             m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getST() / getTrainingLength(TrainingType.SET_PIECES,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
                                                                                                                             staminaTrainingPart),
                                                                       2);
-            m_dSubStandards = m_dSubStandards + old.getSubskill4Pos(SKILL_STANDARDS);
+            m_dSubStandards = m_dSubStandards + old.getSubskill4Pos(PlayerSkill.SET_PIECES);
 
             if (m_dSubStandards >= 1.0d) {
                 m_dSubStandards = 0.99d;
@@ -2461,13 +2462,13 @@ public final class Spieler implements plugins.ISpieler {
         float loy = RatingPredictionManager.getLoyaltyHomegrownBonus(this);
         
         String key = fo.getPosition() + ":"
-        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(SKILL_TORWART) + loy, 2) + "|"
-        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(SKILL_SPIELAUFBAU) + loy, 2) + "|"
-        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(SKILL_VERTEIDIGUNG) + loy, 2) + "|"
-        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(SKILL_FLUEGEL) + loy, 2) + "|"
-        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(SKILL_PASSSPIEL) + loy, 2) + "|"
-        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(SKILL_STANDARDS) + loy, 2) + "|"
-        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(SKILL_TORSCHUSS) + loy, 2) + "|"
+        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(PlayerSkill.KEEPER) + loy, 2) + "|"
+        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING) + loy, 2) + "|"
+        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(PlayerSkill.DEFENDING) + loy, 2) + "|"
+        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(PlayerSkill.WINGER) + loy, 2) + "|"
+        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(PlayerSkill.PASSING) + loy, 2) + "|"
+        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES) + loy, 2) + "|"
+        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(PlayerSkill.SCORING) + loy, 2) + "|"
         					+ getForm() + "|"
         					+ getKondition() + "|"
         					+ getErfahrung() + "|"
@@ -2481,24 +2482,24 @@ public final class Spieler implements plugins.ISpieler {
         }
     	final boolean normalized = false;
 
-        float gkValue = fo.getTorwartScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORWART, useForm);
+        float gkValue = fo.getTorwartScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.KEEPER, useForm);
 
-        float pmValue = fo.getSpielaufbauScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_SPIELAUFBAU, useForm);
+        float pmValue = fo.getSpielaufbauScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.PLAYMAKING, useForm);
 
-        float deValue = fo.getVerteidigungScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_VERTEIDIGUNG, useForm);
+        float deValue = fo.getVerteidigungScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.DEFENDING, useForm);
 
-        float wiValue = fo.getFluegelspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_FLUEGEL, useForm);
+        float wiValue = fo.getFluegelspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.WINGER, useForm);
 
-        float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_PASSSPIEL, useForm);
+        float psValue = fo.getPasspielScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.PASSING, useForm);
 
         // Fix for new Defensive Attacker position
 		if (fo.getPosition()==ISpielerPosition.FORWARD_DEF && getSpezialitaet()==PlayerSpeciality.TECHNICAL) {
 			psValue *= 1.30f;
 		}
 
-        float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_STANDARDS, useForm);
+        float spValue = fo.getStandardsScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.SET_PIECES, useForm);
 
-        float scValue = fo.getTorschussScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, SKILL_TORSCHUSS, useForm);
+        float scValue = fo.getTorschussScaled(normalized) * RatingPredictionManager.calcPlayerStrength(this, PlayerSkill.SCORING, useForm);
 
         float val = gkValue + pmValue + deValue + wiValue + psValue + spValue + scValue;
 
@@ -2538,56 +2539,56 @@ public final class Spieler implements plugins.ISpieler {
      * @param old
      */
     public void copySubSkills(ISpieler old) {
-        if (!check4SkillUp(SKILL_TORWART, old)) {
-            m_dSubTorwart = old.getSubskill4Pos(SKILL_TORWART);
+        if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
+            m_dSubTorwart = old.getSubskill4Pos(PlayerSkill.KEEPER);
             m_dTrainingsOffsetTorwart = old.getTrainingsOffsetTorwart();
         } else {
             m_dSubTorwart = 0.0d;
             m_dTrainingsOffsetTorwart = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_VERTEIDIGUNG, old)) {
-            m_dSubVerteidigung = old.getSubskill4Pos(SKILL_VERTEIDIGUNG);
+        if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
+            m_dSubVerteidigung = old.getSubskill4Pos(PlayerSkill.DEFENDING);
             m_dTrainingsOffsetVerteidigung = old.getTrainingsOffsetVerteidigung();
         } else {
             m_dSubVerteidigung = 0.0d;
             m_dTrainingsOffsetVerteidigung = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_SPIELAUFBAU, old)) {
-            m_dSubSpielaufbau = old.getSubskill4Pos(SKILL_SPIELAUFBAU);
+        if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
+            m_dSubSpielaufbau = old.getSubskill4Pos(PlayerSkill.PLAYMAKING);
             m_dTrainingsOffsetSpielaufbau = old.getTrainingsOffsetSpielaufbau();
         } else {
             m_dSubSpielaufbau = 0.0d;
             m_dTrainingsOffsetSpielaufbau = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_PASSSPIEL, old)) {
-            m_dSubPasspiel = old.getSubskill4Pos(SKILL_PASSSPIEL);
+        if (!check4SkillUp(PlayerSkill.PASSING, old)) {
+            m_dSubPasspiel = old.getSubskill4Pos(PlayerSkill.PASSING);
             m_dTrainingsOffsetPasspiel = old.getTrainingsOffsetPasspiel();
         } else {
             m_dSubPasspiel = 0.0d;
             m_dTrainingsOffsetPasspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_FLUEGEL, old)) {
-            m_dSubFluegelspiel = old.getSubskill4Pos(SKILL_FLUEGEL);
+        if (!check4SkillUp(PlayerSkill.WINGER, old)) {
+            m_dSubFluegelspiel = old.getSubskill4Pos(PlayerSkill.WINGER);
             m_dTrainingsOffsetFluegelspiel = old.getTrainingsOffsetFluegelspiel();
         } else {
             m_dSubFluegelspiel = 0.0d;
             m_dTrainingsOffsetFluegelspiel = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_TORSCHUSS, old)) {
-            m_dSubTorschuss = old.getSubskill4Pos(SKILL_TORSCHUSS);
+        if (!check4SkillUp(PlayerSkill.SCORING, old)) {
+            m_dSubTorschuss = old.getSubskill4Pos(PlayerSkill.SCORING);
             m_dTrainingsOffsetTorschuss = old.getTrainingsOffsetTorschuss();
         } else {
             m_dSubTorschuss = 0.0d;
             m_dTrainingsOffsetTorschuss = 0.0d;
         }
 
-        if (!check4SkillUp(SKILL_STANDARDS, old)) {
-            m_dSubStandards = old.getSubskill4Pos(SKILL_STANDARDS);
+        if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
+            m_dSubStandards = old.getSubskill4Pos(PlayerSkill.SET_PIECES);
             m_dTrainingsOffsetStandards = old.getTrainingsOffsetStandards();
         } else {
             m_dSubStandards = 0.0d;

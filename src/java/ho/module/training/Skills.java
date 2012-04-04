@@ -2,6 +2,7 @@
 package ho.module.training;
 
 import ho.core.constants.TrainingType;
+import ho.core.constants.player.PlayerSkill;
 
 import java.awt.Color;
 
@@ -27,31 +28,31 @@ public class Skills {
     public static int getSkillAtPosition(int position) {
         switch (position) {
             case 0:
-                return ISpieler.SKILL_TORWART;
+                return PlayerSkill.KEEPER;
 
             case 1:
-                return ISpieler.SKILL_SPIELAUFBAU;
+                return PlayerSkill.PLAYMAKING;
 
             case 2:
-                return ISpieler.SKILL_PASSSPIEL;
+                return PlayerSkill.PASSING;
 
             case 3:
-                return ISpieler.SKILL_FLUEGEL;
+                return PlayerSkill.WINGER;
 
             case 4:
-                return ISpieler.SKILL_VERTEIDIGUNG;
+                return PlayerSkill.DEFENDING;
 
             case 5:
-                return ISpieler.SKILL_TORSCHUSS;
+                return PlayerSkill.SCORING;
 
             case 6:
-                return ISpieler.SKILL_STANDARDS;
+                return PlayerSkill.SET_PIECES;
 
             case 7:
-                return ISpieler.SKILL_KONDITION;
+                return PlayerSkill.STAMINA;
 
             case 8:
-                return ISpieler.SKILL_EXPIERIENCE;
+                return PlayerSkill.EXPERIENCE;
         }
 
         return 0;
@@ -66,28 +67,28 @@ public class Skills {
      */
     public static Color getSkillColor(int skillIndex) {
         switch (skillIndex) {
-            case ISpieler.SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return Color.BLACK;
 
-            case ISpieler.SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return Color.ORANGE.darker();
 
-            case ISpieler.SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return Color.GREEN.darker();
 
-            case ISpieler.SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return Color.MAGENTA;
 
-            case ISpieler.SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return Color.BLUE;
 
-            case ISpieler.SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return Color.RED;
 
-            case ISpieler.SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return Color.CYAN.darker();
 
-            case ISpieler.SKILL_KONDITION:
+            case PlayerSkill.STAMINA:
                 return new Color(85, 26, 139);
         }
 
@@ -104,31 +105,31 @@ public class Skills {
      */
     public static int getSkillValue(ISpieler spieler, int skillIndex) {
         switch (skillIndex) {
-            case ISpieler.SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return spieler.getTorwart();
 
-            case ISpieler.SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return spieler.getSpielaufbau();
 
-            case ISpieler.SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return spieler.getPasspiel();
 
-            case ISpieler.SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return spieler.getFluegelspiel();
 
-            case ISpieler.SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return spieler.getVerteidigung();
 
-            case ISpieler.SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return spieler.getTorschuss();
 
-            case ISpieler.SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return spieler.getStandards();
 
-            case ISpieler.SKILL_KONDITION:
+            case PlayerSkill.STAMINA:
                 return spieler.getKondition();
 
-            case ISpieler.SKILL_EXPIERIENCE:
+            case PlayerSkill.EXPERIENCE:
                 return spieler.getErfahrung();
         }
 
@@ -144,25 +145,25 @@ public class Skills {
      */
     public static int getTrainedSkillCode(int skillIndex) {
         switch (skillIndex) {
-            case ISpieler.SKILL_TORWART:
+            case PlayerSkill.KEEPER:
                 return  TrainingType.GOALKEEPING;
 
-            case ISpieler.SKILL_SPIELAUFBAU:
+            case PlayerSkill.PLAYMAKING:
                 return TrainingType.PLAYMAKING;
 
-            case ISpieler.SKILL_PASSSPIEL:
+            case PlayerSkill.PASSING:
                 return TrainingType.SHORT_PASSES;
 
-            case ISpieler.SKILL_FLUEGEL:
+            case PlayerSkill.WINGER:
                 return TrainingType.CROSSING_WINGER;
 
-            case ISpieler.SKILL_VERTEIDIGUNG:
+            case PlayerSkill.DEFENDING:
                 return TrainingType.DEFENDING;
 
-            case ISpieler.SKILL_TORSCHUSS:
+            case PlayerSkill.SCORING:
                 return TrainingType.SCORING;
 
-            case ISpieler.SKILL_STANDARDS:
+            case PlayerSkill.SET_PIECES:
                 return TrainingType.SET_PIECES;
 
           }

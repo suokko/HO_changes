@@ -1,6 +1,7 @@
 // %3661143817:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
@@ -87,7 +88,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     		setPiecesColor, gup.statistikAlleStandards);
     private ImageCheckbox m_jchScoring = new ImageCheckbox(hov.getLanguageString("skill.scoring"), 
     		scoringColor, gup.statistikAlleTorschuss);
-    private ImageCheckbox m_jchKeeper = new ImageCheckbox(hov.getLanguageString("skill.keeper"),
+    private ImageCheckbox m_jchKeeper = new ImageCheckbox(PlayerSkill.toString(PlayerSkill.KEEPER),
     		keeperColor,gup.statistikAlleTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(hov.getLanguageString("skill.defending"),
     		defendingColor,gup.statistikAlleVerteidigung);

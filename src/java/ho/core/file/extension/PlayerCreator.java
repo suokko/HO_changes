@@ -1,5 +1,6 @@
 package ho.core.file.extension;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.file.xml.XMLManager;
@@ -179,14 +180,14 @@ public class PlayerCreator extends XMLCreator {
 
 		Element skill = doc.createElement("skill");
 		playerTag.appendChild(skill);
-		skill.appendChild(createNode(doc,"playmaking", (player.getSpielaufbau() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU))+""));
-		skill.appendChild(createNode(doc,"passing", (player.getPasspiel() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL))+""));
-		skill.appendChild(createNode(doc,"cross", (player.getFluegelspiel() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL))+""));
-		skill.appendChild(createNode(doc,"defense", (player.getVerteidigung() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG))+""));
-		skill.appendChild(createNode(doc,"attack", (player.getTorschuss() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS))+""));
-		skill.appendChild(createNode(doc,"setpieces", (player.getStandards() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS))+""));
-		skill.appendChild(createNode(doc,"keeper", (player.getTorwart() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART))+""));
-		skill.appendChild(createNode(doc,"stamina", (player.getKondition() + player.getSubskill4SkillWithOffset(ISpieler.SKILL_KONDITION))+""));
+		skill.appendChild(createNode(doc,"playmaking", (player.getSpielaufbau() + player.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING))+""));
+		skill.appendChild(createNode(doc,"passing", (player.getPasspiel() + player.getSubskill4SkillWithOffset(PlayerSkill.PASSING))+""));
+		skill.appendChild(createNode(doc,"cross", (player.getFluegelspiel() + player.getSubskill4SkillWithOffset(PlayerSkill.WINGER))+""));
+		skill.appendChild(createNode(doc,"defense", (player.getVerteidigung() + player.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING))+""));
+		skill.appendChild(createNode(doc,"attack", (player.getTorschuss() + player.getSubskill4SkillWithOffset(PlayerSkill.SCORING))+""));
+		skill.appendChild(createNode(doc,"setpieces", (player.getStandards() + player.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES))+""));
+		skill.appendChild(createNode(doc,"keeper", (player.getTorwart() + player.getSubskill4SkillWithOffset(PlayerSkill.KEEPER))+""));
+		skill.appendChild(createNode(doc,"stamina", (player.getKondition() + player.getSubskill4SkillWithOffset(PlayerSkill.STAMINA))+""));
 		skill.appendChild(createNode(doc,"form", player.getForm()+""));
 		skill.appendChild(createNode(doc,"experience", player.getErfahrung()+""));
 		skill.appendChild(createNode(doc,"tsi", player.getTSI()+""));
@@ -209,44 +210,12 @@ public class PlayerCreator extends XMLCreator {
 				skillups.appendChild(skillupTag);
 				skillupTag.appendChild(createNode(doc,"week", skillup.getHtSeason() + "/" + skillup.getHtWeek()));
 				skillupTag.appendChild(createNode(doc,"skill", skillup.getType()+""));
-				skillupTag.appendChild(createNode(doc,"skillDesc", getSkillDescription(skillup.getType())));
+				skillupTag.appendChild(createNode(doc,"skillDesc", PlayerSkill.toString(skillup.getType())));
 				skillupTag.appendChild(createNode(doc,"value", skillup.getValue()+""));
 				skillupTag.appendChild(createNode(doc,"valueDesc", PlayerHelper.getNameForSkill(skillup.getValue(), false)));
 			}
 		}
 	}
 
-	public static String getSkillDescription(int skillIndex) {
-		// Based on the code returns the proper ho property
-		switch (skillIndex) {
-			case ISpieler.SKILL_TORWART :
-				return HOVerwaltung.instance().getLanguageString("skill.keeper"); //$NON-NLS-1$
 
-			case ISpieler.SKILL_SPIELAUFBAU :
-				return HOVerwaltung.instance().getLanguageString("skill.playmaking"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_PASSSPIEL :
-				return HOVerwaltung.instance().getLanguageString("skill.passing"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_FLUEGEL :
-				return HOVerwaltung.instance().getLanguageString("skill.winger"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_VERTEIDIGUNG :
-				return HOVerwaltung.instance().getLanguageString("skill.defending"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_TORSCHUSS :
-				return HOVerwaltung.instance().getLanguageString("skill.scoring"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_STANDARDS :
-				return HOVerwaltung.instance().getLanguageString("skill.set_pieces"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_KONDITION :
-				return HOVerwaltung.instance().getLanguageString("skill.stamina"); //$NON-NLS-1$
-
-			case ISpieler.SKILL_EXPIERIENCE :
-				return HOVerwaltung.instance().getLanguageString("skill.experience"); //$NON-NLS-1$
-		}
-
-		return ""; //$NON-NLS-1$
-	}
 }

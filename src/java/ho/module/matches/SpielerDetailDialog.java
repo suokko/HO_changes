@@ -4,6 +4,7 @@ package ho.module.matches;
 import ho.core.constants.player.PlayerAggressiveness;
 import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
+import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -45,7 +46,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import plugins.ISpieler;
 
 
 /**
@@ -365,37 +365,37 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             m_jpKondition2.clear();
             m_jpTorwart.setText(PlayerHelper.getNameForSkill(m_clSpieler.getTorwart()
                                                              + m_clSpieler
-                                                               .getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART))
+                                                               .getSubskill4SkillWithOffset(PlayerSkill.KEEPER))
                                 + "");
             m_jpTorwart2.clear();
             m_jpVerteidigung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getVerteidigung()
                                                                   + m_clSpieler
-                                                                    .getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG))
+                                                                    .getSubskill4SkillWithOffset(PlayerSkill.DEFENDING))
                                      + "");
             m_jpVerteidigung2.clear();
             m_jpSpielaufbau.setText(PlayerHelper.getNameForSkill(m_clSpieler.getSpielaufbau()
                                                                  + m_clSpieler
-                                                                   .getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU))
+                                                                   .getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING))
                                     + "");
             m_jpSpielaufbau2.clear();
             m_jpPasspiel.setText(PlayerHelper.getNameForSkill(m_clSpieler.getPasspiel()
                                                               + m_clSpieler
-                                                                .getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL))
+                                                                .getSubskill4SkillWithOffset(PlayerSkill.PASSING))
                                  + "");
             m_jpPasspiel2.clear();
             m_jpFluegelspiel.setText(PlayerHelper.getNameForSkill(m_clSpieler.getFluegelspiel()
                                                                   + m_clSpieler
-                                                                    .getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL))
+                                                                    .getSubskill4SkillWithOffset(PlayerSkill.WINGER))
                                      + "");
             m_jpFluegelspiel2.clear();
             m_jpStandards.setText(PlayerHelper.getNameForSkill(m_clSpieler.getStandards()
                                                                + m_clSpieler
-                                                                 .getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS))
+                                                                 .getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES))
                                   + "");
             m_jpStandards2.clear();
             m_jpTorschuss.setText(PlayerHelper.getNameForSkill(m_clSpieler.getTorschuss()
                                                                + m_clSpieler
-                                                                 .getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS))
+                                                                 .getSubskill4SkillWithOffset(PlayerSkill.SCORING))
                                   + "");
             m_jpTorschuss2.clear();
             m_jpErfahrung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getErfahrung()) + "");
@@ -436,76 +436,76 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
                                                          !m_clVergleichsSpieler.isOld(), true);
             m_jpTorwart.setText(PlayerHelper.getNameForSkill(m_clSpieler.getTorwart()
                                                              + m_clSpieler
-                                                               .getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART))
+                                                               .getSubskill4SkillWithOffset(PlayerSkill.KEEPER))
                                 + "");
             m_jpTorwart2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getTorwart()
                                                        - m_clSpieler.getTorwart(),
                                                        m_clVergleichsSpieler
-                                                       .getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART)
-                                                       - m_clSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_TORWART),
+                                                       .getSubskill4SkillWithOffset(PlayerSkill.KEEPER)
+                                                       - m_clSpieler.getSubskill4SkillWithOffset(PlayerSkill.KEEPER),
                                                        !m_clVergleichsSpieler.isOld(), true);
             m_jpVerteidigung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getVerteidigung()
                                                                   + m_clSpieler
-                                                                    .getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG))
+                                                                    .getSubskill4SkillWithOffset(PlayerSkill.DEFENDING))
                                      + "");
             m_jpVerteidigung2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getVerteidigung()
                                                             - m_clSpieler.getVerteidigung(),
                                                             m_clVergleichsSpieler
-                                                            .getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG)
+                                                            .getSubskill4SkillWithOffset(PlayerSkill.DEFENDING)
                                                             - m_clSpieler
-                                                              .getSubskill4SkillWithOffset(ISpieler.SKILL_VERTEIDIGUNG),
+                                                              .getSubskill4SkillWithOffset(PlayerSkill.DEFENDING),
                                                             !m_clVergleichsSpieler.isOld(), true);
             m_jpSpielaufbau.setText(PlayerHelper.getNameForSkill(m_clSpieler.getSpielaufbau()
                                                                  + m_clSpieler
-                                                                   .getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU))
+                                                                   .getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING))
                                     + "");
             m_jpSpielaufbau2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getSpielaufbau()
                                                            - m_clSpieler.getSpielaufbau(),
                                                            m_clVergleichsSpieler
-                                                           .getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU)
+                                                           .getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING)
                                                            - m_clSpieler
-                                                             .getSubskill4SkillWithOffset(ISpieler.SKILL_SPIELAUFBAU),
+                                                             .getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING),
                                                            !m_clVergleichsSpieler.isOld(), true);
             m_jpPasspiel.setText(PlayerHelper.getNameForSkill(m_clSpieler.getPasspiel()
                                                               + m_clSpieler
-                                                                .getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL))
+                                                                .getSubskill4SkillWithOffset(PlayerSkill.PASSING))
                                  + "");
             m_jpPasspiel2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getPasspiel()
                                                         - m_clSpieler.getPasspiel(),
                                                         m_clVergleichsSpieler
-                                                        .getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL)
-                                                        - m_clSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_PASSSPIEL),
+                                                        .getSubskill4SkillWithOffset(PlayerSkill.PASSING)
+                                                        - m_clSpieler.getSubskill4SkillWithOffset(PlayerSkill.PASSING),
                                                         !m_clVergleichsSpieler.isOld(), true);
             m_jpFluegelspiel.setText(PlayerHelper.getNameForSkill(m_clSpieler.getFluegelspiel()
                                                                   + m_clSpieler
-                                                                    .getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL))
+                                                                    .getSubskill4SkillWithOffset(PlayerSkill.WINGER))
                                      + "");
             m_jpFluegelspiel2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getFluegelspiel()
                                                             - m_clSpieler.getFluegelspiel(),
                                                             m_clVergleichsSpieler
-                                                            .getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL)
+                                                            .getSubskill4SkillWithOffset(PlayerSkill.WINGER)
                                                             - m_clSpieler
-                                                              .getSubskill4SkillWithOffset(ISpieler.SKILL_FLUEGEL),
+                                                              .getSubskill4SkillWithOffset(PlayerSkill.WINGER),
                                                             !m_clVergleichsSpieler.isOld(), true);
             m_jpStandards.setText(PlayerHelper.getNameForSkill(m_clSpieler.getStandards()
                                                                + m_clSpieler
-                                                                 .getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS))
+                                                                 .getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES))
                                   + "");
             m_jpStandards2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getStandards()
                                                          - m_clSpieler.getStandards(),
                                                          m_clVergleichsSpieler
-                                                         .getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS)
-                                                         - m_clSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS),
+                                                         .getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES)
+                                                         - m_clSpieler.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES),
                                                          !m_clVergleichsSpieler.isOld(), true);
             m_jpTorschuss.setText(PlayerHelper.getNameForSkill(m_clSpieler.getTorschuss()
                                                                + m_clSpieler
-                                                                 .getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS))
+                                                                 .getSubskill4SkillWithOffset(PlayerSkill.SCORING))
                                   + "");
             m_jpTorschuss2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getTorschuss()
                                                          - m_clSpieler.getTorschuss(),
                                                          m_clVergleichsSpieler
-                                                         .getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS)
-                                                         - m_clSpieler.getSubskill4SkillWithOffset(ISpieler.SKILL_TORSCHUSS),
+                                                         .getSubskill4SkillWithOffset(PlayerSkill.SCORING)
+                                                         - m_clSpieler.getSubskill4SkillWithOffset(PlayerSkill.SCORING),
                                                          !m_clVergleichsSpieler.isOld(), true);
             m_jpErfahrung.setText(PlayerHelper.getNameForSkill(m_clSpieler.getErfahrung()) + "");
             m_jpErfahrung2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getErfahrung()
@@ -823,7 +823,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.keeper"));
+        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 8;

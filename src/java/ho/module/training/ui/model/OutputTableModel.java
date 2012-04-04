@@ -1,6 +1,7 @@
 // %3513105810:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
@@ -134,28 +135,28 @@ public class OutputTableModel extends AbstractTableModel {
 
                 //Beste Postion
                 case 3:
-                    return createIcon(spieler, ISpieler.SKILL_TORWART);
+                    return createIcon(spieler, PlayerSkill.KEEPER);
 
                 case 4:
-                    return createIcon(spieler, ISpieler.SKILL_VERTEIDIGUNG);
+                    return createIcon(spieler, PlayerSkill.DEFENDING);
 
                 case 5:
-                    return createIcon(spieler, ISpieler.SKILL_SPIELAUFBAU);
+                    return createIcon(spieler, PlayerSkill.PLAYMAKING);
 
                 case 6:
-                    return createIcon(spieler, ISpieler.SKILL_PASSSPIEL);
+                    return createIcon(spieler, PlayerSkill.PASSING);
 
                 case 7:
-                    return createIcon(spieler, ISpieler.SKILL_FLUEGEL);
+                    return createIcon(spieler, PlayerSkill.WINGER);
 
                 case 8:
-                    return createIcon(spieler, ISpieler.SKILL_TORSCHUSS);
+                    return createIcon(spieler, PlayerSkill.SCORING);
 
                 case 9:
-                    return createIcon(spieler, ISpieler.SKILL_STANDARDS);
+                    return createIcon(spieler, PlayerSkill.SET_PIECES);
 
                 case 10:
-                    return createIcon(spieler, ISpieler.SKILL_KONDITION);
+                    return createIcon(spieler, PlayerSkill.STAMINA);
 
                 case 11:
                     return Integer.toString(spieler.getSpielerID());

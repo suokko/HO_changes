@@ -1,6 +1,7 @@
 // %2759382947:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOColorName;
@@ -163,7 +164,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		panel.add(m_jpTorschuss);
 
 		m_jpTorwart =
-			new SliderPanel(HOVerwaltung.instance().getLanguageString("skill.keeper"),
+			new SliderPanel(PlayerSkill.toString(PlayerSkill.KEEPER),
 				100,
 				0,
 				1,

@@ -1,6 +1,7 @@
 // %2927626437:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup2;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.datatype.CBItem;
 import ho.core.gui.Updateable;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
@@ -521,7 +522,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 
 		if (this.positionID == ISpielerPosition.setPieces) {
 			item.setValues(spielerName,
-					spieler.getStandards() + spieler.getSubskill4SkillWithOffset(ISpieler.SKILL_STANDARDS),
+					spieler.getStandards() + spieler.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES),
 					spieler);
 		} else if (this.positionID == ISpielerPosition.captain) {
 			item.setValues(

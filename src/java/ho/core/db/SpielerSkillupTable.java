@@ -1,5 +1,6 @@
 package ho.core.db;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
@@ -179,15 +180,15 @@ final class SpielerSkillupTable extends AbstractTable {
 			ISpieler nPlayer = iter.next();
 			ISpieler oPlayer = HOVerwaltung.instance().getModel().getSpieler(nPlayer.getSpielerID());
 			if (oPlayer!=null) {
-				checkNewSkillup(nPlayer,nPlayer.getTorwart(),oPlayer.getTorwart(),ISpieler.SKILL_TORWART,homodel.getID());	
-				checkNewSkillup(nPlayer,nPlayer.getSpielaufbau(),oPlayer.getSpielaufbau(),ISpieler.SKILL_SPIELAUFBAU,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getPasspiel(),oPlayer.getPasspiel(),ISpieler.SKILL_PASSSPIEL,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getFluegelspiel(),oPlayer.getFluegelspiel(),ISpieler.SKILL_FLUEGEL,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getVerteidigung(),oPlayer.getVerteidigung(),ISpieler.SKILL_VERTEIDIGUNG,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getTorschuss(),oPlayer.getTorschuss(),ISpieler.SKILL_TORSCHUSS,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getStandards(),oPlayer.getStandards(),ISpieler.SKILL_STANDARDS,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getKondition(),oPlayer.getKondition(),ISpieler.SKILL_KONDITION,homodel.getID());
-				checkNewSkillup(nPlayer,nPlayer.getErfahrung(),oPlayer.getErfahrung(),ISpieler.SKILL_EXPIERIENCE,homodel.getID());				
+				checkNewSkillup(nPlayer,nPlayer.getTorwart(),oPlayer.getTorwart(),PlayerSkill.KEEPER,homodel.getID());	
+				checkNewSkillup(nPlayer,nPlayer.getSpielaufbau(),oPlayer.getSpielaufbau(),PlayerSkill.PLAYMAKING,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getPasspiel(),oPlayer.getPasspiel(),PlayerSkill.PASSING,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getFluegelspiel(),oPlayer.getFluegelspiel(),PlayerSkill.WINGER,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getVerteidigung(),oPlayer.getVerteidigung(),PlayerSkill.DEFENDING,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getTorschuss(),oPlayer.getTorschuss(),PlayerSkill.SCORING,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getStandards(),oPlayer.getStandards(),PlayerSkill.SET_PIECES,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getKondition(),oPlayer.getKondition(),PlayerSkill.STAMINA,homodel.getID());
+				checkNewSkillup(nPlayer,nPlayer.getErfahrung(),oPlayer.getErfahrung(),PlayerSkill.EXPERIENCE,homodel.getID());				
 				
 			}
 			
@@ -226,15 +227,15 @@ final class SpielerSkillupTable extends AbstractTable {
 	}
 
 	private void importSpieler(int spielerId) {	
-		importSkillUp(ISpieler.SKILL_SPIELAUFBAU,spielerId);
-		importSkillUp(ISpieler.SKILL_KONDITION,spielerId);
-		importSkillUp(ISpieler.SKILL_VERTEIDIGUNG,spielerId);
-		importSkillUp(ISpieler.SKILL_TORWART,spielerId);
-		importSkillUp(ISpieler.SKILL_FLUEGEL,spielerId);
-		importSkillUp(ISpieler.SKILL_TORSCHUSS,spielerId);
-		importSkillUp(ISpieler.SKILL_PASSSPIEL,spielerId);
-		importSkillUp(ISpieler.SKILL_STANDARDS,spielerId);
-		importSkillUp(ISpieler.SKILL_EXPIERIENCE,spielerId);
+		importSkillUp(PlayerSkill.PLAYMAKING,spielerId);
+		importSkillUp(PlayerSkill.STAMINA,spielerId);
+		importSkillUp(PlayerSkill.DEFENDING,spielerId);
+		importSkillUp(PlayerSkill.KEEPER,spielerId);
+		importSkillUp(PlayerSkill.WINGER,spielerId);
+		importSkillUp(PlayerSkill.SCORING,spielerId);
+		importSkillUp(PlayerSkill.PASSING,spielerId);
+		importSkillUp(PlayerSkill.SET_PIECES,spielerId);
+		importSkillUp(PlayerSkill.EXPERIENCE,spielerId);
 	}
 	
 	private void importSkillUp(int skillCode, int spielerId) {
@@ -268,39 +269,39 @@ final class SpielerSkillupTable extends AbstractTable {
 		String key = "Spielaufbau";
 
 		switch (code) {
-			case ISpieler.SKILL_STANDARDS:
+			case PlayerSkill.SET_PIECES:
 				key = "Standards";
 				break;
 
-			case ISpieler.SKILL_PASSSPIEL:
+			case PlayerSkill.PASSING:
 				key = "Passpiel";
 				break;
 
-			case ISpieler.SKILL_TORSCHUSS:
+			case PlayerSkill.SCORING:
 				key = "Torschuss";
 				break;
 
-			case ISpieler.SKILL_SPIELAUFBAU:
+			case PlayerSkill.PLAYMAKING:
 				key = "Spielaufbau";
 				break;
 
-			case ISpieler.SKILL_FLUEGEL:
+			case PlayerSkill.WINGER:
 				key = "Fluegel";
 				break;
 
-			case ISpieler.SKILL_TORWART:
+			case PlayerSkill.KEEPER:
 				key = "Torwart";
 				break;
 
-			case ISpieler.SKILL_VERTEIDIGUNG:
+			case PlayerSkill.DEFENDING:
 				key = "Verteidigung";
 				break;
 
-			case ISpieler.SKILL_KONDITION:
+			case PlayerSkill.STAMINA:
 				key = "Kondition";
 				break;
 
-			case ISpieler.SKILL_EXPIERIENCE:
+			case PlayerSkill.EXPERIENCE:
 				key = "Erfahrung";
 				break;
 		}
