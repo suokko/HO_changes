@@ -331,13 +331,5 @@ public class Stadium {
     public void setArenaId (int arenaId) {
     	this.m_iStadiumId = arenaId;
     }
-    /**
-     * berechnet die Maximalen EInahmen bei vollem HAus
-     *
-     * @return TODO Missing Return Method Documentation
-     * @deprecated
-     */
-    public final int calcMaxEinahmen() {
-    	return new ArenaSizer().calcMaxIncome(this);
-    }
+
 }
