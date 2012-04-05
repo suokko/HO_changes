@@ -301,17 +301,6 @@ public class MatchKurzInfo implements Comparable<Object> {
         return m_iMatchTyp;
     }
 
-    /**
-     * Getter for property m_lDatum.
-     *
-     * @return Value of property m_lDatum.
-     * 
-     * @deprecated use getMatchDateAsTimestamp()
-     */
-    @Deprecated
-	public final java.sql.Timestamp getTimestampMatchDate() {
-    	return getMatchDateAsTimestamp();
-    }
 
     //--------------------------------------------------------------    
     public final int compareTo(Object obj) {

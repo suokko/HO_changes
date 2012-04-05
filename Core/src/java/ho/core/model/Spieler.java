@@ -1061,29 +1061,7 @@ public final class Spieler {
         return m_sManuellerSmilie;
     }
 
-    /**
-     * Sets the TSI (aka Marktwert)
-     *
-     * @param m_iTSI New value of property m_iMarkwert.
-     * @deprecated Use setTSI()
-     */
-    @Deprecated
-	public void setMarkwert(int m_iTSI) {
-        this.m_iTSI = m_iTSI;
-    }
-
-    /**
-     * Returns the TSI (aka Marktwert)
-     *
-     * @return Value of property m_iMarkwert.
-     * @deprecated use getTSI()
-     */
-    @Deprecated
-	public int getMarkwert() {
-        return m_iTSI;
-    }
-
-    /**
+     /**
      * Sets the TSI
      *
      * @param m_iTSI New value of property m_iMarkwert.
@@ -1236,20 +1214,6 @@ public final class Spieler {
 
         //TSI
         return m_iTSI;
-    }
-
-    /**
-     * gibt an ob der angeforderte Skill beim diesem Trainingstyp trainiert wird
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param trainingstype TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     * @deprecated Never used, better system integrated in Trainingmanager
-     */
-    @Deprecated
-	public boolean isSkillTrained(int skill, int trainingstype) {
-        return false;
     }
 
     /**

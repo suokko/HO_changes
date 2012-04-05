@@ -81,10 +81,6 @@ public class HelperWrapper {
         return m_clInstance;
     }
 
-    public java.awt.Color getColor4SpielHighlight(int typ, int subtyp) {
-        return SpielHighlightPanel.getColor4SpielHighlight(typ, subtyp);
-    }
-
     public Date getHattrickDate(String string) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.UK);
         final Date d = sdf.parse(string);
@@ -146,21 +142,6 @@ public class HelperWrapper {
         } catch (Exception e) {
             return -1;
         }
-    }
-
-    public String getLanguageName() {
-        final java.io.File sprachdatei = new java.io.File("sprache/languages.properties");
-
-        if (sprachdatei.exists()) {
-            try {
-                final java.util.Properties temp = new java.util.Properties();
-                temp.load(new java.io.FileInputStream(sprachdatei));
-                return temp.getProperty(getLanguageID() + "");
-            } catch (Exception e) {
-            }
-        }
-
-        return "Unknown";
     }
 
     /**
@@ -237,11 +218,7 @@ public class HelperWrapper {
         return Matchdetails.getNameForTaktik(typ);
     }
 
-    public String getNameForTeamorder(int typ) {
-        return Matchdetails.getNameForEinstellung(typ);
-    }
-
-    /**
+     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
      * impossible to make difference between left and right so always the left position is
      * returned
@@ -282,10 +259,6 @@ public class HelperWrapper {
         return hoposcode;
     }
 
-    public String getTooltiptext4SpielHighlight(int typ, int subtyp) {
-        return MatchHighlight.getTooltiptext(typ, subtyp);
-    }
-
     @Deprecated
     public boolean isUserMatch(String matchID) {
     	try {
@@ -302,82 +275,8 @@ public class HelperWrapper {
       return false;
     }
 
-    public void addTempSpieler(Spieler spieler) {
-        final Spieler tempSpieler = new Spieler();
-
-        tempSpieler.setNationalitaet(spieler.getNationalitaet());
-        tempSpieler.setSpielerID(TransferEingabePanel
-                                 .getNextTempSpielerID());
-        tempSpieler.setName(spieler.getName());
-        tempSpieler.setAlter(spieler.getAlter());
-        tempSpieler.setAgeDays(spieler.getAgeDays());
-        tempSpieler.setErfahrung(spieler.getErfahrung());
-        tempSpieler.setForm(spieler.getForm());
-        tempSpieler.setKondition(spieler.getKondition());
-        tempSpieler.setVerteidigung(spieler.getVerteidigung());
-        tempSpieler.setTorschuss(spieler.getTorschuss());
-        tempSpieler.setTorwart(spieler.getTorwart());
-        tempSpieler.setFluegelspiel(spieler.getFluegelspiel());
-        tempSpieler.setPasspiel(spieler.getPasspiel());
-        tempSpieler.setStandards(spieler.getStandards());
-        tempSpieler.setSpielaufbau(spieler.getSpielaufbau());
-
-        HOVerwaltung.instance().getModel().addSpieler(tempSpieler);
-        ho.core.gui.RefreshManager.instance().doReInit();
-    }
-
-    public String[] convertTimeMillisToFormatString(double[] timewerte) {
-        return Helper.convertTimeMillisToFormatString(timewerte);
-    }
-
     public void copyArray2Vector(Object[] src, Vector dest) {
         Helper.copyArray2Vector(src, dest);
-    }
-
- 
-    public void copyVector2Array(Vector src, Object[] dest) {
-        Helper.copyVector2Array(src, dest);
-    }
-
-    public DefaultComboBoxModel createListModel(Vector<Object> vector) {
-        return Helper.createListModel(vector);
-    }
-
-    public Spieler createSpielerFromText(String text) throws Exception {
-        final Player player = new PlayerConverter().build(text);
-
-        final Spieler tempSpieler = new Spieler();
-        tempSpieler.setNationalitaet(HOVerwaltung.instance().getModel().getBasics().getLand());
-        tempSpieler.setSpielerID(TransferEingabePanel.getNextTempSpielerID());
-
-        if (player.getPlayerName().trim().equals("")) {
-            tempSpieler.setName("Temp " + Math.abs(1000 + tempSpieler.getSpielerID()));
-        } else {
-            tempSpieler.setName(player.getPlayerName());
-        }
-
-        tempSpieler.setAlter(player.getAge());
-        tempSpieler.setAgeDays(player.getAgeDays());
-        tempSpieler.setErfahrung(player.getExperience());
-        tempSpieler.setForm(player.getForm());
-        tempSpieler.setKondition(player.getStamina());
-        tempSpieler.setVerteidigung(player.getDefense());
-        tempSpieler.setTorschuss(player.getAttack());
-        tempSpieler.setTorwart(player.getGoalKeeping());
-        tempSpieler.setFluegelspiel(player.getWing());
-        tempSpieler.setPasspiel(player.getPassing());
-        tempSpieler.setStandards(player.getSetPieces());
-        tempSpieler.setSpielaufbau(player.getPlayMaking());
-
-        return tempSpieler;
-    }
-
-    public String decodeStringFromDatabase(String text) {
-        return DBManager.deleteEscapeSequences(text);
-    }
-
-    public String deleteEscapeSequences(String text) {
-        return DBManager.deleteEscapeSequences(text);
     }
 
     /**
@@ -450,41 +349,12 @@ public class HelperWrapper {
         return true;
     }
 
-    public String encodeString4Database(String text) {
-        return DBManager.insertEscapeSequences(text);
-    }
-
     public boolean existsMatchInDB(int matchID) {
         return DBManager.instance().isMatchVorhanden(matchID);
     }
 
     public int[] generateIntArray(String text) {
         return Helper.generateIntArray(text);
-    }
-
-    public String[] generateStringArray(String werte, char trenner) {
-        return Helper.generateStringArray(werte, trenner);
-    }
-
-    public void importHRF() {
-        new HRFImport(HOMainFrame.instance());
-    }
-
-    public String insertEscapeSequences(String text) {
-        return DBManager.insertEscapeSequences(text);
-    }
-
-    public BufferedImage loadImage(String datei) {
-    	return ImageUtilities.toBufferedImage(ThemeManager.loadImage(datei));
-    }
-
-    public java.awt.Image makeColorTransparent(java.awt.Image im, java.awt.Color color) {
-        return ImageUtilities.makeColorTransparent(im, color);
-    }
-
-    public java.awt.Image makeColorTransparent(java.awt.Image im, int minr, int ming, int minb,
-                                               int maxr, int maxg, int maxb) {
-        return ImageUtilities.makeColorTransparent(im, minr, ming, minb, maxr, maxg, maxb);
     }
 
     public void openUrlInUserBRowser(String url) {
@@ -542,11 +412,6 @@ public class HelperWrapper {
         Helper.showMessage(parent, message, titel, typ);
     }
 
- 
-    public int[][] sortintArray(int[][] toSort, int spaltenindex) {
-        return Helper.sortintArray(toSort, spaltenindex);
-    }
-
 	public boolean isDevVersion() {
 		File file = new File(HOVerwaltung.instance().getModel().getBasics().getManager() + ".ext");
 		if (file.exists()) {
@@ -555,29 +420,7 @@ public class HelperWrapper {
 		return false;
 	}
 
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
-     * over to the next week.
-     *
-     * @see return a HTCalendar.
-     */
-    public HTCalendar createEconomyCalendar() {
-    	return HTCalendarFactory.createEconomyCalendar();
-    }
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
-     * over to the next week.
-     *
-     * @param timestamp Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createEconomyCalendar(Timestamp timestamp) {
-    	return createEconomyCalendar(new Date(timestamp.getTime()));
-
-    }
-/**
+ /**
      * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
      * over to the next week.
      *
@@ -589,27 +432,6 @@ public class HelperWrapper {
     public HTCalendar createEconomyCalendar(Date date) {
     	return HTCalendarFactory.createEconomyCalendar(date);
 
-    }
-
-    /**
-     * Creates a HTCalendar to calculate global (Swedish) values.
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createGlobalCalendar() {
-    	return HTCalendarFactory.createGlobalCalendar();
-    }
-
-    /**
-     * Creates a HTCalendar to calculate global (Swedish) values  and presets it with he specified
-     * date a date.
-     *
-     * @param date Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createGlobalCalendar(Date date) {
-    	return HTCalendarFactory.createGlobalCalendar(date);
     }
 
     /**
