@@ -5,6 +5,7 @@ package ho.module.playeranalysis.skillCompare;
 
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -85,7 +86,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		}
 		else if(column == 2) {
 			natWert = ((Integer)table.getValueAt(row,column)).intValue();
-			label.setIcon(HelperWrapper.instance().getImageIcon4Country(natWert));
+			label.setIcon(ImageUtilities.getFlagIcon(natWert));
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setBackground(table.getBackground());
 		}
@@ -94,7 +95,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			
 			String group = ((String)table.getValueAt(row,column)).toString();
 			if(group != null && group.length() > 3)
-				label.setIcon(HelperWrapper.instance().getImageIcon(group));
+				label.setIcon(ThemeManager.getIcon(group));
 			label.setBackground(table.getBackground());
 		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("BestePosition")))		{
 			byte tmpPos = ((Float)table.getValueAt(row,column)).byteValue();
@@ -115,7 +116,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			int changeWert = skillWertNew - skillWertOld;
 			if (skillwert == 2 || skillWertNew == 2 || skillWertOld == 2)
 			{
-				label.setIcon(HelperWrapper.instance().getImageIcon(HOIconName.HOMEGROWN));
+				label.setIcon(ThemeManager.getIcon(HOIconName.HOMEGROWN));
 				label.setHorizontalAlignment(SwingConstants.CENTER);
 			}
 			if (changeWert < 0)

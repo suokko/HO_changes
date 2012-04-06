@@ -2,16 +2,16 @@
 package ho.module.teamAnalyzer.ui.controller;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.prediction.MatchEnginePanel;
+import ho.core.prediction.MatchPredictionDialog;
+import ho.core.prediction.engine.MatchPredictionManager;
+import ho.core.prediction.engine.TeamData;
+import ho.core.prediction.engine.TeamRatings;
 import ho.core.util.HelperWrapper;
 import ho.module.matches.model.IMatchDetails;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
-import ho.tool.matchPrediction.MatchEnginePanel;
-import ho.tool.matchPrediction.MatchPredictionDialog;
-import ho.tool.matchPrediction.engine.MatchPredictionManager;
-import ho.tool.matchPrediction.engine.TeamData;
-import ho.tool.matchPrediction.engine.TeamRatings;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

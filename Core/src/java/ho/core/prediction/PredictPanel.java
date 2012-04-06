@@ -1,10 +1,10 @@
 // %3942717939:de.hattrickorganizer.gui.matchprediction%
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.prediction.engine.MatchResult;
 import ho.core.util.HOLogger;
-import ho.tool.matchPrediction.engine.MatchResult;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

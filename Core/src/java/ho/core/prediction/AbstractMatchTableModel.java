@@ -4,9 +4,9 @@
  *
  * Created on 4. Januar 2005, 13:19
  */
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
-import ho.tool.matchPrediction.engine.MatchResult;
+import ho.core.prediction.engine.MatchResult;
 
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;

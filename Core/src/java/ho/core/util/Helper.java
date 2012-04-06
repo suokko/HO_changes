@@ -88,18 +88,7 @@ public class Helper {
 			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
 			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT) };
 
-    /** Speciality */
-    public static final CBItem[] EINSTUFUNG_SPECIALITY = {
-    	new CBItem("", 0),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Technical"), 1),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Quick"),2),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Powerful"), 3),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Unpredictable"), 4),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Head"), 5),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Regainer"), 6)
-    };
-
-    /** Spielerpositionen */
+     /** Spielerpositionen */
 	public static final CBItem[] SPIELERPOSITIONEN = {
 			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.KEEPER), ISpielerPosition.KEEPER),
 			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.CENTRAL_DEFENDER), ISpielerPosition.CENTRAL_DEFENDER),
@@ -161,20 +150,6 @@ public class Helper {
         }
 
         return returnwerte;
-    }
-
-    /**
-     * Erzeugt ein ComboBoxModel aus einem Vector
-     *
-     */
-    public static DefaultComboBoxModel createListModel(Vector<Object> vector) {
-        final DefaultComboBoxModel model = new DefaultComboBoxModel();
-
-        for (int i = 0; i < vector.size(); i++) {
-            model.addElement(vector.get(i));
-        }
-
-        return model;
     }
 
     ////Debug CacheTest------------------------------------------------

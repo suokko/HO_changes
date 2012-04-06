@@ -4,11 +4,11 @@
  *
  * Created on 4. Januar 2005, 13:19
  */
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.model.HOVerwaltung;
-import ho.tool.matchPrediction.engine.MatchResult;
+import ho.core.prediction.engine.MatchResult;
 
 import javax.swing.SwingConstants;
 

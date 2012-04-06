@@ -1,9 +1,9 @@
 package ho.module.ifa.table;
 
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
-import ho.core.util.HelperWrapper;
 import ho.core.util.StringUtilities;
 import ho.module.ifa.IfaMatch;
 
@@ -90,7 +90,7 @@ public class FriendlyStatisticsPanel extends JPanel {
 		for (Integer key : keys) {
 			FriendlyStatistik stat = map.get(key);
 			JLabel label = new JLabel(stat.getLeague().getCountryName());
-			label.setIcon(HelperWrapper.instance().getImageIcon4Country(stat.getLeague().getCountryId()));
+			label.setIcon(ImageUtilities.getFlagIcon(stat.getLeague().getCountryId()));
 			objects[counter][0] = 	stat.getLeague();
 			objects[counter][1] =	Integer.valueOf(stat.getTotal());
 			objects[counter][2] =	Integer.valueOf(home?stat.getHomeWon():stat.getHomeLost());

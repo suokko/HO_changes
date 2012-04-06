@@ -3,6 +3,7 @@ package ho.module.playerOverview;
 
 import ho.core.constants.player.PlayerAbilities;
 import ho.core.constants.player.PlayerSkill;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -93,7 +94,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     private final JComboBox m_jcbTorschuss = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbTorwart = new JComboBox(Helper.EINSTUFUNG);
     private final JComboBox m_jcbVerteidigung = new JComboBox(Helper.EINSTUFUNG);
-	private final JComboBox m_jcbSpeciality = new JComboBox(Helper.EINSTUFUNG_SPECIALITY);    
+	private final JComboBox m_jcbSpeciality = new JComboBox(PlayerSpeciality.ITEMS);    
 	private final JComboBox m_jcbLoyalty = new JComboBox(Helper.EINSTUFUNG);
 	private final JCheckBox m_jchHomegrown = new JCheckBox();
 	private JTextField jtfAge = new JTextField("17.0");	    
