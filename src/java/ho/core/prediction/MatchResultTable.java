@@ -1,8 +1,8 @@
 // %1378604643:de.hattrickorganizer.gui.matchprediction%
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
 import ho.core.gui.comp.table.TableSorter;
-import ho.tool.matchPrediction.engine.MatchResult;
+import ho.core.prediction.engine.MatchResult;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;

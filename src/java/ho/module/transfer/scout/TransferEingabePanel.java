@@ -2,6 +2,7 @@
 package ho.module.transfer.scout;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -92,7 +93,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JComboBox jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
     private JComboBox jcbStamina = new JComboBox(Helper.EINSTUFUNG_KONDITION);
     private JComboBox jcbPassing = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbSpeciality = new JComboBox(Helper.EINSTUFUNG_SPECIALITY);
+    private JComboBox jcbSpeciality = new JComboBox(PlayerSpeciality.ITEMS);
     private JComboBox jcbPlaymaking = new JComboBox(Helper.EINSTUFUNG);
     private JComboBox jcbSetPieces = new JComboBox(Helper.EINSTUFUNG);
     private JComboBox jcbScoring = new JComboBox(Helper.EINSTUFUNG);

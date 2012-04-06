@@ -1,5 +1,5 @@
 // %2981324713:de.hattrickorganizer.logik.matchengine.engine.core%
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 
 

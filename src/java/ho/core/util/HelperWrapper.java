@@ -7,31 +7,23 @@
 package ho.core.util;
 
 import ho.core.db.DBManager;
-import ho.core.file.hrf.HRFImport;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
 import ho.core.model.SpielerPosition;
 import ho.core.net.MyConnector;
-import ho.module.matches.SpielHighlightPanel;
-import ho.module.matches.model.MatchHighlight;
 import ho.module.matches.model.MatchKurzInfo;
 import ho.module.matches.model.MatchLineup;
 import ho.module.matches.model.Matchdetails;
-import ho.module.transfer.scout.Player;
-import ho.module.transfer.scout.PlayerConverter;
-import ho.module.transfer.scout.TransferEingabePanel;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -42,7 +34,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -101,17 +92,6 @@ public class HelperWrapper {
         return ImageUtilities.getImage4Position(posid, taktik, 0);
     }
 
-    public ImageIcon getImageIcon4Country(int country) {
-        return ImageUtilities.getFlagIcon(country);
-    }
-
-    public ImageIcon getImageIcon(String key) {
-    	return ThemeManager.getIcon(key);
-    }
-
-    public ImageIcon getImageIcon4SpielHighlight(int typ, int subtyp) {
-        return SpielHighlightPanel.getImageIcon4SpielHighlight(typ, subtyp);
-    }
 
     public ImageIcon getImageIcon4Spieltyp(int spieltyp) {
         return ThemeManager.getIcon(HOIconName.MATCHTYPES[spieltyp]);
@@ -124,24 +104,8 @@ public class HelperWrapper {
     public ImageIcon getWideImageIcon4Veraenderung(int value) {
         return ImageUtilities.getWideImageIcon4Veraenderung(value, true);
     }
-    public ImageIcon getImageIcon4Wetter(int wert) {
-        return ThemeManager.getIcon(HOIconName.WEATHER[wert]);
-    }
     public ImageIcon getImageIcon4Spezialitaet(int wert) {
         return  ThemeManager.getIcon(HOIconName.SPECIAL[wert]);
-    }
-    public ImageIcon getImageIcon4WetterEffekt(int wert) {
-        return ThemeManager.getIcon("weatherEffect" + wert);
-    }
-
-    public int getLanguageID() {
-        final String id = HOVerwaltung.instance().getLanguageString("LanguageID");
-
-        try {
-            return Integer.parseInt(id);
-        } catch (Exception e) {
-            return -1;
-        }
     }
 
     /**

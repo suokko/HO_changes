@@ -1,12 +1,12 @@
 // %1301666028:de.hattrickorganizer.gui.matchprediction%
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.prediction.engine.TeamData;
+import ho.core.prediction.engine.TeamRatings;
 import ho.core.util.PlayerHelper;
 import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.Matchdetails;
-import ho.tool.matchPrediction.engine.TeamData;
-import ho.tool.matchPrediction.engine.TeamRatings;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

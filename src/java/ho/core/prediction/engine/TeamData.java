@@ -1,5 +1,5 @@
 // %2070140242:de.hattrickorganizer.logik.matchengine%
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 import java.util.ArrayList;
 import java.util.List;

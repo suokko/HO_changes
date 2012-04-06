@@ -2,6 +2,7 @@
 package ho.module.transfer.scout;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
@@ -58,7 +59,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
     private JComboBox jcbKeeper = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
     private JComboBox jcbPassing = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
     private JComboBox jcbPlaymaking = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbSpeciality = new JComboBox(ho.core.util.Helper.EINSTUFUNG_SPECIALITY);
+    private JComboBox jcbSpeciality = new JComboBox(PlayerSpeciality.ITEMS);
     private JComboBox jcbStamina = new JComboBox(ho.core.util.Helper.EINSTUFUNG_KONDITION);
     private JComboBox jcbStandards = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
     private JComboBox jcbWinger = new JComboBox(ho.core.util.Helper.EINSTUFUNG);

@@ -1,5 +1,5 @@
 // %3040931838:de.hattrickorganizer.logik.matchengine%
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 public class TeamRatings {
     //~ Instance fields ----------------------------------------------------------------------------
