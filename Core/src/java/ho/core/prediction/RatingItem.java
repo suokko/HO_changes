@@ -1,4 +1,4 @@
-package ho.tool.matchPrediction;
+package ho.core.prediction;
 
 class RatingItem {
 	private String description;

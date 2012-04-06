@@ -4,7 +4,7 @@
  *
  * Created on 22. Dezember 2004, 14:01
  */
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 
 import java.util.Vector;

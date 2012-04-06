@@ -1,30 +1,24 @@
 package ho.module.ifa.imagebuilder;
 
 import ho.core.db.DBManager;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 import ho.module.ifa.FlagLabel;
 import ho.module.ifa.GlobalActionsListener;
 import ho.module.ifa.PluginIfaPanel;
-import ho.module.ifa.PluginIfaUtils;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Arrays;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -374,15 +368,13 @@ public class ImageDesignPanel extends JPanel {
 				flagLabel.setCountryId(leagues[i].getCountryId());
 				flagLabel.setCountryName(leagues[i].getCountryName());
 				try {
-					flagLabel.setIcon(HelperWrapper.instance()
-							.getImageIcon4Country(flagLabel.getCountryId()));
+					flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 				} catch (Exception e) {
 					System.out.println("Error getting image icon for country "
 							+ flagLabel.getCountryId() + " "
 							+ flagLabel.getCountryName() + "\n"
 							+ e.getMessage());
-					flagLabel.setIcon(HelperWrapper.instance()
-							.getImageIcon4Country(-1));
+					flagLabel.setIcon(ImageUtilities.getFlagIcon(-1));
 				}
 				flagLabel.setToolTipText(flagLabel.getCountryName());
 				int flagLeagueID = leagues[i].getLeagueId();

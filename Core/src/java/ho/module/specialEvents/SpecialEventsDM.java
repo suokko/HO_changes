@@ -6,6 +6,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
+import ho.module.matches.SpielHighlightPanel;
 import ho.module.matches.model.IMatchDetails;
 import ho.module.matches.model.IMatchHighlight;
 import ho.module.matches.model.MatchHighlight;
@@ -185,7 +186,7 @@ class SpecialEventsDM
                     } else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
                         singleLine.add(chanceIcon);
                     } else if (isWeatherSE(highlight)){
-                        singleLine.add(HelperWrapper.instance().getImageIcon4Wetter(weather));
+                        singleLine.add(ThemeManager.getIcon(HOIconName.WEATHER[weather]));
                     } else {
                     	singleLine.add(null);
                     }
@@ -265,7 +266,7 @@ class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
     		case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
-    			return HelperWrapper.instance().getImageIcon4SpielHighlight(IMatchHighlight.HIGHLIGHT_ERFOLGREICH,
+    			return SpielHighlightPanel.getImageIcon4SpielHighlight(IMatchHighlight.HIGHLIGHT_ERFOLGREICH,
     					highlight.getHighlightSubTyp()); // Always return the icon for "SUCCESS" because we only want the chance type icon
     		}
     	}

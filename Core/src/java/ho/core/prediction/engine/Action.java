@@ -1,5 +1,5 @@
 // %1125186933:de.hattrickorganizer.logik.matchengine.engine.common%
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 import ho.module.matches.model.IMatchDetails;
 

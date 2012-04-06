@@ -109,7 +109,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Module"));
 	
 	// Menus
-	private final JMenu m_jmPluginsRefresh = new JMenu(HOVerwaltung.instance().getLanguageString("Plugins"));
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
 	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
@@ -133,9 +132,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ratings"));
 
 	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
-	private final JMenuItem m_jmiPluginsDelete = new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
-	private final JMenuItem m_jmiPluginsLibrary = new JMenuItem(HOVerwaltung.instance().getLanguageString("Libraries"));
-	private final JMenuItem m_jmiPluginsNormal = new JMenuItem(HOVerwaltung.instance().getLanguageString("Normal"));
 	// Components
 	private HOTabbedPane m_jtpTabbedPane;
 	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
@@ -515,7 +511,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		// Updating Menu
 		m_jmiLanguages.addActionListener(this);
-		m_jmiPluginsDelete.addActionListener(this);
 		m_jmiFlags.addActionListener(this);
 		if (isMac()) { // update doesn't work on MacOs' strange packet structure
 			m_jmiHO.setEnabled(false);
@@ -526,12 +521,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 		m_jmiEPV.addActionListener(this);
 		m_jmiRatings.addActionListener(this);
-		m_jmiPluginsNormal.addActionListener(this);
-		m_jmiPluginsLibrary.addActionListener(this);
-
-		m_jmPluginsRefresh.add(m_jmiPluginsNormal);
-		m_jmPluginsRefresh.add(m_jmiPluginsLibrary);
-		m_jmPluginsRefresh.add(m_jmiPluginsDelete);
 
 		//m_jmUpdating.add(m_jmPluginsRefresh);
 		m_jmUpdating.add(m_jmiHO);

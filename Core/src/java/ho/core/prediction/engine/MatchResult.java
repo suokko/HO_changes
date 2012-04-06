@@ -1,4 +1,4 @@
-package ho.tool.matchPrediction.engine;
+package ho.core.prediction.engine;
 
 
 public class MatchResult  {
