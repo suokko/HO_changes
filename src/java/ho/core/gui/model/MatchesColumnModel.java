@@ -4,8 +4,8 @@ import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 
 import java.awt.Color;
 

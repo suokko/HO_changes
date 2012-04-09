@@ -8,8 +8,8 @@ import ho.core.epv.EPVData;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.Helper;
 
 import java.awt.BorderLayout;

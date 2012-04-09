@@ -13,7 +13,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 

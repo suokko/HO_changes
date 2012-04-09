@@ -2,7 +2,7 @@
 package ho.module.training.ui;
 
 import ho.core.gui.model.BaseTableModel;
-import ho.core.model.ISkillup;
+import ho.core.model.player.ISkillup;
 
 import java.awt.event.MouseEvent;
 

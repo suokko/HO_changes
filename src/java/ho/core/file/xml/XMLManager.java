@@ -2,8 +2,8 @@
 package ho.core.file.xml;
 
 import ho.core.model.WorldDetailLeague;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchLineup;
 
 import java.io.File;
 import java.io.InputStream;

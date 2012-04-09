@@ -3,12 +3,12 @@ package ho.core.db;
 import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;

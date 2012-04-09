@@ -7,9 +7,9 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.series.Paarung;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 
 import org.w3c.dom.Document;

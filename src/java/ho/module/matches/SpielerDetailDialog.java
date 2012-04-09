@@ -16,14 +16,14 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
 import ho.module.playerOverview.SpielerDetailPanel;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
@@ -308,7 +308,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
     public void windowOpened(WindowEvent e) {
     }
 
-    private void setLabels(ho.core.model.Spieler m_clSpieler) {
+    private void setLabels(ho.core.model.player.Spieler m_clSpieler) {
         final Spieler m_clVergleichsSpieler = HOVerwaltung.instance().getModel().getSpieler(m_clSpieler.getSpielerID());
 
         m_jpName.setText(m_clSpieler.getName());
@@ -515,7 +515,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             m_jpFuehrung2.setGrafischeVeraenderungswert(m_clVergleichsSpieler.getFuehrung()
                                                         - m_clSpieler.getFuehrung(),
                                                         !m_clVergleichsSpieler.isOld(), true);
-            m_jpBestPos.setText(ho.core.model.SpielerPosition.getNameForPosition(m_clSpieler
+            m_jpBestPos.setText(ho.core.model.player.SpielerPosition.getNameForPosition(m_clSpieler
                                                                                               .getIdealPosition())
                                 + " ("
                                 + m_clSpieler.calcPosValue(m_clSpieler.getIdealPosition(), true)
@@ -1297,7 +1297,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subpanel = new ImagePanel(sublayout);
         subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")
                                                             + " "
-                                                            + SpielerPosition.getNameForPosition(ho.core.model.SpielerPosition
+                                                            + SpielerPosition.getNameForPosition(ho.core.model.player.SpielerPosition
                                                                                   .getPosition(matchplayer.getId(),
                                                                                                matchplayer.getTaktik()))));
 

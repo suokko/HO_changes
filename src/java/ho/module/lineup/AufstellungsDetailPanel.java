@@ -11,12 +11,12 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.Spieler;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.Matchdetails;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

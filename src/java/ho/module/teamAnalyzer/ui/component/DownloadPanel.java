@@ -3,8 +3,8 @@ package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Matchdetails;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.Matchdetails;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 
 import java.awt.BorderLayout;

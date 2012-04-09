@@ -6,10 +6,10 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.module.matches.model.IMatchHighlight;
-import ho.module.matches.model.MatchHighlight;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.Matchdetails;
+import ho.core.model.match.IMatchHighlight;
+import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.Matchdetails;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -5,7 +5,7 @@ package ho.tool.keepertool;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

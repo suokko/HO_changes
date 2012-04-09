@@ -1,13 +1,13 @@
 package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.match.MatchesHighlightsStat;
+import ho.core.model.match.MatchesOverviewRow;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.Matchdetails;
-import ho.module.matches.model.MatchesHighlightsStat;
-import ho.module.matches.model.MatchesOverviewRow;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
 import java.sql.ResultSet;

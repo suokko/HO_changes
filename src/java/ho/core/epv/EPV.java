@@ -2,7 +2,7 @@
 package ho.core.epv;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 
 /**

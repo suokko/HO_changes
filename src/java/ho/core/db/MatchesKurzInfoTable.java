@@ -1,9 +1,9 @@
 package ho.core.db;
 
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 
 import java.sql.ResultSet;

@@ -2,7 +2,7 @@ package ho.core.gui.model;
 
 import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.module.playerOverview.SpielerTrainingsVergleichsPanel;
 
 import java.util.Vector;

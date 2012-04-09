@@ -8,10 +8,12 @@ package ho.module.lineup;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
@@ -19,8 +21,6 @@ import ho.core.util.Helper;
 import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -1034,7 +1034,7 @@ public class Lineup {
 			return getPositionById(positionsid).getTaktik();
 		} catch (Exception e) {
 			HOLogger.instance().error(getClass(), "getTactic4PositionID: " + e);
-			return ho.core.model.ISpielerPosition.UNKNOWN;
+			return ho.core.model.player.ISpielerPosition.UNKNOWN;
 		}
 	}
 
@@ -1042,17 +1042,17 @@ public class Lineup {
 		float value = 0.0f;
 
 		switch (type) {
-		case ho.module.matches.model.IMatchDetails.TAKTIK_PRESSING:
+		case ho.core.model.match.IMatchDetails.TAKTIK_PRESSING:
 			value = getTacticLevelPressing();
 			break;
-		case ho.module.matches.model.IMatchDetails.TAKTIK_KONTER:
+		case ho.core.model.match.IMatchDetails.TAKTIK_KONTER:
 			value = getTacticLevelCounter();
 			break;
-		case ho.module.matches.model.IMatchDetails.TAKTIK_MIDDLE:
-		case ho.module.matches.model.IMatchDetails.TAKTIK_WINGS:
+		case ho.core.model.match.IMatchDetails.TAKTIK_MIDDLE:
+		case ho.core.model.match.IMatchDetails.TAKTIK_WINGS:
 			value = getTacticLevelAimAow();
 			break;
-		case ho.module.matches.model.IMatchDetails.TAKTIK_LONGSHOTS:
+		case ho.core.model.match.IMatchDetails.TAKTIK_LONGSHOTS:
 			value = getTacticLevelLongShots();
 			break;
 		}

@@ -1,6 +1,6 @@
 package ho.module.lineup.substitution;
 
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 public class PlayerPositionItem {
 	private Integer position;

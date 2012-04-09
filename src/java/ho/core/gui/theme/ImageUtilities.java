@@ -1,7 +1,7 @@
 package ho.core.gui.theme;
 
-import ho.core.model.ISpielerPosition;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.SpielerPosition;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

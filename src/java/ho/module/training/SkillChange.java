@@ -1,8 +1,8 @@
 // %3284418725:hoplugins.trainingExperience.vo%
 package ho.module.training;
 
-import ho.core.model.ISkillup;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISkillup;
+import ho.core.model.player.Spieler;
 
 
 /**

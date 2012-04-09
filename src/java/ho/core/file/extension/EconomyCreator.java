@@ -2,11 +2,11 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.Basics;
-import ho.core.model.Finanzen;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.XtraData;
+import ho.core.model.misc.Basics;
+import ho.core.model.misc.Finanzen;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;

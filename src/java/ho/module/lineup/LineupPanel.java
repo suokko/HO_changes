@@ -144,7 +144,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
             m_jtAufstellungSpielerTableName.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
                                                                                           .getSpieler(row);
 
             if (spieler != null) {
@@ -155,7 +155,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTableName.getSelectedRow();
             m_jtAufstellungSpielerTable.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
                                                                                               .getSpieler(row);
 
             if (spieler != null) {
@@ -170,7 +170,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
             m_jtAufstellungSpielerTableName.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
                                                                                           .getSpieler(row);
 
             if (spieler != null) {
@@ -181,7 +181,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTableName.getSelectedRow();
             m_jtAufstellungSpielerTable.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
                                                                                               .getSpieler(row);
 
             if (spieler != null) {
@@ -200,7 +200,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
             m_jtAufstellungSpielerTableName.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
                                                                                           .getSpieler(row);
 
             if (spieler != null) {
@@ -211,7 +211,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTableName.getSelectedRow();
             m_jtAufstellungSpielerTable.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
                                                                                               .getSpieler(row);
 
             if (spieler != null) {
@@ -236,7 +236,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTable.getSelectedRow();
             m_jtAufstellungSpielerTableName.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTable.getSorter()
                                                                                           .getSpieler(row);
 
             if (spieler != null) {
@@ -247,7 +247,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel
             final int row = m_jtAufstellungSpielerTableName.getSelectedRow();
             m_jtAufstellungSpielerTable.setRowSelectionInterval(row, row);
 
-            final ho.core.model.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
+            final ho.core.model.player.Spieler spieler = m_jtAufstellungSpielerTableName.getSorter()
                                                                                               .getSpieler(row);
 
             if (spieler != null) {

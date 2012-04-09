@@ -1,7 +1,7 @@
 package ho.core.db;
 
+import ho.core.model.series.Paarung;
 import ho.core.util.HOLogger;
-import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 
 import java.sql.ResultSet;

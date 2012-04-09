@@ -2,8 +2,8 @@ package ho.module.lineup;
 
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 
 public class SwapPositionsManager {
 

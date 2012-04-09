@@ -6,7 +6,7 @@ import ho.core.gui.comp.entry.DoppelLabelEntry;
 import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import javax.swing.SwingConstants;
 
@@ -21,7 +21,7 @@ public class SpielerStatusLabelEntry extends DoppelLabelEntry {
     private ColorLabelEntry verwarnungen = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                                ColorLabelEntry.BG_STANDARD,
                                                                SwingConstants.LEFT);
-    private ho.core.model.Spieler spieler;
+    private ho.core.model.player.Spieler spieler;
 
     //~ Constructors -------------------------------------------------------------------------------
 

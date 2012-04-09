@@ -5,7 +5,7 @@ package ho.tool.injury;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.tool.keepertool.PlayerItem;
 
 import java.awt.BorderLayout;

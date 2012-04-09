@@ -6,12 +6,13 @@
  */
 package ho.module.series;
 
+import ho.core.model.series.LigaTabelle;
+import ho.core.model.series.LigaTabellenEintrag;
+import ho.core.model.series.Paarung;
+import ho.core.model.series.TabellenVerlaufEintrag;
+import ho.core.model.series.Tabellenverlauf;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.module.series.model.LigaTabelle;
-import ho.module.series.model.LigaTabellenEintrag;
-import ho.module.series.model.TabellenVerlaufEintrag;
-import ho.module.series.model.Tabellenverlauf;
 
 import java.sql.Timestamp;
 import java.util.Vector;

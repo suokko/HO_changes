@@ -8,10 +8,10 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -218,7 +218,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
 
             //SpielerPosition pos = new SpielerPosition( player.getId (), player.getSpielerId (), player.getTaktik () );
             int trickotnummer = 0;
-            final ho.core.model.Spieler spieler = ho.core.model.HOVerwaltung.instance()
+            final ho.core.model.player.Spieler spieler = ho.core.model.HOVerwaltung.instance()
                                                                                                       .getModel()
                                                                                                       .getSpieler(player
                                                                                                                   .getSpielerId());
@@ -313,8 +313,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     			break;
     			} else {
     			
-    				m_jlPosition.setText(ho.core.model.SpielerPosition
-    						.getNameForPosition(ho.core.model.SpielerPosition.getPosition(posid, taktik)));
+    				m_jlPosition.setText(ho.core.model.player.SpielerPosition
+    						.getNameForPosition(ho.core.model.player.SpielerPosition.getPosition(posid, taktik)));
     			}
     		}
         }

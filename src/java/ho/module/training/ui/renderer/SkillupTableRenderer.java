@@ -7,7 +7,7 @@
  */
 package ho.module.training.ui.renderer;
 
-import ho.core.model.ISkillup;
+import ho.core.model.player.ISkillup;
 import ho.module.training.Skills;
 
 import java.awt.Color;

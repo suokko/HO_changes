@@ -1,10 +1,10 @@
 // %888293640:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.series.Paarung;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.series.Paarung;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;

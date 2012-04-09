@@ -2,9 +2,9 @@
 package ho.module.matches;
 
 import ho.core.db.DBManager;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.Matchdetails;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.Matchdetails;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -41,7 +41,7 @@ public class SpielePrintDialog extends JDialog {
      *
      * @param info TODO Missing Constructuor Parameter Documentation
      */
-    public SpielePrintDialog(ho.module.matches.model.MatchKurzInfo info) {
+    public SpielePrintDialog(ho.core.model.match.MatchKurzInfo info) {
         initComponents();
         initValues(info);
 

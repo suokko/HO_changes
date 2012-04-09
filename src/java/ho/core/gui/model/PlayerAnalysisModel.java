@@ -2,8 +2,8 @@ package ho.core.gui.model;
 
 import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
-import ho.core.model.Spieler;
-import ho.module.matches.model.Matchdetails;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.Spieler;
 
 import java.util.Vector;
 

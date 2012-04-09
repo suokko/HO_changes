@@ -4,10 +4,10 @@ import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.MatchLineup;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.MatchLineup;
 
 import java.awt.Color;
 import java.awt.Cursor;

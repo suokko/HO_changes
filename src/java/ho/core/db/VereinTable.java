@@ -1,6 +1,6 @@
 package ho.core.db;
 
-import ho.core.model.Verein;
+import ho.core.model.misc.Verein;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;

@@ -4,7 +4,7 @@ package ho.module.lineup;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

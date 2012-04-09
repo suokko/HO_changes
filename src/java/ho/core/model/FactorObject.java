@@ -6,6 +6,7 @@
  */
 package ho.core.model;
 
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 
 /**
@@ -194,7 +195,7 @@ public final class FactorObject {
     }
 
     //HelperFuncs//////
-    final float getSum() {
+    public final float getSum() {
         return (m_fTorwart + m_fStandards + m_fTorschuss + m_fVerteidigung + m_fFluegelspiel
                + m_fPasspiel + m_fSpielaufbau);
     }

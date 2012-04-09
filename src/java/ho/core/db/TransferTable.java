@@ -1,7 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;

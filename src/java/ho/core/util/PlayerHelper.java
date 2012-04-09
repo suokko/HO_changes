@@ -3,7 +3,7 @@ package ho.core.util;
 
 import ho.core.constants.player.PlayerAbilities;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 
 /**

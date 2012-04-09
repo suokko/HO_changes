@@ -542,11 +542,11 @@ Spielertabelle() {
 
 
 	void aktualisieren() {
-		Vector<ho.core.model.Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		Vector<ho.core.model.player.Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
 		spielerSortierung = new SpielerSortierung[alleSpieler.size()];
 		spieler = new Vector<Spieler>(alleSpieler.size());
 		int pos = 0;
-		for (Enumeration<ho.core.model.Spieler> el = alleSpieler.elements(); el.hasMoreElements();) {
+		for (Enumeration<ho.core.model.player.Spieler> el = alleSpieler.elements(); el.hasMoreElements();) {
 			spieler.add(new Spieler(el.nextElement()));
 			spielerSortierung[pos] = new SpielerSortierung(pos);
 			pos++;

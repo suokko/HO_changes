@@ -3,12 +3,12 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.series.LigaTabellenEintrag;
+import ho.core.model.series.Paarung;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
-import ho.module.series.model.LigaTabellenEintrag;
 import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;

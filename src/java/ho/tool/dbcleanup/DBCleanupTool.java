@@ -4,10 +4,10 @@ import ho.core.db.DBManager;
 import ho.core.file.hrf.HRF;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

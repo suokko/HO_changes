@@ -4,7 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.module.transfer.history.HistoryPane;
 import ho.module.transfer.scout.TransferScoutPanel;
 import ho.module.transfer.transfertype.TransferTypePane;

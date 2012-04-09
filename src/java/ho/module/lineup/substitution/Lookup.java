@@ -1,7 +1,7 @@
 package ho.module.lineup.substitution;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.player.ISpielerPosition;
 
 public class Lookup {
 

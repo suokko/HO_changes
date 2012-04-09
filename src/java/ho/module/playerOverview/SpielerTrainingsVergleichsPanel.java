@@ -9,8 +9,8 @@ import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.AufstellungsListRenderer;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
+import ho.core.model.player.Spieler;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

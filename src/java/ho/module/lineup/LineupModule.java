@@ -1,13 +1,12 @@
 package ho.module.lineup;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.module.DefaultModule;
+
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-
-
-import ho.core.model.HOVerwaltung;
-import ho.core.module.DefaultModule;
 
 public final class LineupModule extends DefaultModule {
 

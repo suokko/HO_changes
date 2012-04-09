@@ -10,9 +10,9 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
@@ -242,7 +242,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		final Vector<Spieler> alleSpieler = hoModel.getAllSpieler();
 
 		for (int i = 0; i < alleSpieler.size(); i++) {
-			final ho.core.model.Spieler spieler = (ho.core.model.Spieler) alleSpieler
+			final ho.core.model.player.Spieler spieler = (ho.core.model.player.Spieler) alleSpieler
 			.get(i);
 
 			//Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, oder genau die zu der der Spieler gehört

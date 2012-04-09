@@ -4,7 +4,7 @@ package ho.core.training;
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
 

@@ -11,9 +11,9 @@ import ho.core.gui.print.PrintController;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

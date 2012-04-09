@@ -1,7 +1,7 @@
 // %1762772776:de.hattrickorganizer.logik.matchengine.engine.core%
 package ho.core.prediction.engine;
 
-import ho.module.matches.model.IMatchDetails;
+import ho.core.model.match.IMatchDetails;
 
 
 class BaseActionGenerator {

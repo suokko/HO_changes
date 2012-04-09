@@ -30,8 +30,8 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.match.IMatchDetails;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.IMatchDetails;
 
 import java.awt.Color;
 import java.awt.Font;

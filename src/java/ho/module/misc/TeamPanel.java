@@ -4,9 +4,9 @@ package ho.module.misc;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
-import ho.module.series.model.Liga;
+import ho.core.model.misc.Basics;
+import ho.core.model.series.Liga;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
