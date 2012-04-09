@@ -1,7 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.Team;
-import ho.core.model.Verein;
+import ho.core.model.misc.Verein;
 
 import java.sql.Timestamp;
 

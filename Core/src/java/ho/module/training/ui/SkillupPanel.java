@@ -5,8 +5,8 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISkillup;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISkillup;
+import ho.core.model.player.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 

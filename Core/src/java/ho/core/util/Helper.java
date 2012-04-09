@@ -5,8 +5,8 @@ package ho.core.util;
 import ho.core.constants.player.PlayerAbilities;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.SpielerPosition;
 
 import java.awt.Component;
 import java.awt.Window;

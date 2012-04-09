@@ -7,10 +7,10 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.Matchdetails;
 import ho.core.util.Helper;
 import ho.core.util.PlayerHelper;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.Matchdetails;
 
 import java.awt.Color;
 import java.awt.Dimension;

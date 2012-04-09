@@ -2,7 +2,7 @@ package ho.module.specialEvents;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.module.matches.model.MatchKurzInfo;
+import ho.core.model.match.MatchKurzInfo;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

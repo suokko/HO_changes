@@ -1,7 +1,7 @@
 package ho.core.prediction.engine;
 
 
-import ho.module.matches.model.IMatchDetails;
+import ho.core.model.match.IMatchDetails;
 
 class CounterAttackGenerator extends BaseActionGenerator {
 

@@ -1,7 +1,7 @@
 // %1125186933:de.hattrickorganizer.logik.matchengine.engine.common%
 package ho.core.prediction.engine;
 
-import ho.module.matches.model.IMatchDetails;
+import ho.core.model.match.IMatchDetails;
 
 
 /**

@@ -5,6 +5,11 @@ import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.epv.EPV;
+import ho.core.model.misc.Basics;
+import ho.core.model.misc.Finanzen;
+import ho.core.model.misc.Verein;
+import ho.core.model.player.Spieler;
+import ho.core.model.series.Liga;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
@@ -13,7 +18,6 @@ import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
 import ho.module.lineup.Lineup;
 import ho.module.series.Spielplan;
-import ho.module.series.model.Liga;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.Timestamp;
@@ -443,7 +447,7 @@ public class HOModel {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             try {
-                final Spieler player = (ho.core.model.Spieler) vSpieler.get(i);
+                final Spieler player = (ho.core.model.player.Spieler) vSpieler.get(i);
                 Spieler old = players.get("" + player.getSpielerID());
 
                 if (old == null) {

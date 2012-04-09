@@ -2,13 +2,13 @@ package ho.core.rating;
 
 import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
 import ho.core.model.Team;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.Matchdetails;
 
 import java.sql.Timestamp;
 import java.util.Date;

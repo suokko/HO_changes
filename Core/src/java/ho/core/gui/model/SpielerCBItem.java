@@ -5,7 +5,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import java.awt.Component;
 

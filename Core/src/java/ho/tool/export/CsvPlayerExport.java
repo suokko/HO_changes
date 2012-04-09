@@ -4,8 +4,8 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.file.ExampleFileFilter;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
 

@@ -3,7 +3,7 @@ package ho.module.transfer;
 
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import java.util.Iterator;
 import java.util.List;

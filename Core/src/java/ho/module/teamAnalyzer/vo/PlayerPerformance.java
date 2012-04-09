@@ -1,7 +1,7 @@
 // %272607020:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
-import ho.module.matches.model.MatchLineupPlayer;
+import ho.core.model.match.MatchLineupPlayer;
 
 
 /**

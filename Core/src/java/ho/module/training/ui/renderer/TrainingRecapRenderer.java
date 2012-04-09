@@ -3,7 +3,7 @@ package ho.module.training.ui.renderer;
 
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.TrainingLegendPanel;
 

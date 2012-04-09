@@ -23,7 +23,7 @@ package ho.module.tsforecast;
 
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
-import ho.module.matches.model.IMatchDetails;
+import ho.core.model.match.IMatchDetails;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ class Curve {
   class Point implements Comparable<Point> {
   
     double m_dSpirit    = TEAM_SPIRIT_UNKNOWN;
-    int m_iAttitude     = ho.module.matches.model.IMatchDetails.EINSTELLUNG_UNBEKANNT;
+    int m_iAttitude     = ho.core.model.match.IMatchDetails.EINSTELLUNG_UNBEKANNT;
     Date m_dDate        = null; 
     int m_iMatchDay     = 0;
     int m_iMatchType    = UNKNOWN_MATCH;

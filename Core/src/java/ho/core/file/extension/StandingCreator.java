@@ -3,9 +3,9 @@ package ho.core.file.extension;
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.series.LigaTabellenEintrag;
 import ho.core.util.HOLogger;
 import ho.module.series.Spielplan;
-import ho.module.series.model.LigaTabellenEintrag;
 
 import java.io.BufferedWriter;
 import java.io.File;

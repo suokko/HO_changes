@@ -7,9 +7,9 @@
 package ho.core.file.xml;
 
 
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.module.matches.model.MatchKurzInfo;
 
 import java.util.Vector;
 

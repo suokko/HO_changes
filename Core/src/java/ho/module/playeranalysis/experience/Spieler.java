@@ -2,8 +2,8 @@ package ho.module.playeranalysis.experience;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchLineup;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -39,7 +39,7 @@ final class Spieler {
 	private HashMap<Integer,Integer> einsaetzeNachVorletzterAufwertung;
 	private HashMap<Integer,Integer> einsaetzeMitAktualisierungNachVorletzterAufwertung;
 
-	public Spieler(ho.core.model.Spieler inSpieler) {
+	public Spieler(ho.core.model.player.Spieler inSpieler) {
 		letzteErfahrungsAufwertung = null;
 		vorletzteErfahrungsAufwertung = null;
 		vorvorletzteErfahrungsAufwertung = null;

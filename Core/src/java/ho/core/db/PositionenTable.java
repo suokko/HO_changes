@@ -1,6 +1,6 @@
 package ho.core.db;
 
-import ho.core.model.ISpielerPosition;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -38,7 +38,7 @@ public final class PositionenTable extends AbstractTable {
 	 */
 	Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		ResultSet rs = null;
-		ho.core.model.SpielerPosition pos = null;
+		ho.core.model.player.SpielerPosition pos = null;
 		String sql = null;
 		final Vector<ISpielerPosition> ret = new Vector<ISpielerPosition>();
 
@@ -81,7 +81,7 @@ public final class PositionenTable extends AbstractTable {
 						playerID = 0;
 					}
 					
-					pos = new ho.core.model.SpielerPosition(roleID, playerID, (byte)behavior);
+					pos = new ho.core.model.player.SpielerPosition(roleID, playerID, (byte)behavior);
 					ret.add(pos);
 				}
 			}
@@ -101,14 +101,14 @@ public final class PositionenTable extends AbstractTable {
 	 */
 	void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		String statement = null;
-		ho.core.model.SpielerPosition pos = null;
+		ho.core.model.player.SpielerPosition pos = null;
 
 		//bereits vorhandenen Eintrag entdernen
 		DBManager.instance().deleteSystem(hrfId, sysName);
 
 		//speichern vorbereiten
 		for (int i = 0;(positionen != null) && (sysName != null) && (i < positionen.size()); i++) {
-			pos = (ho.core.model.SpielerPosition) positionen.elementAt(i);
+			pos = (ho.core.model.player.SpielerPosition) positionen.elementAt(i);
 			statement = "INSERT INTO "+getTableName()+" ( HRF_ID, ID, Aufstellungsname, SpielerID, Taktik ) VALUES(";
 			statement += ("" + hrfId + "," + pos.getId() + ",'" + sysName + "'," + pos.getSpielerId() + "," + pos.getTaktik() + " )");
 

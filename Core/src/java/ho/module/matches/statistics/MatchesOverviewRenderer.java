@@ -3,8 +3,8 @@ package ho.module.matches.statistics;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.module.matches.model.MatchesHighlightsStat;
-import ho.module.matches.model.MatchesOverviewRow;
+import ho.core.model.match.MatchesHighlightsStat;
+import ho.core.model.match.MatchesOverviewRow;
 
 import java.awt.Component;
 

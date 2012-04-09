@@ -3,8 +3,8 @@ package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.module.config.ModuleConfig;
 import ho.module.lineup.Lineup;
 import ho.module.teamAnalyzer.SystemManager;

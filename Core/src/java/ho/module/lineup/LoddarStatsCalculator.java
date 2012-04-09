@@ -56,15 +56,15 @@ public class LoddarStatsCalculator {
 				* ((ZG * HQ(centralDefenseRating)) + (AG * (HQ(leftDefenseRating) + HQ(rightDefenseRating))));
 
 		// AiM or AoW or CA?
-		if (tacticType == ho.module.matches.model.IMatchDetails.TAKTIK_MIDDLE) {
+		if (tacticType == ho.core.model.match.IMatchDetails.TAKTIK_MIDDLE) {
 			AiM = (float) Math.min(tacticLevelAimAow, 20.0d);
 			KZG = ZG + (((0.2f * (AiM - 1.0f)) / 19.0f) + 0.2f);
 			KK = 0.0f;
-		} else if (tacticType == ho.module.matches.model.IMatchDetails.TAKTIK_WINGS) {
+		} else if (tacticType == ho.core.model.match.IMatchDetails.TAKTIK_WINGS) {
 			AoW = (float) Math.min(tacticLevelAimAow, 20.0d);
 			KZG = ZG - (((0.2f * (AoW - 1.0f)) / 19.0f) + 0.2f);
 			KK = 0.0f;
-		} else if (tacticType == ho.module.matches.model.IMatchDetails.TAKTIK_KONTER) {
+		} else if (tacticType == ho.core.model.match.IMatchDetails.TAKTIK_KONTER) {
 			CA = (float) Math.min(tacticLevelCounter, 20.0d);
 			KK = KG * 2.0f * (CA / (CA + 20.0f));
 			KZG = ZG;

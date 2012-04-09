@@ -12,12 +12,12 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.SpielerPosition;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.SpielerPosition;
 import ho.core.net.MyConnector;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.Matchdetails;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -227,7 +227,7 @@ public class HelperWrapper {
     public boolean isUserMatch(String matchID) {
     	try {
           final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
-          final ho.module.matches.model.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
+          final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
                                                                            .parseMachtdetailsFromString(input);
           final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 

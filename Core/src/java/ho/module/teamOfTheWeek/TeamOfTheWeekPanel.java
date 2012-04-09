@@ -5,9 +5,9 @@ import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.series.Paarung;
 import ho.core.util.HelperWrapper;
-import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
 
 import java.awt.BorderLayout;

@@ -1,15 +1,15 @@
 package ho.core.file.hrf;
 
-import ho.core.model.Basics;
-import ho.core.model.Finanzen;
 import ho.core.model.HOModel;
-import ho.core.model.Spieler;
 import ho.core.model.Team;
-import ho.core.model.Verein;
 import ho.core.model.XtraData;
+import ho.core.model.misc.Basics;
+import ho.core.model.misc.Finanzen;
+import ho.core.model.misc.Verein;
+import ho.core.model.player.Spieler;
+import ho.core.model.series.Liga;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
-import ho.module.series.model.Liga;
 import ho.tool.arenasizer.Stadium;
 
 import java.io.BufferedReader;

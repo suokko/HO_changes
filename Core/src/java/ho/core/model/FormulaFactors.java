@@ -7,6 +7,7 @@
 package ho.core.model;
 
 import ho.core.file.xml.XMLManager;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 
 import java.io.File;

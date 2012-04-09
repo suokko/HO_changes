@@ -79,7 +79,7 @@ public class ElfmeterSchuetzenDialog extends JDialog {
      * @return TODO Missing Return Method Documentation
      */
     private SpielerCBItem createSpielerLabel(int spielerID) {
-        final ho.core.model.Spieler spieler = ho.core.model.HOVerwaltung.instance()
+        final ho.core.model.player.Spieler spieler = ho.core.model.HOVerwaltung.instance()
                                                                                                   .getModel()
                                                                                                   .getSpieler(spielerID);
 

@@ -2,11 +2,11 @@ package ho.core.training;
 
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
-import ho.core.model.FuturePlayer;
-import ho.core.model.ISkillup;
 import ho.core.model.PlayerSkillup;
-import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
+import ho.core.model.player.FuturePlayer;
+import ho.core.model.player.ISkillup;
+import ho.core.model.player.Spieler;
 import ho.core.util.HelperWrapper;
 import ho.module.training.FutureTrainingWeek;
 

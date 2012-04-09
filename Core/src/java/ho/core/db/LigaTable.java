@@ -1,7 +1,7 @@
 package ho.core.db;
 
+import ho.core.model.series.Liga;
 import ho.core.util.HOLogger;
-import ho.module.series.model.Liga;
 
 import java.sql.ResultSet;
 import java.sql.Types;

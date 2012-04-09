@@ -2,9 +2,9 @@ package de.hattrickorganizer.model.matches;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.module.matches.model.MatchLineupTeam;
-import ho.module.matches.model.MatchStatistics;
+import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchStatistics;
+import ho.core.model.player.ISpielerPosition;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

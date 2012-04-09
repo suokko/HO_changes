@@ -2,7 +2,7 @@ package ho.core.gui.model;
 
 import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.comp.table.UserColumn;
-import ho.module.matches.model.Matchdetails;
+import ho.core.model.match.Matchdetails;
 
 /**
  * column shows values from a matchdetail

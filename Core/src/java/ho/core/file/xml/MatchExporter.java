@@ -3,15 +3,15 @@ package ho.core.file.xml;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
+import ho.core.model.match.MatchHelper;
+import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchHelper;
-import ho.module.matches.model.MatchHighlight;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
-import ho.module.matches.model.Matchdetails;
 
 import java.util.ArrayList;
 import java.util.Date;

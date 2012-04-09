@@ -1,8 +1,8 @@
 package ho.core.prediction.engine;
 
 
+import ho.core.model.match.IMatchDetails;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.IMatchDetails;
 
 import java.util.List;
 

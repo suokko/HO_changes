@@ -2,9 +2,9 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.module.config.ModuleConfig;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.vo.Match;

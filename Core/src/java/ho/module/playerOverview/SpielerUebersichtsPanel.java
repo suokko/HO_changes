@@ -4,7 +4,7 @@ package ho.module.playerOverview;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.table.TableSorter;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

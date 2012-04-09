@@ -1,7 +1,7 @@
 package ho.core.epv;
 
 import ho.core.constants.player.PlayerSkill;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 
 /**

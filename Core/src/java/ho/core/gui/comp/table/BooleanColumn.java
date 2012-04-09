@@ -1,6 +1,6 @@
 package ho.core.gui.comp.table;
 
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 
 /**
  * editable checkbox in a JTable

@@ -7,12 +7,12 @@
 package ho.core.file.xml;
 
 import ho.core.db.DBManager;
+import ho.core.model.match.IMatchHighlight;
+import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.Matchdetails;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.IMatchHighlight;
-import ho.module.matches.model.MatchHighlight;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
-import ho.module.matches.model.Matchdetails;
 
 import java.util.Vector;
 

@@ -4,9 +4,9 @@ import ho.core.db.DBManager;
 import ho.core.gui.comp.table.ToolTipHeader;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnController;
+import ho.core.model.match.MatchesOverviewRow;
 import ho.core.util.Helper;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchesOverviewRow;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;

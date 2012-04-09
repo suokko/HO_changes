@@ -10,7 +10,7 @@ public class HomegrownEntry implements IHOTableEntry{
 	private ColorLabelEntry icon = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_STANDARD,
 			SwingConstants.CENTER);
-	private ho.core.model.Spieler spieler;
+	private ho.core.model.player.Spieler spieler;
 
 	//~ Constructors -------------------------------------------------------------------------------
 
@@ -21,12 +21,12 @@ public class HomegrownEntry implements IHOTableEntry{
 		super();
 	}
 
-	public final void setSpieler(ho.core.model.Spieler spieler) {
+	public final void setSpieler(ho.core.model.player.Spieler spieler) {
 		this.spieler = spieler;
 		updateComponent();
 	}
 
-	public final ho.core.model.Spieler getSpieler() {
+	public final ho.core.model.player.Spieler getSpieler() {
 		return spieler;
 	}
 

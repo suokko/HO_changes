@@ -2,8 +2,8 @@ package ho.core.file.extension;
 
 import ho.core.file.xml.XMLManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 

@@ -2,7 +2,7 @@
 package ho.module.training;
 
 
-import ho.core.model.ISkillup;
+import ho.core.model.player.ISkillup;
 
 import java.util.Date;
 

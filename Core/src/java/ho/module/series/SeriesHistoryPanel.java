@@ -4,7 +4,7 @@ package ho.module.series;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.module.series.model.TabellenVerlaufEintrag;
+import ho.core.model.series.TabellenVerlaufEintrag;
 
 import java.awt.Color;
 import java.awt.Dimension;

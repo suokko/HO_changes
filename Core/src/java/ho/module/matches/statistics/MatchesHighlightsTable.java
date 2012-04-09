@@ -2,9 +2,9 @@ package ho.module.matches.statistics;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchesHighlightsStat;
+import ho.core.model.match.MatchesOverviewRow;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchesHighlightsStat;
-import ho.module.matches.model.MatchesOverviewRow;
 import ho.tool.updater.TableModel;
 
 import javax.swing.JTable;

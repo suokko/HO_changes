@@ -7,14 +7,14 @@
 package ho.core.file.xml;
 
 
-import ho.core.model.ISpielerPosition;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
-import ho.module.matches.model.MatchLineupTeam;
 
 import java.util.ArrayList;
 

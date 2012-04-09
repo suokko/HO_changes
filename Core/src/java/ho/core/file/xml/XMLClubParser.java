@@ -7,7 +7,7 @@
 package ho.core.file.xml;
 
 
-import ho.core.model.Verein;
+import ho.core.model.misc.Verein;
 import ho.core.util.HOLogger;
 
 import org.w3c.dom.Document;
