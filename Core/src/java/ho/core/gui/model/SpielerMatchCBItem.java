@@ -1,8 +1,8 @@
 // %793684749:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
-import ho.core.model.Spieler;
-import ho.module.matches.model.Matchdetails;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.Spieler;
 
 
 /**
@@ -196,7 +196,7 @@ public class SpielerMatchCBItem {
      *
      * @param m_clMatchdetails New value of property m_clMatchdetails.
      */
-    public final void setMatchdetails(ho.module.matches.model.Matchdetails m_clMatchdetails) {
+    public final void setMatchdetails(ho.core.model.match.Matchdetails m_clMatchdetails) {
         this.m_clMatchdetails = m_clMatchdetails;
     }
 
@@ -205,7 +205,7 @@ public class SpielerMatchCBItem {
      *
      * @return Value of property m_clMatchdetails.
      */
-    public final ho.module.matches.model.Matchdetails getMatchdetails() {
+    public final ho.core.model.match.Matchdetails getMatchdetails() {
         return m_clMatchdetails;
     }
 
@@ -268,7 +268,7 @@ public class SpielerMatchCBItem {
      *
      * @param m_clSpieler New value of property m_clSpieler.
      */
-    public final void setSpieler(ho.core.model.Spieler m_clSpieler) {
+    public final void setSpieler(ho.core.model.player.Spieler m_clSpieler) {
         this.m_clSpieler = m_clSpieler;
     }
 
@@ -277,7 +277,7 @@ public class SpielerMatchCBItem {
      *
      * @return Value of property m_clSpieler.
      */
-    public final ho.core.model.Spieler getSpieler() {
+    public final ho.core.model.player.Spieler getSpieler() {
         return m_clSpieler;
     }
 

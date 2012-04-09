@@ -1,8 +1,8 @@
 package ho.module.matches.statistics;
 
 import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.model.match.MatchesOverviewRow;
 import ho.core.util.StringUtilities;
-import ho.module.matches.model.MatchesOverviewRow;
 
 
 public final class MatchesOverviewColumnModel extends HOColumnModel {

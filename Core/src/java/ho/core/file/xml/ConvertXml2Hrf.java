@@ -14,16 +14,16 @@ import ho.core.constants.player.PlayerAggressiveness;
 import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
 import ho.core.constants.player.PlayerSpeciality;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
 import ho.core.util.PlayerHelper;
 import ho.module.lineup.substitution.ISubstitution;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupTeam;
-import ho.module.matches.model.Matchdetails;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -124,14 +124,14 @@ public class ConvertXml2Hrf {
                 final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID()));
 
                 if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdetails.get("TeamID").toString())) {
-                    m_clTeam = (ho.module.matches.model.MatchLineupTeam) m_clLineUp.getHeim();
+                    m_clTeam = (ho.core.model.match.MatchLineupTeam) m_clLineUp.getHeim();
 
                     if (md != null) {
                         m_iLastAttitude = md.getHomeEinstellung();
                         m_iLastTactic = md.getHomeTacticType();
                     }
                 } else {
-                    m_clTeam = (ho.module.matches.model.MatchLineupTeam) m_clLineUp.getGast();
+                    m_clTeam = (ho.core.model.match.MatchLineupTeam) m_clLineUp.getGast();
 
                     if (md != null) {
                         m_iLastAttitude = md.getGuestEinstellung();

@@ -1,6 +1,8 @@
 // %1126721452213:hoplugins.trainingExperience.vo%
 package ho.core.model;
 
+import ho.core.model.player.ISkillup;
+
 import java.util.Date;
 
 

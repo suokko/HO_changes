@@ -19,7 +19,7 @@ public class SmilieEntry extends DoppelLabelEntry {
     private ColorLabelEntry team = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
                                                        ColorLabelEntry.BG_STANDARD,
                                                        SwingConstants.LEFT);
-    private ho.core.model.Spieler spieler;
+    private ho.core.model.player.Spieler spieler;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -31,12 +31,12 @@ public class SmilieEntry extends DoppelLabelEntry {
         this.setLabels(team, manuell);
     }
 
-   public final void setSpieler(ho.core.model.Spieler spieler) {
+   public final void setSpieler(ho.core.model.player.Spieler spieler) {
         this.spieler = spieler;
         updateComponent();
     }
 
-    public final ho.core.model.Spieler getSpieler() {
+    public final ho.core.model.player.Spieler getSpieler() {
         return spieler;
     }
 
@@ -67,12 +67,12 @@ public class SmilieEntry extends DoppelLabelEntry {
 
                 //Bei "Gleichstand" die Aufstellung beachten
                 if (ergebnis == 0) {
-                    final ho.core.model.SpielerPosition entrySort = ho.core.model.HOVerwaltung.instance()
+                    final ho.core.model.player.SpielerPosition entrySort = ho.core.model.HOVerwaltung.instance()
                                                                                                                         .getModel()
                                                                                                                         .getAufstellung()
                                                                                                                         .getPositionBySpielerId(entry.getSpieler()
                                                                                                                                                      .getSpielerID());
-                    final ho.core.model.SpielerPosition sort = ho.core.model.HOVerwaltung.instance()
+                    final ho.core.model.player.SpielerPosition sort = ho.core.model.HOVerwaltung.instance()
                                                                                                                    .getModel()
                                                                                                                    .getAufstellung()
                                                                                                                    .getPositionBySpielerId(getSpieler()

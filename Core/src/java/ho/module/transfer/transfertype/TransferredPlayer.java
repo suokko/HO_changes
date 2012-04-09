@@ -4,7 +4,7 @@ package ho.module.transfer.transfertype;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.TransferTypes;
 

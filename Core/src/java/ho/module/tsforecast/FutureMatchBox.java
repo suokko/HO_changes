@@ -18,8 +18,8 @@ package ho.module.tsforecast;
  */
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.IMatchDetails;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

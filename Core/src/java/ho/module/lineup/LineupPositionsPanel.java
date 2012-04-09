@@ -7,8 +7,8 @@ import ho.core.gui.model.AufstellungCBItem;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;

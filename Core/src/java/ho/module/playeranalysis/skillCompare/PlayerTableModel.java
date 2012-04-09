@@ -9,7 +9,7 @@ package ho.module.playeranalysis.skillCompare;
 //import javax.swing.*;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.player.ISpielerPosition;
 
 import javax.swing.table.DefaultTableModel;
 

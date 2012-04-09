@@ -4,8 +4,8 @@ package ho.module.misc;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.Finanzen;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.misc.Finanzen;
 
 import java.awt.Component;
 import java.awt.Font;

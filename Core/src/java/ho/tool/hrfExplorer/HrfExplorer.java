@@ -11,9 +11,9 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

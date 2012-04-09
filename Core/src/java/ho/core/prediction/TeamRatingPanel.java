@@ -2,11 +2,11 @@
 package ho.core.prediction;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Matchdetails;
 import ho.core.prediction.engine.TeamData;
 import ho.core.prediction.engine.TeamRatings;
 import ho.core.util.PlayerHelper;
-import ho.module.matches.model.IMatchDetails;
-import ho.module.matches.model.Matchdetails;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

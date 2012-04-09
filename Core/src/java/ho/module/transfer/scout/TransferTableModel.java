@@ -7,9 +7,9 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 
 import java.util.Vector;
 

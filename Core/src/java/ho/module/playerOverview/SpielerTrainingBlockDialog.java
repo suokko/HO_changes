@@ -6,7 +6,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 
 import java.awt.Dimension;

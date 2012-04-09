@@ -1,7 +1,7 @@
 package ho.core.db;
 
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchLineup;
 
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -149,8 +149,8 @@ public final class MatchLineupTable extends AbstractTable {
 				adapter.executeUpdate(sql);
 
 				//Einträge noch saven
-				DBManager.instance().storeMatchLineupTeam((ho.module.matches.model.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
-				DBManager.instance().storeMatchLineupTeam((ho.module.matches.model.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
+				DBManager.instance().storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
+				DBManager.instance().storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchLineup Error" + e);
 				HOLogger.instance().log(getClass(),e);

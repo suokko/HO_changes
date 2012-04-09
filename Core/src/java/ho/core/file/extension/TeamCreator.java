@@ -2,12 +2,12 @@ package ho.core.file.extension;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.XtraData;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.misc.Basics;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
 
 import java.io.BufferedWriter;
 import java.io.File;

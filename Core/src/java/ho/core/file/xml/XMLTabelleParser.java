@@ -6,9 +6,9 @@
  */
 package ho.core.file.xml;
 
+import ho.core.model.series.LigaTabelle;
+import ho.core.model.series.LigaTabellenEintrag;
 import ho.core.util.HOLogger;
-import ho.module.series.model.LigaTabelle;
-import ho.module.series.model.LigaTabellenEintrag;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

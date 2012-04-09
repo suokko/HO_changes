@@ -2,7 +2,7 @@
 package ho.core.training;
 
 import ho.core.constants.TrainingType;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.player.ISpielerPosition;
 
 import java.util.ArrayList;
 import java.util.Collections;

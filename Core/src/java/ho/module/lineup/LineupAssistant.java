@@ -8,9 +8,9 @@ package ho.module.lineup;
 
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 
 import java.util.List;
 import java.util.Vector;
@@ -526,7 +526,7 @@ public class LineupAssistant {
      */
     public final void resetPositionsbesetzungen(Vector<ISpielerPosition> positionen) {
         for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-            ((ho.core.model.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
+            ((ho.core.model.player.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
         }
     }
 
@@ -543,19 +543,19 @@ public class LineupAssistant {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final ho.core.model.Spieler getBestSpieler(byte position,
+    protected final ho.core.model.player.Spieler getBestSpieler(byte position,
                                                                       boolean mitForm,
                                                                       boolean ignoreVerletzung,
                                                                       boolean ignoreSperre,
                                                                       List<Spieler> vSpieler,
                                                                       List<ISpielerPosition> positionen) {
-        ho.core.model.Spieler spieler = null;
-        ho.core.model.Spieler bestSpieler = null;
+        ho.core.model.player.Spieler spieler = null;
+        ho.core.model.player.Spieler bestSpieler = null;
         float bestStk = -1.0f;
         float aktuStk = 0.0f;
 
         for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-            spieler = (ho.core.model.Spieler) vSpieler.get(i);
+            spieler = (ho.core.model.player.Spieler) vSpieler.get(i);
 
             //stk inklusive Wetter effekt errechnen
             aktuStk = spieler.calcPosValue(position, mitForm);
@@ -681,7 +681,7 @@ public class LineupAssistant {
 
         for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
              i++) {
-            pos = (ho.core.model.SpielerPosition) positionen.get(i);
+            pos = (ho.core.model.player.SpielerPosition) positionen.get(i);
 
             //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
             if ((pos.getSpielerId() > 0)

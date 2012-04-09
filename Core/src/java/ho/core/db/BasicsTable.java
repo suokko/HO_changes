@@ -1,7 +1,7 @@
 package ho.core.db;
 
 import ho.core.datatype.CBItem;
-import ho.core.model.Basics;
+import ho.core.model.misc.Basics;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -46,7 +46,7 @@ final class BasicsTable extends AbstractTable {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
-	void saveBasics(int hrfId, ho.core.model.Basics basics) {
+	void saveBasics(int hrfId, ho.core.model.misc.Basics basics) {
 		String statement = null;
 		final String[] awhereS = { "HRF_ID" };
 		final String[] awhereV = { "" + hrfId };

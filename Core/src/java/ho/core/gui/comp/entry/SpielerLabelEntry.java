@@ -8,9 +8,9 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.Spieler;
-import ho.core.model.SpielerPosition;
 import ho.core.model.UserParameter;
+import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.Helper;
 
 import java.awt.Color;

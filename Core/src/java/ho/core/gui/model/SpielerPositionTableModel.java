@@ -5,7 +5,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.SpielerPosition;
+import ho.core.model.player.SpielerPosition;
 
 import java.util.Vector;
 

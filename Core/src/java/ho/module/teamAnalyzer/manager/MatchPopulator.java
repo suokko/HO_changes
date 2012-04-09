@@ -2,11 +2,11 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
-import ho.core.model.ISpielerPosition;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HelperWrapper;
-import ho.module.matches.model.MatchLineupPlayer;
-import ho.module.matches.model.MatchLineupTeam;
-import ho.module.matches.model.Matchdetails;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;

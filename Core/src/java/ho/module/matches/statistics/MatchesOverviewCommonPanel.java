@@ -3,9 +3,9 @@ package ho.module.matches.statistics;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.util.StringUtilities;
 import ho.module.matches.SpielePanel;
-import ho.module.matches.model.MatchKurzInfo;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

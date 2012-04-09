@@ -5,7 +5,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.Verein;
+import ho.core.model.misc.Verein;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;

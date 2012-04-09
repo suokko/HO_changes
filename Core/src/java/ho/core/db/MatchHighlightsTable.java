@@ -1,10 +1,11 @@
 package ho.core.db;
 
+import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.Matchdetails;
 import ho.core.util.HOLogger;
-import ho.module.matches.model.MatchHighlight;
-import ho.module.matches.model.Matchdetails;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Vector;
 
@@ -95,23 +96,7 @@ final class MatchHighlightsTable extends AbstractTable {
 
 			//Alle Highlights des Spieles holen
 			while (rs.next()) {
-				final MatchHighlight highlight = new MatchHighlight();
-
-				highlight.setGastTore(rs.getInt("GastTore"));
-				highlight.setHeimTore(rs.getInt("HeimTore"));
-				highlight.setHighlightTyp(rs.getInt("Typ"));
-				highlight.setMinute(rs.getInt("Minute"));
-				highlight.setSpielerID(rs.getInt("SpielerId"));
-				highlight.setSpielerName(DBManager.deleteEscapeSequences(rs.getString("SpielerName")));
-				highlight.setTeamID(rs.getInt("TeamId"));
-				highlight.setHighlightSubTyp(rs.getInt("SubTyp"));
-				highlight.setSpielerHeim(rs.getBoolean("SpielerHeim"));
-				highlight.setGehilfeID(rs.getInt("GehilfeID"));
-				highlight.setGehilfeName(DBManager.deleteEscapeSequences(rs.getString("GehilfeName")));
-				highlight.setGehilfeHeim(rs.getBoolean("GehilfeHeim"));
-				highlight.setEventText(DBManager.deleteEscapeSequences(rs.getString("EventText")));
-				
-				vMatchHighlights.add(highlight);
+				vMatchHighlights.add(createObject(rs));
 			}
 			return vMatchHighlights;
 
@@ -120,4 +105,52 @@ final class MatchHighlightsTable extends AbstractTable {
 		}
 		return new Vector<MatchHighlight>();
 	}
+	
+	
+	private MatchHighlight createObject(ResultSet rs) throws SQLException {
+		final MatchHighlight highlight = new MatchHighlight();
+
+		highlight.setMatchId(rs.getInt("MatchId"));
+		highlight.setGastTore(rs.getInt("GastTore"));
+		highlight.setHeimTore(rs.getInt("HeimTore"));
+		highlight.setHighlightTyp(rs.getInt("Typ"));
+		highlight.setMinute(rs.getInt("Minute"));
+		highlight.setSpielerID(rs.getInt("SpielerId"));
+		highlight.setSpielerName(DBManager.deleteEscapeSequences(rs.getString("SpielerName")));
+		highlight.setTeamID(rs.getInt("TeamId"));
+		highlight.setHighlightSubTyp(rs.getInt("SubTyp"));
+		highlight.setSpielerHeim(rs.getBoolean("SpielerHeim"));
+		highlight.setGehilfeID(rs.getInt("GehilfeID"));
+		highlight.setGehilfeName(DBManager.deleteEscapeSequences(rs.getString("GehilfeName")));
+		highlight.setGehilfeHeim(rs.getBoolean("GehilfeHeim"));
+		highlight.setEventText(DBManager.deleteEscapeSequences(rs.getString("EventText")));
+		
+		return highlight;
+	}
+	
+	Vector<MatchHighlight> getMatchHighlightsByTypIdAndPlayerId(int type, int playerId) {
+		final Vector<MatchHighlight> vMatchHighlights = new Vector<MatchHighlight>();
+
+		try {
+		String sql =
+			"SELECT * FROM "+getTableName()+" WHERE TYP="
+				+ type
+				+ " AND "
+				+ "SpielerId="
+				+ playerId
+				+ " ORDER BY Minute, HeimTore, GastTore";
+		ResultSet rs = adapter.executeQuery(sql);
+
+		rs.beforeFirst();
+
+		while (rs.next()) {
+			vMatchHighlights.add(createObject(rs));
+		}
+		return vMatchHighlights;
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(),e);
+		}
+		return new Vector<MatchHighlight>();
+	}
+	
 }

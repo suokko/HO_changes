@@ -1,6 +1,6 @@
 package ho.core.db;
 
-import ho.core.model.Finanzen;
+import ho.core.model.misc.Finanzen;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;

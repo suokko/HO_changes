@@ -4,7 +4,7 @@ package ho.core.gui.comp.table;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.model.PlayerOverviewModel;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.module.lineup.LineupColumnModel;
 

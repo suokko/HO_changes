@@ -1,8 +1,8 @@
 package ho.core.file.xml;
 
-import ho.core.model.Spieler;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.Matchdetails;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.player.Spieler;
 
 import java.util.Hashtable;
 

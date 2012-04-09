@@ -7,34 +7,34 @@ import ho.core.file.hrf.HRF;
 import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.gui.model.SpielerMatchCBItem;
-import ho.core.model.Basics;
 import ho.core.model.FactorObject;
-import ho.core.model.Finanzen;
 import ho.core.model.HOModel;
 import ho.core.model.HOParameter;
-import ho.core.model.ISpielerPosition;
-import ho.core.model.Spieler;
 import ho.core.model.Team;
 import ho.core.model.UserParameter;
-import ho.core.model.Verein;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.XtraData;
+import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.Matchdetails;
+import ho.core.model.match.MatchesHighlightsStat;
+import ho.core.model.match.MatchesOverviewRow;
+import ho.core.model.misc.Basics;
+import ho.core.model.misc.Finanzen;
+import ho.core.model.misc.Verein;
+import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
+import ho.core.model.series.Liga;
+import ho.core.model.series.Paarung;
 import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.ifa.IfaMatch;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.ISubstitution;
-import ho.module.matches.model.MatchHighlight;
-import ho.module.matches.model.MatchKurzInfo;
-import ho.module.matches.model.MatchLineup;
-import ho.module.matches.model.MatchLineupPlayer;
-import ho.module.matches.model.MatchLineupTeam;
-import ho.module.matches.model.Matchdetails;
-import ho.module.matches.model.MatchesHighlightsStat;
-import ho.module.matches.model.MatchesOverviewRow;
-import ho.module.series.Paarung;
 import ho.module.series.Spielplan;
-import ho.module.series.model.Liga;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.transfer.PlayerTransfer;
@@ -743,7 +743,7 @@ public class DBManager {
 	 * @param hrfId TODO Missing Constructuor Parameter Documentation
 	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveBasics(int hrfId, ho.core.model.Basics basics) {
+	public void saveBasics(int hrfId, ho.core.model.misc.Basics basics) {
 		((BasicsTable) getTable(BasicsTable.TABLENAME)).saveBasics(hrfId, basics);
 	}
 
@@ -1504,14 +1504,17 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	protected Vector<MatchHighlight> getMatchHighlights(int matchId) {
-		return (
-			(MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlights(
+		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlights(
 			matchId);
 	}
 
 	public MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
 		return MatchesOverviewQuery.getChancesStat(ownTeam, matchtype);
 	
+	}
+	
+	public Vector<MatchHighlight> getMatchHighlightsByTypIdAndPlayerId(int type, int playerId) {
+		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlightsByTypIdAndPlayerId(type,playerId);
 	}
 	/**
 	 * Speichert die Highlights zu einem Spiel
@@ -1711,11 +1714,11 @@ public class DBManager {
 				}
 
 				//Spieler
-				final ho.core.model.Spieler player =
+				final ho.core.model.player.Spieler player =
 					getSpielerAtDate(spielerid, filter);
 
 				//Matchdetails
-				final ho.module.matches.model.Matchdetails details =
+				final ho.core.model.match.Matchdetails details =
 					getMatchDetails(item.getMatchID());
 
 				//Stimmung und Selbstvertrauen

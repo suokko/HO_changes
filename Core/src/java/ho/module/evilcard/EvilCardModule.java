@@ -2,6 +2,7 @@ package ho.module.evilcard;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
+import ho.module.evilcard.gui.EvilCardPanel;
 
 import java.awt.event.KeyEvent;
 

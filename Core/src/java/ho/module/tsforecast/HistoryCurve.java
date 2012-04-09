@@ -1,9 +1,9 @@
 package ho.module.tsforecast;
 
-import ho.core.model.Basics;
 import ho.core.model.HOVerwaltung;
-import ho.module.matches.model.MatchLineup;
-import ho.module.series.model.Liga;
+import ho.core.model.match.MatchLineup;
+import ho.core.model.misc.Basics;
+import ho.core.model.series.Liga;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

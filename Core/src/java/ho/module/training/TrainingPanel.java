@@ -1,8 +1,8 @@
 package ho.module.training;
 
 import ho.core.gui.IRefreshable;
-import ho.core.model.Spieler;
 import ho.core.model.UserParameter;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.module.training.ui.MainPanel;
 import ho.module.training.ui.PlayerDetailPanel;

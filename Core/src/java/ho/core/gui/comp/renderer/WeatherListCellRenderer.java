@@ -7,7 +7,7 @@ import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.module.matches.model.IMatchDetails;
+import ho.core.model.match.IMatchDetails;
 
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;

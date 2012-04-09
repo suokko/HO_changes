@@ -8,10 +8,10 @@ import ho.core.gui.model.VAPTableModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.series.LigaTabellenEintrag;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.StringUtilities;
-import ho.module.series.model.LigaTabellenEintrag;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

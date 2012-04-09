@@ -3,8 +3,8 @@ package de.hattrickorganizer.model;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
+import ho.core.model.match.IMatchDetails;
 import ho.module.lineup.LoddarStatsCalculator;
-import ho.module.matches.model.IMatchDetails;
 
 import org.junit.Test;
 

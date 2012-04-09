@@ -11,6 +11,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.model.player.Spieler;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;

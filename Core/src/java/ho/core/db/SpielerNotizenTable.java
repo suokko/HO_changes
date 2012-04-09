@@ -35,7 +35,7 @@ final class SpielerNotizenTable extends AbstractTable {
 	 */
 	byte getSpielerUserPosFlag(int spielerId) {
 		if (spielerId <= 0) {
-			return ho.core.model.ISpielerPosition.UNKNOWN;
+			return ho.core.model.player.ISpielerPosition.UNKNOWN;
 		}
 
 		ResultSet rs = null;
@@ -50,14 +50,14 @@ final class SpielerNotizenTable extends AbstractTable {
 					return rs.getByte("userPos");
 				}
 				
-				return ho.core.model.ISpielerPosition.UNKNOWN;
+				return ho.core.model.player.ISpielerPosition.UNKNOWN;
 				
 			}
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getSpielerUserPosFlag: " + e);
 		}
 
-		return ho.core.model.ISpielerPosition.UNKNOWN;
+		return ho.core.model.player.ISpielerPosition.UNKNOWN;
 	}
 	
 	/**

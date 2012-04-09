@@ -2,7 +2,7 @@
 package ho.module.teamOfTheWeek;
 
 import ho.core.db.DBManager;
-import ho.module.series.Paarung;
+import ho.core.model.series.Paarung;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

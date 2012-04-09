@@ -5,7 +5,7 @@ import ho.core.gui.comp.table.HOColumnModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.PlayerColumn;
 import ho.core.gui.model.UserColumnFactory;
-import ho.core.model.Spieler;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 
 import java.util.Vector;
