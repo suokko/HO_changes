@@ -2,7 +2,7 @@
 package ho.core.util;
 
 
-import ho.core.constants.player.PlayerAbilities;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
@@ -30,63 +30,63 @@ public class Helper {
  
 	/** Gesamteinstufung */
 	public static final CBItem[] EINSTUFUNG = {
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.FORMIDABLE), PlayerAbilities.FORMIDABLE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.OUTSTANDING), PlayerAbilities.OUTSTANDING),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.BRILLIANT), PlayerAbilities.BRILLIANT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MAGNIFICENT), PlayerAbilities.MAGNIFICENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WORLD_CLASS), PlayerAbilities.WORLD_CLASS),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SUPERNATURAL), PlayerAbilities.SUPERNATURAL),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.TITANIC), PlayerAbilities.TITANIC),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXTRA_TERRESTRIAL), PlayerAbilities.EXTRA_TERRESTRIAL),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MYTHICAL), PlayerAbilities.MYTHICAL),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.MAGICAL), PlayerAbilities.MAGICAL),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.UTOPIAN), PlayerAbilities.UTOPIAN),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DIVINE), PlayerAbilities.DIVINE) };
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.NON_EXISTENT), PlayerAbility.NON_EXISTENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WRETCHED), PlayerAbility.WRETCHED),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.POOR), PlayerAbility.POOR),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WEAK), PlayerAbility.WEAK),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.INADEQUATE), PlayerAbility.INADEQUATE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.PASSABLE), PlayerAbility.PASSABLE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SOLID), PlayerAbility.SOLID),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXCELLENT), PlayerAbility.EXCELLENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.FORMIDABLE), PlayerAbility.FORMIDABLE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.OUTSTANDING), PlayerAbility.OUTSTANDING),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.BRILLIANT), PlayerAbility.BRILLIANT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MAGNIFICENT), PlayerAbility.MAGNIFICENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WORLD_CLASS), PlayerAbility.WORLD_CLASS),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SUPERNATURAL), PlayerAbility.SUPERNATURAL),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.TITANIC), PlayerAbility.TITANIC),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXTRA_TERRESTRIAL), PlayerAbility.EXTRA_TERRESTRIAL),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MYTHICAL), PlayerAbility.MYTHICAL),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MAGICAL), PlayerAbility.MAGICAL),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.UTOPIAN), PlayerAbility.UTOPIAN),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DIVINE), PlayerAbility.DIVINE) };
 
     /** Form */
 	public static final CBItem[] EINSTUFUNG_FORM = {
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT) };
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.NON_EXISTENT), PlayerAbility.NON_EXISTENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WRETCHED), PlayerAbility.WRETCHED),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.POOR), PlayerAbility.POOR),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WEAK), PlayerAbility.WEAK),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.INADEQUATE), PlayerAbility.INADEQUATE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.PASSABLE), PlayerAbility.PASSABLE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SOLID), PlayerAbility.SOLID),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXCELLENT), PlayerAbility.EXCELLENT) };
 
     /** Kondition */
 	public static final CBItem[] EINSTUFUNG_KONDITION = {
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.NON_EXISTENT), PlayerAbilities.NON_EXISTENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.FORMIDABLE), PlayerAbilities.FORMIDABLE) };
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.NON_EXISTENT), PlayerAbility.NON_EXISTENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WRETCHED), PlayerAbility.WRETCHED),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.POOR), PlayerAbility.POOR),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WEAK), PlayerAbility.WEAK),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.INADEQUATE), PlayerAbility.INADEQUATE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.PASSABLE), PlayerAbility.PASSABLE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SOLID), PlayerAbility.SOLID),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXCELLENT), PlayerAbility.EXCELLENT),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.FORMIDABLE), PlayerAbility.FORMIDABLE) };
 
     /** Form */
 	public static final CBItem[] EINSTUFUNG_TRAINER = {
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.DISASTROUS), PlayerAbilities.DISASTROUS),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WRETCHED), PlayerAbilities.WRETCHED),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.POOR), PlayerAbilities.POOR),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.WEAK), PlayerAbilities.WEAK),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.INADEQUATE), PlayerAbilities.INADEQUATE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.PASSABLE), PlayerAbilities.PASSABLE),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.SOLID), PlayerAbilities.SOLID),
-			new CBItem(PlayerHelper.getNameForSkill(PlayerAbilities.EXCELLENT), PlayerAbilities.EXCELLENT) };
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WRETCHED), PlayerAbility.WRETCHED),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.POOR), PlayerAbility.POOR),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WEAK), PlayerAbility.WEAK),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.INADEQUATE), PlayerAbility.INADEQUATE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.PASSABLE), PlayerAbility.PASSABLE),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SOLID), PlayerAbility.SOLID),
+			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXCELLENT), PlayerAbility.EXCELLENT) };
 
      /** Spielerpositionen */
 	public static final CBItem[] SPIELERPOSITIONEN = {

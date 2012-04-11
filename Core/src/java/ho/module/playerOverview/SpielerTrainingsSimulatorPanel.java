@@ -1,7 +1,7 @@
 // %857396099:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
-import ho.core.constants.player.PlayerAbilities;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
@@ -846,7 +846,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     }
     
     private void resetCB(JComboBox cb){
-    	Helper.markierenComboBox(cb, PlayerAbilities.DISASTROUS);
+    	Helper.markierenComboBox(cb, PlayerAbility.DISASTROUS);
     	cb.setEnabled(false);
     }
     /**

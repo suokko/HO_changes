@@ -3,6 +3,7 @@ package ho.module.lineup2;
 
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -15,7 +16,6 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
 
@@ -235,7 +235,7 @@ final class AufstellungsDetailPanel extends JPanel implements Refreshable, ItemL
 			// m_jpPredictionType.setText(RatingPredictionConfig.getInstancePredictionName());
 
 			float avXp = homodel.getAufstellung().getAverageExperience();
-			m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
+			m_jpDurchschnittErfahrung.setText(PlayerAbility.getNameForSkill(avXp));
 			m_jpDurchschnittErfahrung.setToolTipText((avXp < 0 ? "Need to set team captain!"
 					: "TeamXP formula by kopsterkespits")); // TODO L10N
 			m_jpAktuellesSystem.setText(Lineup.getNameForSystem(aufstellung.ermittelSystem()));
@@ -420,7 +420,7 @@ final class AufstellungsDetailPanel extends JPanel implements Refreshable, ItemL
 		case IMatchDetails.TAKTIK_MIDDLE:
 		case IMatchDetails.TAKTIK_WINGS:
 		case IMatchDetails.TAKTIK_LONGSHOTS:
-			return PlayerHelper.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
+			return PlayerAbility.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
 
 		default:
 			return HOVerwaltung.instance().getLanguageString("Unbestimmt");

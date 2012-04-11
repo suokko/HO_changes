@@ -22,7 +22,6 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
-import ho.core.util.PlayerHelper;
 import ho.module.lineup.substitution.ISubstitution;
 
 import java.io.BufferedWriter;

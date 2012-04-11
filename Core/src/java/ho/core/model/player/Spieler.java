@@ -13,17 +13,13 @@ import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
 import ho.core.model.FactorObject;
 import ho.core.model.FormulaFactors;
-import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.UserParameter;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.training.TrainingsWeekManager;
-import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -52,12 +48,6 @@ public final class Spieler {
 
     /** Name */
     private String m_sName = "";
-
-    /** Spielernotizen */
-    private String m_sNotiz;
-
-    /** SpezialitätName */
-    private String m_sSpezialitaet = "";
 
     /** TeamInfoSmilie Dateiname */
     private String m_sTeamInfoSmilie;
@@ -246,87 +236,6 @@ public final class Spieler {
     }
 
     /**
-     * Erstellt einen Spieler aus der Datenbank
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     */
-    public Spieler(java.sql.ResultSet rs) {
-        try {
-            m_iSpielerID = rs.getInt("SpielerID");
-            m_sName = DBManager.deleteEscapeSequences(rs.getString("Name"));
-            m_iAlter = rs.getInt("Age");
-            m_iAgeDays = rs.getInt("AgeDays");
-            m_iKondition = rs.getInt("Kondition");
-            m_iForm = rs.getInt("Form");
-            m_iTorwart = rs.getInt("Torwart");
-            m_iVerteidigung = rs.getInt("Verteidigung");
-            m_iSpielaufbau = rs.getInt("Spielaufbau");
-            m_iPasspiel = rs.getInt("Passpiel");
-            m_iFluegelspiel = rs.getInt("Fluegel");
-            m_iTorschuss = rs.getInt("Torschuss");
-            m_iStandards = rs.getInt("Standards");
-            m_iSpezialitaet = rs.getInt("iSpezialitaet");
-            m_sSpezialitaet = DBManager.deleteEscapeSequences(rs.getString("sSpezialitaet"));
-            m_iCharakter = rs.getInt("iCharakter");
-            m_iAnsehen = rs.getInt("iAnsehen");
-            m_iAgressivitaet = rs.getInt("iAgressivitaet");
-            m_iErfahrung = rs.getInt("Erfahrung");
-            m_iLoyalty = rs.getInt("Loyalty");
-            m_bHomeGrown = rs.getBoolean("HomeGrown");
-            m_iFuehrung = rs.getInt("Fuehrung");
-            m_iGehalt = rs.getInt("Gehalt");
-            m_iNationalitaet = rs.getInt("Land");
-            m_iTSI = rs.getInt("Marktwert");
-
-            //TSI, alles vorher durch 1000 teilen
-            m_clhrfDate = rs.getTimestamp("Datum");
-
-            if (m_clhrfDate.before(DBManager.TSIDATE)) {
-                m_iTSI /= 1000d;
-            }
-
-            //Subskills
-            m_dSubTorwart = rs.getFloat("SubTorwart");
-            m_dSubVerteidigung = rs.getFloat("SubVerteidigung");
-            m_dSubSpielaufbau = rs.getFloat("SubSpielaufbau");
-            m_dSubPasspiel = rs.getFloat("SubPasspiel");
-            m_dSubFluegelspiel = rs.getFloat("SubFluegel");
-            m_dSubTorschuss = rs.getFloat("SubTorschuss");
-            m_dSubStandards = rs.getFloat("SubStandards");
-
-            //Offset
-            m_dTrainingsOffsetTorwart = rs.getFloat("OffsetTorwart");
-            m_dTrainingsOffsetVerteidigung = rs.getFloat("OffsetVerteidigung");
-            m_dTrainingsOffsetSpielaufbau = rs.getFloat("OffsetSpielaufbau");
-            m_dTrainingsOffsetPasspiel = rs.getFloat("OffsetPasspiel");
-            m_dTrainingsOffsetFluegelspiel = rs.getFloat("OffsetFluegel");
-            m_dTrainingsOffsetTorschuss = rs.getFloat("OffsetTorschuss");
-            m_dTrainingsOffsetStandards = rs.getFloat("OffsetStandards");
-
-            m_iGelbeKarten = rs.getInt("GelbeKarten");
-            m_iVerletzt = rs.getInt("Verletzt");
-            m_iToreFreund = rs.getInt("ToreFreund");
-            m_iToreLiga = rs.getInt("ToreLiga");
-            m_iTorePokal = rs.getInt("TorePokal");
-            m_iToreGesamt = rs.getInt("ToreGesamt");
-            m_iHattrick = rs.getInt("Hattrick");
-            m_iBewertung = rs.getInt("Bewertung");
-            m_iTrainerTyp = rs.getInt("TrainerTyp");
-            m_iTrainer = rs.getInt("Trainer");
-
-            m_iTrikotnummer = rs.getInt("PlayerNumber");
-            m_iTransferlisted = rs.getInt("TransferListed");
-            m_iLaenderspiele = rs.getInt("Caps");
-            m_iU20Laenderspiele = rs.getInt("CapsU20");
-
-            // Training block
-            m_bTrainingBlock = rs.getBoolean("TrainingBlock");
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),e);
-        }
-    }
-
-    /**
      * Erstellt einen Spieler aus den Properties einer HRF Datei
      *
      * @param properties TODO Missing Constructuor Parameter Documentation
@@ -353,7 +262,6 @@ public final class Spieler {
         m_iTorschuss = Integer.parseInt(properties.getProperty("mal", "0"));
         m_iStandards = Integer.parseInt(properties.getProperty("fas", "0"));
         m_iSpezialitaet = Integer.parseInt(properties.getProperty("speciality", "0"));
-        m_sSpezialitaet = properties.getProperty("specialitylabel", "");
         m_iCharakter = Integer.parseInt(properties.getProperty("gentleness", "0"));
         m_iAnsehen = Integer.parseInt(properties.getProperty("honesty", "0"));
         m_iAgressivitaet = Integer.parseInt(properties.getProperty("aggressiveness", "0"));
@@ -883,6 +791,9 @@ public final class Spieler {
         return m_clhrfDate;
     }
 
+    public void setHrfDate(Timestamp timestamp){
+    	m_clhrfDate = timestamp;
+    }
     /**
      * liefert die Stärke für die IdealPosition
      *
@@ -1122,52 +1033,12 @@ public final class Spieler {
     }
 
     /**
-     * Setter for property m_iBonus.
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-
-    /* public void setBonus (int m_iBonus)
-       {
-           this.m_iBonus = m_iBonus;
-       }
-     */
-
-    /**
      * Getter for property m_iNationalitaet.
      *
      * @return Value of property m_iNationalitaet.
      */
     public int getNationalitaet() {
         return m_iNationalitaet;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param notiz TODO Missing Method Parameter Documentation
-     */
-    public void setNotiz(String notiz) {
-        if (notiz == null) {
-            notiz = "";
-        }
-
-        m_sNotiz = notiz;
-        DBManager.instance().saveSpielerNotiz(m_iSpielerID, notiz);
-    }
-
-    /**
-     * liefert User Notiz zum Spieler
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public String getNotiz() {
-        if (m_sNotiz == null) {
-            m_sNotiz = DBManager.instance().getSpielerNotiz(m_iSpielerID);
-        }
-
-        //database.DBZugriff.instance ().getSpielerNotiz ( m_iSpielerID );
-        return m_sNotiz;
     }
 
     /**
@@ -1237,24 +1108,6 @@ public final class Spieler {
      */
     public int getSpezialitaet() {
         return m_iSpezialitaet;
-    }
-
-    /**
-     * Setter for property m_sSpezialitaet.
-     *
-     * @param m_sSpezialitaet New value of property m_sSpezialitaet.
-     */
-    public void setSpezialitaetString(java.lang.String m_sSpezialitaet) {
-        this.m_sSpezialitaet = m_sSpezialitaet;
-    }
-
-    /**
-     * Getter for property m_sSpezialitaet.
-     *
-     * @return Value of property m_sSpezialitaet.
-     */
-    public java.lang.String getSpezialitaetString() {
-        return m_sSpezialitaet;
     }
 
     /**
@@ -1372,6 +1225,32 @@ public final class Spieler {
         }
     }
 
+    public void setSubskill4Pos(int skill, float value) {
+        switch (skill) {
+            case PlayerSkill.KEEPER:
+                 m_dSubTorwart= value;
+                 break;
+            case PlayerSkill.PLAYMAKING:
+                m_dSubSpielaufbau= value;
+                break;
+            case PlayerSkill.DEFENDING:
+                m_dSubVerteidigung= value;
+                break;
+            case PlayerSkill.PASSING:
+                m_dSubPasspiel= value;
+                break;
+            case PlayerSkill.WINGER:
+                m_dSubFluegelspiel= value;
+                break;
+            case PlayerSkill.SCORING:
+                m_dSubTorschuss= value;
+                break;
+            case PlayerSkill.SET_PIECES:
+                m_dSubStandards= value;
+                break;
+        }
+    }
+    
     /**
      * berechnet den Subskill pro position
      *
@@ -2339,7 +2218,7 @@ public final class Spieler {
      *
      * @return 			the player strength on this position
      */
-    public float calcPosValue(FactorObject fo, boolean useForm) {
+    float calcPosValue(FactorObject fo, boolean useForm) {
         if ((fo == null) || (fo.getSum() == 0.0f)) {
             return -1.0f;
         }
@@ -2555,7 +2434,9 @@ public final class Spieler {
      * @return TODO Missing Return Method Documentation
      */
     protected boolean check4SkillUp(int skill, Spieler oldPlayer) {
-        return PlayerHelper.check4SkillUp(skill, oldPlayer, this);
+    	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) 
+        	return oldPlayer.getValue4Skill4(skill) < getValue4Skill4(skill);
+        return false;
     }
 
     /**

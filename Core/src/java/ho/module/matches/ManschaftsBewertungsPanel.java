@@ -1,6 +1,7 @@
 // %2517784300:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
@@ -10,7 +11,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.Matchdetails;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -339,7 +339,7 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             }
 
             String temp;
-            temp = PlayerHelper.getNameForSkill(details.getHomeGesamtstaerke(false), false, true);
+            temp = PlayerAbility.getNameForSkill(details.getHomeGesamtstaerke(false), false, true);
 
             if (ho.core.model.UserParameter.instance().zahlenFuerSkill) {
                 temp += (" ("
@@ -347,7 +347,7 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             }
 
             m_clHeimGesamt.setText(temp);
-            temp = PlayerHelper.getNameForSkill(details.getGuestGesamtstaerke(false), false, true);
+            temp = PlayerAbility.getNameForSkill(details.getGuestGesamtstaerke(false), false, true);
 
             if (ho.core.model.UserParameter.instance().zahlenFuerSkill) {
                 temp += (" ("
@@ -355,20 +355,20 @@ class ManschaftsBewertungsPanel extends ImagePanel /*implements ActionListener*/
             }
 
             m_clGastGesamt.setText(temp);
-            m_clHeimMidfield.setText(PlayerHelper.getNameForSkill(true, details.getHomeMidfield()));
-            m_clGastMidfield.setText(PlayerHelper.getNameForSkill(true, details.getGuestMidfield()));
-            m_clHeimRightDef.setText(PlayerHelper.getNameForSkill(true, details.getHomeRightDef()));
-            m_clGastRightDef.setText(PlayerHelper.getNameForSkill(true, details.getGuestRightDef()));
-            m_clHeimCenterDef.setText(PlayerHelper.getNameForSkill(true, details.getHomeMidDef()));
-            m_clGastCenterDef.setText(PlayerHelper.getNameForSkill(true, details.getGuestMidDef()));
-            m_clHeimLeftDef.setText(PlayerHelper.getNameForSkill(true, details.getHomeLeftDef()));
-            m_clGastLeftDef.setText(PlayerHelper.getNameForSkill(true, details.getGuestLeftDef()));
-            m_clHeimRightAtt.setText(PlayerHelper.getNameForSkill(true, details.getHomeRightAtt()));
-            m_clGastRightAtt.setText(PlayerHelper.getNameForSkill(true, details.getGuestRightAtt()));
-            m_clHeimCenterAtt.setText(PlayerHelper.getNameForSkill(true, details.getHomeMidAtt()));
-            m_clGastCenterAtt.setText(PlayerHelper.getNameForSkill(true, details.getGuestMidAtt()));
-            m_clHeimLeftAtt.setText(PlayerHelper.getNameForSkill(true, details.getHomeLeftAtt()));
-            m_clGastLeftAtt.setText(PlayerHelper.getNameForSkill(true, details.getGuestLeftAtt()));
+            m_clHeimMidfield.setText(PlayerAbility.getNameForSkill(true, details.getHomeMidfield()));
+            m_clGastMidfield.setText(PlayerAbility.getNameForSkill(true, details.getGuestMidfield()));
+            m_clHeimRightDef.setText(PlayerAbility.getNameForSkill(true, details.getHomeRightDef()));
+            m_clGastRightDef.setText(PlayerAbility.getNameForSkill(true, details.getGuestRightDef()));
+            m_clHeimCenterDef.setText(PlayerAbility.getNameForSkill(true, details.getHomeMidDef()));
+            m_clGastCenterDef.setText(PlayerAbility.getNameForSkill(true, details.getGuestMidDef()));
+            m_clHeimLeftDef.setText(PlayerAbility.getNameForSkill(true, details.getHomeLeftDef()));
+            m_clGastLeftDef.setText(PlayerAbility.getNameForSkill(true, details.getGuestLeftDef()));
+            m_clHeimRightAtt.setText(PlayerAbility.getNameForSkill(true, details.getHomeRightAtt()));
+            m_clGastRightAtt.setText(PlayerAbility.getNameForSkill(true, details.getGuestRightAtt()));
+            m_clHeimCenterAtt.setText(PlayerAbility.getNameForSkill(true, details.getHomeMidAtt()));
+            m_clGastCenterAtt.setText(PlayerAbility.getNameForSkill(true, details.getGuestMidAtt()));
+            m_clHeimLeftAtt.setText(PlayerAbility.getNameForSkill(true, details.getHomeLeftAtt()));
+            m_clGastLeftAtt.setText(PlayerAbility.getNameForSkill(true, details.getGuestLeftAtt()));
 
             m_clHeimGesamt.setIcon(ImageUtilities.getImageIcon4Veraenderung((int) (details.getHomeGesamtstaerke(false)
                                                                                                - details.getGuestGesamtstaerke(false)),true));

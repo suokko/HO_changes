@@ -61,7 +61,7 @@ public class DBManager {
 
 	//Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** database version */
-	private static final int DBVersion = 13;
+	private static final int DBVersion = 14;
 
 	/** 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -73,7 +73,6 @@ public class DBManager {
 
 	/** DB-Adapter */
 	private JDBCAdapter m_clJDBCAdapter = null; //new JDBCAdapter();
-	private DBAdapter m_clDBAdapter = null;
 
 	/** all Tables */
 	private final Hashtable<String, AbstractTable> tables = new Hashtable<String, AbstractTable>();
@@ -220,17 +219,6 @@ public class DBManager {
 	//Accessor
 	public JDBCAdapter getAdapter() {
 		return m_clJDBCAdapter;
-	}
-
-	/**
-	 * Get an DBAdapter instance (lazy initialisation).
-	 * @return an DBAdapter instance
-	 */
-	public DBAdapter getDBAdapter() {
-		if (m_clDBAdapter == null) {
-			m_clDBAdapter = new DBAdapter();
-		}
-		return m_clDBAdapter;
 	}
 
 	/**

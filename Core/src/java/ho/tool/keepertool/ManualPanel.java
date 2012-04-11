@@ -2,8 +2,8 @@
 package ho.tool.keepertool;
 
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.util.PlayerHelper;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -83,7 +83,7 @@ class ManualPanel extends JPanel {
         buttonPanel.add(label(""));
 
         for (int i = 1; i < 9; i++) {
-            form.addItem(PlayerHelper.getNameForSkill(i, false));
+            form.addItem(PlayerAbility.getNameForSkill(i, false));
         }
 
         form.addItemListener(new ItemListener() {

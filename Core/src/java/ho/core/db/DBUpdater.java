@@ -59,6 +59,8 @@ final class DBUpdater {
 						updateDBv12();
 					case 12:
 						updateDBv13(DBVersion, version);
+					case 13:
+						updateDBv14();
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -267,6 +269,7 @@ final class DBUpdater {
 			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
 		else
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "+IfaMatchTable.TABLENAME);
+
 		// Always set field DBVersion to the new value as last action.
 		// Do not use DBVersion but the value, as update packs might
 		// do version checking again before applying!
@@ -274,15 +277,15 @@ final class DBUpdater {
 			 dbZugriff.saveUserParameter("DBVersion", 13); 
 		} 
 	}
+	
+	private void updateDBv14() {
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sSpezialitaet");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sCharakter");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
+       dbZugriff.saveUserParameter("DBVersion", 14); 
+	}
 
-//	private void changeColumnType(String table,String oldName, String newName, String type) {
-//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN TEMPCOLUMN "+ type);
-//		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET TEMPCOLUMN="+oldName);
-//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN "+oldName);
-//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" ADD COLUMN "+newName+" "+ type);
-//		m_clJDBCAdapter.executeUpdate("UPDATE "+table+" SET "+newName+"=TEMPCOLUMN");
-//		m_clJDBCAdapter.executeUpdate("ALTER TABLE "+table+" DROP COLUMN TEMPCOLUMN");
-//}
 	
 	/**
 	 * Automatic update of User Configuration parameters
