@@ -1,6 +1,7 @@
 // %1751165603:de.hattrickorganizer.gui.matches%
 package ho.module.matches;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -15,7 +16,6 @@ import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -555,13 +555,13 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             //Skill
             if (details.getHomeTacticType() != 0) {
-                m_clHeimTaktikskill.setText(PlayerHelper.getNameForSkill(details.getHomeTacticSkill()));
+                m_clHeimTaktikskill.setText(PlayerAbility.getNameForSkill(details.getHomeTacticSkill()));
             } else {
                 m_clHeimTaktikskill.setText("");
             }
 
             if (details.getGuestTacticType() != 0) {
-                m_clGastTaktikskill.setText(PlayerHelper.getNameForSkill(details.getGuestTacticSkill()));
+                m_clGastTaktikskill.setText(PlayerAbility.getNameForSkill(details.getGuestTacticSkill()));
             } else {
                 m_clGastTaktikskill.setText("");
             }

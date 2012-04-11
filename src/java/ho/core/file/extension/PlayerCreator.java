@@ -1,5 +1,6 @@
 package ho.core.file.extension;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.epv.EPVData;
@@ -14,7 +15,6 @@ import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingsManager;
 import ho.core.util.HOLogger;
-import ho.core.util.PlayerHelper;
 import ho.module.training.FutureTrainingWeek;
 
 import java.io.BufferedWriter;
@@ -211,7 +211,7 @@ public class PlayerCreator extends XMLCreator {
 				skillupTag.appendChild(createNode(doc,"skill", skillup.getType()+""));
 				skillupTag.appendChild(createNode(doc,"skillDesc", PlayerSkill.toString(skillup.getType())));
 				skillupTag.appendChild(createNode(doc,"value", skillup.getValue()+""));
-				skillupTag.appendChild(createNode(doc,"valueDesc", PlayerHelper.getNameForSkill(skillup.getValue(), false)));
+				skillupTag.appendChild(createNode(doc,"valueDesc", PlayerAbility.getNameForSkill(skillup.getValue(), false)));
 			}
 		}
 	}

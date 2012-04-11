@@ -6,6 +6,7 @@
  */
 package ho.core.util;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
@@ -163,7 +164,7 @@ public class HelperWrapper {
     }
 
     public String getNameForBewertung(int value, boolean showNumber, boolean isMatch) {
-        return PlayerHelper.getNameForSkill(value, showNumber, isMatch);
+        return PlayerAbility.getNameForSkill(value, showNumber, isMatch);
     }
 
     public String getNameForMatchTyp(int typ) {
@@ -175,7 +176,7 @@ public class HelperWrapper {
     }
 
     public String getNameForSkill(int value, boolean showNumber) {
-        return PlayerHelper.getNameForSkill(value, showNumber);
+        return PlayerAbility.getNameForSkill(value, showNumber);
     }
 
     public String getNameForTaktik(int typ) {

@@ -1,9 +1,9 @@
 package ho.module.lineup2;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.Team;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -108,16 +108,16 @@ public class FormationExperienceView extends JPanel {
 
 	private void setValues() {
 		Team team = HOVerwaltung.instance().getModel().getTeam();
-		this.entryXP550.setText(PlayerHelper.getNameForSkill(team.getFormationExperience550()));
-		this.entryXP541.setText(PlayerHelper.getNameForSkill(team.getFormationExperience541()));
-		this.entryXP532.setText(PlayerHelper.getNameForSkill(team.getFormationExperience532()));
-		this.entryXP523.setText(PlayerHelper.getNameForSkill(team.getFormationExperience523()));
-		this.entryXP451.setText(PlayerHelper.getNameForSkill(team.getFormationExperience451()));
-		this.entryXP442.setText(PlayerHelper.getNameForSkill(team.getFormationExperience442()));
-		this.entryXP433.setText(PlayerHelper.getNameForSkill(team.getFormationExperience433()));
-		this.entryXP352.setText(PlayerHelper.getNameForSkill(team.getFormationExperience352()));
-		this.entryXP343.setText(PlayerHelper.getNameForSkill(team.getFormationExperience343()));
-		this.entryXP253.setText(PlayerHelper.getNameForSkill(team.getFormationExperience253()));
+		this.entryXP550.setText(PlayerAbility.getNameForSkill(team.getFormationExperience550()));
+		this.entryXP541.setText(PlayerAbility.getNameForSkill(team.getFormationExperience541()));
+		this.entryXP532.setText(PlayerAbility.getNameForSkill(team.getFormationExperience532()));
+		this.entryXP523.setText(PlayerAbility.getNameForSkill(team.getFormationExperience523()));
+		this.entryXP451.setText(PlayerAbility.getNameForSkill(team.getFormationExperience451()));
+		this.entryXP442.setText(PlayerAbility.getNameForSkill(team.getFormationExperience442()));
+		this.entryXP433.setText(PlayerAbility.getNameForSkill(team.getFormationExperience433()));
+		this.entryXP352.setText(PlayerAbility.getNameForSkill(team.getFormationExperience352()));
+		this.entryXP343.setText(PlayerAbility.getNameForSkill(team.getFormationExperience343()));
+		this.entryXP253.setText(PlayerAbility.getNameForSkill(team.getFormationExperience253()));
 
 		this.entryXP550.setFGColor(getEntryColor(team.getFormationExperience550()));
 		this.entryXP541.setFGColor(getEntryColor(team.getFormationExperience541()));
