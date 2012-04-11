@@ -1,6 +1,7 @@
 // %119582289:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.gui.IRefreshable;
@@ -18,7 +19,6 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 import ho.module.matches.SpielePanel;
 
 import java.awt.BorderLayout;
@@ -535,47 +535,47 @@ public class SpieleStatistikPanel extends ImagePanel
                     // (int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidfield() - 1) / 4) + 1;
                     statistikWerte[1][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeRightDef() - 1) / 4) + 1;
                     statistikWerte[2][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidDef() - 1) / 4) + 1;
                     statistikWerte[3][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeLeftDef() - 1) / 4) + 1;
                     statistikWerte[4][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeRightAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeRightAtt() - 1) / 4) + 1;
                     statistikWerte[5][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeMidAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeMidAtt() - 1) / 4) + 1;
                     statistikWerte[6][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getHomeLeftAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getHomeLeftAtt() - 1) / 4) + 1;
                     statistikWerte[7][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     temp = details.getHomeGesamtstaerke(false);
                     sublevel = ((int) temp) % 4;
                     statistikWerte[8][i] = (((int) temp - 1) / 4) + 1
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     statistikWerte[11][i] = details.getHomeHatStats();
                     // Calculate and return the LoddarStats rating
                     statistikWerte[12][i] = details.getHomeLoddarStats();
@@ -585,47 +585,47 @@ public class SpieleStatistikPanel extends ImagePanel
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidfield() - 1) / 4) + 1;
                     statistikWerte[1][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestRightDef() - 1) / 4) + 1;
                     statistikWerte[2][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidDef() - 1) / 4) + 1;
                     statistikWerte[3][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftDef()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestLeftDef() - 1) / 4) + 1;
                     statistikWerte[4][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestRightAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestRightAtt() - 1) / 4) + 1;
                     statistikWerte[5][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestMidAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestMidAtt() - 1) / 4) + 1;
                     statistikWerte[6][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     sublevel = (details.getGuestLeftAtt()) % 4;
 
                     //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
                     bewertungwert = ((details.getGuestLeftAtt() - 1) / 4) + 1;
                     statistikWerte[7][i] = bewertungwert
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     temp = details.getGuestGesamtstaerke(false);
                     sublevel = ((int) temp) % 4;
                     statistikWerte[8][i] = (((int) temp - 1) / 4) + 1
-                                           + PlayerHelper.getValue4Sublevel(sublevel);
+                                           + PlayerAbility.getValue4Sublevel(sublevel);
                     statistikWerte[11][i] = details.getAwayHatStats();
                     // Calculate and return the LoddarStats rating
                     statistikWerte[12][i] = details.getAwayLoddarStats();

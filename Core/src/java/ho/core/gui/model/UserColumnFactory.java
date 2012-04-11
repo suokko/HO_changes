@@ -1,5 +1,6 @@
 package ho.core.gui.model;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.epv.EPVData;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -22,7 +23,6 @@ import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
-import ho.core.util.PlayerHelper;
 import ho.core.util.StringUtilities;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
@@ -161,7 +161,7 @@ final public class UserColumnFactory {
 				final int teamid = HOVerwaltung.instance().getModel()
                 .getBasics().getTeamId();
 				int tacticSkill = (matchdetails.getHeimId() == teamid)?matchdetails.getHomeTacticSkill():matchdetails.getGuestTacticSkill(); 
-				return new ColorLabelEntry(PlayerHelper.getNameForSkill(tacticSkill), ColorLabelEntry.FG_STANDARD,
+				return new ColorLabelEntry(PlayerAbility.getNameForSkill(tacticSkill), ColorLabelEntry.FG_STANDARD,
                         ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 			}
 		};

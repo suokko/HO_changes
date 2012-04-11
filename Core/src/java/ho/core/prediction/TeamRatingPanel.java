@@ -1,12 +1,12 @@
 // %1301666028:de.hattrickorganizer.gui.matchprediction%
 package ho.core.prediction;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.Matchdetails;
 import ho.core.prediction.engine.TeamData;
 import ho.core.prediction.engine.TeamRatings;
-import ho.core.util.PlayerHelper;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -207,7 +207,7 @@ class TeamRatingPanel extends JPanel implements ItemListener {
         levels = new ArrayList<RatingItem>();
 
         for (int i = 1; i < 21; i++) {
-            levels.add(new RatingItem(PlayerHelper.getNameForSkill(i, false), i));
+            levels.add(new RatingItem(PlayerAbility.getNameForSkill(i, false), i));
         }
     }
 

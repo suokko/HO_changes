@@ -1,13 +1,13 @@
 // %2020218070:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.misc.Finanzen;
 import ho.core.model.misc.Verein;
-import ho.core.util.PlayerHelper;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -61,7 +61,7 @@ final class MiscPanel extends JPanel {
 
         DecimalFormat df = new DecimalFormat("###,###,###,##0");
 
-        m_jpJugend.setText(PlayerHelper.getNameForSkill(verein.getJugend()));
+        m_jpJugend.setText(PlayerAbility.getNameForSkill(verein.getJugend()));
         m_jpFansAnzahl.setText(verein.getFans() + "");
         m_jpFans.setText(Finanzen.getNameForLevelFans(finanzen.getSupporter()));
         m_jpSponsoren.setText(Finanzen.getNameForLevelSponsors(finanzen.getSponsoren()));

@@ -4,8 +4,6 @@ import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
 import ho.core.file.LanguageFiles;
-import ho.core.file.extension.ExtensionListener;
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.SplashFrame;
 import ho.core.gui.model.UserColumnController;
@@ -208,7 +206,8 @@ public class HO {
 		// Startbild weg
 		interuptionsWindow.setVisible(false);
 
-		new ExtensionListener().run();
+		//version 1.432 seems to be dead code
+		//new ExtensionListener().run();
 		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
 
     }

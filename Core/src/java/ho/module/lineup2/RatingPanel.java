@@ -1,9 +1,9 @@
 package ho.module.lineup2;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -98,7 +98,7 @@ public class RatingPanel extends JPanel {
 	}
 
 	private String getNameForSkill(double skill) {
-		return PlayerHelper.getNameForSkill(getIntValue4Rating(skill), false, true);
+		return PlayerAbility.getNameForSkill(getIntValue4Rating(skill), false, true);
 	}
 
 	// TODO move to static utility class (same method in Lineup is non-static)

@@ -3,6 +3,7 @@ package ho.module.lineup;
 
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -16,7 +17,6 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
-import ho.core.util.PlayerHelper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -223,19 +223,19 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             //Erst mal leeren
 			//aufstellung.updateRatingPredictionConfig();
 			m_jpRating.clear();
-			m_jpRating.setTopRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftDefenseRating())),
+			m_jpRating.setTopRightText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftDefenseRating())),
 					false, true));
-			m_jpRating.setTopCenterText(PlayerHelper.getNameForSkill(
+			m_jpRating.setTopCenterText(PlayerAbility.getNameForSkill(
 					(aufstellung.getIntValue4Rating(aufstellung.getCentralDefenseRating())), false, true));
-			m_jpRating.setTopLeftText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightDefenseRating())),
+			m_jpRating.setTopLeftText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightDefenseRating())),
 					false, true));
-			m_jpRating.setMiddleText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getMidfieldRating())), false,
+			m_jpRating.setMiddleText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getMidfieldRating())), false,
 					true));
-			m_jpRating.setBottomRightText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftAttackRating())),
+			m_jpRating.setBottomRightText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftAttackRating())),
 					false, true));
-			m_jpRating.setBottomCenterText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
+			m_jpRating.setBottomCenterText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
 					.getCentralAttackRating())), false, true));
-			m_jpRating.setBottomLeftText(PlayerHelper.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightAttackRating())),
+			m_jpRating.setBottomLeftText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightAttackRating())),
 					false, true));
             m_jpRating.setTopRight(aufstellung.getLeftDefenseRating());
             m_jpRating.setTopCenter(aufstellung.getCentralDefenseRating());
@@ -273,7 +273,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 //			m_jpPredictionType.setText(RatingPredictionConfig.getInstancePredictionName());
 
             float avXp = homodel.getAufstellung().getAverageExperience();
-            m_jpDurchschnittErfahrung.setText(PlayerHelper.getNameForSkill(avXp));
+            m_jpDurchschnittErfahrung.setText(PlayerAbility.getNameForSkill(avXp));
             m_jpDurchschnittErfahrung.setToolTipText(
             		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
 
@@ -495,7 +495,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             case IMatchDetails.TAKTIK_MIDDLE:
             case IMatchDetails.TAKTIK_WINGS:
             case IMatchDetails.TAKTIK_LONGSHOTS:
-                return PlayerHelper.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
+                return PlayerAbility.getNameForSkill(aufstellung.getTacticLevel(getTaktik()));
 
             default:
                 return HOVerwaltung.instance().getLanguageString("Unbestimmt");
