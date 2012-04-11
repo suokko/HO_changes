@@ -3,7 +3,6 @@ package ho.module.playeranalysis.experience;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HOLogger;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,9 +13,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.StreamTokenizer;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -67,7 +63,7 @@ Spielertabelle() {
 	mouseListener = null;
 	aktualisieren();
 	cm = new SpielertabellenSpalte();
-	Spaltenkonfiguration spaltenkonfiguration[] = KonfigurationLaden();
+	Spaltenkonfiguration spaltenkonfiguration[] = null;//KonfigurationLaden();
 	if (spaltenkonfiguration == null) {
 		int n = spaltennamen.length;
 		for (int i = 0; i < n; i++)
@@ -533,7 +529,7 @@ Spielertabelle() {
 
 		@Override
 		public void windowClosing(WindowEvent event) {
-			KonfigurationSpeichern();
+			//KonfigurationSpeichern();
 		}
 
 		public WindowClosingAdapter() {
@@ -602,91 +598,91 @@ Spielertabelle() {
 				+ "ExperienceViewer.cfg";
 	}
 
-	Spaltenkonfiguration[] KonfigurationLaden() {
-		Spaltenkonfiguration ret[] = null;
-		try {
-			int index[] = new int[spaltennamen.length];
-			int weite[] = new int[spaltennamen.length];
-			int n = 0;
-			StreamTokenizer st = new StreamTokenizer(new FileReader(
-					gibKonfigurationsdateiname()));
-			st.slashSlashComments(true);
-			st.parseNumbers();
-			st.eolIsSignificant(true);
-			boolean istIndex = true;
-			int tval;
-			while ((tval = st.nextToken()) != -1) {
-				if (n >= spaltennamen.length)
-					break;
-				if (tval == -2) {
-					if (istIndex) {
-						index[n] = (int) st.nval;
-						istIndex = false;
-					} else {
-						istIndex = true;
-						int w = (int) st.nval;
-						weite[n] = Math.max(0, Math.min(400, w));
-					}
-					continue;
-				}
-				if (tval != 10)
-					continue;
-				if (!istIndex)
-					break;
-				n++;
-			}
-			if (n == spaltennamen.length) {
-				int i;
-				for (i = 0; i < n; i++) {
-					int j;
-					for (j = 0; j < n; j++)
-						if (index[j] == i)
-							break;
-
-					if (j == n)
-						break;
-				}
-
-				if (i == n) {
-					ret = new Spaltenkonfiguration[n];
-					for (i = 0; i < n; i++) {
-						ret[i] = new Spaltenkonfiguration();
-						ret[i].index = index[i];
-						ret[i].weite = weite[i];
-					}
-
-				}
-			}
-		} catch (Exception e) {
-			HOLogger.instance().error(this.getClass(), e);
-		}
-		return ret;
-	}
-
-	void KonfigurationSpeichern() {
-		try {
-			TableColumnModel tcm = getColumnModel();
-			FileWriter fileWriter = new FileWriter(
-					gibKonfigurationsdateiname(), false);
-			int n = tcm.getColumnCount();
-			for (int i = 0; i < n; i++) {
-				TableColumn p = tcm.getColumn(i);
-				String out = p.getModelIndex() + " " + p.getWidth() + "\r\n";
-				fileWriter.write(out);
-			}
-
-			fileWriter.flush();
-			fileWriter.close();
-		} catch (Exception e) {
-			HOLogger.instance().error(this.getClass(), e);
-		}
-	}
-
-	static {
-		experienceViewerVerzeichnis = System.getProperty("user.dir")
-				+ File.separator + "hoplugins" + File.separator
-				+ "experienceViewer";
-		spracheVerzeichnis = experienceViewerVerzeichnis + File.separator
-				+ "Sprache";
-	}
+//	Spaltenkonfiguration[] KonfigurationLaden() {
+//		Spaltenkonfiguration ret[] = null;
+//		try {
+//			int index[] = new int[spaltennamen.length];
+//			int weite[] = new int[spaltennamen.length];
+//			int n = 0;
+//			StreamTokenizer st = new StreamTokenizer(new FileReader(
+//					gibKonfigurationsdateiname()));
+//			st.slashSlashComments(true);
+//			st.parseNumbers();
+//			st.eolIsSignificant(true);
+//			boolean istIndex = true;
+//			int tval;
+//			while ((tval = st.nextToken()) != -1) {
+//				if (n >= spaltennamen.length)
+//					break;
+//				if (tval == -2) {
+//					if (istIndex) {
+//						index[n] = (int) st.nval;
+//						istIndex = false;
+//					} else {
+//						istIndex = true;
+//						int w = (int) st.nval;
+//						weite[n] = Math.max(0, Math.min(400, w));
+//					}
+//					continue;
+//				}
+//				if (tval != 10)
+//					continue;
+//				if (!istIndex)
+//					break;
+//				n++;
+//			}
+//			if (n == spaltennamen.length) {
+//				int i;
+//				for (i = 0; i < n; i++) {
+//					int j;
+//					for (j = 0; j < n; j++)
+//						if (index[j] == i)
+//							break;
+//
+//					if (j == n)
+//						break;
+//				}
+//
+//				if (i == n) {
+//					ret = new Spaltenkonfiguration[n];
+//					for (i = 0; i < n; i++) {
+//						ret[i] = new Spaltenkonfiguration();
+//						ret[i].index = index[i];
+//						ret[i].weite = weite[i];
+//					}
+//
+//				}
+//			}
+//		} catch (Exception e) {
+//			HOLogger.instance().error(this.getClass(), e);
+//		}
+//		return ret;
+//	}
+//
+//	void KonfigurationSpeichern() {
+//		try {
+//			TableColumnModel tcm = getColumnModel();
+//			FileWriter fileWriter = new FileWriter(
+//					gibKonfigurationsdateiname(), false);
+//			int n = tcm.getColumnCount();
+//			for (int i = 0; i < n; i++) {
+//				TableColumn p = tcm.getColumn(i);
+//				String out = p.getModelIndex() + " " + p.getWidth() + "\r\n";
+//				fileWriter.write(out);
+//			}
+//
+//			fileWriter.flush();
+//			fileWriter.close();
+//		} catch (Exception e) {
+//			HOLogger.instance().error(this.getClass(), e);
+//		}
+//	}
+//
+//	static {
+//		experienceViewerVerzeichnis = System.getProperty("user.dir")
+//				+ File.separator + "hoplugins" + File.separator
+//				+ "experienceViewer";
+//		spracheVerzeichnis = experienceViewerVerzeichnis + File.separator
+//				+ "Sprache";
+//	}
 }
