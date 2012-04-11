@@ -2,6 +2,7 @@ package ho.module.playeranalysis.experience;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
 
@@ -12,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Vector;
 
 final class Spieler {
 	static double fehlerAbsolutZuSigma = 0.66;
@@ -224,14 +226,12 @@ final class Spieler {
 				matchIds.add(new Integer(matchId));
 			}
 			rs.close();
-			sql = "SELECT MATCHID FROM MATCHHIGHLIGHTS WHERE SPIELERID = " + id
-					+ " AND TYP = " + 5;
-			for (rs = DBManager.instance().getAdapter().executeQuery(sql); rs.next();) {
-				int matchId = rs.getInt("MATCHID");
-				matchIds.add(new Integer(matchId));
+			Vector<MatchHighlight> highlights = DBManager.instance().getMatchHighlightsByTypIdAndPlayerId(5, id);
+			for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
+				MatchHighlight matchHighlight = iterator.next();
+				matchIds.add(Integer.valueOf(matchHighlight.getMatchId()));
 			}
-
-			rs.close();
+			
 			for (Iterator<Integer> it = matchIds.iterator(); it.hasNext();) {
 				Integer mId = it.next();
 				MatchLineup lu = DBManager.instance().getMatchLineup(mId.intValue());
