@@ -8,6 +8,7 @@ Changelist HO! 1.432
 Language updates:
 -----------------
 - Added Japanese as new HO language (thx nomad331)
+- Update French translations (thx davidatorus)
 
 ThemeManager:
 ------------
