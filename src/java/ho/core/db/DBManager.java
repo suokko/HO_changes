@@ -1374,7 +1374,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
+	public MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
 		return (
 			(MatchLineupTeamTable) getTable(MatchLineupTeamTable.TABLENAME)).getMatchLineupTeam(
 			matchID,
