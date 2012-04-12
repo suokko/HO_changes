@@ -61,7 +61,7 @@ class ArenaSizer {
     final Stadium[] calcConstructionArenas(Stadium currentArena, int supporter){
     	Stadium arenaMax = createArena(supporter * (SUPPORTER_NORMAL.intValue()+5) ,currentArena);
         Stadium arenaNormal = createArena(supporter * SUPPORTER_NORMAL.intValue(),currentArena);
-        Stadium arenaMin = createArena(supporter * (SUPPORTER_NORMAL.intValue()+5),currentArena);
+        Stadium arenaMin = createArena(supporter * (SUPPORTER_NORMAL.intValue()-5),currentArena);
         return new Stadium[]{arenaMax, arenaNormal, arenaMin};
     }
     
