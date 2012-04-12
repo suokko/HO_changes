@@ -66,41 +66,40 @@ class TrainingPoint {
     //The list is automatically sorted by basePoints (high to low)
     private ArrayList<MatchForTraining> matchesForTraining = new ArrayList<MatchForTraining>();
 
-    //	Abwehrverhalten alle Verteidiger und Mittelfeldspieler in Verteidigung mit 50% 
-    //Defensive Positions: all defenders and playmakers 50% defense
+    //Defensive Positions
     private Hashtable<Integer,Double> DEFPOS;
 
-    //	Chancenauswertung -> Torschuss 100% St?rmer 
-    //Scoring: 100% scoring forwards 
+    //Scoring 
     private Hashtable<Integer,Double> SCORING;
-
-    private Hashtable<Integer,Double> WINGATTACK = null; //External Attacker
     
-    //Flankel?ufe // Wing
+    //Wing Attacks
+    private Hashtable<Integer,Double> WINGATTACK;
+    
+    //Crossing
     private Hashtable<Integer,Double> CROSSING;
 
-    //Passspiel //Passing
+    //Short Passes
     private Hashtable<Integer,Double> SHORTPASS;
 
-    //Spielaufbau // playmaking
+    //Playmaking
     private Hashtable<Integer,Double> PLAYMAKING;
 
-    //scoring
+    //Scoring
     private Hashtable<Integer,Double> SHOOTING;
 
-    //Steilpaesse : Passspiel f?r alle Verteidiger und MFler mit 85% // Through passess: passing for all defenders and midfielders with 85%
+    //Through Passes
     private Hashtable<Integer,Double> THROUGHPASS;
 
-    //Torwart //Keeper
+    //Keeper
     private Hashtable<Integer,Double> KEEPER;
 
-    //Verteidigung //Defense
+    //Defense
     private Hashtable<Integer,Double> DEFENSE;
     
-    //Standards //Set Pieces
+    //Set Pieces
     private Hashtable<Integer,Double> SETPIECES;
 
-    //Order is the same as in Data. As value only SpielerIDS (do i have to translate this?) -> same index for same players
+    //Order is the same as in Data. As value only SpielerIDs (do i have to translate this?) -> same index for same players
     private Hashtable<Integer,Hashtable<Integer,Double>> p_Ht_trainPositionen = new Hashtable<Integer,Hashtable<Integer,Double>>();
 
 	private TrainingPerWeek trainWeek;
@@ -152,112 +151,63 @@ class TrainingPoint {
      * Method that initialize the Class Data
      */
     private void init() {
-        //F?r jedes TRainingsart die Positionen und Werte festlegen
-        //for every traintype position and values definition
-       
-    	
+        //Define training for every position
     	PLAYMAKING = new Hashtable<Integer,Double>();
-        PLAYMAKING.put(new Integer(ISpielerPosition.leftWinger), new Double(0.5));
-        PLAYMAKING.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
-        PLAYMAKING.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
-        PLAYMAKING.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
-        PLAYMAKING.put(new Integer(ISpielerPosition.rightWinger), new Double(0.5));
+        PLAYMAKING.put(new Integer(TrainingPosition.winger), new Double(0.5));
+        PLAYMAKING.put(new Integer(TrainingPosition.innerMidfielder), new Double(1.0));
 
         CROSSING = new Hashtable<Integer,Double>();
-        CROSSING.put(new Integer(ISpielerPosition.rightBack), new Double(0.5));
-        CROSSING.put(new Integer(ISpielerPosition.leftBack), new Double(0.5));
-        CROSSING.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
-        CROSSING.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
+        CROSSING.put(new Integer(TrainingPosition.wingBack), new Double(0.5));
+        CROSSING.put(new Integer(TrainingPosition.winger), new Double(1.0));
 
         DEFENSE = new Hashtable<Integer,Double>();
-        DEFENSE.put(new Integer(ISpielerPosition.leftBack), new Double(1.0));
-        DEFENSE.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(1.0));
-        DEFENSE.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(1.0));
-        DEFENSE.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(1.0));
-        DEFENSE.put(new Integer(ISpielerPosition.rightBack), new Double(1.0));
+        DEFENSE.put(new Integer(TrainingPosition.wingBack), new Double(1.0));
+        DEFENSE.put(new Integer(TrainingPosition.centralDefender), new Double(1.0));
 
         SHORTPASS = new Hashtable<Integer,Double>();
-        SHORTPASS.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
-        SHORTPASS.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
+        SHORTPASS.put(new Integer(TrainingPosition.winger), new Double(1.0));
+        SHORTPASS.put(new Integer(TrainingPosition.innerMidfielder), new Double(1.0));
+        SHORTPASS.put(new Integer(TrainingPosition.forward), new Double(1.0));
 
         KEEPER = new Hashtable<Integer,Double>();
-        KEEPER.put(new Integer(ISpielerPosition.keeper), new Double(1.0));
+        KEEPER.put(new Integer(TrainingPosition.keeper), new Double(1.0));
 
         SCORING = new Hashtable<Integer,Double>();
-        SCORING.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
-        SCORING.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
-        SCORING.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
+        SCORING.put(new Integer(TrainingPosition.forward), new Double(1.0));
 
         SHOOTING = new Hashtable<Integer,Double>();
-        SHOOTING.put(new Integer(ISpielerPosition.keeper), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.leftBack), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.rightBack), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.leftWinger), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.rightWinger), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.leftForward), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.centralForward), new Double(0.6));
-        SHOOTING.put(new Integer(ISpielerPosition.rightForward), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.keeper), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.wingBack), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.centralDefender), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.winger), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.innerMidfielder), new Double(0.6));
+        SHOOTING.put(new Integer(TrainingPosition.forward), new Double(0.6));
 
         DEFPOS = new Hashtable<Integer,Double>();
-        DEFPOS.put(new Integer(ISpielerPosition.keeper), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.leftBack), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.rightBack), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.leftWinger), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.5));
-        DEFPOS.put(new Integer(ISpielerPosition.rightWinger), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.keeper), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.wingBack), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.centralDefender), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.winger), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.innerMidfielder), new Double(0.5));
 
         THROUGHPASS = new Hashtable<Integer,Double>();
-        THROUGHPASS.put(new Integer(ISpielerPosition.leftBack), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.rightBack), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.leftWinger), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(0.85));
-        THROUGHPASS.put(new Integer(ISpielerPosition.rightWinger), new Double(0.85));
+        THROUGHPASS.put(new Integer(TrainingPosition.wingBack), new Double(0.85));
+        THROUGHPASS.put(new Integer(TrainingPosition.centralDefender), new Double(0.85));
+        THROUGHPASS.put(new Integer(TrainingPosition.winger), new Double(0.85));
+        THROUGHPASS.put(new Integer(TrainingPosition.innerMidfielder), new Double(0.85));
 
         WINGATTACK = new Hashtable<Integer,Double>();
-        WINGATTACK.put(new Integer(ISpielerPosition.leftWinger), new Double(0.6));
-        WINGATTACK.put(new Integer(ISpielerPosition.rightWinger), new Double(0.6));        
-        WINGATTACK.put(new Integer(ISpielerPosition.leftForward), new Double(0.6));
-        WINGATTACK.put(new Integer(ISpielerPosition.centralForward), new Double(0.6));
-        WINGATTACK.put(new Integer(ISpielerPosition.rightForward), new Double(0.6));
+        WINGATTACK.put(new Integer(TrainingPosition.winger), new Double(0.6));
+        WINGATTACK.put(new Integer(TrainingPosition.forward), new Double(0.6));
         
-        // TODO flattermann: The default SetPieces taker gets 25% bonus as well
         SETPIECES = new Hashtable<Integer,Double>();
-        SETPIECES.put(new Integer(ISpielerPosition.keeper), new Double(1.25)); // Goalkeepers train 25% faster
-        SETPIECES.put(new Integer(ISpielerPosition.leftBack), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.leftCentralDefender), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.middleCentralDefender), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.rightCentralDefender), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.rightBack), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.leftWinger), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.leftInnerMidfield), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.centralInnerMidfield), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.rightInnerMidfield), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.rightWinger), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.leftForward), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.centralForward), new Double(1.0));
-        SETPIECES.put(new Integer(ISpielerPosition.rightForward), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.keeper), new Double(1.25)); // Goalkeepers train 25% faster
+        SETPIECES.put(new Integer(TrainingPosition.wingBack), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.centralDefender), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.winger), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.innerMidfielder), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.forward), new Double(1.0));
+        SETPIECES.put(new Integer(TrainingPosition.setPiece), new Double(0.25));
 
         //die einzelnen Trainingsarten hinzuf?gen
         //add all traintypes to one hashtable with all trainingstypes
@@ -277,13 +227,245 @@ class TrainingPoint {
     /**
 	 * Adds a match to the internal list
 	 * 
-	 * @param minutes	How long was the player on the field in this match
-	 * @param posId		Position of the player in this match
+	 * @param tp	TrainingPlayer
 	 */
-	public void addTrainingMatch (int minutes, int posId) {
-		if (minutes > 0 && posId > 0) {
-			double basePoints = getTrainingPoint(trainWeek.getTyp(), new Integer (posId)).doubleValue();
-//			System.out.println ("Match added: train="+trainWeek.getTyp()+", min="+minutes+", pos="+posId+", bP="+basePoints);
+	public void addTrainingMatch(TrainingPlayer tp) {
+		if (tp.PlayerHasPlayed()) {
+			int minutes = 0;
+			int tmp = 0;
+			double basePoints = 0;
+			switch (trainWeek.getTyp())
+			{
+				case TrainingType.GOALKEEPING:
+					minutes += tp.getMinutesPlayedAsGK();
+					if (minutes > 0)
+						basePoints = getTrainingPoint(TrainingType.GOALKEEPING, new Integer(TrainingPosition.keeper)).doubleValue();
+					break;
+				case TrainingType.DEFENDING:
+					tmp = tp.getMinutesPlayedAsCD();
+					minutes = tmp;
+					if (minutes > 0)
+					{
+						basePoints = getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (minutes > 0)
+					{
+						basePoints = getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					break;
+				case TrainingType.DEF_POSITIONS:
+					tmp = tp.getMinutesPlayedAsGK();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.keeper)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsCD();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes += tmp;
+					if (minutes > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					break;
+				case TrainingType.CROSSING_WINGER:
+					tmp = tp.getMinutesPlayedAsW();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.CROSSING_WINGER, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.CROSSING_WINGER, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					break;
+				case TrainingType.WING_ATTACKS:
+					tmp = tp.getMinutesPlayedAsW();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.WING_ATTACKS, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsFW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.WING_ATTACKS, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					break;
+				case TrainingType.PLAYMAKING:
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.PLAYMAKING, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.PLAYMAKING, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					break;
+				case TrainingType.SHORT_PASSES:
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHORT_PASSES, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHORT_PASSES, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsFW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHORT_PASSES, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					break;
+				case TrainingType.THROUGH_PASSES:
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsCD();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					break;
+				case TrainingType.SCORING:
+					minutes = tp.getMinutesPlayedAsFW();
+					if (minutes > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SCORING, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					break;
+				case TrainingType.SHOOTING:
+					tmp = tp.getMinutesPlayedAsGK();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.keeper)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsCD();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsFW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SHOOTING, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					break;
+				case TrainingType.SET_PIECES:
+					tmp = tp.getMinutesPlayedAsGK();
+					minutes = tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.keeper)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsCD();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsIM();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsFW();
+					minutes += tmp;
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsSP();
+					// Don't add to minutes played, as it's already added elsewhere.
+					if (tmp > 0)
+					{
+						basePoints += getTrainingPoint(TrainingType.SET_PIECES, new Integer(TrainingPosition.setPiece)).doubleValue();
+					}
+					break;
+			}
+			//System.out.println ("Match added: train="+trainWeek.getTyp()+", min="+minutes+", bP="+basePoints);
 			matchesForTraining.add(new MatchForTraining(minutes, basePoints));
 			Collections.sort(matchesForTraining);
 		}
@@ -326,12 +508,5 @@ class TrainingPoint {
      */
 	public TrainingPerWeek getTrainWeek() {
 		return trainWeek;
-	}
-
-    /**
-     * Sets the training week for this training point
-     */
-	public void setTrainWeek(TrainingPerWeek trainWeek) {
-		this.trainWeek = trainWeek;
 	}
 }
