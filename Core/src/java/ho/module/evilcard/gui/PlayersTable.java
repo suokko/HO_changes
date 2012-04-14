@@ -63,6 +63,7 @@ class PlayersTable extends JTable {
 
     void setFilter(int filterMode) {
         playersTableModel.refresh(filterMode);
+        validate();
     }
 
 
