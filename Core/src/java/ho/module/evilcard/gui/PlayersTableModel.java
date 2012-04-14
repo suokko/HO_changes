@@ -4,13 +4,13 @@ import ho.core.constants.player.PlayerAggressiveness;
 import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
 import ho.core.db.DBManager;
+import ho.core.gui.model.SpielerMatchCBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchHighlight;
+import ho.core.model.match.MatchHighlight;
 import ho.core.model.player.Spieler;
-import ho.core.util.HOLogger;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -146,7 +146,7 @@ class PlayersTableModel extends AbstractTableModel {
     private void generateData2() {
         // Get current players.
         Vector<Spieler> players = new Vector<Spieler>();
-        players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
+        		players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
 
         // Add old players, when requested.
         if (m_typePlayer == TYPE_ALL_PLAYERS) {
@@ -154,7 +154,6 @@ class PlayersTableModel extends AbstractTableModel {
         }
 
         playersNumber = players.size();
-        //DebugWindow.setInfoText("players=" + playersNumber);
 
         // Reset table data.
         data = new Object[playersNumber][cols];
@@ -167,33 +166,30 @@ class PlayersTableModel extends AbstractTableModel {
 
             data[row][COL_NAME] = player.getName();
             data[row][COL_ID] = new Integer(id);
-            data[row][COL_AGGRESSIVITY] = "(" + player.getAgressivitaet() + ") "
-                                          + PlayerAggressiveness.toString(player.getAgressivitaet());
-            data[row][COL_HONESTY] = "(" + player.getAnsehen() + ") " + PlayerAgreeability.toString(player.getAnsehen());
-            data[row][COL_AGREEABILITY] = "(" + player.getCharakter() + ") "
-                                          + PlayerHonesty.toString(player.getCharakter());
+            data[row][COL_AGGRESSIVITY] = PlayerAggressiveness.toString(player.getAgressivitaet())+" (" + player.getAgressivitaet() + ")";
+            data[row][COL_HONESTY] =  PlayerAgreeability.toString(player.getAnsehen())+" (" + player.getAnsehen() + ")";
+            data[row][COL_AGREEABILITY] = PlayerHonesty.toString(player.getCharakter())+" (" + player.getCharakter() + ")";
 
             for (int col = 5; col < cols; col++) {
                 data[row][col] = new Integer(0);
             }
 
             // GESTIONE CARTELLINI
-            String sql = "SELECT TYP, SUBTYP, MATCHID FROM MATCHHIGHLIGHTS WHERE TYP = "
-                         + IMatchHighlight.HIGHLIGHT_KARTEN + " AND SPIELERID = " + id;
-
+            //String sql = "SELECT TYP, SUBTYP, MATCHID FROM MATCHHIGHLIGHTS WHERE TYP = "                      + IMatchHighlight.HIGHLIGHT_KARTEN + " AND SPIELERID = " + id;
+            Vector<MatchHighlight> highlights = DBManager.instance().getMatchHighlightsByTypIdAndPlayerId(IMatchHighlight.HIGHLIGHT_KARTEN, id);
             // String filter = " AND MATCHID IN (SELECT MATCHID FROM PAARUNG
             // WHERE SAISON = 25)";
             // sql += filter;
-            ResultSet res = DBManager.instance().getAdapter().executeQuery(sql);
+            //ResultSet res = DBManager.instance().getAdapter().executeQuery(sql);
 
-            try {
-                int matchid = 0;
-                int cartellino = 0;
+             int matchid = 0;
+             int cartellino = 0;
 
-                while (res.next()) {
+             for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
+					MatchHighlight matchHighlight = iterator.next();
                     //int typeHighlight = res.getInt("TYP");
-                    int subtypeHighlight = res.getInt("SUBTYP");
-                    int matchidlast = res.getInt("MATCHID");
+                    int subtypeHighlight = matchHighlight.getHighlightSubTyp();//res.getInt("SUBTYP");
+                    int matchidlast = matchHighlight.getMatchId();//res.getInt("MATCHID");
 
                     if (matchid != matchidlast) {
                         cartellino = 0;
@@ -245,32 +241,9 @@ class PlayersTableModel extends AbstractTableModel {
                             break;
                     }
                 }
-            } // try
-
-            catch (SQLException e) {
-            	HOLogger.instance().error(this.getClass(), e);
-            }
-
-            // GESTIONE PARTITE GIOCATE
-            // quelli che vengono espulsi e quelli che vengono sostituiti non
-            // risultano
-            // aver giocato ! quindi bisogna aggiunstare in altro modo
-            sql = "SELECT POSITIONCODE FROM MATCHLINEUPPLAYER WHERE SPIELERID = " + id;
-
-            res = DBManager.instance().getAdapter().executeQuery(sql);
-
-            try {
-                while (res.next()) {
-                    int codpos = res.getInt("POSITIONCODE");
-
-                    if (codpos != -1) {
-                        data[row][COL_MATCHES] = new Integer(((Integer) data[row][COL_MATCHES])
-                                                             .intValue() + 1);
-                    }
-                }
-            } catch (SQLException e1) {
-                HOLogger.instance().error(this.getClass(), e1);
-            }
+            
+             Vector<SpielerMatchCBItem> matches = DBManager.instance().getSpieler4Matches(id);
+             data[row][COL_MATCHES] = matches.size();
 
             // GESITONE MEDIE
             aggiornaMedie(row);
