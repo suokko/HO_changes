@@ -8,6 +8,7 @@ import javax.swing.KeyStroke;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
+import ho.module.teamOfTheWeek.gui.TeamOfTheWeekPanel;
 
 public class TeamOfTheWeekModule extends DefaultModule {
 
