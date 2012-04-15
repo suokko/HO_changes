@@ -13,7 +13,7 @@ import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.module.training.FutureTrainingWeek;
 
@@ -84,7 +84,7 @@ public class PlayerCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			Vector<TrainingPerWeek> l = TrainingsManager.instance().getTrainingsVector();
+			Vector<TrainingPerWeek> l = TrainingManager.instance().getTrainingsVector();
 			int oldWeek = 0;
 			for (int index = l.size(); index > 0; index--) {
 				TrainingPerWeek tpw = (TrainingPerWeek) l.get(index - 1);

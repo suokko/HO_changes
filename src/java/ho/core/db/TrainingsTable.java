@@ -39,7 +39,7 @@ final class TrainingsTable extends AbstractTable {
 			delete( awhereS, awhereV );
 			
 			String statement = "INSERT INTO "+getTableName()+" ( Week, Year, Typ, Intensity, StaminaTrainingPart ) VALUES ( ";
-			statement += (training.getWeek() + ", " + training.getYear() + ", " + training.getTyp() + ", " + training.getIntensitaet() + ", " + training.getStaminaTrainingPart() + " )");
+			statement += (training.getWeek() + ", " + training.getYear() + ", " + training.getTrainingType() + ", " + training.getTrainingIntensity() + ", " + training.getStaminaTrainingPart() + " )");
 
 			adapter.executeUpdate(statement);
 		}

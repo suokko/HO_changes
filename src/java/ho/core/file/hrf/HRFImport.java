@@ -10,7 +10,7 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
@@ -145,7 +145,7 @@ public class HRFImport {
 			
             HOVerwaltung.instance().loadLatestHoModel();
 
-            TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
+            TrainingManager.instance().calculateTraining(DBManager.instance().getTrainingsVector());
             HOVerwaltung.instance().recalcSubskills(true, olderHrf);
 
             HOVerwaltung.instance().loadLatestHoModel();

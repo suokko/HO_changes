@@ -11,7 +11,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 
 import java.io.BufferedReader;
@@ -193,7 +193,7 @@ public class HO {
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
-		TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
+		TrainingManager.instance().calculateTraining(DBManager.instance().getTrainingsVector());
 
 //		version 1.432: seems to be dead code
 //		interuptionsWindow.setInfoText(8,"Initialize Lineup");

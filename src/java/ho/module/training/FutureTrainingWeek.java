@@ -11,16 +11,16 @@ public class FutureTrainingWeek  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Training staminaTrainingPart */
-    private int staminaTrainingPart;
+    private int staminaTraining;
 
     /** Training intensity */
-    private int intensitaet;
+    private int trainingIntensity;
 
     /** HT season */
     private int season;
 
     /** Training type */
-    private int typ;
+    private int trainingType;
 
     /** HT week */
     private int week;
@@ -33,7 +33,7 @@ public class FutureTrainingWeek  {
      * @param staminaTrainingPart
      */
     public void setStaminaTrainingPart(int staminaTrainingPart) {
-        this.staminaTrainingPart = staminaTrainingPart;
+        this.staminaTraining = staminaTrainingPart;
     }
 
     /**
@@ -42,7 +42,7 @@ public class FutureTrainingWeek  {
      * @return staminaTrainingPart
      */
     public int getStaminaTrainingPart() {
-        return staminaTrainingPart;
+        return staminaTraining;
     }
 
     /**
@@ -50,8 +50,8 @@ public class FutureTrainingWeek  {
      *
      * @param intensity
      */
-    public void setIntensitaet(int intensity) {
-        intensitaet = intensity;
+    public void setTrainingIntensity(int intensity) {
+        trainingIntensity = intensity;
     }
 
     /**
@@ -59,8 +59,8 @@ public class FutureTrainingWeek  {
      *
      * @return intensity
      */
-    public int getIntensitaet() {
-        return intensitaet;
+    public int getTrainingIntensity() {
+        return trainingIntensity;
     }
 
     /**
@@ -86,8 +86,8 @@ public class FutureTrainingWeek  {
      *
      * @param type
      */
-    public void setTyp(int type) {
-        typ = type;
+    public void setTrainingType(int type) {
+        trainingType = type;
     }
 
     /**
@@ -95,8 +95,8 @@ public class FutureTrainingWeek  {
      *
      * @return type
      */
-    public int getTyp() {
-        return typ;
+    public int getTrainingType() {
+        return trainingType;
     }
 
     /**
@@ -118,7 +118,7 @@ public class FutureTrainingWeek  {
     }
 
     /**
-     * toString methode: creates a String representation of the object
+     * toString method: creates a String representation of the object
      *
      * @return the String representation
      */
@@ -126,10 +126,11 @@ public class FutureTrainingWeek  {
 	public String toString() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("HattrickTrainingWeek[");
-        buffer.append("intensitaet = " + intensitaet);
+        buffer.append("FutureTrainingWeek[");
+        buffer.append(" intensity = " + trainingIntensity);
+        buffer.append(", stamina = " + staminaTraining);
         buffer.append(", season = " + season);
-        buffer.append(", typ = " + typ);
+        buffer.append(", typ = " + trainingType);
         buffer.append(", week = " + week);
         buffer.append("]");
 

@@ -8,7 +8,7 @@ import ho.core.model.XtraData;
 import ho.core.model.misc.Basics;
 import ho.core.model.misc.Finanzen;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 
 import java.io.BufferedWriter;
@@ -38,7 +38,7 @@ public class EconomyCreator extends XMLCreator {
 
 
 		try {
-			Vector<TrainingPerWeek> l = TrainingsManager.instance().getTrainingsVector();
+			Vector<TrainingPerWeek> l = TrainingManager.instance().getTrainingsVector();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

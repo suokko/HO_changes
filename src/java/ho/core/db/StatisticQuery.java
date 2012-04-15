@@ -6,7 +6,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
 
@@ -20,7 +20,7 @@ public class StatisticQuery {
 
 	public static double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 
-		Vector<TrainingPerWeek> trainings = TrainingsManager.instance().getTrainingsVector();
+		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 16;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
@@ -251,7 +251,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
-		Vector<TrainingPerWeek> trainings = TrainingsManager.instance().getTrainingsVector();
+		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 15;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 		double[][] returnWerte = new double[0][0];
@@ -370,7 +370,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getFinanzen4Statistik(int anzahlHRF) {
-		Vector<TrainingPerWeek> trainings =TrainingsManager.instance().getTrainingsVector();
+		Vector<TrainingPerWeek> trainings =TrainingManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 17;
 
 		final double[][] marktwerte = getMarktwert4Statistik(anzahlHRF);
@@ -482,7 +482,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
-		Vector<TrainingPerWeek> trainings = TrainingsManager.instance().getTrainingsVector();
+		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 3;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
@@ -531,7 +531,7 @@ public class StatisticQuery {
 
 	private static double[][] getMarktwert4Statistik(int anzahlHRF) {
 
-		Vector<TrainingPerWeek> trainings = TrainingsManager.instance().getTrainingsVector();
+		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
 		final int anzahlSpalten = 2;
 
 		double[][] returnWerte = new double[0][0];

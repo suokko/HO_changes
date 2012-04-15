@@ -7,12 +7,6 @@ import ho.core.util.HelperWrapper;
 import java.util.Calendar;
 import java.util.Locale;
 
-
-
-
-
-// %1110567470171:hoplugins.commons.model%
-
 /**
  * New Training Class
  *
@@ -130,7 +124,7 @@ public class TrainingPerWeek  {
      *
      * @param intensitaet
      */
-    public final void setIntensitaet(int intensitaet) {
+    public final void setTrainingIntensity(int intensitaet) {
         this.intensity = intensitaet;
     }
 
@@ -139,7 +133,7 @@ public class TrainingPerWeek  {
      *
      * @return
      */
-    public final int getIntensitaet() {
+    public final int getTrainingIntensity() {
         return this.intensity;
     }
 
@@ -148,7 +142,7 @@ public class TrainingPerWeek  {
      *
      * @param typ
      */
-    public final void setTyp(int typ) {
+    public final void setTrainingType(int typ) {
         this.typ = typ;
     }
 
@@ -157,7 +151,7 @@ public class TrainingPerWeek  {
      *
      * @return
      */
-    public final int getTyp() {
+    public final int getTrainingType() {
         return this.typ;
     }
 
