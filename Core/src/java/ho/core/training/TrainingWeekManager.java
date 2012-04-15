@@ -21,10 +21,10 @@ import java.util.Vector;
  *
  * @author humorlos, Dragettho, thetom
  */
-public class TrainingsWeekManager {
+public class TrainingWeekManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static TrainingsWeekManager m_clInstance;
+    private static TrainingWeekManager m_clInstance;
 
     /** TrainingWeeks */
     private Vector<TrainingPerWeek> m_vTrainings;
@@ -34,7 +34,7 @@ public class TrainingsWeekManager {
     /**
      * Creates a new instance of TrainingsManager
      */
-    private TrainingsWeekManager() {
+    private TrainingWeekManager() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -45,9 +45,9 @@ public class TrainingsWeekManager {
      *
      * @return instance of NewTrainingManager
      */
-    public static TrainingsWeekManager instance() {
+    public static TrainingWeekManager instance() {
         if (m_clInstance == null) {
-            m_clInstance = new TrainingsWeekManager();
+            m_clInstance = new TrainingWeekManager();
         }
 
         return m_clInstance;
@@ -319,8 +319,8 @@ public class TrainingsWeekManager {
             final HattrickDate htDate = calculateByDifference(actaulSeason, actualWeek,
                                                               trainNumber - index);
             final TrainingPerWeek newTrain = new TrainingPerWeek(train.getWeek(), train.getYear(),
-                                                                 train.getTyp(),
-                                                                 train.getIntensitaet(),
+                                                                 train.getTrainingType(),
+                                                                 train.getTrainingIntensity(),
                                                                  train.getStaminaTrainingPart());
             newTrain.setHattrickSeason(htDate.getSeason());
             newTrain.setHattrickWeek(htDate.getWeek());

@@ -42,8 +42,8 @@ public final class FutureTrainingTable extends AbstractTable {
 
 				while (rs.next()) {
 					FutureTrainingWeek train = new FutureTrainingWeek();			
-					train.setTyp(rs.getInt("TYPE")); 
-					train.setIntensitaet(rs.getInt("INTENSITY")); 
+					train.setTrainingType(rs.getInt("TYPE")); 
+					train.setTrainingIntensity(rs.getInt("INTENSITY")); 
 					train.setWeek(rs.getInt("WEEK"));
 					train.setSeason(rs.getInt("SEASON"));
 					train.setStaminaTrainingPart(rs.getInt("STAMINATRAININGPART"));
@@ -98,9 +98,9 @@ public final class FutureTrainingTable extends AbstractTable {
 				train = new FutureTrainingWeek();
 				train.setWeek(week);
 				train.setSeason(season);
-				train.setIntensitaet(-1);
+				train.setTrainingIntensity(-1);
 				train.setStaminaTrainingPart(-1);
-				train.setTyp(-1);
+				train.setTrainingType(-1);
 				saveFutureTraining(train);				
 			}
 			futures.add(train);
@@ -117,12 +117,12 @@ public final class FutureTrainingTable extends AbstractTable {
 	void saveFutureTraining(FutureTrainingWeek training) {
 		if (training != null) {
 			String statement =
-				"update "+getTableName()+" set TYPE= " + training.getTyp() + ", INTENSITY=" + training.getIntensitaet() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();
+				"update "+getTableName()+" set TYPE= " + training.getTrainingType() + ", INTENSITY=" + training.getTrainingIntensity() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();
 			int count = adapter.executeUpdate(statement);
 
 			if (count == 0) {
 				adapter.executeUpdate("insert into "+getTableName()+" (TYPE, INTENSITY, WEEK, SEASON, STAMINATRAININGPART) values (" //$NON-NLS-1$
-				+training.getTyp() + ", " + training.getIntensitaet() + ", " + training.getWeek() + ", " + training.getSeason() + "," + training.getStaminaTrainingPart() + ")");
+				+training.getTrainingType() + ", " + training.getTrainingIntensity() + ", " + training.getWeek() + ", " + training.getSeason() + "," + training.getStaminaTrainingPart() + ")");
 			}
 
 		}

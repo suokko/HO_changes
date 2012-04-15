@@ -73,16 +73,16 @@ public class FutureTrainingManager {
 		}
 
 		weeksPassed = 0;
-		int position = HelperWrapper.instance().getPosition(player.getIdealPosition());
+		int position = TrainingPosition.getTrainingPosition(HelperWrapper.instance().getPosition(player.getIdealPosition()));
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
 			FutureTrainingWeek tw = this.futureTrainings.get(index-1);
-			
-			double point = TrainingsManager.instance().getTrainingPoint().getTrainingPoint(tw.getTyp(), Integer.valueOf(position)).doubleValue();
+			double point = TrainingManager.instance().getTrainingPoint().
+							getTrainingPoint(tw.getTrainingType(), Integer.valueOf(position)).doubleValue();
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
-			switch (tw.getTyp()) {
+			switch (tw.getTrainingType()) {
 				case TrainingType.GOALKEEPING :
 				case TrainingType.PLAYMAKING :
 				case TrainingType.SHORT_PASSES :
@@ -93,7 +93,7 @@ public class FutureTrainingManager {
 				case TrainingType.SCORING :
 				case TrainingType.SET_PIECES :
 				case TrainingType.WING_ATTACKS :
-					processTraining(getSkillForTraining(tw.getTyp()), point, tw);
+					processTraining(getSkillForTraining(tw.getTrainingType()), point, tw);
 					break;
 				case TrainingType.SHOOTING :
 					processTraining(PlayerSkill.SCORING, point, tw);
@@ -239,7 +239,7 @@ public class FutureTrainingManager {
 	*/
 	private void processTraining(int skillIndex, double point, FutureTrainingWeek tw) {
 		// number of weeks necessary to have a skillup
-		double trainLength = getTrainingLength(skillIndex, tw.getIntensitaet(), tw.getStaminaTrainingPart());
+		double trainLength = getTrainingLength(skillIndex, tw.getTrainingIntensity(), tw.getStaminaTrainingPart());
 
 		// If invalid training (trType does not train this skill)
 		if (trainLength == -1)

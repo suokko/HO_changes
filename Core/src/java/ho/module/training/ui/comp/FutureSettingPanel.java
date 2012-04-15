@@ -59,9 +59,9 @@ public class FutureSettingPanel extends JPanel {
 
         for (Iterator<FutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
             FutureTrainingWeek train = iter.next();
-            train.setIntensitaet(intensity.getSelectedIndex());
+            train.setTrainingIntensity(intensity.getSelectedIndex());
             train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
-            train.setTyp(((CBItem)training.getSelectedItem()).getId());
+            train.setTrainingType(((CBItem)training.getSelectedItem()).getId());
             DBManager.instance().saveFutureTraining(train);
         }
 
@@ -78,10 +78,10 @@ public class FutureSettingPanel extends JPanel {
         List<FutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
     	FutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
-        final int ttyp = firstFutureTraining.getTyp();
+        final int ttyp = firstFutureTraining.getTrainingType();
         training.setSelectedItem(new CBItem(TrainingType.toString(ttyp), ttyp));
         intensity = new IntensityComboBox();
-        intensity.setSelectedIndex(firstFutureTraining.getIntensitaet());
+        intensity.setSelectedIndex(firstFutureTraining.getTrainingIntensity());
         staminaTrainingPart = new IntensityComboBox();
         staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaTrainingPart());
 

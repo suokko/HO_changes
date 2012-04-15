@@ -17,8 +17,8 @@ import ho.core.model.HOVerwaltung;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
-import ho.core.training.TrainingsWeekManager;
+import ho.core.training.TrainingManager;
+import ho.core.training.TrainingWeekManager;
 import ho.core.util.Helper;
 
 import java.sql.Timestamp;
@@ -557,43 +557,43 @@ public final class Spieler {
     	switch (trTyp) {
             case TrainingType.GOALKEEPING:
             	// Blaghaid sends coTrainer rather than the never present twTrainers
-                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingsManager.BASE_DURATION_GOALKEEPING, 
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_GOALKEEPING + TrainingManager.BASE_DURATION_GOALKEEPING, 
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorwart());
 
             case TrainingType.PLAYMAKING:
-                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingsManager.BASE_DURATION_PLAYMAKING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PLAYMAKING + TrainingManager.BASE_DURATION_PLAYMAKING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getSpielaufbau());
 
             case TrainingType.CROSSING_WINGER:
-                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingManager.BASE_DURATION_WINGER,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             case TrainingType.SCORING:
-                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_SCORING + TrainingsManager.BASE_DURATION_SCORING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_SCORING + TrainingManager.BASE_DURATION_SCORING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getTorschuss());
 
             case TrainingType.DEFENDING:
-                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING,
+                return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingManager.BASE_DURATION_DEFENDING,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
             case TrainingType.SHORT_PASSES:
-				return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING,
+				return calcTraining(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingManager.BASE_DURATION_PASSING,
 						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case TrainingType.THROUGH_PASSES:
-                return calcTraining((100d/85d)*(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingsManager.BASE_DURATION_PASSING), 
+                return calcTraining((100d/85d)*(ho.core.model.UserParameter.instance().TRAINING_OFFSET_PASSING + TrainingManager.BASE_DURATION_PASSING), 
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getPasspiel());
 
             case TrainingType.SET_PIECES:
-                return calcTraining(ho.core.model.UserParameter.instance ().TRAINING_OFFSET_SETPIECES + TrainingsManager.BASE_DURATION_SET_PIECES,
+                return calcTraining(ho.core.model.UserParameter.instance ().TRAINING_OFFSET_SETPIECES + TrainingManager.BASE_DURATION_SET_PIECES,
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getStandards());
 
             case TrainingType.DEF_POSITIONS:
-                return calcTraining(2 * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingsManager.BASE_DURATION_DEFENDING),
+                return calcTraining(2 * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_DEFENDING + TrainingManager.BASE_DURATION_DEFENDING),
                 		m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getVerteidigung());
 
 			case TrainingType.WING_ATTACKS:
-				return calcTraining((100d/60d) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingsManager.BASE_DURATION_WINGER),
+				return calcTraining((100d/60d) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_WINGER + TrainingManager.BASE_DURATION_WINGER),
 						m_iAlter, coTrainer, trainerLvl, intensitaet, staminaTrainingPart, getFluegelspiel());
 
             default:
@@ -1927,13 +1927,13 @@ public final class Spieler {
      */
     public void calcFullSubskills(Spieler old, int coTrainer, int trainerlevel,
                                   int intensitaet, int staminaTrainingPart, Timestamp hrftimestamp) {
-        final TrainingPerPlayer trainingPerPlayer = ho.core.training.TrainingsManager.instance()
-        		.calculateFullTrainingForPlayer(this, ho.core.training.TrainingsManager.instance().getTrainingsVector(), hrftimestamp);
+        final TrainingPerPlayer trainingPerPlayer = ho.core.training.TrainingManager.instance()
+        		.calculateFullTrainingForPlayer(this, ho.core.training.TrainingManager.instance().getTrainingsVector(), hrftimestamp);
 
         //TODO Training pro Woche berechenen
         //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
         if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
-            m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TrainingType.GOALKEEPING,
+            m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getGoalKeeping() / getTrainingLength(TrainingType.GOALKEEPING,
                                                                                                                           coTrainer,
                                                                                                                           trainerlevel,
                                                                                                                           intensitaet,
@@ -1951,7 +1951,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
-            m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(TrainingType.DEFENDING,
+            m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getDefending() / getTrainingLength(TrainingType.DEFENDING,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
@@ -1969,7 +1969,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
-            m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(TrainingType.PLAYMAKING,
+            m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getPlaymaking() / getTrainingLength(TrainingType.PLAYMAKING,
                                                                                                                               coTrainer,
                                                                                                                               trainerlevel,
                                                                                                                               intensitaet,
@@ -1987,7 +1987,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.PASSING, old)) {
-            m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(TrainingType.SHORT_PASSES,
+            m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPassing() / getTrainingLength(TrainingType.SHORT_PASSES,
                                                                                                                            coTrainer,
                                                                                                                            trainerlevel,
                                                                                                                            intensitaet,
@@ -2005,7 +2005,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.WINGER, old)) {
-            m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(TrainingType.CROSSING_WINGER,
+            m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getWing() / getTrainingLength(TrainingType.CROSSING_WINGER,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
@@ -2023,7 +2023,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.SCORING, old)) {
-            m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(TrainingType.SCORING,
+            m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getScoring() / getTrainingLength(TrainingType.SCORING,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
@@ -2041,7 +2041,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
-            m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getST() / getTrainingLength(TrainingType.SET_PIECES,
+            m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getSetPieces() / getTrainingLength(TrainingType.SET_PIECES,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
@@ -2071,12 +2071,12 @@ public final class Spieler {
      */
     public void calcIncrementalSubskills(Spieler old, int coTrainer, 
                                          int trainerlevel, int intensitaet, int staminaTrainingPart, int hrfID) {
-    	final TrainingPerWeek trainingWeek = TrainingsWeekManager.instance().getTrainingWeek(hrfID);
+    	final TrainingPerWeek trainingWeek = TrainingWeekManager.instance().getTrainingWeek(hrfID);
         final TrainingPerPlayer trainingPerPlayer =
-        	ho.core.training.TrainingsManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
+        	ho.core.training.TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 
         if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
-            m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getTW() / getTrainingLength(TrainingType.GOALKEEPING,
+            m_dSubTorwart = ho.core.util.Helper.round(trainingPerPlayer.getGoalKeeping() / getTrainingLength(TrainingType.GOALKEEPING,
                                                                                                                           coTrainer,
                                                                                                                           trainerlevel,
                                                                                                                           intensitaet,
@@ -2093,7 +2093,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
-            m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getVE() / getTrainingLength(TrainingType.DEFENDING,
+            m_dSubVerteidigung = ho.core.util.Helper.round(trainingPerPlayer.getDefending() / getTrainingLength(TrainingType.DEFENDING,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
@@ -2110,7 +2110,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
-            m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getSA() / getTrainingLength(TrainingType.PLAYMAKING,
+            m_dSubSpielaufbau = ho.core.util.Helper.round(trainingPerPlayer.getPlaymaking() / getTrainingLength(TrainingType.PLAYMAKING,
                                                                                                                               coTrainer,
                                                                                                                               trainerlevel,
                                                                                                                               intensitaet,
@@ -2129,7 +2129,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.PASSING, old)) {
-            m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPS() / getTrainingLength(TrainingType.SHORT_PASSES,
+            m_dSubPasspiel = ho.core.util.Helper.round(trainingPerPlayer.getPassing() / getTrainingLength(TrainingType.SHORT_PASSES,
                                                                                                                            coTrainer,
                                                                                                                            trainerlevel,
                                                                                                                            intensitaet,
@@ -2148,7 +2148,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.WINGER, old)) {
-            m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getFL() / getTrainingLength(TrainingType.CROSSING_WINGER,
+            m_dSubFluegelspiel = ho.core.util.Helper.round(trainingPerPlayer.getWing() / getTrainingLength(TrainingType.CROSSING_WINGER,
                                                                                                                                coTrainer,
                                                                                                                                trainerlevel,
                                                                                                                                intensitaet,
@@ -2167,7 +2167,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.SCORING, old)) {
-            m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getTS() / getTrainingLength(TrainingType.SCORING,
+            m_dSubTorschuss = ho.core.util.Helper.round(trainingPerPlayer.getScoring() / getTrainingLength(TrainingType.SCORING,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
@@ -2186,7 +2186,7 @@ public final class Spieler {
         }
 
         if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
-            m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getST() / getTrainingLength(TrainingType.SET_PIECES,
+            m_dSubStandards = ho.core.util.Helper.round(trainingPerPlayer.getSetPieces() / getTrainingLength(TrainingType.SET_PIECES,
                                                                                                                             coTrainer,
                                                                                                                             trainerlevel,
                                                                                                                             intensitaet,
@@ -2405,16 +2405,16 @@ public final class Spieler {
     protected static double calcTraining(double baseLength, int age, int cotrainer, int trainerLvl,
                                int intensitaet, int staminaTrainingPart, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
-    	double ageFactor = Math.pow(1.0404, age-17) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_AGE + TrainingsManager.BASE_AGE_FACTOR);
+    	double ageFactor = Math.pow(1.0404, age-17) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_AGE + TrainingManager.BASE_AGE_FACTOR);
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
     	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
     	if (skillFactor < 0)
     		skillFactor = 0;
-    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * (ho.core.model.UserParameter.instance().TrainerFaktor + TrainingsManager.BASE_COACH_FACTOR);
-    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingsManager.BASE_ASSISTANT_COACH_FACTOR);
+    	double trainerFactor = (1 + (7 - Math.min(trainerLvl, 7.5)) * 0.091) * (ho.core.model.UserParameter.instance().TrainerFaktor + TrainingManager.BASE_COACH_FACTOR);
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(cotrainer+1)/Math.log(10)) * 0.2749) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingManager.BASE_ASSISTANT_COACH_FACTOR);
     	double tiFactor = Double.MAX_VALUE;
     	if (intensitaet > 0)
-    		tiFactor = (1 / (intensitaet/100d)) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_INTENSITY + TrainingsManager.BASE_INTENSITY_FACTOR);
+    		tiFactor = (1 / (intensitaet/100d)) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_INTENSITY + TrainingManager.BASE_INTENSITY_FACTOR);
     	double staminaFactor = Double.MAX_VALUE;
     	if (staminaTrainingPart < 100)
     		staminaFactor = 1 / (1 - staminaTrainingPart/100d);

@@ -5,7 +5,7 @@ import ho.core.constants.TrainingType;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -50,11 +50,11 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         TrainingPerWeek train = (TrainingPerWeek) p_V_trainingsVector.get(p_V_data.size() - row - 1);
         if (col == 2) {
             CBItem sel = (CBItem)value;
-            train.setTyp(sel.getId());
+            train.setTrainingType(sel.getId());
         }
         else if (col == 3) {
             Integer intense = (Integer) value;
-            train.setIntensitaet(intense.intValue());
+            train.setTrainingIntensity(intense.intValue());
         }
         else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
@@ -73,20 +73,20 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         p_V_data = new Vector<Object[]>();
 
         // Stores ho trainings into training vector
-        p_V_trainingsVector = TrainingsManager.instance().getTrainingsVector();
+        p_V_trainingsVector = TrainingManager.instance().getTrainingsVector();
 
         Object[] aobj;
 
         // for each training week
         for (Iterator<TrainingPerWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
         	TrainingPerWeek train = it.next();
-            String selectedTrain = TrainingType.toString(train.getTyp());
+            String selectedTrain = TrainingType.toString(train.getTrainingType());
 
             aobj = (new Object[]{
                        train.getHattrickWeek() + "", //$NON-NLS-1$
                        train.getHattrickSeason() + "", //$NON-NLS-1$
-                       new CBItem(selectedTrain, train.getTyp()),
-                       new Integer(train.getIntensitaet()),
+                       new CBItem(selectedTrain, train.getTrainingType()),
+                       new Integer(train.getTrainingIntensity()),
                        new Integer(train.getStaminaTrainingPart())
                    });
 
