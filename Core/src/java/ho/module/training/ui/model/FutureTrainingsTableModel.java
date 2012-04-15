@@ -53,11 +53,11 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 
         if (col == 2) {
             CBItem sel = (CBItem)value;
-            train.setTyp(sel.getId());
+            train.setTrainingType(sel.getId());
         }
         else if (col == 3) {
             Integer intense = (Integer) value;
-            train.setIntensitaet(intense.intValue());
+            train.setTrainingIntensity(intense.intValue());
         }
         else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
@@ -87,27 +87,27 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
             FutureTrainingWeek train = iter.next();
 
             // if not found create it and saves it
-            if (train.getIntensitaet() == -1) {
+            if (train.getTrainingIntensity() == -1) {
                 if (oldTrain != null) {
-                    train.setIntensitaet(oldTrain.getIntensitaet());
+                    train.setTrainingIntensity(oldTrain.getTrainingIntensity());
                     train.setStaminaTrainingPart(oldTrain.getStaminaTrainingPart());
-                    train.setTyp(oldTrain.getTyp());
+                    train.setTrainingType(oldTrain.getTrainingType());
                 } else {
-                    train.setIntensitaet(100);
+                    train.setTrainingIntensity(100);
                     train.setStaminaTrainingPart(5);
-                    train.setTyp(TrainingType.SET_PIECES);
+                    train.setTrainingType(TrainingType.SET_PIECES);
                 }
 
                 DBManager.instance().saveFutureTraining(train);
             }
 
-            String selectedTrain = TrainingType.toString(train.getTyp());
+            String selectedTrain = TrainingType.toString(train.getTrainingType());
 
             aobj = (new Object[]{
                        train.getWeek() + "", //$NON-NLS-1$
                        train.getSeason() + "", //$NON-NLS-1$
-                       new CBItem(selectedTrain, train.getTyp()), 
-                       new Integer(train.getIntensitaet()), 
+                       new CBItem(selectedTrain, train.getTrainingType()), 
+                       new Integer(train.getTrainingIntensity()), 
                        new Integer(train.getStaminaTrainingPart())
                    });
 

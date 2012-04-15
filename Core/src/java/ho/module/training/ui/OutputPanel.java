@@ -6,7 +6,7 @@ package ho.module.training.ui;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.model.OutputTableModel;
 import ho.module.training.ui.renderer.OutputTableRenderer;
@@ -160,7 +160,7 @@ public class OutputPanel extends JPanel {
 
         p_JB_berechne.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                	TrainingsManager.instance().recalcSubskills(true);
+                	TrainingManager.instance().recalcSubskills(true);
                     reload();
                     ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
                 }

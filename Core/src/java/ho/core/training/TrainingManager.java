@@ -33,10 +33,10 @@ import javax.swing.JOptionPane;
  *
  * @author humorlos, Dragettho, thetom
  */
-public class TrainingsManager {
+public class TrainingManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	private static TrainingsManager m_clInstance;
+	private static TrainingManager m_clInstance;
 
     /** Base values for training duration */
 	public static final float BASE_DURATION_GOALKEEPING = (float)2.0;
@@ -55,7 +55,7 @@ public class TrainingsManager {
 
     private Map<String,Map<Integer,Integer>> matchMap;
 
-    private TrainingsWeekManager weekManager;
+    private TrainingWeekManager weekManager;
     static final public boolean TRAININGDEBUG = true;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -63,54 +63,41 @@ public class TrainingsManager {
     /**
      * Creates a new instance of TrainingsManager
      */
-    private TrainingsManager() {
-        this.weekManager = TrainingsWeekManager.instance();
+    private TrainingManager() {
+        this.weekManager = TrainingWeekManager.instance();
         this.matchMap = new HashMap<String,Map<Integer,Integer>>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * liefert instance vom Trainingsmanager  vor der ersten Nutzun noch fillWithData(
-     * vorgabeTrainings ) aufrufen
+     * Returns a singleton TrainingManager object
      *
-     * @return instance of NewTrainingManager
+     * @return instance of TrainingManager
      */
-    public static TrainingsManager instance() {
+    public static TrainingManager instance() {
         if (m_clInstance == null) {
-            m_clInstance = new TrainingsManager();
+            m_clInstance = new TrainingManager();
         }
-
         return m_clInstance;
     }
 
     /**
-     * returns an empty ITrainingPerPlayer instance
+     * returns an empty TrainingPerPlayer instance
      */
 	public TrainingPerPlayer getTrainingPerPlayer() {
 		return (new TrainingPerPlayer());
 	}
 
     /**
-     * returns a ITrainingPerPlayer instance for a specific player
+     * returns a TrainingPerPlayer instance for a specific player
      */
 	public TrainingPerPlayer getTrainingPerPlayer(Spieler player) {
 		return (new TrainingPerPlayer(player));
 	}
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param hrfId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public TrainingPerWeek getLastTrainingWeek(int hrfId) {
-        return this.weekManager.getTrainingWeek(hrfId);
-    }
-
-    /**
-     * get a new training point instance
+     * Get a new training point instance
      *
      * @return new training point
      */
@@ -120,7 +107,7 @@ public class TrainingsManager {
 
     /**
      * get a new training point instance
-     * initialized with existing ITrainingWeek
+     * initialized with existing TrainingWeek
      *
      * @return new training point
      */
@@ -130,7 +117,7 @@ public class TrainingsManager {
 
     /**
      * get a new training point instance
-     * initialized with a new ITrainingWeek created by the arguments
+     * initialized with a new TrainingWeek created by the arguments
      *
      * @return new training point
      * @
@@ -146,59 +133,49 @@ public class TrainingsManager {
 
 
     /**
-     * liefert die komplette Trainings in jedem skill eines Spielers calculates TRaining for given
-     * Player for each skill
+     * Calculates Training for a given Player for each skill
      *
-     * @param inputSpieler Player to use
-     * @param inputTrainings preset Trainingweeks
+     * @param inputPlayer Player to use
+     * @param inputTraining preset Trainingweeks
      * @param timestamp calc trainings up to timestamp, null for all
      *
      * @return TrainingPerPlayer
      */
-    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputSpieler,
-                                                             Vector<TrainingPerWeek> inputTrainings,
+    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputPlayer,
+                                                             Vector<TrainingPerWeek> inputTraining,
                                                              Timestamp timestamp) {
-        //playerID HIER SETZEN
-        final Spieler spieler = inputSpieler;
-
         if (timestamp == null) {
         	Calendar c = Calendar.getInstance();
         	c.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
             timestamp = new Timestamp(c.getTimeInMillis());
         }
-
-        TrainingPerPlayer output = getTrainingPerPlayer(spieler);
+        TrainingPerPlayer output = getTrainingPerPlayer(inputPlayer);
 
         if (TRAININGDEBUG)
-        	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+spieler.getName()+", output="+output);
+        	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+inputPlayer.getName()+", output="+output);
 
-        //alle Trainings durchlaufen
-        //run through all trainings
-        Iterator<TrainingPerWeek> i = inputTrainings.iterator();
+        //Iterate through all training
+        Iterator<TrainingPerWeek> i = inputTraining.iterator();
         while (i.hasNext()) {
         	TrainingPerPlayer curTraining = new TrainingPerPlayer();
-            //holen des gerade abzuarbeitenden trainings
             //get training to consider this round of the loop
             final TrainingPerWeek train = i.next();
-
-            if (train.getTyp() == -1) {
+            if (train.getTrainingType() == -1) {
                 continue;
             }
-
             final Calendar trainingDate = train.getTrainingDate();
-
-            // if (trainingDate > timestamp) then ignore training and quit, because all following trainings would be after the timestamp too
+            // if (trainingDate > timestamp) then ignore training and quit, because all following 
+            // training would be after the timestamp too
             if (trainingDate.getTimeInMillis() >= timestamp.getTime()) {
                 return output;
             }
-
-            curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(spieler, train, timestamp);
+            curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
             output.addValues(curTraining);
             if (TRAININGDEBUG)
-            	HOLogger.instance().debug(getClass(), "Mid calcFullTraining for "+spieler.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
+            	HOLogger.instance().debug(getClass(), "Mid calcFullTraining for "+inputPlayer.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
         }
         if (TRAININGDEBUG)
-        	HOLogger.instance().debug(getClass(), "End calcFullTraining for "+spieler.getName()+", output="+output);
+        	HOLogger.instance().debug(getClass(), "End calcFullTraining for "+inputPlayer.getName()+", output="+output);
         return output;
     }
 
@@ -209,7 +186,7 @@ public class TrainingsManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<TrainingPerWeek> calculateTrainings(Vector<?> inputTrainings) {
+    public Vector<TrainingPerWeek> calculateTraining(Vector<?> inputTrainings) {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
@@ -219,8 +196,7 @@ public class TrainingsManager {
     }
 
     /**
-     * liefert die komplette Trainings in jedem skill eines Spielers calculates Training for given
-     * Player for each skill
+     * Training for given player for each skill
      *
      * @param inputSpieler Player to use
      * @param train preset Trainingweeks
@@ -254,7 +230,7 @@ public class TrainingsManager {
         			"Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")
         			+ ", trainDate="+train.getTrainingDate().toString()+c2s);
         }
-        if (train == null || train.getTyp() < 0) {
+        if (train == null || train.getTrainingType() < 0) {
             return output;
         }
 
@@ -299,10 +275,10 @@ public class TrainingsManager {
                     		+" played "+ tp.getMinutesPlayedAsFW() + " mins as FW"
                     		+" played "+ tp.getMinutesPlayedAsSP() + " mins as SP"
                     );
-                    trainPoints.addTrainingMatch(tp);
+                    trainPoints.addTrainingPlayer(tp);
                 }
             }
-            output.setTrainPoint(trainPoints);
+            output.setTrainingPoint(trainPoints);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
         }
@@ -313,9 +289,7 @@ public class TrainingsManager {
         return output;
     }
 
-    // ------------------------ Deprecated Methods -----------------------------------------------------------------
-
-    /**
+    /*
      * Recalculates all sub skills for all players
      *
      * @param showBar show progress bar
@@ -326,8 +300,6 @@ public class TrainingsManager {
                                           "Depending on database volume this process takes several minutes. Start recalculation ?",
                                           "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             HOVerwaltung.instance().recalcSubskills(showBar, null);
-
-            //tools.Helper.showMessage ( this, model.HOVerwaltung.instance().getLanguageString( "NeustartErforderlich" ), "", JOptionPane.INFORMATION_MESSAGE );
         }
     }
 
@@ -346,7 +318,7 @@ public class TrainingsManager {
         	final ResultSet matchRS = DBManager.instance().getAdapter().executeQuery(createQuery(trainingDate));
 
         	if (matchRS == null) {
-        		//Falls nichts geliefert wurde // in case of no return values
+        		// in case of no return values
         		return matches;
         	}
 
@@ -386,5 +358,4 @@ public class TrainingsManager {
 
         return sdbquery;
     }
-
 }

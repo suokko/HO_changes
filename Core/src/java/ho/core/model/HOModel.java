@@ -11,8 +11,8 @@ import ho.core.model.misc.Verein;
 import ho.core.model.player.Spieler;
 import ho.core.model.series.Liga;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingsManager;
-import ho.core.training.TrainingsWeekManager;
+import ho.core.training.TrainingManager;
+import ho.core.training.TrainingWeekManager;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
@@ -451,7 +451,7 @@ public class HOModel {
                 Spieler old = players.get("" + player.getSpielerID());
 
                 if (old == null) {
-                	if (TrainingsManager.TRAININGDEBUG)
+                	if (TrainingManager.TRAININGDEBUG)
                 		HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
                     old = new Spieler();
                     old.setSpielerID(-1);
@@ -488,7 +488,7 @@ public class HOModel {
                         break;
                 }
 
-				if (TrainingsManager.TRAININGDEBUG) {
+				if (TrainingManager.TRAININGDEBUG) {
 	                /**
 	                 * Start of debug
 	                 */
@@ -504,9 +504,9 @@ public class HOModel {
 	                HTCalendar htcC = helper.createTrainingCalendar(calcDate);
 	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
-	            	TrainingPerWeek trWeek = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
+	            	TrainingPerWeek trWeek = TrainingWeekManager.instance().getTrainingWeek(m_iID);
 	                HOLogger.instance().debug(HOModel.class,
-	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTyp())
+	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTrainingType())
 	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs
 	                			+ ", act="+actualTrainingDate.toLocaleString() +htcAs
 	                			+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toLocaleString()+htcPs)
@@ -532,9 +532,9 @@ public class HOModel {
     private void logPlayerProgress (Spieler before, Spieler after) {
     	int playerID = after.getSpielerID();
     	String playerName = after.getName();
-    	TrainingPerWeek train = TrainingsWeekManager.instance().getTrainingWeek(m_iID);
-    	int trLevel = train.getIntensitaet();
-    	int trArt = train.getTyp();
+    	TrainingPerWeek train = TrainingWeekManager.instance().getTrainingWeek(m_iID);
+    	int trLevel = train.getTrainingIntensity();
+    	int trArt = train.getTrainingType();
     	String trArtString = TrainingType.toString(trArt);
     	int trStPart = train.getStaminaTrainingPart();
     	int age = after.getAlter();

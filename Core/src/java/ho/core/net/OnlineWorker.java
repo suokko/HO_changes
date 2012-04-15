@@ -30,7 +30,7 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.net.login.LoginWaitDialog;
-import ho.core.training.TrainingsManager;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
@@ -155,7 +155,7 @@ public class OnlineWorker {
     					hov.setModel(homodel);
     					//Recalculate Training
     					//Training->Subskill calculation
-    					TrainingsManager.instance().calculateTrainings(DBManager.instance().getTrainingsVector());
+    					TrainingManager.instance().calculateTraining(DBManager.instance().getTrainingsVector());
     					homodel.calcSubskills();
     					AufstellungsVergleichHistoryPanel.setHRFAufstellung(homodel.getAufstellung(), homodel.getLastAufstellung());
     					AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(
