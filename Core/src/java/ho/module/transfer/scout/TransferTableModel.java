@@ -26,13 +26,13 @@ import javax.swing.table.AbstractTableModel;
  * @version 0.2a    31.10.2001
  */
 public class TransferTableModel extends AbstractTableModel {
-	
+
 	private static final long serialVersionUID = -7723286963812074041L;
 
 	//~ Instance fields ----------------------------------------------------------------------------
 
     /** Array of ToolTip Strings shown in the table header (first row of table) */
-    public String[] m_sToolTipStrings = 
+    public String[] m_sToolTipStrings =
     {
     	HOVerwaltung.instance().getLanguageString("ID"),
         //Name
@@ -44,9 +44,11 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Beste Position
 	    HOVerwaltung.instance().getLanguageString("BestePosition"),
 	    //Alter
-	    HOVerwaltung.instance().getLanguageString("Alter"), 
+	    HOVerwaltung.instance().getLanguageString("Alter"),
 	    //TSI
-	    "TSI", 
+	    "TSI",
+	    // Homegrown
+	    HOVerwaltung.instance().getLanguageString("Motherclub"),
 	    //Erfahrung
 	    HOVerwaltung.instance().getLanguageString("Erfahrung"),
 	    //Form
@@ -55,8 +57,6 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("skill.stamina"),
 	    //Loyalty
 	    HOVerwaltung.instance().getLanguageString("Loyalty"),
-	    // Homegrown
-	    HOVerwaltung.instance().getLanguageString("Motherclub"),
 	    //Torwart
 	    PlayerSkill.toString(PlayerSkill.KEEPER),
 	    //Verteidigung
@@ -96,7 +96,7 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Mittelfeld Defensiv
 	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
 	    //Flügel
-	    HOVerwaltung.instance().getLanguageString("Fluegelspiel"),
+	    HOVerwaltung.instance().getLanguageString("Fluegel"),
 	    //Flügel Nach Innen
 	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
 	    //Flügel Offensiv
@@ -107,16 +107,18 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("Sturm"),
 	    //Sturm Defensiv
 	    HOVerwaltung.instance().getLanguageString("Sturm_Def"),
+		//Sturm Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("Sturm_Aus"),
 	    //Notes
 	    HOVerwaltung.instance().getLanguageString("Notizen"),
-	    
+
     };
 
     /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
     /** Array of Strings shown in the table header (first row of table) */
-    protected String[] m_sColumnNames = 
+    protected String[] m_sColumnNames =
     {
         HOVerwaltung.instance().getLanguageString("ID"),
         //Name
@@ -128,9 +130,9 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Beste Position
 	    HOVerwaltung.instance().getLanguageString("BestePosition"),
 	    //Alter
-	    HOVerwaltung.instance().getLanguageString("Alter"), 
+	    HOVerwaltung.instance().getLanguageString("Alter"),
 	    //TSI
-	    "TSI", 
+	    "TSI",
 	    // Homegrown
 	    HOVerwaltung.instance().getLanguageString("MC"),
 	    //Erfahrung
@@ -191,11 +193,13 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("STU"),
 	    //Sturm Defensiv
 	    HOVerwaltung.instance().getLanguageString("STUD"),
+	  //Sturm Nach Aussen
+	    HOVerwaltung.instance().getLanguageString("STUA"),
 	    //Notes
 	    HOVerwaltung.instance().getLanguageString("Notizen"),
-	    
+
     };
-    
+
     private Vector<ScoutEintrag> m_vScoutEintraege;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -249,7 +253,7 @@ public class TransferTableModel extends AbstractTableModel {
     /**
      *  Returns the name for the column of columnIndex.
      *  Return null if there is no match.
-     *   
+     *
      *
      * @param column  the column being queried
      * @return a string containing the name of <code>column</code>
@@ -378,7 +382,7 @@ public class TransferTableModel extends AbstractTableModel {
             initData();
         }
     }
-    
+
     /**
      * Remove all players from table
      *
@@ -386,7 +390,7 @@ public class TransferTableModel extends AbstractTableModel {
     public final void removeScoutEntries() {
     	if (m_vScoutEintraege != null) {
     		m_vScoutEintraege.removeAllElements();
-            initData();	
+            initData();
     	}
     }
 
@@ -439,10 +443,10 @@ public class TransferTableModel extends AbstractTableModel {
             		+ aktuellerSpieler.calcPosValue(aktuellerSpieler.getIdealPosition(), true) + ")",
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
             //Alter
-            m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlterWithAgeDays(), 
+            m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlterWithAgeDays(),
             		aktuellerScoutEintrag.getAlterWithAgeDaysAsString(),
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);
-            //Marktwert
+            //TSI
             m_clData[i][6] = new ColorLabelEntry(aktuellerScoutEintrag.getTSI()+"",
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
             // Homegrown
@@ -462,7 +466,7 @@ public class TransferTableModel extends AbstractTableModel {
             m_clData[i][11] = new ColorLabelEntry(aktuellerSpieler.getLoyalty()+"",
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_SPIELEREINZELWERTE,
                     SwingConstants.RIGHT);
-           
+
             //Torwart
             m_clData[i][12] = new ColorLabelEntry(aktuellerSpieler.getTorwart()+"",
                                                   ColorLabelEntry.FG_STANDARD,
@@ -537,21 +541,21 @@ public class TransferTableModel extends AbstractTableModel {
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Aussenverteidiger
+            //Wert Aussenverteidiger Nach Innen
             m_clData[i][24] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_TOMID,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Aussenverteidiger
+            //Wert Aussenverteidiger Offensiv
             m_clData[i][25] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Aussenverteidiger
+            //Wert Aussenverteidiger Defensiv
             m_clData[i][26] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.BACK_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
@@ -564,21 +568,21 @@ public class TransferTableModel extends AbstractTableModel {
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Mittelfeld
+            //Wert Mittelfeld Nach Aussen
             m_clData[i][28] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_TOWING,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Mittelfeld
+            //Wert Mittelfeld Offensiv
             m_clData[i][29] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Mittelfeld
+            //Wert Mittelfeld Defensiv
             m_clData[i][30] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.MIDFIELDER_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
@@ -591,21 +595,21 @@ public class TransferTableModel extends AbstractTableModel {
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert Flügel Nach Innen
             m_clData[i][32] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_TOMID,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert Flügel Offensiv
             m_clData[i][33] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_OFF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Flügel
+            //Wert Flügel Defensiv
             m_clData[i][34] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.WINGER_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
@@ -618,18 +622,25 @@ public class TransferTableModel extends AbstractTableModel {
                                                   ColorLabelEntry.BG_SPIELERPOSITONSWERTE, false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
-            //Wert Sturm
+            //Wert Sturm Defensiv
             m_clData[i][36] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FORWARD_DEF,
                                                                                 true),
                                                   ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
                                                   false,
                                                   ho.core.model.UserParameter.instance().anzahlNachkommastellen);
 
+          //Wert Sturm Nach Aussen
+            m_clData[i][37] = new ColorLabelEntry(aktuellerSpieler.calcPosValue(SpielerPosition.FORWARD_TOWING,
+                                                                                true),
+                                                  ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE,
+                                                  false,
+                                                  ho.core.model.UserParameter.instance().anzahlNachkommastellen);
+
             //Notiz
-            m_clData[i][37] = new ColorLabelEntry(aktuellerScoutEintrag.getInfo(),
+            m_clData[i][38] = new ColorLabelEntry(aktuellerScoutEintrag.getInfo(),
                                                   ColorLabelEntry.FG_STANDARD,
                                                   ColorLabelEntry.BG_STANDARD, JLabel.LEFT);
-           
+
         }
     }
 }
