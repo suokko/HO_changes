@@ -1,5 +1,5 @@
 // %2956927164:plugins%
-package ho.module.teamOfTheWeek;
+package ho.module.teamOfTheWeek.gui;
 
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 /**
  * This is an empty panel to display a lineup
  */
-public class LineupPanel extends JPanel {
+class LineupPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**

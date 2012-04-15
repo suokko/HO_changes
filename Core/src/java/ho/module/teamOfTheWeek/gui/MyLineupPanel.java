@@ -5,7 +5,7 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package ho.module.teamOfTheWeek;
+package ho.module.teamOfTheWeek.gui;
 
 import ho.core.gui.comp.panel.RasenPanel;
 
