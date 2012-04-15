@@ -1,5 +1,5 @@
 // %2684565945:hoplugins.toTW%
-package ho.module.teamOfTheWeek;
+package ho.module.teamOfTheWeek.gui;
 
 import ho.core.db.DBManager;
 import ho.core.model.series.Paarung;
