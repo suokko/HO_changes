@@ -4,6 +4,7 @@ package ho.module.teamOfTheWeek.gui;
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.series.Paarung;
@@ -45,10 +46,10 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-	private MyLineupPanel bestOfWeek = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
-    private MyLineupPanel bestOfYear = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
-    private MyLineupPanel worstOfWeek = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
-    private MyLineupPanel worstOfYear = new MyLineupPanel(LineupPanel.LINEUP_NORMAL_SEQUENCE);
+	private LineupPanel bestOfWeek = new LineupPanel();
+    private LineupPanel bestOfYear = new LineupPanel();
+    private LineupPanel worstOfWeek = new LineupPanel();
+    private LineupPanel worstOfYear = new LineupPanel();
 
     private JComboBox seasonCombo = new JComboBox();
     JSpinner weekSpinner = new JSpinner();
@@ -63,7 +64,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
+ 
     /**
      * TODO Missing Method Documentation
      *
@@ -120,35 +121,35 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
      * @param sl TODO Missing Method Parameter Documentation
      * @param noStars TODO Missing Method Parameter Documentation
      */
-    private void fillLineup(MyLineupPanel lineupPanel, MatchLineupPlayer[] sl, boolean noStars) {
+    private void fillLineup(LineupPanel lineupPanel, MatchLineupPlayer[] sl, boolean noStars) {
         if (!noStars) {
-            fillPanel(lineupPanel.getLineup().getKeeperPanel(), sl[0]);
-            fillPanel(lineupPanel.getLineup().getLeftWingbackPanel(), sl[1]);
-            fillPanel(lineupPanel.getLineup().getLeftCentralDefenderPanel(), sl[2]);
-            fillPanel(lineupPanel.getLineup().getRightCentralDefenderPanel(), sl[3]);
-            fillPanel(lineupPanel.getLineup().getRightWingbackPanel(), sl[4]);
-            fillPanel(lineupPanel.getLineup().getLeftWingPanel(), sl[5]);
-            fillPanel(lineupPanel.getLineup().getLeftMidfieldPanel(), sl[6]);
-            fillPanel(lineupPanel.getLineup().getRightMidfieldPanel(), sl[7]);
-            fillPanel(lineupPanel.getLineup().getRightWingPanel(), sl[8]);
-            fillPanel(lineupPanel.getLineup().getLeftForwardPanel(), sl[9]);
-            fillPanel(lineupPanel.getLineup().getRightForwardPanel(), sl[10]);
+            fillPanel(lineupPanel.getKeeperPanel(), sl[0]);
+            fillPanel(lineupPanel.getLeftWingbackPanel(), sl[1]);
+            fillPanel(lineupPanel.getLeftCentralDefenderPanel(), sl[2]);
+            fillPanel(lineupPanel.getRightCentralDefenderPanel(), sl[3]);
+            fillPanel(lineupPanel.getRightWingbackPanel(), sl[4]);
+            fillPanel(lineupPanel.getLeftWingPanel(), sl[5]);
+            fillPanel(lineupPanel.getLeftMidfieldPanel(), sl[6]);
+            fillPanel(lineupPanel.getRightMidfieldPanel(), sl[7]);
+            fillPanel(lineupPanel.getRightWingPanel(), sl[8]);
+            fillPanel(lineupPanel.getLeftForwardPanel(), sl[9]);
+            fillPanel(lineupPanel.getRightForwardPanel(), sl[10]);
         } else {
-            fillPanel(lineupPanel.getLineup().getKeeperPanel(), sl[0], true);
-            fillPanel(lineupPanel.getLineup().getLeftWingbackPanel(), sl[1], true);
-            fillPanel(lineupPanel.getLineup().getLeftCentralDefenderPanel(), sl[2], true);
-            fillPanel(lineupPanel.getLineup().getRightCentralDefenderPanel(), sl[3], true);
-            fillPanel(lineupPanel.getLineup().getRightWingbackPanel(), sl[4], true);
-            fillPanel(lineupPanel.getLineup().getLeftWingPanel(), sl[5], true);
-            fillPanel(lineupPanel.getLineup().getLeftMidfieldPanel(), sl[6], true);
-            fillPanel(lineupPanel.getLineup().getRightMidfieldPanel(), sl[7], true);
-            fillPanel(lineupPanel.getLineup().getRightWingPanel(), sl[8], true);
-            fillPanel(lineupPanel.getLineup().getLeftForwardPanel(), sl[9], true);
-            fillPanel(lineupPanel.getLineup().getRightForwardPanel(), sl[10], true);
+            fillPanel(lineupPanel.getKeeperPanel(), sl[0], true);
+            fillPanel(lineupPanel.getLeftWingbackPanel(), sl[1], true);
+            fillPanel(lineupPanel.getLeftCentralDefenderPanel(), sl[2], true);
+            fillPanel(lineupPanel.getRightCentralDefenderPanel(), sl[3], true);
+            fillPanel(lineupPanel.getRightWingbackPanel(), sl[4], true);
+            fillPanel(lineupPanel.getLeftWingPanel(), sl[5], true);
+            fillPanel(lineupPanel.getLeftMidfieldPanel(), sl[6], true);
+            fillPanel(lineupPanel.getRightMidfieldPanel(), sl[7], true);
+            fillPanel(lineupPanel.getRightWingPanel(), sl[8], true);
+            fillPanel(lineupPanel.getLeftForwardPanel(), sl[9], true);
+            fillPanel(lineupPanel.getRightForwardPanel(), sl[10], true);
         }
 
-        lineupPanel.getLineup().setTeamName("");
-        lineupPanel.getLineup().updateUI();
+        lineupPanel.setTeamName("");
+        lineupPanel.updateUI();
     }
 
     /**
@@ -262,15 +263,21 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
         m_jpPanel.add(north, BorderLayout.NORTH);
 
         JTabbedPane tab = new JTabbedPane();
-        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfWeek"), bestOfWeek);
-        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfWeek"), worstOfWeek);
-        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfSeason"), bestOfYear);
-        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfSeason"), worstOfYear);
+        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfWeek"), createTabPanel(bestOfWeek));
+        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfWeek"), createTabPanel(worstOfWeek));
+        tab.addTab(HOVerwaltung.instance().getLanguageString("bestOfSeason"), createTabPanel(bestOfYear));
+        tab.addTab(HOVerwaltung.instance().getLanguageString("worstOfSeason"), createTabPanel(worstOfYear));
         m_jpPanel.add(tab, BorderLayout.CENTER);
         setLayout(new BorderLayout());
         add(m_jpPanel, BorderLayout.CENTER);
     }
 
+    private JPanel createTabPanel(LineupPanel p){
+    	RasenPanel panel = new RasenPanel(new BorderLayout());
+    	panel.add(p,BorderLayout.CENTER);
+    	return panel;
+    	
+    }
     /**
      * TODO Missing Method Documentation
      *
