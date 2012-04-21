@@ -64,11 +64,11 @@ final class TeamTable extends AbstractTable {
 				+= ("" + team.getTrainingslevel()
 					+ "," + team.getStaminaTrainingPart()
 					+ "," + team.getTrainingsArtAsInt()
-					+ ",'" + DBManager.insertEscapeSequences(team.getTrainingsArt())
+					+ ",'" 
 					+ "'," + team.getStimmungAsInt()
-					+ ",'" + DBManager.insertEscapeSequences(team.getStimmung())
+					+ ",'" 
 					+ "'," + team.getSelbstvertrauenAsInt()
-					+ ",'" + DBManager.insertEscapeSequences(team.getSelbstvertrauen())
+					+ ",'" 
 					+ "'," + team.getFormationExperience541()
 					+ "," + team.getFormationExperience433()
 					+ "," + team.getFormationExperience352()
