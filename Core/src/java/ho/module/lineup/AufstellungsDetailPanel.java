@@ -429,8 +429,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             	// team spirit changed
 				HOVerwaltung.instance().getModel().getTeam().
 						setStimmungAsInt(((CBItem) m_jcbMainStimmung.getSelectedItem()).getId());
-                HOVerwaltung.instance().getModel().getTeam().
-                		setStimmung(((CBItem) m_jcbMainStimmung.getSelectedItem()).getText());
 			} else if (event.getSource().equals(m_jcbSubStimmung)) {
 				// team spirit (sub) changed
 				HOVerwaltung.instance().getModel().getTeam().
@@ -439,8 +437,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             	// team confidence changed
                 HOVerwaltung.instance().getModel().getTeam().
                 		setSelbstvertrauenAsInt(((CBItem) m_jcbSelbstvertrauen.getSelectedItem()).getId());
-                HOVerwaltung.instance().getModel().getTeam().
-                		setSelbstvertrauen(((CBItem) m_jcbSelbstvertrauen.getSelectedItem()).getText());
             } else if (event.getSource().equals(m_jcbTrainerType)) {
             	// trainer type changed
             	HOVerwaltung.instance().getModel().getTrainer().

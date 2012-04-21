@@ -14,16 +14,6 @@ import java.util.Properties;
  */
 public final class Team  {
 	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	/** confidence */
-	private String m_sSelbstvertrauen = "";
-
-	/** team spirit */
-	private String m_sStimmung = "";
-
-	/** training type */
-	private String m_sTrainingsArt = "";
 
 	/** formation xp 343 */
 	private int formationXp343;
@@ -84,10 +74,7 @@ public final class Team  {
 	public Team(Properties properties) throws Exception {
 		m_iTrainingslevel = Integer.parseInt(properties.getProperty("trlevel", "0"));
 		m_iStaminaTrainingPart = Integer.parseInt(properties.getProperty("staminatrainingpart", "0"));
-		m_sTrainingsArt = properties.getProperty("trtype", "");
 		m_iStimmungInt = Integer.parseInt(properties.getProperty("stamningvalue", "0"));
-		m_sStimmung = properties.getProperty("stamning", "");
-		m_sSelbstvertrauen = properties.getProperty("sjalvfortroende", "");
 		m_iSelbstvertrauen = Integer.parseInt(properties.getProperty("sjalvfortroendevalue", "0"));
 		formationXp433 = Integer.parseInt(properties.getProperty("exper433", "0"));
 		formationXp451 = Integer.parseInt(properties.getProperty("exper451", "0"));
@@ -109,9 +96,6 @@ public final class Team  {
 	public Team(ResultSet rs) throws Exception {
 		m_iTrainingslevel = rs.getInt("TrainingsIntensitaet");
 		m_iStaminaTrainingPart = rs.getInt("StaminaTrainingPart");
-		m_sTrainingsArt = DBManager.deleteEscapeSequences(rs.getString("sTrainingsArt"));
-		m_sStimmung = DBManager.deleteEscapeSequences(rs.getString("sStimmung"));
-		m_sSelbstvertrauen = DBManager.deleteEscapeSequences(rs.getString("sSelbstvertrauen"));
 		m_iSelbstvertrauen = rs.getInt("iSelbstvertrauen");
 		m_iStimmungInt = rs.getInt("iStimmung");
 		formationXp433 = rs.getInt("iErfahrung433");
@@ -279,25 +263,6 @@ public final class Team  {
 	}
 
 	/**
-	 * Setter for property m_sSelbstvertrauen.
-	 * 
-	 * @param m_sSelbstvertrauen
-	 *            New value of property m_sSelbstvertrauen.
-	 */
-	public void setSelbstvertrauen(String m_sSelbstvertrauen) {
-		this.m_sSelbstvertrauen = m_sSelbstvertrauen;
-	}
-
-	/**
-	 * Getter for property m_sSelbstvertrauen.
-	 * 
-	 * @return Value of property m_sSelbstvertrauen.
-	 */
-	public String getSelbstvertrauen() {
-		return m_sSelbstvertrauen;
-	}
-
-	/**
 	 * Setter for property m_iSelbstvertrauen.
 	 * 
 	 * @param m_iSelbstvertrauen
@@ -317,25 +282,6 @@ public final class Team  {
 	}
 
 	/**
-	 * Setter for property m_sStimmung.
-	 * 
-	 * @param m_sStimmung
-	 *            New value of property m_sStimmung.
-	 */
-	public void setStimmung(String m_sStimmung) {
-		this.m_sStimmung = m_sStimmung;
-	}
-
-	/**
-	 * Getter for property m_sStimmung.
-	 * 
-	 * @return Value of property m_sStimmung.
-	 */
-	public String getStimmung() {
-		return m_sStimmung;
-	}
-
-	/**
 	 * Setter for property m_iStimmung.
 	 * 
 	 * @param m_iStimmung
@@ -352,25 +298,6 @@ public final class Team  {
 	 */
 	public int getStimmungAsInt() {
 		return m_iStimmungInt;
-	}
-
-	/**
-	 * Setter for property m_sTrainingsArt.
-	 * 
-	 * @param m_sTrainingsArt
-	 *            New value of property m_sTrainingsArt.
-	 */
-	public void setTrainingsArt(String m_sTrainingsArt) {
-		this.m_sTrainingsArt = m_sTrainingsArt;
-	}
-
-	/**
-	 * Getter for property m_sTrainingsArt.
-	 * 
-	 * @return Value of property m_sTrainingsArt.
-	 */
-	public String getTrainingsArt() {
-		return m_sTrainingsArt;
 	}
 
 	/**
