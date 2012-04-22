@@ -8,12 +8,15 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.misc.Finanzen;
 import ho.core.model.misc.Verein;
+import ho.core.model.player.Spieler;
+import ho.core.util.Helper;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.DecimalFormat;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -68,13 +71,13 @@ final class MiscPanel extends JPanel {
         m_jpUngeschlagen.setText(verein.getUngeschlagen() + "");
         m_jpSiegeInFolge.setText(verein.getSiege() + "");
         m_jpAnzahlSpieler.setText(HOVerwaltung.instance().getModel().getAllSpieler().size() + "");
-        m_jpAvgTSI.setText(df.format(HOVerwaltung.instance().getAvgTSI()));
-        m_jpSumTSI.setText(df.format(HOVerwaltung.instance().getSumTSI()));
-        m_jpAvgEPV.setSpezialNumber(Math.round(HOVerwaltung.instance().getAvgEPV()), true);
-        m_jpSumEPV.setSpezialNumber(Math.round(HOVerwaltung.instance().getSumEPV()), true);
-        m_jpDAlter.setText(HOVerwaltung.instance().getDurchschnittsAlter() + "");
-        m_jpDForm.setText(HOVerwaltung.instance().getDurchschnittsForm() + "");
-        m_jpDErfahrung.setText(HOVerwaltung.instance().getDurchschnittsErfahrung() + "");
+        m_jpAvgTSI.setText(df.format(getAvgTSI()));
+        m_jpSumTSI.setText(df.format(getSumTSI()));
+        m_jpAvgEPV.setSpezialNumber(Math.round(getAvgEPV()), true);
+        m_jpSumEPV.setSpezialNumber(Math.round(getSumEPV()), true);
+        m_jpDAlter.setText(getDurchschnittsAlter() + "");
+        m_jpDForm.setText(getDurchschnittsForm() + "");
+        m_jpDErfahrung.setText(getDurchschnittsErfahrung() + "");
     }
 
     /**
@@ -150,5 +153,124 @@ final class MiscPanel extends JPanel {
     	constraints.gridwidth = 1;
     	layout.setConstraints(comp, constraints);
     	add(comp);
+    }
+    
+    /**
+     * Returns the average TSI
+     *
+     * @return average TSI
+     */
+    float getAvgTSI() {
+        int numPlayers = HOVerwaltung.instance().getModel().getAllSpieler().size();
+        //Trainer abziehen // without trainer
+        if (numPlayers <= 1)
+        	return 0;
+       	return Helper.round(getSumTSI() / (numPlayers - 1));
+    }
+
+    /**
+     * Gibt den Durchschnittlichen Mannschaftswert zurück
+     * Returns the average estimated market value (EPV)
+     *
+     * @return average EPV
+     */
+    float getAvgEPV() {
+        int numPlayers = HOVerwaltung.instance().getModel().getAllSpieler().size();
+        //Trainer abziehen // without trainer
+        if (numPlayers <= 1)
+        	return 0;
+       	return Helper.round(getSumEPV() / (numPlayers - 1));
+    }
+
+    /**
+     * Gibt das Durchschnittsalter zurück
+     */
+    float getDurchschnittsAlter() {
+        float summe = 0;
+        final Vector<Spieler> vSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!( vSpieler.get(i)).isTrainer()) {
+            	// Age Years
+                summe += (vSpieler.get(i)).getAlter();
+                // Age Days
+                summe += (vSpieler.get(i)).getAgeDays()/112.0;
+            }
+        }
+
+        //Trainer abziehen
+        return Helper.round(summe / (vSpieler.size() - 1));
+    }
+
+    /**
+     * Gibt das Durchschnittserfahrung zurück
+     */
+    float getDurchschnittsErfahrung() {
+        float summe = 0;
+        final Vector<Spieler> vSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getErfahrung();
+            }
+        }
+
+        //Trainer abziehen
+        return Helper.round(summe / (vSpieler.size() - 1), 3);
+    }
+
+    /**
+     * Gibt das Durchschnittsform zurück
+     */
+    float getDurchschnittsForm() {
+        float summe = 0;
+        final Vector<Spieler> vSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getForm();
+            }
+        }
+
+        //Trainer abziehen
+        return Helper.round(summe / (vSpieler.size() - 1), 3);
+    }
+
+    /**
+     * Returns the TSI sum
+     */
+    float getSumTSI() {
+        float summe = 0;
+        final Vector<Spieler> vSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getTSI();
+            }
+        }
+
+        return summe;
+    }
+
+    /**
+     * Gibt den gesamtmarktwert zurück
+     * Returns the sum of all estimated player values (EPV)
+     */
+    float getSumEPV() {
+        float summe = 0;
+        final Vector<Spieler> vSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+
+        for (int i = 0; i < vSpieler.size(); i++) {
+            //Trainer nicht berücksichtigen
+            if (!(vSpieler.get(i)).isTrainer()) {
+                summe += (vSpieler.get(i)).getEPV();
+            }
+        }
+
+        return summe;
     }
 }
