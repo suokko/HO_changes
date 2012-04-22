@@ -43,9 +43,6 @@ public class HOVerwaltung {
     /** Resource */
     protected Properties m_clResource;
 
-    /** Parameter */
-    protected String[] m_sArgs;
-
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -54,139 +51,9 @@ public class HOVerwaltung {
     private HOVerwaltung() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Set string arguments.
-     */
-    public void setArgs(String[] args) {
-        m_sArgs = args;
-    }
-
-    public String[] getArgs() {
-        return m_sArgs;
-    }
-
     //-----------------Hilfsmethoden---------------------------------------------
 
-    /**
-     * Returns the average TSI
-     *
-     * @return average TSI
-     */
-    public float getAvgTSI() {
-        int numPlayers = getModel().getAllSpieler().size();
-        //Trainer abziehen // without trainer
-        if (numPlayers <= 1)
-        	return 0;
-       	return Helper.round(getSumTSI() / (numPlayers - 1));
-    }
 
-    /**
-     * Gibt den Durchschnittlichen Mannschaftswert zurück
-     * Returns the average estimated market value (EPV)
-     *
-     * @return average EPV
-     */
-    public float getAvgEPV() {
-        int numPlayers = getModel().getAllSpieler().size();
-        //Trainer abziehen // without trainer
-        if (numPlayers <= 1)
-        	return 0;
-       	return Helper.round(getSumEPV() / (numPlayers - 1));
-    }
-
-    /**
-     * Gibt das Durchschnittsalter zurück
-     */
-    public float getDurchschnittsAlter() {
-        float summe = 0;
-        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
-
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!( vSpieler.get(i)).isTrainer()) {
-            	// Age Years
-                summe += (vSpieler.get(i)).getAlter();
-                // Age Days
-                summe += (vSpieler.get(i)).getAgeDays()/112.0;
-            }
-        }
-
-        //Trainer abziehen
-        return Helper.round(summe / (vSpieler.size() - 1));
-    }
-
-    /**
-     * Gibt das Durchschnittserfahrung zurück
-     */
-    public float getDurchschnittsErfahrung() {
-        float summe = 0;
-        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
-
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!(vSpieler.get(i)).isTrainer()) {
-                summe += (vSpieler.get(i)).getErfahrung();
-            }
-        }
-
-        //Trainer abziehen
-        return Helper.round(summe / (vSpieler.size() - 1), 3);
-    }
-
-    /**
-     * Gibt das Durchschnittsform zurück
-     */
-    public float getDurchschnittsForm() {
-        float summe = 0;
-        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
-
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!(vSpieler.get(i)).isTrainer()) {
-                summe += (vSpieler.get(i)).getForm();
-            }
-        }
-
-        //Trainer abziehen
-        return Helper.round(summe / (vSpieler.size() - 1), 3);
-    }
-
-    /**
-     * Returns the TSI sum
-     */
-    public float getSumTSI() {
-        float summe = 0;
-        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
-
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!(vSpieler.get(i)).isTrainer()) {
-                summe += (vSpieler.get(i)).getTSI();
-            }
-        }
-
-        return summe;
-    }
-
-    /**
-     * Gibt den gesamtmarktwert zurück
-     * Returns the sum of all estimated player values (EPV)
-     */
-    public float getSumEPV() {
-        float summe = 0;
-        final Vector<Spieler> vSpieler = getModel().getAllSpieler();
-
-        for (int i = 0; i < vSpieler.size(); i++) {
-            //Trainer nicht berücksichtigen
-            if (!(vSpieler.get(i)).isTrainer()) {
-                summe += (vSpieler.get(i)).getEPV();
-            }
-        }
-
-        return summe;
-    }
 
     /**
      * Set the HOModel.
