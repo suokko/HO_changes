@@ -3,7 +3,6 @@ package ho;
 import ho.core.db.DBManager;
 import ho.core.db.User;
 import ho.core.db.backup.BackupHelper;
-import ho.core.file.LanguageFiles;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.SplashFrame;
 import ho.core.gui.model.UserColumnController;
@@ -166,7 +165,7 @@ public class HO {
 
 		// Check -> Sprachdatei in Ordnung?
 		interuptionsWindow.setInfoText(4,"Check Languagefiles");
-		LanguageFiles.checkLanguageFile(UserParameter.instance().sprachDatei);
+		HOVerwaltung.checkLanguageFile(UserParameter.instance().sprachDatei);
 
 		// font switch, because the default font doesn't support Georgian and
 		// Chinese characters

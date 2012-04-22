@@ -3,7 +3,6 @@ package ho.core.option;
 
 import ho.core.datatype.CBItem;
 import ho.core.datatype.GeldFaktorCBItem;
-import ho.core.file.LanguageFiles;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 
@@ -196,7 +195,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		m_jcbSkin.addItemListener(this);
 		add(m_jcbSkin);
 
-		final String[] sprachdateien = LanguageFiles.getSprachDateien();
+		final String[] sprachdateien = HOVerwaltung.getLanguageFileNames();
 		try {
 			java.util.Arrays.sort(sprachdateien);
 		} catch (Exception e) {
