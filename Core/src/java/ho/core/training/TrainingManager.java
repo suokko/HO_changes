@@ -254,6 +254,7 @@ public class TrainingManager {
                 MatchLineupTeam mlt = DBManager.instance().getMatchLineupTeam(matchId, myID);
                 MatchStatistics ms = new MatchStatistics(matchId, mlt);
                 TrainingPlayer tp = new TrainingPlayer();
+                tp.Name(spieler.getName());
                 tp.setMinutesPlayedAsGK(tp.getMinutesPlayedAsGK() + ms.getMinutesPlayedInPositions(playerID, gkPos));
                 tp.setMinutesPlayedAsWB(tp.getMinutesPlayedAsWB() + ms.getMinutesPlayedInPositions(playerID, wbPos));
                 tp.setMinutesPlayedAsCD(tp.getMinutesPlayedAsCD() + ms.getMinutesPlayedInPositions(playerID, cdPos));
@@ -274,6 +275,7 @@ public class TrainingManager {
                     		+" played "+ tp.getMinutesPlayedAsIM() + " mins as IM"
                     		+" played "+ tp.getMinutesPlayedAsFW() + " mins as FW"
                     		+" played "+ tp.getMinutesPlayedAsSP() + " mins as SP"
+                    		+" played total " + tp.getMinutesPlayed() + " mins"
                     );
                     trainPoints.addTrainingPlayer(tp);
                 }

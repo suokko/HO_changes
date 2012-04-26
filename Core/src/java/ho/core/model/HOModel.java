@@ -536,7 +536,7 @@ public class HOModel {
     	int trLevel = train.getTrainingIntensity();
     	int trArt = train.getTrainingType();
     	String trArtString = TrainingType.toString(trArt);
-    	int trStPart = train.getStaminaTrainingPart();
+    	int trStPart = train.getStaminaPart();
     	int age = after.getAlter();
     	int skill = -1;
 		int beforeSkill = 0;

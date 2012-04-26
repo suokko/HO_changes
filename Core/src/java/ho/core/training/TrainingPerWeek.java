@@ -20,8 +20,8 @@ public class TrainingPerWeek  {
     private int hattrickWeek = -1;
     private int hrfId;
     private int intensity = -1;
-    private int staminaTrainingPart = -1;
-    private int typ = -1;
+    private int stamina = -1;
+    private int trainingType = -1;
     private int week = -1;
     private int year = -1;
     private int previousHrfId;
@@ -33,16 +33,16 @@ public class TrainingPerWeek  {
      *
      * @param week
      * @param year
-     * @param typ
+     * @param trType
      * @param intensity
-     * @param staminaTrainingPart
+     * @param stamina
      */
-    public TrainingPerWeek(int week, int year, int typ, int intensity, int staminaTrainingPart) {
+    public TrainingPerWeek(int week, int year, int trType, int intensity, int stamina) {
         this.week = week;
         this.year = year;
-        this.typ = typ;
+        this.trainingType = trType;
         this.intensity = intensity;
-        this.staminaTrainingPart = staminaTrainingPart;
+        this.stamina = stamina;
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -104,10 +104,10 @@ public class TrainingPerWeek  {
     /**
      * DOCUMENT ME!
      *
-     * @param staminaTrainingPart
+     * @param stamina
      */
-    public final void setStaminaTrainingPart(int staminaTrainingPart) {
-        this.staminaTrainingPart = staminaTrainingPart;
+    public final void setStaminaPart(int stamina) {
+        this.stamina = stamina;
     }
 
     /**
@@ -115,17 +115,17 @@ public class TrainingPerWeek  {
      *
      * @return
      */
-    public final int getStaminaTrainingPart() {
-        return this.staminaTrainingPart;
+    public final int getStaminaPart() {
+        return this.stamina;
     }
 
     /**
      * DOCUMENT ME!
      *
-     * @param intensitaet
+     * @param intensity
      */
-    public final void setTrainingIntensity(int intensitaet) {
-        this.intensity = intensitaet;
+    public final void setTrainingIntensity(int intensity) {
+        this.intensity = intensity;
     }
 
     /**
@@ -140,10 +140,10 @@ public class TrainingPerWeek  {
     /**
      * DOCUMENT ME!
      *
-     * @param typ
+     * @param trType
      */
-    public final void setTrainingType(int typ) {
-        this.typ = typ;
+    public final void setTrainingType(int trType) {
+        this.trainingType = trType;
     }
 
     /**
@@ -152,7 +152,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getTrainingType() {
-        return this.typ;
+        return this.trainingType;
     }
 
     /**
@@ -174,7 +174,7 @@ public class TrainingPerWeek  {
     }
 
     /**
-     * toString methode: creates a String representation of the object
+     * toString method: creates a String representation of the object
      *
      * @return the String representation
      */
@@ -183,13 +183,13 @@ public class TrainingPerWeek  {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TrainingPerWeek[");
         buffer.append("intensity = " + intensity);
-        buffer.append(", staminaTrainingPart = " + staminaTrainingPart);
-        buffer.append(", typ = " + typ);
+        buffer.append(", staminaTrainingPart = " + stamina);
+        buffer.append(", typ = " + trainingType);
         buffer.append(", week = " + week);
         buffer.append(", year = " + year);
         buffer.append(", hattrickWeek = " + hattrickWeek);
         buffer.append(", hattrickSeason = " + hattrickSeason);
-        buffer.append(", trainDate = " + getTrainingDate().getTime().toLocaleString());
+        buffer.append(", trainDate = " + getTrainingDate().getTime().toString());
         buffer.append(", hrfId = " + hrfId);
         buffer.append("]");
         return buffer.toString();
@@ -208,13 +208,12 @@ public class TrainingPerWeek  {
 	 * @return	training date
 	 */
 	public Calendar getTrainingDate () {
-		// Kalenderwerte setzen
 		// set calendar values
 		final Calendar cal = Calendar.getInstance(Locale.UK);
 
 		/**
 		 * Start of Week is Sunday, because all Trainings in all Countries
-		 * are before Sunday (actually the are on Thursday and Friday)
+		 * are before Sunday (actually they are on Thursday and Friday)
 		 */
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
 		cal.setMinimalDaysInFirstWeek(1);
