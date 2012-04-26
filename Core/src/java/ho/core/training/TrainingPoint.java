@@ -8,7 +8,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 
-
 /**
  * Class that manages the relation between position and training points
  * 
@@ -153,25 +152,30 @@ class TrainingPoint {
     	PLAYMAKING = new Hashtable<Integer,Double>();
         PLAYMAKING.put(new Integer(TrainingPosition.winger), new Double(0.5));
         PLAYMAKING.put(new Integer(TrainingPosition.innerMidfielder), new Double(1.0));
+    	PLAYMAKING.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
 
         CROSSING = new Hashtable<Integer,Double>();
         CROSSING.put(new Integer(TrainingPosition.wingBack), new Double(0.5));
         CROSSING.put(new Integer(TrainingPosition.winger), new Double(1.0));
-
+        CROSSING.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
+        
         DEFENSE = new Hashtable<Integer,Double>();
         DEFENSE.put(new Integer(TrainingPosition.wingBack), new Double(1.0));
         DEFENSE.put(new Integer(TrainingPosition.centralDefender), new Double(1.0));
-
+        DEFENSE.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
+        
         SHORTPASS = new Hashtable<Integer,Double>();
         SHORTPASS.put(new Integer(TrainingPosition.winger), new Double(1.0));
         SHORTPASS.put(new Integer(TrainingPosition.innerMidfielder), new Double(1.0));
         SHORTPASS.put(new Integer(TrainingPosition.forward), new Double(1.0));
+        SHORTPASS.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
 
         KEEPER = new Hashtable<Integer,Double>();
         KEEPER.put(new Integer(TrainingPosition.keeper), new Double(1.0));
 
         SCORING = new Hashtable<Integer,Double>();
         SCORING.put(new Integer(TrainingPosition.forward), new Double(1.0));
+        SCORING.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
 
         SHOOTING = new Hashtable<Integer,Double>();
         SHOOTING.put(new Integer(TrainingPosition.keeper), new Double(0.6));
@@ -187,16 +191,19 @@ class TrainingPoint {
         DEFPOS.put(new Integer(TrainingPosition.centralDefender), new Double(0.5));
         DEFPOS.put(new Integer(TrainingPosition.winger), new Double(0.5));
         DEFPOS.put(new Integer(TrainingPosition.innerMidfielder), new Double(0.5));
+        DEFPOS.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
 
         THROUGHPASS = new Hashtable<Integer,Double>();
         THROUGHPASS.put(new Integer(TrainingPosition.wingBack), new Double(0.85));
         THROUGHPASS.put(new Integer(TrainingPosition.centralDefender), new Double(0.85));
         THROUGHPASS.put(new Integer(TrainingPosition.winger), new Double(0.85));
         THROUGHPASS.put(new Integer(TrainingPosition.innerMidfielder), new Double(0.85));
-
+        THROUGHPASS.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
+        
         WINGATTACK = new Hashtable<Integer,Double>();
         WINGATTACK.put(new Integer(TrainingPosition.winger), new Double(0.6));
         WINGATTACK.put(new Integer(TrainingPosition.forward), new Double(0.6));
+        WINGATTACK.put(new Integer(TrainingPosition.osmosis), new Double(0.16));
         
         SETPIECES = new Hashtable<Integer,Double>();
         SETPIECES.put(new Integer(TrainingPosition.keeper), new Double(1.25)); // Goalkeepers train 25% faster
@@ -207,7 +214,6 @@ class TrainingPoint {
         SETPIECES.put(new Integer(TrainingPosition.forward), new Double(1.0));
         SETPIECES.put(new Integer(TrainingPosition.setPiece), new Double(0.25));
 
-        //die einzelnen Trainingsarten hinzuf?gen
         //add all traintypes to one hashtable with all trainingstypes
         p_Ht_trainPositionen.put(new Integer(TrainingType.PLAYMAKING), PLAYMAKING);
         p_Ht_trainPositionen.put(new Integer(TrainingType.CROSSING_WINGER), CROSSING);
@@ -241,9 +247,22 @@ class TrainingPoint {
 					}
 					break;
 				case TrainingType.DEFENDING:
-					minutes = tp.getMinutesPlayedAsCD() + tp.getMinutesPlayedAsWB();
+					minutes = tp.getMinutesPlayedAsCD();
 					if (minutes > 0) {
 						basePoints = getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.centralDefender)).doubleValue();
+					}
+					tmp = tp.getMinutesPlayedAsWB();
+					minutes += tmp;
+					if (tmp > 0) {
+						basePoints += getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsW() + tp.getMinutesPlayedAsIM() + tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
 					}
 					break;
 				case TrainingType.DEF_POSITIONS:
@@ -272,6 +291,14 @@ class TrainingPoint {
 					if (minutes > 0) {
 						basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
 					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.DEF_POSITIONS, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
+					}
 					break;
 				case TrainingType.CROSSING_WINGER:
 					tmp = tp.getMinutesPlayedAsW();
@@ -283,6 +310,14 @@ class TrainingPoint {
 					minutes += tmp;
 					if (tmp > 0) {
 						basePoints += getTrainingPoint(TrainingType.CROSSING_WINGER, new Integer(TrainingPosition.wingBack)).doubleValue();
+					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsCD() + tp.getMinutesPlayedAsIM() + tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.CROSSING_WINGER, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
 					}
 					break;
 				case TrainingType.WING_ATTACKS:
@@ -296,6 +331,14 @@ class TrainingPoint {
 					if (tmp > 0) {
 						basePoints += getTrainingPoint(TrainingType.WING_ATTACKS, new Integer(TrainingPosition.forward)).doubleValue();
 					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsCD() + tp.getMinutesPlayedAsIM() + tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.WING_ATTACKS, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
+					}
 					break;
 				case TrainingType.PLAYMAKING:
 					tmp = tp.getMinutesPlayedAsIM();
@@ -307,6 +350,14 @@ class TrainingPoint {
 					minutes += tmp;
 					if (tmp > 0) {
 						basePoints += getTrainingPoint(TrainingType.PLAYMAKING, new Integer(TrainingPosition.winger)).doubleValue();
+					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsCD() + tp.getMinutesPlayedAsWB() + tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.PLAYMAKING, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
 					}
 					break;
 				case TrainingType.SHORT_PASSES:
@@ -324,6 +375,14 @@ class TrainingPoint {
 					minutes += tmp;
 					if (tmp > 0) {
 						basePoints += getTrainingPoint(TrainingType.SHORT_PASSES, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsWB() + tp.getMinutesPlayedAsCD();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.SHORT_PASSES, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
 					}
 					break;
 				case TrainingType.THROUGH_PASSES:
@@ -347,11 +406,27 @@ class TrainingPoint {
 					if (tmp > 0) {
 						basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.innerMidfielder)).doubleValue();
 					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsFW();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.THROUGH_PASSES, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
+					}
 					break;
 				case TrainingType.SCORING:
 					minutes = tp.getMinutesPlayedAsFW();
 					if (minutes > 0) {
 						basePoints += getTrainingPoint(TrainingType.SCORING, new Integer(TrainingPosition.forward)).doubleValue();
+					}
+					if (minutes < 90)
+					{
+						tmp = tp.getMinutesPlayedAsGK() + tp.getMinutesPlayedAsCD() + tp.getMinutesPlayedAsWB() + tp.getMinutesPlayedAsW() + tp.getMinutesPlayedAsIM();
+						minutes += tmp;
+						if (tmp > 0) {
+							basePoints += getTrainingPoint(TrainingType.DEFENDING, new Integer(TrainingPosition.osmosis)).doubleValue();
+						}
 					}
 					break;
 				case TrainingType.SHOOTING:
@@ -425,6 +500,7 @@ class TrainingPoint {
 					break;
 			}
 			//System.out.println ("Match added: train="+trainWeek.getTyp()+", min="+minutes+", bP="+basePoints);
+			//System.out.println("Name " + tp.Name() + " Minutes played " + tp.getMinutesPlayed() + " base point: " + basePoints);
 			matchesForTraining.add(new MatchForTraining(minutes, basePoints));
 			Collections.sort(matchesForTraining);
 		}
@@ -458,7 +534,7 @@ class TrainingPoint {
    			points += curPoints;
    			minutesLeft -= curMinutes;
     	}
-//    	System.out.println ("calcTrP: final points="+points);
+    	//System.out.println ("calcTrP: final points="+points);
     	return points;
     }
 
