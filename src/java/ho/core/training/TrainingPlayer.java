@@ -1,6 +1,7 @@
 package ho.core.training;
 
 public class TrainingPlayer {
+	private String pName = "";
 	private int pMinutesPlayedAsGK = 0;
 	private int pMinutesPlayedAsWB = 0;
 	private int pMinutesPlayedAsCD = 0;
@@ -75,6 +76,18 @@ public class TrainingPlayer {
 	public int getMinutesPlayedAsSP()
 	{
 		return pMinutesPlayedAsSP;
+	}
+	public int getMinutesPlayed()
+	{
+		return pTotalMinutesPlayed;
+	}
+	public String Name()
+	{
+		return pName;
+	}
+	public void Name(String sName)
+	{
+		pName = sName;
 	}
 	public boolean PlayerHasPlayed()
 	{

@@ -10,6 +10,7 @@ public class TrainingPosition {
     public static final int innerMidfielder = 4;
     public static final int forward = 5;
     public static final int setPiece = 6;
+    public static final int osmosis = 7;
     
     // Convert an on field position to a training position
     public static int getTrainingPosition(int playerPosition)

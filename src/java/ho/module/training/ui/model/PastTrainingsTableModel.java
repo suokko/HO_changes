@@ -58,7 +58,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         }
         else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
-            train.setStaminaTrainingPart(staminaTrainingPart.intValue());
+            train.setStaminaPart(staminaTrainingPart.intValue());
         }
 
         DBManager.instance().saveTraining((TrainingPerWeek) train);
@@ -87,7 +87,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
                        train.getHattrickSeason() + "", //$NON-NLS-1$
                        new CBItem(selectedTrain, train.getTrainingType()),
                        new Integer(train.getTrainingIntensity()),
-                       new Integer(train.getStaminaTrainingPart())
+                       new Integer(train.getStaminaPart())
                    });
 
             // add the data object into the table model

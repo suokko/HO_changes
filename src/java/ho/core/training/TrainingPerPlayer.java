@@ -354,6 +354,7 @@ public class TrainingPerPlayer  {
     		return;
     	}
     	double d = trainingPoint.calcTrainingPoints(false);
+    	System.out.println (player.getName() + " final points="+d);
     	int trainType = train.getTrainingType();
     	switch (trainType) {
 		case TrainingType.PLAYMAKING:
