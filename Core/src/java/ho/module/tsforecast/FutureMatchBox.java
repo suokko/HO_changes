@@ -17,6 +17,8 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.util.HelperWrapper;
@@ -74,7 +76,7 @@ final class FutureMatchBox extends JPanel {
     add(m_rbMOTS, gridbagconstraints);
 
     gridbagconstraints.gridx = 3;
-    JLabel lIcon = new JLabel( HelperWrapper.instance().getImageIcon4Spieltyp( iType));
+    JLabel lIcon = new JLabel( ThemeManager.getIcon(HOIconName.MATCHTYPES[iType]) );
     lIcon.setToolTipText( HelperWrapper.instance().getNameForMatchTyp( iType));
     add( lIcon, gridbagconstraints );
 

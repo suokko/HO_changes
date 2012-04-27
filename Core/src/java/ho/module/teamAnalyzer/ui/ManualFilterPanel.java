@@ -7,6 +7,8 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.ht.HattrickManager;
@@ -79,11 +81,11 @@ public class ManualFilterPanel extends JPanel {
 
 			if (element.isHome()) {
 				rowData.add(element.getAwayTeam());
-				rowData.add(HelperWrapper.instance().getImageIcon4Spieltyp(element.getMatchType()));
+				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[element.getMatchType()]));
 				rowData.add(element.getHomeGoals() + " - " + element.getAwayGoals());
 			} else {
 				rowData.add("*" + element.getHomeTeam());
-				rowData.add(HelperWrapper.instance().getImageIcon4Spieltyp(element.getMatchType()));
+				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[element.getMatchType()]));
 				rowData.add(element.getAwayGoals() + " - " + element.getHomeGoals());
 			}
 

@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.MatchesColumnModel;
 import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
@@ -71,7 +72,7 @@ public class RecapTableRenderer extends DefaultTableCellRenderer {
 			case 1:
 
 				// Set icon for match type.
-				setIcon(HelperWrapper.instance().getImageIcon4Spieltyp(matchType));
+				setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType]));
 				setText(null);
 
 				StringBuffer tipText = new StringBuffer(HelperWrapper.instance().getNameForMatchTyp(matchType));

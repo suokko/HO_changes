@@ -9,9 +9,7 @@ package ho.core.util;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
-import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
@@ -94,20 +92,10 @@ public class HelperWrapper {
     }
 
 
-    public ImageIcon getImageIcon4Spieltyp(int spieltyp) {
-        return ThemeManager.getIcon(HOIconName.MATCHTYPES[spieltyp]);
-    }
-
     public ImageIcon getImageIcon4Veraenderung(int wert) {
         return ImageUtilities.getImageIcon4Veraenderung(wert,true);
     }
 
-    public ImageIcon getWideImageIcon4Veraenderung(int value) {
-        return ImageUtilities.getWideImageIcon4Veraenderung(value, true);
-    }
-    public ImageIcon getImageIcon4Spezialitaet(int wert) {
-        return  ThemeManager.getIcon(HOIconName.SPECIAL[wert]);
-    }
 
     /**
      * Calculate the last valid training date for a certain date (skillupDate)

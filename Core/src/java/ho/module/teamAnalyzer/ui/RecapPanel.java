@@ -2,6 +2,8 @@
 package ho.module.teamAnalyzer.ui;
 
 //import ho.module.teamAnalyzer.SystemManager;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HelperWrapper;
@@ -146,11 +148,11 @@ public class RecapPanel extends JPanel {
             // Columns 0-2
             if (isHomeMatch) {
                 rowData.add(match.getAwayTeam());
-                rowData.add(HelperWrapper.instance().getImageIcon4Spieltyp(matchType));
+                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType]));
                 rowData.add(match.getHomeGoals() + GOALS_SPACE + match.getAwayGoals());
             } else {
                 rowData.add("* " + match.getHomeTeam()); //$NON-NLS-1$
-                rowData.add(HelperWrapper.instance().getImageIcon4Spieltyp(matchType));
+                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType]));
                 rowData.add(match.getAwayGoals() + GOALS_SPACE + match.getHomeGoals());
             }
 

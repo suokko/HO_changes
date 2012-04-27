@@ -3,10 +3,10 @@ package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
-import ho.core.util.HelperWrapper;
 import ho.module.training.OldTrainingManager;
 import ho.module.training.SkillChange;
 import ho.module.training.ui.model.ChangesTableModel;
@@ -267,7 +267,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        panel.add(new JLabel(HelperWrapper.instance().getWideImageIcon4Veraenderung(change)));
+        panel.add(new JLabel(ImageUtilities.getWideImageIcon4Veraenderung(change,true)));
         panel.add(cBox);
 
         return panel;
