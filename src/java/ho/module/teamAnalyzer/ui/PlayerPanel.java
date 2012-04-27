@@ -3,6 +3,8 @@ package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
@@ -183,7 +185,7 @@ public class PlayerPanel extends JPanel {
             if (lineup.getPlayerId() == 0) {
                 specialEventImage.setIcon(null);
             } else {
-                specialEventImage.setIcon(HelperWrapper.instance().getImageIcon4Spezialitaet(specialEvent));
+                specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[specialEvent]));
             }
 
             positionField.setText(HelperWrapper.instance().getNameForPosition((byte) lineup

@@ -1,6 +1,8 @@
 // %3062152101:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
@@ -58,7 +60,7 @@ public class RosterTableRenderer extends DefaultTableCellRenderer {
 
             if (column == 9) {
                 int v = Integer.parseInt((String) value);
-                ImageIcon icon =HelperWrapper.instance().getImageIcon4Spezialitaet(v);
+                ImageIcon icon =ThemeManager.getIcon(HOIconName.SPECIAL[v]);
                 setIcon(icon);
                 setText("");
                 return this;

@@ -10,7 +10,6 @@ import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.Matchdetails;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 import ho.module.matches.SpielHighlightPanel;
 
 import java.sql.Timestamp;
@@ -72,9 +71,9 @@ class SpecialEventsDM
         downIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);//createImageIcon(this, "/hoplugins/specialEvents/img/down.gif");
         oldmanIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);//createImageIcon(this, "/hoplugins/specialEvents/img/oldman.gif");
         counterIcon = ThemeManager.getIcon(HOIconName.GOAL_COUNTER);
-        ballZaubererIcon = HelperWrapper.instance().getImageIcon4Spezialitaet(1);
-        schnellIcon = HelperWrapper.instance().getImageIcon4Spezialitaet(2);
-        unberechenbarIcon =HelperWrapper.instance().getImageIcon4Spezialitaet(4);
+        ballZaubererIcon = ThemeManager.getIcon(HOIconName.SPECIAL[1]);
+        schnellIcon =ThemeManager.getIcon(HOIconName.SPECIAL[2]);
+        unberechenbarIcon =ThemeManager.getIcon(HOIconName.SPECIAL[4]);
         weatherPositiveIcon= ThemeManager.getIcon(HOIconName.WEATHER_EFFECT_GOOD);
         weatherNegativeIcon= ThemeManager.getIcon(HOIconName.WEATHER_EFFECT_BAD);
         teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
