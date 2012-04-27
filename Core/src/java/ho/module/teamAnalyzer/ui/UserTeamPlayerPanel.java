@@ -1,6 +1,8 @@
 // %55184142:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.vo.UserTeamSpotLineup;
@@ -63,8 +65,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
             positionImage.setIcon(HelperWrapper.instance().getImage4Position(lineup.getSpot(),
                                                                                    (byte) lineup
                                                                                    .getTacticCode()));
-            specialEventImage.setIcon(HelperWrapper.instance().getImageIcon4Spezialitaet(lineup
-                                                                                               .getSpecialEvent()));
+            specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[lineup.getSpecialEvent()]));
             positionField.setText(HelperWrapper.instance().getNameForPosition((byte) lineup
                                                                                     .getPosition()));
             updateRatingPanel(lineup.getRating());
