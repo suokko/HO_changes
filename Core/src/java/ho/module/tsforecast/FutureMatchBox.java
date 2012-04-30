@@ -21,7 +21,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
-import ho.core.util.HelperWrapper;
+import ho.core.model.match.MatchLineup;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -77,7 +77,7 @@ final class FutureMatchBox extends JPanel {
 
     gridbagconstraints.gridx = 3;
     JLabel lIcon = new JLabel( ThemeManager.getIcon(HOIconName.MATCHTYPES[iType]) );
-    lIcon.setToolTipText( HelperWrapper.instance().getNameForMatchTyp( iType));
+    lIcon.setToolTipText( MatchLineup.getName4MatchTyp( iType));
     add( lIcon, gridbagconstraints );
 
     gridbagconstraints.gridx = 4;

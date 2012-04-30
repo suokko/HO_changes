@@ -5,6 +5,7 @@ package ho.module.teamAnalyzer.ui;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Matchdetails;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
@@ -177,7 +178,7 @@ public class RecapPanel extends JPanel {
             rowData.add(df2.format(matchDetail.getRating().getLoddarStats(matchDetail.getTacticCode(),
                                                                           matchDetail
                                                                           .getTacticLevel())));
-            rowData.add(HelperWrapper.instance().getNameForTaktik(matchDetail.getTacticCode()));
+            rowData.add(Matchdetails.getNameForTaktik(matchDetail.getTacticCode()));
 
             // Column 18
             if (matchDetail.getTacticCode() == 0) {

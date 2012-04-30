@@ -4,6 +4,7 @@ package ho.module.training.ui.model;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
+import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
@@ -222,8 +223,7 @@ public class OutputTableModel extends AbstractTableModel {
         double point = getOffset(spieler, skillIndex);
         double trainingLength = getTrainingLength(spieler, skillIndex);
 
-        VerticalIndicator vi = new VerticalIndicator(HelperWrapper.instance().round(point, 1),
-        		HelperWrapper.instance().round(trainingLength, 1));
+        VerticalIndicator vi = new VerticalIndicator(Helper.round(point, 1),Helper.round(trainingLength, 1));
 
         return vi;
     }

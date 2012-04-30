@@ -1,9 +1,10 @@
 // %898728795:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
-import ho.core.util.HelperWrapper;
+import ho.core.util.Helper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.model.UiRatingTableModel;
 import ho.module.teamAnalyzer.ui.renderer.RatingTableCellRenderer;
@@ -119,7 +120,7 @@ public class RatingPanel extends JPanel {
 
         double relativeVal;
         if (myRating != 0 || opponentRating != 0)
-        	relativeVal = HelperWrapper.instance().round(myRating/(myRating+opponentRating),2);
+        	relativeVal = Helper.round(myRating/(myRating+opponentRating),2);
         else
         	relativeVal = 0;
         
@@ -134,7 +135,7 @@ public class RatingPanel extends JPanel {
         	relValString = "-" + relValString;
 
         // Add difference as icon
-        rowData.add( HelperWrapper.instance().getImageIcon4Veraenderung(diff));
+        rowData.add(  ImageUtilities.getImageIcon4Veraenderung(diff,true));
         // Add relative difference [%]
         rowData.add(relValString);
 

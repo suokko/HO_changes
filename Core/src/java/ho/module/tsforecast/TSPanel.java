@@ -27,6 +27,7 @@ package ho.module.tsforecast;
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
 import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -232,9 +233,9 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
         int i1 = (int)(((curve.getSpirit() + 0.5D) * (double)m_iMaxY) / m_dValues);
         switch(curve.getPointType()) {
           case Curve.TRAINER_DOWN_PT:
-            graphics2d.drawImage(  ihelper.getImageIcon4Veraenderung(-1).getImage(), 
+            graphics2d.drawImage(   ImageUtilities.getImageIcon4Veraenderung(-1,true).getImage(), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1, 
-                                   ihelper.getImageIcon4Veraenderung(-1).getImageObserver());
+                                   ImageUtilities.getImageIcon4Veraenderung(-1,true).getImageObserver());
             graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_down"), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
             graphics2d.drawString( ihelper.getNameForSkill((int)curve.getSpirit(), true), 

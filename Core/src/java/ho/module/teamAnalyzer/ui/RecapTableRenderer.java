@@ -6,6 +6,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchLineup;
 import ho.core.util.HelperWrapper;
 
 import java.awt.Color;
@@ -75,7 +76,7 @@ public class RecapTableRenderer extends DefaultTableCellRenderer {
 				setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType]));
 				setText(null);
 
-				StringBuffer tipText = new StringBuffer(HelperWrapper.instance().getNameForMatchTyp(matchType));
+				StringBuffer tipText = new StringBuffer(MatchLineup.getName4MatchTyp(matchType));
 
 				tipText.append(" - "); //$NON-NLS-1$
 

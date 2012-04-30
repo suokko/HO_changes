@@ -10,6 +10,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.XtraData;
+import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
@@ -99,7 +100,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			label.setBackground(table.getBackground());
 		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("BestePosition")))		{
 			byte tmpPos = ((Float)table.getValueAt(row,column)).byteValue();
-			float tmpFloat =HelperWrapper.instance().round((((Float)table.getValueAt(row,column)).floatValue() - tmpPos)*100,UserParameter.instance().anzahlNachkommastellen);
+			float tmpFloat =Helper.round((((Float)table.getValueAt(row,column)).floatValue() - tmpPos)*100,UserParameter.instance().anzahlNachkommastellen);
 			label.setText(HelperWrapper.instance().getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
 			label.setBackground(table.getBackground());
 		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MC"))) {
@@ -153,7 +154,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
 			int changeWert = skillWertNew - skillWertOld;
 			
-			Icon ii = HelperWrapper.instance().getImageIcon4Veraenderung(changeWert);
+			Icon ii =  ImageUtilities.getImageIcon4Veraenderung(changeWert,true);
 			label = new JLabel(""+skillWertNew,ii,SwingConstants.CENTER);
 			label.setHorizontalTextPosition(SwingConstants.LEADING);
 			if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ER"))
@@ -205,7 +206,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			try
 			{
 				neuerWert = Float.parseFloat(skill[0]);
-				changeValue = HelperWrapper.instance().round(Float.parseFloat(skill[1]),UserParameter.instance().anzahlNachkommastellen);
+				changeValue = Helper.round(Float.parseFloat(skill[1]),UserParameter.instance().anzahlNachkommastellen);
 			}
 			catch(Exception exc){}
 			

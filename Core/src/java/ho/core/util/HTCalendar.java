@@ -201,5 +201,15 @@ public class HTCalendar {
         elapsedWeeks += (WEEK_IN_SEASON * SE_CORRECTION);
     }
     
- 
+    public static Date resetDay(Date date) {
+        final Calendar cal = new GregorianCalendar();
+
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
+}
 }
