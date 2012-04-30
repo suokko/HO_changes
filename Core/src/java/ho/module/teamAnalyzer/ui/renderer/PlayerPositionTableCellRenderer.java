@@ -1,6 +1,7 @@
 // %4090885170:hoplugins.teamAnalyzer.ui.renderer%
 package ho.module.teamAnalyzer.ui.renderer;
 
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.util.HelperWrapper;
 
 import java.awt.Component;
@@ -65,8 +66,8 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
                 icon = map.get(value);
             } else {
                 // Make new icon and cache it.
-                icon = HelperWrapper.instance().getImage4Position(HelperWrapper.instance().getPosition(pos),
-                                                                        (byte) 0);
+                icon = ImageUtilities.getImage4Position(HelperWrapper.instance().getPosition(pos),
+                                                                        (byte) 0,0);
                 map.put(value, icon);
             }
 

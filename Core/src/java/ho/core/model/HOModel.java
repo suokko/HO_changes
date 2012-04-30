@@ -15,6 +15,7 @@ import ho.core.training.TrainingManager;
 import ho.core.training.TrainingWeekManager;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
+import ho.core.util.HTCalendarFactory;
 import ho.core.util.HelperWrapper;
 import ho.module.lineup.Lineup;
 import ho.module.series.Spielplan;
@@ -22,6 +23,7 @@ import ho.tool.arenasizer.Stadium;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -496,12 +498,12 @@ public class HOModel {
 					HTCalendar htcP;
 	                String htcPs = "";
 	                if (previousTrainingDate != null) {
-	                	htcP = helper.createTrainingCalendar(previousTrainingDate);
+	                	htcP = HTCalendarFactory.createTrainingCalendar(new Date(previousTrainingDate.getTime()));
 	                	htcPs = " ("+htcP.getHTSeason()+"."+htcP.getHTWeek()+")";
 	                }
-	                HTCalendar htcA = helper.createTrainingCalendar(actualTrainingDate);
+	                HTCalendar htcA = HTCalendarFactory.createTrainingCalendar(new Date((actualTrainingDate.getTime())));
 	            	String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
-	                HTCalendar htcC = helper.createTrainingCalendar(calcDate);
+	                HTCalendar htcC = HTCalendarFactory.createTrainingCalendar(new Date((calcDate.getTime())));
 	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
 	            	TrainingPerWeek trWeek = TrainingWeekManager.instance().getTrainingWeek(m_iID);

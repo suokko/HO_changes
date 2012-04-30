@@ -2,6 +2,7 @@ package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
+import ho.core.util.HTCalendar;
 import ho.core.util.HelperWrapper;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
@@ -126,7 +127,7 @@ public class TransferTable extends AbstractTable {
             final Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_MONTH, 1);
 
-            final List<PlayerTransfer> transfers = XMLParser.getAllTeamTransfers(teamid, HelperWrapper.instance().resetDay(cal.getTime()));
+            final List<PlayerTransfer> transfers = XMLParser.getAllTeamTransfers(teamid, HTCalendar.resetDay(cal.getTime()));
 
             for (Iterator<PlayerTransfer> iter = transfers.iterator(); iter.hasNext();) {
                 PlayerTransfer transfer = iter.next();

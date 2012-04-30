@@ -62,7 +62,7 @@ public class MatchPopulator {
         for (Iterator<Match> iter = matches.iterator(); iter.hasNext();) {
         	bOK = true;
             Match element = iter.next();
-            if (!isMatchAvailable(element.getMatchId()) && HattrickManager.isDownloadAllowed(element)) {
+            if (!DBManager.instance().isMatchVorhanden(element.getMatchId()) && HattrickManager.isDownloadAllowed(element)) {
                 bOK = downloadMatch(element.getMatchId());
             }
             if (bOK) {
@@ -80,17 +80,6 @@ public class MatchPopulator {
             }
         }
         return list;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private boolean isMatchAvailable(int matchId) {
-        return HelperWrapper.instance().existsMatchInDB(matchId);
     }
 
     /**

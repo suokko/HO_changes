@@ -6,6 +6,7 @@
  */
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -74,7 +75,7 @@ public class ManualFilterPanel extends JPanel {
 
 			rowData = new Vector<Object>();
 
-			boolean isAvailable = HelperWrapper.instance().existsMatchInDB(element.getMatchId());
+			boolean isAvailable = DBManager.instance().isMatchVorhanden(element.getMatchId());
 			boolean isSelected = TeamAnalyzerPanel.filter.getMatches().contains("" + element.getMatchId());
 
 			rowData.add(Boolean.valueOf(isSelected));

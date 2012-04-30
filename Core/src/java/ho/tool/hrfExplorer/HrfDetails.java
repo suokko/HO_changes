@@ -12,6 +12,7 @@ import ho.core.constants.TrainingType;
 import ho.core.db.DBManager;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
@@ -72,7 +73,7 @@ class HrfDetails {
 				.getAdapter()
 				.executeQuery(
 						"SELECT MAX(DATUM) FROM HRF WHERE DATUM < '"
-								+ m_helper.parseDate(getStr_Datum()) + "'");
+								+ Helper.parseDate(getStr_Datum()) + "'");
 		try {
 			while (m_rs.next()) {
 				m_rs.getTimestamp(1);
@@ -92,7 +93,7 @@ class HrfDetails {
 				.getAdapter()
 				.executeQuery(
 						"SELECT MIN(DATUM) FROM HRF WHERE DATUM > '"
-								+ m_helper.parseDate(getStr_Datum()) + "'");
+								+ Helper.parseDate(getStr_Datum()) + "'");
 		try {
 			while (m_rs.next()) {
 				m_rs.getTimestamp(1);
@@ -112,7 +113,7 @@ class HrfDetails {
 				.getAdapter()
 				.executeQuery(
 						"SELECT count(*) FROM HRF WHERE DATUM = '"
-								+ m_helper.parseDate(getStr_Datum()) + "'");
+								+ Helper.parseDate(getStr_Datum()) + "'");
 		try {
 			while (m_rs.next()) {
 				if (m_rs.getInt(1) == 0) {
