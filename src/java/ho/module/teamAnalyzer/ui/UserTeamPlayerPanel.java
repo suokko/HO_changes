@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -62,9 +63,9 @@ public class UserTeamPlayerPanel extends PlayerPanel {
         	containsPlayer = true;
         	
             nameField.setText(lineup.getName());
-            positionImage.setIcon(HelperWrapper.instance().getImage4Position(lineup.getSpot(),
+            positionImage.setIcon(ImageUtilities.getImage4Position(lineup.getSpot(),
                                                                                    (byte) lineup
-                                                                                   .getTacticCode()));
+                                                                                   .getTacticCode(),0));
             specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[lineup.getSpecialEvent()]));
             positionField.setText(HelperWrapper.instance().getNameForPosition((byte) lineup
                                                                                     .getPosition()));
@@ -76,7 +77,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
             nameField.setText("");
             positionField.setText("");
             updateRatingPanel(0);
-            positionImage.setIcon(HelperWrapper.instance().getImage4Position(0, (byte) 0));
+            positionImage.setIcon(ImageUtilities.getImage4Position(0, (byte) 0,0));
             specialEventImage.setIcon(null);
             tacticPanel.reload(new ArrayList<TacticReport>());
         }

@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.ui.controller;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Matchdetails;
 import ho.core.prediction.MatchEnginePanel;
 import ho.core.prediction.MatchPredictionDialog;
 import ho.core.prediction.engine.MatchPredictionManager;
@@ -154,17 +155,17 @@ public class SimButtonListener implements ActionListener {
     	try {
 	    	if (strTactic == null || RecapPanel.VALUE_NA.equals(strTactic)) {
 	    		return IMatchDetails.TAKTIK_NORMAL;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_KONTER))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_KONTER))) {
 	    		return IMatchDetails.TAKTIK_KONTER;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_MIDDLE))) {
 	    		return IMatchDetails.TAKTIK_MIDDLE;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_WINGS))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS))) {
 	    		return IMatchDetails.TAKTIK_WINGS;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_PRESSING))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING))) {
 	    		return IMatchDetails.TAKTIK_PRESSING;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE))) {
 	    		return IMatchDetails.TAKTIK_CREATIVE;
-	    	} else if (strTactic.equals(HelperWrapper.instance().getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS))) {
+	    	} else if (strTactic.equals(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS))) {
 	    		return IMatchDetails.TAKTIK_LONGSHOTS;
 	    	}
     	} catch (Exception e) {

@@ -9,7 +9,6 @@ package ho.core.util;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
@@ -23,17 +22,13 @@ import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -86,16 +81,6 @@ public class HelperWrapper {
 
         return d;
     }
-
-    public ImageIcon getImage4Position(int posid, byte taktik) {
-        return ImageUtilities.getImage4Position(posid, taktik, 0);
-    }
-
-
-    public ImageIcon getImageIcon4Veraenderung(int wert) {
-        return ImageUtilities.getImageIcon4Veraenderung(wert,true);
-    }
-
 
     /**
      * Calculate the last valid training date for a certain date (skillupDate)
@@ -155,20 +140,12 @@ public class HelperWrapper {
         return PlayerAbility.getNameForSkill(value, showNumber, isMatch);
     }
 
-    public String getNameForMatchTyp(int typ) {
-        return MatchLineup.getName4MatchTyp(typ);
-    }
-
     public String getNameForPosition(byte value) {
         return SpielerPosition.getNameForPosition(value);
     }
 
     public String getNameForSkill(int value, boolean showNumber) {
         return PlayerAbility.getNameForSkill(value, showNumber);
-    }
-
-    public String getNameForTaktik(int typ) {
-        return Matchdetails.getNameForTaktik(typ);
     }
 
      /**
@@ -226,10 +203,6 @@ public class HelperWrapper {
       }
 
       return false;
-    }
-
-    public void copyArray2Vector(Object[] src, Vector dest) {
-        Helper.copyArray2Vector(src, dest);
     }
 
     /**
@@ -302,14 +275,6 @@ public class HelperWrapper {
         return true;
     }
 
-    public boolean existsMatchInDB(int matchID) {
-        return DBManager.instance().isMatchVorhanden(matchID);
-    }
-
-    public int[] generateIntArray(String text) {
-        return Helper.generateIntArray(text);
-    }
-
     public void openUrlInUserBRowser(String url) {
         try {
             ho.core.util.BrowserLauncher.openURL(url);
@@ -321,16 +286,19 @@ public class HelperWrapper {
 			urlField.setText(" " + MyConnector.getHOSite());
 			urlField.addKeyListener(new KeyListener() {
 
+				@Override
 				public void keyTyped(KeyEvent event) {
 					event.consume();
 				}
 
+				@Override
 				public void keyPressed(KeyEvent event) {
 					if (!(event.getModifiers() == InputEvent.CTRL_MASK)) {
 						event.consume();
 					}
 				}
 
+				@Override
 				public void keyReleased(KeyEvent event) {
 					event.consume();
 				}
@@ -349,81 +317,12 @@ public class HelperWrapper {
         }
     }
 
-    public java.sql.Timestamp parseDate(String date) {
-        return Helper.parseDate(date);
-    }
-
-    public double round(double wert, int nachkommastellen) {
-        return Helper.round(wert, nachkommastellen);
-    }
-
-    public float round(float wert, int nachkommastellen) {
-        return Helper.round(wert, nachkommastellen);
-    }
-    
+  
     public void showMessage(java.awt.Component parent, String message, String titel, int typ) {
         Helper.showMessage(parent, message, titel, typ);
     }
 
-	public boolean isDevVersion() {
-		File file = new File(HOVerwaltung.instance().getModel().getBasics().getManager() + ".ext");
-		if (file.exists()) {
-			return true;
-		}
-		return false;
-	}
-
- /**
-     * Creates a HTCalendar to calculate local values for a league,  using the economy date to flip
-     * over to the next week.
-     *
-     * @param model HO data model
-     * @param date Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createEconomyCalendar(Date date) {
-    	return HTCalendarFactory.createEconomyCalendar(date);
-
-    }
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the training date to
-     * flip over to the next week.
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createTrainingCalendar() {
-    	return HTCalendarFactory.createTrainingCalendar();
-    }
-
-
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the training date to
-     * flip over to the next week.
-     *
-     * @param date Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createTrainingCalendar(Date date) {
-    	return HTCalendarFactory.createTrainingCalendar(date);
-    }
-
-    /**
-     * Creates a HTCalendar to calculate local values for a league,  using the training date to
-     * flip over to the next week.
-     *
-     * @param timestamp Date to set the calendar
-     *
-     * @return a HTCalendar.
-     */
-    public HTCalendar createTrainingCalendar(Timestamp timestamp) {
-    	return createTrainingCalendar(new Date(timestamp.getTime()));
-    }
-
-
+ 
 	/**
 	 * Get HT-Season of a given date (using the economy calendar)
 	 *
@@ -444,9 +343,9 @@ public class HelperWrapper {
 	public int getHTSeason (Date date, boolean useTrainingCalendar) {
 		HTCalendar cal;
 		if (useTrainingCalendar)
-			cal = createTrainingCalendar(date);
+			cal = HTCalendarFactory.createTrainingCalendar(date);
 		else
-			cal = createEconomyCalendar(date);
+			cal = HTCalendarFactory.createEconomyCalendar(date);
 		if (cal != null)
 			return cal.getHTSeason();
 		else
@@ -473,9 +372,9 @@ public class HelperWrapper {
 	public int getHTWeek (Date date, boolean useTrainingCalendar) {
 		HTCalendar cal;
 		if (useTrainingCalendar)
-			cal = createTrainingCalendar(date);
+			cal = HTCalendarFactory.createTrainingCalendar(date);
 		else
-			cal = createEconomyCalendar(date);
+			cal = HTCalendarFactory.createEconomyCalendar(date);
 		if (cal != null)
 			return cal.getHTWeek();
 		else
@@ -513,26 +412,4 @@ public class HelperWrapper {
 		return getHTWeek(new Date(timestamp.getTime()));
 	}
 
-	/**
-	 * Get HT-Week of a given date
-	 *
-	 * @param timestamp				the date to convert
-	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
-	 * @return	HT-Week
-	 */
-	public int getHTWeek (Timestamp timestamp, boolean useTrainingCalendar) {
-		return getHTWeek(new Date(timestamp.getTime()), useTrainingCalendar);
-	}
-
-	public Date resetDay(Date date) {
-	        final Calendar cal = new GregorianCalendar();
-
-	        cal.setTime(date);
-	        cal.set(Calendar.HOUR_OF_DAY, 0);
-	        cal.set(Calendar.MINUTE, 0);
-	        cal.set(Calendar.SECOND, 0);
-	        cal.set(Calendar.MILLISECOND, 0);
-
-	        return cal.getTime();
-	}
 }

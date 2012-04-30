@@ -4,6 +4,7 @@ package ho.module.teamAnalyzer.ui;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HelperWrapper;
@@ -179,7 +180,7 @@ public class PlayerPanel extends JPanel {
             }
 
             int posCode =HelperWrapper.instance().getPosition(lineup.getPosition());
-            positionImage.setIcon(HelperWrapper.instance().getImage4Position(posCode, (byte) 0));
+            positionImage.setIcon(ImageUtilities.getImage4Position(posCode, (byte) 0,0));
             int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId()).getSpecialEvent();
 
             if (lineup.getPlayerId() == 0) {
@@ -201,7 +202,7 @@ public class PlayerPanel extends JPanel {
             infoPanel.setVisible(false);
             infoPanel.clearData();
             updateRatingPanel(0);
-            positionImage.setIcon(HelperWrapper.instance().getImage4Position(0, (byte) 0));
+            positionImage.setIcon(ImageUtilities.getImage4Position(0, (byte) 0,0));
             specialEventImage.setIcon(null);
             tacticPanel.reload(new ArrayList<TacticReport>());
         }

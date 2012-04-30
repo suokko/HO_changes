@@ -5,8 +5,8 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 
 import java.awt.Color;
@@ -101,7 +101,7 @@ public class TrainingLegendPanel extends JPanel {
                                  Math.min(color.getGreen() + 20, 255),
                                  Math.min(color.getBlue() + 20, 255), 224);
 
-        ImageIcon icon = HelperWrapper.instance().getImageIcon4Veraenderung(count);
+        ImageIcon icon =  ImageUtilities.getImageIcon4Veraenderung(count,true);
 
         int farbwert = Math.min(240, 90 + (50 * count));
         Color iconColor = new Color(0, farbwert, 0);

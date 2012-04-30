@@ -2,8 +2,8 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
@@ -18,11 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
+
 public class RosterTableRenderer extends DefaultTableCellRenderer {
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -123,9 +119,9 @@ public class RosterTableRenderer extends DefaultTableCellRenderer {
                     int v = Integer.parseInt("" + value);
                     int diff = v - oldInfo.getForm();
 
-                    if (HelperWrapper.instance().isDevVersion()) {
-                        setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(diff));
-                    }
+                    
+                   setIcon( ImageUtilities.getImageIcon4Veraenderung(diff,true));
+
 
                     break;
                 }
@@ -134,9 +130,9 @@ public class RosterTableRenderer extends DefaultTableCellRenderer {
                     int v = Integer.parseInt("" + value);
                     int diff = v - oldInfo.getExperience();
 
-                    if (HelperWrapper.instance().isDevVersion()) {
-                        setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(diff));
-                    }
+
+                        setIcon( ImageUtilities.getImageIcon4Veraenderung(diff,true));
+
 
                     break;
                 }
@@ -145,14 +141,6 @@ public class RosterTableRenderer extends DefaultTableCellRenderer {
                     int v = Integer.parseInt("" + value);
                     int diff = v - oldInfo.getTSI();
                     String desc = "";
-
-                    if (HelperWrapper.instance().isDevVersion()) {
-                        if (diff > 0) {
-                            desc = "+";
-                        }
-
-                        desc = desc + diff;
-                    }
 
                     setText(getText() + " " + desc);
                     break;

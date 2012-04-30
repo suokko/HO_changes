@@ -4,14 +4,14 @@ package ho.core.training;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.UserParameter;
+import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchStatistics;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -215,8 +215,8 @@ public class TrainingManager {
         	output.setTimestamp(timestamp);
 
         if (TRAININGDEBUG) {
-        	HTCalendar htc1 = HelperWrapper.instance().createTrainingCalendar();
-        	HTCalendar htc2 = HelperWrapper.instance().createTrainingCalendar();
+        	HTCalendar htc1 = HTCalendarFactory.createTrainingCalendar();
+        	HTCalendar htc2 = HTCalendarFactory.createTrainingCalendar();
         	String c1s = "";
         	String c2s = "";
         	if (timestamp != null) {

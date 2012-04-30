@@ -86,26 +86,22 @@ public class PlayerInfoPanel extends JPanel {
             return;
         }
 
-        if (HelperWrapper.instance().isDevVersion()) {
-            expLabel.setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(actual
-                                                                                      .getExperience()
-                                                                                      - oldPlayer
-                                                                                        .getExperience()));
-            formLabel.setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(actual
-                                                                                       .getForm()
-                                                                                       - oldPlayer
-                                                                                         .getForm()));
-
-            int diff = actual.getTSI() - oldPlayer.getTSI();
-            String desc = "";
-
-            if (diff > 0) {
-                desc = "+";
-            }
-
-            desc = desc + diff;
-            tsiLabel.setToolTipText(desc);
-        }
+//        if (HelperWrapper.instance().isDevVersion()) {
+//            expLabel.setIcon( ImageUtilities.getImageIcon4Veraenderung(actual.getExperience()
+//                                                                         - oldPlayer.getExperience(),true));
+//            formLabel.setIcon( ImageUtilities.getImageIcon4Veraenderung(actual.getForm()
+//                                                                         - oldPlayer.getForm(),true));
+//
+//            int diff = actual.getTSI() - oldPlayer.getTSI();
+//            String desc = "";
+//
+//            if (diff > 0) {
+//                desc = "+";
+//            }
+//
+//            desc = desc + diff;
+//            tsiLabel.setToolTipText(desc);
+//        }
     }
 
     /**

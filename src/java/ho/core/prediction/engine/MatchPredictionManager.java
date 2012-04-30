@@ -7,6 +7,8 @@
 package ho.core.prediction.engine;
 
 
+import ho.core.util.Helper;
+
 import java.util.Vector;
 
 
@@ -68,7 +70,7 @@ public class MatchPredictionManager {
         final MatchData matchengine = new MatchData((TeamData) home, (TeamData) away);
 
         for (int i = 0; i < 91; i++) {
-            ho.core.util.HelperWrapper.instance().copyArray2Vector(matchengine.advance(), actions);
+        	Helper.copyArray2Vector(matchengine.advance(), actions);
         }
         return actions;
     }

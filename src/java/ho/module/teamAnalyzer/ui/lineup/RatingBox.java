@@ -2,8 +2,8 @@
 package ho.module.teamAnalyzer.ui.lineup;
 
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.theme.ImageUtilities;
 import ho.core.module.config.ModuleConfig;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RatingUtil;
 
@@ -39,7 +39,7 @@ class RatingBox extends JPanel {
         		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING)));
         opponentValue.setText(RatingUtil.getRating(r2, ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
         		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING)));
-        arrow.setIcon(HelperWrapper.instance().getImageIcon4Veraenderung(r1 - r2));
+        arrow.setIcon( ImageUtilities.getImageIcon4Veraenderung(r1 - r2,true));
     }
 
     private void jbInit() {
