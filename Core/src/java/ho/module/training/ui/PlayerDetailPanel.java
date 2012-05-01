@@ -1,6 +1,7 @@
 // %4263391236:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -9,7 +10,6 @@ import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
-import ho.core.util.HelperWrapper;
 import ho.module.training.FutureTrainingWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
@@ -91,9 +91,7 @@ public class PlayerDetailPanel extends JPanel {
 
         for (int i = 0; i < 8; i++) {
             int skillIndex = Skills.getSkillAtPosition(i);
-            skillLabel[i].setText(HelperWrapper.instance().getNameForSkill(Skills
-                                                                                 .getSkillValue(spieler,
-                                                                                                skillIndex),
+            skillLabel[i].setText(PlayerAbility.getNameForSkill(Skills.getSkillValue(spieler,skillIndex),
                                                                                  true));
 
             FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);

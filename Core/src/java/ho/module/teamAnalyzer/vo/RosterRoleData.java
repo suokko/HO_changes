@@ -1,6 +1,7 @@
 // %2218737670:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.HelperWrapper;
 
 
@@ -87,7 +88,7 @@ public class RosterRoleData {
     public String getPositionDesc() {
         int posCode = HelperWrapper.instance().getPosition(pos);
 
-        return HelperWrapper.instance().getNameForPosition((byte) posCode);
+        return SpielerPosition.getNameForPosition((byte) posCode);
     }
 
     /**

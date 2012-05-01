@@ -4,7 +4,7 @@ package ho.module.teamAnalyzer.ui;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.util.HelperWrapper;
+import ho.core.model.player.SpielerPosition;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.vo.UserTeamSpotLineup;
 
@@ -67,7 +67,7 @@ public class UserTeamPlayerPanel extends PlayerPanel {
                                                                                    (byte) lineup
                                                                                    .getTacticCode(),0));
             specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[lineup.getSpecialEvent()]));
-            positionField.setText(HelperWrapper.instance().getNameForPosition((byte) lineup
+            positionField.setText(SpielerPosition.getNameForPosition((byte) lineup
                                                                                     .getPosition()));
             updateRatingPanel(lineup.getRating());
             tacticPanel.reload(new ArrayList<TacticReport>());

@@ -4,8 +4,8 @@ package ho.module.training.ui.model;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.Helper;
-import ho.core.util.HelperWrapper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
 import ho.module.training.ui.comp.VerticalIndicator;
@@ -129,7 +129,7 @@ public class OutputTableModel extends AbstractTableModel {
                     return spieler.getAlterWithAgeDaysAsString(); //Spieleralter
 
                 case 2:
-                    return HelperWrapper.instance().getNameForPosition(spieler
+                    return SpielerPosition.getNameForPosition(spieler
                                                                              .getIdealPosition())
                            + " (" + spieler.getIdealPosStaerke(true) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 

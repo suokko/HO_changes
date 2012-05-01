@@ -1,8 +1,8 @@
 // %2597556203:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
 import ho.module.training.SkillChange;
 
 import java.util.List;
@@ -93,7 +93,7 @@ public class ChangesTableModel extends AbstractTableModel {
                 return Integer.toString(change.getSkillup().getType());
 
             case 4:
-                return HelperWrapper.instance().getNameForSkill(change.getSkillup().getValue(),
+                return PlayerAbility.getNameForSkill(change.getSkillup().getValue(),
                                                                       true);
 
             case 5:

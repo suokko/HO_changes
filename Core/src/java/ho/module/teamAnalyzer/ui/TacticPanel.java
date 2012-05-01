@@ -8,7 +8,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.BaseTableModel;
-import ho.core.util.HelperWrapper;
+import ho.core.model.player.SpielerPosition;
 import ho.module.teamAnalyzer.report.TacticReport;
 
 import java.awt.BorderLayout;
@@ -85,7 +85,7 @@ public class TacticPanel extends JPanel {
             TacticReport report = iter.next();
 
             rowData = new Vector<Object>();
-            rowData.add(getTacticalRoleDesc(report.getTacticCode()));
+            rowData.add(SpielerPosition.getNameForPosition((byte)report.getTacticCode()));
             rowData.add("" + report.getAppearance());
             rowData.add(format(report.getRating()));
             tableModel.addRow(rowData);
@@ -108,17 +108,6 @@ public class TacticPanel extends JPanel {
 
         table.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(30);
         table.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(30);
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param position TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private String getTacticalRoleDesc(int position) {
-        return HelperWrapper.instance().getNameForPosition((byte) position);
     }
 
     /**

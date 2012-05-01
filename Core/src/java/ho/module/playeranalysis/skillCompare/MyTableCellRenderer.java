@@ -10,8 +10,8 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.XtraData;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.Helper;
-import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -101,7 +101,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("BestePosition")))		{
 			byte tmpPos = ((Float)table.getValueAt(row,column)).byteValue();
 			float tmpFloat =Helper.round((((Float)table.getValueAt(row,column)).floatValue() - tmpPos)*100,UserParameter.instance().anzahlNachkommastellen);
-			label.setText(HelperWrapper.instance().getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
+			label.setText(SpielerPosition.getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
 			label.setBackground(table.getBackground());
 		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MC"))) {
 			double skillwert = 0;

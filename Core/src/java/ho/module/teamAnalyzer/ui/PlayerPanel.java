@@ -6,6 +6,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.player.SpielerPosition;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
@@ -189,7 +190,7 @@ public class PlayerPanel extends JPanel {
                 specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[specialEvent]));
             }
 
-            positionField.setText(HelperWrapper.instance().getNameForPosition((byte) lineup
+            positionField.setText(SpielerPosition.getNameForPosition((byte) lineup
                                                                                     .getPosition()));
             updateRatingPanel(lineup.getRating());
             tacticPanel.reload(lineup.getTactics());
