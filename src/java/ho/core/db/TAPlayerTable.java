@@ -1,7 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.UserParameter;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
 import java.sql.ResultSet;
@@ -127,7 +127,7 @@ final class TAPlayerTable extends AbstractTable {
 	private Integer getCurrentHTSeason() {
         Calendar date = Calendar.getInstance();
         date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-        return HelperWrapper.instance().getHTSeason(date.getTime());
+        return HTCalendarFactory.getHTSeason(date.getTime());
     }
 
     /**
@@ -138,7 +138,7 @@ final class TAPlayerTable extends AbstractTable {
     private Integer getCurrentHTWeek() {
         Calendar date = Calendar.getInstance();
         date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-        return HelperWrapper.instance().getHTWeek(date.getTime());
+        return HTCalendarFactory.getHTWeek(date.getTime());
     }
 
     /**

@@ -7,6 +7,7 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
+import ho.core.util.HTCalendarFactory;
 import ho.core.util.HelperWrapper;
 
 import java.text.ParseException;
@@ -129,8 +130,8 @@ public class OldTrainingManager {
 
         PastSkillup skillup = new PastSkillup();
 
-        skillup.setHtSeason(HelperWrapper.instance().getHTSeason(skillupDate));
-        skillup.setHtWeek(HelperWrapper.instance().getHTWeek(skillupDate));
+        skillup.setHtSeason(HTCalendarFactory.getHTSeason(skillupDate));
+        skillup.setHtWeek(HTCalendarFactory.getHTWeek(skillupDate));
         skillup.setDate(skillupDate);
 
         return skillup;

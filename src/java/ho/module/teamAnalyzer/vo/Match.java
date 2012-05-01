@@ -5,7 +5,7 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.series.Paarung;
 import ho.core.util.HTCalendar;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.Date;
@@ -73,8 +73,8 @@ public class Match {
 
         Date matchDate = HTCalendar.resetDay(matchInfo.getMatchDateAsTimestamp());        
        
-        week = HelperWrapper.instance().getHTWeek(matchDate);
-        season = HelperWrapper.instance().getHTSeason(matchDate);
+        week = HTCalendarFactory.getHTWeek(matchDate);
+        season = HTCalendarFactory.getHTSeason(matchDate);
     }
 
     /**

@@ -7,7 +7,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -110,8 +110,8 @@ public class EffectDAO {
             for (Iterator<Timestamp> iter = trainingDates.iterator(); iter.hasNext();) {
                 Timestamp trainDate = iter.next();
 
-                int HTWeek = HelperWrapper.instance().getHTWeek(trainDate);
-                int HTSeason =HelperWrapper.instance().getHTSeason(trainDate);
+                int HTWeek = HTCalendarFactory.getHTWeek(trainDate);
+                int HTSeason =HTCalendarFactory.getHTSeason(trainDate);
 
                
 

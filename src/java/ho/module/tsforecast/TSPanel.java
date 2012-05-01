@@ -26,6 +26,7 @@ package ho.module.tsforecast;
 
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
@@ -238,7 +239,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
                                    ImageUtilities.getImageIcon4Veraenderung(-1,true).getImageObserver());
             graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_down"), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( ihelper.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           case Curve.NEW_TRAINER_PT:
@@ -247,7 +248,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
                                    m_newImage.getImageObserver());
             graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_exchange"), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( ihelper.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           case Curve.START_TRAINER_PT:
@@ -256,7 +257,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
                                    m_startImage.getImageObserver());
             graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_start"), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( ihelper.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           }

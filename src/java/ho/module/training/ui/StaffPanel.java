@@ -1,9 +1,9 @@
 // %1476100437:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -131,7 +131,7 @@ public class StaffPanel extends JPanel {
         trainerLevel = new JComboBox();
 
         for (int i = 1; i < 9; i++) {
-            trainerLevel.addItem(HelperWrapper.instance().getNameForSkill(i, false));
+            trainerLevel.addItem(PlayerAbility.getNameForSkill(i, false));
         }
     }
 

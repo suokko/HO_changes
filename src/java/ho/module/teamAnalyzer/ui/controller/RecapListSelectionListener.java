@@ -1,7 +1,7 @@
 package ho.module.teamAnalyzer.ui.controller;
 
 import ho.core.model.UserParameter;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
@@ -56,8 +56,8 @@ public class RecapListSelectionListener implements ListSelectionListener {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
 
-                int week = HelperWrapper.instance().getHTWeek(calendar.getTime());
-                int season =HelperWrapper.instance().getHTSeason(calendar.getTime());
+                int week = HTCalendarFactory.getHTWeek(calendar.getTime());
+                int season =HTCalendarFactory.getHTSeason(calendar.getTime());
                 
                 SystemManager.getPlugin().getMainPanel().reload(lineup, week, season);
                 SystemManager.getPlugin().getRatingPanel().reload(lineup);

@@ -5,6 +5,7 @@ package ho.module.transfer;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.net.MyConnector;
+import ho.core.util.HTCalendarFactory;
 import ho.core.util.HelperWrapper;
 
 import java.io.IOException;
@@ -109,8 +110,8 @@ public final class XMLParser {
                         Timestamp time = new Timestamp(transferDate.getTime());
 
                         playerTranfer.setDate(time);
-                        playerTranfer.setSeason(HelperWrapper.instance().getHTSeason(time));
-                        playerTranfer.setWeek(HelperWrapper.instance().getHTWeek(time));
+                        playerTranfer.setSeason(HTCalendarFactory.getHTSeason(time));
+                        playerTranfer.setWeek(HTCalendarFactory.getHTWeek(time));
 
                         final Element buyer = (Element) transfer.getElementsByTagName("Buyer").item(0); //$NON-NLS-1$
                         final Element seller = (Element) transfer.getElementsByTagName("Seller").item(0); //$NON-NLS-1$
@@ -279,8 +280,8 @@ public final class XMLParser {
                         Timestamp time = new Timestamp(transferDate.getTime());
 
                         playerTranfer.setDate(time);
-                        playerTranfer.setSeason(HelperWrapper.instance().getHTSeason(time));
-                        playerTranfer.setWeek(HelperWrapper.instance().getHTWeek(time));
+                        playerTranfer.setSeason(HTCalendarFactory.getHTSeason(time));
+                        playerTranfer.setWeek(HTCalendarFactory.getHTWeek(time));
 
 
                         final Element buyer = (Element) transfer.getElementsByTagName("Buyer").item(0); //$NON-NLS-1$
