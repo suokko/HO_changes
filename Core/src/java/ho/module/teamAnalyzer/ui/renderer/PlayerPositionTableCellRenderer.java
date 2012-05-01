@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui.renderer;
 
 import ho.core.gui.theme.ImageUtilities;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.HelperWrapper;
 
 import java.awt.Component;
@@ -72,7 +73,7 @@ public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
             }
 
             this.setIcon(icon);
-            this.setText(HelperWrapper.instance().getNameForPosition((byte) pos));
+            this.setText(SpielerPosition.getNameForPosition((byte) pos));
         } else {
             this.setIcon(null);
             this.setText(null);

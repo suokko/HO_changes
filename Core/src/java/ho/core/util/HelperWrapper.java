@@ -14,7 +14,6 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
-import ho.core.model.player.SpielerPosition;
 import ho.core.net.MyConnector;
 
 import java.awt.Color;
@@ -22,7 +21,6 @@ import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -140,15 +138,7 @@ public class HelperWrapper {
         return PlayerAbility.getNameForSkill(value, showNumber, isMatch);
     }
 
-    public String getNameForPosition(byte value) {
-        return SpielerPosition.getNameForPosition(value);
-    }
-
-    public String getNameForSkill(int value, boolean showNumber) {
-        return PlayerAbility.getNameForSkill(value, showNumber);
-    }
-
-     /**
+    /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
      * impossible to make difference between left and right so always the left position is
      * returned
@@ -322,94 +312,5 @@ public class HelperWrapper {
         Helper.showMessage(parent, message, titel, typ);
     }
 
- 
-	/**
-	 * Get HT-Season of a given date (using the economy calendar)
-	 *
-	 * @param date					the date to convert
-	 * @return	HT-Season
-	 */
-	public int getHTSeason (Date date) {
-		return getHTSeason(date, false);
-	}
-
-	/**
-	 * Get HT-Season of a given date
-	 *
-	 * @param date					the date to convert
-	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
-	 * @return	HT-Season
-	 */
-	public int getHTSeason (Date date, boolean useTrainingCalendar) {
-		HTCalendar cal;
-		if (useTrainingCalendar)
-			cal = HTCalendarFactory.createTrainingCalendar(date);
-		else
-			cal = HTCalendarFactory.createEconomyCalendar(date);
-		if (cal != null)
-			return cal.getHTSeason();
-		else
-			return -1;
-	}
-
-	/**
-	 * Get HT-Week of a given date (using the economy calendar)
-	 *
-	 * @param date					the date to convert
-	 * @return	HT-Week
-	 */
-	public int getHTWeek (Date date) {
-		return getHTWeek(date, false);
-	}
-
-	/**
-	 * Get HT-Week of a given date
-	 *
-	 * @param date					the date to convert
-	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
-	 * @return	HT-Week
-	 */
-	public int getHTWeek (Date date, boolean useTrainingCalendar) {
-		HTCalendar cal;
-		if (useTrainingCalendar)
-			cal = HTCalendarFactory.createTrainingCalendar(date);
-		else
-			cal = HTCalendarFactory.createEconomyCalendar(date);
-		if (cal != null)
-			return cal.getHTWeek();
-		else
-			return -1;
-	}
-
-	/**
-	 * Get HT-Season of a given date (using the economy calendar)
-	 *
-	 * @param timestamp				the date to convert
-	 * @return	HT-Season
-	 */
-	public int getHTSeason (Timestamp timestamp) {
-		return getHTSeason(new Date(timestamp.getTime()));
-	}
-
-	/**
-	 * Get HT-Season of a given date
-	 *
-	 * @param timestamp				the date to convert
-	 * @param useTrainingCalendar	use training calendar if true, else use economy calendar
-	 * @return	HT-Season
-	 */
-	public int getHTSeason (Timestamp timestamp, boolean useTrainingCalendar) {
-		return getHTSeason(new Date(timestamp.getTime()), useTrainingCalendar);
-	}
-
-	/**
-	 * Get HT-Week of a given date (using the economy calendar)
-	 *
-	 * @param timestamp				the date to convert
-	 * @return	HT-Week
-	 */
-	public int getHTWeek (Timestamp timestamp) {
-		return getHTWeek(new Date(timestamp.getTime()));
-	}
 
 }

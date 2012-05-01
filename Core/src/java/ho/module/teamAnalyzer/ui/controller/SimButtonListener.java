@@ -1,6 +1,7 @@
 // %3491987323:hoplugins.teamAnalyzer.ui.controller%
 package ho.module.teamAnalyzer.ui.controller;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.Matchdetails;
@@ -9,7 +10,6 @@ import ho.core.prediction.MatchPredictionDialog;
 import ho.core.prediction.engine.MatchPredictionManager;
 import ho.core.prediction.engine.TeamData;
 import ho.core.prediction.engine.TeamRatings;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ui.RecapPanel;
 import ho.module.teamAnalyzer.ui.TeamLineupData;
@@ -183,7 +183,7 @@ public class SimButtonListener implements ActionListener {
     			return 0;
     		}
     		for (int m=0; m<21; m++) {
-    			if (strSkill.equals(HelperWrapper.instance().getNameForSkill(m, false))) {
+    			if (strSkill.equals(PlayerAbility.getNameForSkill(m, false))) {
     				return (m>0?m-1:m); // TeamRatingPanel doesnt handle 'non existant', index 0=disastrous
     			}
     		}

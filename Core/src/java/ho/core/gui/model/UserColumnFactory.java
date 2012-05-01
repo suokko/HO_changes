@@ -21,8 +21,8 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
+import ho.core.util.HTCalendarFactory;
 import ho.core.util.Helper;
-import ho.core.util.HelperWrapper;
 import ho.core.util.StringUtilities;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
@@ -697,7 +697,7 @@ final public class UserColumnFactory {
 					
 					}
 					EPVData comparedata = HOVerwaltung.instance().getModel().getEPV().getEPVData(playerCompare);
-					int htweek = HelperWrapper.instance().getHTWeek(playerCompare.getHrfDate());
+					int htweek = HTCalendarFactory.getHTWeek(playerCompare.getHrfDate());
 					double compareepv = HOVerwaltung.instance().getModel().getEPV().getPrice(comparedata, htweek);
 					return new DoppelLabelEntry(new ColorLabelEntry(price,
                             text,

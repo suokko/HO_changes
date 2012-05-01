@@ -1,13 +1,13 @@
 // %1303949933:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
-import ho.core.util.HelperWrapper;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
 import java.awt.BorderLayout;
@@ -61,7 +61,7 @@ public class SkillupPanel extends JPanel {
         Vector<Object> v = new Vector<Object>();
 
         v.add(PlayerSkill.toString(skillup.getType()) + ": " //$NON-NLS-1$
-              + HelperWrapper.instance().getNameForSkill(skillup.getValue(), true));
+              + PlayerAbility.getNameForSkill(skillup.getValue(), true));
         v.add("" + skillup.getHtWeek()); //$NON-NLS-1$
         v.add("" + skillup.getHtSeason()); //$NON-NLS-1$
         v.add("" + skillup.getTrainType()); //$NON-NLS-1$

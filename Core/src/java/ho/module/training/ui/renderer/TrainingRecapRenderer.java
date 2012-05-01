@@ -1,10 +1,10 @@
 // %36155679:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
-import ho.core.util.HelperWrapper;
 import ho.module.training.ui.TrainingLegendPanel;
 
 import java.awt.Color;
@@ -70,7 +70,7 @@ public class TrainingRecapRenderer extends DefaultTableCellRenderer {
 //        		Color color = Skills.getSkillColor(skillType);
         		icon = TrainingLegendPanel.getSkillupTypeIcon(skillType, 1);
         		int val = Integer.parseInt(skills[1]);
-        		String skillLevelName = HelperWrapper.instance().getNameForSkill(val, true);
+        		String skillLevelName = PlayerAbility.getNameForSkill(val, true);
         		tooltip =PlayerSkill.toString(skillType)+": " + skillLevelName;
         		text = skillLevelName;
         	}

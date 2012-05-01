@@ -3,7 +3,7 @@ package ho.core.db;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.util.HTCalendar;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 import ho.module.transfer.PlayerRetriever;
 import ho.module.transfer.PlayerTransfer;
 import ho.module.transfer.XMLParser;
@@ -298,10 +298,10 @@ public class TransferTable extends AbstractTable {
             final Spieler spieler = DBManager.instance().getSpielerAtDate(transfer.getPlayerId(),transfer.getDate());
 
             if (spieler != null) {
-            	int transferSeason = HelperWrapper.instance().getHTSeason(transfer.getDate());
-                int transferWeek = HelperWrapper.instance().getHTWeek(transfer.getDate());
-                int spielerSeason = HelperWrapper.instance().getHTSeason(spieler.getHrfDate());
-                int spielerWeek = HelperWrapper.instance().getHTWeek(spieler.getHrfDate());
+            	int transferSeason = HTCalendarFactory.getHTSeason(transfer.getDate());
+                int transferWeek = HTCalendarFactory.getHTWeek(transfer.getDate());
+                int spielerSeason = HTCalendarFactory.getHTSeason(spieler.getHrfDate());
+                int spielerWeek = HTCalendarFactory.getHTWeek(spieler.getHrfDate());
 
                 // Not in the same week, possible skillup so skip it
                 if (((transferSeason * 16) + transferWeek) == ((spielerSeason * 16) + spielerWeek)) {

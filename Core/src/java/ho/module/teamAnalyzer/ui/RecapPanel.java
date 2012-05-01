@@ -2,12 +2,12 @@
 package ho.module.teamAnalyzer.ui;
 
 //import ho.module.teamAnalyzer.SystemManager;
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.Matchdetails;
 import ho.core.module.config.ModuleConfig;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.MatchPopulator;
 import ho.module.teamAnalyzer.ui.controller.RecapListSelectionListener;
@@ -184,8 +184,7 @@ public class RecapPanel extends JPanel {
             if (matchDetail.getTacticCode() == 0) {
                 rowData.add(VALUE_NA);
             } else {
-                rowData.add(HelperWrapper.instance().getNameForSkill(matchDetail
-                                                                           .getTacticLevel(), false));
+                rowData.add(PlayerAbility.getNameForSkill(matchDetail.getTacticLevel(), false));
             }
 
             // Columns 19-21

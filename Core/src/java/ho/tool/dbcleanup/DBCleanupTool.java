@@ -7,7 +7,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
+import ho.core.util.HTCalendarFactory;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -71,8 +71,8 @@ public class DBCleanupTool {
 			int curId = curHrf.getHrfId();
 //			String curName = curHrf.getName();
 			Timestamp curDate = curHrf.getDatum();
-			int curHtSeasonTraining = HelperWrapper.instance().getHTSeason(curDate, true);
-			int curHtWeekTraining = HelperWrapper.instance().getHTWeek(curDate, true);
+			int curHtSeasonTraining = HTCalendarFactory.getHTSeason(curDate, true);
+			int curHtWeekTraining = HTCalendarFactory.getHTWeek(curDate, true);
 			boolean remove = false;
 			if (removeDate != null && removeDate.after(curDate)) {
 				remove = true;

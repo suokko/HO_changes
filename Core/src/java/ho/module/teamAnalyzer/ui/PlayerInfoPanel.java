@@ -4,9 +4,9 @@
  */
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
@@ -74,11 +74,11 @@ public class PlayerInfoPanel extends JPanel {
      */
     public void setValue(PlayerInfo oldPlayer) {
         clearData();
-        expLabel.setText(HelperWrapper.instance().getNameForSkill(oldPlayer.getExperience(),
+        expLabel.setText(PlayerAbility.getNameForSkill(oldPlayer.getExperience(),
                                                                         false));
         tsiLabel.setText("" + oldPlayer.getTSI());
         ageLabel.setText("" + oldPlayer.getAge());
-        formLabel.setText(HelperWrapper.instance().getNameForSkill(oldPlayer.getForm(), false));
+        formLabel.setText(PlayerAbility.getNameForSkill(oldPlayer.getForm(), false));
 
         PlayerInfo actual = PlayerDataManager.getPlayerInfo(oldPlayer.getPlayerId());
 

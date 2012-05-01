@@ -7,8 +7,8 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.SpielerPosition;
 import ho.core.model.series.Paarung;
-import ho.core.util.HelperWrapper;
 import ho.module.series.Spielplan;
 
 import java.awt.BorderLayout;
@@ -172,7 +172,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
     private void fillPanel(JPanel panel, MatchLineupPlayer mlp, boolean noStars) {
         panel.setOpaque(false);
 
-        String posi = HelperWrapper.instance().getNameForPosition((byte) mlp.getPositionCode());
+        String posi = SpielerPosition.getNameForPosition((byte) mlp.getPositionCode());
 
         panel.removeAll();
 
