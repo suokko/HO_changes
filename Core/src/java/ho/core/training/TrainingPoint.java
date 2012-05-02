@@ -136,9 +136,12 @@ class TrainingPoint {
         }
 
         Double value = positions.get(trainingPosition);
-
         if (value == null) {
-            value = new Double(0);
+        	trainingPosition = TrainingPosition.osmosis;
+        	value = positions.get(trainingPosition);
+        	if (value == null) {
+        		value = new Double(0);
+        	}
         }
 
         return value;

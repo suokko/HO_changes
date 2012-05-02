@@ -18,26 +18,45 @@ public class TrainingPosition {
     	int trainPosition = keeper;
     	switch (playerPosition)
     	{
+    		case ISpielerPosition.KEEPER:
     		case ISpielerPosition.keeper:
     			break;
+    		case ISpielerPosition.BACK:
+    		case ISpielerPosition.BACK_DEF:
+    		case ISpielerPosition.BACK_OFF:
+    		case ISpielerPosition.BACK_TOMID:
     		case ISpielerPosition.rightBack:
     		case ISpielerPosition.leftBack:
     			trainPosition = wingBack;
     			break;
+    		case ISpielerPosition.CENTRAL_DEFENDER:
+    		case ISpielerPosition.CENTRAL_DEFENDER_OFF:
+    		case ISpielerPosition.CENTRAL_DEFENDER_TOWING:
     		case ISpielerPosition.rightCentralDefender:
     		case ISpielerPosition.middleCentralDefender:
     		case ISpielerPosition.leftCentralDefender:
 				trainPosition = centralDefender;
 				break;
+    		case ISpielerPosition.WINGER:
+    		case ISpielerPosition.WINGER_DEF:
+    		case ISpielerPosition.WINGER_OFF:
+    		case ISpielerPosition.WINGER_TOMID:
     		case ISpielerPosition.rightWinger:
     		case ISpielerPosition.leftWinger:
     			trainPosition = winger;
     			break;
+    		case ISpielerPosition.MIDFIELDER:
+    		case ISpielerPosition.MIDFIELDER_DEF:
+    		case ISpielerPosition.MIDFIELDER_OFF:
+    		case ISpielerPosition.MIDFIELDER_TOWING:
     		case ISpielerPosition.leftInnerMidfield:
     		case ISpielerPosition.centralInnerMidfield:
     		case ISpielerPosition.rightInnerMidfield:
     			trainPosition = innerMidfielder;
     			break;
+    		case ISpielerPosition.FORWARD:
+    		case ISpielerPosition.FORWARD_DEF:
+    		case ISpielerPosition.FORWARD_TOWING:
     		case ISpielerPosition.leftForward:
     		case ISpielerPosition.centralForward:
     		case ISpielerPosition.rightForward:
