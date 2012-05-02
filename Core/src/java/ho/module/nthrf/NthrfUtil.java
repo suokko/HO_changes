@@ -65,7 +65,9 @@ class NthrfUtil {
                 x2h.writeHRF(file);
                 debug("wrote file " + (file != null ? file.getAbsolutePath() : "null"));
                 // save folder setting
-                ho.core.model.UserParameter.instance().hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
+                if(file!=null) {
+                	ho.core.model.UserParameter.instance().hrfImport_HRFPath = file.getParentFile().getAbsolutePath();
+                }
             } else {
                 debug("Could not write file, nothing selected!");
                 return false;

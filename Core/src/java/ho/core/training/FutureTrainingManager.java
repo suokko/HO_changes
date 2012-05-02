@@ -97,6 +97,7 @@ public class FutureTrainingManager {
 					processTraining(getSkillForTraining(trType), point, tw);
 					break;
 				case TrainingType.SHOOTING :
+					//TODO This doesn't look right, looks like full scoring training...
 					processTraining(PlayerSkill.SCORING, point, tw);
 					processTraining(PlayerSkill.SET_PIECES, 0.5d, tw);
 					break;
