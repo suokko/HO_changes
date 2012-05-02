@@ -36,8 +36,7 @@ public final class RatingUtil {
             return "";
         }
 
-        final String value = HelperWrapper.instance().getNameForBewertung(rating,
-                showNumber, true);
+        final String value = HelperWrapper.instance().getNameForBewertung(rating, showNumber, true);
         String level = value;
         String subLevel = "";
         final StringTokenizer st = new StringTokenizer(value, "(");
@@ -65,7 +64,7 @@ public final class RatingUtil {
         }
 
         if (showNumber) {
-        	if (value.indexOf("(")>-1 && value.indexOf(")")>-1) {
+        	if (value != null && value.indexOf("(")>-1 && value.indexOf(")")>-1) {
 	        	StringTokenizer st2 = new StringTokenizer(st.nextToken(), ")");
 	
 	            final String number = st2.nextToken();
