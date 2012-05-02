@@ -287,21 +287,22 @@ public void addPoint(int i, Curve.Point point) {
       java.util.Date maxDate = null;
 
       Curve.Point point;
-      for( boolean flag = resultset != null && resultset.first(); flag; flag = resultset.next()) {
-        if(resultset.getInt( "SPIELTAG") > 0)
-          iMatchDay = resultset.getInt( "SPIELTAG");
-        if(ibasics.getTeamId() == resultset.getInt("HEIMID"))
-          point = new Curve.Point( resultset.getTimestamp("SORTDATE"),
-                                   resultset.getInt("HEIMEINSTELLUNG"),
-                                   iMatchDay, resultset.getInt("MATCHTYP"));
-        else
-          point = new Curve.Point( resultset.getTimestamp("SORTDATE"),
-                                   resultset.getInt("GASTEINSTELLUNG"),
-                                   iMatchDay, resultset.getInt("MATCHTYP"));
-        m_clPoints.add( point);
-        maxDate = point.m_dDate;
+      if(resultset != null) {
+	      for (boolean flag = resultset != null && resultset.first(); flag; flag = resultset.next()) {
+	    	  if(resultset.getInt( "SPIELTAG") > 0) {
+	    		  iMatchDay = resultset.getInt( "SPIELTAG");
+	    	  }
+	    	  if(ibasics.getTeamId() == resultset.getInt("HEIMID")) {
+	    		  point = new Curve.Point(resultset.getTimestamp("SORTDATE"), resultset.getInt("HEIMEINSTELLUNG"),
+	    				  iMatchDay, resultset.getInt("MATCHTYP"));
+	    	  } else {
+	    		  point = new Curve.Point( resultset.getTimestamp("SORTDATE"), resultset.getInt("GASTEINSTELLUNG"),
+	    				  iMatchDay, resultset.getInt("MATCHTYP"));
+	    	  }
+	    	  m_clPoints.add( point);
+	    	  maxDate = point.m_dDate;
+	      }
       }
-      
       //Add update points
       //this function reads only league, cup and qualification matches, therefor has to add all Updatepoints
       int iEnd = m_clPoints.size();

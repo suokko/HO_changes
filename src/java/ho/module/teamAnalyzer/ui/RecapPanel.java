@@ -123,15 +123,25 @@ public class RecapPanel extends JPanel {
             DecimalFormat df = new DecimalFormat("###.#"); //$NON-NLS-1$
 
             rowData.add(df.format(stars));
-            rowData.add(df.format(averageRating.getHatStats()));
-            rowData.add(df.format(averageRating.getSquad()));
-            rowData.add(df.format(averageRating.getSquad() / stars));
+            if(averageRating!=null) {
+	            rowData.add(df.format(averageRating.getHatStats()));
+	            rowData.add(df.format(averageRating.getSquad()));
+	            if (stars > 0) {
+	            	rowData.add(df.format(averageRating.getSquad() / stars));
+	            } else {
+	            	rowData.add(df.format(0));
+	            }
+            } else {
+            	rowData.add(df.format(0));
+	            rowData.add(df.format(0));
+	            rowData.add(df.format(0));
+            }
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
-            rowData.add(""); //$NON-NLS-1$
-            rowData.add(""); //$NON-NLS-1$
+            rowData.add("");
+            rowData.add("");
             tableModel.addRow(rowData);
             table.getSelectionModel().setSelectionInterval(0, 0);
         }
