@@ -78,11 +78,12 @@ public class FutureTrainingManager {
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
 			FutureTrainingWeek tw = this.futureTrainings.get(index-1);
-			double point = TrainingManager.instance().getTrainingPoint().
-							getTrainingPoint(tw.getTrainingType(), Integer.valueOf(position)).doubleValue();
+			int trType = tw.getTrainingType();
+			double point = TrainingManager.instance().getTrainingPoint().getTrainingPoint(trType, position).doubleValue();
+			System.out.println(point);
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
-			switch (tw.getTrainingType()) {
+			switch (trType) {
 				case TrainingType.GOALKEEPING :
 				case TrainingType.PLAYMAKING :
 				case TrainingType.SHORT_PASSES :
@@ -93,7 +94,7 @@ public class FutureTrainingManager {
 				case TrainingType.SCORING :
 				case TrainingType.SET_PIECES :
 				case TrainingType.WING_ATTACKS :
-					processTraining(getSkillForTraining(tw.getTrainingType()), point, tw);
+					processTraining(getSkillForTraining(trType), point, tw);
 					break;
 				case TrainingType.SHOOTING :
 					processTraining(PlayerSkill.SCORING, point, tw);

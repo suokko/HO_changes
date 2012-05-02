@@ -478,7 +478,6 @@ public class SpielHighlightPanel extends ImagePanel {
 	            case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
-	            case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_EIGENTOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
 	            case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:

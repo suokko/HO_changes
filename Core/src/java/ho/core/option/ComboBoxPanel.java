@@ -113,7 +113,12 @@ class ComboBoxPanel extends ImagePanel {
         layout.setConstraints(m_jlLabel, constraints);
         add(m_jlLabel);
 
-        m_jcbComboBox = new JComboBox(items);
+        if (items != null) {
+        	m_jcbComboBox = new JComboBox(items);
+        } else {
+        	m_jcbComboBox = new JComboBox();
+        }
+        	
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.anchor = GridBagConstraints.EAST;
         constraints.weightx = 1.0;

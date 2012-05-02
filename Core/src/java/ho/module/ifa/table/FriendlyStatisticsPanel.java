@@ -97,8 +97,11 @@ public class FriendlyStatisticsPanel extends JPanel {
 			objects[counter][3] = 	Integer.valueOf(stat.getDraw());
 			objects[counter][4] = 	Integer.valueOf(home?stat.getHomeLost():stat.getHomeWon());
 			objects[counter][5] =  	StringUtilities.getResultString(stat.getHomeGoals(),stat.getAwayGoals());
-			Integer tmpCoolness =  Integer.valueOf(WorldDetailsManager.instance().getTotalUsers()/stat.getLeague().getActiveUsers());
-			sumCoolness += tmpCoolness.intValue();
+			int active = stat.getLeague().getActiveUsers();
+			int tmpCoolness = 0;
+			if (active > 0)
+				tmpCoolness =  WorldDetailsManager.instance().getTotalUsers() / active;
+			sumCoolness += tmpCoolness;
 			objects[counter][6] = 	tmpCoolness;
 			objects[counter][7] =  	stat.getLastPlayedDate();
 			counter++;

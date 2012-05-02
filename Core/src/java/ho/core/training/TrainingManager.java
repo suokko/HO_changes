@@ -1,4 +1,3 @@
-// %2732728450:de.hattrickorganizer.logik%
 package ho.core.training;
 
 import ho.core.db.DBManager;
@@ -264,8 +263,7 @@ public class TrainingManager {
                 tp.setMinutesPlayedAsSP(tp.getMinutesPlayedAsSP() + ms.getMinutesPlayedInPositions(playerID, spPos));
 
                 if (tp.PlayerHasPlayed()) {
-                	// Player has played -> check how long he was on the field
-                	// (i.e. if he got a red card or injured)
+                	// Player has played
                     HOLogger.instance().debug(getClass(), "Match "+matchId+": "
                     		+"Player "+spieler.getName()+" ("+playerID+")"
                     		+" played "+ tp.getMinutesPlayedAsGK() + " mins as GK"
