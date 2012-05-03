@@ -4,7 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.util.HelperWrapper;
+import ho.core.util.BrowserLauncher;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -110,7 +110,7 @@ public class SQLDialog extends JDialog implements ActionListener {
     }
 
     protected void openHSQLDoc() {
-        HelperWrapper.instance().openUrlInUserBRowser("http://hsqldb.sourceforge.net/web/hsqlDocsFrame.html");
+        BrowserLauncher.openUrlInUserBRowser("http://hsqldb.sourceforge.net/web/hsqlDocsFrame.html");
     }
 
     protected void showAllStatements() {

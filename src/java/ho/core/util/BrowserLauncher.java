@@ -1,12 +1,26 @@
 // %3066638262:de.hattrickorganizer.tools%
 package ho.core.util;
 
+import ho.core.gui.HOMainFrame;
+import ho.core.net.MyConnector;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 
 /**
@@ -719,4 +733,46 @@ public class BrowserLauncher {
 
         return browser;
     }
+
+	public static void openUrlInUserBRowser(String url) {
+	    try {
+	        openURL(url);
+	    } catch (java.io.IOException ioex) {
+			JPanel panel = new JPanel();
+			panel.add(new JLabel("Open this manually: "));
+			JTextField urlField = new JTextField();
+			urlField.setAlignmentX(Component.CENTER_ALIGNMENT);
+			urlField.setText(" " + MyConnector.getHOSite());
+			urlField.addKeyListener(new KeyListener() {
+	
+				@Override
+				public void keyTyped(KeyEvent event) {
+					event.consume();
+				}
+	
+				@Override
+				public void keyPressed(KeyEvent event) {
+					if (!(event.getModifiers() == InputEvent.CTRL_MASK)) {
+						event.consume();
+					}
+				}
+	
+				@Override
+				public void keyReleased(KeyEvent event) {
+					event.consume();
+				}
+	
+			});
+			urlField.setSelectionColor(Color.GRAY);
+			urlField.setBackground(UIManager.getColor("Label.background"));
+			urlField.setBorder(null);
+			panel.add(urlField);
+	
+			JOptionPane.showMessageDialog(
+					HOMainFrame.instance().getOwner(),
+					panel,
+					"Browser not found",
+					JOptionPane.INFORMATION_MESSAGE);
+	    }
+	}
 }

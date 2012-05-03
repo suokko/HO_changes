@@ -1,8 +1,8 @@
 // %1180046389:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.module.config.ModuleConfig;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.transfer.ui.sorter.AbstractTableSorter;
 
@@ -56,7 +56,7 @@ public class RecapTableSorter extends AbstractTableSorter {
         skills = new ArrayList<String>();
 
         for (int i = 1; i < 21; i++) {
-            skills.add(HelperWrapper.instance().getNameForBewertung(i, false, false));
+            skills.add(PlayerAbility.getNameForSkill(i, false, false));
         }
     }
 
