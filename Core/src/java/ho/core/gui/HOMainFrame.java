@@ -21,8 +21,8 @@ import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.OnlineWorker;
 import ho.core.option.OptionenDialog;
+import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 import ho.module.lineup.AufstellungsAssistentPanel;
 import ho.module.lineup.LineupPanel;
 import ho.module.matches.SpielePanel;
@@ -369,13 +369,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			text.append("Since 2006 this project is open source and developed by changing developers.");
 			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
-			HelperWrapper.instance().openUrlInUserBRowser(MyConnector.getHOSite());
+			BrowserLauncher.openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmWikiItem)) { // Forum
-			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/trac/ho1/wiki/Manual");
+			BrowserLauncher.openUrlInUserBRowser("https://sourceforge.net/apps/trac/ho1/wiki/Manual");
 		} else if (source.equals(m_jmForumItem)) { // Forum
-			HelperWrapper.instance().openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
+			BrowserLauncher.openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
-			HelperWrapper.instance().openUrlInUserBRowser("http://www.hattrick.org");
+			BrowserLauncher.openUrlInUserBRowser("http://www.hattrick.org");
 		} else if (source.equals(m_jmiLanguages)) {
 			UpdateController.showLanguageUpdateDialog();
 		} else if (source.equals(m_jmiFlags)) {

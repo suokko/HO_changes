@@ -6,7 +6,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.net.MyConnector;
 import ho.core.util.HTCalendarFactory;
-import ho.core.util.HelperWrapper;
+import ho.core.util.Helper;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -98,7 +98,7 @@ public final class XMLParser {
                             try {
                                 transferDate = DATE.parse(deadline);
                             } catch (ParseException e0) {
-                            	HelperWrapper.instance().showMessage(HOMainFrame.instance(),
+                            	Helper.showMessage(HOMainFrame.instance(),
                                                                            "XML Parse error",
                                                                            "Error parsing XML: transfer '"
                                                                            + transferid
@@ -266,7 +266,7 @@ public final class XMLParser {
                             try {
                                 transferDate = DATE.parse(deadline);
                             } catch (ParseException e0) {
-                            	HelperWrapper.instance().showMessage(HOMainFrame.instance(),
+                            	Helper.showMessage(HOMainFrame.instance(),
                                                                            "XML Parse error",
                                                                            "Error parsing XML: transfer '"
                                                                            + transferid+ "' will be skipped", 0);
