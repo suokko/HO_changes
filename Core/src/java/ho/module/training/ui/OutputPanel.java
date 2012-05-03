@@ -7,6 +7,7 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingManager;
+import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.model.OutputTableModel;
 import ho.module.training.ui.renderer.OutputTableRenderer;
@@ -84,17 +85,17 @@ public class OutputPanel extends JPanel {
 
             if (HelperWrapper.instance().isUserMatch(input)) {
                 if (HelperWrapper.instance().downloadMatchData(matchID.intValue())) {
-                	HelperWrapper.instance().showMessage(null, HOVerwaltung.instance().getLanguageString("MatchImported"), //$NON-NLS-1$
+                	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchImported"), //$NON-NLS-1$
                     		HOVerwaltung.instance().getLanguageString("ImportOK"), //$NON-NLS-1$
                                                   1); 
                                                   RefreshManager.instance().doRefresh();
                 }
             } else {
-                HelperWrapper.instance().showMessage(null, HOVerwaltung.instance().getLanguageString("NotUserMatch"), //$NON-NLS-1$
+            	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("NotUserMatch"), //$NON-NLS-1$
                 		HOVerwaltung.instance().getLanguageString("ImportError"), 1); //$NON-NLS-1$ 
             }
         } catch (Exception e) {
-        	HelperWrapper.instance().showMessage(null, HOVerwaltung.instance().getLanguageString("MatchNotImported"), //$NON-NLS-1$
+        	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchNotImported"), //$NON-NLS-1$
             		HOVerwaltung.instance().getLanguageString("ImportError"), 1); //$NON-NLS-1$ 
         }
     }

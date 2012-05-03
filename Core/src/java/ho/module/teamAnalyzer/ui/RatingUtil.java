@@ -1,8 +1,8 @@
 // %1126721046323:hoplugins.commons.utils%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
 
 import java.util.List;
 import java.util.StringTokenizer;
@@ -36,7 +36,7 @@ public final class RatingUtil {
             return "";
         }
 
-        final String value = HelperWrapper.instance().getNameForBewertung(rating, showNumber, true);
+        final String value = PlayerAbility.getNameForSkill(rating, showNumber, true);
         String level = value;
         String subLevel = "";
         final StringTokenizer st = new StringTokenizer(value, "(");

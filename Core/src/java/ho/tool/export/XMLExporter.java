@@ -20,7 +20,7 @@ import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
+import ho.core.util.Helper;
 import ho.module.lineup.Lineup;
 
 import java.awt.BorderLayout;
@@ -83,7 +83,8 @@ public class XMLExporter  {
 
             JButton button = new JButton("OK");
             button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
+                    @Override
+					public void actionPerformed(ActionEvent e) {
                         dialog.setVisible(false);
                     }
                 });
@@ -491,7 +492,7 @@ public class XMLExporter  {
 		}
 
 		//        HOMiniModel.instance().getGUI ().getInfoPanel ().clearAll ();   
-		HelperWrapper.instance().showMessage(
+		Helper.showMessage(
 			HOMainFrame.instance(),
 			"" + matches.size() + " Matches exportet.\n Regarding to CHPP rules: Any App that uses this XML-File has to be CHPP approved!",
 			"Finished",

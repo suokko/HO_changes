@@ -6,7 +6,6 @@
  */
 package ho.core.util;
 
-import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
@@ -14,24 +13,13 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
-import ho.core.net.MyConnector;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 
 
@@ -134,11 +122,7 @@ public class HelperWrapper {
         return c;
     }
 
-    public String getNameForBewertung(int value, boolean showNumber, boolean isMatch) {
-        return PlayerAbility.getNameForSkill(value, showNumber, isMatch);
-    }
-
-    /**
+     /**
      * Utility Method that returns the field position from the HO Position Code (hoposcode) It is
      * impossible to make difference between left and right so always the left position is
      * returned
@@ -264,53 +248,5 @@ public class HelperWrapper {
 
         return true;
     }
-
-    public void openUrlInUserBRowser(String url) {
-        try {
-            ho.core.util.BrowserLauncher.openURL(url);
-        } catch (java.io.IOException ioex) {
-			JPanel panel = new JPanel();
-			panel.add(new JLabel("Open this manually: "));
-			JTextField urlField = new JTextField();
-			urlField.setAlignmentX(Component.CENTER_ALIGNMENT);
-			urlField.setText(" " + MyConnector.getHOSite());
-			urlField.addKeyListener(new KeyListener() {
-
-				@Override
-				public void keyTyped(KeyEvent event) {
-					event.consume();
-				}
-
-				@Override
-				public void keyPressed(KeyEvent event) {
-					if (!(event.getModifiers() == InputEvent.CTRL_MASK)) {
-						event.consume();
-					}
-				}
-
-				@Override
-				public void keyReleased(KeyEvent event) {
-					event.consume();
-				}
-
-			});
-			urlField.setSelectionColor(Color.GRAY);
-			urlField.setBackground(UIManager.getColor("Label.background"));
-			urlField.setBorder(null);
-			panel.add(urlField);
-
-			JOptionPane.showMessageDialog(
-					HOMainFrame.instance().getOwner(),
-					panel,
-					"Browser not found",
-					JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
-  
-    public void showMessage(java.awt.Component parent, String message, String titel, int typ) {
-        Helper.showMessage(parent, message, titel, typ);
-    }
-
 
 }

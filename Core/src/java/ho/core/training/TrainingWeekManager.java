@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
@@ -257,9 +258,9 @@ public class TrainingWeekManager {
                 msg = msg + "\n" + aste[j];
             }
 
-           HelperWrapper.instance().showMessage(null, e.getMessage(), "DatenreiheA",
+            Helper.showMessage(null, e.getMessage(), "DatenreiheA",
                                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            HelperWrapper.instance().showMessage(null, msg, "DatenreiheB",
+            Helper.showMessage(null, msg, "DatenreiheB",
                                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
 
