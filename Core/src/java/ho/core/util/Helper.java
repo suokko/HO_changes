@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 

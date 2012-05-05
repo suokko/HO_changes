@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 
 public class HrfPanel extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 594549010839252273L;
 	int m_Breite;
 	int m_Hoehe;
 	
@@ -34,10 +38,12 @@ public class HrfPanel extends JPanel
 		setOpaque(true);
 	}
 	
+	@Override
 	public Dimension getPreferredSize()
     {
         return new Dimension(getBreite(),getHoehe());
     }
+	@Override
 	public Insets getInsets()
 	{
 		return new Insets(0,0,0,0);

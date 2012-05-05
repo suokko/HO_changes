@@ -17,6 +17,7 @@ import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
 import ho.core.rating.RatingPredictionConfig;
 import ho.core.util.Helper;
+import ho.module.teamAnalyzer.ui.RatingUtil;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -223,19 +224,19 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             //Erst mal leeren
 			//aufstellung.updateRatingPredictionConfig();
 			m_jpRating.clear();
-			m_jpRating.setTopRightText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftDefenseRating())),
+			m_jpRating.setTopRightText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung.getLeftDefenseRating())),
 					false, true));
 			m_jpRating.setTopCenterText(PlayerAbility.getNameForSkill(
-					(aufstellung.getIntValue4Rating(aufstellung.getCentralDefenseRating())), false, true));
-			m_jpRating.setTopLeftText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightDefenseRating())),
+					(RatingUtil.getIntValue4Rating(aufstellung.getCentralDefenseRating())), false, true));
+			m_jpRating.setTopLeftText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung.getRightDefenseRating())),
 					false, true));
-			m_jpRating.setMiddleText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getMidfieldRating())), false,
+			m_jpRating.setMiddleText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung.getMidfieldRating())), false,
 					true));
-			m_jpRating.setBottomRightText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getLeftAttackRating())),
+			m_jpRating.setBottomRightText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung.getLeftAttackRating())),
 					false, true));
-			m_jpRating.setBottomCenterText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung
+			m_jpRating.setBottomCenterText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung
 					.getCentralAttackRating())), false, true));
-			m_jpRating.setBottomLeftText(PlayerAbility.getNameForSkill((aufstellung.getIntValue4Rating(aufstellung.getRightAttackRating())),
+			m_jpRating.setBottomLeftText(PlayerAbility.getNameForSkill((RatingUtil.getIntValue4Rating(aufstellung.getRightAttackRating())),
 					false, true));
             m_jpRating.setTopRight(aufstellung.getLeftDefenseRating());
             m_jpRating.setTopCenter(aufstellung.getCentralDefenseRating());

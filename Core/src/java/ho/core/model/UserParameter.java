@@ -379,6 +379,7 @@ public final class UserParameter extends Configuration {
     	m_clTemp = null;
     }
 
+	@Override
 	public HashMap<String,String> getValues() {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("FG_ANGESCHLAGEN",String.valueOf(FG_ANGESCHLAGEN.getRGB()));

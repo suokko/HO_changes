@@ -142,4 +142,7 @@ public final class RatingUtil {
 
         return extra + value;
     }
+    public static int getIntValue4Rating(double rating) {
+		return (int) (((double) (rating - 1) * 4d) + 1);
+	}
 }

@@ -112,7 +112,8 @@ class TSPanel extends JPanel {
 
 //-- protected ------------------------------------------------------------------------
  
-  protected void paintComponent( Graphics g) {
+  @Override
+protected void paintComponent( Graphics g) {
     super.paintComponent(g);
 
     if( !m_bInited ) {

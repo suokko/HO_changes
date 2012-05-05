@@ -19,7 +19,11 @@ import javax.swing.SwingConstants;
 
 
 public class ColorLabelEntry extends JLabel implements IHOTableEntry {
-	   public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
+	   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2300786156899745002L;
+	public static final Color FG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_FG);//gui.UserParameter.instance().FG_STANDARD;
 	   public static final Color BG_STANDARD = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
 	   public static final Color BG_SPIELERSONDERWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
 	   public static final Color BG_SPIELEREINZELWERTE = ThemeManager.getColor(HOColorName.PLAYER_SKILL_BG);//new Color(255, 255, 200);

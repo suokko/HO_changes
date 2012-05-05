@@ -5,7 +5,6 @@ import ho.core.gui.model.MatchesColumnModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.util.HelperWrapper;
 
 import java.awt.Color;
 import java.awt.Component;

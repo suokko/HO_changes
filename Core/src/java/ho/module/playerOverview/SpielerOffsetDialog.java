@@ -10,7 +10,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.option.SliderPanel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

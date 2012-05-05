@@ -31,6 +31,7 @@ import ho.module.lineup.Lineup;
 import ho.module.matches.statistics.MatchesHighlightsTable;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
 import ho.module.matches.statistics.MatchesOverviewTable;
+import ho.module.teamAnalyzer.ui.RatingUtil;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -309,13 +310,13 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     private TeamData getOwnLineupRatings(MatchPredictionManager manager) {
     	Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
     	TeamRatings teamRatings = manager.generateTeamRatings(
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getMidfieldRating())),
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftDefenseRating())),
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getCentralDefenseRating())),
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getRightDefenseRating())),
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getLeftAttackRating())),
-    			getRatingValue(lineup.getIntValue4Rating(lineup.getCentralAttackRating())),
-				getRatingValue(lineup.getIntValue4Rating(lineup.getRightAttackRating())));
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getMidfieldRating())),
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getLeftDefenseRating())),
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getCentralDefenseRating())),
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getRightDefenseRating())),
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getLeftAttackRating())),
+    			getRatingValue(RatingUtil.getIntValue4Rating(lineup.getCentralAttackRating())),
+				getRatingValue(RatingUtil.getIntValue4Rating(lineup.getRightAttackRating())));
     	
     	int tactic = lineup.getTacticType();
     	return manager.generateTeamData(HOVerwaltung.instance().getModel().getBasics().getTeamName(),

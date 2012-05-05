@@ -6,11 +6,6 @@
  */
 package ho.core.model.match;
 
-
-import java.util.List;
-import java.util.Vector;
-
-
 /**
  * Interface for severy match details.
  *

@@ -8,8 +8,6 @@ import ho.module.ifa.IfaMatch;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Vector;
-
 
 public class IfaMatchTable extends AbstractTable {
 

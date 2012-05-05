@@ -16,6 +16,11 @@ import javax.swing.table.DefaultTableModel;
 public class HrfTableModel extends DefaultTableModel {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4726662462776212169L;
+
 	public HrfTableModel(Vector columns, Vector rows) {
 		dataVector = rows;
 		columnIdentifiers = columns;
