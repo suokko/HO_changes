@@ -1,11 +1,8 @@
 // %1497023504:de.hattrickorganizer.model%
 package ho.core.model.misc;
 
-import ho.core.model.HOVerwaltung;
 import ho.core.util.HOLogger;
-
 import java.sql.Timestamp;
-
 
 /**
  * Enthält alle Informationen zu den Finanzen

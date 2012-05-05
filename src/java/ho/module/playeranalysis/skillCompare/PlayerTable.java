@@ -26,6 +26,11 @@ class PlayerTable extends JTable{
 	    TableColumn col;
 	    setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5342806852198198162L;
+
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value,
 					boolean isSelected, boolean hasFocus, int row, int column) {

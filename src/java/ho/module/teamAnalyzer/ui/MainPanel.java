@@ -1,15 +1,8 @@
-// %3876182235:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
-import ho.core.model.HOVerwaltung;
 import ho.module.teamAnalyzer.vo.TeamLineup;
-
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
-
 
 /**
  * TODO Missing Class Documentation

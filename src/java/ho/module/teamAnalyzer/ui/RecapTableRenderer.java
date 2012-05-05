@@ -7,7 +7,6 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchLineup;
-import ho.core.util.HelperWrapper;
 
 import java.awt.Color;
 import java.awt.Component;

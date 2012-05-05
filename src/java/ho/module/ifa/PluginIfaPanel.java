@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 public class PluginIfaPanel extends JPanel {

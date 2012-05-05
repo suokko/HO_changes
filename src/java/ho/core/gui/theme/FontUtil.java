@@ -1,7 +1,5 @@
 package ho.core.gui.theme;
 
-import ho.core.model.UserParameter;
-
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 
