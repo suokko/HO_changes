@@ -1,5 +1,6 @@
 package ho.core.training;
 
+import ho.core.constants.TrainingType;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
@@ -357,5 +358,96 @@ public class TrainingManager {
                                 + "ORDER BY SPIELDATUM DESC";
 
         return sdbquery;
+    }
+    /**
+     * internal calculation of training duration
+     *
+     * @param baseLength base length
+     * 		(i.e. the normalized length for a skillup for a 17Y trainee,
+     * 		solid coach, 10 co, 100% TI, 0% Stamina)
+     * @param age player's age
+     * @param trTyp training type
+     * @param assistants number of assistants
+     * @param trainerLevel trainer level
+     * @param intensity training intensity
+     * @param stamina stamina share
+     *
+     * @return length for a single skillup
+     */
+    protected static double calcTraining(double baseLength, int age, int assistants, int trainerLevel,
+                               int intensity, int stamina, int curSkill) {
+//    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
+    	double ageFactor = Math.pow(1.0404, age-17) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_AGE + BASE_AGE_FACTOR);
+//    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
+    	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
+    	if (skillFactor < 0) {
+    		skillFactor = 0;
+    	}
+    	double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (ho.core.model.UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingManager.BASE_ASSISTANT_COACH_FACTOR);
+    	double tiFactor = Double.MAX_VALUE;
+    	if (intensity > 0)
+    		tiFactor = (1 / (intensity/100d)) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
+    	double staminaFactor = Double.MAX_VALUE;
+    	if (stamina < 100)
+    		staminaFactor = 1 / (1 - stamina/100d);
+    	double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
+    	if (trainLength < 1)
+    		trainLength = 1;
+//    	System.out.println ("Factors for "+getName()+": "+ageFactor+"/"+skillFactor+"/"+trainerFactor+"/"+coFactor+"/"+tiFactor+"/"+staminaFactor+" -> "+trainLength);
+    	return trainLength;
+    }
+/////////////////////////////////////////////////7
+    //Training ( reflected to skills)
+    //TORSCHUSS is skipped due it trains two skills, won't be displayed in gui. Real calc for this is done in Trainingsmanager
+    //TA_EXTERNALATTACK skipped due it trains two skills, calc must be done in trainingmanager for each skill seperate like Torschuss.no display in options gui.
+    // @return duration of training based on settings and tr type, calls calcTraining for nested calculation
+    ///////////////////////////////////////////////////77
+    public static double getTrainingLength(Spieler player, int trTyp, int assistants, int trainerLevel, int intensity, int stamina) {
+    	UserParameter up = UserParameter.instance();
+    	switch (trTyp) {
+            case TrainingType.GOALKEEPING:
+                return calcTraining(up.TRAINING_OFFSET_GOALKEEPING + BASE_DURATION_GOALKEEPING, 
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getTorwart());
+
+            case TrainingType.PLAYMAKING:
+                return calcTraining(up.TRAINING_OFFSET_PLAYMAKING + BASE_DURATION_PLAYMAKING,
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getSpielaufbau());
+
+            case TrainingType.CROSSING_WINGER:
+                return calcTraining(up.TRAINING_OFFSET_WINGER + BASE_DURATION_WINGER,
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getFluegelspiel());
+
+            case TrainingType.SCORING:
+                return calcTraining(up.TRAINING_OFFSET_SCORING + BASE_DURATION_SCORING,
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getTorschuss());
+
+            case TrainingType.DEFENDING:
+                return calcTraining(up.TRAINING_OFFSET_DEFENDING + BASE_DURATION_DEFENDING,
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getVerteidigung());
+
+            case TrainingType.SHORT_PASSES:
+				return calcTraining(up.TRAINING_OFFSET_PASSING + BASE_DURATION_PASSING,
+						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getPasspiel());
+
+            case TrainingType.THROUGH_PASSES:
+                return calcTraining((100d/85d)*(up.TRAINING_OFFSET_PASSING + BASE_DURATION_PASSING), 
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getPasspiel());
+
+            case TrainingType.SET_PIECES:
+                return calcTraining(up.TRAINING_OFFSET_SETPIECES + BASE_DURATION_SET_PIECES,
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getStandards());
+
+            case TrainingType.DEF_POSITIONS:
+                return calcTraining(2 * (up.TRAINING_OFFSET_DEFENDING + BASE_DURATION_DEFENDING),
+                		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getVerteidigung());
+
+			case TrainingType.WING_ATTACKS:
+				return calcTraining((100d/60d) * (up.TRAINING_OFFSET_WINGER + BASE_DURATION_WINGER),
+						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getFluegelspiel());
+
+            default:
+                return -1;
+        }
     }
 }
