@@ -5,6 +5,7 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
+import ho.core.training.TrainingManager;
 import ho.core.util.Helper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
@@ -186,7 +187,7 @@ public class OutputTableModel extends AbstractTableModel {
      * @return predicted training length
      */
     private double getTrainingLength (Spieler player, int skillIndex) {
-        return player.getTrainingLength(Skills.getTrainedSkillCode(skillIndex),
+        return TrainingManager.getTrainingLength(player, Skills.getTrainedSkillCode(skillIndex),
                 TrainingPanel.getStaffPanel()
                                   .getCoTrainerNumber(),
                                   TrainingPanel.getStaffPanel()

@@ -793,6 +793,7 @@ public class Lineup {
 	 * @deprecated use RatingUtil.getIntValue4Rating(double rating) instead 
 	 * @param rating
 	 */
+	@Deprecated
 	public final int getIntValue4Rating(double rating) {
 		return (int) (((float) (rating - 1) * 4f) + 1);
 	}
