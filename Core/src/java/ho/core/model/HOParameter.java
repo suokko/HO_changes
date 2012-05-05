@@ -60,6 +60,7 @@ public final class HOParameter extends Configuration {
     @Deprecated
     public int HOUsers = 0;
 
+	@Override
 	public HashMap<String,String> getValues() {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("lastNews",String.valueOf(lastNews));
@@ -71,6 +72,7 @@ public final class HOParameter extends Configuration {
 		return map;
 	}
 
+	@Override
 	public void setValues(HashMap<String,String> values) {
 		DBVersion = getIntValue(values,"DBVersion");
 		//HOTotalUsers = getIntValue(values,"HOTotalUsers");

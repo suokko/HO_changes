@@ -1,8 +1,6 @@
 // %2449251406:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
-import ho.core.util.HOLogger;
-
 import java.awt.Color;
 import java.awt.Component;
 

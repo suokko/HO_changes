@@ -310,6 +310,7 @@ public class ImageDesignPanel extends JPanel {
 		TextKeyListener() {
 		}
 
+		@Override
 		public void keyReleased(KeyEvent arg0) {
 			visitedEmblemPanel.setHeaderText(((JTextField) arg0.getSource()).getText());
 		}

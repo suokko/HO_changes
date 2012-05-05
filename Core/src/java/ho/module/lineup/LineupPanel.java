@@ -1,23 +1,18 @@
-// %3969157412:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
 import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.theme.HOIconName;
-import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.playerOverview.SpielerUebersichtNamenTable;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;

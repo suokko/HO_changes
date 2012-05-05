@@ -13,6 +13,10 @@ import javax.swing.table.TableCellRenderer;
  */
 public class HrfTableCellRenderer extends JLabel implements TableCellRenderer
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6661171826323106858L;
 	private JLabel label;
 	private Color grau = new Color (240,240,240);
 	private Color dunkelgrau = new Color (200,200,200);

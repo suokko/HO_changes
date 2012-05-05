@@ -268,7 +268,7 @@ public class TeamPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     private int convertRating(double rating) {
-        return HOVerwaltung.instance().getModel().getAufstellung().getIntValue4Rating(rating);
+        return RatingUtil.getIntValue4Rating(rating);
     }
 
     /**

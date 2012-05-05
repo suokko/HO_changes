@@ -509,9 +509,9 @@ public class HOModel {
 	            	TrainingPerWeek trWeek = TrainingWeekManager.instance().getTrainingWeek(m_iID);
 	                HOLogger.instance().debug(HOModel.class,
 	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTrainingType())
-	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toLocaleString()+htcCs
-	                			+ ", act="+actualTrainingDate.toLocaleString() +htcAs
-	                			+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toLocaleString()+htcPs)
+	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toString()+htcCs
+	                			+ ", act="+actualTrainingDate.toString() +htcAs
+	                			+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toString()+htcPs)
 	                			+ " ("+previousHrfId+")");
 
 	                if (trainingType > 0)

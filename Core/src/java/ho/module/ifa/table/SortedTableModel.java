@@ -9,6 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 public class SortedTableModel extends AbstractTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2323510453329739002L;
 	DefaultTableModel model;
 	int sortColumn;
 	private Row[] rows;
@@ -43,11 +47,13 @@ public class SortedTableModel extends AbstractTableModel {
 	}
 
 
+	@Override
 	public boolean isCellEditable(int r, int c) {
 		return false;
     	//return model.isCellEditable(rows[r].index, c);
 	}
 
+	@Override
 	public void setValueAt(Object aValue, int r, int c) {
 		model.setValueAt(aValue, rows[r].index, c);
 	}
@@ -60,10 +66,12 @@ public class SortedTableModel extends AbstractTableModel {
 		return model.getColumnCount();
 	}
 
+	@Override
 	public String getColumnName(int c) {
 		return model.getColumnName(c);
 	}
 
+	@Override
 	public Class getColumnClass(int c){
 		return model.getColumnClass(c);
 	}

@@ -1,14 +1,8 @@
-// %2898908854:de.hattrickorganizer.gui.templates%
 package ho.core.gui.comp.entry;
 
-//import java.awt.Color;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.theme.HOIconName;
-import ho.core.gui.theme.ImageUtilities;
 import ho.core.gui.theme.ThemeManager;
-
-import java.awt.Color;
-import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;

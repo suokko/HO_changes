@@ -5,9 +5,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.Matchdetails;
-import ho.core.util.HOLogger;
-
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;

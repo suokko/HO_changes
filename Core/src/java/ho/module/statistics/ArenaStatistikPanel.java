@@ -17,8 +17,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-
 
 
 /**

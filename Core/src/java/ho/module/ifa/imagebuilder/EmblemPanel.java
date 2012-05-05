@@ -23,7 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class EmblemPanel extends JPanel implements MouseListener{
-//	private EmblemPanel emblemPanel;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4241847282455700992L;
+	//	private EmblemPanel emblemPanel;
 	private GridBagConstraints constraints = new GridBagConstraints();
 	private FlagPanel flagPanel;
 	private JLabel logo;

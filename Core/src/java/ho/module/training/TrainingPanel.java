@@ -16,7 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 public class TrainingPanel extends JPanel implements IRefreshable {
-    /** The currently selected player */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1313192105835561643L;
+
+	/** The currently selected player */
     private static Spieler activePlayer;
 
     /** Class that keep track of the past skillup */

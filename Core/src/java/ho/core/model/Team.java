@@ -1,13 +1,9 @@
 // %233313029:de.hattrickorganizer.model%
 package ho.core.model;
 
-import ho.core.db.DBManager;
 import ho.core.util.HOLogger;
-
 import java.sql.ResultSet;
 import java.util.Properties;
-
-
 
 /**
  * Enthält die Daten des Teams (nicht der Spieler!)

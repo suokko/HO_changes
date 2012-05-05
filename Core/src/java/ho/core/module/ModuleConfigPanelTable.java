@@ -2,7 +2,6 @@ package ho.core.module;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
-import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;

@@ -13,6 +13,10 @@ import javax.swing.JScrollPane;
 
 public class ExperienceViewer extends ImagePanel implements IRefreshable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3294326447950073349L;
 	private Spielertabelle spielertabelle;
 	
 	public ExperienceViewer() {

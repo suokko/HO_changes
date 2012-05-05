@@ -92,7 +92,12 @@ import javax.swing.table.TableModel;
  *  last updated on: 25:2:2004 
  */
 class TableSorter extends AbstractTableModel {
-    protected TableModel tableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8099667252567228773L;
+
+	protected TableModel tableModel;
 
     public static final int DESCENDING = -1;
     public static final int NOT_SORTED = 0;
@@ -118,7 +123,7 @@ class TableSorter extends AbstractTableModel {
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
     private Map columnComparators = new HashMap();
-    private List sortingColumns = new ArrayList();
+    private List<Directive> sortingColumns = new ArrayList<Directive>();
 
     TableSorter() {
         this.mouseListener = new MouseHandler();
@@ -288,15 +293,18 @@ class TableSorter extends AbstractTableModel {
         return (tableModel == null) ? 0 : tableModel.getColumnCount();
     }
 
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         return tableModel.getColumnName(column);
     }
 
-    public Class<?> getColumnClass(int column) {
+    @Override
+	public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return tableModel.isCellEditable(modelIndex(row), column);
     }
 
@@ -304,7 +312,8 @@ class TableSorter extends AbstractTableModel {
         return tableModel.getValueAt(modelIndex(row), column);
     }
 
-    public void setValueAt(Object aValue, int row, int column) {
+    @Override
+	public void setValueAt(Object aValue, int row, int column) {
         tableModel.setValueAt(aValue, modelIndex(row), column);
     }
 
@@ -401,7 +410,8 @@ class TableSorter extends AbstractTableModel {
     }
 
     private class MouseHandler extends MouseAdapter {
-        public void mouseClicked(MouseEvent e) {
+        @Override
+		public void mouseClicked(MouseEvent e) {
             JTableHeader h = (JTableHeader) e.getSource();
             TableColumnModel columnModel = h.getColumnModel();
             int viewColumn = columnModel.getColumnIndexAtX(e.getX());
