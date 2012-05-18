@@ -3,6 +3,7 @@
  */
 package ho.module.playeranalysis.skillCompare;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
@@ -10,7 +11,6 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
-import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -116,7 +116,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	private Player[] m_ar_setPlayers;
 	
 	
-	private CBItem[] m_rating = Helper.EINSTUFUNG;
+	private CBItem[] m_rating = PlayerAbility.ITEMS;
 	
 	private static int m_selectedRow;
 	private int m_i_ptmTopCount;

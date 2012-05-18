@@ -52,18 +52,18 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 	private JButton jbApply = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbApplyScout = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbCancel = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
-    private JComboBox jcbAttacking = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbDefense = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbExperience = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbAttacking = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbDefense = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbExperience = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
     private JComboBox jcbForm = new JComboBox(ho.core.util.Helper.EINSTUFUNG_FORM);
-    private JComboBox jcbKeeper = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbPassing = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbPlaymaking = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbKeeper = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbPassing = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbPlaymaking = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
     private JComboBox jcbSpeciality = new JComboBox(PlayerSpeciality.ITEMS);
     private JComboBox jcbStamina = new JComboBox(ho.core.util.Helper.EINSTUFUNG_KONDITION);
-    private JComboBox jcbStandards = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbWinger = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
-    private JComboBox jcbLoyalty = new JComboBox(ho.core.util.Helper.EINSTUFUNG);
+    private JComboBox jcbStandards = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbWinger = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
+    private JComboBox jcbLoyalty = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
     private JCheckBox jchHomegrown = new JCheckBox();
     private JLabel jlRating = new JLabel(ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt")
                                          + ": 0.0");
