@@ -1,5 +1,6 @@
 package ho.core.constants.player;
 
+import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.util.Helper;
@@ -33,6 +34,29 @@ public final class PlayerAbility {
 	public static final int MAGICAL 		= 18;
 	public static final int UTOPIAN 		= 19;
 	public static final int DIVINE 			= 20;
+
+	public static final CBItem[] ITEMS = {
+			new CBItem(getNameForSkill(NON_EXISTENT), NON_EXISTENT),
+			new CBItem(getNameForSkill(DISASTROUS), DISASTROUS),
+			new CBItem(getNameForSkill(WRETCHED), WRETCHED),
+			new CBItem(getNameForSkill(POOR), POOR),
+			new CBItem(getNameForSkill(WEAK), WEAK),
+			new CBItem(getNameForSkill(INADEQUATE), INADEQUATE),
+			new CBItem(getNameForSkill(PASSABLE), PASSABLE),
+			new CBItem(getNameForSkill(SOLID), SOLID),
+			new CBItem(getNameForSkill(EXCELLENT), EXCELLENT),
+			new CBItem(getNameForSkill(FORMIDABLE), FORMIDABLE),
+			new CBItem(getNameForSkill(OUTSTANDING), OUTSTANDING),
+			new CBItem(getNameForSkill(BRILLIANT), BRILLIANT),
+			new CBItem(getNameForSkill(MAGNIFICENT), MAGNIFICENT),
+			new CBItem(getNameForSkill(WORLD_CLASS), WORLD_CLASS),
+			new CBItem(getNameForSkill(SUPERNATURAL), SUPERNATURAL),
+			new CBItem(getNameForSkill(TITANIC), TITANIC),
+			new CBItem(getNameForSkill(EXTRA_TERRESTRIAL), EXTRA_TERRESTRIAL),
+			new CBItem(getNameForSkill(MYTHICAL), MYTHICAL),
+			new CBItem(getNameForSkill(MAGICAL), MAGICAL),
+			new CBItem(getNameForSkill(UTOPIAN), UTOPIAN),
+			new CBItem(getNameForSkill(DIVINE), DIVINE) };
 
 	private PlayerAbility(){};
 	

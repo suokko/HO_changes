@@ -1,6 +1,7 @@
 // %1128099595984:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
@@ -88,18 +89,18 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));
     private JButton jbApply = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbRemoveAll = new JButton(HOVerwaltung.instance().getLanguageString("Scout.RemoveAll"));
-    private JComboBox jcbExperience = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbWinger = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbExperience = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbWinger = new JComboBox(PlayerAbility.ITEMS);
     private JComboBox jcbForm = new JComboBox(Helper.EINSTUFUNG_FORM);
     private JComboBox jcbStamina = new JComboBox(Helper.EINSTUFUNG_KONDITION);
-    private JComboBox jcbPassing = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbPassing = new JComboBox(PlayerAbility.ITEMS);
     private JComboBox jcbSpeciality = new JComboBox(PlayerSpeciality.ITEMS);
-    private JComboBox jcbPlaymaking = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbSetPieces = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbScoring = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbKeeper = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbDefending = new JComboBox(Helper.EINSTUFUNG);
-    private JComboBox jcbLoyalty = new JComboBox(Helper.EINSTUFUNG);
+    private JComboBox jcbPlaymaking = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbSetPieces = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbScoring = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbKeeper = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbDefending = new JComboBox(PlayerAbility.ITEMS);
+    private JComboBox jcbLoyalty = new JComboBox(PlayerAbility.ITEMS);
     private JCheckBox jchHomegrown = new JCheckBox();
     private JLabel jlStatus = new JLabel(HOVerwaltung.instance().getLanguageString("scout_status") + ": ");
     private JTextArea jtaCopyPaste = new JTextArea(5, 20);

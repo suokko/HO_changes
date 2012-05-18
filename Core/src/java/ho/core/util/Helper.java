@@ -27,31 +27,7 @@ import javax.swing.JTextField;
  */
 public class Helper {
  
-	/** Gesamteinstufung */
-	public static final CBItem[] EINSTUFUNG = {
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.NON_EXISTENT), PlayerAbility.NON_EXISTENT),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WRETCHED), PlayerAbility.WRETCHED),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.POOR), PlayerAbility.POOR),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WEAK), PlayerAbility.WEAK),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.INADEQUATE), PlayerAbility.INADEQUATE),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.PASSABLE), PlayerAbility.PASSABLE),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SOLID), PlayerAbility.SOLID),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXCELLENT), PlayerAbility.EXCELLENT),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.FORMIDABLE), PlayerAbility.FORMIDABLE),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.OUTSTANDING), PlayerAbility.OUTSTANDING),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.BRILLIANT), PlayerAbility.BRILLIANT),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MAGNIFICENT), PlayerAbility.MAGNIFICENT),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.WORLD_CLASS), PlayerAbility.WORLD_CLASS),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.SUPERNATURAL), PlayerAbility.SUPERNATURAL),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.TITANIC), PlayerAbility.TITANIC),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.EXTRA_TERRESTRIAL), PlayerAbility.EXTRA_TERRESTRIAL),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MYTHICAL), PlayerAbility.MYTHICAL),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.MAGICAL), PlayerAbility.MAGICAL),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.UTOPIAN), PlayerAbility.UTOPIAN),
-			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DIVINE), PlayerAbility.DIVINE) };
-
-    /** Form */
+	/** Form */
 	public static final CBItem[] EINSTUFUNG_FORM = {
 			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.NON_EXISTENT), PlayerAbility.NON_EXISTENT),
 			new CBItem(PlayerAbility.getNameForSkill(PlayerAbility.DISASTROUS), PlayerAbility.DISASTROUS),
@@ -385,48 +361,6 @@ public class Helper {
 	}
 
 	/**
-	 * ersetzt die Substrings in einem String
-	 *
-	 */
-	public static String replaceSubString(String[] varFind, String[] varReplace, String text) {
-	    final StringBuffer buf = new StringBuffer(text);
-	    int index = 0;
-	
-	    for (int i = 0;
-	         (varFind != null) && (varReplace != null) && (varReplace.length == varFind.length)
-	         && (i < varFind.length); i++) {
-	        index = buf.indexOf(varFind[i]);
-	
-	        //Substring ersetzen
-	        while (index > -1) {
-	            buf.replace(index, index + varFind[i].length(), varReplace[i]);
-	            index = buf.indexOf(varFind[i]);
-	        }
-	    }
-	
-	    return buf.toString();
-	}
-
-	/**
-	 * replace char
-	 *
-	 */
-	public static String replaceChar(String text, char gesucht, char ersatz) {
-	    final char[] charText = text.toCharArray();
-	    final StringBuffer buffer = new StringBuffer();
-	
-	    for (int i = 0; (charText != null) && (i < charText.length); i++) {
-	        if (charText[i] == gesucht) {
-	            buffer.append("" + ersatz);
-	        } else {
-	            buffer.append("" + charText[i]);
-	        }
-	    }
-	
-	    return buffer.toString();
-	}
-
-	/**
 	 * liefer das Datum aus einem String im Format yyyy-MM-dd HH:mm:ss
 	 *
 	 */
@@ -448,47 +382,6 @@ public class Helper {
 	    }
 	
 	    return null;
-	}
-
-	/**
-	 * Erzeugt aus einem String, der durch Komma getrennte Teilstrings enthält einen Array mit den
-	 * Teilstrings.
-	 *
-	 */
-	public static String[] generateStringArray(String werte, char trenner) {
-	    if ((werte == null) || (werte.trim().equals(""))) {
-	        return new String[0];
-	    }
-	
-	    final StringBuffer buffer = new StringBuffer();
-	    final char[] ccoords = werte.toCharArray();
-	    int j = 0;
-	
-	    for (int i = 0; i < ccoords.length; i++) {
-	        if (ccoords[i] == (trenner)) {
-	            j++;
-	        }
-	    }
-	
-	    //+1, da es values-1 Kommas in der Zeile sind
-	    final String[] sValues = new String[j + 1];
-	    j = 0;
-	
-	    for (int i = 0; i < ccoords.length; i++) {
-	        if (ccoords[i] != (trenner)) {
-	            buffer.append("" + ccoords[i]);
-	        } else {
-	            sValues[j++] = buffer.toString().trim();
-	
-	            //buffer reseten, eine new StringBuffer sparen
-	            buffer.delete(0, buffer.capacity());
-	        }
-	    }
-	
-	    //letzte Zahl(Koordinate) hinzufügen, da am Ende kein Komma mehr folgt
-	    sValues[j] = buffer.toString().trim();
-	
-	    return sValues;
 	}
 
 	/**
