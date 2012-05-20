@@ -353,7 +353,7 @@ public class TrainingPerPlayer  {
 			}    		
     		return;
     	}
-    	double d = trainingPoint.calcTrainingPoints(false);
+    	double d = trainingPoint.calcTrainingPoints();
     	System.out.println (player.getName() + " final points="+d);
     	int trainType = train.getTrainingType();
     	switch (trainType) {
@@ -396,7 +396,7 @@ public class TrainingPerPlayer  {
 			}
             // Shooting gives some training in Set Pieces, too
 			if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
-	            this.setpieces = (p_f_shooting_SetPieces * trainingPoint.calcTrainingPoints(true));
+	            this.setpieces = (p_f_shooting_SetPieces * trainingPoint.calcTrainingPoints());
 			}
 			break;
 		case TrainingType.SET_PIECES:
