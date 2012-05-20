@@ -83,8 +83,11 @@ public class FutureTrainingManager {
 			System.out.println(point);
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
+			TrainingPlayer tp = new TrainingPlayer();
+			
 			switch (trType) {
 				case TrainingType.GOALKEEPING :
+					tp.setMinutesPlayedAsGK(90);
 				case TrainingType.PLAYMAKING :
 				case TrainingType.SHORT_PASSES :
 				case TrainingType.THROUGH_PASSES :
@@ -258,17 +261,14 @@ public class FutureTrainingManager {
 		// check if skillup happened!
 		if (checkSkillup(pos)) {
 			PlayerSkillup su = new PlayerSkillup();
-
 			su.setHtSeason(tw.getSeason());
 			su.setHtWeek(tw.getWeek());
 			su.setType(skillIndex);
 			su.setValue(player.getValue4Skill4(skillIndex) + finalSkillup[pos]);
 			su.setTrainType(ISkillup.SKILLUP_FUTURE);
-
 			if ((skillIndex == PlayerSkill.STAMINA) && (su.getValue() > 9)) {
 				return;
 			}
-
 			futureSkillups.add(su);
 		}
 	}

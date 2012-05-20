@@ -4,7 +4,6 @@ import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 
 public final class TrainingType {
-	
 	public static final int SET_PIECES 			= 2;
 	public static final int DEFENDING 			= 3;
 	public static final int SCORING 			= 4;
