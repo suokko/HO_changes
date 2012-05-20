@@ -383,11 +383,11 @@ public class TrainingManager {
     	if (skillFactor < 0) {
     		skillFactor = 0;
     	}
-    	double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (ho.core.model.UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
+    	double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
     	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingManager.BASE_ASSISTANT_COACH_FACTOR);
     	double tiFactor = Double.MAX_VALUE;
     	if (intensity > 0)
-    		tiFactor = (1 / (intensity/100d)) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
+    		tiFactor = (1 / (intensity/100d)) * (UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
     	double staminaFactor = Double.MAX_VALUE;
     	if (stamina < 100)
     		staminaFactor = 1 / (1 - stamina/100d);
