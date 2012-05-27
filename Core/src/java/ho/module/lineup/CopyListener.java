@@ -24,7 +24,6 @@ public class CopyListener implements ActionListener {
 	private static String LF = System.getProperty("line.separator", "\n");
 	private JMenuItem miPlaintext = new JMenuItem(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.PlainText"));
 	private JMenuItem miHattickMLDef = new JMenuItem(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.HattrickML"));
-	//private JMenuItem miHattickMLAtt = new JMenuItem(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.HattrickML"));
 	final JPopupMenu menu = new JPopupMenu(); 
 	
 	/**
@@ -34,22 +33,18 @@ public class CopyListener implements ActionListener {
 		this.lineup = lineup;
 		miPlaintext.addActionListener(this);
 		miHattickMLDef.addActionListener(this);
-		//miHattickMLAtt.addActionListener(this);
 		menu.add(miPlaintext);
 		menu.add(miHattickMLDef);
-		//menu.add(miHattickMLAtt);
 	}
 
 	/**
 	 * Handle action events (shop popup menu or copy ratings).
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e != null && e.getSource().equals(miPlaintext)) {
 			menu.setVisible(false);
 			copyToClipboard(getRatingsAsText());
-//		} else if (e != null && e.getSource().equals(miHattickMLAtt)) {
-//			copyToClipboard(getRatingsAsHattrickML_AttTop());
-//			menu.setVisible(false);
 		} else if (e != null && e.getSource().equals(miHattickMLDef)) {
 			copyToClipboard(getRatingsAsHattrickML_DefTop());
 			menu.setVisible(false);
@@ -59,7 +54,7 @@ public class CopyListener implements ActionListener {
 	}
 	
 	/**
-	 * Copy the giben text into the system clipboard.
+	 * Copy the given text into the system clip board.
 	 */
 	public static void copyToClipboard(final String txt) {
 		try {
@@ -97,46 +92,18 @@ public class CopyListener implements ActionListener {
 			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Mitte"));
 			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Links")+"[/th][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Verteidigung"));
-			sb.append("[/th][td]"+lineup.getRightDefenseRating());
-			sb.append("[/td][td]"+lineup.getCentralDefenseRating());
-			sb.append("[/td][td]"+lineup.getLeftDefenseRating());
+			sb.append("[/th][td align=center]"+lineup.getRightDefenseRating());
+			sb.append("[/td][td align=center]"+lineup.getCentralDefenseRating());
+			sb.append("[/td][td align=center]"+lineup.getLeftDefenseRating());
 			sb.append("[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
 			sb.append("[/th][td colspan=3 align=center]");
 			sb.append(lineup.getMidfieldRating()+"[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Attack"));
-			sb.append("[/th][td]"+lineup.getRightAttackRating());
-			sb.append("[/td][td]"+lineup.getCentralAttackRating());
-			sb.append("[/td][td]"+lineup.getLeftAttackRating());
+			sb.append("[/th][td align=center]"+lineup.getRightAttackRating());
+			sb.append("[/td][td align=center]"+lineup.getCentralAttackRating());
+			sb.append("[/td][td align=center]"+lineup.getLeftAttackRating());
 			sb.append("[/td][/tr]" + LF);
-			sb.append("[/table]");
-			sb.append(LF);
-		}
-		return sb.toString();
-	}
-	
-	/**
-	 * Get ratings in a HT-ML style table.
-	 */
-	private String getRatingsAsHattrickML_AttTop() {
-		StringBuilder sb = new StringBuilder("");
-		if (lineup != null) {
-			sb.append("[table]");
-			sb.append("[tr][th][/th][th]"+HOVerwaltung.instance().getLanguageString("Links"));
-			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Mitte"));
-			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Rechts")+"[/th][/tr]" + LF);
-			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Attack"));
-			sb.append("[/th][td]"+lineup.getLeftAttackRating());
-			sb.append("[/td][td]"+lineup.getCentralAttackRating());
-			sb.append("[/td][td]"+lineup.getRightAttackRating());
-			sb.append("[/td][/tr]" + LF);
-			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-			sb.append("[/th][td colspan=3 align=center]");
-			sb.append(lineup.getMidfieldRating()+"[/td][/tr]" + LF);
-			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Verteidigung"));
-			sb.append("[/th][td]"+lineup.getLeftDefenseRating()+"[/td][td]");
-			sb.append(lineup.getCentralDefenseRating()+"[/td][td]");
-			sb.append(lineup.getRightDefenseRating()+"[/td][/tr]" + LF);
 			sb.append("[/table]");
 			sb.append(LF);
 		}
