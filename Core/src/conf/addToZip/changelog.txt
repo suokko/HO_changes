@@ -4,6 +4,7 @@ forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 Changelist HO! 1.432
 ====================
 - ArenaSizer become a extra tool
+- Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 
 Language updates:
 -----------------
