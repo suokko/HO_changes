@@ -4,7 +4,7 @@ package ho.module.training.ui.model;
 import ho.core.constants.TrainingType;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
-import ho.module.training.FutureTrainingWeek;
+import ho.core.training.TrainingPerWeek;
 import ho.module.training.TrainingPanel;
 
 import java.util.Iterator;
@@ -49,7 +49,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 
         aobj[col] = value;
 
-        FutureTrainingWeek train = (FutureTrainingWeek) p_V_trainingsVector.get(row);
+        TrainingPerWeek train = (TrainingPerWeek) p_V_trainingsVector.get(row);
 
         if (col == 2) {
             CBItem sel = (CBItem)value;
@@ -61,7 +61,7 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
         }
         else if (col == 4) {
             Integer staminaTrainingPart = (Integer) value;
-            train.setStaminaTrainingPart(staminaTrainingPart.intValue());
+            train.setStaminaPart(staminaTrainingPart.intValue());
         }
         DBManager.instance().saveFutureTraining(train);
         fireTableCellUpdated(row, col);
@@ -75,26 +75,26 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
     @Override
 	public void populate() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector();
+        p_V_trainingsVector = new Vector<TrainingPerWeek>();
 
         Object[] aobj;
 
-        FutureTrainingWeek oldTrain = null;
+        TrainingPerWeek oldTrain = null;
 
-        List<FutureTrainingWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
+        List<TrainingPerWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
 
-        for (Iterator<FutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
-            FutureTrainingWeek train = iter.next();
+        for (Iterator<TrainingPerWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+        	TrainingPerWeek train = iter.next();
 
             // if not found create it and saves it
             if (train.getTrainingIntensity() == -1) {
                 if (oldTrain != null) {
                     train.setTrainingIntensity(oldTrain.getTrainingIntensity());
-                    train.setStaminaTrainingPart(oldTrain.getStaminaTrainingPart());
+                    train.setStaminaPart(oldTrain.getStaminaPart());
                     train.setTrainingType(oldTrain.getTrainingType());
                 } else {
                     train.setTrainingIntensity(100);
-                    train.setStaminaTrainingPart(5);
+                    train.setStaminaPart(5);
                     train.setTrainingType(TrainingType.SET_PIECES);
                 }
 
@@ -104,11 +104,11 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
             String selectedTrain = TrainingType.toString(train.getTrainingType());
 
             aobj = (new Object[]{
-                       train.getWeek() + "", //$NON-NLS-1$
-                       train.getSeason() + "", //$NON-NLS-1$
+                       train.getHattrickWeek() + "", //$NON-NLS-1$
+                       train.getHattrickSeason() + "", //$NON-NLS-1$
                        new CBItem(selectedTrain, train.getTrainingType()), 
                        new Integer(train.getTrainingIntensity()), 
-                       new Integer(train.getStaminaTrainingPart())
+                       new Integer(train.getStaminaPart())
                    });
 
             // Add object to be visualized to the table model

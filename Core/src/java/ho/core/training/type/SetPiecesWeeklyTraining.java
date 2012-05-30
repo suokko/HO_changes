@@ -5,7 +5,8 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
-public class SetPiecesWeeklyTraining extends WeeklyTrainingType{
+public class SetPiecesWeeklyTraining extends WeeklyTrainingType {
+	protected static SetPiecesWeeklyTraining m_ciInstance = null;
 	private SetPiecesWeeklyTraining()
 	{
 		_Name = "Set Pieces";
@@ -20,7 +21,8 @@ public class SetPiecesWeeklyTraining extends WeeklyTrainingType{
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
 		_PrimaryTrainingSkillBonusPositions = new int[]{ ISpielerPosition.keeper, ISpielerPosition.setPieces };
-		_PrimaryTrainingSkillBaseSpeed = (float) 0.9 + UserParameter.instance().TRAINING_OFFSET_SETPIECES; // 100%
+		_PrimaryTrainingBaseLength = (float) 0.9;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_SETPIECES; // 100%
 		_PrimaryTrainingSkillBonus = (float) 0.25;
 	}
 	public static WeeklyTrainingType instance() {

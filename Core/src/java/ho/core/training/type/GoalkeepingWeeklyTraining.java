@@ -6,13 +6,15 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public final class GoalkeepingWeeklyTraining extends WeeklyTrainingType {
+	protected static GoalkeepingWeeklyTraining m_ciInstance = null;
 	private GoalkeepingWeeklyTraining()
 	{
 		_Name = "Goalkeeping";
 		_TrainingType = TrainingType.GOALKEEPING;
 		_PrimaryTrainingSkill = PlayerSkill.KEEPER;
 		_PrimaryTrainingSkillPositions = new int[]{ ISpielerPosition.keeper };
-		_PrimaryTrainingSkillBaseSpeed = (float) 2 + UserParameter.instance().TRAINING_OFFSET_GOALKEEPING; // 100%
+		_PrimaryTrainingBaseLength = (float) 2;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_GOALKEEPING; // 100%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

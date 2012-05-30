@@ -6,6 +6,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public class ThroughPassesWeeklyTraining extends WeeklyTrainingType {
+	protected static ThroughPassesWeeklyTraining m_ciInstance = null;
 	private ThroughPassesWeeklyTraining()
 	{
 		_Name = "Through Passes";
@@ -19,8 +20,9 @@ public class ThroughPassesWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.rightInnerMidfield };
 		_PrimaryTrainingSkillOsmosisTrainingPositions = new int[] { ISpielerPosition.keeper,
 				ISpielerPosition.leftForward, ISpielerPosition.centralForward, ISpielerPosition.rightForward}; 
-		_PrimaryTrainingSkillBaseSpeed = ((float) 2.8 + UserParameter.instance().TRAINING_OFFSET_PASSING) / (float) 0.8;
-		_PrimaryTrainingSkillOsmosisSpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.16;
+		_PrimaryTrainingBaseLength = (float) 2.8 / (float) 0.85;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PASSING / (float) 0.85;
+		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {
