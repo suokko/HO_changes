@@ -56,7 +56,7 @@ public class TrainingPerPlayer  {
     //variable for adjusting amount of set pieces when training scoring
     private static final float p_f_shooting_SetPieces = 0.6f;
 
-    private TrainingPoint trainingPoint;
+    private TrainingPerWeek trainingWeek;
     
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -353,58 +353,60 @@ public class TrainingPerPlayer  {
 			}    		
     		return;
     	}
-    	double d = trainingPoint.calcTrainingPoints();
-    	System.out.println (player.getName() + " final points="+d);
-    	int trainType = train.getTrainingType();
-    	switch (trainType) {
-		case TrainingType.PLAYMAKING:
-			if (isAfterSkillup(trainingDate, PlayerSkill.PLAYMAKING)) {
-				this.playmaking = d;
+    	TrainingPoints trp = train.getTrainingPair();
+    	if (trp != null) {
+	    	//System.out.println (player.getName() + " final points="+trp.getPrimary());
+	    	int trainType = train.getTrainingType();
+	    	switch (trainType) {
+			case TrainingType.PLAYMAKING:
+				if (isAfterSkillup(trainingDate, PlayerSkill.PLAYMAKING)) {
+					this.playmaking = trp.getPrimary();
+				}
+				break;
+			case TrainingType.DEFENDING:
+			case TrainingType.DEF_POSITIONS:
+				if (isAfterSkillup(trainingDate, PlayerSkill.DEFENDING)) {
+					this.defending = trp.getPrimary();
+				}
+				break;
+			case TrainingType.CROSSING_WINGER:
+			case TrainingType.WING_ATTACKS:
+				if (isAfterSkillup(trainingDate, PlayerSkill.WINGER)) {
+					this.wing = trp.getPrimary();
+				}
+				break;
+			case TrainingType.SHORT_PASSES:
+			case TrainingType.THROUGH_PASSES:
+				if (isAfterSkillup(trainingDate, PlayerSkill.PASSING)) {
+					this.passing= trp.getPrimary();
+				}
+				break;
+			case TrainingType.GOALKEEPING:
+				if (isAfterSkillup(trainingDate, PlayerSkill.KEEPER)) {
+					this.goalkeeping = trp.getPrimary();
+				}
+				break;
+			case TrainingType.SCORING:
+				if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
+					this.scoring = trp.getPrimary();
+				}
+				break;
+			case TrainingType.SHOOTING:
+				if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
+					this.scoring = trp.getPrimary();
+				}
+	            // Shooting gives some training in Set Pieces, too
+				if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
+		            this.setpieces = trp.getSecondary();
+				}
+				break;
+			case TrainingType.SET_PIECES:
+				if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
+					this.setpieces = trp.getPrimary();
+				}
+				break;
 			}
-			break;
-		case TrainingType.DEFENDING:
-		case TrainingType.DEF_POSITIONS:
-			if (isAfterSkillup(trainingDate, PlayerSkill.DEFENDING)) {
-				this.defending = d;
-			}
-			break;
-		case TrainingType.CROSSING_WINGER:
-		case TrainingType.WING_ATTACKS:
-			if (isAfterSkillup(trainingDate, PlayerSkill.WINGER)) {
-				this.wing = d;
-			}
-			break;
-		case TrainingType.SHORT_PASSES:
-		case TrainingType.THROUGH_PASSES:
-			if (isAfterSkillup(trainingDate, PlayerSkill.PASSING)) {
-				this.passing= d;
-			}
-			break;
-		case TrainingType.GOALKEEPING:
-			if (isAfterSkillup(trainingDate, PlayerSkill.KEEPER)) {
-				this.goalkeeping = d;
-			}
-			break;
-		case TrainingType.SCORING:
-			if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
-				this.scoring = d;
-			}
-			break;
-		case TrainingType.SHOOTING:
-			if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
-				this.scoring = d;
-			}
-            // Shooting gives some training in Set Pieces, too
-			if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
-	            this.setpieces = (p_f_shooting_SetPieces * trainingPoint.calcTrainingPoints());
-			}
-			break;
-		case TrainingType.SET_PIECES:
-			if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
-				this.setpieces = d;
-			}
-			break;
-		}
+    	}
     }
 
     /**
@@ -438,8 +440,8 @@ public class TrainingPerPlayer  {
      * get the training point for this instance
      * @return	training point
      */
-	public TrainingPoint getTrainingPoint() {
-		return trainingPoint;
+	public TrainingPerWeek getTrainingWeek() {
+		return trainingWeek;
 	}
 
 	/**
@@ -449,9 +451,9 @@ public class TrainingPerPlayer  {
 	 *  
 	 * @param trainingPoint	training point
 	 */
-	public void setTrainingPoint(TrainingPoint trainingPoint) {
-		this.trainingPoint = trainingPoint;
-		calculateTrainingResults(trainingPoint.getTrainWeek());
+	public void setTrainingWeek(TrainingPerWeek trainingWeek) {
+		this.trainingWeek = trainingWeek;
+		calculateTrainingResults(trainingWeek);
 	}
     
 }

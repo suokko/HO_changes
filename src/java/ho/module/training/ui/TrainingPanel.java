@@ -5,7 +5,6 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.training.TrainingPerWeek;
-import ho.module.training.FutureTrainingWeek;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
@@ -64,7 +63,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return future trainings list
      */
-    public List<FutureTrainingWeek> getFutureTrainings() {
+    public List<TrainingPerWeek> getFutureTrainings() {
         return futureModel.getTrainingsData();
     }
 

@@ -7,9 +7,19 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
+import ho.core.training.type.CrossingWeeklyTraining;
+import ho.core.training.type.DefendingWeeklyTraining;
+import ho.core.training.type.DefensivePositionsWeeklyTraining;
+import ho.core.training.type.GoalkeepingWeeklyTraining;
+import ho.core.training.type.PlaymakingWeeklyTraining;
+import ho.core.training.type.ScoringWeeklyTraining;
+import ho.core.training.type.SetPiecesWeeklyTraining;
+import ho.core.training.type.ShootingWeeklyTraining;
+import ho.core.training.type.ShortPassesWeeklyTraining;
+import ho.core.training.type.ThroughPassesWeeklyTraining;
+import ho.core.training.type.WeeklyTrainingType;
+import ho.core.training.type.WingAttacksWeeklyTraining;
 import ho.core.util.HelperWrapper;
-import ho.module.training.FutureTrainingWeek;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +32,15 @@ public class FutureTrainingManager {
 	/** Actual Training sub */
 	public double[] actual = new double[8];
 		
-	/** Maximum training sub after future trainings */
+	/** Maximum training sub after future training */
 	public double[] finalSub = new double[8];
 
-	/** Number of skillup with maximum training */
+	/** Number of skill ups with maximum training */
 	public int[] finalSkillup = new int[8];
 
 	/** Active player */
 	private Spieler player;
-	private List<FutureTrainingWeek> futureTrainings;
+	private List<TrainingPerWeek> futureTrainings;
 	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
 
@@ -38,12 +48,12 @@ public class FutureTrainingManager {
 	private int trainer;
 
 	/**
-	* Calculates the effects of the future trainings for the provided player
+	* Calculates the effects of the future training for the provided player
 	*
 	* @param p The active player
-	* @param trainings The future trainings
+	* @param trainings The future training
 	*/
-	public FutureTrainingManager(Spieler p, List<FutureTrainingWeek> trainings, int cotrainer, int trainerLvl) {
+	public FutureTrainingManager(Spieler p, List<TrainingPerWeek> trainings, int cotrainer, int trainerLvl) {
 		this.player = p;
 		this.futureSkillups = new ArrayList<ISkillup>();
 		this.coTrainer = cotrainer;
@@ -73,38 +83,140 @@ public class FutureTrainingManager {
 		}
 
 		weeksPassed = 0;
-		int position = TrainingPosition.getTrainingPosition(HelperWrapper.instance().getPosition(player.getIdealPosition()));
+		int position = HelperWrapper.instance().getPosition(player.getIdealPosition());
 		// Iterate thru all the future training weeks
 		for (int index = startWeekNumber; index <= finalWeekNumber; index++) {
 			weeksPassed++;
-			FutureTrainingWeek tw = this.futureTrainings.get(index-1);
+			TrainingPerWeek tw = this.futureTrainings.get(index-1);
 			int trType = tw.getTrainingType();
-			double point = TrainingManager.instance().getTrainingPoint().getTrainingPoint(trType, position).doubleValue();
-			System.out.println(point);
+			TrainingWeekPlayer tp = new TrainingWeekPlayer();
+			tp.Name(player.getName());
+			WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
+			switch (trType) {
+		        case TrainingType.CROSSING_WINGER:
+					wt = CrossingWeeklyTraining.instance();
+					break;
+				case TrainingType.DEF_POSITIONS:
+					wt = DefensivePositionsWeeklyTraining.instance();
+					break;
+				case TrainingType.DEFENDING:
+					wt = DefendingWeeklyTraining.instance();
+					break;
+				case TrainingType.GOALKEEPING:
+					wt = GoalkeepingWeeklyTraining.instance();
+					break;
+				case TrainingType.PLAYMAKING:
+					wt = PlaymakingWeeklyTraining.instance();
+					break;
+				case TrainingType.SCORING:
+					wt = ScoringWeeklyTraining.instance();
+					break;
+				case TrainingType.SET_PIECES:
+					wt = SetPiecesWeeklyTraining.instance();
+					break;
+				case TrainingType.SHOOTING:
+					wt = ShootingWeeklyTraining.instance();
+					break;
+				case TrainingType.SHORT_PASSES:
+					wt = ShortPassesWeeklyTraining.instance();
+					break;
+				case TrainingType.THROUGH_PASSES:
+					wt = ThroughPassesWeeklyTraining.instance();
+					break;
+				case TrainingType.WING_ATTACKS:
+					wt = WingAttacksWeeklyTraining.instance();
+					break; 
+	        }
+			boolean bFound = false;
+			for (int i = 0; i < wt.getPrimaryTrainingSkillPositions().length; i++)
+			{
+				if(wt.getPrimaryTrainingSkillPositions()[i] == position) {
+					tp.addPrimarySkillPositionMinutes(90);
+					bFound = true;
+					if (wt.getPrimaryTrainingSkillBonusPositions() != null) {
+						for (int j = 0; j < wt.getPrimaryTrainingSkillBonusPositions().length; j++) {
+							if (wt.getPrimaryTrainingSkillBonusPositions()[j] == position) {
+								tp.addPrimarySkillBonusPositionMinutes(90);
+								break;
+							}
+						}
+					}
+					break;
+				}
+			}
+			if(!bFound) {
+				if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null) {
+					for (int i = 0; i < wt.getPrimaryTrainingSkillSecondaryTrainingPositions().length; i++)
+					{
+						if(wt.getPrimaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
+							tp.addPrimarySkillSecondaryPositionMinutes(90);
+							bFound = true;
+							break;
+						}
+					}
+				}
+			}
+			if (!bFound) {
+				if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
+					for (int i = 0; i < wt.getPrimaryTrainingSkillOsmosisTrainingPositions().length; i++)
+					{
+						if(wt.getPrimaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
+							tp.addPrimarySkillOsmosisPositionMinutes(90);
+							bFound = true;
+							break;
+						}
+					}
+				}
+			}
+			bFound = false;
+			if (wt.getSecondaryTrainingSkillPositions() != null) {
+				for (int i = 0; i < wt.getSecondaryTrainingSkillPositions().length; i++)
+				{
+					if(wt.getSecondaryTrainingSkillPositions()[i] == position) {
+						tp.addSecondarySkillPrimaryMinutes(90);
+						bFound = true;
+						if (wt.getSecondaryTrainingSkillBonusPositions() != null) {
+							for (int j = 0; j < wt.getSecondaryTrainingSkillBonusPositions().length; j++) {
+								if (wt.getSecondaryTrainingSkillBonusPositions()[j] == position) {
+									tp.addSecondarySkillBonusMinutes(90);
+									break;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
+			if(!bFound) {
+				if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null) {
+					for (int i = 0; i < wt.getSecondaryTrainingSkillSecondaryTrainingPositions().length; i++)
+					{
+						if(wt.getSecondaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
+							tp.addSecondarySkillSecondaryPositionMinutes(90);
+							bFound = true;
+							break;
+						}
+					}
+				}
+			}
+			if (!bFound) {
+				if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
+					for (int i = 0; i < wt.getSecondaryTrainingSkillOsmosisTrainingPositions().length; i++)
+					{
+						if(wt.getSecondaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
+							tp.addSecondarySkillOsmosisTrainingMinutes(90);
+							bFound = true;
+							break;
+						}
+					}
+				}
+			}
+			TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+			System.out.println(wt.getName() + ", " + wt.getTrainingType() + ", Week: " + weeksPassed + ", " + player.getName() + ", Position: " + position + ", Primary: " + trp.getPrimary() + ", Secondary: " + trp.getSecondary());
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
-			TrainingPlayer tp = new TrainingPlayer();
-			
-			switch (trType) {
-				case TrainingType.GOALKEEPING :
-					tp.setMinutesPlayedAsGK(90);
-				case TrainingType.PLAYMAKING :
-				case TrainingType.SHORT_PASSES :
-				case TrainingType.THROUGH_PASSES :
-				case TrainingType.CROSSING_WINGER :
-				case TrainingType.DEFENDING :
-				case TrainingType.DEF_POSITIONS :
-				case TrainingType.SCORING :
-				case TrainingType.SET_PIECES :
-				case TrainingType.WING_ATTACKS :
-					processTraining(getSkillForTraining(trType), point, tw);
-					break;
-				case TrainingType.SHOOTING :
-					//TODO This doesn't look right, looks like full scoring training...
-					processTraining(PlayerSkill.SCORING, point, tw);
-					processTraining(PlayerSkill.SET_PIECES, 0.5d, tw);
-					break;
-			}
+						
+			processTraining(wt, trp, tw);
 		}		
 		FuturePlayer fp = new FuturePlayer();				
 		fp.setAttack(getFinalValue(PlayerSkill.SCORING));		
@@ -191,24 +303,40 @@ public class FutureTrainingManager {
 	*
 	* @return	the predicted length
 	*/
-	private double getTrainingLength(int skillIndex, int intensity, int staminaTrainingPart) {
-		int trType = getPrimaryTrainingForSkill(skillIndex);
-		int pos = getSkillPosition(skillIndex);
+	//private double getTrainingLength(int trType, int skillIndex, int intensity, int staminaTrainingPart) {
+	private double getTrainingLength(WeeklyTrainingType wt, TrainingPerWeek tw) {
+		int pos = getSkillPosition(wt.getPrimaryTrainingSkill());
 		int curSkillUps = finalSkillup[pos];
 		int age = player.getAlter();
 		int ageDays = player.getAgeDays();
-		int realSkill = player.getValue4Skill4(skillIndex);
+		int realSkill = player.getValue4Skill4(wt.getPrimaryTrainingSkill());
 		// Set age and skill for simulation
 		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
-		player.setValue4Skill4 (skillIndex, realSkill+curSkillUps);
-		double limit = TrainingManager.getTrainingLength(player, trType, coTrainer, trainer, intensity, staminaTrainingPart);
+		player.setValue4Skill4 (wt.getPrimaryTrainingSkill(), realSkill+curSkillUps);
+		double limit = TrainingManager.getTrainingLength(player, wt.getTrainingType(), coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
 //		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
 		// Undo simulation changes on player
 		player.setAlter(age);
-		player.setValue4Skill4 (skillIndex, realSkill);
+		player.setValue4Skill4 (wt.getPrimaryTrainingSkill(), realSkill);
 		return limit;
 	}
 
+	private double getSecondaryTrainingLength(WeeklyTrainingType wt, TrainingPerWeek tw) {
+		int pos = getSkillPosition(wt.getSecondaryTrainingSkill());
+		int curSkillUps = finalSkillup[pos];
+		int age = player.getAlter();
+		int ageDays = player.getAgeDays();
+		int realSkill = player.getValue4Skill4(wt.getSecondaryTrainingSkill());
+		// Set age and skill for simulation
+		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
+		player.setValue4Skill4 (wt.getSecondaryTrainingSkill(), realSkill+curSkillUps);
+		double limit = TrainingManager.getSecondaryTrainingLength(player, wt.getTrainingType(), coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
+//		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
+		// Undo simulation changes on player
+		player.setAlter(age);
+		player.setValue4Skill4 (wt.getSecondaryTrainingSkill(), realSkill);
+		return limit;
+	}
 	/**
 	* Checks if a skillup has happened
 	*
@@ -238,38 +366,50 @@ public class FutureTrainingManager {
 	/**
 	* Updates the training situation
 	*
-	* @param skillIndex The skill to be updated
-	* @param point The points to be added
+	* @param primarySkillIndex The skill to be updated
+	* @param primaryPoints The points to be added
 	* @param tw the training week settings for the considered week
 	*/
-	private void processTraining(int skillIndex, double point, FutureTrainingWeek tw) {
+	private void processTraining(WeeklyTrainingType wt, TrainingPoints trp, TrainingPerWeek tw) {
 		// number of weeks necessary to have a skillup
-		double trainLength = getTrainingLength(skillIndex, tw.getTrainingIntensity(), tw.getStaminaTrainingPart());
-
+		double primaryTrainLength = getTrainingLength(wt, tw);
 		// If invalid training (trType does not train this skill)
-		if (trainLength == -1)
+		if (primaryTrainLength == -1)
 			return;
-		
 		// calculate increase in sub
-		double subForThisWeek = point/trainLength;
+		double primarySubForThisWeek = trp.getPrimary()/ primaryTrainLength;
+		int primaryPos = getSkillPosition(wt.getPrimaryTrainingSkill());
+		double secondaryTrainLength = 0;
+		double secondarySubForThisWeek = 0;
+		int secondaryPos = -1;
+		if (trp.getSecondary()> 0) {
+			secondaryTrainLength = getSecondaryTrainingLength(wt, tw);
+			secondarySubForThisWeek = trp.getSecondary() / secondaryTrainLength;
+			secondaryPos = getSkillPosition(wt.getSecondaryTrainingSkill());
+		}
 		
-		int pos = getSkillPosition(skillIndex);
 		// add sub to skill
-		finalSub[pos] = finalSub[pos] + subForThisWeek;
-
-
-		// check if skillup happened!
-		if (checkSkillup(pos)) {
+		finalSub[primaryPos] += primarySubForThisWeek;
+		if (checkSkillup(primaryPos)) {
 			PlayerSkillup su = new PlayerSkillup();
-			su.setHtSeason(tw.getSeason());
-			su.setHtWeek(tw.getWeek());
-			su.setType(skillIndex);
-			su.setValue(player.getValue4Skill4(skillIndex) + finalSkillup[pos]);
+			su.setHtSeason(tw.getHattrickSeason());
+			su.setHtWeek(tw.getHattrickWeek());
+			su.setType(wt.getPrimaryTrainingSkill());
+			su.setValue(player.getValue4Skill4(wt.getPrimaryTrainingSkill()) + finalSkillup[primaryPos]);
 			su.setTrainType(ISkillup.SKILLUP_FUTURE);
-			if ((skillIndex == PlayerSkill.STAMINA) && (su.getValue() > 9)) {
-				return;
-			}
 			futureSkillups.add(su);
+		}
+		if (secondarySubForThisWeek > 0) {
+			finalSub[secondaryPos] += secondarySubForThisWeek;
+			if (checkSkillup(secondaryPos)) {
+				PlayerSkillup su = new PlayerSkillup();
+				su.setHtSeason(tw.getHattrickSeason());
+				su.setHtWeek(tw.getHattrickWeek());
+				su.setType(wt.getSecondaryTrainingSkill());
+				su.setValue(player.getValue4Skill4(wt.getSecondaryTrainingSkill()) + finalSkillup[secondaryPos]);
+				su.setTrainType(ISkillup.SKILLUP_FUTURE);
+				futureSkillups.add(su);
+			}
 		}
 	}
 

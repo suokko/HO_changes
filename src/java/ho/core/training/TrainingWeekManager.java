@@ -20,7 +20,7 @@ import java.util.Vector;
  * Class that extract data from Database and calculates TrainingWeek and TrainingPoints earned from
  * players
  *
- * @author humorlos, Dragettho, thetom
+ * @author humorlos, Dragettho, thetom, seb04
  */
 public class TrainingWeekManager {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -78,12 +78,10 @@ public class TrainingWeekManager {
 
         for (Iterator<TrainingPerWeek> iter = m_vTrainings.iterator(); iter.hasNext();) {
             final TrainingPerWeek element = iter.next();
-
             if ((element.getYear() == trainYear) && (element.getWeek() == trainWeek)) {
                 return element;
             }
         }
-
         return null;
     }
 
@@ -103,7 +101,7 @@ public class TrainingWeekManager {
      */
     public Vector<TrainingPerWeek> getTrainingsVector() {
         if (m_vTrainings == null) {
-            return calculateTrainings(ho.core.db.DBManager.instance().getTrainingsVector());
+            return calculateTrainings(DBManager.instance().getTrainingsVector());
         }
 
         return m_vTrainings;
@@ -276,7 +274,7 @@ public class TrainingWeekManager {
      * @return TODO Missing Return Method Documentation
      */
     private Vector<TrainingPerWeek> getUpdateTraining(Vector<TrainingPerWeek> output) {
-        int actaulSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
+        int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
         int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
         final int trainNumber = output.size();
 
@@ -288,7 +286,7 @@ public class TrainingWeekManager {
 
                 if (actualWeek == 17) {
                     actualWeek = 1;
-                    actaulSeason++;
+                    actualSeason++;
                 }
             }
         } catch (Exception e) {
@@ -300,7 +298,7 @@ public class TrainingWeekManager {
 
         for (int index = 0; index < trainNumber; index++) {
             final TrainingPerWeek train = output.get(index);
-            final HattrickDate htDate = calculateByDifference(actaulSeason, actualWeek,
+            final HattrickDate htDate = calculateByDifference(actualSeason, actualWeek,
                                                               trainNumber - index);
             final TrainingPerWeek newTrain = new TrainingPerWeek(train.getWeek(), train.getYear(),
                                                                  train.getTrainingType(),

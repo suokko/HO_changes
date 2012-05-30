@@ -10,7 +10,7 @@ import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
-import ho.module.training.FutureTrainingWeek;
+import ho.core.training.TrainingPerWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
 
@@ -73,14 +73,12 @@ public class PlayerDetailPanel extends JPanel {
         playerLabel.setText(spieler.getName());
 
         // gets the list of user defined future trainings
-        List<FutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+        List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
 
+        StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
         // instantiate a future train manager to calculate the previsions */ 
-        FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
-                                                                                 ho.module.training.TrainingPanel.getStaffPanel()
-                                                                                                   .getCoTrainerNumber(),
-                                                                                                   ho.module.training.TrainingPanel.getStaffPanel()
-                                                                                                   .getTrainerLevelNumber());
+        FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings, 
+        		sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
 
         // Add future skillups
         for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
@@ -91,8 +89,7 @@ public class PlayerDetailPanel extends JPanel {
 
         for (int i = 0; i < 8; i++) {
             int skillIndex = Skills.getSkillAtPosition(i);
-            skillLabel[i].setText(PlayerAbility.getNameForSkill(Skills.getSkillValue(spieler,skillIndex),
-                                                                                 true));
+            skillLabel[i].setText(PlayerAbility.getNameForSkill(Skills.getSkillValue(spieler,skillIndex), true));
 
             FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
             double finalValue = getSkillValue(fp, skillIndex);

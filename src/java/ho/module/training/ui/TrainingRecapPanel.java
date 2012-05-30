@@ -8,7 +8,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
-import ho.module.training.FutureTrainingWeek;
+import ho.core.training.TrainingPerWeek;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
@@ -68,7 +68,7 @@ public class TrainingRecapPanel extends JPanel {
         Vector<String> columns = getColumns();
 
         //playerRef = new HashMap();
-        List<FutureTrainingWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+        List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
 
         Vector<Spieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
 
@@ -76,11 +76,9 @@ public class TrainingRecapPanel extends JPanel {
 
         for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
             Spieler player = iter.next();
-            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
-                                                                                     ho.module.training.TrainingPanel.getStaffPanel()
-                                                                                                       .getCoTrainerNumber(),
-                                                                                                       ho.module.training.TrainingPanel.getStaffPanel()
-                                                                                                       .getTrainerLevelNumber());
+            StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
+            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings, 
+            		sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
             List<ISkillup> su = ftm.getFutureSkillups();
 
             // Skip player!

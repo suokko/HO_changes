@@ -6,6 +6,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public final class DefendingWeeklyTraining extends WeeklyTrainingType {
+	protected static DefendingWeeklyTraining m_ciInstance = null;
 	private DefendingWeeklyTraining()
 	{
 		_Name = "Defending";
@@ -19,11 +20,12 @@ public final class DefendingWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.leftInnerMidfield, ISpielerPosition.centralInnerMidfield, 
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
-		_PrimaryTrainingSkillBaseSpeed = (float) 3.6 + UserParameter.instance().TRAINING_OFFSET_DEFENDING; // 100%
-		_PrimaryTrainingSkillSecondarySpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.5; // 50%
-		_PrimaryTrainingSkillOsmosisSpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.16; // 16%
+		_PrimaryTrainingBaseLength = (float) 3.6;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_DEFENDING; // 100%
+		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
+		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
-	public static WeeklyTrainingType instance() {
+	public static DefendingWeeklyTraining instance() {
         if (m_ciInstance == null) {
         	m_ciInstance = new DefendingWeeklyTraining();
         }
