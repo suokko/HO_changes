@@ -2,15 +2,14 @@
 package ho.module.training.ui.model;
 
 import ho.core.model.HOVerwaltung;
-import ho.module.training.FutureTrainingWeek;
-
+import ho.core.training.TrainingPerWeek;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
 
 /**
- * Bast training table model
+ * Basic training table model
  */
 public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -24,7 +23,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     protected Vector<Object[]> p_V_data;
 
     /** Vector of ITrainingPerWeek object */
-    protected Vector p_V_trainingsVector;
+    protected Vector<TrainingPerWeek> p_V_trainingsVector;
     private String[] columnNames;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -36,7 +35,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      */
     public AbstractTrainingsTableModel() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector<FutureTrainingWeek>();
+        p_V_trainingsVector = new Vector<TrainingPerWeek>();
         columnNames = new String[5];
         HOVerwaltung hoV = HOVerwaltung.instance();
         columnNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$
@@ -108,7 +107,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return actual training vector
      */
-    public Vector getTrainingsData() {
+    public Vector<TrainingPerWeek> getTrainingsData() {
         return p_V_trainingsVector;
     }
 

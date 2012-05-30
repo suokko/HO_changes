@@ -6,6 +6,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public class WingAttacksWeeklyTraining extends WeeklyTrainingType {
+	protected static WingAttacksWeeklyTraining m_ciInstance = null;
 	private WingAttacksWeeklyTraining()
 	{
 		_Name = "Wing Attacks";
@@ -18,8 +19,9 @@ public class WingAttacksWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.middleCentralDefender, ISpielerPosition.rightCentralDefender,
 				ISpielerPosition.leftInnerMidfield, ISpielerPosition.centralInnerMidfield, 
 				ISpielerPosition.rightInnerMidfield}; 
-		_PrimaryTrainingSkillBaseSpeed = ((float) 2.2 + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING) / (float) 0.8 ;
-		_PrimaryTrainingSkillOsmosisSpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.16;
+		_PrimaryTrainingBaseLength = (float) 2.2 / (float) 0.6;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_WINGER / (float) 0.6 ;
+		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

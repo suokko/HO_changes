@@ -15,8 +15,6 @@ import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
-import ho.module.training.FutureTrainingWeek;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -197,7 +195,7 @@ public class PlayerCreator extends XMLCreator {
 
 			int coTrainer = HOVerwaltung.instance().getModel().getVerein().getCoTrainer();
 			int trainer = HOVerwaltung.instance().getModel().getTrainer().getTrainer();
-			List<FutureTrainingWeek> futures =DBManager.instance().getFutureTrainingsVector();
+			List<TrainingPerWeek> futures =DBManager.instance().getFutureTrainingsVector();
 
 			FutureTrainingManager ftm = new FutureTrainingManager(player, futures, coTrainer,  trainer);
 

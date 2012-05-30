@@ -5,22 +5,31 @@ import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchStatistics;
-import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
+import ho.core.training.type.CrossingWeeklyTraining;
+import ho.core.training.type.DefendingWeeklyTraining;
+import ho.core.training.type.DefensivePositionsWeeklyTraining;
+import ho.core.training.type.GoalkeepingWeeklyTraining;
+import ho.core.training.type.PlaymakingWeeklyTraining;
+import ho.core.training.type.ScoringWeeklyTraining;
+import ho.core.training.type.SetPiecesWeeklyTraining;
+import ho.core.training.type.ShootingWeeklyTraining;
+import ho.core.training.type.ShortPassesWeeklyTraining;
+import ho.core.training.type.ThroughPassesWeeklyTraining;
+import ho.core.training.type.WeeklyTrainingType;
+import ho.core.training.type.WingAttacksWeeklyTraining;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
 import ho.core.util.HTCalendarFactory;
-
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -38,23 +47,7 @@ public class TrainingManager {
 
 	private static TrainingManager m_clInstance;
 
-    /** Base values for training duration */
-	public static final float BASE_DURATION_GOALKEEPING = (float)2.0;
-	public static final float BASE_DURATION_DEFENDING = (float)3.6;
-	public static final float BASE_DURATION_PLAYMAKING = (float)3.1;
-	public static final float BASE_DURATION_PASSING = (float)2.8;
-	public static final float BASE_DURATION_WINGER = (float)2.2;
-	public static final float BASE_DURATION_SCORING = (float)3.2;
-	public static final float BASE_DURATION_SET_PIECES = (float)0.9;
-	public static final float BASE_AGE_FACTOR = (float)0.9;
-	public static final float BASE_COACH_FACTOR = (float)1.0;
-	public static final float BASE_ASSISTANT_COACH_FACTOR = (float)1.0;
-	public static final float BASE_INTENSITY_FACTOR = (float)1.0;
-    
     //~ Instance fields ----------------------------------------------------------------------------
-
-    private Map<String,Map<Integer,Integer>> matchMap;
-
     private TrainingWeekManager weekManager;
     static final public boolean TRAININGDEBUG = true;
 
@@ -65,7 +58,6 @@ public class TrainingManager {
      */
     private TrainingManager() {
         this.weekManager = TrainingWeekManager.instance();
-        this.matchMap = new HashMap<String,Map<Integer,Integer>>();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -82,51 +74,6 @@ public class TrainingManager {
         return m_clInstance;
     }
 
-    /**
-     * returns an empty TrainingPerPlayer instance
-     */
-	public TrainingPerPlayer getTrainingPerPlayer() {
-		return (new TrainingPerPlayer());
-	}
-
-    /**
-     * returns a TrainingPerPlayer instance for a specific player
-     */
-	public TrainingPerPlayer getTrainingPerPlayer(Spieler player) {
-		return (new TrainingPerPlayer(player));
-	}
-
-    /**
-     * Get a new training point instance
-     *
-     * @return new training point
-     */
-    public TrainingPoint getTrainingPoint() {
-    	return new TrainingPoint();
-    }
-
-    /**
-     * get a new training point instance
-     * initialized with existing TrainingWeek
-     *
-     * @return new training point
-     */
-    public TrainingPoint getTrainingPoint(TrainingPerWeek trainWeek) {
-    	return new TrainingPoint(trainWeek);
-    }
-
-    /**
-     * get a new training point instance
-     * initialized with a new TrainingWeek created by the arguments
-     *
-     * @return new training point
-     * @
-     */
-    public TrainingPoint getTrainingPoint(int year, int week, int type, int intensity, int staminaTrainingPart) {
-    	return new TrainingPoint(year, week, type, intensity, staminaTrainingPart);
-    }
-
-    // ------------------------------ Training Week Calculation ----------------------------------------------------
     public Vector<TrainingPerWeek> getTrainingsVector() {
         return this.weekManager.getTrainingsVector();
     }
@@ -149,7 +96,7 @@ public class TrainingManager {
         	c.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
             timestamp = new Timestamp(c.getTimeInMillis());
         }
-        TrainingPerPlayer output = getTrainingPerPlayer(inputPlayer);
+        TrainingPerPlayer output = new TrainingPerPlayer(inputPlayer);
 
         if (TRAININGDEBUG)
         	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+inputPlayer.getName()+", output="+output);
@@ -186,12 +133,11 @@ public class TrainingManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<TrainingPerWeek> calculateTraining(Vector<?> inputTrainings) {
+    public Vector<TrainingPerWeek> calculateTraining(Vector<TrainingPerWeek> inputTrainings) {
         return this.weekManager.calculateTrainings(inputTrainings);
     }
 
-    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(Spieler inputSpieler,
-    		TrainingPerWeek train) {
+    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(Spieler inputSpieler, TrainingPerWeek train) {
     	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
     }
 
@@ -210,7 +156,7 @@ public class TrainingManager {
         final Spieler spieler = inputSpieler;
         final int playerID = spieler.getSpielerID();
 
-        TrainingPerPlayer output = getTrainingPerPlayer(spieler);
+        TrainingPerPlayer output = new TrainingPerPlayer(spieler);
         if (timestamp != null)
         	output.setTimestamp(timestamp);
 
@@ -234,52 +180,102 @@ public class TrainingManager {
             return output;
         }
 
-        TrainingPoint trainPoints = getTrainingPoint(train);
         Calendar trainingDate = train.getTrainingDate();
-
+        WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
+        switch (train.getTrainingType()){
+	        case TrainingType.CROSSING_WINGER:
+				wt = CrossingWeeklyTraining.instance();
+				break;
+			case TrainingType.DEF_POSITIONS:
+				wt = DefensivePositionsWeeklyTraining.instance();
+				break;
+			case TrainingType.DEFENDING:
+				wt = DefendingWeeklyTraining.instance();
+				break;
+			case TrainingType.GOALKEEPING:
+				wt = GoalkeepingWeeklyTraining.instance();
+				break;
+			case TrainingType.PLAYMAKING:
+				wt = PlaymakingWeeklyTraining.instance();
+				break;
+			case TrainingType.SCORING:
+				wt = ScoringWeeklyTraining.instance();
+				break;
+			case TrainingType.SET_PIECES:
+				wt = SetPiecesWeeklyTraining.instance();
+				break;
+			case TrainingType.SHOOTING:
+				wt = ShootingWeeklyTraining.instance();
+				break;
+			case TrainingType.SHORT_PASSES:
+				wt = ShortPassesWeeklyTraining.instance();
+				break;
+			case TrainingType.THROUGH_PASSES:
+				wt = ThroughPassesWeeklyTraining.instance();
+				break;
+			case TrainingType.WING_ATTACKS:
+				wt = WingAttacksWeeklyTraining.instance();
+				break; 
+        }
+        
         try {
         	List<Integer> matches = getMatchesForTraining(trainingDate);
-        	int gkPos[] = new int[]{ISpielerPosition.keeper};
-        	int wbPos[] = new int[]{ISpielerPosition.leftBack, ISpielerPosition.rightBack};
-        	int cdPos[] = new int[]{ISpielerPosition.leftCentralDefender, ISpielerPosition.middleCentralDefender, ISpielerPosition.rightCentralDefender};
-        	int wPos[] = new int[]{ISpielerPosition.leftWinger, ISpielerPosition.rightWinger};
-        	int mPos[] = new int[]{ISpielerPosition.leftInnerMidfield, ISpielerPosition.rightInnerMidfield, ISpielerPosition.centralInnerMidfield};
-        	int fwPos[] = new int[] {ISpielerPosition.leftForward, ISpielerPosition.centralForward, ISpielerPosition.rightForward};
-        	int spPos[] = new int[] {ISpielerPosition.setPieces};
         	int myID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+        	TrainingWeekPlayer tp = new TrainingWeekPlayer();
+            tp.Name(spieler.getName());
         	for (int i=0; i<matches.size(); i++) {
                 final int matchId = (matches.get(i)).intValue();
                 
                 //Get the MatchLineup by id
                 MatchLineupTeam mlt = DBManager.instance().getMatchLineupTeam(matchId, myID);
                 MatchStatistics ms = new MatchStatistics(matchId, mlt);
-                TrainingPlayer tp = new TrainingPlayer();
-                tp.Name(spieler.getName());
-                tp.setMinutesPlayedAsGK(tp.getMinutesPlayedAsGK() + ms.getMinutesPlayedInPositions(playerID, gkPos));
-                tp.setMinutesPlayedAsWB(tp.getMinutesPlayedAsWB() + ms.getMinutesPlayedInPositions(playerID, wbPos));
-                tp.setMinutesPlayedAsCD(tp.getMinutesPlayedAsCD() + ms.getMinutesPlayedInPositions(playerID, cdPos));
-                tp.setMinutesPlayedAsW(tp.getMinutesPlayedAsW() + ms.getMinutesPlayedInPositions(playerID, wPos));
-                tp.setMinutesPlayedAsIM(tp.getMinutesPlayedAsIM() + ms.getMinutesPlayedInPositions(playerID, mPos));
-                tp.setMinutesPlayedAsFW(tp.getMinutesPlayedAsFW() + ms.getMinutesPlayedInPositions(playerID, fwPos));
-                tp.setMinutesPlayedAsSP(tp.getMinutesPlayedAsSP() + ms.getMinutesPlayedInPositions(playerID, spPos));
-
-                if (tp.PlayerHasPlayed()) {
-                	// Player has played
-                    HOLogger.instance().debug(getClass(), "Match "+matchId+": "
-                    		+"Player "+spieler.getName()+" ("+playerID+")"
-                    		+" played "+ tp.getMinutesPlayedAsGK() + " mins as GK"
-                    		+" played "+ tp.getMinutesPlayedAsWB() + " mins as WB"
-                    		+" played "+ tp.getMinutesPlayedAsCD() + " mins as CD"
-                    		+" played "+ tp.getMinutesPlayedAsW() + " mins as W"
-                    		+" played "+ tp.getMinutesPlayedAsIM() + " mins as IM"
-                    		+" played "+ tp.getMinutesPlayedAsFW() + " mins as FW"
-                    		+" played "+ tp.getMinutesPlayedAsSP() + " mins as SP"
-                    		+" played total " + tp.getMinutesPlayed() + " mins"
-                    );
-                    trainPoints.addTrainingPlayer(tp);
+                
+                if (wt.getPrimaryTrainingSkillPositions() != null) {
+                	tp.addPrimarySkillPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillPositions()));
                 }
+                if (wt.getPrimaryTrainingSkillBonusPositions() != null)
+                {
+                	tp.addPrimarySkillBonusPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillBonusPositions()));
+                }
+                if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null)
+                {
+                	tp.addPrimarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillSecondaryTrainingPositions()));
+                }
+                if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
+                	tp.addPrimarySkillOsmosisPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillOsmosisTrainingPositions()));
+                }
+                if (wt.getSecondaryTrainingSkillPositions() != null) {
+                	tp.addSecondarySkillPrimaryMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillPositions()));
+                }
+                if (wt.getSecondaryTrainingSkillBonusPositions() != null)
+                {
+                	tp.addSecondarySkillBonusMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillBonusPositions()));
+                }
+                if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null)
+                {
+                	tp.addSecondarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillSecondaryTrainingPositions()));
+                }
+                if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
+                	tp.addSecondarySkillOsmosisTrainingMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillOsmosisTrainingPositions()));
+                }
+                HOLogger.instance().debug(getClass(), "Match "+matchId+": "
+                		+"Player "+spieler.getName()+" ("+playerID+")"
+                		+" played total " + tp.getMinutesPlayed() + " mins"
+                );
             }
-            output.setTrainingPoint(trainPoints);
+        	if (tp.PlayerHasPlayed()) {
+            	// Player has played
+                HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek() +": "
+                		+"Player "+spieler.getName()+" ("+playerID+")"
+                		+" played total " + tp.getMinutesPlayed() + " mins"
+                );
+                System.out.println("Week " + train.getHattrickWeek() +": "
+                		+"Player "+spieler.getName()+" ("+playerID+")"
+                		+" played total " + tp.getMinutesPlayed() + " mins");
+                TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+                train.setTrainingPair(trp);
+            }
+            output.setTrainingWeek(train);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
         }
@@ -347,15 +343,22 @@ public class TrainingManager {
         final Timestamp ts = new Timestamp(calendar.getTimeInMillis());
         final Calendar old = (Calendar) calendar.clone();
 
-        //Set Time 1 Woche zur?ck // set time one week back
+        // set time one week back
         old.add(Calendar.WEEK_OF_YEAR, -1);
 
         final Timestamp ots = new Timestamp(old.getTimeInMillis());
         final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        final String sdbquery = "SELECT MATCHID FROM MATCHDETAILS WHERE " + "( HEIMID=" + teamId
-                                + " OR GASTID=" + teamId + " ) " + "AND SPIELDATUM BETWEEN '"
+        final String sdbquery = "SELECT MATCHID FROM MATCHESKURZINFO WHERE " + "( HEIMID=" + teamId
+                                + " OR GASTID=" + teamId + " ) " + "AND MatchDate BETWEEN '"
                                 + ots.toString() + "' AND '" + ts.toString() + "' "
-                                + "ORDER BY SPIELDATUM DESC";
+                                + " AND (MatchTyp=" + MatchLineup.QUALISPIEL
+                                + " OR MatchTyp=" + MatchLineup.LIGASPIEL
+                                + " OR MatchTyp=" + MatchLineup.POKALSPIEL
+        						+ " OR MatchTyp=" + MatchLineup.TESTSPIEL
+        						+ " OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL
+        						+ " OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL
+        						+ " OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )"
+                                + " ORDER BY MatchDate DESC";
 
         return sdbquery;
     }
@@ -377,17 +380,17 @@ public class TrainingManager {
     protected static double calcTraining(double baseLength, int age, int assistants, int trainerLevel,
                                int intensity, int stamina, int curSkill) {
 //    	System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
-    	double ageFactor = Math.pow(1.0404, age-17) * (ho.core.model.UserParameter.instance().TRAINING_OFFSET_AGE + BASE_AGE_FACTOR);
+    	double ageFactor = Math.pow(1.0404, age-17) * (UserParameter.instance().TRAINING_OFFSET_AGE + WeeklyTrainingType.BASE_AGE_FACTOR);
 //    	double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
     	double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
     	if (skillFactor < 0) {
     		skillFactor = 0;
     	}
-    	double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
-    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + TrainingManager.BASE_ASSISTANT_COACH_FACTOR);
+    	double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + WeeklyTrainingType.BASE_COACH_FACTOR);
+    	double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + WeeklyTrainingType.BASE_ASSISTANT_COACH_FACTOR);
     	double tiFactor = Double.MAX_VALUE;
     	if (intensity > 0)
-    		tiFactor = (1 / (intensity/100d)) * (UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
+    		tiFactor = (1 / (intensity/100d)) * (UserParameter.instance().TRAINING_OFFSET_INTENSITY + WeeklyTrainingType.BASE_INTENSITY_FACTOR);
     	double staminaFactor = Double.MAX_VALUE;
     	if (stamina < 100)
     		staminaFactor = 1 / (1 - stamina/100d);
@@ -407,45 +410,59 @@ public class TrainingManager {
     	UserParameter up = UserParameter.instance();
     	switch (trTyp) {
             case TrainingType.GOALKEEPING:
-                return calcTraining(up.TRAINING_OFFSET_GOALKEEPING + BASE_DURATION_GOALKEEPING, 
+                return calcTraining(GoalkeepingWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(), 
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getTorwart());
 
             case TrainingType.PLAYMAKING:
-                return calcTraining(up.TRAINING_OFFSET_PLAYMAKING + BASE_DURATION_PLAYMAKING,
+                return calcTraining(PlaymakingWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getSpielaufbau());
 
             case TrainingType.CROSSING_WINGER:
-                return calcTraining(up.TRAINING_OFFSET_WINGER + BASE_DURATION_WINGER,
+                return calcTraining(CrossingWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getFluegelspiel());
 
             case TrainingType.SCORING:
-                return calcTraining(up.TRAINING_OFFSET_SCORING + BASE_DURATION_SCORING,
+                return calcTraining(ScoringWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getTorschuss());
 
             case TrainingType.DEFENDING:
-                return calcTraining(up.TRAINING_OFFSET_DEFENDING + BASE_DURATION_DEFENDING,
+                return calcTraining(DefendingWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getVerteidigung());
 
             case TrainingType.SHORT_PASSES:
-				return calcTraining(up.TRAINING_OFFSET_PASSING + BASE_DURATION_PASSING,
+				return calcTraining(ShortPassesWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
 						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getPasspiel());
 
             case TrainingType.THROUGH_PASSES:
-                return calcTraining((100d/85d)*(up.TRAINING_OFFSET_PASSING + BASE_DURATION_PASSING), 
+                return calcTraining(ThroughPassesWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(), 
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getPasspiel());
 
             case TrainingType.SET_PIECES:
-                return calcTraining(up.TRAINING_OFFSET_SETPIECES + BASE_DURATION_SET_PIECES,
+                return calcTraining(SetPiecesWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getStandards());
 
             case TrainingType.DEF_POSITIONS:
-                return calcTraining(2 * (up.TRAINING_OFFSET_DEFENDING + BASE_DURATION_DEFENDING),
+                return calcTraining(DefensivePositionsWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
                 		player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getVerteidigung());
 
 			case TrainingType.WING_ATTACKS:
-				return calcTraining((100d/60d) * (up.TRAINING_OFFSET_WINGER + BASE_DURATION_WINGER),
+				return calcTraining(DefensivePositionsWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
 						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getFluegelspiel());
 
+			case TrainingType.SHOOTING:
+				return calcTraining(ShootingWeeklyTraining.instance().getPrimaryTrainingSkillBaseLength(),
+						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getTorschuss());
+
+            default:
+                return -1;
+        }
+    }
+    public static double getSecondaryTrainingLength(Spieler player, int trTyp, int assistants, int trainerLevel, int intensity, int stamina) {
+    	UserParameter up = UserParameter.instance();
+    	switch (trTyp) {
+			case TrainingType.SHOOTING:
+				return calcTraining(ShootingWeeklyTraining.instance().getSecondaryTrainingSkillBaseLength(),
+						player.getAlter(), assistants, trainerLevel, intensity, stamina, player.getStandards());
             default:
                 return -1;
         }

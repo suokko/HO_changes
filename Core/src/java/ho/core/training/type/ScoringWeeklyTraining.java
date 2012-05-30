@@ -6,6 +6,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public class ScoringWeeklyTraining extends WeeklyTrainingType {
+	protected static ScoringWeeklyTraining m_ciInstance = null;
 	private ScoringWeeklyTraining()
 	{
 		_Name = "Scoring";
@@ -19,9 +20,10 @@ public class ScoringWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.rightCentralDefender, ISpielerPosition.rightWinger, 
 				ISpielerPosition.leftWinger, ISpielerPosition.leftInnerMidfield, 
 				ISpielerPosition.centralInnerMidfield, ISpielerPosition.rightInnerMidfield};
-		_PrimaryTrainingSkillBaseSpeed = (float) 3.2 + UserParameter.instance().TRAINING_OFFSET_SCORING; // 100%
-		_PrimaryTrainingSkillSecondarySpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.5; // 50%
-		_PrimaryTrainingSkillOsmosisSpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.16; // 16%
+		_PrimaryTrainingBaseLength = (float) 3.2;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_SCORING; // 100%
+		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
+		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

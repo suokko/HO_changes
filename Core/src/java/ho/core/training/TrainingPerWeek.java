@@ -25,9 +25,12 @@ public class TrainingPerWeek  {
     private int week = -1;
     private int year = -1;
     private int previousHrfId;
-
+    private TrainingPoints _TrainingPair = null;
+    
     //~ Constructors -------------------------------------------------------------------------------
-
+    public TrainingPerWeek() {
+    	
+    }
     /**
      * Creates a new Training object.
      *
@@ -240,4 +243,11 @@ public class TrainingPerWeek  {
 
         return trainingDate;
 	}
+	public void setTrainingPair(TrainingPoints trp) {
+		_TrainingPair = trp;
+	}
+
+    public TrainingPoints getTrainingPair() {
+    	return _TrainingPair;
+    }
 }

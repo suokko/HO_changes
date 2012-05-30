@@ -4,7 +4,15 @@ package ho.core.option;
 
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.training.TrainingManager;
+import ho.core.model.UserParameter;
+import ho.core.training.type.CrossingWeeklyTraining;
+import ho.core.training.type.DefendingWeeklyTraining;
+import ho.core.training.type.GoalkeepingWeeklyTraining;
+import ho.core.training.type.PlaymakingWeeklyTraining;
+import ho.core.training.type.ScoringWeeklyTraining;
+import ho.core.training.type.SetPiecesWeeklyTraining;
+import ho.core.training.type.ShortPassesWeeklyTraining;
+import ho.core.training.type.WeeklyTrainingType;
 
 import java.awt.GridLayout;
 
@@ -72,31 +80,31 @@ final class TrainingsOptionenPanel extends ImagePanel {
         add(label);
 
         m_jtapGoalkeeping = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
-                   TrainingManager.BASE_DURATION_GOALKEEPING, ho.core.model.UserParameter.temp().TRAINING_OFFSET_GOALKEEPING, this);
+                   GoalkeepingWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_GOALKEEPING, this);
         add(m_jtapGoalkeeping);
 
         m_jtapDefending = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.defending"),
-        			TrainingManager.BASE_DURATION_DEFENDING, ho.core.model.UserParameter.temp().TRAINING_OFFSET_DEFENDING, this);
+        			DefendingWeeklyTraining.instance().getBaseTrainingLength(),UserParameter.temp().TRAINING_OFFSET_DEFENDING, this);
         add(m_jtapDefending);
 
         m_jtapPlaymaking = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.playmaking"),
-        		TrainingManager.BASE_DURATION_PLAYMAKING, ho.core.model.UserParameter.temp().TRAINING_OFFSET_PLAYMAKING, this);
+        		PlaymakingWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_PLAYMAKING, this);
         add(m_jtapPlaymaking);
 
         m_jtapPassing = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.short_passes"),
-        		TrainingManager.BASE_DURATION_PASSING, ho.core.model.UserParameter.temp().TRAINING_OFFSET_PASSING, this);
+        		ShortPassesWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_PASSING, this);
         add(m_jtapPassing);
 
         m_jtapWinger = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.crossing"),
-        		TrainingManager.BASE_DURATION_WINGER, ho.core.model.UserParameter.temp().TRAINING_OFFSET_WINGER, this);
+        		CrossingWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_WINGER, this);
         add(m_jtapWinger);
 
         m_jtapScoring = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.scoring"),
-        		TrainingManager.BASE_DURATION_SCORING, ho.core.model.UserParameter.temp().TRAINING_OFFSET_SCORING, this);
+        		ScoringWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_SCORING, this);
         add(m_jtapScoring);
         
         m_jtapSetPieces = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.set_pieces"),
-        		TrainingManager.BASE_DURATION_SET_PIECES, ho.core.model.UserParameter.temp().TRAINING_OFFSET_SETPIECES, this);
+        		SetPiecesWeeklyTraining.instance().getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_SETPIECES, this);
         add(m_jtapSetPieces);
 
         label = new JLabel("   " + 
@@ -104,19 +112,19 @@ final class TrainingsOptionenPanel extends ImagePanel {
         add(label);
 
         m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
-        		TrainingManager.BASE_AGE_FACTOR, ho.core.model.UserParameter.temp().TRAINING_OFFSET_AGE, this);
+        		WeeklyTrainingType.BASE_AGE_FACTOR, UserParameter.temp().TRAINING_OFFSET_AGE, this);
         add(m_tapAgeFactor);
 
         m_jtapCoachFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
-        		TrainingManager.BASE_COACH_FACTOR, ho.core.model.UserParameter.temp().TrainerFaktor, this);
+        		WeeklyTrainingType.BASE_COACH_FACTOR, UserParameter.temp().TrainerFaktor, this);
         add(m_jtapCoachFactor);
 
         m_jtapAssisstantFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorCoTraineranzahl"),
-        		TrainingManager.BASE_ASSISTANT_COACH_FACTOR, ho.core.model.UserParameter.temp().TRAINING_OFFSET_ASSISTANTS, this);
+        		WeeklyTrainingType.BASE_ASSISTANT_COACH_FACTOR, UserParameter.temp().TRAINING_OFFSET_ASSISTANTS, this);
         add(m_jtapAssisstantFactor);
 
         m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
-        		TrainingManager.BASE_INTENSITY_FACTOR, ho.core.model.UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
+        		WeeklyTrainingType.BASE_INTENSITY_FACTOR, UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
         add(m_jtapIntensityFactor);
     }
 }

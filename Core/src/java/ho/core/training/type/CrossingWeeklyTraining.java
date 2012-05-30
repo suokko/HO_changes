@@ -6,6 +6,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 
 public class CrossingWeeklyTraining extends WeeklyTrainingType {
+	protected static CrossingWeeklyTraining m_ciInstance = null;
 	private CrossingWeeklyTraining()
 	{
 		_Name = "Crossing";
@@ -21,9 +22,10 @@ public class CrossingWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.leftInnerMidfield, ISpielerPosition.centralInnerMidfield,
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
-		_PrimaryTrainingSkillBaseSpeed = (float) 2.2 + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING; // 100%
-		_PrimaryTrainingSkillSecondarySpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.5; // 50%
-		_PrimaryTrainingSkillOsmosisSpeed = _PrimaryTrainingSkillBaseSpeed / (float) 0.16; // 16%
+		_PrimaryTrainingBaseLength = (float) 2.2;
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING; // 100%
+		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
+		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

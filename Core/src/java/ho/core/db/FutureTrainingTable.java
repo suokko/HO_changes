@@ -2,9 +2,8 @@ package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
-import ho.module.training.FutureTrainingWeek;
-
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -31,8 +30,8 @@ public final class FutureTrainingTable extends AbstractTable {
 		columns[4] = new ColumnDescriptor("STAMINATRAININGPART",Types.INTEGER,false);
 	}
 	
-	List<FutureTrainingWeek> getFutureTrainingsVector() {
-		final Vector<FutureTrainingWeek> vTrainings = new Vector<FutureTrainingWeek>();
+	List<TrainingPerWeek> getFutureTrainingsVector() {
+		final Vector<TrainingPerWeek> vTrainings = new Vector<TrainingPerWeek>();
 		String query = "select * from "+getTableName();
 		ResultSet rs = adapter.executeQuery(query);
 
@@ -41,12 +40,12 @@ public final class FutureTrainingTable extends AbstractTable {
 				rs.beforeFirst();
 
 				while (rs.next()) {
-					FutureTrainingWeek train = new FutureTrainingWeek();			
+					TrainingPerWeek train = new TrainingPerWeek();			
 					train.setTrainingType(rs.getInt("TYPE")); 
 					train.setTrainingIntensity(rs.getInt("INTENSITY")); 
-					train.setWeek(rs.getInt("WEEK"));
-					train.setSeason(rs.getInt("SEASON"));
-					train.setStaminaTrainingPart(rs.getInt("STAMINATRAININGPART"));
+					train.setHattrickWeek(rs.getInt("WEEK"));
+					train.setHattrickSeason(rs.getInt("SEASON"));
+					train.setStaminaPart(rs.getInt("STAMINATRAININGPART"));
 					vTrainings.add(train);
 				}
 			}
@@ -54,7 +53,7 @@ public final class FutureTrainingTable extends AbstractTable {
 			HOLogger.instance().log(getClass(),"DatenbankZugriff.getTraining " + e);
 		}
 		
-		List<FutureTrainingWeek> futures = new ArrayList<FutureTrainingWeek>();
+		List<TrainingPerWeek> futures = new ArrayList<TrainingPerWeek>();
 
 		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
 		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
@@ -83,11 +82,11 @@ public final class FutureTrainingTable extends AbstractTable {
 			week = (week % 16) + 1;
 	
 			// load the training from DB
-			FutureTrainingWeek train = null;
+			TrainingPerWeek train = null;
 
-			for (Iterator<FutureTrainingWeek> iter = vTrainings.iterator(); iter.hasNext();) {
-				FutureTrainingWeek tmp = (FutureTrainingWeek) iter.next();
-				if ((tmp.getWeek() == week) && (tmp.getSeason() == season)) {
+			for (Iterator<TrainingPerWeek> iter = vTrainings.iterator(); iter.hasNext();) {
+				TrainingPerWeek tmp = (TrainingPerWeek) iter.next();
+				if ((tmp.getHattrickWeek() == week) && (tmp.getHattrickSeason() == season)) {
 					train = tmp;
 					break;
 				}
@@ -95,11 +94,11 @@ public final class FutureTrainingTable extends AbstractTable {
 
 			// if not found create it and saves it
 			if (train == null) {
-				train = new FutureTrainingWeek();
-				train.setWeek(week);
-				train.setSeason(season);
+				train = new TrainingPerWeek();
+				train.setHattrickWeek(week);
+				train.setHattrickSeason(season);
 				train.setTrainingIntensity(-1);
-				train.setStaminaTrainingPart(-1);
+				train.setStaminaPart(-1);
 				train.setTrainingType(-1);
 				saveFutureTraining(train);				
 			}
@@ -114,15 +113,15 @@ public final class FutureTrainingTable extends AbstractTable {
 	 *
 	 * @param training TODO Missing Method Parameter Documentation
 	 */
-	void saveFutureTraining(FutureTrainingWeek training) {
+	void saveFutureTraining(TrainingPerWeek training) {
 		if (training != null) {
 			String statement =
-				"update "+getTableName()+" set TYPE= " + training.getTrainingType() + ", INTENSITY=" + training.getTrainingIntensity() + ", STAMINATRAININGPART=" + training.getStaminaTrainingPart() + " WHERE WEEK=" + training.getWeek() + " AND SEASON=" + training.getSeason();
+				"update "+getTableName()+" set TYPE= " + training.getTrainingType() + ", INTENSITY=" + training.getTrainingIntensity() + ", STAMINATRAININGPART=" + training.getStaminaPart() + " WHERE WEEK=" + training.getHattrickWeek() + " AND SEASON=" + training.getHattrickSeason();
 			int count = adapter.executeUpdate(statement);
 
 			if (count == 0) {
 				adapter.executeUpdate("insert into "+getTableName()+" (TYPE, INTENSITY, WEEK, SEASON, STAMINATRAININGPART) values (" //$NON-NLS-1$
-				+training.getTrainingType() + ", " + training.getTrainingIntensity() + ", " + training.getWeek() + ", " + training.getSeason() + "," + training.getStaminaTrainingPart() + ")");
+				+training.getTrainingType() + ", " + training.getTrainingIntensity() + ", " + training.getHattrickWeek() + ", " + training.getHattrickSeason() + "," + training.getStaminaPart() + ")");
 			}
 
 		}

@@ -5,7 +5,7 @@ import ho.core.constants.TrainingType;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.module.training.FutureTrainingWeek;
+import ho.core.training.TrainingPerWeek;
 import ho.module.training.TrainingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
 
@@ -55,12 +55,12 @@ public class FutureSettingPanel extends JPanel {
      * Populate the Future training table with the future training
      */
     protected void resetFutureTrainings() {
-        List<FutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
+        List<TrainingPerWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
 
-        for (Iterator<FutureTrainingWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
-            FutureTrainingWeek train = iter.next();
+        for (Iterator<TrainingPerWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
+        	TrainingPerWeek train = iter.next();
             train.setTrainingIntensity(intensity.getSelectedIndex());
-            train.setStaminaTrainingPart(staminaTrainingPart.getSelectedIndex());
+            train.setStaminaPart(staminaTrainingPart.getSelectedIndex());
             train.setTrainingType(((CBItem)training.getSelectedItem()).getId());
             DBManager.instance().saveFutureTraining(train);
         }
@@ -75,15 +75,15 @@ public class FutureSettingPanel extends JPanel {
      */
     private void jbInit() {
 
-        List<FutureTrainingWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
-    	FutureTrainingWeek firstFutureTraining = futureTrainings.get(0);
+        List<TrainingPerWeek> futureTrainings =  DBManager.instance().getFutureTrainingsVector();
+        TrainingPerWeek firstFutureTraining = futureTrainings.get(0);
         training = new TrainingComboBox();
         final int ttyp = firstFutureTraining.getTrainingType();
         training.setSelectedItem(new CBItem(TrainingType.toString(ttyp), ttyp));
         intensity = new IntensityComboBox();
         intensity.setSelectedIndex(firstFutureTraining.getTrainingIntensity());
         staminaTrainingPart = new IntensityComboBox();
-        staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaTrainingPart());
+        staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaPart());
 
         JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Aendern")); //$NON-NLS-1$
 
