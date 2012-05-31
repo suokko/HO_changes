@@ -212,7 +212,7 @@ public class FutureTrainingManager {
 				}
 			}
 			TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
-			System.out.println(wt.getName() + ", " + wt.getTrainingType() + ", Week: " + weeksPassed + ", " + player.getName() + ", Position: " + position + ", Primary: " + trp.getPrimary() + ", Secondary: " + trp.getSecondary());
+			//System.out.println(wt.getName() + ", " + wt.getTrainingType() + ", Week: " + weeksPassed + ", " + player.getName() + ", Position: " + position + ", Primary: " + trp.getPrimary() + ", Secondary: " + trp.getSecondary());
 //			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
 			// Depending on the type of training, update the proper skill with the provided training points
 						

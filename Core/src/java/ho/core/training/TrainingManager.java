@@ -269,9 +269,6 @@ public class TrainingManager {
                 		+"Player "+spieler.getName()+" ("+playerID+")"
                 		+" played total " + tp.getMinutesPlayed() + " mins"
                 );
-                System.out.println("Week " + train.getHattrickWeek() +": "
-                		+"Player "+spieler.getName()+" ("+playerID+")"
-                		+" played total " + tp.getMinutesPlayed() + " mins");
                 TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
                 train.setTrainingPair(trp);
             }
