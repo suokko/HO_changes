@@ -1,4 +1,3 @@
-// %2418151228:de.hattrickorganizer.model%
 package ho.core.model;
 
 import ho.core.constants.TrainingType;
