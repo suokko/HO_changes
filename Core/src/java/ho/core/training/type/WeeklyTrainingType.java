@@ -1,6 +1,5 @@
 package ho.core.training.type;
 
-import ho.core.model.UserParameter;
 import ho.core.training.TrainingWeekPlayer;
 
 public abstract class WeeklyTrainingType {
