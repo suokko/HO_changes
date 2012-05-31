@@ -1869,84 +1869,131 @@ public final class Spieler {
     public void calcFullSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, int stamina, Timestamp hrftimestamp) {
         final TrainingPerPlayer trPlayer = TrainingManager.instance().calculateFullTrainingForPlayer(
         		this, TrainingManager.instance().getTrainingsVector(), hrftimestamp);
-
-        //TODO Training pro Woche berechenen
-        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
-        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-            m_dSubTorwart = Helper.round(trPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
-            		this, TrainingType.GOALKEEPING, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubTorwart >= 1.0d) {
-                m_dSubTorwart = 0.99d;
-            }
-        } else {
-            m_dSubTorwart = 0.0d;
-            m_dTrainingsOffsetTorwart = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-            m_dSubVerteidigung = Helper.round(trPlayer.getDefending() / TrainingManager.getTrainingLength(
-            		this, TrainingType.DEFENDING, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubVerteidigung >= 1.0d) {
-                m_dSubVerteidigung = 0.99d;
-            }
-        } else {
-            m_dSubVerteidigung = 0.0d;
-            m_dTrainingsOffsetVerteidigung = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-            m_dSubSpielaufbau = Helper.round(trPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
-            		this, TrainingType.PLAYMAKING, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubSpielaufbau >= 1.0d) {
-                m_dSubSpielaufbau = 0.99d;
-            }
-        } else {
-            m_dSubSpielaufbau = 0.0d;
-            m_dTrainingsOffsetSpielaufbau = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-            m_dSubPasspiel = Helper.round(trPlayer.getPassing() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SHORT_PASSES, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubPasspiel >= 1.0d) {
-                m_dSubPasspiel = 0.99d;
-            }
-        } else {
-            m_dSubPasspiel = 0.0d;
-            m_dTrainingsOffsetPasspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-            m_dSubFluegelspiel = Helper.round(trPlayer.getWing() / TrainingManager.getTrainingLength(
-            		this, TrainingType.CROSSING_WINGER, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubFluegelspiel >= 1.0d) {
-                m_dSubFluegelspiel = 0.99d;
-            }
-        } else {
-            m_dSubFluegelspiel = 0.0d;
-            m_dTrainingsOffsetFluegelspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SCORING, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubTorschuss >= 1.0d) {
-                m_dSubTorschuss = 0.99d;
-            }
-        } else {
-            m_dSubTorschuss = 0.0d;
-            m_dTrainingsOffsetTorschuss = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SET_PIECES, assistants, trainerlevel, intensity, stamina), 2);
-            if (m_dSubStandards >= 1.0d) {
-                m_dSubStandards = 0.99d;
-            }
-        } else {
-            m_dSubStandards = 0.0d;
-            m_dTrainingsOffsetStandards = 0.0d;
+        if (trPlayer != null && trPlayer.getTrainingWeek() != null)
+        {
+	        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
+	        int trType = trPlayer.getTrainingWeek().getTrainingType();
+	        switch (trType)
+	        {
+	        	case TrainingType.GOALKEEPING:
+			        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
+			            m_dSubTorwart = Helper.round(trPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
+			            if (m_dSubTorwart >= 1.0d) {
+			                m_dSubTorwart = 0.99d;
+			            }
+			        } else {
+			            m_dSubTorwart = 0.0d;
+			            m_dTrainingsOffsetTorwart = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.DEFENDING:
+	        	case TrainingType.DEF_POSITIONS:
+			        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
+			            m_dSubVerteidigung = Helper.round(trPlayer.getDefending() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
+			            if (m_dSubVerteidigung >= 1.0d) {
+			                m_dSubVerteidigung = 0.99d;
+			            }
+			        } else {
+			            m_dSubVerteidigung = 0.0d;
+			            m_dTrainingsOffsetVerteidigung = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.PLAYMAKING:
+			        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
+			            m_dSubSpielaufbau = Helper.round(trPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
+			            if (m_dSubSpielaufbau >= 1.0d) {
+			                m_dSubSpielaufbau = 0.99d;
+			            }
+			        } else {
+			            m_dSubSpielaufbau = 0.0d;
+			            m_dTrainingsOffsetSpielaufbau = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.SHORT_PASSES:
+	        	case TrainingType.THROUGH_PASSES:
+			        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
+			            m_dSubPasspiel = Helper.round(trPlayer.getPassing() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
+			            if (m_dSubPasspiel >= 1.0d) {
+			                m_dSubPasspiel = 0.99d;
+			            }
+			        } else {
+			            m_dSubPasspiel = 0.0d;
+			            m_dTrainingsOffsetPasspiel = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.CROSSING_WINGER:
+	        	case TrainingType.WING_ATTACKS:
+			        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
+			            m_dSubFluegelspiel = Helper.round(trPlayer.getWing() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
+			            if (m_dSubFluegelspiel >= 1.0d) {
+			                m_dSubFluegelspiel = 0.99d;
+			            }
+			        } else {
+			            m_dSubFluegelspiel = 0.0d;
+			            m_dTrainingsOffsetFluegelspiel = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.SCORING:
+			        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
+			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
+			            if (m_dSubTorschuss >= 1.0d) {
+			                m_dSubTorschuss = 0.99d;
+			            }
+			        } else {
+			            m_dSubTorschuss = 0.0d;
+			            m_dTrainingsOffsetTorschuss = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.SET_PIECES:
+			        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
+			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
+			            if (m_dSubStandards >= 1.0d) {
+			                m_dSubStandards = 0.99d;
+			            }
+			        } else {
+			            m_dSubStandards = 0.0d;
+			            m_dTrainingsOffsetStandards = 0.0d;
+			        }
+			        break;
+	        	case TrainingType.SHOOTING:
+	        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
+			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / TrainingManager.getTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
+			            if (m_dSubTorschuss >= 1.0d) {
+			                m_dSubTorschuss = 0.99d;
+			            }
+			        } else {
+			            m_dSubTorschuss = 0.0d;
+			            m_dTrainingsOffsetTorschuss = 0.0d;
+			        }
+	        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
+			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / TrainingManager.getSecondaryTrainingLength(
+			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
+			            if (m_dSubStandards >= 1.0d) {
+			                m_dSubStandards = 0.99d;
+			            }
+			        } else {
+			            m_dSubStandards = 0.0d;
+			            m_dTrainingsOffsetStandards = 0.0d;
+			        }
+	        		break;
+	        }
         }
     }
 
@@ -1963,90 +2010,133 @@ public final class Spieler {
     public void calcIncrementalSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, 
     		int stamina, int hrfID) {
     	final TrainingPerWeek trainingWeek = TrainingWeekManager.instance().getTrainingWeek(hrfID);
-        final TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
-        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-            m_dSubTorwart = Helper.round(trForPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
-            		this, TrainingType.GOALKEEPING, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
-            if (m_dSubTorwart >= 1.0d) {
-                m_dSubTorwart = 0.99d;
-            }
-        } else {
-            m_dSubTorwart = 0.0d;
-            m_dTrainingsOffsetTorwart = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-            m_dSubVerteidigung = Helper.round(trForPlayer.getDefending() / TrainingManager.getTrainingLength(
-            		this, TrainingType.DEFENDING, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
-            if (m_dSubVerteidigung >= 1.0d) {
-                m_dSubVerteidigung = 0.99d;
-            }
-        } else {
-            m_dSubVerteidigung = 0.0d;
-            m_dTrainingsOffsetVerteidigung = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-            m_dSubSpielaufbau = Helper.round(trForPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
-            		this, TrainingType.PLAYMAKING, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
-            if (m_dSubSpielaufbau >= 1.0d) {
-                m_dSubSpielaufbau = 0.99d;
-            }
-        } else {
-            m_dSubSpielaufbau = 0.0d;
-            m_dTrainingsOffsetSpielaufbau = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-            m_dSubPasspiel = Helper.round(trForPlayer.getPassing() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SHORT_PASSES, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
-            if (m_dSubPasspiel >= 1.0d) {
-                m_dSubPasspiel = 0.99d;
-            }
-        } else {
-            m_dSubPasspiel = 0.0d;
-            m_dTrainingsOffsetPasspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-            m_dSubFluegelspiel = Helper.round(trForPlayer.getWing() / TrainingManager.getTrainingLength(
-            		this, TrainingType.CROSSING_WINGER, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
-            if (m_dSubFluegelspiel >= 1.0d) {
-                m_dSubFluegelspiel = 0.99d;
-            }
-        } else {
-            m_dSubFluegelspiel = 0.0d;
-            m_dTrainingsOffsetFluegelspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SCORING, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
-            if (m_dSubTorschuss >= 1.0d) {
-                m_dSubTorschuss = 0.99d;
-            }
-        } else {
-            m_dSubTorschuss = 0.0d;
-            m_dTrainingsOffsetTorschuss = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / TrainingManager.getTrainingLength(
-            		this, TrainingType.SET_PIECES, assistants, trainerlevel, intensity, stamina), 2);
-            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
-            if (m_dSubStandards >= 1.0d) {
-                m_dSubStandards = 0.99d;
-            }
-        } else {
-            m_dSubStandards = 0.0d;
-            m_dTrainingsOffsetStandards = 0.0d;
-        }
+    	if (trainingWeek != null) {
+	        final TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
+	        if (trForPlayer != null) {
+		        int trType = trainingWeek.getTrainingType();
+		        switch (trType)
+		        {
+		        	case TrainingType.GOALKEEPING:
+				        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
+				            m_dSubTorwart = Helper.round(trForPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
+				            if (m_dSubTorwart >= 1.0d) {
+				                m_dSubTorwart = 0.99d;
+				            }
+				        } else {
+				            m_dSubTorwart = 0.0d;
+				            m_dTrainingsOffsetTorwart = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.DEFENDING:
+		        	case TrainingType.DEF_POSITIONS:
+				        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
+				            m_dSubVerteidigung = Helper.round(trForPlayer.getDefending() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
+				            if (m_dSubVerteidigung >= 1.0d) {
+				                m_dSubVerteidigung = 0.99d;
+				            }
+				        } else {
+				            m_dSubVerteidigung = 0.0d;
+				            m_dTrainingsOffsetVerteidigung = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.PLAYMAKING:
+				        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
+				            m_dSubSpielaufbau = Helper.round(trForPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
+				            if (m_dSubSpielaufbau >= 1.0d) {
+				                m_dSubSpielaufbau = 0.99d;
+				            }
+				        } else {
+				            m_dSubSpielaufbau = 0.0d;
+				            m_dTrainingsOffsetSpielaufbau = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.SHORT_PASSES:
+		        	case TrainingType.THROUGH_PASSES:
+				        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
+				            m_dSubPasspiel = Helper.round(trForPlayer.getPassing() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
+				            if (m_dSubPasspiel >= 1.0d) {
+				                m_dSubPasspiel = 0.99d;
+				            }
+				        } else {
+				            m_dSubPasspiel = 0.0d;
+				            m_dTrainingsOffsetPasspiel = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.CROSSING_WINGER:
+		        	case TrainingType.WING_ATTACKS:
+				        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
+				            m_dSubFluegelspiel = Helper.round(trForPlayer.getWing() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
+				            if (m_dSubFluegelspiel >= 1.0d) {
+				                m_dSubFluegelspiel = 0.99d;
+				            }
+				        } else {
+				            m_dSubFluegelspiel = 0.0d;
+				            m_dTrainingsOffsetFluegelspiel = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.SCORING:
+				        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
+				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
+				            if (m_dSubTorschuss >= 1.0d) {
+				                m_dSubTorschuss = 0.99d;
+				            }
+				        } else {
+				            m_dSubTorschuss = 0.0d;
+				            m_dTrainingsOffsetTorschuss = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.SET_PIECES:
+				        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
+				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
+				            if (m_dSubStandards >= 1.0d) {
+				                m_dSubStandards = 0.99d;
+				            }
+				        } else {
+				            m_dSubStandards = 0.0d;
+				            m_dTrainingsOffsetStandards = 0.0d;
+				        }
+				        break;
+		        	case TrainingType.SHOOTING:
+		        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
+				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / TrainingManager.getTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
+				            if (m_dSubTorschuss >= 1.0d) {
+				                m_dSubTorschuss = 0.99d;
+				            }
+				        } else {
+				            m_dSubTorschuss = 0.0d;
+				            m_dTrainingsOffsetTorschuss = 0.0d;
+				        }
+		        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
+				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / TrainingManager.getSecondaryTrainingLength(
+				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
+				            if (m_dSubStandards >= 1.0d) {
+				                m_dSubStandards = 0.99d;
+				            }
+				        } else {
+				            m_dSubStandards = 0.0d;
+				            m_dTrainingsOffsetStandards = 0.0d;
+				        }
+		        		break;
+		        }
+	    	}
+    	}
     }
 
     ////////////////////////////////////////////////////////////////////////////////

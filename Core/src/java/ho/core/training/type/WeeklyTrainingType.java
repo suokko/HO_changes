@@ -29,7 +29,7 @@ public abstract class WeeklyTrainingType {
 	public static final float BASE_COACH_FACTOR = (float) 1.0;
 	public static final float BASE_ASSISTANT_COACH_FACTOR = (float) 1.0;
 	public static final float BASE_INTENSITY_FACTOR = (float) 1.0;
-		
+	
 	public String getName() {
 		return _Name;
 	}
@@ -97,30 +97,7 @@ public abstract class WeeklyTrainingType {
 	public int[] getSecondaryTrainingSkillOsmosisTrainingPositions() {
 		return _SecondaryTrainingSkillOsmosisTrainingPositions;
 	}
-		
-	protected static double calcTraining(double baseLength, int age, int assistants, int trainerLevel,
-            int intensity, int stamina, int curSkill) {
-		double ageFactor = Math.pow(1.0404, age-17) * (UserParameter.instance().TRAINING_OFFSET_AGE + BASE_AGE_FACTOR);
-		double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
-		if (skillFactor < 0) {
-			skillFactor = 0;
-		}
-		double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
-		double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + WeeklyTrainingType.BASE_ASSISTANT_COACH_FACTOR);
-		double tiFactor = Double.MAX_VALUE;
-		if (intensity > 0) {
-			tiFactor = (1 / (intensity/100d)) * (UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
-		}
-		double staminaFactor = Double.MAX_VALUE;
-		if (stamina < 100) {
-			staminaFactor = 1 / (1 - stamina/100d);
-		}
-		double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
-		if (trainLength < 1) {
-			trainLength = 1;
-		}
-		return trainLength;
-	}
+
 	public double getPrimaryTraining(TrainingWeekPlayer tp)
 	{
 		double dPrimaryTraining = 0;
