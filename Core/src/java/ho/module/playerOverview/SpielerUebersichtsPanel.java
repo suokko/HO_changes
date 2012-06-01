@@ -47,7 +47,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 	// -------------------------------------------------------------------------------
 
 	/**
-	 * Creates a new SpielerUebersichtsPanel object.
+	 * Creates a new SpielerUebersichtsPanel object. (Players view panel)
 	 */
 	public SpielerUebersichtsPanel() {
 		initComponents();
@@ -66,7 +66,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 	}
 
 	/**
-	 * Aktuell markierter Spieler
+	 * Currently highlighted player
 	 */
 	public final Spieler getAktuellenSpieler() {
 		final int row = m_jtSpielerUebersichtTable.getSelectedRow();
@@ -80,15 +80,14 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 	}
 
 	/**
-	 * Breite der BestPosSpalte zurückgeben
+	 * Returns Width of the best position column
 	 */
 	public final int getBestPosWidth() {
 		return m_jtSpielerUebersichtTable.getBestPosWidth();
 	}
 
 	/**
-	 * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden
-	 * können.
+	 * Returns the current Divider Locations so they can be stored.
 	 */
 	public final int[] getDividerLocations() {
 		final int[] locations = new int[3];
@@ -122,6 +121,8 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 
 	/**
 	 * Refresh, wenn ein Spieler in der Aufstellung geändert wird
+	 * (Google translate)
+	 * Refresh, if a player is changed in the statement
 	 */
 	public final void refresh() {
 		m_jpSpielerDetailPanel.refresh();
@@ -130,6 +131,8 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 
 	/**
 	 * Erneuert alle Spalten, die bei von einem Vergleich betroffen sind
+	 * (Google translate)
+	 * Renewed all the columns that are affected by a comparison with
 	 */
 	public final void refreshHRFVergleich() {
 		m_jtSpielerUebersichtTable.refreshHRFVergleich();
@@ -142,6 +145,9 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 	/**
 	 * Refeshed die Tabelle hier und im Aufstellungspanel, wenn die Gruppen/Info
 	 * geändert wurde
+	 * (Google translate)
+	 * Refeshed the table here and in the installation panel, where the groups / info
+	 * was changed
 	 */
 	public final void update() {
 		refresh();
@@ -162,10 +168,13 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 				.instance().spielerUebersichtsPanel_horizontalRightSplitPane);
 		verticalSplitPane
 				.setDividerLocation(ho.core.model.UserParameter.instance().spielerUebersichtsPanel_verticalSplitPane);
-
+		
 		add(verticalSplitPane, BorderLayout.CENTER);
 	}
 
+	/*
+	 * Initialise the players details
+	 */
 	private Component initSpielerDetail() {
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		m_jpSpielerDetailPanel = new SpielerDetailPanel();
@@ -186,6 +195,9 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		return tabbedPane;
 	}
 
+	/*
+	 * Initialise the players history
+	 */
 	private Component initSpielerHistory() {
 		final JPanel panel = new ho.core.gui.comp.panel.ImagePanel();
 		panel.setLayout(new BorderLayout());
@@ -201,8 +213,10 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		return panel;
 	}
 
+	/*
+	 * Initialise the players table
+	 */
 	private Component initSpielerTabelle() {
-		final JPanel panel = new JPanel(new BorderLayout());
 
 		// table with the player's details
 		m_jtSpielerUebersichtTable = new PlayerOverviewTable();
@@ -231,6 +245,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 
 		// Synchronize vertical scrolling
 		AdjustmentListener adjustmentListener = new AdjustmentListener() {
+			@Override
 			public void adjustmentValueChanged(AdjustmentEvent e) {
 				if (e.getSource() == bar2) {
 					bar.setValue(e.getValue());
@@ -242,8 +257,9 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		bar.addAdjustmentListener(adjustmentListener);
 		bar2.addAdjustmentListener(adjustmentListener);
 
-		panel.add(scrollpane, BorderLayout.WEST);
-		panel.add(scrollpane2, BorderLayout.CENTER);
+		JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false, scrollpane, scrollpane2);
+		panel.setOneTouchExpandable(true);
+		panel.setDividerLocation(ho.core.model.UserParameter.instance().playerTablePanel_horizontalSplitPane);
 
 		return panel;
 	}
@@ -264,6 +280,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		m_jtSpielerUebersichtTable.getSelectionModel()
 				.addListSelectionListener(new ListSelectionListener() {
 
+					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
 							selectRow(m_jtSpielerUebersichtTableName,
@@ -275,6 +292,7 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 		m_jtSpielerUebersichtTableName.getSelectionModel()
 				.addListSelectionListener(new ListSelectionListener() {
 
+					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
 							int row = m_jtSpielerUebersichtTableName
