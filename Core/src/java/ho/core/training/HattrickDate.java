@@ -1,27 +1,24 @@
-// %1862325673:de.hattrickorganizer.model%
 package ho.core.training;
 
 /**
  * Hattrick Date Object
  */
 public class HattrickDate {
-    //~ Instance fields ----------------------------------------------------------------------------
-
     /** season */
-    private int season;
+    private int _Season;
 
     /** Week */
-    private int week;
+    private int _Week;
 
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * Set Hattrick Season
      *
-     * @param season
+     * @param iSeason
      */
-    public final void setSeason(int season) {
-        this.season = season;
+    public final void setSeason(int iSeason) {
+        this._Season = iSeason;
     }
 
     /**
@@ -30,16 +27,16 @@ public class HattrickDate {
      * @return season
      */
     public final int getSeason() {
-        return season;
+        return _Season;
     }
 
     /**
      * Set Hattrick week
      *
-     * @param week
+     * @param iWeek
      */
-    public final void setWeek(int week) {
-        this.week = week;
+    public final void setWeek(int iWeek) {
+        this._Week = iWeek;
     }
 
     /**
@@ -48,11 +45,11 @@ public class HattrickDate {
      * @return week
      */
     public final int getWeek() {
-        return week;
+        return _Week;
     }
 
     /**
-     * toString methode: creates a String representation of the object
+     * toString method: creates a String representation of the object
      *
      * @return the String representation
      */
@@ -60,8 +57,8 @@ public class HattrickDate {
 	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("Skillup[");
-        buffer.append("week = " + week);
-        buffer.append(", season = " + season);
+        buffer.append("week = " + _Week);
+        buffer.append(", season = " + _Season);
         buffer.append("]");
         return buffer.toString();
     }

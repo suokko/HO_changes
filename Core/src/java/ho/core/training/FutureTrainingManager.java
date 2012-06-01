@@ -7,18 +7,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
-import ho.core.training.type.CrossingWeeklyTraining;
-import ho.core.training.type.DefendingWeeklyTraining;
-import ho.core.training.type.DefensivePositionsWeeklyTraining;
-import ho.core.training.type.GoalkeepingWeeklyTraining;
-import ho.core.training.type.PlaymakingWeeklyTraining;
-import ho.core.training.type.ScoringWeeklyTraining;
-import ho.core.training.type.SetPiecesWeeklyTraining;
-import ho.core.training.type.ShootingWeeklyTraining;
-import ho.core.training.type.ShortPassesWeeklyTraining;
-import ho.core.training.type.ThroughPassesWeeklyTraining;
-import ho.core.training.type.WeeklyTrainingType;
-import ho.core.training.type.WingAttacksWeeklyTraining;
+import ho.core.training.type.*;
 import ho.core.util.HelperWrapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -233,7 +222,7 @@ public class FutureTrainingManager {
 	}
 
 	/**
-	 * get the final value (incl. skillups and sub) for a specific skill
+	 * get the final value (including skillups and sub) for a specific skill
 	 * 
 	 * @param skillIndex	index of the skill
 	 * @return				value for this skill
@@ -313,7 +302,7 @@ public class FutureTrainingManager {
 		// Set age and skill for simulation
 		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
 		player.setValue4Skill4 (wt.getPrimaryTrainingSkill(), realSkill+curSkillUps);
-		double limit = TrainingManager.getTrainingLength(player, wt.getTrainingType(), coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
+		double limit = wt.getTrainingLength(player, coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
 //		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
 		// Undo simulation changes on player
 		player.setAlter(age);
@@ -330,7 +319,7 @@ public class FutureTrainingManager {
 		// Set age and skill for simulation
 		player.setAlter (age + (int)Math.floor((ageDays + 7*weeksPassed)/112d));
 		player.setValue4Skill4 (wt.getSecondaryTrainingSkill(), realSkill+curSkillUps);
-		double limit = TrainingManager.getSecondaryTrainingLength(player, wt.getTrainingType(), coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
+		double limit = wt.getSecondaryTrainingLength(player, coTrainer, trainer, tw.getTrainingIntensity(), tw.getStaminaPart());
 //		HOLogger.instance().debug(getClass(), "getTrLen for "+player.getName()+": weeksPassed="+weeksPassed+", age="+player.getAlter()+", skill="+getSkillValue(player, skillIndex)+", limit="+limit);
 		// Undo simulation changes on player
 		player.setAlter(age);
