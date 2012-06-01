@@ -278,13 +278,14 @@ public final class UserParameter extends Configuration {
     //SpielerAnalyse
     public int spielerAnalysePanel_horizontalSplitPane = 400;
 
-    //Position SpielerDetails
+    //Position Player Details
     public int spielerDetails_PositionX = 50;
     public int spielerDetails_PositionY = 50;
     public int futureWeeks = 16;
     public int spielerUebersichtsPanel_horizontalLeftSplitPane = 700;
     public int spielerUebersichtsPanel_horizontalRightSplitPane = 750;
     public int spielerUebersichtsPanel_verticalSplitPane = 400;
+    public int playerTablePanel_horizontalSplitPane = 200;
 
     //Standardsortierung
     public int standardsortierung = SORT_BESTPOS;
