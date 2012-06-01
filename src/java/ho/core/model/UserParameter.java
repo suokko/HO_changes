@@ -1,4 +1,3 @@
-// %844311304:gui%
 package ho.core.model;
 
 import ho.core.db.DBManager;
@@ -515,6 +514,7 @@ public final class UserParameter extends Configuration {
 		map.put("DAUER_STANDARDS",String.valueOf(TRAINING_OFFSET_SETPIECES));
 		map.put("DAUER_TORWART",String.valueOf(TRAINING_OFFSET_GOALKEEPING));
 		map.put("DAUER_VERTEIDIGUNG",String.valueOf(TRAINING_OFFSET_DEFENDING));
+		map.put("DAUER_OSMOSIS",String.valueOf(TRAINING_OFFSET_OSMOSIS));
 		map.put("TimeZoneDifference",String.valueOf(TimeZoneDifference));
 		map.put("anzahlNachkommastellen",String.valueOf(anzahlNachkommastellen));
 		map.put("aufstellungsAssistentPanel_reihenfolge",String.valueOf(aufstellungsAssistentPanel_reihenfolge));
@@ -590,6 +590,7 @@ public final class UserParameter extends Configuration {
 		return map;
 	}
 
+	@Override
 	public void setValues(HashMap<String,String> values) {
 		FG_ANGESCHLAGEN = getColorValue(values,"FG_ANGESCHLAGEN");
 		FG_GESPERRT = getColorValue(values,"FG_GESPERRT");
@@ -733,7 +734,8 @@ public final class UserParameter extends Configuration {
 		TRAINING_OFFSET_SETPIECES = getFloatValue(values,"DAUER_STANDARDS");
 		TRAINING_OFFSET_GOALKEEPING = getFloatValue(values,"DAUER_TORWART");
 		TRAINING_OFFSET_DEFENDING = getFloatValue(values,"DAUER_VERTEIDIGUNG");
-
+		TRAINING_OFFSET_OSMOSIS = getFloatValue(values,"DAUER_OSMOSIS");
+		
 		TimeZoneDifference = getIntValue(values,"TimeZoneDifference");
 		anzahlNachkommastellen = getIntValue(values,"anzahlNachkommastellen");
 		aufstellungsAssistentPanel_reihenfolge = getIntValue(values,"aufstellungsAssistentPanel_reihenfolge");

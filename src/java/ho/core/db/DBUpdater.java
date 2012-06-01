@@ -60,7 +60,7 @@ final class DBUpdater {
 					case 12:
 						updateDBv13(DBVersion, version);
 					case 13:
-						updateDBv14();
+						updateDBv14(DBVersion, version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -278,12 +278,14 @@ final class DBUpdater {
 		} 
 	}
 	
-	private void updateDBv14() {
+	private void updateDBv14(int DBVersion, int version) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sSpezialitaet");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sCharakter");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
-       dbZugriff.saveUserParameter("DBVersion", 14); 
+		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
+			dbZugriff.saveUserParameter("DBVersion", 14); 
+		}
 	}
 
 	

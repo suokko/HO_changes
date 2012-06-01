@@ -112,17 +112,17 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
 
         setLayout(layout);
         
-        
         m_jlLabel = new JLabel(text);
         m_jlLabel.setPreferredSize(new Dimension(200, 20));
         constraints.gridwidth = 3;
         constraints.gridx = 0;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         layout.setConstraints(m_jlLabel, constraints);
         add(m_jlLabel);
 
         m_jlBaseValue = new JLabel(base + ""); 
         m_jlBaseValue.setOpaque(false);
-        m_jlBaseValue.setPreferredSize(new Dimension(20, 20));
+        m_jlBaseValue.setPreferredSize(new Dimension(40, 20));
         constraints.gridwidth = 1;
         constraints.gridx = 4;
         layout.setConstraints(m_jlBaseValue, constraints);
@@ -151,7 +151,7 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
         tempLabel = new JLabel("=");
         tempLabel.setOpaque(false);
         tempLabel.setPreferredSize(new Dimension(20, 20));
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridwidth = 1;
         constraints.gridx = 7;
         layout.setConstraints(tempLabel, constraints);
         add(tempLabel);

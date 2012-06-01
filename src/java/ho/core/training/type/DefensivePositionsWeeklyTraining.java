@@ -23,7 +23,6 @@ public class DefensivePositionsWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward}; 
 		_PrimaryTrainingBaseLength = (float) 7.2;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_DEFENDING;
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {
