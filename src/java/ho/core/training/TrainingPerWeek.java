@@ -16,15 +16,15 @@ import java.util.Locale;
 public class TrainingPerWeek  {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private int hattrickSeason = -1;
-    private int hattrickWeek = -1;
-    private int hrfId;
-    private int intensity = -1;
-    private int stamina = -1;
-    private int trainingType = -1;
-    private int week = -1;
-    private int year = -1;
-    private int previousHrfId;
+    private int _HTSeason = -1;
+    private int _HTWeek = -1;
+    private int _HRFID;
+    private int _Intensity = -1;
+    private int _Stamina = -1;
+    private int _TrainingType = -1;
+    private int _Week = -1;
+    private int _Year = -1;
+    private int _PreviousHRFID;
     private TrainingPoints _TrainingPair = null;
     
     //~ Constructors -------------------------------------------------------------------------------
@@ -41,11 +41,11 @@ public class TrainingPerWeek  {
      * @param stamina
      */
     public TrainingPerWeek(int week, int year, int trType, int intensity, int stamina) {
-        this.week = week;
-        this.year = year;
-        this.trainingType = trType;
-        this.intensity = intensity;
-        this.stamina = stamina;
+        this._Week = week;
+        this._Year = year;
+        this._TrainingType = trType;
+        this._Intensity = intensity;
+        this._Stamina = stamina;
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ public class TrainingPerWeek  {
      * @param i TODO Missing Method Parameter Documentation
      */
     public final void setHattrickSeason(int i) {
-        hattrickSeason = i;
+        _HTSeason = i;
     }
 
     /**
@@ -65,7 +65,7 @@ public class TrainingPerWeek  {
      * @return TODO Missing Return Method Documentation
      */
     public final int getHattrickSeason() {
-        return hattrickSeason;
+        return _HTSeason;
     }
 
     /**
@@ -74,7 +74,7 @@ public class TrainingPerWeek  {
      * @param i TODO Missing Method Parameter Documentation
      */
     public final void setHattrickWeek(int i) {
-        hattrickWeek = i;
+        _HTWeek = i;
     }
 
     /**
@@ -83,7 +83,7 @@ public class TrainingPerWeek  {
      * @return TODO Missing Return Method Documentation
      */
     public final int getHattrickWeek() {
-        return hattrickWeek;
+        return _HTWeek;
     }
 
     /**
@@ -92,7 +92,7 @@ public class TrainingPerWeek  {
      * @param i TODO Missing Method Parameter Documentation
      */
     public final void setHrfId(int i) {
-        hrfId = i;
+        _HRFID = i;
     }
 
     /**
@@ -101,7 +101,7 @@ public class TrainingPerWeek  {
      * @return TODO Missing Return Method Documentation
      */
     public final int getHrfId() {
-        return hrfId;
+        return _HRFID;
     }
 
     /**
@@ -110,7 +110,7 @@ public class TrainingPerWeek  {
      * @param stamina
      */
     public final void setStaminaPart(int stamina) {
-        this.stamina = stamina;
+        this._Stamina = stamina;
     }
 
     /**
@@ -119,7 +119,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getStaminaPart() {
-        return this.stamina;
+        return this._Stamina;
     }
 
     /**
@@ -128,7 +128,7 @@ public class TrainingPerWeek  {
      * @param intensity
      */
     public final void setTrainingIntensity(int intensity) {
-        this.intensity = intensity;
+        this._Intensity = intensity;
     }
 
     /**
@@ -137,7 +137,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getTrainingIntensity() {
-        return this.intensity;
+        return this._Intensity;
     }
 
     /**
@@ -146,7 +146,7 @@ public class TrainingPerWeek  {
      * @param trType
      */
     public final void setTrainingType(int trType) {
-        this.trainingType = trType;
+        this._TrainingType = trType;
     }
 
     /**
@@ -155,7 +155,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getTrainingType() {
-        return this.trainingType;
+        return this._TrainingType;
     }
 
     /**
@@ -164,7 +164,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getWeek() {
-        return this.week;
+        return this._Week;
     }
 
     /**
@@ -173,7 +173,7 @@ public class TrainingPerWeek  {
      * @return
      */
     public final int getYear() {
-        return this.year;
+        return this._Year;
     }
 
     /**
@@ -185,24 +185,24 @@ public class TrainingPerWeek  {
 	public final String toString() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("TrainingPerWeek[");
-        buffer.append("intensity = " + intensity);
-        buffer.append(", staminaTrainingPart = " + stamina);
-        buffer.append(", typ = " + trainingType);
-        buffer.append(", week = " + week);
-        buffer.append(", year = " + year);
-        buffer.append(", hattrickWeek = " + hattrickWeek);
-        buffer.append(", hattrickSeason = " + hattrickSeason);
+        buffer.append("intensity = " + _Intensity);
+        buffer.append(", staminaTrainingPart = " + _Stamina);
+        buffer.append(", typ = " + _TrainingType);
+        buffer.append(", week = " + _Week);
+        buffer.append(", year = " + _Year);
+        buffer.append(", hattrickWeek = " + _HTWeek);
+        buffer.append(", hattrickSeason = " + _HTSeason);
         buffer.append(", trainDate = " + getTrainingDate().getTime().toString());
-        buffer.append(", hrfId = " + hrfId);
+        buffer.append(", hrfId = " + _HRFID);
         buffer.append("]");
         return buffer.toString();
     }
 	public int getPreviousHrfId() {
-		return previousHrfId;
+		return _PreviousHRFID;
 	}
 
 	public void setPreviousHrfId(int i) {
-		previousHrfId = i;
+		_PreviousHRFID = i;
 	}
 
 	/**

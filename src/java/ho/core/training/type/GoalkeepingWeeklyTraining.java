@@ -4,6 +4,7 @@ import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
+import ho.core.model.player.Spieler;
 
 public final class GoalkeepingWeeklyTraining extends WeeklyTrainingType {
 	protected static GoalkeepingWeeklyTraining m_ciInstance = null;
@@ -22,4 +23,14 @@ public final class GoalkeepingWeeklyTraining extends WeeklyTrainingType {
         }
         return m_ciInstance;
     }
+	@Override
+	public double getTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina) {
+		return calcTraining(getPrimaryTrainingSkillBaseLength(), player.getAlter(), assistants, trainerLevel, 
+				intensity, stamina, player.getTorwart());
+	}
+	@Override
+	public double getSecondaryTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina)
+	{
+		return (double) -1;
+	}
 }
