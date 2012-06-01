@@ -1,5 +1,7 @@
 package ho.core.training.type;
 
+import ho.core.model.UserParameter;
+import ho.core.model.player.Spieler;
 import ho.core.training.TrainingWeekPlayer;
 
 public abstract class WeeklyTrainingType {
@@ -100,22 +102,20 @@ public abstract class WeeklyTrainingType {
 	public double getPrimaryTraining(TrainingWeekPlayer tp)
 	{
 		double dPrimaryTraining = 0;
-		double dPoints = 0;
 		int iMinutes = 0;
 		int tmp = tp.getPrimarySkillPositionMinutes();
 		if (tmp > 0)
 		{
-			iMinutes += tmp;
+			iMinutes = tmp;
 			if (tmp >= 90)
-				dPoints = 1;
+				dPrimaryTraining = (double) 1;
 			else
-				dPoints = tmp / 90;
+				dPrimaryTraining = (double) tmp / (double) 90;
 		}
 		tmp = tp.getPrimarySkillBonusPositionMinutes();
 		if (tmp > 0) {
-			dPoints += (tmp / 90) * _PrimaryTrainingSkillBonus; 
+			dPrimaryTraining += ((double) tmp / (double) 90) * _PrimaryTrainingSkillBonus; 
 		}
-		dPrimaryTraining = dPoints;
 		if (iMinutes < 90) {
 			 tmp = tp.getPrimarySkillSecondaryPositionMinutes();
 			 if (tmp > 0) {
@@ -123,7 +123,7 @@ public abstract class WeeklyTrainingType {
 					 tmp = 90 - iMinutes;
 				 }
 				 iMinutes += tmp;
-				 dPrimaryTraining = (tmp / 90) / _PrimaryTrainingSkillSecondaryLengthRate;
+				 dPrimaryTraining += ((double) tmp / (double) 90) / _PrimaryTrainingSkillSecondaryLengthRate;
 			 }
 			 if (iMinutes < 90) {
 				 tmp = tp.getPrimarySkillOsmosisPositionMinutes();
@@ -132,7 +132,7 @@ public abstract class WeeklyTrainingType {
 						 tmp = 90 - iMinutes;
 					 }
 					 iMinutes += tmp;
-					 dPrimaryTraining = (tmp / 90) / _PrimaryTrainingSkillOsmosisLengthRate;
+					 dPrimaryTraining += ((double) tmp / (double) 90) / _PrimaryTrainingSkillOsmosisLengthRate;
 				 }
 			 }	 
 		}
@@ -141,7 +141,6 @@ public abstract class WeeklyTrainingType {
 	public double getSecondaryTraining(TrainingWeekPlayer tp)
 	{
 		double dSecondaryTraining = 0;
-		double dPoints = 0;
 		if (_SecondaryTrainingSkill > 0) {
 			int iMinutes = 0;
 			int tmp = tp.getSecondarySkillPrimaryMinutes();
@@ -149,15 +148,14 @@ public abstract class WeeklyTrainingType {
 			{
 				iMinutes += tmp;
 				if (tmp >= 90)
-					dPoints = 1;
+					dSecondaryTraining = (double) 1;
 				else
-					dPoints = tmp / 90;
+					dSecondaryTraining = (double) tmp / (double) 90;
 			}
 			tmp = tp.getSecondarySkillBonusMinutes();
 			if (tmp > 0) {
-				dPoints += (tmp / 90) * _SecondaryTrainingSkillBonus; 
+				dSecondaryTraining += ((double) tmp / (double) 90) * _SecondaryTrainingSkillBonus; 
 			}
-			dSecondaryTraining = dPoints;
 			if (iMinutes < 90) {
 				tmp = tp.getSecondarySkillSecondaryPositionMinutes();
 				if (tmp > 0) {
@@ -165,7 +163,7 @@ public abstract class WeeklyTrainingType {
 						tmp = 90 - iMinutes;
 					}
 					iMinutes += tmp;
-					dSecondaryTraining = (tmp / 90) / _SecondaryTrainingSkillSecondaryLengthRate;
+					dSecondaryTraining += ((double) tmp / (double) 90) / _SecondaryTrainingSkillSecondaryLengthRate;
 				}
 				 if (iMinutes < 90) {
 					 tmp = tp.getSecondarySkillOsmosisPositionMinutes();
@@ -174,11 +172,39 @@ public abstract class WeeklyTrainingType {
 							 tmp = 90 - iMinutes;
 						 }
 						 iMinutes += tmp;
-						 dSecondaryTraining = (tmp / 90) / _SecondaryTrainingSkillOsmosisLengthRate;
+						 dSecondaryTraining += ((double) tmp / (double) 90) / _SecondaryTrainingSkillOsmosisLengthRate;
 					 }
 				 }	 
 			}
 		}
 		return dSecondaryTraining;
 	}
+	 public static double calcTraining(double baseLength, int age, int assistants, int trainerLevel, int intensity, int stamina, int curSkill) 
+	 {
+		//System.out.println ("calcTraining for "+getName()+", base="+baseLength+", alter="+age+", anzCo="+cotrainer+", train="+trainerLvl+", ti="+intensitaet+", ss="+staminaTrainingPart+", curSkill="+curSkill);
+		double ageFactor = Math.pow(1.0404, age-17) * (UserParameter.instance().TRAINING_OFFSET_AGE + BASE_AGE_FACTOR);
+		//double skillFactor = 1 + Math.log((curSkill+0.5)/7) / Math.log(5);
+		double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill+1d)/20 - 0.1349d;
+		if (skillFactor < 0) {
+			skillFactor = 0;
+		}
+		double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
+		double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + BASE_ASSISTANT_COACH_FACTOR);
+		double tiFactor = Double.MAX_VALUE;
+		if (intensity > 0) {
+			tiFactor = (1 / (intensity/100d)) * (UserParameter.instance().TRAINING_OFFSET_INTENSITY + BASE_INTENSITY_FACTOR);
+		}
+		double staminaFactor = Double.MAX_VALUE;
+		if (stamina < 100) {
+			staminaFactor = 1 / (1 - stamina/100d);
+		}
+		double trainLength = baseLength * ageFactor * skillFactor * trainerFactor * coFactor * tiFactor * staminaFactor;
+		if (trainLength < 1) {
+			trainLength = 1;
+		}
+		//System.out.println ("Factors for "+getName()+": "+ageFactor+"/"+skillFactor+"/"+trainerFactor+"/"+coFactor+"/"+tiFactor+"/"+staminaFactor+" -> "+trainLength);
+		return trainLength;
+	 }
+	 public abstract double getTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina);
+	 public abstract double getSecondaryTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina);
 }

@@ -19,6 +19,7 @@ import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingManager;
 import ho.core.training.TrainingWeekManager;
+import ho.core.training.type.*;
 import ho.core.util.Helper;
 
 import java.sql.Timestamp;
@@ -1871,14 +1872,16 @@ public final class Spieler {
         		this, TrainingManager.instance().getTrainingsVector(), hrftimestamp);
         if (trPlayer != null && trPlayer.getTrainingWeek() != null)
         {
+        	WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
 	        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
 	        int trType = trPlayer.getTrainingWeek().getTrainingType();
 	        switch (trType)
 	        {
 	        	case TrainingType.GOALKEEPING:
+	        		wt = GoalkeepingWeeklyTraining.instance();
 			        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-			            m_dSubTorwart = Helper.round(trPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorwart = Helper.round(trPlayer.getGoalKeeping() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
 			            if (m_dSubTorwart >= 1.0d) {
 			                m_dSubTorwart = 0.99d;
@@ -1890,9 +1893,10 @@ public final class Spieler {
 			        break;
 	        	case TrainingType.DEFENDING:
 	        	case TrainingType.DEF_POSITIONS:
+	        		wt = (trType == TrainingType.DEFENDING ? DefendingWeeklyTraining.instance() : DefendingWeeklyTraining.instance());
 			        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-			            m_dSubVerteidigung = Helper.round(trPlayer.getDefending() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubVerteidigung = Helper.round(trPlayer.getDefending() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
 			            if (m_dSubVerteidigung >= 1.0d) {
 			                m_dSubVerteidigung = 0.99d;
@@ -1903,9 +1907,10 @@ public final class Spieler {
 			        }
 			        break;
 	        	case TrainingType.PLAYMAKING:
+	        		wt = PlaymakingWeeklyTraining.instance();
 			        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-			            m_dSubSpielaufbau = Helper.round(trPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubSpielaufbau = Helper.round(trPlayer.getPlaymaking() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
 			            if (m_dSubSpielaufbau >= 1.0d) {
 			                m_dSubSpielaufbau = 0.99d;
@@ -1917,9 +1922,10 @@ public final class Spieler {
 			        break;
 	        	case TrainingType.SHORT_PASSES:
 	        	case TrainingType.THROUGH_PASSES:
+	        		wt = (trType == TrainingType.SHORT_PASSES ? ShortPassesWeeklyTraining.instance() : ThroughPassesWeeklyTraining.instance());
 			        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-			            m_dSubPasspiel = Helper.round(trPlayer.getPassing() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubPasspiel = Helper.round(trPlayer.getPassing() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
 			            if (m_dSubPasspiel >= 1.0d) {
 			                m_dSubPasspiel = 0.99d;
@@ -1931,9 +1937,11 @@ public final class Spieler {
 			        break;
 	        	case TrainingType.CROSSING_WINGER:
 	        	case TrainingType.WING_ATTACKS:
+	        		wt = (trType == TrainingType.CROSSING_WINGER ? CrossingWeeklyTraining.instance() : WingAttacksWeeklyTraining.instance());
 			        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-			            m_dSubFluegelspiel = Helper.round(trPlayer.getWing() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubFluegelspiel = Helper.round(trPlayer.getWing() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
+			            System.out.println(originalPlayer.getName() + " got " + m_dSubFluegelspiel);
 			            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
 			            if (m_dSubFluegelspiel >= 1.0d) {
 			                m_dSubFluegelspiel = 0.99d;
@@ -1944,9 +1952,10 @@ public final class Spieler {
 			        }
 			        break;
 	        	case TrainingType.SCORING:
+	        		wt = ScoringWeeklyTraining.instance();
 			        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
 			            if (m_dSubTorschuss >= 1.0d) {
 			                m_dSubTorschuss = 0.99d;
@@ -1957,9 +1966,10 @@ public final class Spieler {
 			        }
 			        break;
 	        	case TrainingType.SET_PIECES:
+	        		wt = SetPiecesWeeklyTraining.instance();
 			        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
 			            if (m_dSubStandards >= 1.0d) {
 			                m_dSubStandards = 0.99d;
@@ -1970,9 +1980,10 @@ public final class Spieler {
 			        }
 			        break;
 	        	case TrainingType.SHOOTING:
+	        		wt = ShootingWeeklyTraining.instance();
 	        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / TrainingManager.getTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubTorschuss = Helper.round(trPlayer.getScoring() / wt.getTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
 			            if (m_dSubTorschuss >= 1.0d) {
 			                m_dSubTorschuss = 0.99d;
@@ -1982,8 +1993,8 @@ public final class Spieler {
 			            m_dTrainingsOffsetTorschuss = 0.0d;
 			        }
 	        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / TrainingManager.getSecondaryTrainingLength(
-			            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+			            m_dSubStandards = Helper.round(trPlayer.getSetPieces() / wt.getSecondaryTrainingLength(
+			            		this, assistants, trainerlevel, intensity, stamina), 2);
 			            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
 			            if (m_dSubStandards >= 1.0d) {
 			                m_dSubStandards = 0.99d;
@@ -2014,12 +2025,14 @@ public final class Spieler {
 	        final TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
 	        if (trForPlayer != null) {
 		        int trType = trainingWeek.getTrainingType();
+		        WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
 		        switch (trType)
 		        {
 		        	case TrainingType.GOALKEEPING:
+		        		wt = GoalkeepingWeeklyTraining.instance();
 				        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-				            m_dSubTorwart = Helper.round(trForPlayer.getGoalKeeping() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorwart = Helper.round(trForPlayer.getGoalKeeping() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
 				            if (m_dSubTorwart >= 1.0d) {
 				                m_dSubTorwart = 0.99d;
@@ -2031,9 +2044,10 @@ public final class Spieler {
 				        break;
 		        	case TrainingType.DEFENDING:
 		        	case TrainingType.DEF_POSITIONS:
+		        		wt = (trType == TrainingType.DEFENDING ? DefendingWeeklyTraining.instance() : DefensivePositionsWeeklyTraining.instance());
 				        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-				            m_dSubVerteidigung = Helper.round(trForPlayer.getDefending() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubVerteidigung = Helper.round(trForPlayer.getDefending() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
 				            if (m_dSubVerteidigung >= 1.0d) {
 				                m_dSubVerteidigung = 0.99d;
@@ -2044,9 +2058,10 @@ public final class Spieler {
 				        }
 				        break;
 		        	case TrainingType.PLAYMAKING:
+		        		wt = PlaymakingWeeklyTraining.instance();
 				        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-				            m_dSubSpielaufbau = Helper.round(trForPlayer.getPlaymaking() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubSpielaufbau = Helper.round(trForPlayer.getPlaymaking() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
 				            if (m_dSubSpielaufbau >= 1.0d) {
 				                m_dSubSpielaufbau = 0.99d;
@@ -2058,9 +2073,10 @@ public final class Spieler {
 				        break;
 		        	case TrainingType.SHORT_PASSES:
 		        	case TrainingType.THROUGH_PASSES:
+		        		wt = (trType == TrainingType.SHORT_PASSES ? ShortPassesWeeklyTraining.instance() : ThroughPassesWeeklyTraining.instance());
 				        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-				            m_dSubPasspiel = Helper.round(trForPlayer.getPassing() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubPasspiel = Helper.round(trForPlayer.getPassing() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
 				            if (m_dSubPasspiel >= 1.0d) {
 				                m_dSubPasspiel = 0.99d;
@@ -2072,9 +2088,11 @@ public final class Spieler {
 				        break;
 		        	case TrainingType.CROSSING_WINGER:
 		        	case TrainingType.WING_ATTACKS:
+		        		wt = (trType == TrainingType.CROSSING_WINGER ? CrossingWeeklyTraining.instance() : WingAttacksWeeklyTraining.instance());
 				        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-				            m_dSubFluegelspiel = Helper.round(trForPlayer.getWing() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubFluegelspiel = Helper.round(trForPlayer.getWing() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
+				            System.out.println(originalPlayer.getName() + " got " + m_dSubFluegelspiel);
 				            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
 				            if (m_dSubFluegelspiel >= 1.0d) {
 				                m_dSubFluegelspiel = 0.99d;
@@ -2085,9 +2103,10 @@ public final class Spieler {
 				        }
 				        break;
 		        	case TrainingType.SCORING:
+		        		wt = ScoringWeeklyTraining.instance();
 				        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
 				            if (m_dSubTorschuss >= 1.0d) {
 				                m_dSubTorschuss = 0.99d;
@@ -2098,9 +2117,10 @@ public final class Spieler {
 				        }
 				        break;
 		        	case TrainingType.SET_PIECES:
+		        		wt = SetPiecesWeeklyTraining.instance();
 				        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
 				            if (m_dSubStandards >= 1.0d) {
 				                m_dSubStandards = 0.99d;
@@ -2111,9 +2131,10 @@ public final class Spieler {
 				        }
 				        break;
 		        	case TrainingType.SHOOTING:
+		        		wt= ShootingWeeklyTraining.instance();
 		        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / TrainingManager.getTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubTorschuss = Helper.round(trForPlayer.getScoring() / wt.getTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
 				            if (m_dSubTorschuss >= 1.0d) {
 				                m_dSubTorschuss = 0.99d;
@@ -2123,8 +2144,8 @@ public final class Spieler {
 				            m_dTrainingsOffsetTorschuss = 0.0d;
 				        }
 		        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() / TrainingManager.getSecondaryTrainingLength(
-				            		this, trType, assistants, trainerlevel, intensity, stamina), 2);
+				            m_dSubStandards = Helper.round(trForPlayer.getSetPieces() /  wt.getSecondaryTrainingLength(
+				            		this, assistants, trainerlevel, intensity, stamina), 2);
 				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
 				            if (m_dSubStandards >= 1.0d) {
 				                m_dSubStandards = 0.99d;

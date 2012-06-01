@@ -1,4 +1,3 @@
-// %2751235623:de.hattrickorganizer.model%
 package ho.core.training;
 
 import ho.core.constants.TrainingType;
@@ -16,47 +15,41 @@ import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * Holds and calculates how much skill training a player received
  *
  * @author
  */
 public class TrainingPerPlayer  {
-    //~ Instance fields ----------------------------------------------------------------------------
-
-    private Spieler player;
+    private Spieler _Player;
 
     //Wing
-    private double wing;
+    private double _Wing;
 
     //Stamina
-    private double stamina;
+    private double _Stamina;
 
     //Passing
-    private double passing;
+    private double _Passing;
 
     //Playmaking
-    private double playmaking;
+    private double _Playmaking;
 
     //Set Pieces
-    private double setpieces;
+    private double _SetPieces;
 
     //Scoring
-    private double scoring;
+    private double _Scoring;
 
     //Goal Keeping
-    private double goalkeeping;
+    private double _GoalKeeping;
 
     //Defending
-    private double defending;
+    private double _Defending;
     
     // calculate training for this training date only 
-    private Date timestamp = null;
+    private Date _TrainingDate = null;
     
-    //~ Constants ----------------------------------------------------------------------------------
-    //variable for adjusting amount of set pieces when training scoring
-    private static final float p_f_shooting_SetPieces = 0.6f;
-
-    private TrainingPerWeek trainingWeek;
+    private TrainingPerWeek _TrainingWeek;
     
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -69,8 +62,8 @@ public class TrainingPerPlayer  {
     /**
      * Creates a new TrainingPerPlayer object initialized with a specific player
      */
-    public TrainingPerPlayer(Spieler player) {
-    	this.player = player; 
+    public TrainingPerPlayer(Spieler oPlayer) {
+    	_Player = oPlayer; 
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -78,73 +71,73 @@ public class TrainingPerPlayer  {
     /**
      * Setter for property wing.
      *
-     * @param wing New value of property wing.
+     * @param dWing New value of property wing.
      */
-    public final void setWing(double wing) {
-        this.wing = wing;
+    public final void setWing(double dWing) {
+        _Wing = dWing;
     }
 
     /**
-     * Getter for property FL.
+     * Getter for property Wing.
      *
-     * @return Value of property FL.
+     * @return Value of property Wing.
      */
     public final double getWing() {
-        return this.wing;
+        return _Wing;
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Setter for Stamina
      *
-     * @param d TODO Missing Method Parameter Documentation
+     * @param dStamina New value for stamina
      */
-    public final void setStamina(double stamina) {
-        this.stamina = stamina;
+    public final void setStamina(double dStamina) {
+        _Stamina = dStamina;
     }
 
     /**
-     * TODO Missing Method Documentation
+     * Getter for Stamina
      *
-     * @return TODO Missing Return Method Documentation
+     * @return Value of Stamina
      */
     public final double getStamina() {
-        return this.stamina;
+        return _Stamina;
     }
 
     /**
-     * Setter for property PS.
+     * Setter for property Passing.
      *
-     * @param PS New value of property PS.
+     * @param dPassing New value of property Passing.
      */
-    public final void setPassing(double passing) {
-        this.passing = passing;
+    public final void setPassing(double dPassing) {
+        _Passing = dPassing;
     }
 
     /**
-     * Getter for property PS.
+     * Getter for property Passing.
      *
-     * @return Value of property PS.
+     * @return Value of property Passing.
      */
     public final double getPassing() {
-        return this.passing;
+        return _Passing;
     }
 
     /**
-     * Setter for property SA.
+     * Setter for property Playmaking.
      *
-     * @param SA New value of property SA.
+     * @param dPlaymaking New value of property Playmaking.
      */
-    public final void setPlaymaking(double playmaking) {
-        this.playmaking = playmaking;
+    public final void setPlaymaking(double dPlaymaking) {
+        _Playmaking = dPlaymaking;
     }
 
     /**
-     * Getter for property SA.
+     * Getter for property Playmaking.
      *
-     * @return Value of property SA.
+     * @return Value of property Playmaking.
      */
     public final double getPlaymaking() {
-        return this.playmaking;
+        return _Playmaking;
     }
 
     /**
@@ -153,7 +146,7 @@ public class TrainingPerPlayer  {
      * @param ST New value of property ST.
      */
     public final void setSetPieces(double setPieces) {
-        this.setpieces = setPieces;
+        this._SetPieces = setPieces;
     }
 
     /**
@@ -162,7 +155,7 @@ public class TrainingPerPlayer  {
      * @return Value of property ST.
      */
     public final double getSetPieces() {
-        return this.setpieces;
+        return this._SetPieces;
     }
 
     /**
@@ -171,7 +164,7 @@ public class TrainingPerPlayer  {
      * @param spieler New value of property spieler.
      */
     public final void setPlayer(Spieler player) {
-        this.player = player;
+        this._Player = player;
     }
 
     /**
@@ -180,7 +173,7 @@ public class TrainingPerPlayer  {
      * @return Value of property spieler.
      */
     public final Spieler getPlayer() {
-        return this.player;
+        return this._Player;
     }
 
     /**
@@ -189,7 +182,7 @@ public class TrainingPerPlayer  {
      * @param TS New value of property TS.
      */
     public final void setScoring(double scoring) {
-        this.scoring = scoring;
+        this._Scoring = scoring;
     }
 
     /**
@@ -198,7 +191,7 @@ public class TrainingPerPlayer  {
      * @return Value of property TS.
      */
     public final double getScoring() {
-        return scoring;
+        return _Scoring;
     }
 
     /**
@@ -207,7 +200,7 @@ public class TrainingPerPlayer  {
      * @param goalkeeping New value of property TW.
      */
     public final void setGoalKeeping(double goalkeeping) {
-        this.goalkeeping = goalkeeping;
+        this._GoalKeeping = goalkeeping;
     }
 
     /**
@@ -216,7 +209,7 @@ public class TrainingPerPlayer  {
      * @return Value of property TW.
      */
     public final double getGoalKeeping() {
-        return goalkeeping;
+        return _GoalKeeping;
     }
 
     /**
@@ -225,7 +218,7 @@ public class TrainingPerPlayer  {
      * @param VE New value of property VE.
      */
     public final void setDefending(double defending) {
-        this.defending = defending;
+        this._Defending = defending;
     }
 
     /**
@@ -234,14 +227,14 @@ public class TrainingPerPlayer  {
      * @return Value of property VE.
      */
     public final double getDefending() {
-        return this.defending;
+        return this._Defending;
     }
 
     /**
 	 * @return the timestamp
 	 */
 	public Date getTimestamp() {
-		return this.timestamp;
+		return this._TrainingDate;
 	}
 
 	/**
@@ -251,7 +244,7 @@ public class TrainingPerPlayer  {
 	 * @param timestamp the timestamp to set
 	 */
 	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+		this._TrainingDate = timestamp;
 	}
 
 	/**
@@ -261,8 +254,8 @@ public class TrainingPerPlayer  {
      */
     @Override
 	public final String toString() {
-        return player.getSpielerID() + ":" + goalkeeping + ":" + defending + ":" + playmaking + ":" + passing + ":" + wing + ":"
-               + scoring + ":" + setpieces;
+        return _Player.getSpielerID() + ":" + _GoalKeeping + ":" + _Defending + ":" + _Playmaking + ":" + _Passing + ":" + _Wing + ":"
+               + _Scoring + ":" + _SetPieces;
     }
 
     /**
@@ -270,14 +263,14 @@ public class TrainingPerPlayer  {
      * @param values	the instance we take the values from
      */
     public void addValues (TrainingPerPlayer values) {
-    	this.wing += values.getWing();
-    	this.stamina += values.getStamina();
-    	this.passing += values.getPassing();
-    	this.playmaking += values.getPlaymaking();
-    	this.setpieces += values.getSetPieces();
-    	this.scoring += values.getScoring();
-    	this.goalkeeping += values.getGoalKeeping();
-    	this.defending += values.getDefending();
+    	this._Wing += values.getWing();
+    	this._Stamina += values.getStamina();
+    	this._Passing += values.getPassing();
+    	this._Playmaking += values.getPlaymaking();
+    	this._SetPieces += values.getSetPieces();
+    	this._Scoring += values.getScoring();
+    	this._GoalKeeping += values.getGoalKeeping();
+    	this._Defending += values.getDefending();
     }
 
     /**
@@ -290,19 +283,19 @@ public class TrainingPerPlayer  {
     	double skillValue = 0;
     	switch (skillType) {
 	    	case PlayerSkill.KEEPER:
-	    		skillValue = this.goalkeeping;
+	    		skillValue = this._GoalKeeping;
 	    	case PlayerSkill.DEFENDING:
-	    		skillValue = this.defending;
+	    		skillValue = this._Defending;
 	    	case PlayerSkill.WINGER:
-	    		skillValue = this.wing;
+	    		skillValue = this._Wing;
 	    	case PlayerSkill.PLAYMAKING:
-	    		skillValue = this.playmaking;
+	    		skillValue = this._Playmaking;
 	    	case PlayerSkill.SCORING:
-	    		skillValue = this.scoring;
+	    		skillValue = this._Scoring;
 	    	case PlayerSkill.PASSING:
-	    		skillValue = this.passing;
+	    		skillValue = this._Passing;
 	    	case PlayerSkill.SET_PIECES:
-	    		skillValue = this.setpieces;
+	    		skillValue = this._SetPieces;
     	}
     	return skillValue;
     }
@@ -344,11 +337,11 @@ public class TrainingPerPlayer  {
      */
     private void calculateTrainingResults(TrainingPerWeek train) {
 		Calendar trainingDate = train.getTrainingDate();
-    	if (player.hasTrainingBlock()) {
+    	if (_Player.hasTrainingBlock()) {
     		// Do nothing if the player has a training block
 			if (TrainingManager.TRAININGDEBUG) {
 				HOLogger.instance().debug(getClass(), 
-						"Ignoring train results for player " + player.getName() + " (" + player.getSpielerID() + ") at "
+						"Ignoring train results for player " + _Player.getName() + " (" + _Player.getSpielerID() + ") at "
 						+ trainingDate.getTime().toString() + " because of TrainingBlock!"); 
 			}    		
     		return;
@@ -360,49 +353,49 @@ public class TrainingPerPlayer  {
 	    	switch (trainType) {
 			case TrainingType.PLAYMAKING:
 				if (isAfterSkillup(trainingDate, PlayerSkill.PLAYMAKING)) {
-					this.playmaking = trp.getPrimary();
+					this._Playmaking = trp.getPrimary();
 				}
 				break;
 			case TrainingType.DEFENDING:
 			case TrainingType.DEF_POSITIONS:
 				if (isAfterSkillup(trainingDate, PlayerSkill.DEFENDING)) {
-					this.defending = trp.getPrimary();
+					this._Defending = trp.getPrimary();
 				}
 				break;
 			case TrainingType.CROSSING_WINGER:
 			case TrainingType.WING_ATTACKS:
 				if (isAfterSkillup(trainingDate, PlayerSkill.WINGER)) {
-					this.wing = trp.getPrimary();
+					this._Wing = trp.getPrimary();
 				}
 				break;
 			case TrainingType.SHORT_PASSES:
 			case TrainingType.THROUGH_PASSES:
 				if (isAfterSkillup(trainingDate, PlayerSkill.PASSING)) {
-					this.passing= trp.getPrimary();
+					this._Passing= trp.getPrimary();
 				}
 				break;
 			case TrainingType.GOALKEEPING:
 				if (isAfterSkillup(trainingDate, PlayerSkill.KEEPER)) {
-					this.goalkeeping = trp.getPrimary();
+					this._GoalKeeping = trp.getPrimary();
 				}
 				break;
 			case TrainingType.SCORING:
 				if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
-					this.scoring = trp.getPrimary();
+					this._Scoring = trp.getPrimary();
 				}
 				break;
 			case TrainingType.SHOOTING:
 				if (isAfterSkillup(trainingDate, PlayerSkill.SCORING)) {
-					this.scoring = trp.getPrimary();
+					this._Scoring = trp.getPrimary();
 				}
 	            // Shooting gives some training in Set Pieces, too
 				if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
-		            this.setpieces = trp.getSecondary();
+		            this._SetPieces = trp.getSecondary();
 				}
 				break;
 			case TrainingType.SET_PIECES:
 				if (isAfterSkillup(trainingDate, PlayerSkill.SET_PIECES)) {
-					this.setpieces = trp.getPrimary();
+					this._SetPieces = trp.getPrimary();
 				}
 				break;
 			}
@@ -441,7 +434,7 @@ public class TrainingPerPlayer  {
      * @return	training point
      */
 	public TrainingPerWeek getTrainingWeek() {
-		return trainingWeek;
+		return _TrainingWeek;
 	}
 
 	/**
@@ -452,7 +445,7 @@ public class TrainingPerPlayer  {
 	 * @param trainingPoint	training point
 	 */
 	public void setTrainingWeek(TrainingPerWeek trainingWeek) {
-		this.trainingWeek = trainingWeek;
+		this._TrainingWeek = trainingWeek;
 		calculateTrainingResults(trainingWeek);
 	}
     
