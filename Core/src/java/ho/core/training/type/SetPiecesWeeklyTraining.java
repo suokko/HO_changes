@@ -25,6 +25,7 @@ public class SetPiecesWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingBaseLength = (float) 0.9;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_SETPIECES; // 100%
 		_PrimaryTrainingSkillBonus = (float) 0.25;
+		_PrimaryTrainingSkillOsmosisLengthRate = 0;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

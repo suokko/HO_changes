@@ -16,6 +16,7 @@ public final class GoalkeepingWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingSkillPositions = new int[]{ ISpielerPosition.keeper };
 		_PrimaryTrainingBaseLength = (float) 2;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_GOALKEEPING; // 100%
+		_PrimaryTrainingSkillOsmosisLengthRate = 0;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

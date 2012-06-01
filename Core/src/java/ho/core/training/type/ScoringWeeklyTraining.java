@@ -24,7 +24,6 @@ public class ScoringWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingBaseLength = (float) 3.2;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_SCORING; // 100%
 		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

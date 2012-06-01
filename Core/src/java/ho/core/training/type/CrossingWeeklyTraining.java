@@ -26,7 +26,6 @@ public class CrossingWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingBaseLength = (float) 2.2;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING; // 100%
 		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

@@ -16,7 +16,7 @@ public abstract class WeeklyTrainingType {
 	protected float _PrimaryTrainingSkillBonus = 0;
 	protected float _PrimaryTrainingSkillBaseLength = 0;
 	protected float _PrimaryTrainingSkillSecondaryLengthRate = 0;
-	protected float _PrimaryTrainingSkillOsmosisLengthRate = 0;
+	protected float _PrimaryTrainingSkillOsmosisLengthRate = (float) 100 / (OSMOSIS_BASE_PERCENTAGE + UserParameter.instance().TRAINING_OFFSET_OSMOSIS); // 16%
 	protected int[] _SecondaryTrainingSkillPositions = null;
 	protected int[] _SecondaryTrainingSkillBonusPositions = null;
 	protected int[] _SecondaryTrainingSkillSecondaryTrainingPositions = null;
@@ -26,6 +26,7 @@ public abstract class WeeklyTrainingType {
 	protected float _SecondaryTrainingSkillSecondaryLengthRate = 0;
 	protected float _SecondaryTrainingSkillOsmosisLengthRate = 0;
 	protected float _PrimaryTrainingBaseLength = 0;
+	public static final float OSMOSIS_BASE_PERCENTAGE = (float) 16;
 	public static final float BASE_AGE_FACTOR = (float) 0.9;
 	public static final float BASE_COACH_FACTOR = (float) 1.0;
 	public static final float BASE_ASSISTANT_COACH_FACTOR = (float) 1.0;
@@ -126,13 +127,15 @@ public abstract class WeeklyTrainingType {
 				 dPrimaryTraining += ((double) tmp / (double) 90) / _PrimaryTrainingSkillSecondaryLengthRate;
 			 }
 			 if (iMinutes < 90) {
-				 tmp = tp.getPrimarySkillOsmosisPositionMinutes();
-				 if (tmp > 0) {
-					 if (iMinutes + tmp > 90) {
-						 tmp = 90 - iMinutes;
+				 if (_PrimaryTrainingSkillOsmosisLengthRate > 0) {
+					 tmp = tp.getPrimarySkillOsmosisPositionMinutes();
+					 if (tmp > 0) {
+						 if (iMinutes + tmp > 90) {
+							 tmp = 90 - iMinutes;
+						 }
+						 iMinutes += tmp;
+						 dPrimaryTraining += ((double) tmp / (double) 90) / _PrimaryTrainingSkillOsmosisLengthRate;
 					 }
-					 iMinutes += tmp;
-					 dPrimaryTraining += ((double) tmp / (double) 90) / _PrimaryTrainingSkillOsmosisLengthRate;
 				 }
 			 }	 
 		}
@@ -166,13 +169,15 @@ public abstract class WeeklyTrainingType {
 					dSecondaryTraining += ((double) tmp / (double) 90) / _SecondaryTrainingSkillSecondaryLengthRate;
 				}
 				 if (iMinutes < 90) {
-					 tmp = tp.getSecondarySkillOsmosisPositionMinutes();
-					 if (tmp > 0) {
-						 if (iMinutes + tmp > 90) {
-							 tmp = 90 - iMinutes;
+					 if (_SecondaryTrainingSkillOsmosisLengthRate > 0) {
+						 tmp = tp.getSecondarySkillOsmosisPositionMinutes();
+						 if (tmp > 0) {
+							 if (iMinutes + tmp > 90) {
+								 tmp = 90 - iMinutes;
+							 }
+							 iMinutes += tmp;
+							 dSecondaryTraining += ((double) tmp / (double) 90) / _SecondaryTrainingSkillOsmosisLengthRate;
 						 }
-						 iMinutes += tmp;
-						 dSecondaryTraining += ((double) tmp / (double) 90) / _SecondaryTrainingSkillOsmosisLengthRate;
 					 }
 				 }	 
 			}
