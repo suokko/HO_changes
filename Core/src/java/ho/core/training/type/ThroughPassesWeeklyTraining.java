@@ -23,7 +23,6 @@ public class ThroughPassesWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.leftForward, ISpielerPosition.centralForward, ISpielerPosition.rightForward}; 
 		_PrimaryTrainingBaseLength = (float) 2.8 / (float) 0.85;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PASSING / (float) 0.85;
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

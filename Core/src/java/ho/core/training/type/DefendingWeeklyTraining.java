@@ -24,7 +24,6 @@ public final class DefendingWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingBaseLength = (float) 3.6;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_DEFENDING; // 100%
 		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static DefendingWeeklyTraining instance() {
         if (m_ciInstance == null) {

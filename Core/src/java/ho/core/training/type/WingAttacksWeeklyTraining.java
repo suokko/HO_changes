@@ -22,7 +22,6 @@ public class WingAttacksWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.rightInnerMidfield}; 
 		_PrimaryTrainingBaseLength = (float) 2.2 / (float) 0.6;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_WINGER / (float) 0.6 ;
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

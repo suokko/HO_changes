@@ -27,7 +27,6 @@ public final class PlaymakingWeeklyTraining extends WeeklyTrainingType {
 		_PrimaryTrainingBaseLength = (float) 3.1;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING; // 100%
 		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25; // 16%
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {

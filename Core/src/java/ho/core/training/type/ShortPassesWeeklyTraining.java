@@ -23,8 +23,8 @@ public class ShortPassesWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.middleCentralDefender, ISpielerPosition.rightCentralDefender }; 
 		_PrimaryTrainingBaseLength = (float) 2.8;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PASSING;
-		_PrimaryTrainingSkillOsmosisLengthRate = (float) 6.25;
 	}
+	
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {
         	m_ciInstance = new ShortPassesWeeklyTraining();
