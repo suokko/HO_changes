@@ -1,3 +1,28 @@
+Changelist HO! 1.432
+====================
+- ArenaSizer become a extra tool
+- Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
+- Made player name column width adjustable.
+- Added Minute based training
+
+Language updates:
+-----------------
+- Added Japanese as new HO language (thx nomad331)
+- Update French translations (thx davidatorus)
+
+ThemeManager:
+------------
+- add new keys:
+	icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out
+	colors:
+
+Plugin Updates:
+---------------
+-  MatchesOverview
+	MatchesOverview is deprecated. Functions are integrated in matches tab
+-  Transfer EPV
+	This plugin is deprecated. Merged into function transferscout.
+	
 Changelist HO! 1.431
 ====================
 
