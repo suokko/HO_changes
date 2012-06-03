@@ -37,7 +37,7 @@ public class TrainingManager {
 	private static TrainingManager m_clInstance;
 
     //~ Instance fields ----------------------------------------------------------------------------
-    private TrainingWeekManager weekManager;
+    private TrainingWeekManager _WeekManager;
     static final public boolean TRAININGDEBUG = true;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ public class TrainingManager {
      * Creates a new instance of TrainingsManager
      */
     private TrainingManager() {
-        this.weekManager = TrainingWeekManager.instance();
+        _WeekManager = TrainingWeekManager.instance();
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class TrainingManager {
     }
 
     public Vector<TrainingPerWeek> getTrainingsVector() {
-        return this.weekManager.getTrainingsVector();
+        return _WeekManager.getTrainingsVector();
     }
 
 
@@ -77,9 +77,8 @@ public class TrainingManager {
      *
      * @return TrainingPerPlayer
      */
-    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputPlayer,
-                                                             Vector<TrainingPerWeek> inputTraining,
-                                                             Timestamp timestamp) {
+    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputPlayer, 
+    		Vector<TrainingPerWeek> inputTraining, Timestamp timestamp) {
         if (timestamp == null) {
         	Calendar c = Calendar.getInstance();
         	c.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
@@ -123,13 +122,9 @@ public class TrainingManager {
      * @return TODO Missing Return Method Documentation
      */
     public Vector<TrainingPerWeek> calculateTraining(Vector<TrainingPerWeek> inputTrainings) {
-        return this.weekManager.calculateTrainings(inputTrainings);
+        return _WeekManager.calculateTrainings(inputTrainings);
     }
-
-    public TrainingPerPlayer calculateWeeklyTrainingForPlayer(Spieler inputSpieler, TrainingPerWeek train) {
-    	return calculateWeeklyTrainingForPlayer(inputSpieler, train, null);
-    }
-
+   
     /**
      * Training for given player for each skill
      *
