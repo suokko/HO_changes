@@ -25,7 +25,6 @@ public class TrainingPerWeek  {
     private int _Week = -1;
     private int _Year = -1;
     private int _PreviousHRFID;
-    private TrainingPoints _TrainingPair = null;
     
     //~ Constructors -------------------------------------------------------------------------------
     public TrainingPerWeek() {
@@ -243,11 +242,4 @@ public class TrainingPerWeek  {
 
         return trainingDate;
 	}
-	public void setTrainingPair(TrainingPoints trp) {
-		_TrainingPair = trp;
-	}
-
-    public TrainingPoints getTrainingPair() {
-    	return _TrainingPair;
-    }
 }
