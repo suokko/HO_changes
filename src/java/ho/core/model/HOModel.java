@@ -397,7 +397,13 @@ public class HOModel {
      * berechnet die Subskills zu allen Spielern players calc subskill func
      */
     public final void calcSubskills() {
-        final Vector<Spieler> vSpieler = getAllSpieler();
+        
+    	if (getTrainer() == null ) {
+    		HOLogger.instance().debug(getClass(), "calcSubskill aborting. Trainer is null. HrfId: " + m_iID + " Date: " + m_clBasics.getDatum());
+    		return;
+    	}
+    	
+    	final Vector<Spieler> vSpieler = getAllSpieler();
         final java.sql.Timestamp calcDate = m_clBasics.getDatum();
 
         /*
@@ -531,9 +537,20 @@ public class HOModel {
     }
 
     private void logPlayerProgress (Spieler before, Spieler after) {
+    	
+    	if ((after == null) || (before == null)) {	
+    		// crash due to non paranoid logging is too silly
+    		return;
+    	}
+    	
     	int playerID = after.getSpielerID();
     	String playerName = after.getName();
     	TrainingPerWeek train = TrainingWeekManager.instance().getTrainingWeek(m_iID);
+    	if (train == null) { 
+    		// Just say no to logging crashes.
+    		return;
+    	}
+    	
     	int trLevel = train.getTrainingIntensity();
     	int trArt = train.getTrainingType();
     	String trArtString = TrainingType.toString(trArt);

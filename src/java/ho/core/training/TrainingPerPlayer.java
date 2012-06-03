@@ -93,6 +93,11 @@ public class TrainingPerPlayer  {
      * @param values	the instance we take the values from
      */
     public void addValues (TrainingPerPlayer values) {
+    	
+    	if (_TrainingPair == null) {
+    		HOLogger.instance().debug(getClass(), "_TrainingPair is null. Aborting addValues.");
+    	}
+    	
     	_TrainingPair.addPrimary(values.getTrainingPair().getPrimary());
     	_TrainingPair.addSecondary(values.getTrainingPair().getSecondary());
     }

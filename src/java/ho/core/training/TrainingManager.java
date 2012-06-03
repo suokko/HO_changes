@@ -105,8 +105,10 @@ public class TrainingManager {
                 return output;
             }
             curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
-            output.addValues(curTraining);
-            if (TRAININGDEBUG)
+            if ((curTraining.getTrainingPair() != null) && (output != null)) {
+            	output.addValues(curTraining);
+            }
+           	if (TRAININGDEBUG)
             	HOLogger.instance().debug(getClass(), "Mid calcFullTraining for "+inputPlayer.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
         }
         if (TRAININGDEBUG)
