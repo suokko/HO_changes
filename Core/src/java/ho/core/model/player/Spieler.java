@@ -2025,7 +2025,7 @@ public final class Spieler {
     		int stamina, int hrfID) {
     	TrainingPerWeek trainingWeek = TrainingWeekManager.instance().getTrainingWeek(hrfID);
     	if (trainingWeek != null) {
-	        TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek);
+	        TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek, null);
 	        TrainingPoints tp = trForPlayer.getTrainingPair();
 	        if (tp != null && tp.getPrimary() > 0) {
 		        int trType = trainingWeek.getTrainingType();
