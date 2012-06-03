@@ -255,7 +255,7 @@ public class TrainingManager {
                 		+" played total " + tp.getMinutesPlayed() + " mins"
                 );
                 TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
-                train.setTrainingPair(trp);
+                output.setTrainingPair(trp);
             }
             output.setTrainingWeek(train);
         } catch (Exception e) {
