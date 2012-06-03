@@ -245,21 +245,26 @@ public class TrainingManager {
             }
         	if (tp.PlayerHasPlayed()) {
             	// Player has played
-                HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek() +": "
-                		+"Player "+spieler.getName()+" ("+playerID+")"
-                		+" played total " + tp.getMinutesPlayed() + " mins"
-                );
                 TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+        		if (TrainingManager.TRAININGDEBUG) {
+    				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
+                		+": Player " + spieler.getName() + " (" + playerID + ")"
+                		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
+                		+ wt.getPrimaryTraining(tp) + " primary training points and " 
+                		+ wt.getSecondaryTraining(tp) + " secondary training points");
+        		}
                 output.setTrainingPair(trp);
+            } else {
+            	if (TrainingManager.TRAININGDEBUG) {
+    				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
+                		+": Player " + spieler.getName() + " (" + playerID + ")"
+                		+" did not play");
+        		}
             }
             output.setTrainingWeek(train);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
         }
-
-        if (TRAININGDEBUG)
-        	HOLogger.instance().debug(getClass(),
-        			"End calcWeeklyTraining for "+spieler.getName()+", "+train+", output="+output);
         return output;
     }
 
