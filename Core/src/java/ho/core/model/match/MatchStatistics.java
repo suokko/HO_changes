@@ -16,11 +16,20 @@ public class MatchStatistics {
 	public MatchStatistics(int matchid, MatchLineupTeam team) {
 		this.matchId = matchid;
 		teamLineup = team;
+		
+		if (isOldie()) {
+			// Old match with no start lineup. Set start position like end position for all players.
+			Vector<MatchLineupPlayer> mlps = teamLineup.getAufstellung();
+			for (int i=0; i < mlps.size() ; i++) {
+				mlps.get(i).setStartPosition(mlps.get(i).getFieldPos());
+			}
+		}
 	}
 
 
 	/**
-	 * Returns the minutes a player has played in the specified positions
+	 * Returns the minutes a player has played in the specified positions.
+	 * For matches with no sub/start info, players get 90 minutes on the position they ended the match.
 	 * 
 	 * @param spielerId the id of the player
 	 * @param accepted An array of integers specifying the positions which should be accepted
@@ -243,4 +252,13 @@ public class MatchStatistics {
 		return endMinute;
 	}
 
+	private boolean isOldie() {
+		Vector<MatchLineupPlayer> mlps = teamLineup.getAufstellung();
+		for (int i=0; i < mlps.size() ; i++) {
+			if (mlps.get(i).getStartPosition() > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
