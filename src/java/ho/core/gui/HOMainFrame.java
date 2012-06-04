@@ -17,6 +17,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.module.IModule;
 import ho.core.module.ModuleManager;
+import ho.core.module.config.ModuleConfig;
 import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.OnlineWorker;
@@ -430,6 +431,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		FormulaFactors.instance().save();
 
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
+		
+		// Save module configs
+		ModuleConfig.instance().save();
+		
+		HOLogger.instance().debug(getClass(), "Module configurations saved");
 
 		// Disconnect
 		DBManager.instance().disconnect();
