@@ -1,12 +1,11 @@
 // %3513105810:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
-import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
-import ho.core.training.type.*;
+import ho.core.training.WeeklyTrainingType;
 import ho.core.util.Helper;
 import ho.module.training.Skills;
 import ho.module.training.TrainingPanel;
@@ -188,31 +187,7 @@ public class OutputTableModel extends AbstractTableModel {
      * @return predicted training length
      */
     private double getTrainingLength (Spieler player, int skillIndex) {
-    	WeeklyTrainingType wt = GoalkeepingWeeklyTraining.instance();
-    	switch (Skills.getTrainedSkillCode(skillIndex))
-    	{
-    		case TrainingType.GOALKEEPING:
-    			wt = GoalkeepingWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.PLAYMAKING:
-    			wt = PlaymakingWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.PASSING:
-    			wt = ShortPassesWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.WINGER:
-    			wt = CrossingWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.DEFENDING:
-    			wt = DefendingWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.SCORING:
-    			wt = ScoringWeeklyTraining.instance();
-    			break;
-    		case PlayerSkill.SET_PIECES:
-    			wt = SetPiecesWeeklyTraining.instance();
-    			break;
-    	}
+    	WeeklyTrainingType wt = WeeklyTrainingType.instance(Skills.getTrainedSkillCode(skillIndex));
         return wt.getTrainingLength(player, TrainingPanel.getStaffPanel().getCoTrainerNumber(),
         		TrainingPanel.getStaffPanel().getTrainerLevelNumber(),
         		HOVerwaltung.instance().getModel().getTeam().getTrainingslevel(),

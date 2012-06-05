@@ -7,7 +7,6 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
-import ho.core.training.type.*;
 import ho.core.util.HelperWrapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,42 +79,7 @@ public class FutureTrainingManager {
 			int trType = tw.getTrainingType();
 			TrainingWeekPlayer tp = new TrainingWeekPlayer();
 			tp.Name(player.getName());
-			WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
-			switch (trType) {
-		        case TrainingType.CROSSING_WINGER:
-					wt = CrossingWeeklyTraining.instance();
-					break;
-				case TrainingType.DEF_POSITIONS:
-					wt = DefensivePositionsWeeklyTraining.instance();
-					break;
-				case TrainingType.DEFENDING:
-					wt = DefendingWeeklyTraining.instance();
-					break;
-				case TrainingType.GOALKEEPING:
-					wt = GoalkeepingWeeklyTraining.instance();
-					break;
-				case TrainingType.PLAYMAKING:
-					wt = PlaymakingWeeklyTraining.instance();
-					break;
-				case TrainingType.SCORING:
-					wt = ScoringWeeklyTraining.instance();
-					break;
-				case TrainingType.SET_PIECES:
-					wt = SetPiecesWeeklyTraining.instance();
-					break;
-				case TrainingType.SHOOTING:
-					wt = ShootingWeeklyTraining.instance();
-					break;
-				case TrainingType.SHORT_PASSES:
-					wt = ShortPassesWeeklyTraining.instance();
-					break;
-				case TrainingType.THROUGH_PASSES:
-					wt = ThroughPassesWeeklyTraining.instance();
-					break;
-				case TrainingType.WING_ATTACKS:
-					wt = WingAttacksWeeklyTraining.instance();
-					break; 
-	        }
+			WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
 			boolean bFound = false;
 			for (int i = 0; i < wt.getPrimaryTrainingSkillPositions().length; i++)
 			{

@@ -1,8 +1,10 @@
-package ho.core.training.type;
+package ho.core.training;
 
+import ho.core.constants.TrainingType;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
 import ho.core.training.TrainingWeekPlayer;
+import ho.core.training.type.*;
 
 public abstract class WeeklyTrainingType {
 	protected String _Name = ""; 
@@ -32,6 +34,46 @@ public abstract class WeeklyTrainingType {
 	public static final float BASE_ASSISTANT_COACH_FACTOR = (float) 1.0;
 	public static final float BASE_INTENSITY_FACTOR = (float) 1.0;
 	
+	public static WeeklyTrainingType instance(int iTrainingType)
+	{
+		WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
+		switch (iTrainingType) {
+	        case TrainingType.CROSSING_WINGER:
+				wt = CrossingWeeklyTraining.instance();
+				break;
+			case TrainingType.DEF_POSITIONS:
+				wt = DefensivePositionsWeeklyTraining.instance();
+				break;
+			case TrainingType.DEFENDING:
+				wt = DefendingWeeklyTraining.instance();
+				break;
+			case TrainingType.GOALKEEPING:
+				wt = GoalkeepingWeeklyTraining.instance();
+				break;
+			case TrainingType.PLAYMAKING:
+				wt = PlaymakingWeeklyTraining.instance();
+				break;
+			case TrainingType.SCORING:
+				wt = ScoringWeeklyTraining.instance();
+				break;
+			case TrainingType.SET_PIECES:
+				wt = SetPiecesWeeklyTraining.instance();
+				break;
+			case TrainingType.SHOOTING:
+				wt = ShootingWeeklyTraining.instance();
+				break;
+			case TrainingType.SHORT_PASSES:
+				wt = ShortPassesWeeklyTraining.instance();
+				break;
+			case TrainingType.THROUGH_PASSES:
+				wt = ThroughPassesWeeklyTraining.instance();
+				break;
+			case TrainingType.WING_ATTACKS:
+				wt = WingAttacksWeeklyTraining.instance();
+				break; 
+        }
+		return wt;
+	}
 	public String getName() {
 		return _Name;
 	}
