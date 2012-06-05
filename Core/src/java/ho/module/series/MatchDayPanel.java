@@ -83,13 +83,14 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                 try {
                     //Lineups
                     if (!HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchdata[0],
-                                                                             matchdata[1],
+                    														 1, // not tournament
+                    														 matchdata[1],
                                                                              matchdata[2])) {
                         //Abbruch, wenn das Lineup nicht gezogen wurde
                         return;
                     }
 
-                    if (!HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchdata[0])) {
+                    if (!HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchdata[0], 1)) {
                         //Abbruch, wenn das Details nicht gezogen wurde
                         return;
                     }

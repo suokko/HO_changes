@@ -8,6 +8,7 @@ package ho.module.teamAnalyzer.ui;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -82,11 +83,11 @@ public class ManualFilterPanel extends JPanel {
 
 			if (element.isHome()) {
 				rowData.add(element.getAwayTeam());
-				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[element.getMatchType()]));
+				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(element.getMatchType())]));
 				rowData.add(element.getHomeGoals() + " - " + element.getAwayGoals());
 			} else {
 				rowData.add("*" + element.getHomeTeam());
-				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[element.getMatchType()]));
+				rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(element.getMatchType())]));
 				rowData.add(element.getAwayGoals() + " - " + element.getHomeGoals());
 			}
 
@@ -160,8 +161,8 @@ public class ManualFilterPanel extends JPanel {
 
 					if (!status.equalsIgnoreCase("true")) {
 						int id = availableMatches.get(row).getMatchId();
-
-						downloadDone = HelperWrapper.instance().downloadMatchData(id);
+						int type = availableMatches.get(row).getMatchType();
+						downloadDone = HelperWrapper.instance().downloadMatchData(id, type);
 					}
 
 					e.consume();

@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.MatchesColumnModel;
+import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -50,7 +51,7 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 		}
 		
 		if (value instanceof ImageIcon) {
-			setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[type]));
+			setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(type)]));
 			setText(null);
 		} else {
 			setIcon(null);

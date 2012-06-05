@@ -164,9 +164,9 @@ public class HelperWrapper {
     }
 
     @Deprecated
-    public boolean isUserMatch(String matchID) {
+    public boolean isUserMatch(String matchID, int matchType) {
     	try {
-          final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID));
+          final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
           final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
                                                                            .parseMachtdetailsFromString(input);
           final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -183,21 +183,20 @@ public class HelperWrapper {
      * downloads all match related data and stores it in Database
      *
      */
-    public boolean downloadMatchData(int matchID) {
+    public boolean downloadMatchData(int matchID, int matchType) {
         //Spiel nicht vorhanden, dann erst runterladen!
         if (!DBManager.instance().isMatchVorhanden(matchID)) {
             try {
                 //details
                 if (HOMainFrame.instance().getOnlineWorker()
-                                                        .getMatchDetails(matchID)) {
-                    Matchdetails details = DBManager.instance()
-                                                                                        .getMatchDetails(matchID);
+                			.getMatchDetails(matchID, matchType)) {
+                    Matchdetails details = DBManager.instance().getMatchDetails(matchID);
 
                     //Lineups
                     HOMainFrame.instance().getOnlineWorker()
-                                                        .getMatchlineup(matchID,
-                                                                        details.getHeimId(),
-                                                                        details.getGastId());
+                         	.getMatchlineup(matchID, matchType,
+                         			details.getHeimId(),
+                         			details.getGastId());
 
                     //Workaround
                     // Lineups *must* be available before the match highlights / report
@@ -206,7 +205,7 @@ public class HelperWrapper {
                     if (details == null || details.getMatchreport() == null || details.getMatchreport().trim().length() == 0) {
                     	// Fetch matchDetails again
                     	HOLogger.instance().debug(getClass(), "Fetching missing match highlights / report");
-                    	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID);
+                    	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID, matchType);
                     	details = DBManager.instance().getMatchDetails(matchID);
                     }
 

@@ -5,6 +5,7 @@ import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -411,10 +412,12 @@ class StaerkenvergleichPanel extends ImagePanel {
         	m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
         else
         	m_clWetter.setIcon(null);
-        m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp()]));
+        m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(info.getMatchTyp())]));
         String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
 
-        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED) 
+        		&& (info.getMatchTyp() != MatchLineup.TOURNAMENTGROUP) 
+        		&& (info.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
             name4matchtyp += (" ( "
             + HOVerwaltung.instance().getLanguageString("Reload_Match")
             + " )");

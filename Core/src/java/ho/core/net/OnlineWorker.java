@@ -342,9 +342,9 @@ public class OnlineWorker {
             if ((DBManager.instance().isMatchVorhanden(matches[i].getMatchID()))
                 && (!DBManager.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
                 && (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
-                getMatchlineup(matches[i].getMatchID(), matches[i].getHeimID(),
+                getMatchlineup(matches[i].getMatchID(), matches[i].getMatchTyp(), matches[i].getHeimID(),
                                matches[i].getGastID());
-                if (getMatchDetails(matches[i].getMatchID())) {
+                if (getMatchDetails(matches[i].getMatchID(), matches[i].getMatchTyp())) {
                 	DBManager.instance().updateMatch(matches[i].getMatchID());
                 }
                 else
@@ -361,7 +361,7 @@ public class OnlineWorker {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean getMatchDetails(int matchId) {
+    public final boolean getMatchDetails(int matchId, int matchType) {
         boolean success = true;
         Matchdetails details = null;
 
@@ -369,7 +369,7 @@ public class OnlineWorker {
         waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
         waitDialog.setVisible(true);
         waitDialog.setValue(10);
-        details = fetchDetails(matchId, waitDialog);
+        details = fetchDetails(matchId, matchType, waitDialog);
 
         if (details != null) {
             DBManager.instance().storeMatchDetails(details);
@@ -451,8 +451,9 @@ public class OnlineWorker {
 	            				curDetails.getMatchreport().trim().length() == 0
 	            				))
 	        	{
-	                boolean retLineup = getMatchlineup(curMatchId, matches[i].getHeimID(), matches[i].getGastID());
-	                boolean retDetails = getMatchDetails(curMatchId);
+	        		
+	                boolean retLineup = getMatchlineup(curMatchId, matches[i].getMatchTyp(), matches[i].getHeimID(), matches[i].getGastID());
+	                boolean retDetails = getMatchDetails(curMatchId, matches[i].getMatchTyp());
 	                if (retDetails) {
 	                	HOLogger.instance().debug(getClass(), "Match " + curMatchId + ", getMatchLineup(): "+retLineup+", getMatchDetails(): "+retDetails);
 	                	DBManager.instance().updateMatch(matches[i].getMatchID());
@@ -480,7 +481,7 @@ public class OnlineWorker {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final boolean getMatchlineup(int matchId, int teamId1, int teamId2) {
+    public final boolean getMatchlineup(int matchId, int matchType, int teamId1, int teamId2) {
     	boolean bOK = false;
         MatchLineup lineUp1 = null;
         MatchLineup lineUp2 = null;
@@ -491,13 +492,13 @@ public class OnlineWorker {
         waitDialog.setValue(10);
 
         //Lineups holen
-        lineUp1 = fetchLineup(matchId, teamId1);
+        lineUp1 = fetchLineup(matchId, teamId1, matchType);
         if (lineUp1 != null)
         {
         	bOK = true;
 	        waitDialog.setValue(50);
 	        if (teamId2 > 0)
-	            lineUp2 = fetchLineup(matchId, teamId2);
+	            lineUp2 = fetchLineup(matchId, teamId2, matchType);
 	
 	        // Merge the two
 	        if ((lineUp2 != null)) 
@@ -512,13 +513,13 @@ public class OnlineWorker {
 	            // Get the 2nd lineup
 	            if (lineUp1.getHeim() == null) 
 	            {
-	                lineUp2 = fetchLineup(matchId, lineUp1.getHeimId());
+	                lineUp2 = fetchLineup(matchId, lineUp1.getHeimId(), matchType);
 	                if (lineUp2 != null)
 	                    lineUp1.setHeim((MatchLineupTeam)lineUp2.getHeim());
 	            } 
 	            else 
 	            {
-	                lineUp2 = fetchLineup(matchId, lineUp1.getGastId());
+	                lineUp2 = fetchLineup(matchId, lineUp1.getGastId(), matchType);
 	                if (lineUp2 != null) 
 	                    lineUp1.setGast((MatchLineupTeam)lineUp2.getGast());
 	            }
@@ -674,12 +675,12 @@ public class OnlineWorker {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Matchdetails fetchDetails(int matchID, LoginWaitDialog waitDialog) {
+    protected final Matchdetails fetchDetails(int matchID, int matchType, LoginWaitDialog waitDialog) {
         String matchDetails = "";
         Matchdetails details = null;
 
         try {
-            matchDetails = MyConnector.instance().getMatchdetails(matchID);
+            matchDetails = MyConnector.instance().getMatchdetails(matchID, matchType);
             if (matchDetails.length() == 0) {
             	HOLogger.instance().warning(getClass(), "Unable to fetch details for match " + matchID); 
             	return null;
@@ -724,13 +725,13 @@ public class OnlineWorker {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final MatchLineup fetchLineup(int matchID, int teamID) {
+    protected final MatchLineup fetchLineup(int matchID, int teamID, int matchType) {
         String matchLineup = "";
         MatchLineup lineUp = null;
         boolean bOK = false;
         try 
         {
-            matchLineup = MyConnector.instance().getMatchLineup(matchID, teamID);
+            matchLineup = MyConnector.instance().getMatchLineup(matchID, teamID, matchType);
             bOK = (matchLineup != null && matchLineup.length() > 0);
         } 
         catch (Exception e) 
@@ -813,9 +814,9 @@ public class OnlineWorker {
 				if (infos[i].getMatchStatus() == MatchKurzInfo.FINISHED) 
 				{
 					HOLogger.instance().log(getClass(),"Get Lineup : " + curMatchId);
-					bOK = ow.getMatchlineup(curMatchId, infos[i].getHeimID(), infos[i].getGastID());
+					bOK = ow.getMatchlineup(curMatchId, infos[i].getMatchTyp(), infos[i].getHeimID(), infos[i].getGastID());
 					if (bOK){ 
-						bOK = ow.getMatchDetails(curMatchId);
+						bOK = ow.getMatchDetails(curMatchId, infos[i].getMatchTyp());
 						if (!bOK){
 							break;
 						}

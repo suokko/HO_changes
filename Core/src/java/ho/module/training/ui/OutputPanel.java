@@ -83,8 +83,8 @@ public class OutputPanel extends JPanel {
         	if (input != null) input = input.trim();
             Integer matchID = new Integer(input);
 
-            if (HelperWrapper.instance().isUserMatch(input)) {
-                if (HelperWrapper.instance().downloadMatchData(matchID.intValue())) {
+            if (HelperWrapper.instance().isUserMatch(input, 1)) {
+                if (HelperWrapper.instance().downloadMatchData(matchID.intValue(), 1)) {
                 	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchImported"), //$NON-NLS-1$
                     		HOVerwaltung.instance().getLanguageString("ImportOK"), //$NON-NLS-1$
                                                   1); 
