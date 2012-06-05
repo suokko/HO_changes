@@ -169,10 +169,7 @@ public class xmlMatchdetailsParser {
             			.getFirstChildNodeValue((Element) root.getElementsByTagName("ObjectPlayerID")
             					.item(0))))
             					.intValue();
-            	final String eventkey = (XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventKey")
-            					.item(0)))
-            					.split("_")[0];
+
             	String eventtext = XMLManager.instance().getFirstChildNodeValue((Element) root.getElementsByTagName("EventText")
             			.item(0));
             	eventtext = eventtext.replaceAll("&lt;", "<");
@@ -181,9 +178,15 @@ public class xmlMatchdetailsParser {
             	eventtext = eventtext.replaceAll("&quot;", "\"");
             	eventtext = eventtext.replaceAll("&amp;", "&");
 
-            	final int highlighttyp = (Integer.valueOf(eventkey)).intValue() / 100;
-            	final int highlightsubtyp = (Integer.valueOf(eventkey)).intValue()
-            	- (((Integer.valueOf(eventkey)).intValue() / 100) * 100);
+            	final int highlighttyp = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
+            					.item(0))))
+            					.intValue();
+            	
+            	final int highlightsubtyp = (Integer.valueOf(XMLManager.instance()
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
+            					.item(0))))
+            					.intValue();
 
             	//determine new score
             	if (highlighttyp == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
@@ -541,10 +544,17 @@ public class xmlMatchdetailsParser {
             //MatchData
             root = (Element) root.getElementsByTagName("Match").item(0);
             root = (Element) root.getElementsByTagName("Arena").item(0);
-            ele = (Element) root.getElementsByTagName("ArenaID").item(0);
-            md.setArenaID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-            ele = (Element) root.getElementsByTagName("ArenaName").item(0);
-            md.setArenaName(ele.getFirstChild().getNodeValue());
+            
+            
+            try {
+            	ele = (Element) root.getElementsByTagName("ArenaID").item(0);
+            	md.setArenaID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+            	ele = (Element) root.getElementsByTagName("ArenaName").item(0);
+            	md.setArenaName(ele.getFirstChild().getNodeValue());
+            } catch (Exception e){
+            	// This fails at tournament matches - ignore
+            }
+            
             ele = (Element) root.getElementsByTagName("WeatherID").item(0);
             md.setWetterId(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("SoldTotal").item(0);

@@ -38,11 +38,13 @@ public class AutoFilterPanel extends JPanel {
     private JCheckBox defeat = new JCheckBox();
     private JCheckBox draw = new JCheckBox();
     private JCheckBox friendly = new JCheckBox();
+    private JCheckBox tournament = new JCheckBox();
 
     //  Filter filter = SystemManager.getFilter();
     private JCheckBox homeGames = new JCheckBox();
     private JCheckBox league = new JCheckBox();
     private JCheckBox qualifier = new JCheckBox();
+    private JCheckBox masters = new JCheckBox();
     private JCheckBox win = new JCheckBox();
     private NumberTextField number = new NumberTextField(2);
 
@@ -67,11 +69,13 @@ public class AutoFilterPanel extends JPanel {
         win.setSelected(filter.isWin());
         draw.setSelected(filter.isDraw());
         defeat.setSelected(filter.isDefeat());
-        number.setText(filter.getNumber() + "");
+        number.setText(String.valueOf(filter.getNumber()));
         league.setSelected(filter.isLeague());
         cup.setSelected(filter.isCup());
         qualifier.setSelected(filter.isQualifier());
         friendly.setSelected(filter.isFriendly());
+        tournament.setSelected(filter.isTournament());
+        masters.setSelected(filter.isMasters());
     }
 
     /**
@@ -88,7 +92,11 @@ public class AutoFilterPanel extends JPanel {
     	filter.setCup(cup.isSelected());
     	filter.setFriendly(friendly.isSelected());
     	filter.setQualifier(qualifier.isSelected());
+    	filter.setTournament(tournament.isSelected());
+    	filter.setMasters(masters.isSelected());
     	filter.setNumber(number.getValue());
+    	filter.saveFilters();
+    	
     }
 
     /**
@@ -104,7 +112,7 @@ public class AutoFilterPanel extends JPanel {
 
         JPanel filters = new ImagePanel();
 
-        filters.setLayout(new GridLayout(11, 2));
+        filters.setLayout(new GridLayout(12, 2));
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"))); //$NON-NLS-1$
         homeGames.setSelected(filter.isHomeGames());
         homeGames.setOpaque(false);
@@ -149,6 +157,17 @@ public class AutoFilterPanel extends JPanel {
         qualifier.setSelected(filter.isQualifier());
         qualifier.setOpaque(false);
         filters.add(qualifier);
+        
+        filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.MastersGame"))); //$NON-NLS-1$
+        masters.setSelected(filter.isQualifier());
+        masters.setOpaque(false);
+        filters.add(masters);
+        
+        
+        filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.TournamentGame"))); //$NON-NLS-1$
+        tournament.setSelected(filter.isTournament());
+        tournament.setOpaque(false);
+        filters.add(tournament);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Max_Number"))); //$NON-NLS-1$
         number.setText(filter.getNumber() + "");
