@@ -133,7 +133,7 @@ public class MatchList {
             return false;
         }
 
-        if (!filter.isTournament() && 
+        if (!filter.isFriendly() && 
         		((matchType == MatchLineup.TESTSPIEL) || 
         			(matchType == MatchLineup.TESTPOKALSPIEL) ||
         			(matchType == MatchLineup.INT_TESTSPIEL) ||
@@ -142,6 +142,12 @@ public class MatchList {
         }
 
         if (!filter.isMasters() && (matchType == MatchLineup.INTCUPSPIEL)) {
+        	return false;
+        }
+        
+        if (!filter.isTournament() && 
+        		((matchType == MatchLineup.TOURNAMENTGROUP) ||
+        				(matchType == MatchLineup.TOURNAMENTPLAYOFF))) {
         	return false;
         }
         

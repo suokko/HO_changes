@@ -77,7 +77,7 @@ final class UserConfigurationTable extends AbstractTable {
 	
 	
 
-	String getStringValue(String key) {
+	private String getStringValue(String key) {
 		String value = null;
 		final StringBuffer sql = new StringBuffer(100);
 		sql.append("SELECT * FROM ");
