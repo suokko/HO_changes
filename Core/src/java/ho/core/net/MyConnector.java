@@ -15,6 +15,7 @@ import ho.core.file.xml.xmlTeamDetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
+import ho.core.model.match.MatchLineup;
 import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
 import ho.core.util.HOLogger;
@@ -59,9 +60,10 @@ public class MyConnector  {
 	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
 	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HOMainFrame.VERSION;
 	private static MyConnector m_clInstance;
-	private final static String VERSION_MATCHORDERS = "1.8";
 	private final static String VERSION_TRAINING = "1.5";
-	private final static String VERSION_MATCHLINEUP = "1.6";
+	private final static String VERSION_MATCHORDERS = "1.8";
+	private final static String VERSION_MATCHLINEUP = "1.8";
+	private final static String VERSION_MATCHDETAILS = "2.3";
 	private final static String VERSION_PLAYERS = "2.1";
 	private final static String VERSION_PLAYERDETAILS = "2.0";
 	private final static String VERSION_WORLDDETAILS = "1.4";
@@ -254,7 +256,7 @@ public class MyConnector  {
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchLineup(int matchId, int teamId) throws IOException {
+	public String getMatchLineup(int matchId, int teamId, int matchType) throws IOException {
 		String url = htUrl + "?file=matchlineup&version=" + VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
@@ -264,6 +266,12 @@ public class MyConnector  {
 		if (teamId > 0) {
 			url += ("&teamID=" + teamId);
 		}
+		
+		if ((matchType == MatchLineup.TOURNAMENTGROUP) || 
+				(matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
+			url += "&sourceSystem=htointegrated";
+		}
+		
 		return getCHPPWebFile(url);
 	}
 
@@ -293,11 +301,15 @@ public class MyConnector  {
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchdetails(int matchId) throws IOException {
-		String url = htUrl + "?file=matchdetails";
+	public String getMatchdetails(int matchId, int matchType) throws IOException {
+		String url = htUrl + "?file=matchdetails&version=" + VERSION_MATCHDETAILS;
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
+		if ((matchType == MatchLineup.TOURNAMENTGROUP) || 
+				(matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
+			url += "&sourceSystem=htointegrated";
+		}		
 		url += "&matchEvents=true";
 		return getCHPPWebFile(url);
 	}
@@ -306,7 +318,7 @@ public class MyConnector  {
 	 * Get Matches
 	 */
 	public String getMatches(int teamId, boolean forceRefresh) throws IOException {
-		String url = htUrl + "?file=matches";
+		String url = htUrl + "?file=matches&version=2.6";
 
 		if (teamId > 0)
 			url += "&teamID=" + teamId;

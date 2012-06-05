@@ -17,6 +17,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchLineup;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
@@ -331,7 +332,7 @@ final public class UserColumnFactory {
 			@Override
 			public IHOTableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
-				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp()]),
+				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[convertMatchTypetoIndex(match.getMatchTyp())]),
                         match.getMatchTyp(), ColorLabelEntry.FG_STANDARD,
                         background, SwingConstants.CENTER);
 			}
@@ -339,7 +340,7 @@ final public class UserColumnFactory {
 			@Override
 			public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
-				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[spielerCBItem.getMatchTyp()]),
+				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[convertMatchTypetoIndex(spielerCBItem.getMatchTyp())]),
                         spielerCBItem.getMatchTyp(),
                         ColorLabelEntry.FG_STANDARD, background,
                         SwingConstants.CENTER);
@@ -725,5 +726,17 @@ final public class UserColumnFactory {
 	}
 	
 	
-	
+	public static int convertMatchTypetoIndex(int matchType) {
+		switch (matchType) {
+		case MatchLineup.TOURNAMENTGROUP: 
+					matchType = 13;
+					break;
+		case MatchLineup.TOURNAMENTPLAYOFF: 
+					matchType = 14;
+					break;
+		default:
+					break;
+		}
+		return matchType;
+	}
 }

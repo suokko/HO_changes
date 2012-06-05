@@ -63,7 +63,7 @@ public class MatchPopulator {
         	bOK = true;
             Match element = iter.next();
             if (!DBManager.instance().isMatchVorhanden(element.getMatchId()) && HattrickManager.isDownloadAllowed(element)) {
-                bOK = downloadMatch(element.getMatchId());
+            	bOK = downloadMatch(element.getMatchId(), element.getMatchType());
             }
             if (bOK) {
 	            try {
@@ -150,8 +150,8 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private boolean downloadMatch(int matchId) {
-        return HelperWrapper.instance().downloadMatchData(matchId);
+    private boolean downloadMatch(int matchId, int matchType) {
+        return HelperWrapper.instance().downloadMatchData(matchId, matchType);
     }
 
     /**

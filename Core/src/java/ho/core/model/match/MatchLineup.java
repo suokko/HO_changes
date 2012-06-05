@@ -59,6 +59,13 @@ public class MatchLineup {
 
 	/** TODO Missing Parameter Documentation */
 	
+ 
+    // Tournament playoff matches
+	public static final int TOURNAMENTPLAYOFF = 51;
+    
+    // Tournament group matches
+    public static final int TOURNAMENTGROUP = 50;
+     
 	//	National teams friendly.
 	public static final int TESTLAENDERSPIEL = 12;
 
@@ -84,7 +91,7 @@ public class MatchLineup {
 
 	/** TODO Missing Parameter Documentation */
 	
-	//	Not currently in use, but reserved for international competition matches with cup rules (may or may not be implemented at some future point).	
+	//	Masters.	
 	public static final int INTCUPSPIEL = 7;
 
 	/** TODO Missing Parameter Documentation */
@@ -394,6 +401,12 @@ public class MatchLineup {
             case MatchLineup.TESTSPIEL:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
 
+            case MatchLineup.TOURNAMENTGROUP:
+            	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
+            	
+            case MatchLineup.TOURNAMENTPLAYOFF :
+            	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
+                
             //Fehler?
             default:
                 return "";

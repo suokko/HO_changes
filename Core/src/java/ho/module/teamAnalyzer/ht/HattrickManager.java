@@ -2,21 +2,18 @@
 package ho.module.teamAnalyzer.ht;
 
 import ho.core.file.xml.XMLManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
-import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -37,62 +34,9 @@ public class HattrickManager {
      * @param teamId teamid to download matches for
      */
     public static void downloadMatches(final int teamId) {
-    	final HashSet<String> matches = new HashSet<String>();
-    	try {
-    		boolean download = true;
-    		String xml;
-    		final Calendar start = Calendar.getInstance();
-			final Date oneyearold = new Date(start.getTimeInMillis() - 31536000000l);
-    		final Calendar end = Calendar.getInstance();
-    		start.setLenient(true);
-    		start.add(Calendar.DAY_OF_YEAR, -(7*7)); // 7 week = half season
-    		end.setLenient(true);
-    		end.add(Calendar.DAY_OF_YEAR, 1);
-    		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    		String url;
-
-    		while (download) {
-    			xml = MyConnector.instance().getMatchArchiv(teamId, sdf.format(start.getTime()), sdf.format(end.getTime()));
-    			
-    			if (xml.length() == 0){
-    				download = false;
-    				return;
-    			}
-    				
-    			XMLManager parser = XMLManager.instance();
-    			Document dom = parser.parseString(xml);
-    			Node matchesList = dom.getElementsByTagName("MatchList").item(0);
-
-    			for (int i = 0; i < matchesList.getOwnerDocument().getElementsByTagName("MatchID").getLength(); i++) {
-    				if (matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i) == null) {
-    					continue;
-    				}
-    				String matchId = matchesList.getOwnerDocument().getElementsByTagName("MatchID").item(i).getFirstChild().getNodeValue();
-    				if (!matches.contains(matchId)) {
-    					if (HelperWrapper.instance().downloadMatchData(Integer.parseInt(matchId))) {
-	    					matches.add(matchId);
-	    					if (matches.size() >= Math.max(20, TeamAnalyzerPanel.filter.getNumber() * 3)) { // [3 x limit] matches ought to be enough for anybody.
-	    						download = false;
-	    						return;
-	    					}
-    					} else {
-    						download = false;
-    						return;
-    					}
-    				} else {
-    					continue;
-    				}
-    			}
-    			// next 7 weeks
-    			end.setTime(start.getTime());
-        		start.add(Calendar.DAY_OF_YEAR, -(7*7));
-        		if (end.getTime().before(oneyearold)) {
-        			download = false;
-        		}
-    		}
-        } catch (Exception e) {
-            log("Error(downloadAdditionalMatches): " + e.getMessage());
-        }
+    		final GregorianCalendar start = new GregorianCalendar();
+    		start.add(Calendar.MONTH, -3);
+    		HOMainFrame.instance().getOnlineWorker().getMatchArchive(teamId, start);
     }
 
     /**

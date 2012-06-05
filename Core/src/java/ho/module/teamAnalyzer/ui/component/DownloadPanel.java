@@ -3,17 +3,21 @@ package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchLineup;
 import ho.core.model.match.Matchdetails;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 
 /**
@@ -29,6 +33,10 @@ public class DownloadPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -3212179990708350342L;
 
+	String[] matchTypes = {HOVerwaltung.instance().getLanguageString("NormalMatch"),
+   		 HOVerwaltung.instance().getLanguageString("TournamentMatch")};
+
+	
 	/** Download Button */
     JButton downloadButton = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
 
@@ -40,7 +48,11 @@ public class DownloadPanel extends JPanel {
 
     /** The matchid text field */
     NumberTextField matchId = new NumberTextField(10);
-
+    
+    JRadioButton normal = new JRadioButton(HOVerwaltung.instance().getLanguageString("NormalMatch"));
+    JRadioButton tournament = new JRadioButton(HOVerwaltung.instance().getLanguageString("TournamentMatch"));
+    ButtonGroup radioGroup = new ButtonGroup();
+    
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -57,23 +69,52 @@ public class DownloadPanel extends JPanel {
      */
     private void jbInit() {
         jLabel1.setText(HOVerwaltung.instance().getLanguageString("GameID"));
-        setLayout(new BorderLayout());
-        add(jLabel1, BorderLayout.NORTH);
-        add(downloadButton, BorderLayout.CENTER);
-        add(matchId, BorderLayout.WEST);
-        add(status, BorderLayout.SOUTH);
-
+        setLayout(new GridBagLayout());
+        
+        final GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
+        
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(jLabel1, constraints);
+        
+        constraints.gridx = 2;
+        add(matchId, constraints);
+        
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        normal.setSelected(true);
+        radioGroup.add(normal);
+        add(normal, constraints);
+        
+        constraints.gridy = 4;
+        radioGroup.add(tournament);
+        add(tournament, constraints);
+        
+        constraints.gridy = 6;
+        add(downloadButton, constraints);
+        
+        constraints.gridy = 7;
+        add(status, constraints);
+        
         downloadButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                     int id = matchId.getValue();
-
-                    if (id == 0) {
-                        status.setText(HOVerwaltung.instance().getLanguageString("ImportError"));
-
-                        return;
+                    int type = MatchLineup.LIGASPIEL;
+                    if (tournament.isSelected()) {
+                    	type = MatchLineup.TOURNAMENTGROUP;
                     }
+                    
+//                    if (id == 0) {
+//                        status.setText(HOVerwaltung.instance().getLanguageString("ImportError"));
+//
+//                        return;
+//                    }
 
-                    if (HelperWrapper.instance().downloadMatchData(id)) {
+                    if (HelperWrapper.instance().downloadMatchData(id, type)) {
 	
                     	Matchdetails md = DBManager.instance().getMatchDetails(id);
 	
@@ -87,4 +128,6 @@ public class DownloadPanel extends JPanel {
                 }
             });
     }
+    
+    
 }

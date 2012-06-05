@@ -1,7 +1,9 @@
 // %3124307367:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
-import java.util.ArrayList;
+
+import ho.core.module.config.ModuleConfig;
+
 import java.util.List;
 
 
@@ -17,37 +19,45 @@ public class Filter {
     private List<String> matches;
 
     /** Automatic or manual selection enabled */
-    private boolean automatic;
+    private boolean automatic = true;
 
     /** Consider away games */
-    private boolean awayGames;
+    private boolean awayGames = true;
 
     /** Consider cup games */
-    private boolean cup;
+    private boolean cup = true;
 
     /** Consider lost games */
-    private boolean defeat;
+    private boolean defeat = true;
 
     /** Consider draw games */
-    private boolean draw;
+    private boolean draw = true;
 
     /** Consider friendly games */
-    private boolean friendly;
+    private boolean friendly = false;
 
     /** Consider home games */
-    private boolean homeGames;
+    private boolean homeGames = true;
 
     /** Consider league games */
-    private boolean league;
+    private boolean league = true;
 
     /** Consider qualifier games */
-    private boolean qualifier;
+    private boolean qualifier = true;
 
     /** Consider won games */
-    private boolean win;
+    private boolean win = true;
+    
+    /** Consider tournament games */
+    private boolean tournament = false;
+    
+    /** Consider masters games */
+    private boolean masters = false;
 
     /** Maximum number of games */
     private int number = 10;
+    
+    private static final String STORAGE_FIELD_NAME = "TAfilter";
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -55,18 +65,8 @@ public class Filter {
      * Creates a new Filter object.
      */
     public Filter() {
-        automatic = true;
-        setNumber(10);
-        setAwayGames(true);
-        setHomeGames(true);
-        setWin(true);
-        setDefeat(true);
-        setDraw(true);
-        setLeague(true);
-        setCup(false);
-        setFriendly(false);
-        setQualifier(false);
-        matches = new ArrayList<String>();
+        loadFilters();
+        
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -134,6 +134,14 @@ public class Filter {
     public boolean isLeague() {
         return league;
     }
+    
+    public void setMasters(boolean b) {
+    	masters = b;
+    }
+    
+    public boolean isMasters() {
+    	return masters;
+    }
 
     public void setMatches(List<String> list) {
         matches = list;
@@ -160,6 +168,14 @@ public class Filter {
     public boolean isQualifier() {
         return qualifier;
     }
+    
+    public void setTournament (boolean b) {
+    	tournament = b;
+    }
+    
+    public boolean isTournament () {
+    	return tournament;
+    }
 
     public void setWin(boolean b) {
         win = b;
@@ -168,9 +184,73 @@ public class Filter {
     public boolean isWin() {
         return win;
     }
+    
+    private void loadFilters() {
+    	
+    	/* The filter values are stored in a string where 1 signals true, and everything else false. A single
+    	 * character per value, ending with 2 digits for the number of matches. The order is:
+    	 * 
+    	 * 0 automatic
+    	 * 1 awayGames
+    	 * 2 homeGames
+    	 * 3 Win
+    	 * 4 Defeat
+    	 * 5 Draw
+    	 * 6 League
+    	 * 7 Cup
+    	 * 8 Friendly
+    	 * 9 Qualifier
+    	 * 10 Tournament
+    	 * 11 Masters
+    	 * 12-13 number (two digit number)
+    	 */
+    	
+    	String filters = ModuleConfig.instance().getString(STORAGE_FIELD_NAME);
+  
+    	if (filters == null || filters.length() != 14) {
+    		return;
+    	}
+    	
+    	automatic = (filters.charAt(0) == '1') ? true : false;
+    	awayGames = (filters.charAt(1) == '1') ? true : false;
+    	homeGames = (filters.charAt(2) == '1') ? true : false;
+    	win = (filters.charAt(3) == '1') ? true : false;
+    	defeat = (filters.charAt(4) == '1') ? true : false;
+    	draw = (filters.charAt(5) == '1') ? true : false;
+    	league = (filters.charAt(6) == '1') ? true : false;
+    	cup = (filters.charAt(7) == '1') ? true : false;
+    	friendly = (filters.charAt(8) == '1') ? true : false;
+    	qualifier = (filters.charAt(9) == '1') ? true : false;
+    	tournament = (filters.charAt(10) == '1') ? true : false;
+    	masters = (filters.charAt(11) == '1') ? true : false;
+    	number = Integer.parseInt(filters.substring(12, 14));
+    }
+    
+    public void saveFilters() {
+    	// See loadFilters() for description of the fields
+    	String filter = "";
+    	
+    	filter += (automatic) ? "1" : "0";
+    	filter += (awayGames) ? "1" : "0";
+    	filter += (homeGames) ? "1" : "0";
+    	filter += (win) ? "1" : "0";
+    	filter += (defeat) ? "1" : "0";
+    	filter += (draw) ? "1" : "0";
+    	filter += (league) ? "1" : "0";
+    	filter += (cup) ? "1" : "0";
+    	filter += (friendly) ? "1" : "0";
+    	filter += (qualifier) ? "1" : "0";
+    	filter += (tournament) ? "1" : "0";
+    	filter += (masters) ? "1" : "0";
+    	filter += String.valueOf(number);
+    	
+    	ModuleConfig.instance().setString(STORAGE_FIELD_NAME, filter);
+    	ModuleConfig.instance().save();
+    }
+    
 
     /**
-     * toString methode: creates a String representation of the object
+     * toString method: creates a String representation of the object
      *
      * @return the String representation
      */
@@ -187,6 +267,8 @@ public class Filter {
         buffer.append(", defeat = " + defeat);
         buffer.append(", automatic = " + automatic);
         buffer.append(", matches = " + matches);
+        buffer.append(", tournament = " + tournament);
+        buffer.append(", master = " + masters);
         buffer.append("]");
 
         return buffer.toString();

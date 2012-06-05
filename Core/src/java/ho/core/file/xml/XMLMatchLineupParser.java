@@ -132,10 +132,15 @@ public class XMLMatchLineupParser {
 			ml.setGastName(ele.getElementsByTagName("AwayTeamName").item(0).getFirstChild().getNodeValue());
 			ele = (Element) root.getElementsByTagName("MatchType").item(0);
 			ml.setMatchTyp(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-			ele = (Element) root.getElementsByTagName("Arena").item(0);
-			ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0).getFirstChild()
-					.getNodeValue()));
-			ml.setArenaName(ele.getElementsByTagName("ArenaName").item(0).getFirstChild().getNodeValue());
+			
+			if ((ml.getMatchTyp() != MatchLineup.TOURNAMENTGROUP) && 
+					(ml.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
+				ele = (Element) root.getElementsByTagName("Arena").item(0);
+				ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0).getFirstChild()
+						.getNodeValue()));
+				ml.setArenaName(ele.getElementsByTagName("ArenaName").item(0).getFirstChild().getNodeValue());
+			}
+			
 			ele = (Element) root.getElementsByTagName("MatchDate").item(0);
 			ml.setSpielDatum(ele.getFirstChild().getNodeValue());
 
@@ -204,12 +209,19 @@ public class XMLMatchLineupParser {
 
 		// nur wenn Spieler existiert
 		if (spielerID > 0) {
+			 tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
+		     name = tmp.getFirstChild().getNodeValue();
+		     tmp = (Element) ele.getElementsByTagName("LastName").item(0);
+		     name = name + " " + tmp.getFirstChild().getNodeValue();
+			
+			
 			tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
 
-			// Fix für xml BUG von HT
-			if (tmp.getFirstChild() != null) {
-				name = tmp.getFirstChild().getNodeValue();
-			}
+//			// Fix für xml BUG von HT
+//			if (tmp.getFirstChild() != null) {
+//				name = tmp.getFirstChild().getNodeValue();
+//
+//			}
 
 			// tactic is only set for those in the lineup (and not for the
 			// keeper).
@@ -500,8 +512,10 @@ public class XMLMatchLineupParser {
 
 		// nur wenn Spieler existiert
 		if (spielerID > 0) {
-			tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
-			name = tmp.getFirstChild().getNodeValue();
+			 tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
+		     name = tmp.getFirstChild().getNodeValue();
+		     tmp = (Element) ele.getElementsByTagName("LastName").item(0);
+		     name = name + " " + tmp.getFirstChild().getNodeValue();
 
 			// tactic is only set for those in the lineup (and not for the
 			// keeper).

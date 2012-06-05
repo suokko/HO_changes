@@ -136,17 +136,7 @@ public class SystemManager {
         NameManager.clean();
         TeamAnalyzerPanel.filter.setMatches(new ArrayList<String>());
 
-        if (getActiveTeamId() == getCupOpponentId()) {
-        	 TeamAnalyzerPanel.filter.setLeague(false);
-        	 TeamAnalyzerPanel.filter.setQualifier(false);
-        	 TeamAnalyzerPanel.filter.setCup(true);
-        	 TeamAnalyzerPanel.filter.setFriendly(true);
-        } else {
-        	 TeamAnalyzerPanel.filter.setLeague(true);
-        	 TeamAnalyzerPanel.filter.setQualifier(true);
-        	 TeamAnalyzerPanel.filter.setCup(false);
-        	 TeamAnalyzerPanel.filter.setFriendly(false);
-        }
+       // Filter reset is no longer necessary
 
         ReportManager.clean();
         MatchPopulator.clean();

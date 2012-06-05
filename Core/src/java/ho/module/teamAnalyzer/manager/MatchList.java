@@ -1,6 +1,7 @@
 // %2944446152:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
+import ho.core.model.match.MatchLineup;
 import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
 
@@ -120,22 +121,30 @@ public class MatchList {
             return false;
         }
 
-        if (!filter.isLeague() && (matchType == 1)) {
+        if (!filter.isLeague() && (matchType == MatchLineup.LIGASPIEL)) {
             return false;
         }
 
-        if (!filter.isCup() && (matchType == 3)) {
+        if (!filter.isCup() && (matchType == MatchLineup.POKALSPIEL)) {
             return false;
         }
 
-        if (!filter.isQualifier() && (matchType == 2)) {
+        if (!filter.isQualifier() && (matchType == MatchLineup.QUALISPIEL)) {
             return false;
         }
 
-        if (!filter.isFriendly() && (matchType > 3)) {
+        if (!filter.isTournament() && 
+        		((matchType == MatchLineup.TESTSPIEL) || 
+        			(matchType == MatchLineup.TESTPOKALSPIEL) ||
+        			(matchType == MatchLineup.INT_TESTSPIEL) ||
+        			(matchType == MatchLineup.INT_TESTCUPSPIEL))) {
             return false;
         }
 
+        if (!filter.isMasters() && (matchType == MatchLineup.INTCUPSPIEL)) {
+        	return false;
+        }
+        
         return true;
     }
     

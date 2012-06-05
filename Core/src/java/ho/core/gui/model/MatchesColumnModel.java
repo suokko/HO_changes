@@ -101,6 +101,10 @@ public final class MatchesColumnModel extends HOColumnModel {
             case MatchLineup.TESTSPIEL:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_FRIENDLY_BG);
 
+            case MatchLineup.TOURNAMENTGROUP:
+            	return ThemeManager.getColor(HOColorName.MATCHTYPE_TOURNAMENT_GROUP_BG);
+            case MatchLineup.TOURNAMENTPLAYOFF:
+            	return ThemeManager.getColor(HOColorName.MATCHTYPE_TOURNAMENT_FINALS_BG);
             //Fehler?
             default:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_BG);
