@@ -1,6 +1,5 @@
 package ho.core.training;
 
-import ho.core.constants.TrainingType;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
@@ -9,10 +8,10 @@ import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchStatistics;
 import ho.core.model.player.Spieler;
-import ho.core.training.type.*;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
 import ho.core.util.HTCalendarFactory;
+
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -167,43 +166,7 @@ public class TrainingManager {
         }
 
         Calendar trainingDate = train.getTrainingDate();
-        WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
-        switch (train.getTrainingType()){
-	        case TrainingType.CROSSING_WINGER:
-				wt = CrossingWeeklyTraining.instance();
-				break;
-			case TrainingType.DEF_POSITIONS:
-				wt = DefensivePositionsWeeklyTraining.instance();
-				break;
-			case TrainingType.DEFENDING:
-				wt = DefendingWeeklyTraining.instance();
-				break;
-			case TrainingType.GOALKEEPING:
-				wt = GoalkeepingWeeklyTraining.instance();
-				break;
-			case TrainingType.PLAYMAKING:
-				wt = PlaymakingWeeklyTraining.instance();
-				break;
-			case TrainingType.SCORING:
-				wt = ScoringWeeklyTraining.instance();
-				break;
-			case TrainingType.SET_PIECES:
-				wt = SetPiecesWeeklyTraining.instance();
-				break;
-			case TrainingType.SHOOTING:
-				wt = ShootingWeeklyTraining.instance();
-				break;
-			case TrainingType.SHORT_PASSES:
-				wt = ShortPassesWeeklyTraining.instance();
-				break;
-			case TrainingType.THROUGH_PASSES:
-				wt = ThroughPassesWeeklyTraining.instance();
-				break;
-			case TrainingType.WING_ATTACKS:
-				wt = WingAttacksWeeklyTraining.instance();
-				break; 
-        }
-        
+        WeeklyTrainingType wt = WeeklyTrainingType.instance(train.getTrainingType());
         try {
         	List<Integer> matches = getMatchesForTraining(trainingDate);
         	int myID = HOVerwaltung.instance().getModel().getBasics().getTeamId();

@@ -5,6 +5,7 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.UserParameter;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
+import ho.core.training.WeeklyTrainingType;
 
 public final class DefendingWeeklyTraining extends WeeklyTrainingType {
 	protected static DefendingWeeklyTraining m_ciInstance = null;
