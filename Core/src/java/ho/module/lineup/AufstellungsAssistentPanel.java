@@ -171,6 +171,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		} else if (actionEvent.getSource().equals(m_jbElfmeter)) {
 			new ElfmeterSchuetzenDialog(mainFrame);
+			new de.hattrickorganizer.model.matches.StatisticsTestFrame().show();
+			
+			
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
 				|| actionEvent.getSource().equals(m_jchLast)) {
 			mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
