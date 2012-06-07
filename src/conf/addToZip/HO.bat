@@ -8,7 +8,7 @@
 :: ---------------------------------------------------------------
 
 :: Set Debug mode [on/off]
-set DEBUG=on
+set DEBUG=off
 
 :: Set JavaPath, i.e. the path that contains java.exe/javaw.exe
 :: e.g. set JAVA_PATH=c:\Program Files\Java\jre1.6.0_07
