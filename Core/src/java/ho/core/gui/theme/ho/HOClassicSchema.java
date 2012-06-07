@@ -162,7 +162,7 @@ public class HOClassicSchema extends Schema implements HOIconName,HOColorName,HO
 		put(TRANSFER_IN,"gui/bilder/in.gif");
 		put(TRANSFER_OUT,"gui/bilder/out.gif");
 
-		put(TABBEDPANE_CLOSE,"gui/bilder/closeTab.gif");
+		put(TABBEDPANE_CLOSE,"gui/bilder/closetab.png");
 
 		put(ARROW_LEFT1,"gui/bilder/arrows/leftArrow1.gif");
 		put(ARROW_LEFT2,"gui/bilder/arrows/leftArrow2.gif");

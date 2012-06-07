@@ -19,35 +19,38 @@ final class TabCloseIcon implements Icon {
 	private transient Rectangle mPosition = null;
 	
 	TabCloseIcon(final JTabbedPane mTabbedPane){
-			mTabbedPane.addMouseListener( new MouseAdapter()
+		mTabbedPane.addMouseListener( new MouseAdapter()
+		{
+			@Override 
+			public void mouseReleased( MouseEvent e )
 			{
-				@Override 
-				public void mouseReleased( MouseEvent e )
+				// asking for isConsumed is *very* important, otherwise more than one tab might get closed!
+				if ( !e.isConsumed()  &&   mPosition.contains( e.getX(), e.getY() ) )
 				{
-					// asking for isConsumed is *very* important, otherwise more than one tab might get closed!
-					if ( !e.isConsumed()  &&   mPosition.contains( e.getX(), e.getY() ) )
-					{
-						final int index = mTabbedPane.getSelectedIndex();
-						mTabbedPane.remove( index );
-						e.consume();
-					}
+					final int index = mTabbedPane.getSelectedIndex();
+					mTabbedPane.remove( index );
+					e.consume();
 				}
-			});
+			}
+		});
 	}
 	
 	
 	/**
 	 * when painting, remember last position painted.
+	 * add extra 6 pixels to make sure the icon is on the right of the tab
 	 */
+	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y){
 		mPosition = new Rectangle( x,y, getIconWidth(), getIconHeight() );
-		mIcon.paintIcon(c, g, x, y );
+		mIcon.paintIcon(c, g, x + 6, y );
 	}
 	
 	
 	/**
 	 * just delegate
 	 */
+	@Override
 	public int getIconWidth(){
 		return mIcon.getIconWidth();
 	}
@@ -55,6 +58,7 @@ final class TabCloseIcon implements Icon {
 	/**
 	 * just delegate
 	 */
+	@Override
 	public int getIconHeight(){
 		return mIcon.getIconHeight();
 	}
