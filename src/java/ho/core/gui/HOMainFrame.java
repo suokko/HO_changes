@@ -90,6 +90,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static final double VERSION = 1.432d;
 	private static int revision = 0;
 
+	private static final boolean DEVELOPMENT = true;
+	
 	private static HOMainFrame m_clHOMainFrame;
 
 
