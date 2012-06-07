@@ -444,6 +444,25 @@ public class HOModel {
             }
         }
 
+        // Find the number of training weeks - needed for skilldrops
+        int weeks = 0;
+        if ((trainingType > 0) && (previousTrainingDate != null)) {
+	        final Calendar cal = Calendar.getInstance(Locale.UK);
+			cal.setTimeInMillis(actualTrainingDate.getTime());
+			int actyear = cal.get(Calendar.YEAR);
+			int actweek = cal.get(Calendar.WEEK_OF_YEAR);
+			cal.setTimeInMillis(previousTrainingDate.getTime());
+			for (int j=0; j < 10; j++) {
+				//We don't care to look more than 10 weeks back...
+				cal.add(Calendar.WEEK_OF_YEAR, 1);
+				weeks++;
+				if ((actyear == cal.get(Calendar.YEAR)) ||
+						(actweek == cal.get(Calendar.WEEK_OF_YEAR)))		{
+					break;
+				}
+			}
+        }
+        
         final Map<String,Spieler> players = new HashMap<String,Spieler>();
 
         for (Iterator<Spieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
@@ -522,10 +541,30 @@ public class HOModel {
 	                if (trainingType > 0)
 	                	logPlayerProgress (old, player);
 
-	                /**
-	                 * End of debug
-	                 */
 				}
+				/**
+				 * End of debug
+				 */
+				
+				/* Time to perform skill drop 
+				 * 
+				 * */
+				
+				if (weeks > 0) {
+					// Get the previous version. We will try up to 10 hrf back before giving up.
+					
+					int id = m_iID;
+					for (int j=0; j<10; j++) {
+						id = DBManager.instance().getPreviousHRF(id);
+						
+						Spieler lastWeekPlayer = DBManager.instance().getSpielerFromHrf(id, player.getSpielerID());
+						if (lastWeekPlayer != null) {
+							player.performSkilldrop(lastWeekPlayer, Math.min(weeks, 4));
+							break;
+						}
+					}
+				}
+	
             } catch (Exception e) {
                 HOLogger.instance().log(getClass(),e);
                 HOLogger.instance().log(getClass(),"Model calcSubskill: " + e);
