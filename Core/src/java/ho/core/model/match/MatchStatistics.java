@@ -248,8 +248,8 @@ public class MatchStatistics {
 				}
 			}
 		}
-		
-		return endMinute;
+		// Paranoia. A match is 90 minutes or more, and no 100% trust in highlights.
+		return Math.max(90, endMinute);
 	}
 
 	private boolean isOldie() {
