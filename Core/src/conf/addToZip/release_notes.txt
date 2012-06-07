@@ -4,6 +4,7 @@ Changelist HO! 1.432
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 - Made player name column width adjustable.
 - Added Minute based training
+- Tweaks to tab close buttons
 
 Language updates:
 -----------------
