@@ -148,6 +148,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return ((CBItem) m_jcbWetter.getSelectedItem()).getId();
 	}
 
+	@Override
 	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
 		final HOModel hoModel 		= HOVerwaltung.instance().getModel();
 		final HOMainFrame mainFrame = ho.core.gui.HOMainFrame.instance();
@@ -171,9 +172,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		} else if (actionEvent.getSource().equals(m_jbElfmeter)) {
 			new ElfmeterSchuetzenDialog(mainFrame);
-			new de.hattrickorganizer.model.matches.StatisticsTestFrame().show();
-			
-			
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
 				|| actionEvent.getSource().equals(m_jchLast)) {
 			mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
@@ -212,6 +210,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 	}
 
+	@Override
 	public final void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			//Wetter -> Refresh
