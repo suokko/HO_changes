@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
-
-<pluginupdater>
-  <mypluginID>11</mypluginID>
-  <dependent>
-    <pluginID>24</pluginID>
-  </dependent>  
-</pluginupdater> 
