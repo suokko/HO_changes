@@ -103,8 +103,8 @@ public class TrainingManager {
             if (trainingDate.getTimeInMillis() >= timestamp.getTime()) {
                 return output;
             }
-            curTraining = (TrainingPerPlayer)calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
-            if ((curTraining.getTrainingPair() != null) && (output != null)) {
+            curTraining = calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
+            if (curTraining != null && curTraining.getTrainingPair() != null && output != null) {
             	output.addValues(curTraining);
             }
            	if (TRAININGDEBUG)
@@ -144,7 +144,9 @@ public class TrainingManager {
         TrainingPerPlayer output = new TrainingPerPlayer(spieler);
         if (timestamp != null)
         	output.setTimestamp(timestamp);
-
+        if (train == null || train.getTrainingType() < 0) {
+            return output;
+        }
         if (TRAININGDEBUG) {
         	HTCalendar htc1 = HTCalendarFactory.createTrainingCalendar();
         	HTCalendar htc2 = HTCalendarFactory.createTrainingCalendar();
@@ -161,10 +163,7 @@ public class TrainingManager {
         			"Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")
         			+ ", trainDate="+train.getTrainingDate().toString()+c2s);
         }
-        if (train == null || train.getTrainingType() < 0) {
-            return output;
-        }
-
+        
         Calendar trainingDate = train.getTrainingDate();
         WeeklyTrainingType wt = WeeklyTrainingType.instance(train.getTrainingType());
         try {
@@ -208,24 +207,15 @@ public class TrainingManager {
                 	tp.addSecondarySkillOsmosisTrainingMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillOsmosisTrainingPositions()));
                 }
             }
-        	if (tp.PlayerHasPlayed()) {
-            	// Player has played
-                TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
-        		if (TrainingManager.TRAININGDEBUG) {
-    				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
-                		+": Player " + spieler.getName() + " (" + playerID + ")"
-                		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
-                		+ wt.getPrimaryTraining(tp) + " primary training points and " 
-                		+ wt.getSecondaryTraining(tp) + " secondary training points");
-        		}
-                output.setTrainingPair(trp);
-            } else {
-            	if (TrainingManager.TRAININGDEBUG) {
-    				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
-                		+": Player " + spieler.getName() + " (" + playerID + ")"
-                		+" did not play");
-        		}
-            }
+            TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+    		if (TrainingManager.TRAININGDEBUG) {
+				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
+            		+": Player " + spieler.getName() + " (" + playerID + ")"
+            		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
+            		+ wt.getPrimaryTraining(tp) + " primary training points and " 
+            		+ wt.getSecondaryTraining(tp) + " secondary training points");
+    		}
+            output.setTrainingPair(trp);
             output.setTrainingWeek(train);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
