@@ -6,6 +6,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfigDialog;
+import ho.core.option.OptionManager;
 import ho.tool.updater.TableEditor;
 import ho.tool.updater.TableModel;
 
@@ -90,11 +91,13 @@ class ModuleConfigPanelTable extends JTable implements ActionListener{
 		return tmp;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()instanceof JComboBox){
 			JComboBox box = (JComboBox)e.getSource();
 			IModule module = (IModule)box.getClientProperty("MODULE");
 			int index = box.getSelectedIndex();
+			OptionManager.instance().setRestartNeeded();
 			module.setStatus(index);
 			refresh();
 		} else if(e.getSource() instanceof JButton){
