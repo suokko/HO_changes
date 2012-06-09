@@ -25,6 +25,7 @@ import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
 import ho.module.lineup.AufstellungsAssistentPanel;
+import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
 import ho.module.matches.SpielePanel;
 import ho.module.playerOverview.SpielerUebersichtsPanel;
@@ -34,6 +35,7 @@ import ho.tool.ToolManager;
 import ho.tool.updater.UpdateController;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -277,7 +279,12 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 
 	public LineupPanel getAufstellungsPanel() {
-		return ((LineupPanel)getTabbedPane().getModulePanel(IModule.LINEUP));
+		Container c = getTabbedPane().getModulePanel(IModule.LINEUP);
+		if (c instanceof LineupPanel) {
+			return (LineupPanel)c;
+		} else {
+			return ((LineupMasterView)c).getLineupPanel();
+		}
 	}
 
 	public InfoPanel getInfoPanel() {
