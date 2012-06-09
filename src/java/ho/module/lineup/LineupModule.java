@@ -1,5 +1,6 @@
 package ho.module.lineup;
 
+import ho.HO;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
@@ -10,10 +11,10 @@ import javax.swing.KeyStroke;
 
 public final class LineupModule extends DefaultModule {
 
-	public LineupModule(){
+	public LineupModule() {
 		super(true);
 	}
-	
+
 	@Override
 	public int getModuleId() {
 		return LINEUP;
@@ -26,9 +27,13 @@ public final class LineupModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
+		if (HO.isDevelopment()) {
+			return new LineupMasterView();
+		}
 		return new LineupPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0);
 	}
