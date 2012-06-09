@@ -21,10 +21,9 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-
 /**
  * Main HO starter class.
- *
+ * 
  * @author thomas.werth
  */
 public class HO {
@@ -38,43 +37,33 @@ public class HO {
 	/** Is this a development version? */
 	private static final boolean DEVELOPMENT = true;
 	public static final int SPRACHVERSION = 2; // language version
-    /**
-     * Creates a new instance of ho
-     */
-    public HO() {
-    }
 
 	public static boolean isDevelopment() {
 		return DEVELOPMENT;
 	}
-    /**
-     * Main method to start a HOMainFrame.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+
+	/**
+	 * Main method to start a HOMainFrame.
+	 * 
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String[] args) {
 		final long start = System.currentTimeMillis();
 
-		// Schnauze!
-		// nur wenn Kein Debug
 		if ((args != null) && (args.length > 0)) {
-			String debugLvl = args[0].trim();
+			String debugLvl = args[0].trim().toUpperCase();
 
-			if (debugLvl.equalsIgnoreCase("INFO")) {
+			if (debugLvl.equals("INFO")) {
 				HOLogger.instance().setLogLevel(HOLogger.INFORMATION);
-			} else if (debugLvl.equalsIgnoreCase("DEBUG")) {
+			} else if (debugLvl.equals("DEBUG")) {
 				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
-			} else if (debugLvl.equalsIgnoreCase("WARNING")) {
+			} else if (debugLvl.equals("WARNING")) {
 				HOLogger.instance().setLogLevel(HOLogger.WARNING);
-			} else if (debugLvl.equalsIgnoreCase("ERROR")) {
+			} else if (debugLvl.equals("ERROR")) {
 				HOLogger.instance().setLogLevel(HOLogger.ERROR);
 			}
 		}
-
-		// Set HOE file
-		// This creates a file called ho.dir in $home
-		// Do we really need this? Removed by flattermann 2009-01-18
-		// FileExtensionManager.createDirFile();
 
 		// Usermanagement Login-Dialog
 		try {
@@ -93,7 +82,7 @@ public class HO {
 			HOLogger.instance().log(HOMainFrame.class, ex);
 		}
 
-		// //Spoofing test
+		// Spoofing test
 		try {
 			final BufferedReader buffy = new BufferedReader(new java.io.FileReader("ident.txt"));
 			final Vector<String> ids = new Vector<String>();
@@ -111,7 +100,8 @@ public class HO {
 
 			if (ids.size() > 0) {
 				// Math.floor(Math.random()*10)
-				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size())).toString();
+				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size()))
+						.toString();
 			}
 		} catch (Exception e) {
 		}
@@ -121,8 +111,7 @@ public class HO {
 			final Timestamp datum = new Timestamp(System.currentTimeMillis());
 
 			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
-				JOptionPane.showMessageDialog(
-						null,
+				JOptionPane.showMessageDialog(null,
 						"Your HO version is very old!\nPlease download a new version at "
 								+ MyConnector.getHOSite(), "Update strongly recommended",
 						JOptionPane.WARNING_MESSAGE);
@@ -134,24 +123,25 @@ public class HO {
 
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
-			interuptionsWindow.setInfoText(1,"Backup Database");
+			interuptionsWindow.setInfoText(1, "Backup Database");
 			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
 		}
 
 		// Standardparameter aus der DB holen
-		interuptionsWindow.setInfoText(2,"Initialize Database");
+		interuptionsWindow.setInfoText(2, "Initialize Database");
 		DBManager.instance().loadUserParameter();
 
 		// init Theme
 		try {
 			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
 		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class, "Can´t load Theme:" + UserParameter.instance().theme);
-			JOptionPane.showMessageDialog(null, e.getMessage(),
-					"Can´t load Theme: " + UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
+			HOLogger.instance().log(HOMainFrame.class,
+					"Can´t load Theme:" + UserParameter.instance().theme);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Can´t load Theme: "
+					+ UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
 		}
 		// Init!
-		interuptionsWindow.setInfoText(3,"Initialize Data-Administration");
+		interuptionsWindow.setInfoText(3, "Initialize Data-Administration");
 
 		// Beim ersten Start Sprache erfragen
 		if (DBManager.instance().isFirstStart()) {
@@ -164,52 +154,39 @@ public class HO {
 		}
 
 		// Check -> Sprachdatei in Ordnung?
-		interuptionsWindow.setInfoText(4,"Check Languagefiles");
+		interuptionsWindow.setInfoText(4, "Check Languagefiles");
 		HOVerwaltung.checkLanguageFile(UserParameter.instance().sprachDatei);
 
-		// font switch, because the default font doesn't support Georgian and
-		// Chinese characters
-		// TODO
-		
-
 		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
-		interuptionsWindow.setInfoText(5,"Load latest Data");
+		interuptionsWindow.setInfoText(5, "Load latest Data");
 		HOVerwaltung.instance().loadLatestHoModel();
-		interuptionsWindow.setInfoText(6,"Load  XtraDaten");
+		interuptionsWindow.setInfoText(6, "Load  XtraDaten");
 
 		// TableColumn
 		UserColumnController.instance().load();
 
 		// Die Währung auf die aus dem HRF setzen
-		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten()
+				.getCurrencyRate();
 
 		if (faktorgeld > -1) {
 			UserParameter.instance().faktorGeld = faktorgeld;
 		}
 
 		// Training
-		interuptionsWindow.setInfoText(7,"Initialize Training");
+		interuptionsWindow.setInfoText(7, "Initialize Training");
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
 		TrainingManager.instance().calculateTraining(DBManager.instance().getTrainingsVector());
 
-//		version 1.432: seems to be dead code
-//		interuptionsWindow.setInfoText(8,"Initialize Lineup");
-//		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-//		FileExtensionManager.extractLineup("Actual");
 		// Anzeigen
-		interuptionsWindow.setInfoText(8,"Prepare to show");
+		interuptionsWindow.setInfoText(8, "Prepare to show");
 		HOMainFrame.instance().setVisible(true);
 
 		// Startbild weg
 		interuptionsWindow.setVisible(false);
 
-		//version 1.432 seems to be dead code
-		//new ExtensionListener().run();
 		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
-
-    }
-    
-
+	}
 }
