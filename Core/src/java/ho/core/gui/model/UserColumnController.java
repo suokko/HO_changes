@@ -2,7 +2,7 @@ package ho.core.gui.model;
 
 import ho.core.db.DBManager;
 import ho.core.gui.comp.table.HOTableModel;
-import ho.module.lineup.LineupColumnModel;
+import ho.module.lineup.LineupTableModel;
 import ho.module.matches.statistics.MatchesOverviewColumnModel;
 
 import java.util.Vector;
@@ -29,7 +29,7 @@ public final class UserColumnController {
 	private  PlayerOverviewModel playerOverviewColumnModel	= null;
 	
 	/** model for lineup table **/
-	private  LineupColumnModel lineupColumnModel			= null;
+	private  LineupTableModel lineupColumnModel			= null;
 	
 	/** model for player analysis **/
 	private PlayerAnalysisModel playerAnalysis1Model 		= null;
@@ -120,9 +120,9 @@ public final class UserColumnController {
 	 * 
 	 * @return LineupColumnModel
 	 */
-	public final LineupColumnModel getLineupModel(){
+	public final LineupTableModel getLineupModel(){
 		if(lineupColumnModel == null){
-			lineupColumnModel = new LineupColumnModel(3);
+			lineupColumnModel = new LineupTableModel(3);
 			
 		}
 		return lineupColumnModel;

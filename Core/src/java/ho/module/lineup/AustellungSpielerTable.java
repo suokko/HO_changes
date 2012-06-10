@@ -34,7 +34,7 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
-	private LineupColumnModel tableModel;
+	private LineupTableModel tableModel;
 	private TableSorter tableSorter;
 
 	// ~ Constructors
@@ -85,7 +85,7 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 	 * TODO Missing Method Documentation
 	 */
 	public void reInitModel() {
-		((LineupColumnModel) (this.getSorter()).getModel()).reInitData();
+		((LineupTableModel) (this.getSorter()).getModel()).reInitData();
 	}
 
 	/**
