@@ -15,6 +15,7 @@ import ho.core.gui.theme.nimbus.NimbusTheme;
 import ho.core.model.FormulaFactors;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.player.Spieler;
 import ho.core.module.IModule;
 import ho.core.module.ModuleManager;
 import ho.core.module.config.ModuleConfig;
@@ -65,15 +66,12 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 /**
  * The Main HO window
  */
-public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener,
-		ChangeListener {
+public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener {
 	// ~ Static fields/initializers
 	// -----------------------------------------------------------------
 
@@ -221,6 +219,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			Class<?> applicationListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
 			Object appleListener = Proxy.newProxyInstance(getClass().getClassLoader(),
 					new Class[] { applicationListenerClass }, new InvocationHandler() {
+						@Override
 						public Object invoke(Object proxy, Method method, Object[] args) {
 							if (method.getName().equals("handleQuit")) {
 								HOLogger.instance()
@@ -271,10 +270,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return m_clHOMainFrame;
 	}
 
-	public void setActualSpieler(int playerID) {
-		getAufstellungsPanel().setPlayer(playerID);
-		getSpielerUebersichtPanel().setPlayer(playerID);
-		getSpielerUebersichtPanel().newSelectionInform();
+	public void setActualSpieler(Spieler spieler) {
+		getAufstellungsPanel().setPlayer(spieler.getSpielerID());
+		getSpielerUebersichtPanel().setPlayer(spieler);
 	}
 
 
@@ -337,6 +335,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Handle action events.
 	 */
+	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		HOMainFrame.setHOStatus(HOMainFrame.BUSY);
 		final Object source = actionEvent.getSource();
@@ -594,6 +593,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				showTabMenuItem.putClientProperty("MODULE", activeModules[i]);
 				showTabMenuItem.addActionListener(new ActionListener() {
 					
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						JMenuItem item = (JMenuItem)e.getSource();
 						IModule module = (IModule)item.getClientProperty("MODULE");
@@ -685,6 +685,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Reinit, set currency.
 	 */
+	@Override
 	public void reInit() {
 		// Die Währung auf die aus dem HRF setzen
 		try {
@@ -706,6 +707,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Wird bei einer Datenänderung aufgerufen
 	 */
+	@Override
 	public void refresh() {
 		// nix?
 	}
@@ -736,31 +738,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jtpTabbedPane.showTab(tabnumber);
 	}
 
-
-	/**
-	 * React on state changed events.
-	 * No need anymore
-	 */
-	public void stateChanged(ChangeEvent changeEvent) {
-//		// Wenn ein Tab als Temp gespeichert wurde dieses entfernen
-//		if (m_sToRemoveTabName != null) {
-//			final int index = m_jtpTabbedPane.indexOfTab(m_sToRemoveTabName);
-//
-//			if ((index >= 0) && (m_jtpTabbedPane.getTabCount() > index)) {
-//				// hier wegen rekursion
-//				m_sToRemoveTabName = null;
-//				m_jtpTabbedPane.removeTabAt(index);
-//			} else {
-//				HOLogger.instance().log(
-//						HOMainFrame.class,
-//						"Fehler Tabremove: " + m_sToRemoveTabName + " " + index + "/"
-//								+ m_jtpTabbedPane.getTabCount());
-//				m_sToRemoveTabName = null;
-//			}
-//		}
-	}
-
 	// ----------------Unused Listener----------------------------
+	@Override
 	public void windowActivated(WindowEvent windowEvent) {
 	}
 
@@ -773,6 +752,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * @param windowEvent
 	 *            is ignored
 	 */
+	@Override
 	public void windowClosed(WindowEvent windowEvent) {
 		if (isAppTerminated) {
 			System.exit(0);
@@ -784,19 +764,24 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Close HO window.
 	 */
+	@Override
 	public void windowClosing(WindowEvent windowEvent) {
 		beenden();
 	}
 
+	@Override
 	public void windowDeactivated(WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowDeiconified(WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowIconified(WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowOpened(WindowEvent windowEvent) {
 	}
 

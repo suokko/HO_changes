@@ -257,7 +257,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 				}
 				Spieler spieler = ((PlayerTable) sourceTable).getSpieler(row);
 				if (spieler != null) {
-					HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
+					HOMainFrame.instance().setActualSpieler(spieler);
 				}
 			}
 		};
