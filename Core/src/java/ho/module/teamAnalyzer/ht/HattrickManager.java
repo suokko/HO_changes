@@ -3,10 +3,8 @@ package ho.module.teamAnalyzer.ht;
 
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
-import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
-import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
@@ -163,18 +161,12 @@ public class HattrickManager {
      * @return true if allowed
      */
     public static boolean isDownloadAllowed(Match match) {
-        boolean isNextOpponent = ((match.getHomeId() == SystemManager.getLeagueOpponentId())
-                                 || (match.getAwayId() == SystemManager.getLeagueOpponentId()));
-        boolean last2Weeks = false;
-        int actualWeek = getWeekNumber(HOVerwaltung.instance().getModel().getBasics().getSeason(),
-        		HOVerwaltung.instance().getModel().getBasics().getSpieltag());
-        int gameWeek = getWeekNumber(match.getSeason(), match.getWeek());
+    	
+    	// CHPP-Teles confirms in staff message to bingeling (blaghaid) that this is not a problem
+    	// We don't have to worry much about traffic anymore, but may want to check for new functionality.
+    	// The team analyzer was discussed.       return (isNextOpponent && last2Weeks);
 
-        if ((actualWeek - gameWeek) < 3) {
-            last2Weeks = true;
-        }
-
-        return (isNextOpponent && last2Weeks);
+    	return true;
     }
 
     /**
