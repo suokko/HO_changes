@@ -179,12 +179,12 @@ public class xmlMatchdetailsParser {
             	eventtext = eventtext.replaceAll("&amp;", "&");
 
             	final int highlighttyp = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
             					.item(0))))
             					.intValue();
             	
             	final int highlightsubtyp = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
+            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
             					.item(0))))
             					.intValue();
 

@@ -156,7 +156,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     public final int getGuestHalfTimeGoals() {
     	Vector<MatchHighlight> highLights = getHighlights();
     	for (MatchHighlight iMatchHighlight : highLights) {
-			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
+			if(iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getGastTore();
 		}
     	return -1;
@@ -165,7 +165,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 	public final int getHomeHalfTimeGoals() {
 		Vector<MatchHighlight> highLights = getHighlights();
     	for (MatchHighlight iMatchHighlight : highLights) {
-			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
+			if(iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getHeimTore();
 		}
     	return -1;
