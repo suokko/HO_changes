@@ -1,6 +1,6 @@
 package ho.core.gui.model;
 
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
@@ -14,7 +14,7 @@ import java.util.Vector;
  * @since 1.36
  *
  */
-public class PlayerAnalysisModel extends HOColumnModel {
+public class PlayerAnalysisModel extends HOTableModel {
 
 	/**
 	 * 

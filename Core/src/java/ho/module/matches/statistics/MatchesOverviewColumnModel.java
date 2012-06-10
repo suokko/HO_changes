@@ -1,11 +1,11 @@
 package ho.module.matches.statistics;
 
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.model.match.MatchesOverviewRow;
 import ho.core.util.StringUtilities;
 
 
-public final class MatchesOverviewColumnModel extends HOColumnModel {
+public final class MatchesOverviewColumnModel extends HOTableModel {
 		
 	private static final long serialVersionUID = 1L;
 	private MatchesOverviewRow[] rows;
