@@ -67,12 +67,12 @@ class TSPanel extends JPanel {
 
   static int m_iMaxX = 600;
   static int m_iMaxY = 500;
-  
+
   static double m_dMaxTextWidth = 20D;
   static double m_dFactor = 2D;
   static int m_iCoordX0 = 0;
   static final double m_dValues = 10.2D;
-  
+
   static boolean m_bInited = false;
 
   public static final Color lightBlue   = new Color(220, 220, 255);
@@ -80,7 +80,7 @@ class TSPanel extends JPanel {
   public static final Color darkGreen   = new Color(0, 180, 0);
   public static final Color lightRed    = new Color(255, 230, 230);
   public static final Color lightYellow = new Color(255, 255, 200);
-  
+
   private final ImageIcon m_newImage   = ThemeManager.getIcon(HOIconName.MATCHTYPES[2]);
   private final ImageIcon m_startImage = ThemeManager.getIcon(HOIconName.MANUELLSMILIES[7]);
 
@@ -93,25 +93,25 @@ class TSPanel extends JPanel {
   private boolean m_bShowConfidenceScale = true;
 
   private ArrayList<Curve> m_Curves = new ArrayList<Curve>();
-  
-  
+
+
   TSPanel() {
     setDoubleBuffered( true);
     setBackground( Color.white);
   }
 
-  void addCurve( Curve curve, boolean first) { 
-    if( first) m_Curves.add( 0, curve); 
-    else m_Curves.add( curve); 
+  void addCurve( Curve curve, boolean first) {
+    if( first) m_Curves.add( 0, curve);
+    else m_Curves.add( curve);
   }
-  
+
   void addCurve( Curve curve) { addCurve( curve, false); }
   boolean removeCurve( Curve curve) { return m_Curves.remove( curve); }
   void showTeamspiritScale( boolean b) { m_bShowTeamspiritScale = b; }
   void showConfidenceScale( boolean b) { m_bShowConfidenceScale = b; }
 
 //-- protected ------------------------------------------------------------------------
- 
+
   @Override
 protected void paintComponent( Graphics g) {
     super.paintComponent(g);
@@ -134,11 +134,11 @@ protected void paintComponent( Graphics g) {
   }
 
 //-- private ------------------------------------------------------------------------
- 
+
   private void drawDiagram( Graphics2D graphics2d) {
     graphics2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     graphics2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    
+
     drawCoordSystem( graphics2d);
       for(int i = 0; i < m_Curves.size(); i++) {
         if(m_Curves.get(i) instanceof TrainerCurve) {
@@ -157,9 +157,9 @@ protected void paintComponent( Graphics g) {
       Polygon polygon2 = new Polygon();
       GregorianCalendar HRFDate = new GregorianCalendar();
       boolean flag = curve.next();
-      
+
       HRFDate.setTime( curve.getDate());
-      
+
       int deltaX = m_startDate.get( Calendar.DAY_OF_YEAR);
       int lastYear = m_startDate.get( Calendar.YEAR);
       int deltaYear = 0;
@@ -167,7 +167,7 @@ protected void paintComponent( Graphics g) {
       int iSpirit = 40;
       int dayOffset = m_startDate.get( Calendar.DAY_OF_WEEK) - 1;
       if( dayOffset < 0) dayOffset += 7;
-      
+
       for(; flag; flag = curve.next()) {
         HRFDate.setTime( curve.getDate());
         if( lastYear != HRFDate.get( Calendar.YEAR)) {
@@ -176,27 +176,27 @@ protected void paintComponent( Graphics g) {
             deltaYear++;
           lastYear = HRFDate.get( Calendar.YEAR);
         }
-        x = (double)HRFDate.get( Calendar.DAY_OF_YEAR) + (double)HRFDate.get( Calendar.HOUR_OF_DAY)/24D 
+        x = (double)HRFDate.get( Calendar.DAY_OF_YEAR) + (double)HRFDate.get( Calendar.HOUR_OF_DAY)/24D
             - (double)deltaX + (double)deltaYear + (double)dayOffset;
         iSpirit = (int)((curve.getSpirit() * (double)m_iMaxY) / m_dValues);
-/*if( curve.getMatchDay() == 1) 
+/*if( curve.getMatchDay() == 1)
 ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " + " + (double)HRFDate.get( Calendar.HOUR_OF_DAY)/24D
-                          + " - " + deltaX  + " + " + deltaYear  + " + " + dayOffset);          
+                          + " - " + deltaX  + " + " + deltaYear  + " + " + dayOffset);
 */
         if( curve.getPointType() == Curve.RESET_PT) {
-          graphics2d.drawString( "R", (int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - 2 - iSpirit);        
+          graphics2d.drawString( "R", (int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - 2 - iSpirit);
 /*ErrorLog.writeln("Reset " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " + " + (double)HRFDate.get( Calendar.HOUR_OF_DAY)/24D
-                          + " - " + deltaX  + " + " + deltaYear  + " + " + dayOffset);          
+                          + " - " + deltaX  + " + " + deltaYear  + " + " + dayOffset);
 */
-        } 
-        else if( curve.getAttitude() != IMatchDetails.EINSTELLUNG_NORMAL 
+        }
+        else if( curve.getAttitude() != IMatchDetails.EINSTELLUNG_NORMAL
               && curve.getAttitude() != IMatchDetails.EINSTELLUNG_UNBEKANNT) {
           if( curve.getAttitude() == IMatchDetails.EINSTELLUNG_PIC)
             graphics2d.drawString( "P", (int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - 2 - iSpirit);
           else
             graphics2d.drawString("M", (int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - 2 - iSpirit);
         }
-        
+
         polygon1.addPoint((int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - iSpirit);
         polygon2.addPoint((int)(x * m_dFactor + (double)m_iCoordX0), m_iMaxY + DYFrame - iSpirit + 1);
       }
@@ -235,30 +235,30 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
         int i1 = (int)(((curve.getSpirit() + 0.5D) * (double)m_iMaxY) / m_dValues);
         switch(curve.getPointType()) {
           case Curve.TRAINER_DOWN_PT:
-            graphics2d.drawImage(   ImageUtilities.getImageIcon4Veraenderung(-1,true).getImage(), 
-                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1, 
+            graphics2d.drawImage(   ImageUtilities.getImageIcon4Veraenderung(-1,true).getImage(),
+                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1,
                                    ImageUtilities.getImageIcon4Veraenderung(-1,true).getImageObserver());
-            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_down"), 
+            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_down"),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           case Curve.NEW_TRAINER_PT:
-            graphics2d.drawImage(  m_newImage.getImage(), 
-                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1, 
+            graphics2d.drawImage(  m_newImage.getImage(),
+                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1,
                                    m_newImage.getImageObserver());
-            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_exchange"), 
+            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_exchange"),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           case Curve.START_TRAINER_PT:
-            graphics2d.drawImage(  m_startImage.getImage(), 
-                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1, 
+            graphics2d.drawImage(  m_startImage.getImage(),
+                                   (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1,
                                    m_startImage.getImageObserver());
-            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("trainer_start"), 
+            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("Trainerlevel"),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
-            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true), 
+            graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);
             break;
           }
@@ -281,7 +281,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     graphics2d.setFont( font);
     for( int i = 0; i < m_dValues; i++) { // values 0-10.2
       graphics2d.setColor( Color.lightGray);
-      graphics2d.drawLine( m_iCoordX0, (int)(m_iMaxY+DYFrame - i*m_iMaxY/m_dValues), 
+      graphics2d.drawLine( m_iCoordX0, (int)(m_iMaxY+DYFrame - i*m_iMaxY/m_dValues),
                            m_iMaxX,    (int)(m_iMaxY+DYFrame - i*m_iMaxY/m_dValues));
 
       // draw scale for teamspirit
@@ -291,19 +291,19 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
         rectangle2d = new TextLayout( str, font, fontrendercontext).getBounds();
         if( i < m_dValues-1)
           graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5,
-                                 (int)(m_iMaxY+DYFrame - i*m_iMaxY/m_dValues - m_iMaxY/(2*m_dValues) 
+                                 (int)(m_iMaxY+DYFrame - i*m_iMaxY/m_dValues - m_iMaxY/(2*m_dValues)
                                  + UserParameter.instance().schriftGroesse/2 -3));
         else
           graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5,
                                  (m_iMaxY+DYFrame - m_iMaxY + 3));
       }
-      
+
       // draw scale for confidence
 	if( m_bShowConfidenceScale && i < m_dValues-1) {
         graphics2d.setColor( Color.blue);
         str = TeamConfidence.toString( i);
         rectangle2d = new TextLayout( str, font, fontrendercontext).getBounds();
-        graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5, 
+        graphics2d.drawString( str, m_iCoordX0 - (int)rectangle2d.getWidth() - 5,
                                (int)(m_iMaxY+DYFrame - (i+1)*m_iMaxY/m_dValues + 3));
 	}
       graphics2d.setColor( Color.darkGray);
@@ -324,14 +324,14 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     GregorianCalendar today = new GregorianCalendar();
     today.setTime( HOVerwaltung.instance().getModel().getBasics().getDatum());
 
-    // Week starts at Saturday = 7, Sunday = 1 
+    // Week starts at Saturday = 7, Sunday = 1
     int iDay = today.get( Calendar.DAY_OF_WEEK);
-    
+
     int iSeason =HOVerwaltung.instance().getModel().getBasics().getSeason();
 
 //    m_dFactor = (double)(m_iMaxX - m_iCoordX0 + DXFrame) / (double)m_iDaysToDisplay;
 //    if(m_dFactor < 1.0D) m_dFactor = 1.0D;
-    
+
     // Spieltag increases with game, therefore -1
     int iSeasonWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag()-1;
     // iSeasonWeek starts with 1 and the current week has already been subtracted by iDay
@@ -348,7 +348,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     int iXX4 = m_iMaxX;
     if( iXX3 > iXX4) iXX3 = iXX4;
     int iYText = m_iMaxY+2*DYFrame+DYAxis+3;
-    
+
     Font font = new Font("SansSerif", 1, UserParameter.instance().schriftGroesse+2);
     graphics2d.setFont(font);
 
@@ -360,7 +360,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
                            iXX2 + (iXX3-iXX2)/2, iYText);
 //ErrorLog.writeln("Saisonstart(F): "+ (double) iCurrentSeasonStart*m_dFactor);
 //ErrorLog.writeln("Saisonstart   : "+ iCurrentSeasonStart);
-    
+
     // previous seasons
     if(iCurrentSeasonStart > 0) {
       graphics2d.setColor( lightGreen);
@@ -386,9 +386,9 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     if( iCurrentSeasonStart + iSeasonLength < m_iDaysToDisplay) {
       graphics2d.setColor( lightRed);
       graphics2d.fillRect( iXX3, DYFrame, iXX4-iXX3, m_iMaxY);
-    }  
+    }
   }
-  
+
   // draw weekend lines
   private void drawWeeks( Graphics2D graphics2d) {
     // calculate first week on screen
@@ -400,7 +400,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
 
     for( int saturday = Calendar.SATURDAY;
          (double)saturday*m_dFactor+(double)m_iCoordX0 < (double)m_iMaxX-2D*m_dFactor;
-         saturday += 7 , iSeasonWeek++ ) 
+         saturday += 7 , iSeasonWeek++ )
     {
       if( iSeasonWeek > 16) {
         iSeasonWeek = 1;
@@ -410,7 +410,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
                            (int)(2D*m_dFactor-1.0D), m_iMaxY);
       graphics2d.setColor(Color.black);
       graphics2d.drawString( iSeasonWeek+"",
-                             (int)((double)(saturday+3)*m_dFactor+(double)m_iCoordX0), 
+                             (int)((double)(saturday+3)*m_dFactor+(double)m_iCoordX0),
                              m_iMaxY+2*DYFrame+DYAxis- (UserParameter.instance().schriftGroesse));
     }
   }
@@ -422,7 +422,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
 
     m_startDate.setTime( HOVerwaltung.instance().getModel().getBasics().getDatum());
     m_endDate = (GregorianCalendar)m_startDate.clone();
-    
+
     Curve curve = null;
     for( int i = 0; i < m_Curves.size(); i++) {
       curve = m_Curves.get(i);
@@ -437,16 +437,16 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
       m_startDate.add( Calendar.DAY_OF_YEAR, -7);
     }
     m_endDate.add( Calendar.DAY_OF_YEAR, 7);
-    
+
     //calculate days to display
     m_iDaysToDisplay = 0;
     if( m_startDate.get( Calendar.YEAR) != m_endDate.get( Calendar.YEAR)) {
       m_iDaysToDisplay = 365;
       if( m_startDate.isLeapYear(m_startDate.get( Calendar.YEAR)))
         m_iDaysToDisplay++;
-    } 
+    }
     m_iDaysToDisplay += m_endDate.get( Calendar.DAY_OF_YEAR) - m_startDate.get( Calendar.DAY_OF_YEAR);
-    
+
     //calculate days from start to today
     m_iTodayPosition = 0;
     GregorianCalendar today = new GregorianCalendar();
@@ -458,7 +458,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     }
     m_iTodayPosition += today.get( Calendar.DAY_OF_YEAR) - m_startDate.get( Calendar.DAY_OF_YEAR);
   }
-  
+
   //Calculate longest string at y-axis
   private double getMaxTextWidth( Graphics2D graphics2d) {
     Font font = new Font( "SansSerif", 1, UserParameter.instance().schriftGroesse);
@@ -475,6 +475,6 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
     }
     return maxWidth;
   }
-  
-  
+
+
 }
