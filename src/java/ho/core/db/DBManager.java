@@ -4,7 +4,7 @@ package ho.core.db;
 import ho.core.datatype.CBItem;
 import ho.core.db.backup.BackupDialog;
 import ho.core.file.hrf.HRF;
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.gui.model.SpielerMatchCBItem;
 import ho.core.model.FactorObject;
@@ -1843,11 +1843,11 @@ public class DBManager {
 		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName, value);
 	}
 
-	public void saveHOColumnModel(HOColumnModel model) {
+	public void saveHOColumnModel(HOTableModel model) {
 		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME)).saveModel(model);
 	}
 
-	public void loadHOColumModel(HOColumnModel model) {
+	public void loadHOColumModel(HOTableModel model) {
 		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME)).loadModel(model);
 	}
 
