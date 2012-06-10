@@ -164,7 +164,7 @@ public class HattrickManager {
     	
     	// CHPP-Teles confirms in staff message to bingeling (blaghaid) that this is not a problem
     	// We don't have to worry much about traffic anymore, but may want to check for new functionality.
-    	// The team analyzer was discussed.       return (isNextOpponent && last2Weeks);
+    	// The team analyzer was discussed.
 
     	return true;
     }
