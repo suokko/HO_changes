@@ -181,9 +181,10 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @param event TODO Missing Method Parameter Documentation
      */
-    public void focusGained(FocusEvent event) {
+    @Override
+	public void focusGained(FocusEvent event) {
         if (getSelectedPlayer() != null) {
-            HOMainFrame.instance().setActualSpieler(getSelectedPlayer().getSpielerID());
+            HOMainFrame.instance().setActualSpieler(getSelectedPlayer());
         }
     }
 
@@ -192,7 +193,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @param event TODO Missing Method Parameter Documentation
      */
-    public void focusLost(FocusEvent event) {
+    @Override
+	public void focusLost(FocusEvent event) {
         //nix
     }
 
@@ -277,7 +279,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
     }
 
     //-------------Listener------------------------------------------------
-    public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
+    @Override
+	public void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
             final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
@@ -323,7 +326,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
             //Aktualisierung der Tabellen
             if (spieler != null) {
-                HOMainFrame.instance().setActualSpieler(spieler.getSpielerID());
+                HOMainFrame.instance().setActualSpieler(spieler);
             }
 
             //Alle anderen Position aktualisieren
