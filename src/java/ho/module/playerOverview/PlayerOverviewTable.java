@@ -5,6 +5,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.comp.table.ToolTipHeader;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.PlayerOverviewModel;
 import ho.core.gui.model.UserColumnController;
@@ -25,15 +26,8 @@ import javax.swing.table.TableColumnModel;
 public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshable {
 
 	private static final long serialVersionUID = -6074136156090331418L;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	private PlayerOverviewModel m_clTableModel;
-	private TableSorter m_clTableSorter;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
+	private PlayerOverviewModel tableModel;
+	private TableSorter tableSorter;
 
 	public PlayerOverviewTable() {
 		super();
@@ -48,12 +42,12 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	 */
 	public final int getBestPosWidth() {
 		return getColumnModel().getColumn(
-				getColumnModel().getColumnIndex(Integer.valueOf(m_clTableModel.getPositionInArray(UserColumnFactory.BEST_POSITION))))
+				getColumnModel().getColumnIndex(Integer.valueOf(tableModel.getPositionInArray(UserColumnFactory.BEST_POSITION))))
 				.getWidth();
 	}
 
 	public final TableSorter getSorter() {
-		return m_clTableSorter;
+		return tableSorter;
 	}
 
 	/**
@@ -62,9 +56,9 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	 * @return int[spaltenanzahl][2] mit 0=ModelIndex und 1=ViewIndex
 	 */
 	public final int[][] getSpaltenreihenfolge() {
-		final int[][] reihenfolge = new int[m_clTableModel.getColumnCount()][2];
+		final int[][] reihenfolge = new int[tableModel.getColumnCount()][2];
 
-		for (int i = 0; i < m_clTableModel.getColumnCount(); i++) {
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
 			// Modelindex
 			reihenfolge[i][0] = i;
 			// ViewIndex
@@ -74,24 +68,25 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	}
 
 	public final void saveColumnOrder() {
-		final UserColumn[] columns = m_clTableModel.getDisplayedColumns();
-		final TableColumnModel tableColumnModel = getColumnModel();
+		UserColumn[] columns = tableModel.getDisplayedColumns();
+		TableColumnModel tableColumnModel = getColumnModel();
 		for (int i = 0; i < columns.length; i++) {
 			columns[i].setIndex(convertColumnIndexToView(i));
 			columns[i].setPreferredWidth(tableColumnModel.getColumn(convertColumnIndexToView(i)).getWidth());
 		}
-		m_clTableModel.setCurrentValueToColumns(columns);
-		DBManager.instance().saveHOColumnModel(m_clTableModel);
+		tableModel.setCurrentValueToColumns(columns);
+		DBManager.instance().saveHOColumnModel(tableModel);
 	}
 
 	public final void setSpieler(int spielerid) {
-		final int index = m_clTableSorter.getRow4Spieler(spielerid);
+		final int index = tableSorter.getRow4Spieler(spielerid);
 
 		if (index >= 0) {
 			this.setRowSelectionInterval(index, index);
 		}
 	}
 
+	@Override
 	public final void reInit() {
 		initModel();
 		repaint();
@@ -105,6 +100,7 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 		((PlayerOverviewModel) getSorter().getModel()).reInitDataHRFVergleich();
 	}
 
+	@Override
 	public final void refresh() {
 		reInitModel();
 		repaint();
@@ -121,22 +117,22 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	private int getSortSpalte() {
 		switch (UserParameter.instance().standardsortierung) {
 		case UserParameter.SORT_NAME:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.NAME);
+			return tableModel.getPositionInArray(UserColumnFactory.NAME);
 
 		case UserParameter.SORT_BESTPOS:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.BEST_POSITION);
+			return tableModel.getPositionInArray(UserColumnFactory.BEST_POSITION);
 
 		case UserParameter.SORT_AUFGESTELLT:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.LINUP);
+			return tableModel.getPositionInArray(UserColumnFactory.LINUP);
 
 		case UserParameter.SORT_GRUPPE:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.GROUP);
+			return tableModel.getPositionInArray(UserColumnFactory.GROUP);
 
 		case UserParameter.SORT_BEWERTUNG:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.RATING);
+			return tableModel.getPositionInArray(UserColumnFactory.RATING);
 
 		default:
-			return m_clTableModel.getPositionInArray(UserColumnFactory.BEST_POSITION);
+			return tableModel.getPositionInArray(UserColumnFactory.BEST_POSITION);
 		}
 	}
 
@@ -146,25 +142,24 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	private void initModel() {
 		setOpaque(false);
 
-		if (m_clTableModel == null) {
-			m_clTableModel = UserColumnController.instance().getPlayerOverviewModel();
-			m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
-			m_clTableSorter = new TableSorter(m_clTableModel, m_clTableModel.getDisplayedColumns().length - 1, getSortSpalte());
+		if (tableModel == null) {
+			tableModel = UserColumnController.instance().getPlayerOverviewModel();
+			tableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
+			tableSorter = new TableSorter(tableModel, tableModel.getDisplayedColumns().length - 1, getSortSpalte());
 
-			final ho.core.gui.comp.table.ToolTipHeader header = new ho.core.gui.comp.table.ToolTipHeader(getColumnModel());
-			header.setToolTipStrings(m_clTableModel.getTooltips());
+			ToolTipHeader header = new ToolTipHeader(getColumnModel());
+			header.setToolTipStrings(tableModel.getTooltips());
 			header.setToolTipText("");
 			setTableHeader(header);
 
-			setModel(m_clTableSorter);
+			setModel(tableSorter);
 
-			final TableColumnModel tableColumnModel = getColumnModel();
-
-			for (int i = 0; i < m_clTableModel.getColumnCount(); i++) {
+			TableColumnModel tableColumnModel = getColumnModel();
+			for (int i = 0; i < tableModel.getColumnCount(); i++) {
 				tableColumnModel.getColumn(i).setIdentifier(new Integer(i));
 			}
 
-			int[][] targetColumn = m_clTableModel.getColumnOrder();// gui.UserParameter.instance().spieleruebersichtsspaltenreihenfolge;
+			int[][] targetColumn = tableModel.getColumnOrder();
 
 			// Reihenfolge -> nach [][1] sortieren
 			targetColumn = Helper.sortintArray(targetColumn, 1);
@@ -175,17 +170,17 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 				}
 			}
 
-			m_clTableSorter.addMouseListenerToHeaderInTable(this);
-			m_clTableModel.setColumnsSize(getColumnModel());
+			tableSorter.addMouseListenerToHeaderInTable(this);
+			tableModel.setColumnsSize(getColumnModel());
 		} else {
 			// Werte neu setzen
-			m_clTableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
-			m_clTableSorter.reallocateIndexes();
+			tableModel.setValues(HOVerwaltung.instance().getModel().getAllSpieler());
+			tableSorter.reallocateIndexes();
 		}
 
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		setSelectionMode(0);
 		setRowSelectionAllowed(true);
-		m_clTableSorter.initsort();
+		tableSorter.initsort();
 	}
 }
