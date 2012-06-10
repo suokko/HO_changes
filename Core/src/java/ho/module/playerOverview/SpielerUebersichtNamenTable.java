@@ -10,76 +10,68 @@ import ho.core.model.player.Spieler;
 
 import javax.swing.JTable;
 
-
-
 /**
  * TODO Missing Class Documentation
- *
+ * 
  * @author TODO Author Name
  */
-public class SpielerUebersichtNamenTable extends JTable implements Refreshable, PlayerTable
-{
+public class SpielerUebersichtNamenTable extends JTable implements Refreshable, PlayerTable {
 
 	private static final long serialVersionUID = -7686660400379157142L;
-	
-	//~ Instance fields ----------------------------------------------------------------------------
+	private TableSorter tableSorter;
 
-    //TableSorter sorter;
-    private TableSorter m_clTableSorter;
+	/**
+	 * Nur Namensspalte anzeigen
+	 * 
+	 */
+	public SpielerUebersichtNamenTable(TableSorter model) {
+		super();
+		tableSorter = model;
+		model.addMouseListenerToHeaderInTable(this);
+		model.addTableModelListener(this);
+		setSelectionMode(0);
+		setModel(new ReduzedTableModel(model, 0));
+		setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
+		RefreshManager.instance().registerRefreshable(this);
+	}
 
-    /**
-     * Nur Namensspalte anzeigen
-     *
-     */
-    public SpielerUebersichtNamenTable(TableSorter model) {
-        super();
-        m_clTableSorter = model;
-        model.addMouseListenerToHeaderInTable(this);
-        model.addTableModelListener(this);
-        setSelectionMode(0);
-        setModel(new ReduzedTableModel(model, 0));
-        setDefaultRenderer(java.lang.Object.class, new HODefaultTableCellRenderer());
-        RefreshManager.instance().registerRefreshable(this);
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
-        //Kein init hier!
-    }
-
-    //~ Methods ------------------------------------------------------------------------------------
-
-    @Override
+	@Override
 	public Spieler getSpieler(int row) {
-    	return this.m_clTableSorter.getSpieler(row);
-    }
+		return this.tableSorter.getSpieler(row);
+	}
 
-    @Override
+	@Override
 	public final void setSpieler(int spielerid) {
-        final int index = m_clTableSorter.getRow4Spieler(spielerid);
+		final int index = tableSorter.getRow4Spieler(spielerid);
 
-        if (index >= 0) {
-            this.setRowSelectionInterval(index, index);
-        }
-    }
+		if (index >= 0) {
+			this.setRowSelectionInterval(index, index);
+		}
+	}
 
-    @Override
+	@Override
 	public final void reInit() {
-        initModelNamen();
+		initModelNamen();
 
-        repaint();
-    }
+		repaint();
+	}
 
-    @Override
+	@Override
 	public final void refresh() {
-        //Datenanpassung wird vom SpielerUbersichtsTable erledigt
-        repaint();
-    }
+		// Datenanpassung wird vom SpielerUbersichtsTable erledigt
+		repaint();
+	}
 
-    /**
-     * Initialisiert das Model für die Namen
-     */
-    private void initModelNamen() {
-        setAutoResizeMode(AUTO_RESIZE_OFF);
-        setSelectionMode(0);
-        setRowSelectionAllowed(true);
-        getColumnModel().getColumn(0).setMinWidth(167);
-    }
+	/**
+	 * Initialisiert das Model für die Namen
+	 */
+	private void initModelNamen() {
+		setAutoResizeMode(AUTO_RESIZE_OFF);
+		setSelectionMode(0);
+		setRowSelectionAllowed(true);
+		getColumnModel().getColumn(0).setMinWidth(167);
+	}
 }
