@@ -12,7 +12,7 @@ import ho.core.gui.model.UserColumnController;
 import ho.core.gui.model.UserColumnFactory;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.Helper;
-import ho.module.lineup.LineupColumnModel;
+import ho.module.lineup.LineupTableModel;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -35,7 +35,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
 
 	
 	//TableSorter sorter;
-    private LineupColumnModel m_clTableModel;
+    private LineupTableModel m_clTableModel;
     private TableSorter m_clTableSorter;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
      * TODO Missing Method Documentation
      */
     public void reInitModel() {
-        ((LineupColumnModel) (this.getSorter()).getModel()).reInitData();
+        ((LineupTableModel) (this.getSorter()).getModel()).reInitData();
     }
 
     /**

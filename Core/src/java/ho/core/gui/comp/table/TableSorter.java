@@ -6,7 +6,7 @@ import ho.core.gui.comp.entry.IHOTableEntry;
 import ho.core.gui.model.PlayerOverviewModel;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
-import ho.module.lineup.LineupColumnModel;
+import ho.module.lineup.LineupTableModel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -113,8 +113,8 @@ public class TableSorter extends TableMap {
                 
                 if (getModel() instanceof PlayerOverviewModel) {
                     return ((PlayerOverviewModel) getModel()).getSpieler(id);
-                } else if (getModel() instanceof LineupColumnModel) {
-                    return ((LineupColumnModel) getModel()).getSpieler(id);
+                } else if (getModel() instanceof LineupTableModel) {
+                    return ((LineupTableModel) getModel()).getSpieler(id);
                 } else {
                     throw new Exception("Tablemodel umbekannt!");
                 }
