@@ -1,112 +1,47 @@
 Changelist HO! 1.432
 ====================
-- Hattrick Organizer now requires java 1.6. Open JDK supports older operating systems that oracle does not.
-- ArenaSizer become a extra tool
+- Hattrick Organizer now requires Java 1.6 (aka JRE6). Open JDK supports older operating systems that oracle does not. Please update your Java installation if needed.
+- Added Minute based training.
+- Added age based skill drops and Osmosis training.
+- Added Tournament matches for matches tab and Team Analyzer.
+- New icon and startup screen.
+- Moved intern help texts and from external files to our wiki page (https://sourceforge.net/apps/trac/ho1/wiki/Manual) and link to it in the menu.
+- Made player name column width adjustable on squad tab.
+- Added half time results in matches tab.
+- Seat distribution is shown in arena section of Statistics tab.
+- Hattrick Masters matches selectable in Team Analyzer.
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
-- Made player name column width adjustable.
-- Added Minute based training
 
 Language updates:
 -----------------
-- Added Japanese as new HO language (thx nomad331)
-- Update French translations (thx davidatorus)
+- Added Japanese as new HO language (thx nomad331).
+- Updated French translations (thx davidatorus).
 
 ThemeManager:
 ------------
-- add new keys:
-	icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out
-	colors:
+- New keys:
+	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff
+	. Colors: matchtype.tourneyGroup.bg, matchtype.tourneyFinals.bg
+- Fatcow-Theme: Added and updated some icons and colors.
 
-Plugin Updates:
+Plugin (Module) Updates:
 ---------------
--  MatchesOverview
-	MatchesOverview is deprecated. Functions are integrated in matches tab
--  Transfer EPV
-	This plugin is deprecated. Merged into function transferscout.
-	
-Changelist HO! 1.431
-====================
-
-- Added Loyalty and Mother Club Bonus.
- 	. Rating prediction is updated.
- 	. Added in most places we could think of.
- 	. Column preferences are cleared in lineup and squad view due to column changes.
-
-- Theme Manager is added - customize the looks! (Thanks fusselhirn!)
-	. See example.zip in the theme folder, especially data.txt and ReadMe.txt inside.
-
-- Download modifications
-	. Added better error message when file save on download fails.
-	. HRF saving is now optional. You can actually cancel!
-	. Reworked Download to abort on failure. Cancel only once!
-	. CHPP is now checked for status via it's XML
-	. Sanity checks added for downloads of matches...
-	. Removed double proxy dialog on download of non chpp files.
-	. Can now delete 'corrupted' matches
-- Added better error message when database is unable to create its file.
-- Fixed sort issue on player tables.
-- Fixed localization issue messing up ratings for some locales
-- Added new parameter to ratings, called postDelta, which is added after postMulti has been applied (defaults to 0).
-- Added two more new parameter to CA ratings calculations only, called playerPostMulti and playerPostDelta, for use in CA player contribution calculations (default to 1 and 0 respectively)
-- Modified button behaviour on matches screen to be enabled/disabled appropriately
-- Fixed player regainer string not showing.
-- Fixed wrong set piece taker on corners
-- Added missing match events
-- Added rest of HOMainFrame non language string to language files
-- Added Hatstats and Loddar stats to Matches view
-- Minor fixes and tweaks that is probably not mentioned...
-- Download of beta and update via HO now works.
-
-Language updates:
------------------
-- Removed unused strings (thx Seb04 for hunting :) )
-- Added Hebrew as new HO language (thx Mod-Transy)
-- Added Indonesian as new HO language (thx Zolfaghar)
-- Update Bulgarian translations (thx stiflar)
-- Update Catalan translations (thx carlesmu)
-- Update Chinese translations (thx tianbing)
-- Update Danish translations (thx Max_Schreck)
-- Update Finnish translations (thx paragon81)
-- Update French translations (thx fierz1998)
-- Update Galego translations (thx GZ-ivanff)
-- Update German translations (thx Werder0405)
-- Update Hangul(Korean) translations (thx SI-CH)
-- Update Hebrew translations (thx Mod-Transy)
-- Update Hrvatski(Croatian) translations (thx -Iuve-)
-- Update Italiano translations (thx silkevicious)
-- Update Lithuanian translations (thx Kacerga)
-- Update Magyar translations (thx salt00)
-- Update Nederlands translations (thx BrammieG)
-- Update Norsk translations (thx ultracool)
-- Update Persian translations (thx lvl_Rashid_lvl)
-- Update Polish translations (thx aMiUK)
-- Update Portugues translations (thx Aristodemos)
-- Update PortuguesBrasil translations (thx garcilp)
-- Update Romanian translations (thx Spify)
-- Update Russian translations (thx Deal_of_Ghost)
-- Update Slovak translations (thx Refri)
-- Update Spanish translations (thx Baler0)
-- Update Spanish_sudamericano translations (thx Baler0)
-- Update Srpski + Srpski (lat) translations (thx FoxWMB, ljushaff)
-- Update Svenska translations (thx KrustyTheClown, Ehlana)
-- Update Turkish translations (thx QUARESMAA7)
-- Update Ukranian translations (thx oleh_deneb)
-- Update Vlaams translations (thx icarus95)
-
-Plugin Updates:
----------------
-- Training Experience v 1.255:
-  - Added set piece filter, and removed occurrences of no longer existing general and stamina training
-  - Changed icon drawing on Analyzer panel to show values > 99
-
-- Team Analyzer v 2.84:
-  - Fixed icon issue with Nimbus skin
-  - Match download is updated to work even better
-
-- Special Events v 1.24
-  - Added missing events
-
-Themes:
----------------
-- Fatcow
-  - Added first version (thanks Werder0405)
+- Active developed Plugins are now integrated as modules, outdated and not more developed Plugins are NOT integrated/supported anymore.
+	. Calendar, Commons, Converter, Feedback, PerformanceOverview, SeriesStats, StarCalc, Teamplanner and YouthClub were NOT integrated.
+	. NTHRF, SpecialEvents, TeamAnalyzer, TeamOfTheWeek, TrainingExperience, Transfers, TS Forecast were integrated.
+	. ArenaSizer was moved into tools + got more options and statistical section.
+	. DevHelp -> SQL Dialog integrated for developers.
+	. Evilcard was integrated + got a small rearrangement of panels.
+	. ExperienceViewer moved as submodule into Playeranalysis.
+	. Flags was not integrated. Functions are integrated in IFA module.
+	. HRF-Explorer was moved into tools.
+	. IFA was integrated + Panels were rearranged and also optimized.
+	. MatchesOverview was not integrated. Functions are integrated in matches tab.
+	. Playercompare moved as submodule into Playeranalysis.
+	. Transferscout moved as submodule into Transfers.
+	. XMLExporter was moved into tools.
+- New startup possibility for each module in the options:
+	. Autostart = visible after HO-startup. (uses memory)
+	. Activated = Not visible after HO-Startup but easy to start with the functions-menu without HO-restart. (uses memory)
+	. Deactivated = Not visible after HO-Startup. Can only be made visible through changing the startup option and HO-restart. (uses no memory)
+- Possibility added to close a module with the "x"-Button on each tab.
