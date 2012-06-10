@@ -18,9 +18,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-
-
-
 public class TableSorter extends TableMap {
 
 	private static final long serialVersionUID = 1132334126127788944L;
@@ -132,7 +129,7 @@ public class TableSorter extends TableMap {
 
     @Override
 	public final void setValueAt(Object obj, int i, int j) {
-        model.setValueAt(obj, indexes[i], j);
+    	getModel().setValueAt(obj, indexes[i], j);
     }
 
     @Override
@@ -142,7 +139,7 @@ public class TableSorter extends TableMap {
             return null;
         } 
         
-        return model.getValueAt(indexes[i], j);
+        return getModel().getValueAt(indexes[i], j);
        
     }
 
@@ -196,8 +193,8 @@ public class TableSorter extends TableMap {
     }
 
     private final int compareRowsByColumn(int i, int j, int k) {
-        final Object obj = model.getValueAt(i, k);
-        final Object obj1 = model.getValueAt(j, k);
+        final Object obj = getModel().getValueAt(i, k);
+        final Object obj1 = getModel().getValueAt(j, k);
 
         if ((obj == null) && (obj1 == null)) {
             return 0;
@@ -213,14 +210,14 @@ public class TableSorter extends TableMap {
 
         if (obj instanceof IHOTableEntry
             && obj1 instanceof IHOTableEntry) {
-            final IHOTableEntry colorLabelentry1 = (IHOTableEntry) model.getValueAt(i, k);
-            final IHOTableEntry colorLabelentry2 = (IHOTableEntry) model.getValueAt(j, k);
+            final IHOTableEntry colorLabelentry1 = (IHOTableEntry) getModel().getValueAt(i, k);
+            final IHOTableEntry colorLabelentry2 = (IHOTableEntry) getModel().getValueAt(j, k);
             return colorLabelentry1.compareTo(colorLabelentry2);
         } 
         
-        final Object obj2 = model.getValueAt(i, k);
+        final Object obj2 = getModel().getValueAt(i, k);
         final String s2 = obj2.toString();
-        final Object obj3 = model.getValueAt(j, k);
+        final Object obj3 = getModel().getValueAt(j, k);
         final String s3 = obj3.toString();
         final int i2 = s2.compareTo(s3);
 
@@ -243,7 +240,7 @@ public class TableSorter extends TableMap {
 
 
     public final void reallocateIndexes() {
-        final int i = model.getRowCount();
+        final int i = getModel().getRowCount();
         indexes = new int[i];
 
         for (int j = 0; j < i; j++) {
