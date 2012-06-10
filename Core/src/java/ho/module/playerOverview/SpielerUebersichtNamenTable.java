@@ -6,6 +6,7 @@ import ho.core.gui.Refreshable;
 import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
 import ho.core.gui.model.ReduzedTableModel;
+import ho.core.model.player.Spieler;
 
 import javax.swing.JTable;
 
@@ -16,7 +17,7 @@ import javax.swing.JTable;
  *
  * @author TODO Author Name
  */
-public class SpielerUebersichtNamenTable extends JTable implements Refreshable
+public class SpielerUebersichtNamenTable extends JTable implements Refreshable, PlayerTable
 {
 
 	private static final long serialVersionUID = -7686660400379157142L;
@@ -45,12 +46,13 @@ public class SpielerUebersichtNamenTable extends JTable implements Refreshable
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    public final TableSorter getSorter() {
-        return m_clTableSorter;
+    @Override
+	public Spieler getSpieler(int row) {
+    	return this.m_clTableSorter.getSpieler(row);
     }
 
-
-    public final void setSpieler(int spielerid) {
+    @Override
+	public final void setSpieler(int spielerid) {
         final int index = m_clTableSorter.getRow4Spieler(spielerid);
 
         if (index >= 0) {
@@ -58,13 +60,15 @@ public class SpielerUebersichtNamenTable extends JTable implements Refreshable
         }
     }
 
-    public final void reInit() {
+    @Override
+	public final void reInit() {
         initModelNamen();
 
         repaint();
     }
 
-    public final void refresh() {
+    @Override
+	public final void refresh() {
         //Datenanpassung wird vom SpielerUbersichtsTable erledigt
         repaint();
     }

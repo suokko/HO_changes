@@ -11,7 +11,9 @@ import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnController;
 import ho.core.gui.model.UserColumnFactory;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.player.Spieler;
 import ho.core.util.Helper;
+import ho.module.playerOverview.PlayerTable;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
@@ -25,7 +27,8 @@ import javax.swing.table.TableColumnModel;
  */
 public final class AustellungSpielerTable extends JTable implements java.awt.event.MouseListener,
                                                                     java.awt.event.KeyListener,
-                                                                    ho.core.gui.Refreshable
+                                                                    ho.core.gui.Refreshable,
+                                                                    PlayerTable
 {
 	
 	private static final long serialVersionUID = -8295456454328467793L;
@@ -59,12 +62,18 @@ public final class AustellungSpielerTable extends JTable implements java.awt.eve
      *
      * @param spielerid TODO Missing Method Parameter Documentation
      */
-    public void setSpieler(int spielerid) {
+    @Override
+	public void setSpieler(int spielerid) {
         final int index = m_clTableSorter.getRow4Spieler(spielerid);
 
         if (index >= 0) {
             this.setRowSelectionInterval(index, index);
         }
+    }
+    
+    @Override
+	public Spieler getSpieler(int row) {
+    	return this.m_clTableSorter.getSpieler(row);
     }
 
     /**
