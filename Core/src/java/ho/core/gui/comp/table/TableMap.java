@@ -26,7 +26,8 @@ class TableMap extends AbstractTableModel implements TableModelListener {
         return model.getColumnClass(i);
     }
 
-    public final int getColumnCount() {
+    @Override
+	public final int getColumnCount() {
         return (model != null) ? model.getColumnCount() : 0;
     }
 
@@ -44,7 +45,8 @@ class TableMap extends AbstractTableModel implements TableModelListener {
         return model;
     }
 
-    public final int getRowCount() {
+    @Override
+	public final int getRowCount() {
         return (model != null) ? model.getRowCount() : 0;
     }
 
@@ -53,11 +55,13 @@ class TableMap extends AbstractTableModel implements TableModelListener {
         model.setValueAt(obj, i, j);
     }
 
-    public Object getValueAt(int i, int j) {
+    @Override
+	public Object getValueAt(int i, int j) {
         return model.getValueAt(i, j);
     }
 
-    public void tableChanged(TableModelEvent tablemodelevent) {
+    @Override
+	public void tableChanged(TableModelEvent tablemodelevent) {
         fireTableChanged(tablemodelevent);
     }
 }
