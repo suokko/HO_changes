@@ -28,35 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 
-/**
- * Tab_TSForecast -> „hinzugefügt“
-
-Training -> Trainingsintensity
-
-trainer_start -> Trainerlevel
-
-no_teamleader -> "nicht weiterverwendet"
-
-teamleader -> "nicht weiterverwendet"
-
-beloved_team_member -> "nicht weiterverwendet"
-
-popular -> "nicht weiterverwendet"
-
-sympathetic -> "nicht weiterverwendet"
-
-pleasant -> "nicht weiterverwendet"
-
-controversial --> "nicht weiterverwendet"
-
-nasty --> "nicht weiterverwendet"
- * 
- * 
- * @author thorsten
- *
- */
 public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListener,ItemListener {
-  
+
 	private static final long serialVersionUID = 1L;
   final static String  TS_SHOWCUPMATCHES= "TS_ShowCupMatches";
   final static String  TS_SHOWQUALIFICATIONMATCH= "TS_ShowQualificationMatch";
@@ -65,8 +38,8 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
   final static String  TS_LOEPIHISTORY= "TS_LoepiHistory";
   final static String  TS_CONFIDENCE= "TS_Confidence";
   final static String  TS_GENERALSPIRIT = "TS_GeneralSpirit";
-	
-	
+
+
   private JPanel m_jpSettingsPanel			= null;
   private JPanel m_jpGamesPanel			= null;
 
@@ -97,23 +70,23 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 
   private void initialize()  {
     try {
-    	
+
       GridBagLayout gridbaglayout = new GridBagLayout();
       setLayout( gridbaglayout);
 
       GridBagConstraints gridbagconstraints = new GridBagConstraints();
       gridbagconstraints.fill = GridBagConstraints.NONE;
       gridbagconstraints.insets = new Insets(5, 5, 5, 5);
-      
+
       m_jpSettingsPanel = new JPanel();
       m_jpSettingsPanel.setOpaque(false);
       m_jpSettingsPanel.setLayout( new BoxLayout(m_jpSettingsPanel, BoxLayout.Y_AXIS));
-      
-      
+
+
       createSettingsPanel( m_jpSettingsPanel);
       createCurvesPanel( m_jpSettingsPanel);
       createGamesPanel( m_jpSettingsPanel);
-      
+
       gridbagconstraints.gridx = 0;
       gridbagconstraints.gridheight = 2;
       gridbagconstraints.anchor = 18;
@@ -127,10 +100,10 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
       gridbagconstraints.weighty = 1.0D;
       gridbagconstraints.gridheight = -1;
       add(m_jpGraphics, gridbagconstraints);
-      
+
       //createTeamData(1);
       double d = ModuleConfig.instance().getBigDecimal(TS_GENERALSPIRIT).doubleValue();
-      try { 
+      try {
         m_LoepiForecast.setGeneralSpirit( d);
         m_LoepiHist.setGeneralSpirit( d);
       }
@@ -175,7 +148,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     try {
       if( actionevent.getSource() instanceof JRadioButton) {
         int iButton = Integer.parseInt(actionevent.getActionCommand().substring(1));
-        
+
         switch(actionevent.getActionCommand().charAt(0)) {
         case 80: // 'P'
           m_LoepiForecast.setAttitude(iButton , IMatchDetails.EINSTELLUNG_PIC);
@@ -190,7 +163,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
           break;
         }
         m_jpGraphics.repaint();
-      } 
+      }
     }
     catch(Exception ex) {
     	HOLogger.instance().error(this.getClass(), ex);
@@ -249,7 +222,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
       m_jpGraphics.showConfidenceScale( config.getBoolean(TS_CONFIDENCE));
 
     // check whether it is necessary to draw teamspirit scale
-      
+
     if(  !config.getBoolean(TS_LOEPIHISTORY)
       && !config.getBoolean(TS_LOEPIFORECAST)
       && !config.getBoolean(TS_HISTORY) )  {
@@ -281,22 +254,22 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 
 //  private int createTeamData(int gridy) throws SQLException {
 //    IJDBCAdapter ijdbcadapter = DBManager.instance().getAdapter();
-//    
+//
 //    GridBagConstraints gridbagconstraints = new GridBagConstraints();
 //    gridbagconstraints.anchor = GridBagConstraints.WEST;
 //    gridbagconstraints.insets = new Insets(0, 5, 5, 5);
 //    gridbagconstraints.gridy = gridy;
 //    gridbagconstraints.gridx = 1;
-//    
+//
 //    String strLabel = new String();
-//    
+//
 //    ResultSet resultset = ijdbcadapter.executeQuery("select FUEHRUNG from SPIELER where TRAINER > 0 order by DATUM desc");
 //    if( resultset != null && resultset.first()) {
 //      strLabel += HOVerwaltung.instance().getLanguageString( "FQTrainer")
 //               + PlayerHelper.getNameForSkill( resultset.getInt("FUEHRUNG"), true)
 //               + ". ";
 //    }
-//    
+//
 //    resultset = ijdbcadapter.executeQuery( "select max(FUEHRUNG) as MAXF, max(DATUM) as MAXD from SPIELER where TRAINER=0");
 //    resultset.first();
 //    resultset = ijdbcadapter.executeQuery( "select count(SPIELERID) as COUNTF from SPIELER where FUEHRUNG = "
@@ -311,22 +284,22 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 //
 //      if(resultset != null && resultset.first()) {
 //        switch(resultset.getInt("ICHARAKTER")) {
-//          case 5: 
+//          case 5:
 //              strLabel +=HOVerwaltung.instance().getLanguageString("beloved_team_member") + ". ";
 //              break;
-//          case 4: 
+//          case 4:
 //              strLabel += HOVerwaltung.instance().getLanguageString("popular") + ". ";
 //              break;
-//          case 3: 
+//          case 3:
 //              strLabel += HOVerwaltung.instance().getLanguageString("sympathetic") + ". ";
 //              break;
-//          case 2: 
+//          case 2:
 //              strLabel +=HOVerwaltung.instance().getLanguageString("pleasant") + ". ";
 //              break;
-//          case 1: 
+//          case 1:
 //              strLabel +=HOVerwaltung.instance().getLanguageString("controversial") + ". ";
 //              break;
-//          case 0: 
+//          case 0:
 //              strLabel += HOVerwaltung.instance().getLanguageString("nasty") + ". ";
 //              break;
 //          default:
@@ -335,18 +308,18 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 //        }
 //      }
 //    }
-//    
+//
 //    resultset = ijdbcadapter.executeQuery("select PSCHYOLOGEN from VEREIN order by HRF_ID desc");
 //    if(resultset != null && resultset.first()) {
-//      strLabel += HOVerwaltung.instance().getLanguageString("Staff") 
-//               + resultset.getInt("PSCHYOLOGEN") + " " 
+//      strLabel += HOVerwaltung.instance().getLanguageString("Staff")
+//               + resultset.getInt("PSCHYOLOGEN") + " "
 //               + HOVerwaltung.instance().getLanguageString("Psychologen")
 //               + ". ";
 //    }
 //    resultset = ijdbcadapter.executeQuery("select TRAININGSINTENSITAET from TEAM order by HRF_ID desc");
 //    if(resultset != null && resultset.first()) {
-//      strLabel += HOVerwaltung.instance().getLanguageString("Trainingsintensity") 
-//               + resultset.getInt("TRAININGSINTENSITAET") 
+//      strLabel += HOVerwaltung.instance().getLanguageString("Trainingsintensity")
+//               + resultset.getInt("TRAININGSINTENSITAET")
 //               + "% . ";
 //    }
 //    JLabel jlabel = new JLabel(strLabel, 2);
@@ -363,38 +336,38 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     m_jtCupMatches.setAlignmentX( 0.0F);
     m_jtCupMatches.addItemListener( this);
     jpanel.add( m_jtCupMatches);
-    
+
     m_jtRelegationMatch = new JCheckBox( HOVerwaltung.instance().getLanguageString("QualifikationSpiel"), config.getBoolean(TS_SHOWQUALIFICATIONMATCH));
     m_jtRelegationMatch.setToolTipText( HOVerwaltung.instance().getLanguageString("ShowQMatch"));
     m_jtRelegationMatch.setAlignmentX( 0.0F);
     m_jtRelegationMatch.addItemListener( this);
     jpanel.add( m_jtRelegationMatch);
   }
-  
+
 
   private void createCurvesPanel(JPanel jpanel) throws Exception {
 	  ModuleConfig config = ModuleConfig.instance();
     createCurves();
-    
+
     m_jtHistory = new CheckBox( HOVerwaltung.instance().getLanguageString("HistoryCurve"), m_History.getColor(), config.getBoolean(TS_HISTORY));
     m_jtHistory.setAlignmentX( 0.0F);
     m_jtHistory.addItemListener( this);
     jpanel.add( m_jtHistory);
-    
+
     m_jtConfidence = new CheckBox( HOVerwaltung.instance().getLanguageString("Selbstvertrauen"), m_Confidence.getColor(), config.getBoolean(TS_CONFIDENCE));
     m_jtConfidence.setAlignmentX( 0.0F);
     m_jtConfidence.addItemListener( this);
     jpanel.add(m_jtConfidence);
-   
+
     m_jtLoepiHist = new CheckBox(HOVerwaltung.instance().getLanguageString( "LoepiCurve"), m_LoepiHist.getColor(), config.getBoolean(TS_LOEPIHISTORY));
     m_jtLoepiHist.setAlignmentX( 0.0F);
     m_jtLoepiHist.addItemListener( this);
     jpanel.add( m_jtLoepiHist);
-    
+
     m_jtLoepiFore = new CheckBox(HOVerwaltung.instance().getLanguageString("TSForecast"), m_LoepiForecast.getColor(), config.getBoolean(TS_LOEPIFORECAST));
     m_jtLoepiFore.setAlignmentX( 0.0F);
     m_jtLoepiFore.addItemListener( this);
-    jpanel.add( m_jtLoepiFore);    
+    jpanel.add( m_jtLoepiFore);
   }
 
 
@@ -405,11 +378,11 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     }
     jpanel.remove( m_jpGamesPanel);
     m_jpGamesPanel.removeAll();
-    
+
     GridBagConstraints gridbagconstraints = new GridBagConstraints();
     gridbagconstraints.gridwidth = 1;
     gridbagconstraints.anchor = GridBagConstraints.NORTHWEST;
-    
+
     int iCmdID = 0;
     JLabel jlabel = new JLabel(" PIC  N  MOTS");
     jlabel.setOpaque( true);
@@ -417,7 +390,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     gridbagconstraints.gridy = 0;
     m_jpGamesPanel.add( jlabel, gridbagconstraints);
     gridbagconstraints.insets = new Insets(0, 0, 0, 0);
-    
+
     boolean bshowCupMatches = ModuleConfig.instance().getBoolean(TS_SHOWCUPMATCHES);
     boolean bshowQualMatches = ModuleConfig.instance().getBoolean(TS_SHOWQUALIFICATIONMATCH);
 
@@ -426,7 +399,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
         if(  m_LoepiForecast.getMatchType() == MatchLineup.LIGASPIEL
           || (m_LoepiForecast.getMatchType() == MatchLineup.POKALSPIEL && bshowCupMatches)
           || (m_LoepiForecast.getMatchType() == MatchLineup.QUALISPIEL && bshowQualMatches) ) {
-          
+
           FutureMatchBox futurematchbox = new FutureMatchBox( DateFormat.getDateInstance(3).format(m_LoepiForecast.getDate()),
                                                               m_LoepiForecast.getTooltip(), iCmdID,
                                                               m_LoepiForecast.getAttitude(), m_LoepiForecast.getMatchType());
@@ -436,9 +409,9 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
         }
         if( m_LoepiForecast.getMatchType() == MatchLineup.QUALISPIEL ) { // indicate end of season
           gridbagconstraints.gridy++;
-          m_jpGamesPanel.add( new JLabel( "  " + HOVerwaltung.instance().getLanguageString("EndOFSeason")), gridbagconstraints);          
+          m_jpGamesPanel.add( new JLabel( "  " + HOVerwaltung.instance().getLanguageString("EndOFSeason")), gridbagconstraints);
 //          JToolBar.Separator s = new JToolBar.Separator( new Dimension(40,40));
-//          m_jpGamesPanel.add( s, gridbagconstraints);          
+//          m_jpGamesPanel.add( s, gridbagconstraints);
         }
       }
       flag = m_LoepiForecast.next();
@@ -485,7 +458,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     }
     m_LoepiHist.setSpirit( 0, m_History.getSpirit());
     m_LoepiHist.setColor( Color.orange);
-    
+
     if ( m_LoepiForecast != null && m_jpGraphics.removeCurve( m_LoepiForecast) ) {
       m_LoepiForecast = new LoepiCurve( m_Trainer, true);
       m_jpGraphics.addCurve( m_LoepiForecast);
