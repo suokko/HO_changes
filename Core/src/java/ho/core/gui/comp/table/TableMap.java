@@ -6,12 +6,14 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-
+/**
+ * TODO The purpose of this class is unclear to me (kruescho, 06/10/2012)
+ * 
+ */
 class TableMap extends AbstractTableModel implements TableModelListener {
 	
 	private static final long serialVersionUID = 5022212679370349761L;
-	
-    protected TableModel model;
+    private TableModel model;
 
     TableMap() {
     }
