@@ -4,6 +4,7 @@ import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
 import ho.module.playerOverview.PlayerTable;
 import ho.module.playerOverview.SpielerUebersichtNamenTable;
@@ -34,16 +35,16 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
-	private AufstellungsAssistentPanel m_jpAufstellungsAssistentPanel;
-	private AufstellungsDetailPanel m_jpAufstellungsDetailPanel;
-	private LineupPositionsPanel m_jpAufstellungsPositionsPanel;
-	private AufstellungsVergleichHistoryPanel m_jpAufstellungsVergleichHistoryPanel;
-	private AustellungSpielerTable m_jtAufstellungSpielerTable;
+	private AufstellungsAssistentPanel aufstellungsAssistentPanel;
+	private AufstellungsDetailPanel aufstellungsDetailPanel;
+	private LineupPositionsPanel aufstellungsPositionsPanel;
+	private AufstellungsVergleichHistoryPanel aufstellungsVergleichHistoryPanel;
+	private AustellungSpielerTable aufstellungSpielerTable;
 	private JSplitPane horizontalLeftSplitPane;
 	private JSplitPane horizontalRightSplitPane;
 	private JSplitPane verticalSplitPane;
 	private JSplitPane verticalSplitPaneLow;
-	private SpielerUebersichtNamenTable m_jtAufstellungSpielerTableName;
+	private SpielerUebersichtNamenTable aufstellungSpielerTableName;
 
 	// ~ Constructors
 	// -------------------------------------------------------------------------------
@@ -66,15 +67,15 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 *            the id of the player to select.
 	 */
 	public void setPlayer(int idPlayer) {
-		m_jtAufstellungSpielerTableName.setSpieler(idPlayer);
-		m_jtAufstellungSpielerTable.setSpieler(idPlayer);
+		aufstellungSpielerTableName.setSpieler(idPlayer);
+		aufstellungSpielerTable.setSpieler(idPlayer);
 	}
 
 	/**
 	 * Refreshes the view.
 	 */
 	public void refresh() {
-		m_jtAufstellungSpielerTable.refresh();
+		aufstellungSpielerTable.refresh();
 	}
 
 	/**
@@ -82,7 +83,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 * 
 	 */
 	public final AufstellungsAssistentPanel getAufstellungsAssitentPanel() {
-		return m_jpAufstellungsAssistentPanel;
+		return aufstellungsAssistentPanel;
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 * 
 	 */
 	public final AufstellungsDetailPanel getAufstellungsDetailPanel() {
-		return m_jpAufstellungsDetailPanel;
+		return aufstellungsDetailPanel;
 	}
 
 	/**
@@ -98,7 +99,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 * 
 	 */
 	public final LineupPositionsPanel getAufstellungsPositionsPanel() {
-		return m_jpAufstellungsPositionsPanel;
+		return aufstellungsPositionsPanel;
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 * 
 	 */
 	public final int getBestPosWidth() {
-		return m_jtAufstellungSpielerTable.getBestPosWidth();
+		return aufstellungSpielerTable.getBestPosWidth();
 	}
 
 	// --------------------------------------------------------
@@ -127,102 +128,77 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 		return locations;
 	}
 
-	/**
-	 * Gibt die Reihenfolge der Spalten in der Tabelle zurück
-	 * 
-	 */
-	public final int[][] getSpaltenreihenfolge() {
-		return m_jtAufstellungSpielerTable.getSpaltenreihenfolge();
-	}
-
 	public void saveColumnOrder() {
-		m_jtAufstellungSpielerTable.saveColumnOrder();
+		aufstellungSpielerTable.saveColumnOrder();
 	}
 
 	/**
 	 * Setzt die Spieler und Taktiken der einzelnen PositionsPanels neu
 	 */
 	public final void update() {
-		m_jpAufstellungsPositionsPanel.refresh();
-		m_jpAufstellungsDetailPanel.refresh();
-		m_jtAufstellungSpielerTable.refresh();
-		m_jtAufstellungSpielerTableName.refresh();
+		aufstellungsPositionsPanel.refresh();
+		aufstellungsDetailPanel.refresh();
+		aufstellungSpielerTable.refresh();
+		aufstellungSpielerTableName.refresh();
 
 		// Tabelle und Details der Spielerübersicht refreshen
 		ho.core.gui.HOMainFrame.instance().getSpielerUebersichtPanel().refresh();
 
-		m_jpAufstellungsPositionsPanel.exportOldLineup("Actual");
+		aufstellungsPositionsPanel.exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
 	}
 
-	private Component initAufstellungsDetail() {
-		m_jpAufstellungsDetailPanel = new AufstellungsDetailPanel();
-
-		return new JScrollPane(m_jpAufstellungsDetailPanel);
-	}
-
-	private Component initAufstellungsHistory() {
-		m_jpAufstellungsVergleichHistoryPanel = new AufstellungsVergleichHistoryPanel();
-
-		return m_jpAufstellungsVergleichHistoryPanel;
-	}
-
-	private Component initButtons() {
-		m_jpAufstellungsAssistentPanel = new AufstellungsAssistentPanel();
-
-		return new JScrollPane(m_jpAufstellungsAssistentPanel);
-	}
-
-	// ----------init-----------------------------------------------
 	private void initComponents() {
 		setLayout(new BorderLayout());
 
-		// ,initButtons(), initAufstellungsHistory() );
 		verticalSplitPaneLow = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
 
-		final JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("", ThemeManager.getScaledIcon(HOIconName.BALL, 13, 13), initButtons());
-		tabbedPane.addTab("", ThemeManager.getIcon(HOIconName.DISK), initAufstellungsHistory());
-		horizontalLeftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
-				initSpielerPositionen(), initSpielerTabelle());
-		horizontalRightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
+		aufstellungsVergleichHistoryPanel = new AufstellungsVergleichHistoryPanel();
+		aufstellungsAssistentPanel = new AufstellungsAssistentPanel();
 
-		// verticalSplitPaneLow );
-				initAufstellungsDetail(), tabbedPane);
-		verticalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false,
-				horizontalLeftSplitPane, horizontalRightSplitPane);
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.addTab("", ThemeManager.getScaledIcon(HOIconName.BALL, 13, 13), new JScrollPane(
+				aufstellungsAssistentPanel));
+		tabbedPane.addTab("", ThemeManager.getIcon(HOIconName.DISK),
+				aufstellungsVergleichHistoryPanel);
 
-		verticalSplitPaneLow
-				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPaneLow);
-		horizontalLeftSplitPane
-				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_horizontalLeftSplitPane);
+		aufstellungsPositionsPanel = new LineupPositionsPanel(this);
+		horizontalLeftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
+		horizontalLeftSplitPane.setLeftComponent(new JScrollPane(aufstellungsPositionsPanel));
+		horizontalLeftSplitPane.setRightComponent(initSpielerTabelle());
+
+		aufstellungsDetailPanel = new AufstellungsDetailPanel();
+		horizontalRightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
+		horizontalRightSplitPane.setLeftComponent(new JScrollPane(aufstellungsDetailPanel));
+		horizontalRightSplitPane.setRightComponent(tabbedPane);
+
+		verticalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false);
+		verticalSplitPane.setLeftComponent(horizontalLeftSplitPane);
+		verticalSplitPane.setRightComponent(horizontalRightSplitPane);
+
+		UserParameter param = UserParameter.instance();
+		verticalSplitPaneLow.setDividerLocation(param.aufstellungsPanel_verticalSplitPaneLow);
+		horizontalLeftSplitPane.setDividerLocation(param.aufstellungsPanel_horizontalLeftSplitPane);
 		horizontalRightSplitPane
-				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_horizontalRightSplitPane);
-		verticalSplitPane
-				.setDividerLocation(ho.core.model.UserParameter.instance().aufstellungsPanel_verticalSplitPane);
+				.setDividerLocation(param.aufstellungsPanel_horizontalRightSplitPane);
+		verticalSplitPane.setDividerLocation(param.aufstellungsPanel_verticalSplitPane);
 
 		add(verticalSplitPane, BorderLayout.CENTER);
-	}
-
-	private Component initSpielerPositionen() {
-		m_jpAufstellungsPositionsPanel = new LineupPositionsPanel(this);
-
-		return new JScrollPane(m_jpAufstellungsPositionsPanel);
 	}
 
 	private Component initSpielerTabelle() {
 		final JPanel panel = new JPanel(new BorderLayout());
 
-		m_jtAufstellungSpielerTable = new AustellungSpielerTable();
+		aufstellungSpielerTable = new AustellungSpielerTable();
 
-		m_jtAufstellungSpielerTableName = new SpielerUebersichtNamenTable(
-				m_jtAufstellungSpielerTable.getSorter());
+		aufstellungSpielerTableName = new SpielerUebersichtNamenTable(
+				aufstellungSpielerTable.getSorter());
 
-		final JScrollPane scrollpane = new JScrollPane(m_jtAufstellungSpielerTableName);
+		JScrollPane scrollpane = new JScrollPane(aufstellungSpielerTableName);
 		scrollpane.setPreferredSize(new Dimension(170, 100));
 		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		final JScrollPane scrollpane2 = new JScrollPane(m_jtAufstellungSpielerTable);
+		JScrollPane scrollpane2 = new JScrollPane(aufstellungSpielerTable);
 		scrollpane2.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
 		scrollpane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -260,19 +236,19 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (e.getSource() == m_jtAufstellungSpielerTable.getSelectionModel()) {
-					synchronizeSelection(m_jtAufstellungSpielerTable);
-				} else if (e.getSource() == m_jtAufstellungSpielerTableName.getSelectionModel()) {
-					synchronizeSelection(m_jtAufstellungSpielerTableName);
+				if (e.getSource() == aufstellungSpielerTable.getSelectionModel()) {
+					synchronizeSelection(aufstellungSpielerTable);
+				} else if (e.getSource() == aufstellungSpielerTableName.getSelectionModel()) {
+					synchronizeSelection(aufstellungSpielerTableName);
 				}
 			}
 
 			private void synchronizeSelection(JTable sourceTable) {
 				JTable targetTable;
-				if (sourceTable == m_jtAufstellungSpielerTable) {
-					targetTable = m_jtAufstellungSpielerTableName;
+				if (sourceTable == aufstellungSpielerTable) {
+					targetTable = aufstellungSpielerTableName;
 				} else {
-					targetTable = m_jtAufstellungSpielerTable;
+					targetTable = aufstellungSpielerTable;
 				}
 
 				int row = sourceTable.getSelectedRow();
@@ -286,7 +262,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 			}
 		};
 
-		this.m_jtAufstellungSpielerTable.getSelectionModel().addListSelectionListener(lsl);
-		this.m_jtAufstellungSpielerTableName.getSelectionModel().addListSelectionListener(lsl);
+		this.aufstellungSpielerTable.getSelectionModel().addListSelectionListener(lsl);
+		this.aufstellungSpielerTableName.getSelectionModel().addListSelectionListener(lsl);
 	}
 }
