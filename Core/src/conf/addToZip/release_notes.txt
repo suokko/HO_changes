@@ -1,5 +1,6 @@
 Changelist HO! 1.432
 ====================
+- Hattrick Organizer now requires java 1.6. Open JDK supports older operating systems that oracle does not.
 - ArenaSizer become a extra tool
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 - Made player name column width adjustable.
