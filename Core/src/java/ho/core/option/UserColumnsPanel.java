@@ -1,7 +1,7 @@
 package ho.core.option;
 
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnController;
 import ho.core.gui.theme.HOIconName;
@@ -74,8 +74,8 @@ public class UserColumnsPanel extends JPanel implements ActionListener{
 		return panel;
 	}
 	
-	private HOColumnModel getSelectedModel(){
-		return (HOColumnModel)m_jcbColumnModel.getSelectedItem();
+	private HOTableModel getSelectedModel(){
+		return (HOTableModel)m_jcbColumnModel.getSelectedItem();
 	}
     /**
      * Creates a table with checkboxes for UserColumns of the selected model

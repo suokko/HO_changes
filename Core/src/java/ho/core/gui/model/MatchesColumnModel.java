@@ -1,6 +1,6 @@
 package ho.core.gui.model;
 
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
@@ -11,7 +11,7 @@ import java.awt.Color;
 
 
 
-public final class MatchesColumnModel extends HOColumnModel {
+public final class MatchesColumnModel extends HOTableModel {
 
 	private static final long serialVersionUID = -2148644586671286752L;
 

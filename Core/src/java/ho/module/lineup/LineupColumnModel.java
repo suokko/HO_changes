@@ -1,7 +1,7 @@
 package ho.module.lineup;
 
 import ho.core.gui.comp.table.BooleanColumn;
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.PlayerColumn;
 import ho.core.gui.model.UserColumnFactory;
@@ -10,7 +10,7 @@ import ho.core.util.HOLogger;
 
 import java.util.Vector;
 
-public class LineupColumnModel extends HOColumnModel {
+public class LineupColumnModel extends HOTableModel {
 
 	private static final long serialVersionUID = 6706783648812506363L;
 	

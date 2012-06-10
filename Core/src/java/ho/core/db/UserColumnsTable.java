@@ -1,6 +1,6 @@
 package ho.core.db;
 
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.model.UserColumnFactory;
 import ho.core.util.HOLogger;
@@ -29,7 +29,7 @@ class UserColumnsTable extends AbstractTable {
 	}
 
 
-	void saveModel(HOColumnModel model){
+	void saveModel(HOTableModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
 
@@ -67,7 +67,7 @@ class UserColumnsTable extends AbstractTable {
 		}
 	}
 
-	void insertDefault(HOColumnModel model){
+	void insertDefault(HOTableModel model){
 
 		adapter.executeUpdate("DELETE FROM USERCOLUMNS WHERE COLUMN_ID BETWEEN "+(model.getId()*1000)+" AND "+((model.getId()+1)*1000));
 
@@ -101,7 +101,7 @@ class UserColumnsTable extends AbstractTable {
 			values.delete(0,values.length());
 		}
 	}
-	void loadModel(HOColumnModel model){
+	void loadModel(HOTableModel model){
 		int modelIndex 	= 0;
 		int tableIndex 	= 0;
 		int width		= 10;

@@ -1,7 +1,7 @@
 package ho.core.gui.model;
 
 import ho.core.db.DBManager;
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.module.lineup.LineupColumnModel;
 import ho.module.matches.statistics.MatchesOverviewColumnModel;
 
@@ -133,8 +133,8 @@ public final class UserColumnController {
 	 * return all model as Vector
 	 * @return
 	 */
-	public Vector<HOColumnModel> getAllModels(){
-		Vector<HOColumnModel> v = new Vector<HOColumnModel>();
+	public Vector<HOTableModel> getAllModels(){
+		Vector<HOTableModel> v = new Vector<HOTableModel>();
 		
 		v.add( getPlayerOverviewModel() );
 		v.add( getLineupModel() );

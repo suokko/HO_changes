@@ -1,6 +1,6 @@
 package ho.core.gui.model;
 
-import ho.core.gui.comp.table.HOColumnModel;
+import ho.core.gui.comp.table.HOTableModel;
 import ho.core.gui.comp.table.UserColumn;
 import ho.core.model.player.Spieler;
 import ho.module.playerOverview.SpielerTrainingsVergleichsPanel;
@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author Thorsten Dietz
  * @since 1.36
  */
-public final  class PlayerOverviewModel extends HOColumnModel {
+public final  class PlayerOverviewModel extends HOTableModel {
 	
 	private static final long serialVersionUID = 5149408240369536138L;
 	
