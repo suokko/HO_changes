@@ -97,6 +97,7 @@ public class SubstitutionEditDialog extends JDialog {
 
 		okButton.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				canceled = false;
 				dispose();
@@ -104,6 +105,7 @@ public class SubstitutionEditDialog extends JDialog {
 		});
 		cancelButton.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				canceled = true;
 				dispose();
