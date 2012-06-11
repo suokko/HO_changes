@@ -4,67 +4,55 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-
 /**
- * A class that is used to overlay panels with green or red color to make selection of positions for
- * the lineup assistant to ignore.
+ * A class that is used to overlay panels with green or red color to make
+ * selection of positions for the lineup assistant to ignore.
  */
-public class LineupAssistantSelectorOverlay extends JPanel implements MouseListener {
-	/**
-	 * 
-	 */
+public class LineupAssistantSelectorOverlay extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	private boolean isSelected;
-  
+
 	public LineupAssistantSelectorOverlay() {
-        super();
-        setOpaque(false);
-        setLayout(null);
-        addMouseListener(this);
-    }
-    
-    @Override
+		super();
+		init();
+	}
+
+	@Override
 	public void paintComponent(Graphics g) {
-    	super.paintComponent(g);
-        if (isSelected) {
-        	g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_SELECTION_BG));//new Color(10, 255, 10, 40); //r,g,b,alpha
-        } else {
-        	g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_BG));//new Color(255, 10, 10, 40); //r,g,b,alpha
-        }
-        g.fillRect(0,0,500,500); //x,y,width,height -big enough, and then some
-    }    
-	
-	
-	
-	public void mouseClicked(MouseEvent arg0) {
-		// Flip color (and selected)
-		isSelected = !isSelected;
-		repaint();
+		super.paintComponent(g);
+		if (isSelected) {
+			g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_SELECTION_BG));
+		} else {
+			g.setColor(ThemeManager.getColor(HOColorName.SEL_OVERLAY_BG));
+		}
+		g.fillRect(0, 0, 500, 500);
 	}
 
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	public void mouseExited(MouseEvent arg0) {
-	}
-
-	public void mousePressed(MouseEvent arg0) {
-	}
-
-	public void mouseReleased(MouseEvent arg0) {
-	}
-	
 	public void setSelected(boolean b) {
 		isSelected = b;
 		repaint();
 	}
-	
-	public boolean isSelected () {
+
+	public boolean isSelected() {
 		return isSelected;
+	}
+
+	private void init() {
+		setOpaque(false);
+		setLayout(null);
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// Flip color (and selected)
+				isSelected = !isSelected;
+				repaint();
+			}
+		});
 	}
 }
