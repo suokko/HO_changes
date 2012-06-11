@@ -59,6 +59,7 @@ public class WhenTextField extends JFormattedTextField {
 			public void focusGained(FocusEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 
+					@Override
 					public void run() {
 						selectAll();
 					}
