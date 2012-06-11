@@ -38,7 +38,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-
 public class SubstitutionOverview extends JPanel {
 
 	private static final long serialVersionUID = -625638866350314110L;
@@ -60,6 +59,13 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
+	public void setLineup(Lineup lineup) {
+		this.lineup = lineup;
+		if (this.substitutionTable.getRowCount() > 0) {
+			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
+		}
+	}
+
 	private void createActions() {
 		this.editAction = new EditAction();
 		this.editAction.setEnabled(false);
@@ -73,14 +79,16 @@ public class SubstitutionOverview extends JPanel {
 	}
 
 	private void addListeners() {
-		this.substitutionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		this.substitutionTable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
 
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					tableSelectionChanged();
-				}
-			}
-		});
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							tableSelectionChanged();
+						}
+					}
+				});
 	}
 
 	private void tableSelectionChanged() {
@@ -164,7 +172,8 @@ public class SubstitutionOverview extends JPanel {
 		if (!dlg.isCanceled()) {
 			ISubstitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
-			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
+			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
+					.getModel();
 			int idx = model.getRowCount() - 1;
 			model.fireTableRowsInserted(idx, idx);
 
@@ -198,14 +207,17 @@ public class SubstitutionOverview extends JPanel {
 			}
 		}
 
+		@Override
 		public int getRowCount() {
 			return this.data.size();
 		}
 
+		@Override
 		public int getColumnCount() {
 			return this.columnNames.length;
 		}
 
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			ISubstitution sub = this.data.get(rowIndex);
 			switch (columnIndex) {
@@ -213,9 +225,9 @@ public class SubstitutionOverview extends JPanel {
 				return Lookup.getOrderType(sub.getOrderType());
 			case 1:
 				if (sub.getMatchMinuteCriteria() > 0) {
-					return MessageFormat.format(HOVerwaltung.instance()
-							.getLanguageString("subs.MinuteAfterX"), Integer.valueOf(sub
-							.getMatchMinuteCriteria()));
+					return MessageFormat.format(
+							HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX"),
+							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
 			case 2:
@@ -241,6 +253,7 @@ public class SubstitutionOverview extends JPanel {
 			super(HOVerwaltung.instance().getLanguageString("subs.Behavior"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			doNewOrder(MatchOrderType.NEW_BEHAVIOUR);
 		}
@@ -254,6 +267,7 @@ public class SubstitutionOverview extends JPanel {
 			super(HOVerwaltung.instance().getLanguageString("subs.TypeSwap"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			doNewOrder(MatchOrderType.POSITION_SWAP);
 		}
@@ -267,6 +281,7 @@ public class SubstitutionOverview extends JPanel {
 			super(HOVerwaltung.instance().getLanguageString("subs.TypeSub"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			doNewOrder(MatchOrderType.SUBSTITUTION);
 		}
@@ -280,14 +295,15 @@ public class SubstitutionOverview extends JPanel {
 			super(HOVerwaltung.instance().getLanguageString("subs.Remove"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
 			ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
 			lineup.getSubstitutionList().remove(sub);
-			((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsDeleted(selectedRowIndex,
-					selectedRowIndex);
+			((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsDeleted(
+					selectedRowIndex, selectedRowIndex);
 			detailsView.refresh();
 		}
 	}
@@ -300,6 +316,7 @@ public class SubstitutionOverview extends JPanel {
 			super(HOVerwaltung.instance().getLanguageString("subs.Edit"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
 			final ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
@@ -337,6 +354,7 @@ public class SubstitutionOverview extends JPanel {
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				DBManager.instance().loadUserParameter();
 				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
@@ -344,8 +362,9 @@ public class SubstitutionOverview extends JPanel {
 
 				Lineup lineup = null;
 				try {
-					lineup = Helper.getLineup(new File(
-							"/home/chr/tmp/matchorders_version_1_8_matchID_362419131_isYouth_false.xml"));
+					lineup = Helper
+							.getLineup(new File(
+									"/home/chr/tmp/matchorders_version_1_8_matchID_362419131_isYouth_false.xml"));
 					// lineup = Helper.getLineup(new
 					// File("/home/chr/tmp/matchorders_version_1_8_matchID_362217696_isYouth_false.xml"));
 				} catch (Exception e) {
