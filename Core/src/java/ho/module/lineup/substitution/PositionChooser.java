@@ -4,11 +4,9 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,9 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 public class PositionChooser extends JPanel {
 
@@ -175,20 +171,6 @@ public class PositionChooser extends JPanel {
 		pos = positionPanelIterator.next();
 		pos.addMouseListener(myMouseListener);
 		add(pos, gbc);
-	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			public void run() {
-				JDialog dlg = new JDialog();
-				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				dlg.getContentPane().setLayout(new BorderLayout());
-				dlg.getContentPane().add(new PositionChooser(), BorderLayout.CENTER);
-				dlg.pack();
-				dlg.setVisible(true);
-			}
-		});
 	}
 
 	private class PositionPanel extends JPanel {
