@@ -180,6 +180,7 @@ public class SubstitutionEditView extends JPanel {
 		// of minutes when slider changed
 		this.whenSlider.addChangeListener(new ChangeListener() {
 
+			@Override
 			public void stateChanged(ChangeEvent e) {
 				whenTextField.setValue(Integer.valueOf(whenSlider.getModel().getValue()));
 			}
@@ -189,6 +190,7 @@ public class SubstitutionEditView extends JPanel {
 		// "when" textfield changed
 		this.whenTextField.addPropertyChangeListener("value", new PropertyChangeListener() {
 
+			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Integer value = (Integer) whenTextField.getValue();
 				if (value != null) {
@@ -204,6 +206,7 @@ public class SubstitutionEditView extends JPanel {
 			// the position combobox changes
 			this.positionComboBox.addItemListener(new ItemListener() {
 
+				@Override
 				public void itemStateChanged(ItemEvent e) {
 					PlayerPositionItem item = (PlayerPositionItem) positionComboBox.getSelectedItem();
 					if (item != null) {
@@ -218,6 +221,7 @@ public class SubstitutionEditView extends JPanel {
 			// selection if selection in the PositionChooser changes
 			this.positionChooser.addPositionSelectionListener(new PositionSelectionListener() {
 
+				@Override
 				public void selectionChanged(PositionSelectionEvent event) {
 					if (event.getChange() == Change.SELECTED) {
 						for (int i = 0; i < positionComboBox.getModel().getSize(); i++) {
