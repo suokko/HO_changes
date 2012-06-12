@@ -32,12 +32,6 @@ public interface ISubstitution {
 	public static final byte IN_THE_LEAD_BY_MORE_THAN_TWO = 7;
 	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
 
-	// Order type
-	// In the HT-API, position swap has id 3, normal substitution and behaviour
-	// change both have id 1.
-	public static final byte OTHER = 1;
-	public static final byte POSITION_SWAP = 3;
-
 	public int getPlayerOrderId();
 
 	public void setPlayerOrderId(int id);
