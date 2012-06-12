@@ -6,6 +6,8 @@ package ho.module.lineup.substitution;
  */
 public enum MatchOrderType {
 
+	// In the HT-API, position swap has id 3, normal substitution and behaviour
+	// change both have id 1.
 	SUBSTITUTION((byte) 1), NEW_BEHAVIOUR((byte) 1), POSITION_SWAP((byte) 3);
 
 	private final byte id;
