@@ -1,6 +1,8 @@
 package ho.module.lineup.substitution;
 
 import ho.core.db.DBManager;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.util.GUIUtilities;
@@ -8,6 +10,7 @@ import ho.module.lineup.Lineup;
 import ho.module.lineup2.Helper;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -26,6 +29,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -37,6 +41,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class SubstitutionOverview extends JPanel {
 
@@ -64,6 +69,10 @@ public class SubstitutionOverview extends JPanel {
 		if (this.substitutionTable.getRowCount() > 0) {
 			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
 		}
+		refresh();
+		SubstitutionsTableModel model = (SubstitutionsTableModel)this.substitutionTable.getModel();
+		model.getRow(2).setCritical(true);
+		model.fireTableDataChanged();
 	}
 
 	private void createActions() {
@@ -112,6 +121,9 @@ public class SubstitutionOverview extends JPanel {
 		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane tableScrollPane = new JScrollPane();
 		tableScrollPane.getViewport().add(this.substitutionTable);
+		this.substitutionTable.getColumnModel().getColumn(0).setCellRenderer(new WarningRenderer());
+		this.substitutionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+		this.substitutionTable.getColumnModel().getColumn(0).setMaxWidth(25);
 
 		this.detailsView = new DetailsView();
 		add(this.detailsView, BorderLayout.SOUTH);
@@ -186,30 +198,51 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
+	private SubstitutionEditDialog getSubstitutionEditDialog(MatchOrderType orderType) {
+		SubstitutionEditDialog dlg = null;
+		Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
+		if (windowAncestor instanceof Frame) {
+			dlg = new SubstitutionEditDialog((Frame) windowAncestor, orderType);
+		} else {
+			dlg = new SubstitutionEditDialog((Dialog) windowAncestor, orderType);
+		}
+		return dlg;
+	}
+
+	/**
+	 * TableModel for the overview table where existing substitutions are
+	 * listed.
+	 * 
+	 */
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 6969656858380680460L;
-		private List<ISubstitution> data = new ArrayList<ISubstitution>();
-		private String[] columnNames = new String[] { "Order", "When", "Standing", "Red cards" };
+		private List<TableRow> rows = new ArrayList<TableRow>();
+		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards"  };
 
 		public ISubstitution getSubstitution(int rowIndex) {
-			return this.data.get(rowIndex);
+			return this.rows.get(rowIndex).getSub();
 		}
 
 		public void setData(List<ISubstitution> data) {
-			this.data = data;
+			this.rows.clear();
+			for (ISubstitution sub : data) {
+				TableRow row = new TableRow();
+				row.setSub(sub);
+				this.rows.add(row);
+			}
 			fireTableDataChanged();
 		}
 
 		public void select(ISubstitution substitution) {
-			for (int i = 0; i < this.data.size(); i++) {
+			for (int i = 0; i < this.rows.size(); i++) {
 
 			}
 		}
 
 		@Override
 		public int getRowCount() {
-			return this.data.size();
+			return this.rows.size();
 		}
 
 		@Override
@@ -219,20 +252,20 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			ISubstitution sub = this.data.get(rowIndex);
+			ISubstitution sub = this.rows.get(rowIndex).getSub();
 			switch (columnIndex) {
-			case 0:
-				return Lookup.getOrderType(sub.getOrderType());
 			case 1:
+				return Lookup.getOrderType(sub.getOrderType());
+			case 2:
 				if (sub.getMatchMinuteCriteria() > 0) {
 					return MessageFormat.format(
 							HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX"),
 							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
-			case 2:
-				return Lookup.getStanding(sub.getStanding());
 			case 3:
+				return Lookup.getStanding(sub.getStanding());
+			case 4:
 				return Lookup.getRedCard(sub.getCard());
 			}
 
@@ -242,6 +275,43 @@ public class SubstitutionOverview extends JPanel {
 		@Override
 		public String getColumnName(int column) {
 			return this.columnNames[column];
+		}
+
+		public TableRow getRow(int rowIndex) {
+			return this.rows.get(rowIndex);
+		}
+	}
+
+	/*
+	 * This class is a simple container for row data.
+	 */
+	private class TableRow {
+		private ISubstitution sub;
+		private boolean critical;
+		private boolean error;
+
+		public ISubstitution getSub() {
+			return sub;
+		}
+
+		public void setSub(ISubstitution sub) {
+			this.sub = sub;
+		}
+
+		public boolean isCritical() {
+			return critical;
+		}
+
+		public void setCritical(boolean critical) {
+			this.critical = critical;
+		}
+
+		public boolean isError() {
+			return error;
+		}
+
+		public void setError(boolean error) {
+			this.error = error;
 		}
 	}
 
@@ -336,15 +406,27 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
-	private SubstitutionEditDialog getSubstitutionEditDialog(MatchOrderType orderType) {
-		SubstitutionEditDialog dlg = null;
-		Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
-		if (windowAncestor instanceof Frame) {
-			dlg = new SubstitutionEditDialog((Frame) windowAncestor, orderType);
-		} else {
-			dlg = new SubstitutionEditDialog((Dialog) windowAncestor, orderType);
+	private class WarningRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 7013869782046646283L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, value,
+					isSelected, hasFocus, row, column);
+			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table.getModel();
+			TableRow tblRow = tblModel.getRow(row);
+			if (tblRow.isCritical()) {
+				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION));
+			} else if (tblRow.isError()) {
+				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION_RED));
+			} else {
+				component.setIcon(null);
+			}
+			return component;
 		}
-		return dlg;
 	}
 
 	/**
