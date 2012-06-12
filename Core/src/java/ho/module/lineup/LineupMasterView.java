@@ -1,5 +1,6 @@
 package ho.module.lineup;
 
+import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
 import ho.module.lineup.substitution.SubstitutionOverview;
 
@@ -12,7 +13,7 @@ import javax.swing.JTabbedPane;
  * Top-Level Container for the Lineups (contains a tab for the lineup, a tab for
  * the match orders...)
  * 
- * @author chr
+ * @author kruescho
  * 
  */
 public class LineupMasterView extends JPanel {
@@ -23,6 +24,7 @@ public class LineupMasterView extends JPanel {
 
 	public LineupMasterView() {
 		initComponents();
+		addListeners();
 	}
 
 	public LineupPanel getLineupPanel() {
@@ -43,4 +45,15 @@ public class LineupMasterView extends JPanel {
 		add(tabbedPane, BorderLayout.CENTER);
 	}
 
+	private void addListeners() {
+		this.lineupPanel.addUpdateable(new Updateable() {
+			
+			@Override
+			public void update() {
+				System.out.println("####- update");
+				substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
+			}
+		});
+	}
+	
 }
