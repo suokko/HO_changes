@@ -2,6 +2,7 @@ package ho.module.lineup;
 
 import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.Updateable;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.UserParameter;
@@ -14,6 +15,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -32,9 +35,6 @@ import javax.swing.event.ListSelectionListener;
 public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 
 	private static final long serialVersionUID = -8522462525789028842L;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
 	private AufstellungsAssistentPanel aufstellungsAssistentPanel;
 	private AufstellungsDetailPanel aufstellungsDetailPanel;
 	private LineupPositionsPanel aufstellungsPositionsPanel;
@@ -45,9 +45,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	private JSplitPane verticalSplitPane;
 	private JSplitPane verticalSplitPaneLow;
 	private SpielerUebersichtNamenTable aufstellungSpielerTableName;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
+	private List<Updateable> updateables = new ArrayList<Updateable>();
 
 	/**
 	 * Creates a new AufstellungsPanel object.
@@ -56,9 +54,6 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 		initComponents();
 		addListeners();
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * Selects the player with the given id.
@@ -146,6 +141,21 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 
 		aufstellungsPositionsPanel.exportOldLineup("Actual");
 		FileExtensionManager.extractLineup("Actual");
+		fireUpdate();
+	}
+
+	public void addUpdateable(Updateable updateable) {
+		this.updateables.add(updateable);
+	}
+
+	public void removeUpdateable(Updateable updateable) {
+		this.updateables.remove(updateable);
+	}
+
+	private void fireUpdate() {
+		for (int i = this.updateables.size() - 1; i >= 0; i--) {
+			this.updateables.get(i).update();
+		}
 	}
 
 	private void initComponents() {
