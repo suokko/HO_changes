@@ -1,34 +1,26 @@
 package ho.module.lineup.substitution;
 
-import ho.core.db.DBManager;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.UserParameter;
 import ho.core.util.GUIUtilities;
 import ho.module.lineup.Lineup;
-import ho.module.lineup2.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,8 +28,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -70,7 +60,7 @@ public class SubstitutionOverview extends JPanel {
 			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
 		}
 		refresh();
-		SubstitutionsTableModel model = (SubstitutionsTableModel)this.substitutionTable.getModel();
+		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
 		model.getRow(2).setCritical(true);
 		model.fireTableDataChanged();
 	}
@@ -218,7 +208,7 @@ public class SubstitutionOverview extends JPanel {
 
 		private static final long serialVersionUID = 6969656858380680460L;
 		private List<TableRow> rows = new ArrayList<TableRow>();
-		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards"  };
+		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards" };
 
 		public ISubstitution getSubstitution(int rowIndex) {
 			return this.rows.get(rowIndex).getSub();
@@ -427,59 +417,5 @@ public class SubstitutionOverview extends JPanel {
 			}
 			return component;
 		}
-	}
-
-	/**
-	 * For development only, should be removed later.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				DBManager.instance().loadUserParameter();
-				HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
-				HOVerwaltung.instance().loadLatestHoModel();
-
-				Lineup lineup = null;
-				try {
-					lineup = Helper
-							.getLineup(new File(
-									"/home/chr/tmp/matchorders_version_1_8_matchID_362419131_isYouth_false.xml"));
-					// lineup = Helper.getLineup(new
-					// File("/home/chr/tmp/matchorders_version_1_8_matchID_362217696_isYouth_false.xml"));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				try {
-					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-				} catch (Exception e) {
-					// use standard LaF
-				}
-				JDialog dlg = new JDialog();
-				dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				dlg.getContentPane().add(new SubstitutionOverview(lineup));
-				dlg.pack();
-				dlg.setSize(new Dimension(800, 600));
-				dlg.setVisible(true);
-
-				dlg.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosed(WindowEvent e) {
-						System.exit(0);
-					}
-				});
-			}
-		});
-
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-
-			@Override
-			public void run() {
-				DBManager.instance().disconnect();
-			}
-		});
 	}
 }
