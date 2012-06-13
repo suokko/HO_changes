@@ -6,6 +6,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.awt.Dimension;

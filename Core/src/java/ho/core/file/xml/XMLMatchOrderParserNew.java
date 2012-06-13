@@ -3,9 +3,9 @@ package ho.core.file.xml;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.SpielerPosition;
-import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.io.File;

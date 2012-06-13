@@ -8,6 +8,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.awt.Color;
