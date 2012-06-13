@@ -20,6 +20,7 @@ import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Standing;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -39,19 +40,19 @@ import java.util.Vector;
  * @author thomas.werth
  */
 public class Lineup {
-    
+
 	public static final byte SYS_433 = 0;
-    public static final byte SYS_442 = 1;
-    public static final byte SYS_532 = 2;
-    public static final byte SYS_541 = 3;
-    public static final byte SYS_352 = 4;
-    public static final byte SYS_343 = 5;
-    public static final byte SYS_451 = 6;
-    public static final byte SYS_MURKS = 7; // unknown / invalid system
-    public static final byte SYS_523 = 8;
-    public static final byte SYS_550 = 9;
-    public static final byte SYS_253 = 10;
-    
+	public static final byte SYS_442 = 1;
+	public static final byte SYS_532 = 2;
+	public static final byte SYS_541 = 3;
+	public static final byte SYS_352 = 4;
+	public static final byte SYS_343 = 5;
+	public static final byte SYS_451 = 6;
+	public static final byte SYS_MURKS = 7; // unknown / invalid system
+	public static final byte SYS_523 = 8;
+	public static final byte SYS_550 = 9;
+	public static final byte SYS_253 = 10;
+
 	public static final String DEFAULT_NAME = "HO!";
 	public static final String DEFAULT_NAMELAST = "HO!LastLineup";
 	public static final int NO_HRF_VERBINDUNG = -1;
@@ -102,26 +103,26 @@ public class Lineup {
 		try {
 
 			// Positionen erzeugen
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, Integer.parseInt(properties
-					.getProperty("keeper", "0")), (byte) 0));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack, Integer.parseInt(properties
-					.getProperty("rightback", "0")), Byte.parseByte(properties.getProperty("behrightback",
-					"0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.keeper, Integer
+					.parseInt(properties.getProperty("keeper", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightBack, Integer
+					.parseInt(properties.getProperty("rightback", "0")), Byte.parseByte(properties
+					.getProperty("behrightback", "0"))));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightCentralDefender, Integer
-					.parseInt(properties.getProperty("insideback1", "0")), Byte.parseByte(properties
-					.getProperty("behinsideback1", "0"))));
+					.parseInt(properties.getProperty("insideback1", "0")), Byte
+					.parseByte(properties.getProperty("behinsideback1", "0"))));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftCentralDefender, Integer
-					.parseInt(properties.getProperty("insideback2", "0")), Byte.parseByte(properties
-					.getProperty("behinsideback2", "0"))));
+					.parseInt(properties.getProperty("insideback2", "0")), Byte
+					.parseByte(properties.getProperty("behinsideback2", "0"))));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.middleCentralDefender, Integer
-					.parseInt(properties.getProperty("insideback3", "0")), Byte.parseByte(properties
-					.getProperty("behinsideback3", "0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, Integer.parseInt(properties
-					.getProperty("leftback", "0")),
-					Byte.parseByte(properties.getProperty("behleftback", "0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger, Integer.parseInt(properties
-					.getProperty("rightwinger", "0")), Byte.parseByte(properties.getProperty(
-					"behrightwinger", "0"))));
+					.parseInt(properties.getProperty("insideback3", "0")), Byte
+					.parseByte(properties.getProperty("behinsideback3", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftBack, Integer
+					.parseInt(properties.getProperty("leftback", "0")), Byte.parseByte(properties
+					.getProperty("behleftback", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightWinger, Integer
+					.parseInt(properties.getProperty("rightwinger", "0")), Byte
+					.parseByte(properties.getProperty("behrightwinger", "0"))));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightInnerMidfield, Integer
 					.parseInt(properties.getProperty("insidemid1", "0")), Byte.parseByte(properties
 					.getProperty("behinsidemid1", "0"))));
@@ -131,28 +132,28 @@ public class Lineup {
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.centralInnerMidfield, Integer
 					.parseInt(properties.getProperty("insidemid3", "0")), Byte.parseByte(properties
 					.getProperty("behinsidemid3", "0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger, Integer.parseInt(properties
-					.getProperty("leftwinger", "0")), Byte.parseByte(properties.getProperty("behleftwinger",
-					"0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightForward, Integer.parseInt(properties
-					.getProperty("forward1", "0")),
-					Byte.parseByte(properties.getProperty("behforward1", "0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftForward, Integer.parseInt(properties
-					.getProperty("forward2", "0")),
-					Byte.parseByte(properties.getProperty("behforward2", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftWinger, Integer
+					.parseInt(properties.getProperty("leftwinger", "0")), Byte.parseByte(properties
+					.getProperty("behleftwinger", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.rightForward, Integer
+					.parseInt(properties.getProperty("forward1", "0")), Byte.parseByte(properties
+					.getProperty("behforward1", "0"))));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.leftForward, Integer
+					.parseInt(properties.getProperty("forward2", "0")), Byte.parseByte(properties
+					.getProperty("behforward2", "0"))));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.centralForward, Integer
 					.parseInt(properties.getProperty("forward3", "0")), Byte.parseByte(properties
 					.getProperty("behforward3", "0"))));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substDefender, Integer.parseInt(properties
-					.getProperty("substback", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substDefender, Integer
+					.parseInt(properties.getProperty("substback", "0")), (byte) 0));
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substInnerMidfield, Integer
 					.parseInt(properties.getProperty("substinsidemid", "0")), (byte) 0));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, Integer.parseInt(properties
-					.getProperty("substwinger", "0")), (byte) 0));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, Integer.parseInt(properties
-					.getProperty("substkeeper", "0")), (byte) 0));
-			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, Integer.parseInt(properties
-					.getProperty("substforward", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, Integer
+					.parseInt(properties.getProperty("substwinger", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, Integer
+					.parseInt(properties.getProperty("substkeeper", "0")), (byte) 0));
+			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, Integer
+					.parseInt(properties.getProperty("substforward", "0")), (byte) 0));
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
 			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
 
@@ -162,9 +163,12 @@ public class Lineup {
 				if ((properties.getProperty("subst" + i + "playerorderid") != null)
 						&& (Integer.parseInt(properties.getProperty("subst" + i + "playerorderid")) >= 0)) {
 
-					byte orderTypeId = Byte.parseByte(properties.getProperty("subst" + i + "ordertype"));
-					int playerIn = Integer.parseInt(properties.getProperty("subst" + i + "playerin"));
-					int playerOut = Integer.parseInt(properties.getProperty("subst" + i + "playerout"));
+					byte orderTypeId = Byte.parseByte(properties.getProperty("subst" + i
+							+ "ordertype"));
+					int playerIn = Integer.parseInt(properties
+							.getProperty("subst" + i + "playerin"));
+					int playerOut = Integer.parseInt(properties.getProperty("subst" + i
+							+ "playerout"));
 					MatchOrderType matchOrderType;
 					if (orderTypeId == 3) {
 						matchOrderType = MatchOrderType.POSITION_SWAP;
@@ -185,9 +189,11 @@ public class Lineup {
 					sub.setMatchMinuteCriteria(Byte.parseByte(properties.getProperty("subst" + i
 							+ "matchminutecriteria")));
 					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
-					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i + "behaviour")));
+					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i
+							+ "behaviour")));
 					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
-					sub.setStanding(Byte.parseByte(properties.getProperty("subst" + i + "standing")));
+					sub.setStanding(Standing.getById(Byte.parseByte(properties.getProperty("subst"
+							+ i + "standing"))));
 					this.substitutions.add(sub);
 				} else {
 					break;
@@ -216,7 +222,8 @@ public class Lineup {
 	 * @return tactic level
 	 */
 	public final float getTacticLevelAimAow() {
-		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(),
+		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel()
+				.getTeam(),
 				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(),
 				RatingPredictionConfig.getInstance()).getTacticLevelAowAim());
 	}
@@ -227,7 +234,8 @@ public class Lineup {
 	 * @return tactic level
 	 */
 	public final float getTacticLevelCounter() {
-		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(),
+		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel()
+				.getTeam(),
 				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(),
 				RatingPredictionConfig.getInstance()).getTacticLevelCounter());
 	}
@@ -238,7 +246,8 @@ public class Lineup {
 	 * @return tactic level
 	 */
 	public final float getTacticLevelPressing() {
-		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(),
+		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel()
+				.getTeam(),
 				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(),
 				RatingPredictionConfig.getInstance()).getTacticLevelPressing());
 	}
@@ -249,7 +258,8 @@ public class Lineup {
 	 * @return tactic level
 	 */
 	public final float getTacticLevelLongShots() {
-		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel().getTeam(),
+		return Math.max(1, new RatingPredictionManager(this, HOVerwaltung.instance().getModel()
+				.getTeam(),
 				(short) HOVerwaltung.instance().getModel().getTrainer().getTrainerTyp(),
 				RatingPredictionConfig.getInstance()).getTacticLevelLongShots());
 	}
@@ -393,17 +403,20 @@ public class Lineup {
 	 * Get the best players for penalty kicks.
 	 */
 	public final int[] getBestElferKicker() {
-		return m_clAssi.setElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(), m_vPositionen);
+		return m_clAssi.setElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(),
+				m_vPositionen);
 	}
 
 	/**
 	 * Predicts Central Attack-Rating
 	 */
 	public final double getCentralAttackRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
 			double value = Math.max(1, rpManager.getCentralAttackRatings());
@@ -420,10 +433,12 @@ public class Lineup {
 	 * Predicts cd-Rating
 	 */
 	public final double getCentralDefenseRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
 			double value = Math.max(1, rpManager.getCentralDefenseRatings());
@@ -518,10 +533,12 @@ public class Lineup {
 	 * Predicts LeftAttack-Rating
 	 */
 	public final double getLeftAttackRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
@@ -539,10 +556,12 @@ public class Lineup {
 	 * Predicts LeftDefense-Rating
 	 */
 	public final double getLeftDefenseRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
@@ -561,9 +580,9 @@ public class Lineup {
 	 */
 	public final float getLoddarStats() {
 		LoddarStatsCalculator calculator = new LoddarStatsCalculator();
-		calculator.setRatings(getMidfieldRating(), getRightDefenseRating(), getCentralDefenseRating(),
-				getLeftDefenseRating(), getRightAttackRating(), getCentralAttackRating(),
-				getLeftAttackRating());
+		calculator.setRatings(getMidfieldRating(), getRightDefenseRating(),
+				getCentralDefenseRating(), getLeftDefenseRating(), getRightAttackRating(),
+				getCentralAttackRating(), getLeftAttackRating());
 		calculator.setTactics(getTacticType(), getTacticLevelAimAow(), getTacticLevelCounter());
 		return calculator.calculate();
 	}
@@ -601,10 +620,12 @@ public class Lineup {
 	 * Predicts MF-Rating
 	 */
 	public final double getMidfieldRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
 			double value = Math.max(1, rpManager.getMFRatings());
@@ -769,15 +790,15 @@ public class Lineup {
 					checkDate = m.getMatchDateAsTimestamp();
 					continue;
 				}
-				if (m.getMatchDateAsTimestamp().getTime() < (checkDate.getTime() - 8 * 24 * 60 * 60 * 1000L)) { // older
-																												// than
-																												// 8
-																												// days
-					HOLogger.instance()
-							.warning(
-									getClass(),
-									"Old match with status UPCOMING! " + m.getMatchID() + " from "
-											+ m.getMatchDate());
+				if (m.getMatchDateAsTimestamp().getTime() < (checkDate.getTime() - 8 * 24 * 60 * 60
+						* 1000L)) { // older
+									// than
+									// 8
+									// days
+					HOLogger.instance().warning(
+							getClass(),
+							"Old match with status UPCOMING! " + m.getMatchID() + " from "
+									+ m.getMatchDate());
 					i.remove();
 				} else {
 					checkDate = m.getMatchDateAsTimestamp();
@@ -790,7 +811,7 @@ public class Lineup {
 	/**
 	 * Umrechnung von double auf 1-80 int
 	 * 
-	 * @deprecated use RatingUtil.getIntValue4Rating(double rating) instead 
+	 * @deprecated use RatingUtil.getIntValue4Rating(double rating) instead
 	 * @param rating
 	 */
 	@Deprecated
@@ -803,9 +824,11 @@ public class Lineup {
 	 */
 	public Spieler getPlayerByPositionID(int positionId) {
 		try {
-			return HOVerwaltung.instance().getModel().getSpieler(getPositionById(positionId).getSpielerId());
+			return HOVerwaltung.instance().getModel()
+					.getSpieler(getPositionById(positionId).getSpielerId());
 		} catch (Exception e) {
-			HOLogger.instance().error(getClass(), "getPlayerByPositionID(" + positionId + "): " + e);
+			HOLogger.instance()
+					.error(getClass(), "getPlayerByPositionID(" + positionId + "): " + e);
 			return null;
 		}
 	}
@@ -883,10 +906,12 @@ public class Lineup {
 	 * Predicts Right-Attack-Rating
 	 */
 	public final double getRightAttackRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
 			double value = Math.max(1, rpManager.getRightAttackRatings());
@@ -903,10 +928,12 @@ public class Lineup {
 	 * Predicts rd-Rating
 	 */
 	public final double getRightDefenseRating() {
-		if (HOVerwaltung.instance().getModel() != null && HOVerwaltung.instance().getModel().getID() != -1) {
-			final RatingPredictionManager rpManager = new RatingPredictionManager(this, HOVerwaltung
-					.instance().getModel().getTeam(), (short) HOVerwaltung.instance().getModel().getTrainer()
-					.getTrainerTyp(), RatingPredictionConfig.getInstance());
+		if (HOVerwaltung.instance().getModel() != null
+				&& HOVerwaltung.instance().getModel().getID() != -1) {
+			final RatingPredictionManager rpManager = new RatingPredictionManager(this,
+					HOVerwaltung.instance().getModel().getTeam(), (short) HOVerwaltung.instance()
+							.getModel().getTrainer().getTrainerTyp(),
+					RatingPredictionConfig.getInstance());
 			// ruft konvertiertes Plugin ( in Manager ) auf und returned den
 			// Wert
 			double value = Math.max(1, rpManager.getRightDefenseRatings());
@@ -986,8 +1013,8 @@ public class Lineup {
 	 * Check, if the player is a substitute.
 	 */
 	public final boolean isSpielerInReserve(int spielerId) {
-		return (m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen) && !m_clAssi.isSpielerInAnfangsElf(
-				spielerId, m_vPositionen));
+		return (m_clAssi.isSpielerAufgestellt(spielerId, m_vPositionen) && !m_clAssi
+				.isSpielerInAnfangsElf(spielerId, m_vPositionen));
 	}
 
 	/**
@@ -1153,10 +1180,10 @@ public class Lineup {
 	 * erstellt die automatische Aufstellung
 	 */
 	public final void doAufstellung(List<Spieler> spieler, byte reihenfolge, boolean mitForm,
-			boolean idealPosFirst, boolean ignoreVerletzung, boolean ignoreSperren, float wetterBonus,
-			int wetter) {
-		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst, ignoreVerletzung,
-				ignoreSperren, wetterBonus, wetter);
+			boolean idealPosFirst, boolean ignoreVerletzung, boolean ignoreSperren,
+			float wetterBonus, int wetter) {
+		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst,
+				ignoreVerletzung, ignoreSperren, wetterBonus, wetter);
 		setAutoKicker(null);
 		setAutoKapitaen(null);
 	}
@@ -1173,34 +1200,35 @@ public class Lineup {
 					String.valueOf(getPositionById(ISpielerPosition.keeper).getSpielerId()));
 			properties.setProperty("rightback",
 					String.valueOf(getPositionById(ISpielerPosition.rightBack).getSpielerId()));
-			properties.setProperty("insideback1",
-					String.valueOf(getPositionById(ISpielerPosition.rightCentralDefender).getSpielerId()));
-			properties.setProperty("insideback2",
-					String.valueOf(getPositionById(ISpielerPosition.leftCentralDefender).getSpielerId()));
-			properties.setProperty("insideback3",
-					String.valueOf(getPositionById(ISpielerPosition.middleCentralDefender).getSpielerId()));
+			properties.setProperty("insideback1", String.valueOf(getPositionById(
+					ISpielerPosition.rightCentralDefender).getSpielerId()));
+			properties.setProperty("insideback2", String.valueOf(getPositionById(
+					ISpielerPosition.leftCentralDefender).getSpielerId()));
+			properties.setProperty("insideback3", String.valueOf(getPositionById(
+					ISpielerPosition.middleCentralDefender).getSpielerId()));
 			properties.setProperty("leftback",
 					String.valueOf(getPositionById(ISpielerPosition.leftBack).getSpielerId()));
 			properties.setProperty("rightwinger",
 					String.valueOf(getPositionById(ISpielerPosition.rightWinger).getSpielerId()));
-			properties.setProperty("insidemid1",
-					String.valueOf(getPositionById(ISpielerPosition.rightInnerMidfield).getSpielerId()));
-			properties.setProperty("insidemid2",
-					String.valueOf(getPositionById(ISpielerPosition.leftInnerMidfield).getSpielerId()));
-			properties.setProperty("insidemid3",
-					String.valueOf(getPositionById(ISpielerPosition.centralInnerMidfield).getSpielerId()));
+			properties.setProperty("insidemid1", String.valueOf(getPositionById(
+					ISpielerPosition.rightInnerMidfield).getSpielerId()));
+			properties.setProperty("insidemid2", String.valueOf(getPositionById(
+					ISpielerPosition.leftInnerMidfield).getSpielerId()));
+			properties.setProperty("insidemid3", String.valueOf(getPositionById(
+					ISpielerPosition.centralInnerMidfield).getSpielerId()));
 			properties.setProperty("leftwinger",
 					String.valueOf(getPositionById(ISpielerPosition.leftWinger).getSpielerId()));
 			properties.setProperty("forward1",
 					String.valueOf(getPositionById(ISpielerPosition.rightForward).getSpielerId()));
 			properties.setProperty("forward2",
 					String.valueOf(getPositionById(ISpielerPosition.leftForward).getSpielerId()));
-			properties.setProperty("forward3",
-					String.valueOf(getPositionById(ISpielerPosition.centralForward).getSpielerId()));
+			properties
+					.setProperty("forward3", String.valueOf(getPositionById(
+							ISpielerPosition.centralForward).getSpielerId()));
 			properties.setProperty("substback",
 					String.valueOf(getPositionById(ISpielerPosition.substDefender).getSpielerId()));
-			properties.setProperty("substinsidemid",
-					String.valueOf(getPositionById(ISpielerPosition.substInnerMidfield).getSpielerId()));
+			properties.setProperty("substinsidemid", String.valueOf(getPositionById(
+					ISpielerPosition.substInnerMidfield).getSpielerId()));
 			properties.setProperty("substwinger",
 					String.valueOf(getPositionById(ISpielerPosition.substWinger).getSpielerId()));
 			properties.setProperty("substkeeper",
@@ -1209,22 +1237,23 @@ public class Lineup {
 					String.valueOf(getPositionById(ISpielerPosition.substForward).getSpielerId()));
 			properties.setProperty("behrightback",
 					String.valueOf(getPositionById(ISpielerPosition.rightBack).getTaktik()));
-			properties.setProperty("behinsideback1",
-					String.valueOf(getPositionById(ISpielerPosition.rightCentralDefender).getTaktik()));
-			properties.setProperty("behinsideback2",
-					String.valueOf(getPositionById(ISpielerPosition.leftCentralDefender).getTaktik()));
-			properties.setProperty("behinsideback3",
-					String.valueOf(getPositionById(ISpielerPosition.middleCentralDefender).getTaktik()));
+			properties.setProperty("behinsideback1", String.valueOf(getPositionById(
+					ISpielerPosition.rightCentralDefender).getTaktik()));
+			properties.setProperty("behinsideback2", String.valueOf(getPositionById(
+					ISpielerPosition.leftCentralDefender).getTaktik()));
+			properties.setProperty("behinsideback3", String.valueOf(getPositionById(
+					ISpielerPosition.middleCentralDefender).getTaktik()));
 			properties.setProperty("behleftback",
 					String.valueOf(getPositionById(ISpielerPosition.leftBack).getTaktik()));
 			properties.setProperty("behrightwinger",
 					String.valueOf(getPositionById(ISpielerPosition.rightWinger).getTaktik()));
-			properties.setProperty("behinsidemid1",
-					String.valueOf(getPositionById(ISpielerPosition.rightInnerMidfield).getTaktik()));
-			properties.setProperty("behinsidemid2",
-					String.valueOf(getPositionById(ISpielerPosition.leftInnerMidfield).getTaktik()));
-			properties.setProperty("behinsidemid3",
-					String.valueOf(getPositionById(ISpielerPosition.centralInnerMidfield).getTaktik()));
+			properties.setProperty("behinsidemid1", String.valueOf(getPositionById(
+					ISpielerPosition.rightInnerMidfield).getTaktik()));
+			properties
+					.setProperty("behinsidemid2", String.valueOf(getPositionById(
+							ISpielerPosition.leftInnerMidfield).getTaktik()));
+			properties.setProperty("behinsidemid3", String.valueOf(getPositionById(
+					ISpielerPosition.centralInnerMidfield).getTaktik()));
 			properties.setProperty("behleftwinger",
 					String.valueOf(getPositionById(ISpielerPosition.leftWinger).getTaktik()));
 			properties.setProperty("behforward1",
@@ -1241,16 +1270,22 @@ public class Lineup {
 			for (int i = 0; i < this.substitutions.size(); i++) {
 				Substitution sub = this.substitutions.get(i);
 				if (sub != null) {
-					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerOrderId());
-					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());
-					properties.setProperty("subst" + i + "playerout", "" + sub.getPlayerOut());
-					properties.setProperty("subst" + i + "ordertype", "" + sub.getOrderType().getId());
+					properties.setProperty("subst" + i + "playerorderid",
+							String.valueOf(sub.getPlayerOrderId()));
+					properties.setProperty("subst" + i + "playerin",
+							String.valueOf(sub.getPlayerIn()));
+					properties.setProperty("subst" + i + "playerout",
+							String.valueOf(sub.getPlayerOut()));
+					properties.setProperty("subst" + i + "ordertype",
+							String.valueOf(sub.getOrderType().getId()));
 					properties.setProperty("subst" + i + "matchminutecriteria",
-							"" + sub.getMatchMinuteCriteria());
-					properties.setProperty("subst" + i + "pos", "" + sub.getPos());
-					properties.setProperty("subst" + i + "behaviour", "" + sub.getBehaviour());
-					properties.setProperty("subst" + i + "card", "" + sub.getCard());
-					properties.setProperty("subst" + i + "standing", "" + sub.getStanding());
+							String.valueOf(sub.getMatchMinuteCriteria()));
+					properties.setProperty("subst" + i + "pos", String.valueOf(sub.getPos()));
+					properties.setProperty("subst" + i + "behaviour",
+							String.valueOf(sub.getBehaviour()));
+					properties.setProperty("subst" + i + "card", String.valueOf(sub.getCard()));
+					properties.setProperty("subst" + i + "standing",
+							String.valueOf(sub.getStanding().getId()));
 				}
 			}
 
@@ -1357,9 +1392,11 @@ public class Lineup {
 	 */
 	public final void flipSide() {
 		swapContentAtPositions(ISpielerPosition.rightBack, ISpielerPosition.leftBack);
-		swapContentAtPositions(ISpielerPosition.rightCentralDefender, ISpielerPosition.leftCentralDefender);
+		swapContentAtPositions(ISpielerPosition.rightCentralDefender,
+				ISpielerPosition.leftCentralDefender);
 		swapContentAtPositions(ISpielerPosition.rightWinger, ISpielerPosition.leftWinger);
-		swapContentAtPositions(ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftInnerMidfield);
+		swapContentAtPositions(ISpielerPosition.rightInnerMidfield,
+				ISpielerPosition.leftInnerMidfield);
 		swapContentAtPositions(ISpielerPosition.rightForward, ISpielerPosition.leftForward);
 	}
 
@@ -1378,8 +1415,8 @@ public class Lineup {
 	 * Load a lineup from HRF.
 	 */
 	public final void load4HRF() {
-		final Lineup temp = DBManager.instance().getAufstellung(HOVerwaltung.instance().getModel().getID(),
-				"HRF");
+		final Lineup temp = DBManager.instance().getAufstellung(
+				HOVerwaltung.instance().getModel().getID(), "HRF");
 		m_vPositionen = null;
 		m_vPositionen = temp.getPositionen();
 		m_iKicker = temp.getKicker();
@@ -1426,7 +1463,8 @@ public class Lineup {
 	 * Save a lineup.
 	 */
 	public final void save4HRF() {
-		DBManager.instance().saveAufstellung(HOVerwaltung.instance().getModel().getID(), this, "HRF");
+		DBManager.instance().saveAufstellung(HOVerwaltung.instance().getModel().getID(), this,
+				"HRF");
 	}
 
 	/**
@@ -1502,7 +1540,8 @@ public class Lineup {
 
 		for (ISpielerPosition pos : m_vPositionen) {
 			SpielerPosition position = (SpielerPosition) pos;
-			if ((positionId == position.getPosition()) && (position.getId() < ISpielerPosition.startReserves)
+			if ((positionId == position.getPosition())
+					&& (position.getId() < ISpielerPosition.startReserves)
 					&& (position.getSpielerId() > 0)) {
 				++anzahl;
 			}
@@ -1595,13 +1634,17 @@ public class Lineup {
 			}
 		}
 		if (m_iKapitaen > 0) {
-			HOLogger.instance().log(getClass(),
-					"Captain: " + HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
+			HOLogger.instance().log(
+					getClass(),
+					"Captain: "
+							+ HOVerwaltung.instance().getModel().getSpieler(m_iKapitaen).getName());
 		}
 
 		if (m_iKicker > 0) {
-			HOLogger.instance().log(getClass(),
-					"SetPieces: " + HOVerwaltung.instance().getModel().getSpieler(m_iKicker).getName());
+			HOLogger.instance().log(
+					getClass(),
+					"SetPieces: "
+							+ HOVerwaltung.instance().getModel().getSpieler(m_iKicker).getName());
 		}
 
 		if (m_sLocation > -1) {
@@ -1610,9 +1653,12 @@ public class Lineup {
 
 		HOLogger.instance().log(
 				getClass(),
-				"GK: " + getTWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " DF: "
-						+ getAWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " MF : "
-						+ getMFTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true) + " ST : "
+				"GK: " + getTWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
+						+ " DF: "
+						+ getAWTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
+						+ " MF : "
+						+ getMFTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true)
+						+ " ST : "
 						+ getSTTeamStk(HOVerwaltung.instance().getModel().getAllSpieler(), true));
 	}
 

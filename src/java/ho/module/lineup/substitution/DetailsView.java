@@ -7,6 +7,7 @@ import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.util.Helper;
+import ho.module.lineup.substitution.model.Standing;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -77,7 +78,7 @@ public class DetailsView extends JPanel {
 					: HOColorName.TABLEENTRY_BG;
 			this.redCardsEntry.setBGColor(ThemeManager.getColor(color));
 
-			color = (this.substitution.getStanding() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getStanding() != Standing.GOAL_ANY) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.standingEntry.setBGColor(ThemeManager.getColor(color));
 
