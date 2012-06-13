@@ -25,7 +25,7 @@ public class DetailsView extends JPanel {
 	private static final Dimension COMPONENTENSIZE = new Dimension(Helper.calcCellWidth(300),
 			Helper.calcCellWidth(18));
 	private static final long serialVersionUID = -8046083206070885556L;
-	private ISubstitution substitution;
+	private Substitution substitution;
 	private ColorLabelEntry orderTypeEntry;
 	private ColorLabelEntry firstPlayerEntry;
 	private ColorLabelEntry secondPlayerEntry;
@@ -41,7 +41,7 @@ public class DetailsView extends JPanel {
 		initComponents();
 	}
 
-	public void setSubstitution(ISubstitution sub) {
+	public void setSubstitution(Substitution sub) {
 		this.substitution = sub;
 		refresh();
 	}
