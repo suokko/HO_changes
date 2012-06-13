@@ -83,25 +83,25 @@ public class Lookup {
 
 	public static String getStanding(Standing standing) {
 		switch (standing) {
-		case GOAL_ANY:
+		case ANY_STANDING:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalAny");
-		case GOAL_TIED:
+		case MATCH_IS_TIED:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalTied");
-		case GOAL_LEAD:
+		case IN_THE_LEAD:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLead");
-		case GOAL_DOWN:
+		case DOWN:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDown");
-		case GOAL_LEAD_MT1:
+		case IN_THE_LEAD_BY_MORE_THAN_ONE:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT1");
-		case GOAL_DOWN_MT1:
+		case DOWN_BY_MORE_THAN_ONE:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT1");
-		case GOAL_NOT_DOWN:
+		case NOT_DOWN:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalNotDown");
-		case GOAL_NOT_LEAD:
+		case NOT_IN_THE_LEAD:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalNotLead");
-		case GOAL_LEAD_MT2:
+		case IN_THE_LEAD_BY_MORE_THAN_TWO:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT2");
-		case GOAL_DOWN_MT2:
+		case DOWN_BY_MORE_THAN_TWO:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT2");
 		}
 		return "";
