@@ -6,7 +6,6 @@
  */
 package ho.core.file.xml;
 
-
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
@@ -14,6 +13,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Standing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,6 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-
 
 /**
  * DOCUMENT ME!
@@ -123,24 +121,27 @@ public class XMLMatchLineupParser {
 			ele = (Element) root.getElementsByTagName("MatchID").item(0);
 			ml.setMatchID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
 			ele = (Element) root.getElementsByTagName("HomeTeam").item(0);
-			ml.setHeimId(Integer.parseInt(ele.getElementsByTagName("HomeTeamID").item(0).getFirstChild()
-					.getNodeValue()));
-			ml.setHeimName(ele.getElementsByTagName("HomeTeamName").item(0).getFirstChild().getNodeValue());
+			ml.setHeimId(Integer.parseInt(ele.getElementsByTagName("HomeTeamID").item(0)
+					.getFirstChild().getNodeValue()));
+			ml.setHeimName(ele.getElementsByTagName("HomeTeamName").item(0).getFirstChild()
+					.getNodeValue());
 			ele = (Element) root.getElementsByTagName("AwayTeam").item(0);
-			ml.setGastId(Integer.parseInt(ele.getElementsByTagName("AwayTeamID").item(0).getFirstChild()
-					.getNodeValue()));
-			ml.setGastName(ele.getElementsByTagName("AwayTeamName").item(0).getFirstChild().getNodeValue());
+			ml.setGastId(Integer.parseInt(ele.getElementsByTagName("AwayTeamID").item(0)
+					.getFirstChild().getNodeValue()));
+			ml.setGastName(ele.getElementsByTagName("AwayTeamName").item(0).getFirstChild()
+					.getNodeValue());
 			ele = (Element) root.getElementsByTagName("MatchType").item(0);
 			ml.setMatchTyp(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-			
-			if ((ml.getMatchTyp() != MatchLineup.TOURNAMENTGROUP) && 
-					(ml.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
+
+			if ((ml.getMatchTyp() != MatchLineup.TOURNAMENTGROUP)
+					&& (ml.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
 				ele = (Element) root.getElementsByTagName("Arena").item(0);
-				ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0).getFirstChild()
-						.getNodeValue()));
-				ml.setArenaName(ele.getElementsByTagName("ArenaName").item(0).getFirstChild().getNodeValue());
+				ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0)
+						.getFirstChild().getNodeValue()));
+				ml.setArenaName(ele.getElementsByTagName("ArenaName").item(0).getFirstChild()
+						.getNodeValue());
 			}
-			
+
 			ele = (Element) root.getElementsByTagName("MatchDate").item(0);
 			ml.setSpielDatum(ele.getFirstChild().getNodeValue());
 
@@ -153,7 +154,8 @@ public class XMLMatchLineupParser {
 				ml.setGast(team);
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(), "XMLMatchLineupParser.createLineup Exception gefangen: " + e);
+			HOLogger.instance().log(getClass(),
+					"XMLMatchLineupParser.createLineup Exception gefangen: " + e);
 			HOLogger.instance().log(getClass(), e);
 			ml = null;
 		}
@@ -209,19 +211,18 @@ public class XMLMatchLineupParser {
 
 		// nur wenn Spieler existiert
 		if (spielerID > 0) {
-			 tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
-		     name = tmp.getFirstChild().getNodeValue();
-		     tmp = (Element) ele.getElementsByTagName("LastName").item(0);
-		     name = name + " " + tmp.getFirstChild().getNodeValue();
-			
-			
+			tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
+			name = tmp.getFirstChild().getNodeValue();
+			tmp = (Element) ele.getElementsByTagName("LastName").item(0);
+			name = name + " " + tmp.getFirstChild().getNodeValue();
+
 			tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
 
-//			// Fix für xml BUG von HT
-//			if (tmp.getFirstChild() != null) {
-//				name = tmp.getFirstChild().getNodeValue();
-//
-//			}
+			// // Fix für xml BUG von HT
+			// if (tmp.getFirstChild() != null) {
+			// name = tmp.getFirstChild().getNodeValue();
+			//
+			// }
 
 			// tactic is only set for those in the lineup (and not for the
 			// keeper).
@@ -232,7 +233,8 @@ public class XMLMatchLineupParser {
 				roleID = ISpielerPosition.keeper; // takes care of the old
 													// keeper ID.
 
-			} else if ((roleID >= 0) && (roleID < ISpielerPosition.setPieces)
+			} else if ((roleID >= 0)
+					&& (roleID < ISpielerPosition.setPieces)
 					|| ((roleID < ISpielerPosition.startReserves) && (roleID > ISpielerPosition.keeper))) {
 				tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
 				behavior = Integer.parseInt(tmp.getFirstChild().getNodeValue());
@@ -269,7 +271,8 @@ public class XMLMatchLineupParser {
 					&& (roleID < ISpielerPosition.startReserves)
 					|| ((roleID >= ISpielerPosition.ausgewechselt) && (roleID < ISpielerPosition.ausgewechseltEnd))) {
 				tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
-				rating = Double.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",", "."));
+				rating = Double
+						.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",", "."));
 				tmp = (Element) ele.getElementsByTagName("RatingStarsEndOfMatch").item(0);
 				ratingStarsEndOfMatch = Double.parseDouble(tmp.getFirstChild().getNodeValue()
 						.replaceAll(",", "."));
@@ -490,8 +493,8 @@ public class XMLMatchLineupParser {
 				matchOrderType = MatchOrderType.SUBSTITUTION;
 			}
 		}
-		return new Substitution(playerOrderID, playerIn, playerOut, matchOrderType, matchMinuteCriteria, pos,
-				behaviour, card, standing);
+		return new Substitution(playerOrderID, playerIn, playerOut, matchOrderType,
+				matchMinuteCriteria, pos, behaviour, card, Standing.getById(standing));
 	}
 
 	protected final MatchLineupPlayer createStartPlayer(Element ele) throws Exception {
@@ -512,10 +515,10 @@ public class XMLMatchLineupParser {
 
 		// nur wenn Spieler existiert
 		if (spielerID > 0) {
-			 tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
-		     name = tmp.getFirstChild().getNodeValue();
-		     tmp = (Element) ele.getElementsByTagName("LastName").item(0);
-		     name = name + " " + tmp.getFirstChild().getNodeValue();
+			tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
+			name = tmp.getFirstChild().getNodeValue();
+			tmp = (Element) ele.getElementsByTagName("LastName").item(0);
+			name = name + " " + tmp.getFirstChild().getNodeValue();
 
 			// tactic is only set for those in the lineup (and not for the
 			// keeper).
@@ -524,7 +527,8 @@ public class XMLMatchLineupParser {
 				// mitgeliefert in xml, daher selbst setzen!
 				behavior = 0;
 
-			} else if ((roleID < ISpielerPosition.startReserves) && (roleID > ISpielerPosition.keeper)) {
+			} else if ((roleID < ISpielerPosition.startReserves)
+					&& (roleID > ISpielerPosition.keeper)) {
 				tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
 				behavior = Integer.parseInt(tmp.getFirstChild().getNodeValue());
 

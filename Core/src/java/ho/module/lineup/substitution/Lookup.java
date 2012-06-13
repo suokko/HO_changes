@@ -2,6 +2,7 @@ package ho.module.lineup.substitution;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
+import ho.module.lineup.substitution.model.Standing;
 
 public class Lookup {
 
@@ -80,27 +81,27 @@ public class Lookup {
 		}
 	}
 
-	public static String getStanding(byte id) {
-		switch (id) {
-		case -1:
+	public static String getStanding(Standing standing) {
+		switch (standing) {
+		case GOAL_ANY:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalAny");
-		case 0:
+		case GOAL_TIED:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalTied");
-		case 1:
+		case GOAL_LEAD:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLead");
-		case 2:
+		case GOAL_DOWN:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDown");
-		case 3:
+		case GOAL_LEAD_MT1:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT1");
-		case 4:
+		case GOAL_DOWN_MT1:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT1");
-		case 5:
+		case GOAL_NOT_DOWN:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalNotDown");
-		case 6:
+		case GOAL_NOT_LEAD:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalNotLead");
-		case 7:
+		case GOAL_LEAD_MT2:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT2");
-		case 8:
+		case GOAL_DOWN_MT2:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT2");
 		}
 		return "";
