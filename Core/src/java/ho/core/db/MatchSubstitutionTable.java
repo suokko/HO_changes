@@ -3,7 +3,7 @@ package ho.core.db;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -167,7 +167,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 				sub = new Substitution(rs.getInt("PlayerOrderID"), playerIn, playerOut,
 						matchOrderType, (byte) rs.getInt("MatchMinuteCriteria"),
 						(byte) rs.getInt("Pos"), (byte) rs.getInt("Behaviour"),
-						(byte) rs.getInt("Card"), Standing.getById((byte) rs.getInt("Standing")));
+						(byte) rs.getInt("Card"), GoalDiffCriteria.getById((byte) rs.getInt("Standing")));
 				subst.add(sub);
 			}
 		} catch (Exception e) {

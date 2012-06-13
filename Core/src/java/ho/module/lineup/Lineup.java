@@ -20,7 +20,7 @@ import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -192,7 +192,7 @@ public class Lineup {
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i
 							+ "behaviour")));
 					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
-					sub.setStanding(Standing.getById(Byte.parseByte(properties.getProperty("subst"
+					sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(properties.getProperty("subst"
 							+ i + "standing"))));
 					this.substitutions.add(sub);
 				} else {

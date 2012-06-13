@@ -2,7 +2,7 @@ package ho.module.lineup.substitution;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 public class Lookup {
 
@@ -81,7 +81,7 @@ public class Lookup {
 		}
 	}
 
-	public static String getStanding(Standing standing) {
+	public static String getStanding(GoalDiffCriteria standing) {
 		switch (standing) {
 		case ANY_STANDING:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalAny");
