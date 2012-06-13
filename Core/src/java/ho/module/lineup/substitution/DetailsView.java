@@ -8,6 +8,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -46,7 +47,7 @@ public class DetailsView extends JPanel {
 		this.substitution = sub;
 		refresh();
 	}
-	
+
 	public void refresh() {
 		updateData();
 		updateView();
@@ -74,7 +75,7 @@ public class DetailsView extends JPanel {
 					: HOColorName.TABLEENTRY_BG;
 			this.newBehaviourEntry.setBGColor(ThemeManager.getColor(color));
 
-			color = (this.substitution.getCard() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getRedCardCriteria() != RedCardCriteria.IGNORE) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.redCardsEntry.setBGColor(ThemeManager.getColor(color));
 
@@ -92,8 +93,10 @@ public class DetailsView extends JPanel {
 				this.playerInLabel.setText("");
 				break;
 			case POSITION_SWAP:
-				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
-				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
+				this.playerLabel.setText(HOVerwaltung.instance().getLanguageString(
+						"subs.Reposition"));
+				this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString(
+						"subs.RepositionWith"));
 				break;
 			}
 		} else {
@@ -133,7 +136,8 @@ public class DetailsView extends JPanel {
 			}
 
 			if (this.substitution.getMatchMinuteCriteria() > 0) {
-				when = MessageFormat.format(HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX"),
+				when = MessageFormat.format(
+						HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX"),
 						Integer.valueOf(this.substitution.getMatchMinuteCriteria()));
 			} else {
 				when = HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
@@ -144,7 +148,7 @@ public class DetailsView extends JPanel {
 			}
 
 			newBehaviour = Lookup.getBehaviour(this.substitution.getBehaviour());
-			redCards = Lookup.getRedCard(this.substitution.getCard());
+			redCards = Lookup.getRedCard(this.substitution.getRedCardCriteria());
 			standing = Lookup.getStanding(this.substitution.getStanding());
 		}
 		this.orderTypeEntry.setText(orderType);
@@ -213,8 +217,8 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.When")), gbc);
 
-		this.whenEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD,
-				SwingConstants.LEFT);
+		this.whenEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
+				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
 		component = this.whenEntry.getComponent(false);

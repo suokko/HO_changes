@@ -21,6 +21,7 @@ import ho.core.util.Helper;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -191,9 +192,10 @@ public class Lineup {
 					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i
 							+ "behaviour")));
-					sub.setCard(Byte.parseByte(properties.getProperty("subst" + i + "card")));
-					sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(properties.getProperty("subst"
-							+ i + "standing"))));
+					sub.setRedCardCriteria(RedCardCriteria.getById(Byte.parseByte(properties
+							.getProperty("subst" + i + "card"))));
+					sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(properties
+							.getProperty("subst" + i + "standing"))));
 					this.substitutions.add(sub);
 				} else {
 					break;
@@ -1283,7 +1285,8 @@ public class Lineup {
 					properties.setProperty("subst" + i + "pos", String.valueOf(sub.getPos()));
 					properties.setProperty("subst" + i + "behaviour",
 							String.valueOf(sub.getBehaviour()));
-					properties.setProperty("subst" + i + "card", String.valueOf(sub.getCard()));
+					properties.setProperty("subst" + i + "card",
+							String.valueOf(sub.getRedCardCriteria().getId()));
 					properties.setProperty("subst" + i + "standing",
 							String.valueOf(sub.getStanding().getId()));
 				}
