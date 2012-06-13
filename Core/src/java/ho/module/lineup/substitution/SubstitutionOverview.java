@@ -6,6 +6,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.util.GUIUtilities;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.MatchOrderType;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

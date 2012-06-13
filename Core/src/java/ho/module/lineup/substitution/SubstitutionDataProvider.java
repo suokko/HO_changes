@@ -5,6 +5,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.module.lineup.Lineup;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

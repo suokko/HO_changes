@@ -1,9 +1,4 @@
-package ho.module.lineup.substitution;
-
-import ho.module.lineup.substitution.model.GoalDiffCriteria;
-import ho.module.lineup.substitution.model.MatchOrderType;
-import ho.module.lineup.substitution.model.RedCardCriteria;
-
+package ho.module.lineup.substitution.model;
 
 /**
  * A class holding information about substitutions and order changes
@@ -25,8 +20,6 @@ public class Substitution {
 
 	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
 			byte matchMinuteCriteria, byte pos, byte behaviour, RedCardCriteria card, GoalDiffCriteria standing) {
-		super();
-
 		this.playerOrderID = playerOrderID;
 		this.playerIn = playerIn;
 		this.playerOut = playerOut;
@@ -36,11 +29,6 @@ public class Substitution {
 		this.behaviour = behaviour;
 		this.card = card;
 		this.standing = standing;
-	}
-
-	public Substitution(int id) {
-		this.playerOrderID = id;
-
 	}
 
 	public Substitution() {

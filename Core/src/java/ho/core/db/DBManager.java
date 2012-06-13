@@ -33,7 +33,7 @@ import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.ifa.IfaMatch;
 import ho.module.lineup.Lineup;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 import ho.module.series.Spielplan;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
