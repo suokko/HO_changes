@@ -34,7 +34,7 @@ import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
-import ho.module.lineup.substitution.ISubstitution;
+import ho.module.lineup.substitution.Substitution;
 
 import java.io.File;
 import java.io.IOException;
@@ -626,9 +626,9 @@ public class OnlineWorker {
 
     	orders += "\"substitutions\":[";
     	
-    	Iterator<ISubstitution> iter = lineup.getSubstitutionList().iterator();
+    	Iterator<Substitution> iter = lineup.getSubstitutionList().iterator();
     	while (iter.hasNext()) {
-    		ISubstitution sub = iter.next();
+    		Substitution sub = iter.next();
     		orders+= "{\"playerin\":\"" + sub.getPlayerIn() + "\","  
     		+ "\"playerout\":\"" + sub.getPlayerOut() + "\","
     		+ "\"orderType\":\"" + sub.getOrderType().getId() + "\","

@@ -3,10 +3,11 @@ package ho.core.db;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.ISubstitution;
+import ho.module.lineup.substitution.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
 
 
 public final class MatchLineupTeamTable extends AbstractTable {
@@ -50,7 +51,7 @@ public final class MatchLineupTeamTable extends AbstractTable {
 			team = new MatchLineupTeam(DBManager.deleteEscapeSequences(rs.getString("TeamName")), teamID, rs.getInt("Erfahrung"));
 			team.setAufstellung(DBManager.instance().getMatchLineupPlayers(matchID, teamID));
 			
-			team.setSubstitutions(new java.util.ArrayList<ISubstitution>(DBManager.instance().getMatchSubstitutionsByMatchTeam(teamID, matchID)));
+			team.setSubstitutions(new ArrayList<Substitution>(DBManager.instance().getMatchSubstitutionsByMatchTeam(teamID, matchID)));
 			
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),"DB.getMatchLineupTeam Error" + e);

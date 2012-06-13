@@ -33,7 +33,7 @@ import ho.core.training.TrainingPerWeek;
 import ho.core.util.HOLogger;
 import ho.module.ifa.IfaMatch;
 import ho.module.lineup.Lineup;
-import ho.module.lineup.substitution.ISubstitution;
+import ho.module.lineup.substitution.Substitution;
 import ho.module.series.Spielplan;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 import ho.module.transfer.PlayerTransfer;
@@ -1155,7 +1155,7 @@ public class DBManager {
 	 * @param matchId The matchId for the match in question
 	 *
 	 */
-	public List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+	public List<Substitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByMatchTeam(teamId, matchId);
 	}
 	
@@ -1166,7 +1166,7 @@ public class DBManager {
 	 * @param lineupName The name of the lineup
 	 *
 	 */
-	public List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
+	public List<Substitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId, lineupName);
 	}
 	
@@ -1175,7 +1175,7 @@ public class DBManager {
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the team/match combination will be deleted.
 	 */
-	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, List<ISubstitution> subs) {	
+	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, List<Substitution> subs) {	
 		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByMatchTeam(matchId, teamId, subs);
 		
 	}
@@ -1184,7 +1184,7 @@ public class DBManager {
 	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
 	 * All previous substitutions for the hrf will be deleted.
 	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, List<ISubstitution> subs, String lineupName) {
+	public void storeMatchSubstitutionsByHrf(int hrfId, List<Substitution> subs, String lineupName) {
 		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs, lineupName);
 	}
 	

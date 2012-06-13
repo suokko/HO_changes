@@ -38,7 +38,7 @@ public class SubstitutionEditDialog extends JDialog {
 		initDialog();
 	}
 
-	public void init(ISubstitution sub) {
+	public void init(Substitution sub) {
 		this.orderType = sub.getOrderType();
 		setDlgTitle();
 		this.behaviourView.init(sub);
@@ -48,7 +48,7 @@ public class SubstitutionEditDialog extends JDialog {
 		return this.canceled;
 	}
 
-	public ISubstitution getSubstitution() {
+	public Substitution getSubstitution() {
 		return this.behaviourView.getSubstitution();
 	}
 	

@@ -97,7 +97,7 @@ public class SubstitutionOverview extends JPanel {
 	private void tableSelectionChanged() {
 		int selectedRowIndex = this.substitutionTable.getSelectedRow();
 		boolean enable = false;
-		ISubstitution substitution = null;
+		Substitution substitution = null;
 		if (selectedRowIndex != -1) {
 			substitution = ((SubstitutionsTableModel) this.substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
@@ -176,7 +176,7 @@ public class SubstitutionOverview extends JPanel {
 		dlg.setVisible(true);
 
 		if (!dlg.isCanceled()) {
-			ISubstitution sub = dlg.getSubstitution();
+			Substitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
 			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
 					.getModel();
@@ -214,13 +214,13 @@ public class SubstitutionOverview extends JPanel {
 		private List<TableRow> rows = new ArrayList<TableRow>();
 		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards" };
 
-		public ISubstitution getSubstitution(int rowIndex) {
+		public Substitution getSubstitution(int rowIndex) {
 			return this.rows.get(rowIndex).getSub();
 		}
 
-		public void setData(List<ISubstitution> data) {
+		public void setData(List<Substitution> data) {
 			this.rows.clear();
-			for (ISubstitution sub : data) {
+			for (Substitution sub : data) {
 				TableRow row = new TableRow();
 				row.setSub((Substitution) sub);
 				this.rows.add(row);
@@ -228,7 +228,7 @@ public class SubstitutionOverview extends JPanel {
 			fireTableDataChanged();
 		}
 
-		public void select(ISubstitution substitution) {
+		public void select(Substitution substitution) {
 			for (int i = 0; i < this.rows.size(); i++) {
 
 			}
@@ -246,7 +246,7 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			ISubstitution sub = this.rows.get(rowIndex).getSub();
+			Substitution sub = this.rows.get(rowIndex).getSub();
 			switch (columnIndex) {
 			case 1:
 				return Lookup.getOrderType(sub.getOrderType());
@@ -362,7 +362,7 @@ public class SubstitutionOverview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
-			ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+			Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
 			lineup.getSubstitutionList().remove(sub);
@@ -383,7 +383,7 @@ public class SubstitutionOverview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
-			final ISubstitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+			final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
 					.getSubstitution(selectedRowIndex);
 
 			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());

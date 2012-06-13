@@ -18,7 +18,6 @@ import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
@@ -62,7 +61,7 @@ public class Lineup {
 
 	/** positions */
 	private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
-	private List<ISubstitution> substitutions = new ArrayList<ISubstitution>();
+	private List<Substitution> substitutions = new ArrayList<Substitution>();
 
 	/** Attitude */
 	private int m_iAttitude;
@@ -757,6 +756,7 @@ public class Lineup {
 			// Flipped the sign of the return value to get newest first -
 			// blaghaid
 			Collections.sort(matches, new Comparator<MatchKurzInfo>() {
+				@Override
 				public int compare(MatchKurzInfo o1, MatchKurzInfo o2) {
 					return (o1.getMatchDateAsTimestamp().compareTo(o2.getMatchDateAsTimestamp()));
 				}
@@ -996,7 +996,7 @@ public class Lineup {
 	 * @return the substitutions for this lineup. If there are no substitutions,
 	 *         an empty list will be returned.
 	 */
-	public List<ISubstitution> getSubstitutionList() {
+	public List<Substitution> getSubstitutionList() {
 		return this.substitutions;
 	}
 
@@ -1005,11 +1005,11 @@ public class Lineup {
 	 * proper list got max 5 positions.
 	 */
 
-	public void setSubstitionList(List<ISubstitution> subs) {
+	public void setSubstitionList(List<Substitution> subs) {
 		if (subs == null) {
-			this.substitutions = new ArrayList<ISubstitution>();
+			this.substitutions = new ArrayList<Substitution>();
 		} else {
-			this.substitutions = new ArrayList<ISubstitution>(subs);
+			this.substitutions = new ArrayList<Substitution>(subs);
 		}
 	}
 
@@ -1239,7 +1239,7 @@ public class Lineup {
 			properties.setProperty("installning", String.valueOf(getAttitude()));
 
 			for (int i = 0; i < this.substitutions.size(); i++) {
-				ISubstitution sub = this.substitutions.get(i);
+				Substitution sub = this.substitutions.get(i);
 				if (sub != null) {
 					properties.setProperty("subst" + i + "playerorderid", "" + sub.getPlayerOrderId());
 					properties.setProperty("subst" + i + "playerin", "" + sub.getPlayerIn());

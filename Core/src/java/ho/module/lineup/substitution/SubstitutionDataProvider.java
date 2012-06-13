@@ -14,7 +14,7 @@ import java.util.Map;
 public class SubstitutionDataProvider {
 
 	public static void getSubstitutions() {
-		List<ISubstitution> subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList();
+		List<Substitution> subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList();
 	}
 
 	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
