@@ -60,9 +60,6 @@ public class SubstitutionOverview extends JPanel {
 			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
 		}
 		refresh();
-		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
-		model.getRow(2).setCritical(true);
-		model.fireTableDataChanged();
 	}
 
 	private void createActions() {
@@ -75,6 +72,13 @@ public class SubstitutionOverview extends JPanel {
 	private void refresh() {
 		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
 		model.setData(this.lineup.getSubstitutionList());
+
+		for (int i = 0; i < model.getRowCount(); i++) {
+			TableRow row = model.getRow(i);
+			if (!PlausibilityCheck.areBothPlayersInLineup(this.lineup, row.getSub())) {
+				row.setError(true);
+			}
+		}
 	}
 
 	private void addListeners() {
@@ -218,7 +222,7 @@ public class SubstitutionOverview extends JPanel {
 			this.rows.clear();
 			for (ISubstitution sub : data) {
 				TableRow row = new TableRow();
-				row.setSub(sub);
+				row.setSub((Substitution) sub);
 				this.rows.add(row);
 			}
 			fireTableDataChanged();
@@ -276,15 +280,15 @@ public class SubstitutionOverview extends JPanel {
 	 * This class is a simple container for row data.
 	 */
 	private class TableRow {
-		private ISubstitution sub;
+		private Substitution sub;
 		private boolean critical;
 		private boolean error;
 
-		public ISubstitution getSub() {
+		public Substitution getSub() {
 			return sub;
 		}
 
-		public void setSub(ISubstitution sub) {
+		public void setSub(Substitution sub) {
 			this.sub = sub;
 		}
 
