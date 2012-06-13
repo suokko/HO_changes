@@ -51,8 +51,8 @@ staminaPower=0.6
 #formPower=0.5			# Square Root
 formPower=0.45
 xpPower=0.5			# Square Root
-homegrownbonus=0.25
-loyaltyMax=0.5
+homegrownbonus=0.5
+loyaltyMax=1
 loyaltySkillMax=20 
 
 finalXpMultiplier=0.0716
