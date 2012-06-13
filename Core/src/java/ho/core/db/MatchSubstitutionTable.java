@@ -4,6 +4,7 @@ import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -131,8 +132,8 @@ public class MatchSubstitutionTable extends AbstractTable {
 				sql += matchId + "," + teamId + "," + hrfId + "," + sub.getPlayerOrderId() + ","
 						+ sub.getPlayerIn() + "," + sub.getPlayerOut() + ","
 						+ sub.getOrderType().getId() + "," + sub.getMatchMinuteCriteria() + ","
-						+ sub.getPos() + "," + sub.getBehaviour() + "," + sub.getCard() + ","
-						+ sub.getStanding() + "," + "'" + lineupName + "')";
+						+ sub.getPos() + "," + sub.getBehaviour() + "," + sub.getRedCardCriteria().getId() + ","
+						+ sub.getStanding().getId() + "," + "'" + lineupName + "')";
 
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
@@ -167,7 +168,8 @@ public class MatchSubstitutionTable extends AbstractTable {
 				sub = new Substitution(rs.getInt("PlayerOrderID"), playerIn, playerOut,
 						matchOrderType, (byte) rs.getInt("MatchMinuteCriteria"),
 						(byte) rs.getInt("Pos"), (byte) rs.getInt("Behaviour"),
-						(byte) rs.getInt("Card"), GoalDiffCriteria.getById((byte) rs.getInt("Standing")));
+						RedCardCriteria.getById((byte) rs.getInt("Card")),
+						GoalDiffCriteria.getById((byte) rs.getInt("Standing")));
 				subst.add(sub);
 			}
 		} catch (Exception e) {

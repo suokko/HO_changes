@@ -1,6 +1,7 @@
 package ho.module.lineup.substitution;
 
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 
 /**
@@ -10,23 +11,6 @@ import ho.module.lineup.substitution.model.GoalDiffCriteria;
  * 
  */
 public class Substitution {
-
-	// See the match order API for meanings
-
-	// Red card criteria
-//	public static final byte IGNORE_RED_CARD_STATUSIgnore = -1;
-//	public static final byte MY_PLAYER_RED_CARDED = 1;
-//	public static final byte OPPONENT_PLAYER_RED_CARDED = 2;
-//	public static final byte MY_CENTRAL_DEFENDER_RED_CARDED = 11;
-//	public static final byte MY_MIDFIELDER_RED_CARDED = 12;
-//	public static final byte MY_FORWARD_RED_CARDED = 13;
-//	public static final byte MY_WING_BACK_RED_CARDED = 14;
-//	public static final byte MY_WINGER_RED_CARDED = 15;
-//	public static final byte OPPONENT_CENTRAL_DEFENDER_RED_CARDED = 21;
-//	public static final byte OPPONENT_MIDFIELDER_RED_CARDED = 22;
-//	public static final byte OPPONENT_FORAWARD_RED_CARDED = 23;
-//	public static final byte OPPONENT_WING_BACK_RED_CARDED = 24;
-//	public static final byte OPPONENT_WINGER_RED_CARDED = 25;
 	
 	private int playerOrderID = -1;
 	private int playerIn = -1;
@@ -35,11 +19,11 @@ public class Substitution {
 	private byte matchMinuteCriteria = -1;
 	private byte pos = -1;
 	private byte behaviour = -1;
-	private byte card = -1;
+	private RedCardCriteria card = RedCardCriteria.IGNORE;
 	private GoalDiffCriteria standing = GoalDiffCriteria.ANY_STANDING;
 
 	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
-			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, GoalDiffCriteria standing) {
+			byte matchMinuteCriteria, byte pos, byte behaviour, RedCardCriteria card, GoalDiffCriteria standing) {
 		super();
 
 		this.playerOrderID = playerOrderID;
@@ -117,11 +101,11 @@ public class Substitution {
 		this.behaviour = behaviour;
 	}
 
-	public byte getCard() {
+	public RedCardCriteria getRedCardCriteria() {
 		return card;
 	}
 
-	public void setCard(byte card) {
+	public void setRedCardCriteria(RedCardCriteria card) {
 		this.card = card;
 	}
 
@@ -144,7 +128,7 @@ public class Substitution {
 	 */
 	public void merge(Substitution other) {
 		setBehaviour(other.getBehaviour());
-		setCard(other.getCard());
+		setRedCardCriteria(other.getRedCardCriteria());
 		setMatchMinuteCriteria(other.getMatchMinuteCriteria());
 		setOrderType(other.getOrderType());
 		setPlayerIn(other.getPlayerIn());

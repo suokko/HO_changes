@@ -362,8 +362,8 @@ public class ConvertXml2Hrf {
 					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + sub.getMatchMinuteCriteria() + "\n");
 					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
 					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");
-					m_sHRFBuffer.append("subst" + i + "card=" + sub.getCard() + "\n");
-					m_sHRFBuffer.append("subst" + i + "standing=" + sub.getStanding() + "\n");
+					m_sHRFBuffer.append("subst" + i + "card=" + sub.getRedCardCriteria().getId() + "\n");
+					m_sHRFBuffer.append("subst" + i + "standing=" + sub.getStanding().getId() + "\n");
 					i++;
 				}
 			}
