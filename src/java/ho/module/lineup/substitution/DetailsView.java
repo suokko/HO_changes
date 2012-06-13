@@ -78,7 +78,7 @@ public class DetailsView extends JPanel {
 					: HOColorName.TABLEENTRY_BG;
 			this.redCardsEntry.setBGColor(ThemeManager.getColor(color));
 
-			color = (this.substitution.getStanding() != Standing.GOAL_ANY) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getStanding() != Standing.ANY_STANDING) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.standingEntry.setBGColor(ThemeManager.getColor(color));
 
