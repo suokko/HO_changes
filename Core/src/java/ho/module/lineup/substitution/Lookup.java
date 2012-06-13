@@ -3,6 +3,7 @@ package ho.module.lineup.substitution;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
 public class Lookup {
