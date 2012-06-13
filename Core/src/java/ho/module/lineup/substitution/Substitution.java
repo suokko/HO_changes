@@ -1,5 +1,7 @@
 package ho.module.lineup.substitution;
 
+import ho.module.lineup.substitution.model.Standing;
+
 
 /**
  * A class holding information about substitutions and order changes
@@ -12,31 +14,31 @@ public class Substitution {
 	// See the match order API for meanings
 
 	// Red card criteria
-	public static final byte IGNORE_RED_CARD_STATUSIgnore = -1;
-	public static final byte MY_PLAYER_RED_CARDED = 1;
-	public static final byte OPPONENT_PLAYER_RED_CARDED = 2;
-	public static final byte MY_CENTRAL_DEFENDER_RED_CARDED = 11;
-	public static final byte MY_MIDFIELDER_RED_CARDED = 12;
-	public static final byte MY_FORWARD_RED_CARDED = 13;
-	public static final byte MY_WING_BACK_RED_CARDED = 14;
-	public static final byte MY_WINGER_RED_CARDED = 15;
-	public static final byte OPPONENT_CENTRAL_DEFENDER_RED_CARDED = 21;
-	public static final byte OPPONENT_MIDFIELDER_RED_CARDED = 22;
-	public static final byte OPPONENT_FORAWARD_RED_CARDED = 23;
-	public static final byte OPPONENT_WING_BACK_RED_CARDED = 24;
-	public static final byte OPPONENT_WINGER_RED_CARDED = 25;
-
-	// GoalDiffCriteria
-	public static final byte ANY_STANDING = -1;
-	public static final byte MATCH_IS_TIED = 0;
-	public static final byte IN_THE_LEAD = 1;
-	public static final byte DOWN = 2;
-	public static final byte IN_THE_LEAD_BY_MORE_THAN_ONE = 3;
-	public static final byte DOWN_BY_MORE_THAN_ONE = 4;
-	public static final byte NOT_DOWN = 5;
-	public static final byte NOT_IN_THE_LEAD = 6;
-	public static final byte IN_THE_LEAD_BY_MORE_THAN_TWO = 7;
-	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
+//	public static final byte IGNORE_RED_CARD_STATUSIgnore = -1;
+//	public static final byte MY_PLAYER_RED_CARDED = 1;
+//	public static final byte OPPONENT_PLAYER_RED_CARDED = 2;
+//	public static final byte MY_CENTRAL_DEFENDER_RED_CARDED = 11;
+//	public static final byte MY_MIDFIELDER_RED_CARDED = 12;
+//	public static final byte MY_FORWARD_RED_CARDED = 13;
+//	public static final byte MY_WING_BACK_RED_CARDED = 14;
+//	public static final byte MY_WINGER_RED_CARDED = 15;
+//	public static final byte OPPONENT_CENTRAL_DEFENDER_RED_CARDED = 21;
+//	public static final byte OPPONENT_MIDFIELDER_RED_CARDED = 22;
+//	public static final byte OPPONENT_FORAWARD_RED_CARDED = 23;
+//	public static final byte OPPONENT_WING_BACK_RED_CARDED = 24;
+//	public static final byte OPPONENT_WINGER_RED_CARDED = 25;
+//
+//	// GoalDiffCriteria
+//	public static final byte ANY_STANDING = -1;
+//	public static final byte MATCH_IS_TIED = 0;
+//	public static final byte IN_THE_LEAD = 1;
+//	public static final byte DOWN = 2;
+//	public static final byte IN_THE_LEAD_BY_MORE_THAN_ONE = 3;
+//	public static final byte DOWN_BY_MORE_THAN_ONE = 4;
+//	public static final byte NOT_DOWN = 5;
+//	public static final byte NOT_IN_THE_LEAD = 6;
+//	public static final byte IN_THE_LEAD_BY_MORE_THAN_TWO = 7;
+//	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
 	
 	private int playerOrderID = -1;
 	private int playerIn = -1;
@@ -46,10 +48,10 @@ public class Substitution {
 	private byte pos = -1;
 	private byte behaviour = -1;
 	private byte card = -1;
-	private byte standing = -1;
+	private Standing standing = Standing.GOAL_ANY;
 
 	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
-			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, byte standing) {
+			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, Standing standing) {
 		super();
 
 		this.playerOrderID = playerOrderID;
@@ -135,11 +137,11 @@ public class Substitution {
 		this.card = card;
 	}
 
-	public byte getStanding() {
+	public Standing getStanding() {
 		return standing;
 	}
 
-	public void setStanding(byte standing) {
+	public void setStanding(Standing standing) {
 		this.standing = standing;
 	}
 

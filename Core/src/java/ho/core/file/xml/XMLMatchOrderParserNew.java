@@ -5,6 +5,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.SpielerPosition;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Standing;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 
 public class XMLMatchOrderParserNew {
 
@@ -53,7 +53,8 @@ public class XMLMatchOrderParserNew {
 		Substitution sub = new Substitution();
 		sub.setPlayerOrderId(Integer.parseInt(getChildValue(orderNode, "PlayerOrderID")));
 		sub.setMatchMinuteCriteria(Byte.parseByte(getChildValue(orderNode, "MatchMinuteCriteria")));
-		sub.setStanding(Byte.parseByte(getChildValue(orderNode, "GoalDiffCriteria")));
+		sub.setStanding(Standing.getById(Byte
+				.parseByte(getChildValue(orderNode, "GoalDiffCriteria"))));
 		sub.setCard(Byte.parseByte(getChildValue(orderNode, "RedCardCriteria")));
 		sub.setPlayerOut(Integer.parseInt(getChildValue(orderNode, "SubjectPlayerID")));
 		sub.setPlayerIn(Integer.parseInt(getChildValue(orderNode, "ObjectPlayerID")));
@@ -95,7 +96,8 @@ public class XMLMatchOrderParserNew {
 	 */
 	public static void main(String[] args) {
 		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
-		File file = new File("/home/chr/tmp/matchorders_version_1_8_matchID_353869167_isYouth_false.xml");
+		File file = new File(
+				"/home/chr/tmp/matchorders_version_1_8_matchID_353869167_isYouth_false.xml");
 		Document doc = XMLManager.instance().parseFile(file);
 		new XMLMatchOrderParserNew(doc);
 	}
