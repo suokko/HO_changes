@@ -6,7 +6,7 @@ import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
-public class Lookup {
+public class LanguageStringLookup {
 
 	public static String getOrderType(MatchOrderType orderType) {
 		switch (orderType) {

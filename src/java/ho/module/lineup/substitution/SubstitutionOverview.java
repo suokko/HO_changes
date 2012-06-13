@@ -251,7 +251,7 @@ public class SubstitutionOverview extends JPanel {
 			Substitution sub = this.rows.get(rowIndex).getSub();
 			switch (columnIndex) {
 			case 1:
-				return Lookup.getOrderType(sub.getOrderType());
+				return LanguageStringLookup.getOrderType(sub.getOrderType());
 			case 2:
 				if (sub.getMatchMinuteCriteria() > 0) {
 					return MessageFormat.format(
@@ -260,9 +260,9 @@ public class SubstitutionOverview extends JPanel {
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
 			case 3:
-				return Lookup.getStanding(sub.getStanding());
+				return LanguageStringLookup.getStanding(sub.getStanding());
 			case 4:
-				return Lookup.getRedCard(sub.getRedCardCriteria());
+				return LanguageStringLookup.getRedCard(sub.getRedCardCriteria());
 			}
 
 			return "";
