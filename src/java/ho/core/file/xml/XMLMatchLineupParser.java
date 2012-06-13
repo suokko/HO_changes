@@ -11,9 +11,9 @@ import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.util.ArrayList;
