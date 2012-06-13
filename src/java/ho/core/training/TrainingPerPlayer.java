@@ -95,7 +95,7 @@ public class TrainingPerPlayer  {
     public void addValues (TrainingPerPlayer values) {
     	
     	if (_TrainingPair == null) {
-    		HOLogger.instance().debug(getClass(), "_TrainingPair is null. Aborting addValues.");
+    		HOLogger.instance().error(getClass(), "_TrainingPair is null. Aborting addValues.");
     		return;
     	}
     	_TrainingPair.addPrimary(values.getTrainingPair().getPrimary());

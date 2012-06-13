@@ -9,6 +9,7 @@ import ho.core.model.misc.Finanzen;
 import ho.core.model.misc.Verein;
 import ho.core.model.player.Spieler;
 import ho.core.model.series.Liga;
+import ho.core.training.SkillDrops;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingManager;
 import ho.core.training.TrainingWeekManager;
@@ -424,7 +425,8 @@ public class HOModel {
         int trainingType = 0;
 
         // Training Happened, check if we have all the hrf or we have a missing week!
-        if ((previousTrainingDate != null) && (!previousTrainingDate.equals(actualTrainingDate))) {
+        if ((previousTrainingDate != null) && (actualTrainingDate != null)
+        		&& (!previousTrainingDate.equals(actualTrainingDate))) {
             final Calendar cal = Calendar.getInstance(Locale.UK);
             cal.setFirstDayOfWeek(Calendar.SUNDAY);
             cal.setTimeInMillis(actualTrainingDate.getTime());
@@ -444,25 +446,6 @@ public class HOModel {
             }
         }
 
-        // Find the number of training weeks - needed for skilldrops
-        int weeks = 0;
-        if ((trainingType > 0) && (previousTrainingDate != null)) {
-	        final Calendar cal = Calendar.getInstance(Locale.UK);
-			cal.setTimeInMillis(actualTrainingDate.getTime());
-			int actyear = cal.get(Calendar.YEAR);
-			int actweek = cal.get(Calendar.WEEK_OF_YEAR);
-			cal.setTimeInMillis(previousTrainingDate.getTime());
-			for (int j=0; j < 10; j++) {
-				//We don't care to look more than 10 weeks back...
-				cal.add(Calendar.WEEK_OF_YEAR, 1);
-				weeks++;
-				if ((actyear == cal.get(Calendar.YEAR)) ||
-						(actweek == cal.get(Calendar.WEEK_OF_YEAR)))		{
-					break;
-				}
-			}
-        }
-        
         final Map<String,Spieler> players = new HashMap<String,Spieler>();
 
         for (Iterator<Spieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
@@ -473,7 +456,7 @@ public class HOModel {
 
         for (int i = 0; i < vSpieler.size(); i++) {
             try {
-                final Spieler player = (ho.core.model.player.Spieler) vSpieler.get(i);
+                final Spieler player = vSpieler.get(i);
                 Spieler old = players.get("" + player.getSpielerID());
 
                 if (old == null) {
@@ -483,12 +466,24 @@ public class HOModel {
                     old.setSpielerID(-1);
                 }
 
+                // Always copy subskills as the first thing
+   
+                player.copySubSkills(old);
+                
+                // Always check skill drop if drop calculations are active.
+                if (SkillDrops.instance().isActive()) {
+                	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
+                    	if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+                   			continue;
+                   		}
+                		if (player.check4SkillDown(skillType, old)) {
+                			player.dropSubskills(skillType);
+                		}
+                	}
+                }
+                
+                
                 switch (trainingType) {
-                    // Same week just copy settings
-                    case 0: {
-                        player.copySubSkills(old);
-                        break;
-                    }
 
                     // Missing week, full recalculation
                     case 2: {
@@ -514,7 +509,7 @@ public class HOModel {
                         break;
                 }
 
-				if (TrainingManager.TRAININGDEBUG) {
+				if ((TrainingManager.TRAININGDEBUG) && (actualTrainingDate != null)) {
 	                /**
 	                 * Start of debug
 	                 */
@@ -546,22 +541,32 @@ public class HOModel {
 				 * End of debug
 				 */
 				
-				/* Time to perform skill drop 
-				 * 
-				 * */
+				/* Time to perform skill drop */
 				
-				if (weeks > 0) {
-					// Get the previous version. We will try up to 10 hrf back before giving up.
-					
-					int id = m_iID;
-					for (int j=0; j<10; j++) {
-						id = DBManager.instance().getPreviousHRF(id);
-						
-						Spieler lastWeekPlayer = DBManager.instance().getSpielerFromHrf(id, player.getSpielerID());
-						if (lastWeekPlayer != null) {
-							player.performSkilldrop(lastWeekPlayer, Math.min(weeks, 4));
-							break;
+			
+				if (SkillDrops.instance().isActive() && (old != null) 
+						&& (actualTrainingDate != null)) {
+					int weeks = 0;
+					if ((trainingType > 0)  && (previousTrainingDate != null)) {
+						final Calendar actualDate = Calendar.getInstance(Locale.UK);
+						actualDate.setTimeInMillis(actualTrainingDate.getTime());
+	
+						final Calendar previousDate = Calendar.getInstance(Locale.UK);
+						previousDate.setTimeInMillis(previousTrainingDate.getTime());
+	
+						if (previousDate.before(actualDate)) {
+							for (int j=0; j < 20; j++) {
+								previousDate.add(Calendar.WEEK_OF_YEAR, 1);
+								weeks++;
+								if (!previousDate.before(actualDate))		{
+									break;
+								}
+							}
 						}
+					}
+				
+					if (weeks > 0) {
+						player.performSkilldrop(old, Math.min(weeks, 4));
 					}
 				}
 	

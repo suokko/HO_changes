@@ -1,5 +1,5 @@
 // %1126721452213:hoplugins.trainingExperience.vo%
-package ho.core.model;
+package ho.core.training;
 
 import ho.core.model.player.ISkillup;
 
