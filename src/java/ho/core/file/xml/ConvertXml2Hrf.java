@@ -22,7 +22,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.ISubstitution;
+import ho.module.lineup.substitution.Substitution;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -353,7 +353,7 @@ public class ConvertXml2Hrf {
 			m_sHRFBuffer.append("behforward3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik() + "\n");
 			
 			int i = 0;
-			for (ISubstitution sub:  m_clTeam.getSubstitutions()) {
+			for (Substitution sub:  m_clTeam.getSubstitutions()) {
 				if (sub != null) {
 					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + sub.getPlayerOrderId() + "\n");
 					m_sHRFBuffer.append("subst" + i + "playerIn=" + sub.getPlayerIn() + "\n");

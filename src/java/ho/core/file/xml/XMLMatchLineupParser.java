@@ -12,11 +12,11 @@ import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -412,11 +412,11 @@ public class XMLMatchLineupParser {
 		// Substitutions
 
 		list = subs.getElementsByTagName("Substitution");
-		ArrayList<ISubstitution> substitutions = new ArrayList<ISubstitution>();
+		List<Substitution> substitutions = new ArrayList<Substitution>();
 
 		for (int i = 0; (list != null) && (i < list.getLength()); i++) {
 
-			ISubstitution s = createSubstitution((Element) list.item(i), i);
+			Substitution s = createSubstitution((Element) list.item(i), i);
 			substitutions.add(s);
 			// We need to make sure the players involved are in the team lineup
 			// If missing, we only know the ID

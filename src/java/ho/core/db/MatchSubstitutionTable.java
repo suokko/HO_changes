@@ -1,13 +1,13 @@
 package ho.core.db;
 
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.ISubstitution;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatchSubstitutionTable extends AbstractTable {
 	/** tablename **/
@@ -42,12 +42,12 @@ public class MatchSubstitutionTable extends AbstractTable {
 	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
-				"CREATE INDEX IMATCHSUBSTITUTION_1 ON " + getTableName() + "(" + columns[3].getColumnName()
-						+ ")",
-				"CREATE INDEX IMATCHSUBSTITUTION_2 ON " + getTableName() + "(" + columns[0].getColumnName()
-						+ "," + columns[1].getColumnName() + ")",
-				"CREATE INDEX IMATCHSUBSTITUTION_3 ON " + getTableName() + "(" + columns[2].getColumnName()
-						+ ")" };
+				"CREATE INDEX IMATCHSUBSTITUTION_1 ON " + getTableName() + "("
+						+ columns[3].getColumnName() + ")",
+				"CREATE INDEX IMATCHSUBSTITUTION_2 ON " + getTableName() + "("
+						+ columns[0].getColumnName() + "," + columns[1].getColumnName() + ")",
+				"CREATE INDEX IMATCHSUBSTITUTION_3 ON " + getTableName() + "("
+						+ columns[2].getColumnName() + ")" };
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 *            The matchId for the match in question
 	 * 
 	 */
-	java.util.List<ISubstitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
+	java.util.List<Substitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return getSubBySql("SELECT * FROM " + getTableName() + " WHERE MatchID = " + matchId
 				+ " AND TeamID = " + teamId);
 
@@ -72,7 +72,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 *            The teamId for the team in question
 	 * 
 	 */
-	java.util.List<ISubstitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
+	java.util.List<Substitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
 		return getSubBySql("SELECT * FROM " + getTableName() + " WHERE HrfID = " + hrfId
 				+ " AND LineupName = '" + lineupName + "'");
 	}
@@ -82,7 +82,8 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 * must be unique for the match. All previous substitutions for the
 	 * team/match combination will be deleted.
 	 */
-	void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, java.util.List<ISubstitution> subs) {
+	void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId,
+			java.util.List<Substitution> subs) {
 		if ((matchId == DUMMY) || (teamId == DUMMY)) {
 			// Rather not...
 			return;
@@ -96,7 +97,8 @@ public class MatchSubstitutionTable extends AbstractTable {
 	 * must be unique for the match. All previous substitutions for the hrf will
 	 * be deleted.
 	 */
-	void storeMatchSubstitutionsByHrf(int hrfId, java.util.List<ISubstitution> subs, String lineupName) {
+	void storeMatchSubstitutionsByHrf(int hrfId, java.util.List<Substitution> subs,
+			String lineupName) {
 		if (hrfId == DUMMY) {
 			// Rather not...
 			return;
@@ -104,7 +106,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 		storeSub(DUMMY, DUMMY, hrfId, subs, lineupName);
 	}
 
-	private void storeSub(int matchId, int teamId, int hrfId, java.util.List<ISubstitution> subs,
+	private void storeSub(int matchId, int teamId, int hrfId, java.util.List<Substitution> subs,
 			String lineupName) {
 		String sql = null;
 
@@ -114,20 +116,22 @@ public class MatchSubstitutionTable extends AbstractTable {
 		// Get rid of any old subs for the inputs.
 		delete(where, values);
 
-		for (ISubstitution sub : subs) {
+		for (Substitution sub : subs) {
 
 			if (sub == null) {
 				continue;
 			}
 
 			try {
-				sql = "INSERT INTO " + getTableName()
+				sql = "INSERT INTO "
+						+ getTableName()
 						+ " (  MatchID, TeamID, HrfID, PlayerOrderID, PlayerIn, PlayerOut, OrderType,";
 				sql += " MatchMinuteCriteria, Pos, Behaviour, Card, Standing, LineupName ) VALUES(";
 				sql += matchId + "," + teamId + "," + hrfId + "," + sub.getPlayerOrderId() + ","
-						+ sub.getPlayerIn() + "," + sub.getPlayerOut() + "," + sub.getOrderType().getId() + ","
-						+ sub.getMatchMinuteCriteria() + "," + sub.getPos() + "," + sub.getBehaviour() + ","
-						+ sub.getCard() + "," + sub.getStanding() + "," + "'" + lineupName + "')";
+						+ sub.getPlayerIn() + "," + sub.getPlayerOut() + ","
+						+ sub.getOrderType().getId() + "," + sub.getMatchMinuteCriteria() + ","
+						+ sub.getPos() + "," + sub.getBehaviour() + "," + sub.getCard() + ","
+						+ sub.getStanding() + "," + "'" + lineupName + "')";
 
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
@@ -137,10 +141,10 @@ public class MatchSubstitutionTable extends AbstractTable {
 		}
 	}
 
-	private java.util.List<ISubstitution> getSubBySql(String sql) {
+	private java.util.List<Substitution> getSubBySql(String sql) {
 		Substitution sub = null;
 		ResultSet rs = null;
-		final java.util.ArrayList<ISubstitution> subst = new java.util.ArrayList<ISubstitution>();
+		List<Substitution> subst = new ArrayList<Substitution>();
 
 		try {
 			rs = adapter.executeQuery(sql);
@@ -159,9 +163,10 @@ public class MatchSubstitutionTable extends AbstractTable {
 						matchOrderType = MatchOrderType.SUBSTITUTION;
 					}
 				}
-				sub = new Substitution(rs.getInt("PlayerOrderID"), playerIn, playerOut, matchOrderType,
-						(byte) rs.getInt("MatchMinuteCriteria"), (byte) rs.getInt("Pos"),
-						(byte) rs.getInt("Behaviour"), (byte) rs.getInt("Card"), (byte) rs.getInt("Standing"));
+				sub = new Substitution(rs.getInt("PlayerOrderID"), playerIn, playerOut,
+						matchOrderType, (byte) rs.getInt("MatchMinuteCriteria"),
+						(byte) rs.getInt("Pos"), (byte) rs.getInt("Behaviour"),
+						(byte) rs.getInt("Card"), (byte) rs.getInt("Standing"));
 				subst.add(sub);
 			}
 		} catch (Exception e) {

@@ -26,7 +26,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
 public class SubstitutionEditView extends JPanel {
 
 	private static final long serialVersionUID = 6041242290064429972L;
@@ -46,20 +45,22 @@ public class SubstitutionEditView extends JPanel {
 		initComponents();
 		addListeners();
 
-		Map<Integer, PlayerPositionItem> lineupPositions = SubstitutionDataProvider.getLineupPositions();
+		Map<Integer, PlayerPositionItem> lineupPositions = SubstitutionDataProvider
+				.getLineupPositions();
 
 		this.playerComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values().toArray()));
 		this.playerComboBox.setSelectedItem(null);
 
 		if (isSubstitution()) {
-			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider.getFieldPositions(
-					ISpielerPosition.substKeeper, ISpielerPosition.substForward);
+			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
+					.getFieldPositions(ISpielerPosition.substKeeper, ISpielerPosition.substForward);
 			this.playerInComboBox.setModel(new DefaultComboBoxModel(substitutionPlayers.toArray()));
 			this.playerInComboBox.setSelectedItem(null);
 		} else if (isPositionSwap()) {
-			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider.getFieldPositions(
-					ISpielerPosition.substKeeper, ISpielerPosition.substForward);
-			this.playerInComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values().toArray()));
+			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
+					.getFieldPositions(ISpielerPosition.substKeeper, ISpielerPosition.substForward);
+			this.playerInComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values()
+					.toArray()));
 			this.playerInComboBox.setSelectedItem(null);
 		}
 
@@ -80,7 +81,7 @@ public class SubstitutionEditView extends JPanel {
 	 * @param sub
 	 *            the substitution to initialize the view.
 	 */
-	public void init(ISubstitution sub) {
+	public void init(Substitution sub) {
 		this.orderType = sub.getOrderType();
 
 		if (sub.getPlayerOut() != -1) {
@@ -108,7 +109,8 @@ public class SubstitutionEditView extends JPanel {
 		if (!isPositionSwap()) {
 			ComboBoxModel model = this.positionComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				if (((PlayerPositionItem) model.getElementAt(i)).getPosition().byteValue() == sub.getPos()) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getPosition().byteValue() == sub
+						.getPos()) {
 					positionComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -129,8 +131,8 @@ public class SubstitutionEditView extends JPanel {
 	 * 
 	 * @return
 	 */
-	public ISubstitution getSubstitution() {
-		ISubstitution sub = new Substitution();
+	public Substitution getSubstitution() {
+		Substitution sub = new Substitution();
 		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
 		sub.setCard((byte) getSelectedId(this.redCardsComboBox));
 		sub.setStanding((byte) getSelectedId(this.standingComboBox));
@@ -208,7 +210,8 @@ public class SubstitutionEditView extends JPanel {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					PlayerPositionItem item = (PlayerPositionItem) positionComboBox.getSelectedItem();
+					PlayerPositionItem item = (PlayerPositionItem) positionComboBox
+							.getSelectedItem();
 					if (item != null) {
 						positionChooser.select(Integer.valueOf(item.getPosition()));
 					} else {
@@ -225,8 +228,8 @@ public class SubstitutionEditView extends JPanel {
 				public void selectionChanged(PositionSelectionEvent event) {
 					if (event.getChange() == Change.SELECTED) {
 						for (int i = 0; i < positionComboBox.getModel().getSize(); i++) {
-							PlayerPositionItem item = (PlayerPositionItem) positionComboBox.getModel()
-									.getElementAt(i);
+							PlayerPositionItem item = (PlayerPositionItem) positionComboBox
+									.getModel().getElementAt(i);
 							if (event.getPosition().equals(item.getPosition())) {
 								if (item != positionComboBox.getSelectedItem()) {
 									positionComboBox.setSelectedItem(item);
@@ -275,7 +278,8 @@ public class SubstitutionEditView extends JPanel {
 			if (isSubstitution()) {
 				playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
 			} else {
-				playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.RepositionWith"));
+				playerInLabel.setText(HOVerwaltung.instance().getLanguageString(
+						"subs.RepositionWith"));
 			}
 			gbc.gridx = 0;
 			gbc.gridy++;
@@ -291,7 +295,8 @@ public class SubstitutionEditView extends JPanel {
 			add(this.playerInComboBox, gbc);
 		}
 
-		JLabel behaviourLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Behavior"));
+		JLabel behaviourLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
+				"subs.Behavior"));
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.anchor = GridBagConstraints.WEST;
@@ -311,8 +316,8 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(whenLabel, gbc);
 
-		this.whenTextField = new WhenTextField(HOVerwaltung.instance()
-				.getLanguageString("subs.MinuteAnytime"), HOVerwaltung.instance().getLanguageString(
+		this.whenTextField = new WhenTextField(HOVerwaltung.instance().getLanguageString(
+				"subs.MinuteAnytime"), HOVerwaltung.instance().getLanguageString(
 				"subs.MinuteAfterX"));
 		Dimension textFieldSize = new Dimension(200, this.whenTextField.getPreferredSize().height);
 		this.whenTextField.setMinimumSize(textFieldSize);
@@ -336,7 +341,8 @@ public class SubstitutionEditView extends JPanel {
 		add(new Divider(HOVerwaltung.instance().getLanguageString("subs.AdvancedConditions")), gbc);
 
 		if (!isPositionSwap()) {
-			JLabel positionLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position"));
+			JLabel positionLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
+					"subs.Position"));
 			gbc.gridx = 0;
 			gbc.gridy++;
 			gbc.gridwidth = 1;
@@ -374,7 +380,8 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.redCardsComboBox, gbc);
 
-		JLabel standingLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Standing"));
+		JLabel standingLabel = new JLabel(HOVerwaltung.instance()
+				.getLanguageString("subs.Standing"));
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(4, 10, 4, 2);
