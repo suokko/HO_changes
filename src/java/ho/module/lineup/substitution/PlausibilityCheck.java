@@ -1,6 +1,7 @@
 package ho.module.lineup.substitution;
 
 import ho.module.lineup.Lineup;
+import ho.module.lineup.substitution.model.Substitution;
 
 public class PlausibilityCheck {
 

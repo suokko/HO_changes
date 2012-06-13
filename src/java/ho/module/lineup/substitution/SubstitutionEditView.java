@@ -8,6 +8,7 @@ import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

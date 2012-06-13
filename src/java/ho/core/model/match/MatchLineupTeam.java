@@ -8,7 +8,7 @@ package ho.core.model.match;
 
 import ho.core.model.player.ISpielerPosition;
 import ho.module.lineup.Lineup;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.util.ArrayList;
 import java.util.Collections;

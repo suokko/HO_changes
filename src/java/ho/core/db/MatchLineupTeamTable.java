@@ -3,7 +3,7 @@ package ho.core.db;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;
