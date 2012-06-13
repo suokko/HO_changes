@@ -773,16 +773,15 @@ public class RatingPredictionManager {
             float skill;
             float subSkill;
             skill = spieler.getValue4Skill4(skillType);
-            float manualOffset = (float)spieler.getTrainingOffset4Skill(skillType);
             float subskillFromDB = (float)spieler.getSubskill4Pos(skillType);
 //            System.out.println ("t="+skillType+", o="+manualOffset+", s="+subskillFromDB);
             /**
              * If we know the last level up date from this player or
              * the user has set an offset manually -> use this sub/offset
              */
-            if (manualOffset > 0 || subskillFromDB > 0 || 
+            if (subskillFromDB > 0 || 
             		(lastLvlUp = spieler.getLastLevelUp(skillType)) != null && (Timestamp)lastLvlUp[0] != null && ((Boolean)lastLvlUp[1]).booleanValue())
-                subSkill = spieler.getSubskill4SkillWithOffset(skillType);
+                subSkill = spieler.getSubskill4Pos(skillType);
             else
             	/**
             	 * Try to guess the sub based on the skill level

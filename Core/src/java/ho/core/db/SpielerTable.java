@@ -135,13 +135,14 @@ final class SpielerTable extends AbstractTable {
 			statement.append(player.getSubskill4Pos(PlayerSkill.SCORING)).append(",");
 			statement.append(player.getSubskill4Pos(PlayerSkill.PASSING)).append(",");
 			statement.append(player.getSubskill4Pos(PlayerSkill.SET_PIECES)).append(",");
-			statement.append(player.getTrainingsOffsetTorwart()).append(",");
-			statement.append(player.getTrainingsOffsetVerteidigung()).append(",");
-			statement.append(player.getTrainingsOffsetSpielaufbau()).append(",");
-			statement.append(player.getTrainingsOffsetFluegelspiel()).append(",");
-			statement.append(player.getTrainingsOffsetTorschuss()).append(",");
-			statement.append(player.getTrainingsOffsetPasspiel()).append(",");
-			statement.append(player.getTrainingsOffsetStandards()).append(",");
+			// Training offsets below
+			statement.append("0,");
+			statement.append("0,");
+			statement.append("0,");
+			statement.append("0,");
+			statement.append("0,");
+			statement.append("0,");
+			statement.append("0,");
 			statement.append(player.getSpezialitaet()).append(",");
 			statement.append(player.getCharakter()).append(",");
 			statement.append(player.getAnsehen()).append(",");
@@ -576,16 +577,7 @@ final class SpielerTable extends AbstractTable {
             player.setSubskill4Pos(PlayerSkill.WINGER,rs.getFloat("SubFluegel"));
             player.setSubskill4Pos(PlayerSkill.SCORING,rs.getFloat("SubTorschuss"));
             player.setSubskill4Pos(PlayerSkill.SET_PIECES,rs.getFloat("SubStandards"));
-
-            //Offset
-            player.setTrainingsOffsetTorwart(rs.getFloat("OffsetTorwart"));
-            player.setTrainingsOffsetVerteidigung(rs.getFloat("OffsetVerteidigung"));
-            player.setTrainingsOffsetSpielaufbau(rs.getFloat("OffsetSpielaufbau"));
-            player.setTrainingsOffsetPasspiel(rs.getFloat("OffsetPasspiel"));
-            player.setTrainingsOffsetFluegelspiel(rs.getFloat("OffsetFluegel"));
-            player.setTrainingsOffsetTorschuss(rs.getFloat("OffsetTorschuss"));
-            player.setTrainingsOffsetStandards(rs.getFloat("OffsetStandards"));
-
+           
             player.setGelbeKarten(rs.getInt("GelbeKarten"));
             player.setVerletzt(rs.getInt("Verletzt"));
             player.setToreFreund(rs.getInt("ToreFreund"));

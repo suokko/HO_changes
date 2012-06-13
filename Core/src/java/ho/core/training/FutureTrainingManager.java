@@ -2,7 +2,6 @@ package ho.core.training;
 
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
-import ho.core.model.PlayerSkillup;
 import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
 import ho.core.model.player.ISkillup;
@@ -243,7 +242,7 @@ public class FutureTrainingManager {
 	* @return the sub with offset of a player
 	*/
 	private double getOffset(int skillIndex) {
-		double offset = player.getSubskill4SkillWithOffset(skillIndex);
+		double offset = player.getSubskill4Pos(skillIndex);
 		return offset;
 	}
 

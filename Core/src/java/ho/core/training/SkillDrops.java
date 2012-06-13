@@ -1,6 +1,7 @@
 package ho.core.training;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.module.config.ModuleConfig;
 
 
 public class SkillDrops {
@@ -13,23 +14,24 @@ public class SkillDrops {
 	//	Midfield
 	//	Winger
 	//	Scoring
-
+	
 	private static double[][] keeper = {
-		{7.2, 8.6, 10.4, 9.8, 9.6, 8.5,  10.6, 12.4},   // 23
-		{5.4, 6.6, 8.0, 9.8, 9.6, 8.5,  10.6, 12.4}, // 22
+		{7.2, 8.6, 10.4, 99, 99, 99,  99, 99},   // 23
+		{5.4, 6.6, 8.0, 9.8, 99, 99,  99, 99}, // 22
 		{4.0, 5.0, 6.2, 7.6, 9.6, 99, 99, 99},  //21
-		{2.8,  3.6,  4.6,  5.8,  7.7,  8.5,  10.6,  12.4}, //20
-		{1.8,  2.4,  3.2,  4.3,  6.1,  8.5,  10.6,  12.4}, //19
-		{1.0,  1.5,  2.1,  3.1,  4.9,  7.3,  10.6,  12.4}, //18
-		{0.5,  0.9,  1.4,  2.3,  4.0,  6.3,  10.6,  12.4}, //17
-		{0.1,  0.4,  0.8,  1.6,  3.2,  5.4,  9.3,  12.4}, //16
+		{2.8,  3.6,  4.6,  5.8,  7.7,  99,  99,  99}, //20
+		{1.8,  2.4,  3.2,  4.3,  6.1,  8.5,  99,  99}, //19
+		{1.0,  1.5,  2.1,  3.1,  4.9,  7.3,  99,  99}, //18
+		{0.5,  0.9,  1.4,  2.3,  4.0,  6.3,  10.6,  99}, //17
+		{0.1,  0.4,  0.8,  1.6,  3.2,  5.4,  9.3,  99}, //16
 		{0,  0.2,  0.4,  1.0,  2.4,  4.4,  7.6,  12.4}, //15
 		{0,  0.1,  0.2,  0.7,  1.8,  3.6,  6.0,  9.0}, //14
 		{0,  0,  0.2,  0.5,  1.2,  2.7,  4.5,  6.6}, //13
 		{0,  0,  0.2,  0.5,  0.9,  1.9,  3.0,  4.8}, //12
 		{0,  0,  0.1,  0.4,  0.8,  1.5,  2.4,  4.0}};//11
-
-
+	// Lines are from left, 29 and under, 30, 31, ...., 36
+	
+	
 	private static double[][] defending =  {
 		{7.2,  8.0,  99,  99,  99,  99,  99,  99},  
 		{5.4,  6.2,  7.4,  99,  99,  99,  99,  99},  
@@ -89,10 +91,56 @@ public class SkillDrops {
 		{0, 1, 1.7, 2.7, 4.1, 6.3, 9.2, 13.8},
 		{0, 1, 1.7, 2.6, 3.9, 5.5, 8, 12},
 		{0, 1, 1.6, 2.5, 3.8, 5.3, 7.4, 10.8}};
+	
+	boolean active = true;
+	private SkillDrops drops;
+	private static SkillDrops instance = null;
+	
+	private static final String key = "SKILL_DROPS_ACTIVATED";
+	
+	
+	public SkillDrops() {
+		
+		if (ModuleConfig.instance().containsKey(key)) {
+			active = ModuleConfig.instance().getBoolean(key);
+		} else {
+			ModuleConfig.instance().setBoolean(key, true);
+			ModuleConfig.instance().save();
+		}
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	
+	public void setActive(boolean b) {
+		if (b != active) {
+			active = b;
+			ModuleConfig.instance().setBoolean(key, active);
+			ModuleConfig.instance().save();
+		}
+	}
+	
+	
 
 
-
-	public static float getSkillDrop(int skill,  int age,  int skillType) {
+	public static SkillDrops instance() {
+		if (instance == null) {
+			instance = new SkillDrops();
+		}
+		
+		return instance;
+	}
+	
+	/**
+	 * Returns the skill drop for the provided parameters.
+	 * 
+	 * @param skill The skill level of the player to drop
+	 * @param age The age of the player to drop
+	 * @param skillType As defined in PlayerSkill
+	 * @return A percentage number for the skill to drop. On return 2, a skill of 4.50 should move to 4.52.
+	 */
+	public float getSkillDrop(int skill,  int age,  int skillType) {
 		double[][] array;
 		switch (skillType) {
 			case PlayerSkill.KEEPER : {

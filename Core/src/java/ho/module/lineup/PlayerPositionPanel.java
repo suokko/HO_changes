@@ -682,7 +682,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         	if (m_iPositionID == ISpielerPosition.setPieces) {
                 item.setValues(spielerName,
                                spieler.getStandards()
-                               + spieler.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES),
+                               + spieler.getSubskill4Pos(PlayerSkill.SET_PIECES),
                                spieler);
                 return item;
             } else if (m_iPositionID == ISpielerPosition.captain) {

@@ -520,7 +520,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener {
 
 		if (this.positionID == ISpielerPosition.setPieces) {
 			item.setValues(spielerName,
-					spieler.getStandards() + spieler.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES),
+					spieler.getStandards() + spieler.getSubskill4Pos(PlayerSkill.SET_PIECES),
 					spieler);
 		} else if (this.positionID == ISpielerPosition.captain) {
 			item.setValues(

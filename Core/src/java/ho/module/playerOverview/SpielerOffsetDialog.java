@@ -86,17 +86,17 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 	 *
 	 * @param actionEvent TODO Missing Method Parameter Documentation
 	 */
+	@Override
 	public final void actionPerformed(ActionEvent actionEvent) {
 		if (actionEvent.getSource().equals(m_jbOK)) {
-			m_clSpieler.setTrainingsOffsetFluegelspiel(m_jpFluegelspiel.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetPasspiel(m_jpPasspiel.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetSpielaufbau(m_jpSpielaufbau.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetStandards(m_jpStandard.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetTorschuss(m_jpTorschuss.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetTorwart(m_jpTorwart.getValue() / 100d);
-			m_clSpieler.setTrainingsOffsetVerteidigung(m_jpVerteidigung.getValue() / 100d);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.WINGER, m_jpFluegelspiel.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.PASSING, m_jpPasspiel.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.PLAYMAKING, m_jpSpielaufbau.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.SET_PIECES, m_jpStandard.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.SCORING, m_jpTorschuss.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.KEEPER, m_jpTorwart.getValue() / 100);
+			m_clSpieler.setSubskill4Pos(PlayerSkill.DEFENDING, m_jpVerteidigung.getValue() / 100);
 
-			// Recalcualte subskills
 			DBManager.instance().saveSpieler(
 				HOVerwaltung.instance().getModel().getID(),
 				HOVerwaltung.instance().getModel().getAllSpieler(),
@@ -139,7 +139,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpSpielaufbau.setValue((float) m_clSpieler.getTrainingsOffsetSpielaufbau() * 100f);
+		m_jpSpielaufbau.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.PLAYMAKING) * 100f);
 		panel.add(m_jpSpielaufbau);
 
 		m_jpFluegelspiel =
@@ -149,7 +149,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpFluegelspiel.setValue((float) m_clSpieler.getTrainingsOffsetFluegelspiel() * 100f);
+		m_jpFluegelspiel.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.WINGER) * 100f);
 		panel.add(m_jpFluegelspiel);
 
 		m_jpTorschuss =
@@ -159,7 +159,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpTorschuss.setValue((float) m_clSpieler.getTrainingsOffsetTorschuss() * 100f);
+		m_jpTorschuss.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.SCORING) * 100f);
 		panel.add(m_jpTorschuss);
 
 		m_jpTorwart =
@@ -169,7 +169,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpTorwart.setValue((float) m_clSpieler.getTrainingsOffsetTorwart() * 100f);
+		m_jpTorwart.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.KEEPER) * 100f);
 		panel.add(m_jpTorwart);
 
 		m_jpPasspiel =
@@ -179,7 +179,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpPasspiel.setValue((float) m_clSpieler.getTrainingsOffsetPasspiel() * 100f);
+		m_jpPasspiel.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.PASSING) * 100f);
 		panel.add(m_jpPasspiel);
 
 		m_jpVerteidigung =
@@ -189,7 +189,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpVerteidigung.setValue((float) m_clSpieler.getTrainingsOffsetVerteidigung() * 100f);
+		m_jpVerteidigung.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.DEFENDING) * 100f);
 		panel.add(m_jpVerteidigung);
 
 		m_jpStandard =
@@ -199,7 +199,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 				1,
 				1f,
 				80);
-		m_jpStandard.setValue((float) m_clSpieler.getTrainingsOffsetStandards() * 100f);
+		m_jpStandard.setValue((float) m_clSpieler.getSubskill4Pos(PlayerSkill.SET_PIECES) * 100f);
 		panel.add(m_jpStandard);
 
 		constraints.anchor = GridBagConstraints.WEST;

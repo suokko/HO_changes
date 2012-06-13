@@ -107,7 +107,8 @@ class ResultPanel extends JPanel {
         panel.add(set, BorderLayout.SOUTH);
 
         set.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                @Override
+				public void actionPerformed(ActionEvent arg0) {
                     final Spieler sp = HOVerwaltung.instance().getModel().getSpieler(id);
                     double decimals = average - sp.getTorwart()
                                       - sp.getSubskill4Pos(PlayerSkill.KEEPER);
@@ -120,7 +121,7 @@ class ResultPanel extends JPanel {
                         decimals = 0;
                     }
 
-                    sp.setTrainingsOffsetTorwart(decimals);
+                    sp.setSubskill4Pos(PlayerSkill.KEEPER, (float)decimals);
                     ho.core.db.DBManager.instance().saveSpieler(ho.core.model.HOVerwaltung.instance()
                                                                                                                           .getModel()
                                                                                                                           .getID(),
