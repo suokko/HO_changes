@@ -27,18 +27,6 @@ public class Substitution {
 //	public static final byte OPPONENT_FORAWARD_RED_CARDED = 23;
 //	public static final byte OPPONENT_WING_BACK_RED_CARDED = 24;
 //	public static final byte OPPONENT_WINGER_RED_CARDED = 25;
-//
-//	// GoalDiffCriteria
-//	public static final byte ANY_STANDING = -1;
-//	public static final byte MATCH_IS_TIED = 0;
-//	public static final byte IN_THE_LEAD = 1;
-//	public static final byte DOWN = 2;
-//	public static final byte IN_THE_LEAD_BY_MORE_THAN_ONE = 3;
-//	public static final byte DOWN_BY_MORE_THAN_ONE = 4;
-//	public static final byte NOT_DOWN = 5;
-//	public static final byte NOT_IN_THE_LEAD = 6;
-//	public static final byte IN_THE_LEAD_BY_MORE_THAN_TWO = 7;
-//	public static final byte DOWN_BY_MORE_THAN_TWO = 8;
 	
 	private int playerOrderID = -1;
 	private int playerIn = -1;
@@ -48,7 +36,7 @@ public class Substitution {
 	private byte pos = -1;
 	private byte behaviour = -1;
 	private byte card = -1;
-	private Standing standing = Standing.GOAL_ANY;
+	private Standing standing = Standing.ANY_STANDING;
 
 	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
 			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, Standing standing) {
