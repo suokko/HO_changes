@@ -635,8 +635,8 @@ public class OnlineWorker {
     		+ "\"min\":\"" + sub.getMatchMinuteCriteria() + "\","
     		+ "\"pos\":\"" + sub.getPos() + "\","
     		+ "\"beh\":\"" + sub.getBehaviour() + "\","
-    		+ "\"card\":\"" + sub.getCard() + "\","
-    		+ "\"standing\":\"" + sub.getStanding() + "\"}";
+    		+ "\"card\":\"" + sub.getRedCardCriteria().getId() + "\","
+    		+ "\"standing\":\"" + sub.getStanding().getId() + "\"}";
     		if (iter.hasNext()) {
     			orders+= ",";
     		}

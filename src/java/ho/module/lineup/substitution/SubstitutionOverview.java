@@ -260,7 +260,7 @@ public class SubstitutionOverview extends JPanel {
 			case 3:
 				return Lookup.getStanding(sub.getStanding());
 			case 4:
-				return Lookup.getRedCard(sub.getCard());
+				return Lookup.getRedCard(sub.getRedCardCriteria());
 			}
 
 			return "";

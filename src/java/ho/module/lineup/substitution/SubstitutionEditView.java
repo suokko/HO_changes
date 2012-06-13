@@ -6,6 +6,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -119,7 +120,7 @@ public class SubstitutionEditView extends JPanel {
 		}
 
 		Helper.markierenComboBox(this.behaviourComboBox, sub.getBehaviour());
-		Helper.markierenComboBox(this.redCardsComboBox, sub.getCard());
+		Helper.markierenComboBox(this.redCardsComboBox, sub.getRedCardCriteria().getId());
 		Helper.markierenComboBox(this.standingComboBox, sub.getStanding().getId());
 
 		this.whenTextField.setValue(Integer.valueOf(sub.getMatchMinuteCriteria()));
@@ -135,7 +136,7 @@ public class SubstitutionEditView extends JPanel {
 	public Substitution getSubstitution() {
 		Substitution sub = new Substitution();
 		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
-		sub.setCard((byte) getSelectedId(this.redCardsComboBox));
+		sub.setRedCardCriteria(RedCardCriteria.getById((byte) getSelectedId(this.redCardsComboBox)));
 		sub.setStanding(GoalDiffCriteria.getById((byte) getSelectedId(this.standingComboBox)));
 		sub.setMatchMinuteCriteria(((Integer) this.whenTextField.getValue()).byteValue());
 		sub.setOrderType(this.orderType);

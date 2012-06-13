@@ -3,6 +3,7 @@ package ho.module.lineup.substitution;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 public class Lookup {
 
@@ -107,33 +108,33 @@ public class Lookup {
 		return "";
 	}
 
-	public static String getRedCard(byte id) {
-		switch (id) {
-		case -1:
+	public static String getRedCard(RedCardCriteria redCardCriteria) {
+		switch (redCardCriteria) {
+		case IGNORE:
 			return HOVerwaltung.instance().getLanguageString("subs.RedIgnore");
-		case 1:
+		case MY_PLAYER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMy");
-		case 2:
+		case OPPONENT_PLAYER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOpp");
-		case 11:
+		case MY_CENTRAL_DEFENDER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMyCD");
-		case 12:
+		case MY_MIDFIELDER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMyMF");
-		case 13:
+		case MY_FORWARD:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMyFW");
-		case 14:
+		case MY_WING_BACK:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMyWB");
-		case 15:
+		case MY_WINGER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedMyWI");
-		case 21:
+		case OPPONENT_CENTRAL_DEFENDER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppCD");
-		case 22:
+		case OPPONENT_MIDFIELDER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppMF");
-		case 23:
+		case OPPONENT_FORAWARD:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppFW");
-		case 24:
+		case OPPONENT_WING_BACK:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppWB");
-		case 25:
+		case OPPONENT_WINGER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppWi");
 		}
 		return "";

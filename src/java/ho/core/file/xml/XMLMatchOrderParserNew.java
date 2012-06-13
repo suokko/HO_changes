@@ -6,6 +6,7 @@ import ho.core.model.player.SpielerPosition;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
+import ho.module.lineup.substitution.model.RedCardCriteria;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,9 +54,10 @@ public class XMLMatchOrderParserNew {
 		Substitution sub = new Substitution();
 		sub.setPlayerOrderId(Integer.parseInt(getChildValue(orderNode, "PlayerOrderID")));
 		sub.setMatchMinuteCriteria(Byte.parseByte(getChildValue(orderNode, "MatchMinuteCriteria")));
-		sub.setStanding(GoalDiffCriteria.getById(Byte
-				.parseByte(getChildValue(orderNode, "GoalDiffCriteria"))));
-		sub.setCard(Byte.parseByte(getChildValue(orderNode, "RedCardCriteria")));
+		sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(getChildValue(orderNode,
+				"GoalDiffCriteria"))));
+		sub.setRedCardCriteria(RedCardCriteria.getById(Byte.parseByte(getChildValue(orderNode,
+				"RedCardCriteria"))));
 		sub.setPlayerOut(Integer.parseInt(getChildValue(orderNode, "SubjectPlayerID")));
 		sub.setPlayerIn(Integer.parseInt(getChildValue(orderNode, "ObjectPlayerID")));
 		byte orderTypeId = Byte.parseByte(getChildValue(orderNode, "OrderType"));
