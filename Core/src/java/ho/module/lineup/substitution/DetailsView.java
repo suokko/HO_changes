@@ -128,7 +128,7 @@ public class DetailsView extends JPanel {
 
 		if (this.substitution != null) {
 			HOModel hoModel = HOVerwaltung.instance().getModel();
-			orderType = Lookup.getOrderType(this.substitution.getOrderType());
+			orderType = LanguageStringLookup.getOrderType(this.substitution.getOrderType());
 
 			Spieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
 			playerOut = (out != null) ? out.getName() : "";
@@ -146,12 +146,12 @@ public class DetailsView extends JPanel {
 			}
 
 			if (this.substitution.getPos() != -1) {
-				newPosition = Lookup.getPosition(this.substitution.getPos());
+				newPosition = LanguageStringLookup.getPosition(this.substitution.getPos());
 			}
 
-			newBehaviour = Lookup.getBehaviour(this.substitution.getBehaviour());
-			redCards = Lookup.getRedCard(this.substitution.getRedCardCriteria());
-			standing = Lookup.getStanding(this.substitution.getStanding());
+			newBehaviour = LanguageStringLookup.getBehaviour(this.substitution.getBehaviour());
+			redCards = LanguageStringLookup.getRedCard(this.substitution.getRedCardCriteria());
+			standing = LanguageStringLookup.getStanding(this.substitution.getStanding());
 		}
 		this.orderTypeEntry.setText(orderType);
 		this.firstPlayerEntry.setText(playerOut);
