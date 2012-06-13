@@ -13,7 +13,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.MatchOrderType;
 import ho.module.lineup.substitution.Substitution;
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -494,7 +494,7 @@ public class XMLMatchLineupParser {
 			}
 		}
 		return new Substitution(playerOrderID, playerIn, playerOut, matchOrderType,
-				matchMinuteCriteria, pos, behaviour, card, Standing.getById(standing));
+				matchMinuteCriteria, pos, behaviour, card, GoalDiffCriteria.getById(standing));
 	}
 
 	protected final MatchLineupPlayer createStartPlayer(Element ele) throws Exception {

@@ -5,7 +5,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
 import ho.module.lineup.substitution.PositionSelectionEvent.Change;
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -136,7 +136,7 @@ public class SubstitutionEditView extends JPanel {
 		Substitution sub = new Substitution();
 		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
 		sub.setCard((byte) getSelectedId(this.redCardsComboBox));
-		sub.setStanding(Standing.getById((byte) getSelectedId(this.standingComboBox)));
+		sub.setStanding(GoalDiffCriteria.getById((byte) getSelectedId(this.standingComboBox)));
 		sub.setMatchMinuteCriteria(((Integer) this.whenTextField.getValue()).byteValue());
 		sub.setOrderType(this.orderType);
 		PlayerPositionItem item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();

@@ -1,6 +1,6 @@
 package ho.module.lineup.substitution;
 
-import ho.module.lineup.substitution.model.Standing;
+import ho.module.lineup.substitution.model.GoalDiffCriteria;
 
 
 /**
@@ -36,10 +36,10 @@ public class Substitution {
 	private byte pos = -1;
 	private byte behaviour = -1;
 	private byte card = -1;
-	private Standing standing = Standing.ANY_STANDING;
+	private GoalDiffCriteria standing = GoalDiffCriteria.ANY_STANDING;
 
 	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
-			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, Standing standing) {
+			byte matchMinuteCriteria, byte pos, byte behaviour, byte card, GoalDiffCriteria standing) {
 		super();
 
 		this.playerOrderID = playerOrderID;
@@ -125,11 +125,11 @@ public class Substitution {
 		this.card = card;
 	}
 
-	public Standing getStanding() {
+	public GoalDiffCriteria getStanding() {
 		return standing;
 	}
 
-	public void setStanding(Standing standing) {
+	public void setStanding(GoalDiffCriteria standing) {
 		this.standing = standing;
 	}
 
