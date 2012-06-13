@@ -6,7 +6,6 @@
  */
 package ho.core.model.player;
 
-import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
@@ -83,16 +82,7 @@ public final class Spieler {
 
     /** Verteidigung */
     private double m_dSubVerteidigung;
-    private double m_dTrainingsOffsetFluegelspiel;
-    private double m_dTrainingsOffsetPasspiel;
-    private double m_dTrainingsOffsetSpielaufbau;
-    private double m_dTrainingsOffsetStandards;
-    private double m_dTrainingsOffsetTorschuss;
-
-    /** trainingsOffset */
-    private double m_dTrainingsOffsetTorwart;
-    private double m_dTrainingsOffsetVerteidigung;
-
+   
     /** Agressivität */
     private int m_iAgressivitaet;
 
@@ -326,14 +316,6 @@ public final class Spieler {
         final Spieler oldSpieler = oldmodel.getSpieler(m_iSpielerID);
 
         if (oldSpieler != null) {
-            m_dTrainingsOffsetTorwart = oldSpieler.getTrainingsOffsetTorwart();
-            m_dTrainingsOffsetVerteidigung = oldSpieler.getTrainingsOffsetVerteidigung();
-            m_dTrainingsOffsetSpielaufbau = oldSpieler.getTrainingsOffsetSpielaufbau();
-            m_dTrainingsOffsetPasspiel = oldSpieler.getTrainingsOffsetPasspiel();
-            m_dTrainingsOffsetFluegelspiel = oldSpieler.getTrainingsOffsetFluegelspiel();
-            m_dTrainingsOffsetTorschuss = oldSpieler.getTrainingsOffsetTorschuss();
-            m_dTrainingsOffsetStandards = oldSpieler.getTrainingsOffsetStandards();
-
             // Training block
             m_bTrainingBlock = oldSpieler.hasTrainingBlock();
 
@@ -1203,54 +1185,6 @@ public final class Spieler {
     }
     
     /**
-     * berechnet den Subskill pro position
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public float getSubskill4SkillWithOffset(int skill) {
-        float value = 0.0f;
-
-        switch (skill) {
-            case PlayerSkill.KEEPER:
-                value = (float) m_dSubTorwart + (float) m_dTrainingsOffsetTorwart;
-                break;
-
-            case PlayerSkill.PLAYMAKING:
-                value = (float) m_dSubSpielaufbau + (float) m_dTrainingsOffsetSpielaufbau;
-                break;
-
-            case PlayerSkill.DEFENDING:
-                value = (float) m_dSubVerteidigung
-                                 + (float) m_dTrainingsOffsetVerteidigung;
-                break;
-
-            case PlayerSkill.PASSING:
-                value = (float) m_dSubPasspiel + (float) m_dTrainingsOffsetPasspiel;
-                break;
-
-            case PlayerSkill.WINGER:
-            	value = (float) m_dSubFluegelspiel
-                                 + (float) m_dTrainingsOffsetFluegelspiel;
-                break;
-
-            case PlayerSkill.SCORING:
-                value = (float) m_dSubTorschuss + (float) m_dTrainingsOffsetTorschuss;
-                break;
-
-            case PlayerSkill.SET_PIECES:
-                value = (float) m_dSubStandards + (float) m_dTrainingsOffsetStandards;
-                break;
-
-            default:
-                return 0f;
-        }
-
-        return (float) Math.min(0.99, Helper.round(value, 2));
-    }
-
-    /**
      * Setter for property m_sTeamInfoSmilie.
      *
      * @param teamInfoSmilie New value of property m_sTeamInfoSmilie.
@@ -1450,167 +1384,6 @@ public final class Spieler {
     }
 
     /**
-     * TODO Missing Method Documentation
-     *
-     * @param skill TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public double getTrainingOffset4Skill(int skill) {
-        switch (skill) {
-            case PlayerSkill.KEEPER:
-                return m_dTrainingsOffsetTorwart;
-
-            case PlayerSkill.PLAYMAKING:
-                return m_dTrainingsOffsetSpielaufbau;
-
-            case PlayerSkill.DEFENDING:
-                return m_dTrainingsOffsetVerteidigung;
-
-            case PlayerSkill.PASSING:
-                return m_dTrainingsOffsetPasspiel;
-
-            case PlayerSkill.WINGER:
-                return m_dTrainingsOffsetFluegelspiel;
-
-            case PlayerSkill.SCORING:
-                return m_dTrainingsOffsetTorschuss;
-
-            case PlayerSkill.SET_PIECES:
-                return m_dTrainingsOffsetStandards;
-
-            default:
-                return 0f;
-        }
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetFluegelspiel.
-     *
-     * @param m_dTrainingsOffsetFluegelspiel New value of property m_dTrainingsOffsetFluegelspiel.
-     */
-    public void setTrainingsOffsetFluegelspiel(double m_dTrainingsOffsetFluegelspiel) {
-        this.m_dTrainingsOffsetFluegelspiel = m_dTrainingsOffsetFluegelspiel;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetFluegelspiel.
-     *
-     * @return Value of property m_dTrainingsOffsetFluegelspiel.
-     */
-    public double getTrainingsOffsetFluegelspiel() {
-        return m_dTrainingsOffsetFluegelspiel;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetPasspiel.
-     *
-     * @param m_dTrainingsOffsetPasspiel New value of property m_dTrainingsOffsetPasspiel.
-     */
-    public void setTrainingsOffsetPasspiel(double m_dTrainingsOffsetPasspiel) {
-        this.m_dTrainingsOffsetPasspiel = m_dTrainingsOffsetPasspiel;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetPasspiel.
-     *
-     * @return Value of property m_dTrainingsOffsetPasspiel.
-     */
-    public double getTrainingsOffsetPasspiel() {
-        return m_dTrainingsOffsetPasspiel;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetSpielaufbau.
-     *
-     * @param m_dTrainingsOffsetSpielaufbau New value of property m_dTrainingsOffsetSpielaufbau.
-     */
-    public void setTrainingsOffsetSpielaufbau(double m_dTrainingsOffsetSpielaufbau) {
-        this.m_dTrainingsOffsetSpielaufbau = m_dTrainingsOffsetSpielaufbau;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetSpielaufbau.
-     *
-     * @return Value of property m_dTrainingsOffsetSpielaufbau.
-     */
-    public double getTrainingsOffsetSpielaufbau() {
-        return m_dTrainingsOffsetSpielaufbau;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetStandards.
-     *
-     * @param m_dTrainingsOffsetStandards New value of property m_dTrainingsOffsetStandards.
-     */
-    public void setTrainingsOffsetStandards(double m_dTrainingsOffsetStandards) {
-        this.m_dTrainingsOffsetStandards = m_dTrainingsOffsetStandards;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetStandards.
-     *
-     * @return Value of property m_dTrainingsOffsetStandards.
-     */
-    public double getTrainingsOffsetStandards() {
-        return m_dTrainingsOffsetStandards;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetTorschuss.
-     *
-     * @param m_dTrainingsOffsetTorschuss New value of property m_dTrainingsOffsetTorschuss.
-     */
-    public void setTrainingsOffsetTorschuss(double m_dTrainingsOffsetTorschuss) {
-        this.m_dTrainingsOffsetTorschuss = m_dTrainingsOffsetTorschuss;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetTorschuss.
-     *
-     * @return Value of property m_dTrainingsOffsetTorschuss.
-     */
-    public double getTrainingsOffsetTorschuss() {
-        return m_dTrainingsOffsetTorschuss;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetTorwart.
-     *
-     * @param m_dTrainingsOffsetTorwart New value of property m_dTrainingsOffsetTorwart.
-     */
-    public void setTrainingsOffsetTorwart(double m_dTrainingsOffsetTorwart) {
-        this.m_dTrainingsOffsetTorwart = m_dTrainingsOffsetTorwart;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetTorwart.
-     *
-     * @return Value of property m_dTrainingsOffsetTorwart.
-     */
-    public double getTrainingsOffsetTorwart() {
-        return m_dTrainingsOffsetTorwart;
-    }
-
-    /**
-     * Setter for property m_dTrainingsOffsetVerteidigung.
-     *
-     * @param m_dTrainingsOffsetVerteidigung New value of property m_dTrainingsOffsetVerteidigung.
-     */
-    public void setTrainingsOffsetVerteidigung(double m_dTrainingsOffsetVerteidigung) {
-        this.m_dTrainingsOffsetVerteidigung = m_dTrainingsOffsetVerteidigung;
-    }
-
-    /**
-     * Getter for property m_dTrainingsOffsetVerteidigung.
-     *
-     * @return Value of property m_dTrainingsOffsetVerteidigung.
-     */
-    public double getTrainingsOffsetVerteidigung() {
-        return m_dTrainingsOffsetVerteidigung;
-    }
-
-    /**
      * Setter for property m_iTransferlisted.
      *
      * @param m_iTransferlisted New value of property m_iTransferlisted.
@@ -1795,43 +1568,6 @@ public final class Spieler {
 		}
 	}
 
-	 /**
-     * set the training offset for skill
-     *
-     * @param skill the skill to change
-     * @param value the new skill value
-     */
-	private void setValue4TrainingOffset(int skill, int value) {
-		switch (skill) {
-			case PlayerSkill.KEEPER :
-				setTrainingsOffsetTorwart(value);
-				break;
-
-			case PlayerSkill.PLAYMAKING :
-				setTrainingsOffsetSpielaufbau(value);
-				break;
-
-			case PlayerSkill.PASSING :
-				setTrainingsOffsetPasspiel(value);
-				break;
-
-			case PlayerSkill.WINGER :
-				setTrainingsOffsetFluegelspiel(value);
-				break;
-
-			case PlayerSkill.DEFENDING :
-				setTrainingsOffsetVerteidigung(value);
-				break;
-
-			case PlayerSkill.SCORING :
-				setTrainingsOffsetTorschuss(value);
-				break;
-
-			case PlayerSkill.SET_PIECES :
-				setTrainingsOffsetStandards(value);
-				break;
-		}
-	}
 	
     /**
      * Setter for property m_iVerletzt.
@@ -1896,8 +1632,8 @@ public final class Spieler {
     }
 
     /**
-     * Berechnet die Subskills  Wird beim Speichern des HRFs in der Datenbank aufgerufen direkt
-     * bevor die Spieler gespeichert werden.
+     * Calculates training benefit, and updates subskill for the player.
+     * Used when there is a gap in the hrf history, that is weeks "missing".
      *
      * @param originalPlayer TODO Missing Constructuor Parameter Documentation
      * @param assistants TODO Missing Constructuor Parameter Documentation
@@ -1916,134 +1652,35 @@ public final class Spieler {
 		        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
 		        int trType = trPlayer.getTrainingWeek().getTrainingType();
 		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-		        switch (trType)
-		        {
-		        	case TrainingType.GOALKEEPING:
-				        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-				            m_dSubTorwart = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
-				            if (m_dSubTorwart >= 1.0d) {
-				                m_dSubTorwart = 0.99d;
-				            }
-				        } else {
-				            m_dSubTorwart = 0.0d;
-				            m_dTrainingsOffsetTorwart = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.DEFENDING:
-		        	case TrainingType.DEF_POSITIONS:
-				        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-				            m_dSubVerteidigung = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
-				            if (m_dSubVerteidigung >= 1.0d) {
-				                m_dSubVerteidigung = 0.99d;
-				            }
-				        } else {
-				            m_dSubVerteidigung = 0.0d;
-				            m_dTrainingsOffsetVerteidigung = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.PLAYMAKING:
-				        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-				            m_dSubSpielaufbau = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
-				            if (m_dSubSpielaufbau >= 1.0d) {
-				                m_dSubSpielaufbau = 0.99d;
-				            }
-				        } else {
-				            m_dSubSpielaufbau = 0.0d;
-				            m_dTrainingsOffsetSpielaufbau = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.SHORT_PASSES:
-		        	case TrainingType.THROUGH_PASSES:
-				        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-				            m_dSubPasspiel = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
-				            if (m_dSubPasspiel >= 1.0d) {
-				                m_dSubPasspiel = 0.99d;
-				            }
-				        } else {
-				            m_dSubPasspiel = 0.0d;
-				            m_dTrainingsOffsetPasspiel = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.CROSSING_WINGER:
-		        	case TrainingType.WING_ATTACKS:
-				        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-				            m_dSubFluegelspiel = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
-				            if (m_dSubFluegelspiel >= 1.0d) {
-				                m_dSubFluegelspiel = 0.99d;
-				            }
-				        } else {
-				            m_dSubFluegelspiel = 0.0d;
-				            m_dTrainingsOffsetFluegelspiel = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.SCORING:
-				        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-				            m_dSubTorschuss = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
-				            if (m_dSubTorschuss >= 1.0d) {
-				                m_dSubTorschuss = 0.99d;
-				            }
-				        } else {
-				            m_dSubTorschuss = 0.0d;
-				            m_dTrainingsOffsetTorschuss = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.SET_PIECES:
-				        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-				            m_dSubStandards = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
-				            if (m_dSubStandards >= 1.0d) {
-				                m_dSubStandards = 0.99d;
-				            }
-				        } else {
-				            m_dSubStandards = 0.0d;
-				            m_dTrainingsOffsetStandards = 0.0d;
-				        }
-				        break;
-		        	case TrainingType.SHOOTING:
-		        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-				            m_dSubTorschuss = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
-				            if (m_dSubTorschuss >= 1.0d) {
-				                m_dSubTorschuss = 0.99d;
-				            }
-				        } else {
-				            m_dSubTorschuss = 0.0d;
-				            m_dTrainingsOffsetTorschuss = 0.0d;
-				        }
-		        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-				            m_dSubStandards = Helper.round(tp.getSecondary() / wt.getSecondaryTrainingLength(
-				            		this, assistants, trainerlevel, intensity, stamina), 2);
-				            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
-				            if (m_dSubStandards >= 1.0d) {
-				                m_dSubStandards = 0.99d;
-				            }
-				        } else {
-				            m_dSubStandards = 0.0d;
-				            m_dTrainingsOffsetStandards = 0.0d;
-				        }
-		        		break;
-		        }
+		        
+		        int primary = wt.getPrimaryTrainingSkill();
+		        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
+	        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
+	        				this, assistants, trainerlevel, intensity, stamina), 3);
+	        		if (gain > 0) {
+	        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
+	        		}
+	        	}
+	        }
+	        if (tp != null && tp.getSecondary() > 0) {
+		        int trType = trPlayer.getTrainingWeek().getTrainingType();
+		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
+		        
+		        int secondary = wt.getSecondaryTrainingSkill();
+		        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
+	        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
+	        				this, assistants, trainerlevel, intensity, stamina), 3);
+	        		if (gain > 0) {
+	        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
+	        		}
+	        	}
 	        }
         }
     }
 
     /**
-     * Berechnet die Subskills  Wird beim Speichern des HRFs in der Datenbank aufgerufen direkt
-     * bevor die Spieler gespeichert werden.
+     * Calculates training benefit, and updates subskill for the player.
+     * Used when there is only 1 week of training to be calculated.
      *
      * @param originalPlayer - The player to calculate subskills on
      * @param assistants - The number of assistants
@@ -2061,127 +1698,28 @@ public final class Spieler {
 		        if (tp != null && tp.getPrimary() > 0) {
 			        int trType = trainingWeek.getTrainingType();
 			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			        switch (trType)
-			        {
-			        	case TrainingType.GOALKEEPING:
-					        if (!check4SkillUp(PlayerSkill.KEEPER, originalPlayer)) {
-					            m_dSubTorwart = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 3);
-					            m_dSubTorwart += originalPlayer.getSubskill4Pos(PlayerSkill.KEEPER);
-					            if (m_dSubTorwart >= 1.0d) {
-					                m_dSubTorwart = 0.99d;
-					            }
-					        } else {
-					            m_dSubTorwart = 0.0d;
-					            m_dTrainingsOffsetTorwart = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.DEFENDING:
-			        	case TrainingType.DEF_POSITIONS:
-					        if (!check4SkillUp(PlayerSkill.DEFENDING, originalPlayer)) {
-					            m_dSubVerteidigung = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 3);
-					            m_dSubVerteidigung += originalPlayer.getSubskill4Pos(PlayerSkill.DEFENDING);
-					            if (m_dSubVerteidigung >= 1.0d) {
-					                m_dSubVerteidigung = 0.99d;
-					            }
-					        } else {
-					            m_dSubVerteidigung = 0.0d;
-					            m_dTrainingsOffsetVerteidigung = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.PLAYMAKING:
-					        if (!check4SkillUp(PlayerSkill.PLAYMAKING, originalPlayer)) {
-					            m_dSubSpielaufbau = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 3);
-					            m_dSubSpielaufbau += originalPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING);
-					            if (m_dSubSpielaufbau >= 1.0d) {
-					                m_dSubSpielaufbau = 0.99d;
-					            }
-					        } else {
-					            m_dSubSpielaufbau = 0.0d;
-					            m_dTrainingsOffsetSpielaufbau = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.SHORT_PASSES:
-			        	case TrainingType.THROUGH_PASSES:
-					        if (!check4SkillUp(PlayerSkill.PASSING, originalPlayer)) {
-					            m_dSubPasspiel = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 3);
-					            m_dSubPasspiel += originalPlayer.getSubskill4Pos(PlayerSkill.PASSING);
-					            if (m_dSubPasspiel >= 1.0d) {
-					                m_dSubPasspiel = 0.99d;
-					            }
-					        } else {
-					            m_dSubPasspiel = 0.0d;
-					            m_dTrainingsOffsetPasspiel = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.CROSSING_WINGER:
-			        	case TrainingType.WING_ATTACKS:
-					        if (!check4SkillUp(PlayerSkill.WINGER, originalPlayer)) {
-					            m_dSubFluegelspiel = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 3);
-					            m_dSubFluegelspiel += originalPlayer.getSubskill4Pos(PlayerSkill.WINGER);
-					            if (m_dSubFluegelspiel >= 1.0d) {
-					                m_dSubFluegelspiel = 0.99d;
-					            }
-					        } else {
-					            m_dSubFluegelspiel = 0.0d;
-					            m_dTrainingsOffsetFluegelspiel = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.SCORING:
-					        if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-					            m_dSubTorschuss = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 2);
-					            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
-					            if (m_dSubTorschuss >= 1.0d) {
-					                m_dSubTorschuss = 0.99d;
-					            }
-					        } else {
-					            m_dSubTorschuss = 0.0d;
-					            m_dTrainingsOffsetTorschuss = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.SET_PIECES:
-					        if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-					            m_dSubStandards = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 2);
-					            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
-					            if (m_dSubStandards >= 1.0d) {
-					                m_dSubStandards = 0.99d;
-					            }
-					        } else {
-					            m_dSubStandards = 0.0d;
-					            m_dTrainingsOffsetStandards = 0.0d;
-					        }
-					        break;
-			        	case TrainingType.SHOOTING:
-			        		if (!check4SkillUp(PlayerSkill.SCORING, originalPlayer)) {
-					            m_dSubTorschuss = Helper.round(tp.getPrimary() / wt.getTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 2);
-					            m_dSubTorschuss = m_dSubTorschuss + originalPlayer.getSubskill4Pos(PlayerSkill.SCORING);
-					            if (m_dSubTorschuss >= 1.0d) {
-					                m_dSubTorschuss = 0.99d;
-					            }
-					        } else {
-					            m_dSubTorschuss = 0.0d;
-					            m_dTrainingsOffsetTorschuss = 0.0d;
-					        }
-			        		if (!check4SkillUp(PlayerSkill.SET_PIECES, originalPlayer)) {
-					            m_dSubStandards = Helper.round(tp.getSecondary() /  wt.getSecondaryTrainingLength(
-					            		this, assistants, trainerlevel, intensity, stamina), 2);
-					            m_dSubStandards = m_dSubStandards + originalPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES);
-					            if (m_dSubStandards >= 1.0d) {
-					                m_dSubStandards = 0.99d;
-					            }
-					        } else {
-					            m_dSubStandards = 0.0d;
-					            m_dTrainingsOffsetStandards = 0.0d;
-					        }
-			        		break;
-			        }
+			        
+			        int primary = wt.getPrimaryTrainingSkill();
+			        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
+		        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
+		        				this, assistants, trainerlevel, intensity, stamina), 3);
+		        		if (gain > 0) {
+		        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
+		        		}
+		        	}
+		        }
+		        if (tp != null && tp.getSecondary() > 0) {
+			        int trType = trainingWeek.getTrainingType();
+			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
+			        
+			        int secondary = wt.getSecondaryTrainingSkill();
+			        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
+		        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
+		        				this, assistants, trainerlevel, intensity, stamina), 3);
+		        		if (gain > 0) {
+		        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
+		        		}
+		        	}
 		        }
 	    	}
     	}
@@ -2203,28 +1741,19 @@ public final class Spieler {
     	
     	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
     		
-    		if (!check4SkillDown(skillType, originalPlayer)) {
-    			if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA) || (getValue4Skill4(skillType)) == 0) { 
-    				continue;
-    			}
-    			float drop = weeks * SkillDrops.getSkillDrop(getValue4Skill4(skillType), originalPlayer.getAlter(), skillType);
-    			
-    			if ((drop > 0) && (originalPlayer.getSubskill4Pos(skillType) >0)) {
-    				setSubskill4Pos(skillType, Math.max(0, originalPlayer.getSubskill4Pos(skillType) - drop/100));
-    			}
-    				
-    		} else {
-    			if (getValue4Skill4(skillType) > 0) {
-    				if ((getSpielerID() == 151628155) && (skillType == 3)) {
-    					Math.max(2, 1);
-    				}
-    				setSubskill4Pos(skillType, 0.999f); 
-    				
-    			} else {
-    				// non-existent has no subskill.
-    				setSubskill4Pos(skillType, 0);
-    			}
-    			setValue4TrainingOffset(skillType, 0);
+    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+    			continue;
+    		}
+
+   			if (getValue4Skill4(skillType) >= 1) {
+    			float drop = weeks * SkillDrops.instance().getSkillDrop(getValue4Skill4(skillType), originalPlayer.getAlter(), skillType);
+	    		
+    			// Only bother if there is drop, there is something to drop from, 
+    			//and check that the player has not popped
+	    		if ((drop > 0) && (originalPlayer.getSubskill4Pos(skillType) >0)
+	    				&& (getValue4Skill4(skillType) == originalPlayer.getValue4Skill4(skillType))) {
+	    			setSubskill4Pos(skillType, Math.max(0, originalPlayer.getSubskill4Pos(skillType) - drop/100));
+	    		}
     		}
     	}
     }
@@ -2263,13 +1792,13 @@ public final class Spieler {
         float loy = RatingPredictionManager.getLoyaltyHomegrownBonus(this);
         
         String key = fo.getPosition() + ":"
-        					+ Helper.round(getTorwart() + getSubskill4SkillWithOffset(PlayerSkill.KEEPER) + loy, 2) + "|"
-        					+ Helper.round(getSpielaufbau() + getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING) + loy, 2) + "|"
-        					+ Helper.round(getVerteidigung() + getSubskill4SkillWithOffset(PlayerSkill.DEFENDING) + loy, 2) + "|"
-        					+ Helper.round(getFluegelspiel() + getSubskill4SkillWithOffset(PlayerSkill.WINGER) + loy, 2) + "|"
-        					+ Helper.round(getPasspiel() + getSubskill4SkillWithOffset(PlayerSkill.PASSING) + loy, 2) + "|"
-        					+ Helper.round(getStandards() + getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES) + loy, 2) + "|"
-        					+ Helper.round(getTorschuss() + getSubskill4SkillWithOffset(PlayerSkill.SCORING) + loy, 2) + "|"
+        					+ Helper.round(getTorwart() + getSubskill4Pos(PlayerSkill.KEEPER) + loy, 2) + "|"
+        					+ Helper.round(getSpielaufbau() + getSubskill4Pos(PlayerSkill.PLAYMAKING) + loy, 2) + "|"
+        					+ Helper.round(getVerteidigung() + getSubskill4Pos(PlayerSkill.DEFENDING) + loy, 2) + "|"
+        					+ Helper.round(getFluegelspiel() + getSubskill4Pos(PlayerSkill.WINGER) + loy, 2) + "|"
+        					+ Helper.round(getPasspiel() + getSubskill4Pos(PlayerSkill.PASSING) + loy, 2) + "|"
+        					+ Helper.round(getStandards() + getSubskill4Pos(PlayerSkill.SET_PIECES) + loy, 2) + "|"
+        					+ Helper.round(getTorschuss() + getSubskill4Pos(PlayerSkill.SCORING) + loy, 2) + "|"
         					+ getForm() + "|"
         					+ getKondition() + "|"
         					+ getErfahrung() + "|"
@@ -2335,67 +1864,42 @@ public final class Spieler {
     }
 
     /**
-     * Copy old player offset status
+     * Copy old player offset status.
+     * Used by training, checks for skillup and resets subskill in that case
      *
      * @param old
      */
     public void copySubSkills(Spieler old) {
-        if (!check4SkillUp(PlayerSkill.KEEPER, old)) {
-            m_dSubTorwart = old.getSubskill4Pos(PlayerSkill.KEEPER);
-            m_dTrainingsOffsetTorwart = old.getTrainingsOffsetTorwart();
-        } else {
-            m_dSubTorwart = 0.0d;
-            m_dTrainingsOffsetTorwart = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.DEFENDING, old)) {
-            m_dSubVerteidigung = old.getSubskill4Pos(PlayerSkill.DEFENDING);
-            m_dTrainingsOffsetVerteidigung = old.getTrainingsOffsetVerteidigung();
-        } else {
-            m_dSubVerteidigung = 0.0d;
-            m_dTrainingsOffsetVerteidigung = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PLAYMAKING, old)) {
-            m_dSubSpielaufbau = old.getSubskill4Pos(PlayerSkill.PLAYMAKING);
-            m_dTrainingsOffsetSpielaufbau = old.getTrainingsOffsetSpielaufbau();
-        } else {
-            m_dSubSpielaufbau = 0.0d;
-            m_dTrainingsOffsetSpielaufbau = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.PASSING, old)) {
-            m_dSubPasspiel = old.getSubskill4Pos(PlayerSkill.PASSING);
-            m_dTrainingsOffsetPasspiel = old.getTrainingsOffsetPasspiel();
-        } else {
-            m_dSubPasspiel = 0.0d;
-            m_dTrainingsOffsetPasspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.WINGER, old)) {
-            m_dSubFluegelspiel = old.getSubskill4Pos(PlayerSkill.WINGER);
-            m_dTrainingsOffsetFluegelspiel = old.getTrainingsOffsetFluegelspiel();
-        } else {
-            m_dSubFluegelspiel = 0.0d;
-            m_dTrainingsOffsetFluegelspiel = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SCORING, old)) {
-            m_dSubTorschuss = old.getSubskill4Pos(PlayerSkill.SCORING);
-            m_dTrainingsOffsetTorschuss = old.getTrainingsOffsetTorschuss();
-        } else {
-            m_dSubTorschuss = 0.0d;
-            m_dTrainingsOffsetTorschuss = 0.0d;
-        }
-
-        if (!check4SkillUp(PlayerSkill.SET_PIECES, old)) {
-            m_dSubStandards = old.getSubskill4Pos(PlayerSkill.SET_PIECES);
-            m_dTrainingsOffsetStandards = old.getTrainingsOffsetStandards();
-        } else {
-            m_dSubStandards = 0.0d;
-            m_dTrainingsOffsetStandards = 0.0d;
-        }
+    	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
+    		
+    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+    			continue;
+    		}
+    	
+    		if (!check4SkillUp(skillType, old)) {
+    			setSubskill4Pos(skillType, old.getSubskill4Pos(skillType));
+    		} else {
+    			setSubskill4Pos(skillType, 0);
+    		}
+    	}
     }
+        
+    
+    /**
+     * Performs the subskill reset needed at skill drop.
+     * 
+     * @param SkillType The ID of the skill to perform drop on.
+     */
+    public void dropSubskills(int skillType) {
+    	if (getValue4Skill4(skillType) > 0) {
+			// non-existent has no subskill.
+			setSubskill4Pos(skillType, 0.999f); 
+			
+		} else {
+			setSubskill4Pos(skillType, 0);
+		}
+	}
+    
 
     //////////////////////////////////////////////////////////////////////////////////
     //equals
@@ -2433,7 +1937,7 @@ public final class Spieler {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected boolean check4SkillDown(int skill, Spieler oldPlayer) {
+    public boolean check4SkillDown(int skill, Spieler oldPlayer) {
     	if (skill < PlayerSkill.EXPERIENCE)
     	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) 
         	return oldPlayer.getValue4Skill4(skill) > getValue4Skill4(skill);

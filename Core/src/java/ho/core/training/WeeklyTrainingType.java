@@ -9,8 +9,8 @@ import ho.core.training.type.*;
 public abstract class WeeklyTrainingType {
 	protected String _Name = ""; 
 	protected int _TrainingType = 0;
-	protected int _PrimaryTrainingSkill = 0;
-	protected int _SecondaryTrainingSkill = 0;
+	protected int _PrimaryTrainingSkill = -1;
+	protected int _SecondaryTrainingSkill = -1;
 	protected int[] _PrimaryTrainingSkillPositions = null;
 	protected int[] _PrimaryTrainingSkillBonusPositions = null;
 	protected int[] _PrimaryTrainingSkillSecondaryTrainingPositions = null;

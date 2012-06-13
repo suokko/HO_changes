@@ -280,7 +280,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      *
      * @param actionevent TODO Missing Method Parameter Documentation
      */
-    public final void actionPerformed(java.awt.event.ActionEvent actionevent) {
+    @Override
+	public final void actionPerformed(java.awt.event.ActionEvent actionevent) {
     	if (actionevent.getSource().equals(m_jbStatistics)) {
     		HOMainFrame.instance().showTab(IModule.STATISTICS);
     		((StatistikMainPanel)HOMainFrame.instance().getTabbedPane().getModulePanel(IModule.STATISTICS)).setShowSpieler(m_clPlayer.getSpielerID());
@@ -302,7 +303,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      *
      * @param event
      */
-    public void focusGained(java.awt.event.FocusEvent event) {
+    @Override
+	public void focusGained(java.awt.event.FocusEvent event) {
     }
 
     /**
@@ -310,7 +312,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      *
      * @param event
      */
-    public final void focusLost(java.awt.event.FocusEvent event) {
+    @Override
+	public final void focusLost(java.awt.event.FocusEvent event) {
         if (m_clPlayer != null) {
             DBManager.instance().saveSpielerNotiz(m_clPlayer.getSpielerID(), m_jtaNotes.getText());
         }
@@ -321,7 +324,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
      *
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
+    @Override
+	public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             if (m_clPlayer != null) {
                 if (itemEvent.getSource().equals(m_jcbSquad)) {
@@ -340,7 +344,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     /**
      * set the player to compare and refresh the display
      */
-    public final void reInit() {
+    @Override
+	public final void reInit() {
         if (m_clPlayer != null) {
             findComparisonPlayer();
         }
@@ -350,7 +355,8 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     /**
      * refresh the display
      */
-    public final void refresh() {
+    @Override
+	public final void refresh() {
         setSpieler(m_clPlayer);
     }
 
@@ -413,25 +419,25 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
             m_jpStamina.setText(PlayerAbility.getNameForSkill(m_clPlayer.getKondition()) + "");
             m_jpStaminaChange.clear();
             m_jpKeeper.setText(PlayerAbility.getNameForSkill(m_clPlayer.getTorwart()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.KEEPER)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.KEEPER)) + "");
             m_jpKeeperChange.clear();
             m_jpDefending.setText(PlayerAbility.getNameForSkill(m_clPlayer.getVerteidigung()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.DEFENDING)) + "");
             m_jpDefendingChange.clear();
             m_jpPlaymaking.setText(PlayerAbility.getNameForSkill(m_clPlayer.getSpielaufbau()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING)) + "");
             m_jpPlaymakingChange.clear();
             m_jpPassing.setText(PlayerAbility.getNameForSkill(m_clPlayer.getPasspiel()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PASSING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.PASSING)) + "");
             m_jpPassingChange.clear();
             m_jpWinger.setText(PlayerAbility.getNameForSkill(m_clPlayer.getFluegelspiel()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.WINGER)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.WINGER)) + "");
             m_jpWingerChange.clear();
             m_jpSetPieces.setText(PlayerAbility.getNameForSkill(m_clPlayer.getStandards()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES)) + "");
             m_jpSetPiecesChange.clear();
             m_jpScoring.setText(PlayerAbility.getNameForSkill(m_clPlayer.getTorschuss()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SCORING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.SCORING)) + "");
             m_jpScoringChange.clear();
             m_jpExperience.setText(PlayerAbility.getNameForSkill(m_clPlayer.getErfahrung()) + "");
             m_jpExperienceChange.clear();
@@ -465,53 +471,53 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
             m_jpStaminaChange.setGrafischeVeraenderungswert(m_clPlayer.getKondition()
             		- m_clComparisonPlayer.getKondition(), !m_clComparisonPlayer.isOld(), true);
             m_jpKeeper.setText(PlayerAbility.getNameForSkill(m_clPlayer.getTorwart()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.KEEPER)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.KEEPER)) + "");
             m_jpKeeperChange.setGrafischeVeraenderungswert(m_clPlayer.getTorwart()
             		- m_clComparisonPlayer.getTorwart(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.KEEPER)
-            		- m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.KEEPER),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.KEEPER)
+            		- m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.KEEPER),
             		!m_clComparisonPlayer.isOld(), true);
             m_jpDefending.setText(PlayerAbility.getNameForSkill(m_clPlayer.getVerteidigung()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.DEFENDING)) + "");
             m_jpDefendingChange.setGrafischeVeraenderungswert(m_clPlayer.getVerteidigung()
             		- m_clComparisonPlayer.getVerteidigung(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING)
-                    - m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.DEFENDING),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.DEFENDING)
+                    - m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.DEFENDING),
                     !m_clComparisonPlayer.isOld(), true);
             m_jpPlaymaking.setText(PlayerAbility.getNameForSkill(m_clPlayer.getSpielaufbau()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING)) + "");
             m_jpPlaymakingChange.setGrafischeVeraenderungswert(m_clPlayer.getSpielaufbau()
             		- m_clComparisonPlayer.getSpielaufbau(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING)
-            		- m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.PLAYMAKING),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING)
+            		- m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.PLAYMAKING),
             		!m_clComparisonPlayer.isOld(), true);
             m_jpPassing.setText(PlayerAbility.getNameForSkill(m_clPlayer.getPasspiel()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PASSING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.PASSING)) + "");
             m_jpPassingChange.setGrafischeVeraenderungswert(m_clPlayer.getPasspiel()
             		- m_clComparisonPlayer.getPasspiel(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.PASSING)
-            		- m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.PASSING),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.PASSING)
+            		- m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.PASSING),
             		!m_clComparisonPlayer.isOld(), true);
             m_jpWinger.setText(PlayerAbility.getNameForSkill(m_clPlayer.getFluegelspiel()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.WINGER)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.WINGER)) + "");
             m_jpWingerChange.setGrafischeVeraenderungswert(m_clPlayer.getFluegelspiel()
             		- m_clComparisonPlayer.getFluegelspiel(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.WINGER)
-                    - m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.WINGER),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.WINGER)
+                    - m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.WINGER),
                     !m_clComparisonPlayer.isOld(), true);
             m_jpSetPieces.setText(PlayerAbility.getNameForSkill(m_clPlayer.getStandards()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES)) + "");
             m_jpSetPiecesChange.setGrafischeVeraenderungswert(m_clPlayer.getStandards()
             		- m_clComparisonPlayer.getStandards(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES)
-            		- m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.SET_PIECES),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES)
+            		- m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.SET_PIECES),
             		!m_clComparisonPlayer.isOld(), true);
             m_jpScoring.setText(PlayerAbility.getNameForSkill(m_clPlayer.getTorschuss()
-            		+ m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SCORING)) + "");
+            		+ m_clPlayer.getSubskill4Pos(PlayerSkill.SCORING)) + "");
             m_jpScoringChange.setGrafischeVeraenderungswert(m_clPlayer.getTorschuss()
             		- m_clComparisonPlayer.getTorschuss(),
-            		m_clPlayer.getSubskill4SkillWithOffset(PlayerSkill.SCORING)
-            		- m_clComparisonPlayer.getSubskill4SkillWithOffset(PlayerSkill.SCORING),
+            		m_clPlayer.getSubskill4Pos(PlayerSkill.SCORING)
+            		- m_clComparisonPlayer.getSubskill4Pos(PlayerSkill.SCORING),
             		!m_clComparisonPlayer.isOld(), true);
             m_jpExperience.setText(PlayerAbility.getNameForSkill(m_clPlayer.getErfahrung()) + "");
             m_jpExperienceChange.setGrafischeVeraenderungswert(m_clPlayer.getErfahrung()
