@@ -34,7 +34,7 @@ import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.io.File;
 import java.io.IOException;

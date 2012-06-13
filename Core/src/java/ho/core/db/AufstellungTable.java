@@ -2,7 +2,7 @@ package ho.core.db;
 
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;

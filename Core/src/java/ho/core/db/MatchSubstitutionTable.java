@@ -1,10 +1,10 @@
 package ho.core.db;
 
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.Substitution;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.sql.ResultSet;
 import java.sql.Types;

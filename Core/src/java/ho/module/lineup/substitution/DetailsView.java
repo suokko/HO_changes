@@ -10,6 +10,7 @@ import ho.core.util.Helper;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.awt.Color;
 import java.awt.Component;

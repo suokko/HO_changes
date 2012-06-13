@@ -2,7 +2,7 @@ package ho.core.model.match;
 
 import ho.core.db.DBManager;
 import ho.core.util.HOLogger;
-import ho.module.lineup.substitution.Substitution;
+import ho.module.lineup.substitution.model.Substitution;
 
 import java.util.List;
 import java.util.Vector;
