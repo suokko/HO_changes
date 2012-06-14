@@ -97,11 +97,15 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), SpielePanel.NUR_EIGENE_POKALSPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), SpielePanel.NUR_EIGENE_LIGASPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneTournamentsspiele"),SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE),
 			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"), SpielePanel.NUR_FREMDE_SPIELE)
 	};
 
 	/** Only played Matches of suplied team (unsupported for now) */
 	public static final int NUR_GESPIELTEN_SPIELE = 10;
+	
+	/** Only tournament matches of supplied team */
+	public static final int NUR_EIGENE_TOURNAMENTSPIELE = 7;
 
 	/** Only Matches without suplied team */
 	public static final int NUR_FREMDE_SPIELE = 6;
@@ -147,7 +151,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     	matchesOverviewTable.saveColumnOrder();
     }
     //----------------------Listener    
-    public void actionPerformed(ActionEvent e) {
+    @Override
+	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == m_jbReloadMatch) {
             final int matchid = matchShortInfo.getMatchID();
 			HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchShortInfo.getMatchID(),
@@ -354,7 +359,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * React on key pressed events.
      */
-    public void keyPressed(java.awt.event.KeyEvent keyEvent) {
+    @Override
+	public void keyPressed(java.awt.event.KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(matchesTable)) {
             //manageSelectionRow (  );
             newSelectionInform();
@@ -364,7 +370,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * React on key released events.
      */
-    public void keyReleased(java.awt.event.KeyEvent keyEvent) {
+    @Override
+	public void keyReleased(java.awt.event.KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(matchesTable)) {
             //manageSelectionRow (  );
             newSelectionInform();
@@ -374,13 +381,15 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * React on key typed events.
      */
-    public void keyTyped(java.awt.event.KeyEvent keyEvent) {
+    @Override
+	public void keyTyped(java.awt.event.KeyEvent keyEvent) {
     }
 
     /**
      * React on mouse klicked events.
      */
-    public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
+    @Override
+	public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(matchesTable)) {
             //manageSelectionRow (  );
             newSelectionInform();
@@ -390,25 +399,29 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * React on mouse entered events.
      */
-    public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
+    @Override
+	public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
      * React on mouse exited events.
      */
-    public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
+    @Override
+	public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
      * React on mouse pressed events.
      */
-    public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
+    @Override
+	public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
     }
 
     /**
      * React on mouse released events.
      */
-    public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
+    @Override
+	public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(matchesTable)) {
             //manageSelectionRow (  );
             newSelectionInform();
@@ -418,7 +431,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * ReInit
      */
-    public void reInit() {
+    @Override
+	public void reInit() {
         if (m_jcbSpieleFilter.getSelectedIndex() > -1) {
             //Tabelle updaten
         	int id = ((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId();
@@ -438,7 +452,8 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
     /**
      * Refresh
      */
-    public void refresh() {
+    @Override
+	public void refresh() {
         //nix
     }
 
@@ -589,6 +604,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
         Helper.markierenComboBox(m_jcbSpieleFilter,UserParameter.instance().spieleFilter);
         m_jcbSpieleFilter.addItemListener(new ItemListener() {
 			
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED){ 
 		            reInit();

@@ -25,6 +25,7 @@ public class RecapTableSorter extends AbstractTableSorter {
 
     protected final class NaturalNumericComparator implements
 			Comparator<String> {
+		@Override
 		public int compare(String o1, String o2) {
 			return parseToInt(o1) - parseToInt(o2);
 		}
@@ -79,7 +80,8 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(String arg0, String arg1) {
+                    @Override
+					public int compare(String arg0, String arg1) {
                         try {
                             double d1 = RatingUtil.getRating(arg0 + "",
                             		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
@@ -114,7 +116,8 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(String arg0, String arg1) {
+                    @Override
+					public int compare(String arg0, String arg1) {
                         try {
                             double d1 = df.parse(arg0 + "").doubleValue();
                             double d2 = df.parse(arg1 + "").doubleValue();
@@ -144,7 +147,8 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(String arg0, String arg1) {
+                    @Override
+					public int compare(String arg0, String arg1) {
                         try {
                             double d1 = df.parse(arg0 + "").doubleValue();
                             double d2 = df.parse(arg1 + "").doubleValue();
@@ -172,7 +176,8 @@ public class RecapTableSorter extends AbstractTableSorter {
                         return false;
                     }
 
-                    public int compare(String arg0, String arg1) {
+                    @Override
+					public int compare(String arg0, String arg1) {
                         try {
                             double d1 = RatingUtil.getRating(arg0 + "", false, true, skills);
                             double d2 = RatingUtil.getRating(arg1 + "", false, true, skills);

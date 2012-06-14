@@ -87,8 +87,7 @@ public class NumberTextField extends JTextField {
      *
      * @return true if number, or false if not
      */
-    @SuppressWarnings("unused")
-	private boolean _validateNumberString(String str, int offs) {
+    private boolean _validateNumberString(String str, int offs) {
         char c;
 
         String newString = this._getNewString(str, offs);

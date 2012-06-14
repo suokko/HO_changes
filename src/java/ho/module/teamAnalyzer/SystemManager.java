@@ -43,6 +43,9 @@ public class SystemManager {
 
     /** The next cup/friendly opponent team */
     private static Team cupOpponent;
+    
+    /** The next tournament opponent team */
+    private static Team tournamentOpponent;
 
 
     /** Boolean for the updating process being ongoing */
@@ -96,6 +99,15 @@ public class SystemManager {
     public static int getLeagueOpponentId() {
         return leagueOpponent.getTeamId();
     }
+    
+    /**
+     * Get next tournament opponent team Id
+     *
+     * @return
+     */
+    public static int getTournamentOpponentId() {
+    	return tournamentOpponent.getTeamId();
+    }
 
     /**
      * Returns the main Plugin class
@@ -115,11 +127,14 @@ public class SystemManager {
         plugin = aPlugin;
         leagueOpponent = TeamManager.getNextLeagueOpponent();
         cupOpponent = TeamManager.getNextCupOpponent();
+        tournamentOpponent = TeamManager.getNextTournamentOpponent();
 
         if (leagueOpponent.getTeamId() != 0) {
             setActiveTeam(leagueOpponent);
         } else if (cupOpponent.getTeamId() != 0) {
             setActiveTeam(cupOpponent);
+        } else if (tournamentOpponent.getTeamId() != 0) {
+        	setActiveTeam(tournamentOpponent);
         } else {
             Team team = new Team();
 
@@ -152,6 +167,7 @@ public class SystemManager {
         if (!updating) {
             leagueOpponent = TeamManager.getNextLeagueOpponent();
             cupOpponent = TeamManager.getNextCupOpponent();
+            tournamentOpponent = TeamManager.getNextTournamentOpponent();
             NameManager.clean();
             TeamManager.clean();
             refresh();

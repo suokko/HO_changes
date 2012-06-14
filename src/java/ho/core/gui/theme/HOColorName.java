@@ -133,4 +133,13 @@ public interface HOColorName {
 	//1.431
 	public static final String MATCHDETAILS_PROGRESSBAR_GREEN = "matchdetails.progressbar.green";
 	public static final String MATCHDETAILS_PROGRESSBAR_RED = "matchdetails.progressbar.red";
+	
+	//1.432
+	// Team Analyzer
+	public static final String TA_TEAM_LEAGUE_NEXT = "teamanalyzer.teamlist.league";
+	public static final String TA_TEAM_CUP_NEXT = "teamanalyzer.teamlist.cup";
+	public static final String TA_TEAM_TOURNAMENT_NEXT = "teamanalyzer.teamlist.nexttournament";
+	public static final String TA_TEAM_TOURNAMENT = "teamanalyzer.teamlist.tournament";
+	
+	
 }

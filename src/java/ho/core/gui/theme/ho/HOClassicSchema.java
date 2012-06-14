@@ -324,6 +324,14 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		// 1.431
 		put(MATCHDETAILS_PROGRESSBAR_GREEN, new Color(0, 124, 0));
 		put(MATCHDETAILS_PROGRESSBAR_RED, new Color(124, 0, 0));
+		
+		// 1.432
+		
+		// Team Analyzer
+		put(TA_TEAM_LEAGUE_NEXT, Color.RED);
+		put(TA_TEAM_CUP_NEXT, Color.GREEN);
+		put(TA_TEAM_TOURNAMENT_NEXT, new Color(0, 51, 255)); // Darkish blue
+		put(TA_TEAM_TOURNAMENT, new Color(0, 179, 255)); // Lightish blue
 	}
 
 	public Color getDefaultColor(String key) {
