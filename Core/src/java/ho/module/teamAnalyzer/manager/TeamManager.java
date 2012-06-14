@@ -74,6 +74,38 @@ public class TeamManager {
         return team;
     }
 
+    
+    public static Team getNextTournamentOpponent() {
+    	Team team = new Team();
+    	int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+    	MatchKurzInfo[] tournamentMatches =DBManager.instance().getMatchesKurzInfo(teamId,
+    			SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE,
+    			true);
+    	List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
+
+    	l.addAll(Arrays.asList(tournamentMatches));
+
+    	Object[] matches = l.toArray();
+
+    	for (int i = 0; i < matches.length; i++) {
+    		MatchKurzInfo match = (MatchKurzInfo) matches[i];
+
+    		if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+    			if (match.getHeimID() == teamId) {
+    				team.setName(match.getGastName());
+    				team.setTeamId(match.getGastID());
+    			} else {
+    				team.setName(match.getHeimName());
+    				team.setTeamId(match.getHeimID());
+    			}
+    			team.setTournament(true);
+    			return team;
+    		}
+    	}
+
+    	return team;
+    }
+    
     /**
      * TODO Missing Method Documentation
      *
@@ -165,6 +197,12 @@ public class TeamManager {
             if (cupTeam.getTeamId() != 0) {
                 teams.put(cupTeam.getTeamId() + "", cupTeam);
             }
+            
+            List<Team> teamlist = loadTournamentteams();
+            for (Team tourneyteam: teamlist) {
+            	teams.put(String.valueOf(tourneyteam.getTeamId()), tourneyteam);
+            }
+            
         }
 
         return teams.values();
@@ -283,5 +321,34 @@ public class TeamManager {
         }
 
         return loadedTeams;
+    }
+    
+    private static List<Team> loadTournamentteams() {
+    	List<Team> loadedTeams = new ArrayList<Team>();
+    	int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+    	MatchKurzInfo[] infoarray =  DBManager.instance().getMatchesKurzInfo(teamId, MatchKurzInfo.UPCOMING);
+    		
+    	for (int i = 0 ; i < infoarray.length ; i++) {
+    		if ( (infoarray[i].getMatchTyp() == MatchLineup.TOURNAMENTGROUP)
+    				|| (infoarray[i].getMatchTyp() == MatchLineup.TOURNAMENTPLAYOFF)) {
+    			MatchKurzInfo info = infoarray[i];
+    			Team t = new Team();
+    			String teamName;
+    			if (info.getGastID() == teamId) {
+    				t.setName(info.getHeimName());
+    				t.setTeamId(info.getHeimID());
+    				t.setTournament(true);
+    			} else if (info.getHeimID() == teamId) {
+    				t.setName(info.getGastName());
+    				t.setTeamId(info.getGastID());
+    				t.setTournament(true);
+    			} else {
+    				// Huh?
+    				continue;
+    			}
+    			loadedTeams.add(t);
+    		}
+    	}
+    	return loadedTeams;
     }
 }

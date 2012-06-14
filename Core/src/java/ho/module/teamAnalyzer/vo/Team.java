@@ -14,6 +14,9 @@ public class Team {
 
     /** Team id */
     private int teamId;
+ 
+    // A hack for custom coloring of tournament teams in a renderer
+    private boolean tournament = false;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -53,7 +56,16 @@ public class Team {
         return teamId;
     }
 
-    /**
+    
+    public boolean isTournament() {
+		return tournament;
+	}
+
+	public void setTournament(boolean tournament) {
+		this.tournament = tournament;
+	}
+
+	/**
      * Return description for the team
      *
      * @return

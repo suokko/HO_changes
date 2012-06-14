@@ -137,7 +137,12 @@ public class SpieleStatistikPanel extends ImagePanel
 			new CBItem(HOVerwaltung.instance().getLanguageString(
 					"NurEigeneFreundschaftsspiele"),
 					SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE
-							+ SpielePanel.NUR_GESPIELTEN_SPIELE) };
+							+ SpielePanel.NUR_GESPIELTEN_SPIELE),
+			new CBItem(HOVerwaltung.instance().getLanguageString(
+					"NurEigeneTournamentsspiele"),
+					SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE
+						+ SpielePanel.NUR_GESPIELTEN_SPIELE)};
+			
 	private boolean m_bInitialisiert;
 
     // ~ Constructors
@@ -177,7 +182,8 @@ public class SpieleStatistikPanel extends ImagePanel
     }
 
     // --------Listener-------------------------------
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+    @Override
+	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
         } else if (actionEvent.getSource().equals(m_jbDrucken)) {
@@ -242,15 +248,18 @@ public class SpieleStatistikPanel extends ImagePanel
         m_bInitialisiert = true;
     }
 
-    public void focusGained(java.awt.event.FocusEvent focusEvent) {
+    @Override
+	public void focusGained(java.awt.event.FocusEvent focusEvent) {
     }
 
-    public final void focusLost(java.awt.event.FocusEvent focusEvent) {
+    @Override
+	public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         Helper.parseInt(ho.core.gui.HOMainFrame.instance(),
                                                    ((JTextField) focusEvent.getSource()), false);
     }
 
-    public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
+    @Override
+	public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             initStatistik();
         }
@@ -263,7 +272,8 @@ public class SpieleStatistikPanel extends ImagePanel
         //initStatistik();
     }
 
-    public void refresh() {
+    @Override
+	public void refresh() {
     }
 
     private void initComponents() {
