@@ -1,4 +1,4 @@
-package ho.core.file;
+package ho.core.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
