@@ -227,7 +227,7 @@ public class ConvertXml2Hrf {
     protected final void createBasics() throws Exception {
         m_sHRFBuffer.append("[basics]\n");
         m_sHRFBuffer.append("application=HO\n");
-        m_sHRFBuffer.append("appversion=" + ho.core.gui.HOMainFrame.VERSION + "\n");
+        m_sHRFBuffer.append("appversion=" + ho.HO.VERSION + "\n");
         m_sHRFBuffer.append("date=" + m_htTeamdetails.get("FetchedDate") + "\n");
         m_sHRFBuffer.append("season=" + m_htWorld.get("Season") + "\n");
         m_sHRFBuffer.append("matchround=" + m_htWorld.get("MatchRound") + "\n");

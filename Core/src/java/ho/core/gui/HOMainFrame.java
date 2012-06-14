@@ -25,7 +25,6 @@ import ho.core.net.OnlineWorker;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
-import ho.core.util.IOUtilities;
 import ho.module.lineup.AufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
@@ -43,9 +42,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -73,39 +69,13 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  * The Main HO window
  */
 public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
-
-	private static final long serialVersionUID = -6333275250973872365L;
-
-	/**
-	 * Release Notes: ============== The first SVN commit AFTER a release should
-	 * include an increased VERSION number with DEVELOPMENT set to true an
-	 * updated VERSION number in conf/addToZip/version.txt new headers in
-	 * conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt The last
-	 * SVN commit BEFORE a release should set DEVELOPMENT to false and set
-	 * WARN_DATE to 12 (?) months after the release date
-	 */
-
-	/** HO Version */
-	public static final double VERSION = 1.432d;
-	private static int revision = 0;
-
-	// DEVELOPMENT is used by the ant build script. Keep around.
-	private static final boolean DEVELOPMENT = true;
-	
-	private static HOMainFrame m_clHOMainFrame;
-
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
-
+	private static final long serialVersionUID = -6333275250973872365L;
+    private static HOMainFrame m_clHOMainFrame;
 	private static int status = READY;
-
-	// tabs
-	
 	private InfoPanel m_jpInfoPanel;
-
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	// Top level Menu
 	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
@@ -245,13 +215,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public static String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
-		String txt = nf.format(VERSION);
+		String txt = nf.format(HO.VERSION);
 
 		if (HO.isDevelopment()) {
 			txt += " DEV";
-			final int r = getRevisionNumber();
+			final int r = HO.getRevisionNumber();
 			if (r > 1) {
-				txt += " (r" + getRevisionNumber() + ")";
+				txt += " (r" + HO.getRevisionNumber() + ")";
 			}
 		}
 		return txt;
@@ -375,7 +345,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}   else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
-			text.append("Hattrick Organizer ").append(VERSION).append("\n\n");
+			text.append("Hattrick Organizer ").append(HO.VERSION).append("\n\n");
 			text.append("2003 development started by Thomas Werth & Volker Fischer.\n");
 			text.append("Since 2006 this project is open source and developed by changing developers.");
 			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
@@ -865,11 +835,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.hoMainFrame_PositionY = Math.max(getLocation().y, 0);
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - parameter.hoMainFrame_PositionX);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
-
-		
-		
-		
-		
 		
 		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
 
@@ -929,45 +894,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		DBManager.instance().saveUserParameter();
 	}
 
-
-
 	public static int getHOStatus() {
 		return status;
 	}
 
 	public static void setHOStatus(int i) {
 		status = i;
-	}
-
-	public static int getRevisionNumber() {
-		if (revision == 0) {
-			InputStream is = null;
-			BufferedReader br = null;
-			try {
-				is = HOMainFrame.class.getResourceAsStream("/revision.num");
-				if (is != null) {
-					br = new BufferedReader(new InputStreamReader(is));
-					String line = null;
-					if (br != null && (line = br.readLine()) != null) { // expect
-																		// one
-																		// line
-																		// only
-						revision = Integer.parseInt(line.trim());
-					}
-				} else {
-					HOLogger.instance().debug(HOMainFrame.class, "revision.num not found");
-				}
-			} catch (Exception e) {
-				HOLogger.instance().warning(HOMainFrame.class, "getRevisionNumber failed: " + e);
-			} finally {
-				IOUtilities.closeQuietly(is);
-			}
-		}
-		if (revision == 0) { // to avoid multiple errors
-			revision = 1;
-		} else {
-			HOLogger.instance().info(HOMainFrame.class, "HO! revision " + revision);
-		}
-		return revision;
 	}
 }

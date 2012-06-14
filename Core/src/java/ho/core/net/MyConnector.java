@@ -6,6 +6,7 @@
  */
 package ho.core.net;
 
+import ho.HO;
 import ho.core.file.xml.Extension;
 import ho.core.file.xml.XMLCHPPPreParser;
 import ho.core.file.xml.XMLExtensionParser;
@@ -58,7 +59,7 @@ public class MyConnector  {
 	// -----------------------------------------------------------------
 	static final private int chppID = 3330;
 	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
-	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HOMainFrame.VERSION;
+	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HO.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_TRAINING = "1.5";
 	private final static String VERSION_MATCHORDERS = "1.8";
@@ -519,7 +520,7 @@ public class MyConnector  {
 	public VersionInfo getLatestVersion() {
 		VersionInfo ret = new VersionInfo();
 		ret.setBeta(false);
-		ret.setVersion(HOMainFrame.VERSION);
+		ret.setVersion(HO.VERSION);
 		try {
 			final String s = getWebPage(MyConnector.getPluginSite() + "/version.htm", false);
 			try {
