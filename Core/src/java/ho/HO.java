@@ -12,9 +12,12 @@ import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
+import ho.core.util.IOUtilities;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.Vector;
 
@@ -29,17 +32,50 @@ import javax.swing.JOptionPane;
 public class HO {
 
 	/**
+	 * Release Notes: ============== The first SVN commit AFTER a release should
+	 * include an increased VERSION number with DEVELOPMENT set to true an
+	 * updated VERSION number in conf/addToZip/version.txt new headers in
+	 * conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt The last
+	 * SVN commit BEFORE a release should set DEVELOPMENT to false and set
+	 * WARN_DATE to 12 (?) months after the release date
+	 */
+
+	/**
+	 * HO Version
+	 */
+	public static final double VERSION = 1.432d;
+	/**
+	 * language version
+	 */
+	public static final int SPRACHVERSION = 2;
+	private static int revision = 0;
+	/**
 	 * After that date, the user gets a nag screen if he starts his old HO
 	 * version, set to empty string for no warning (DEVELOPMENT versions do not
 	 * show the nag screen)
 	 */
 	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
-	/** Is this a development version? */
-	private static final boolean DEVELOPMENT = true;
-	public static final int SPRACHVERSION = 2; // language version
+	/**
+	 * Is this a development version? Note that a "development" version can a
+	 * release ("Beta" or "DEV" version). The DEVELOPMENT flag is used by the
+	 * ant build script. Keep around.
+	 */
+	private static final boolean DEVELOPMENT = false;
+	/**
+	 * A RELEASE is when a build artifact gets delivered to users. Note that
+	 * even a DEVELOPMENT version can be a RELEASE ("Beta"). So when a version
+	 * is build (no matter if DEVELOPMENT or not), this flag should be set to
+	 * true. The main purpose for the flag is to disable code (unfinished new
+	 * features, debug code) which should not be seen in a release.
+	 */
+	private static final boolean RELEASE = false;
 
 	public static boolean isDevelopment() {
 		return DEVELOPMENT;
+	}
+
+	public boolean isRelease() {
+		return RELEASE;
 	}
 
 	/**
@@ -188,5 +224,35 @@ public class HO {
 		interuptionsWindow.setVisible(false);
 
 		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
+	}
+
+	public static int getRevisionNumber() {
+		if (revision == 0) {
+			InputStream is = null;
+			BufferedReader br = null;
+			try {
+				is = HOMainFrame.class.getResourceAsStream("/revision.num");
+				if (is != null) {
+					br = new BufferedReader(new InputStreamReader(is));
+					String line = null;
+					// expect one line only
+					if (br != null && (line = br.readLine()) != null) {
+						revision = Integer.parseInt(line.trim());
+					}
+				} else {
+					HOLogger.instance().debug(HO.class, "revision.num not found");
+				}
+			} catch (Exception e) {
+				HOLogger.instance().warning(HO.class, "getRevisionNumber failed: " + e);
+			} finally {
+				IOUtilities.closeQuietly(is);
+			}
+		}
+		if (revision == 0) { // to avoid multiple errors
+			revision = 1;
+		} else {
+			HOLogger.instance().info(HO.class, "HO! revision " + HO.revision);
+		}
+		return revision;
 	}
 }

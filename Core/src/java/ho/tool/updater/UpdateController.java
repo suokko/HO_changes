@@ -168,8 +168,8 @@ public final class UpdateController {
 	public static void check4update() {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
 		if (version != null && 
-				(version.getVersion() > HOMainFrame.VERSION || 
-				(version.getVersion() == HOMainFrame.VERSION && HO.isDevelopment()))
+				(version.getVersion() > HO.VERSION || 
+				(version.getVersion() == HO.VERSION && HO.isDevelopment()))
 			) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
@@ -181,9 +181,9 @@ public final class UpdateController {
 				updateHO(MyConnector.getFinalSite() +"/" + version.getZipFileName());
 			}
 		} else {
-			final int currRev = HOMainFrame.getRevisionNumber();
+			final int currRev = HO.getRevisionNumber();
 			JOptionPane.showMessageDialog(HOMainFrame.instance(),
-					"No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+					"No update available\n\nYour HO! version is: " + HO.VERSION
 							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
 							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
 
@@ -231,9 +231,9 @@ public final class UpdateController {
 	 */
 	public static void check4latestbeta() {
 		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
-		final int currRev = HOMainFrame.getRevisionNumber();
+		final int currRev = HO.getRevisionNumber();
 		if (vi != null && vi.isValid()
-				&& (vi.getVersion() > HOMainFrame.VERSION || (vi.getVersion() == HOMainFrame.VERSION && currRev > 1 && currRev < vi.getBuild()))) {
+				&& (vi.getVersion() > HO.VERSION || (vi.getVersion() == HO.VERSION && currRev > 1 && currRev < vi.getBuild()))) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), "Update your HO to this "
 					+ (vi.isBeta() ? "beta " : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
 					+ "\nReleased: " + vi.getReleaseDate() + "\n\n"
@@ -245,7 +245,7 @@ public final class UpdateController {
 			}
 		} else {
 			JOptionPane.showMessageDialog(HOMainFrame.instance(),
-					"No update available\n\nYour HO! version is: " + HOMainFrame.VERSION
+					"No update available\n\nYour HO! version is: " + HO.VERSION
 							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
 							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -253,7 +253,7 @@ public final class UpdateController {
 
 	public static void check4EPVUpdate() {
 		Extension data = MyConnector.instance().getEpvVersion();
-		if (HOMainFrame.VERSION >= data.getMinimumHOVersion()
+		if (HO.VERSION >= data.getMinimumHOVersion()
 				&& data.getRelease() > HOParameter.instance().EpvRelease) {
 			// Info anzeigen, dass es ein Update gibt
 			// Show update info
@@ -296,10 +296,10 @@ public final class UpdateController {
 		Extension data = MyConnector.instance().getRatingsVersion();
 		HOLogger.instance().log(
 				UpdateController.class,
-				"Check: " + HOMainFrame.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f)
+				"Check: " + HO.VERSION + ">=" + (data != null ? data.getMinimumHOVersion() : -1f)
 						+ " && " + (data != null ? data.getRelease() : -1f) + " > "
 						+ HOParameter.instance().RatingsRelease);
-		if (data != null && HOMainFrame.VERSION >= data.getMinimumHOVersion()
+		if (data != null && HO.VERSION >= data.getMinimumHOVersion()
 				&& data.getRelease() > HOParameter.instance().RatingsRelease) {
 			// Infro anzeigen das es ein Update gibt
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
@@ -346,11 +346,11 @@ public final class UpdateController {
 	public static void checkNews() {
 		News news = MyConnector.instance().getLatestNews();
 		if (news.getId() > HOParameter.instance().lastNews) {
-			if (HOMainFrame.VERSION >= news.getMinimumHOVersion()) {
+			if (HO.VERSION >= news.getMinimumHOVersion()) {
 				HOParameter.instance().lastNews = news.getId();
 				switch (news.getType()) {
 				case News.HO: {
-					if (!UserParameter.instance().updateCheck && news.getVersion() > HOMainFrame.VERSION) {
+					if (!UserParameter.instance().updateCheck && news.getVersion() > HO.VERSION) {
 						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung
 								.instance().getLanguageString("updateMSG"), HOVerwaltung.instance()
 								.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
