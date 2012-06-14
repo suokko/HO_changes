@@ -23,7 +23,8 @@ class MatchComparator implements Comparator<Match> {
      *
      * @return
      */
-    public int compare(Match o1, Match o2) {
+    @Override
+	public int compare(Match o1, Match o2) {
         Date s1 = o1.getMatchDate();
         Date s2 = o2.getMatchDate();
 

@@ -170,7 +170,11 @@ final class MatchesKurzInfoTable extends AbstractTable {
 				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
 				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
 				break;
-			}
+			case SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE :
+				sql.append(" AND ( MatchTyp=" + MatchLineup.TOURNAMENTGROUP);
+				sql.append(" OR MatchTyp=" + MatchLineup.TOURNAMENTPLAYOFF + " )");
+				break;
+		}
 		return sql;
 	}
 	

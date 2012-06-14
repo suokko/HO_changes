@@ -46,8 +46,7 @@ public class FilterPanel extends JPanel implements ActionListener {
     private JRadioButton radioAutomatic;
     private JRadioButton radioManual;
     private ManualFilterPanel manualPanel;
-    private boolean fullUpdate = false;
-
+   
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -69,7 +68,8 @@ public class FilterPanel extends JPanel implements ActionListener {
     /**
      * Handle action events.
      */
-    public void actionPerformed(ActionEvent ae) {
+    @Override
+	public void actionPerformed(ActionEvent ae) {
         Object compo = ae != null ? ae.getSource() : null;
         CardLayout cLayout = (CardLayout) (cards.getLayout());
 
@@ -102,14 +102,8 @@ public class FilterPanel extends JPanel implements ActionListener {
             fillTeamCombo();
         }
 
-        if (isNextOpponent()) {
-            fullUpdate = true;
-            downloadButton.setEnabled(true);
-            downloadButton.setText(HOVerwaltung.instance().getLanguageString("update"));
-        } else {
-            fullUpdate = false;
-            downloadButton.setText(HOVerwaltung.instance().getLanguageString("FilterPanel.RosterUpdate"));
-        }
+        downloadButton.setEnabled(true);
+        downloadButton.setText(HOVerwaltung.instance().getLanguageString("update"));
 
         CardLayout cLayout = (CardLayout) (cards.getLayout());
 
@@ -162,10 +156,10 @@ public class FilterPanel extends JPanel implements ActionListener {
         teamCombo.setRenderer(new ComboBoxRenderer());
         teamCombo.setOpaque(false);
         teamCombo.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
+                @Override
+				public void itemStateChanged(ItemEvent e) {
                     if (!teamComboUpdating) {
                         SystemManager.setActiveTeam((Team) teamCombo.getSelectedItem());
-                        fullUpdate = isNextOpponent();
                         SystemManager.refresh();
                     }
                 }
@@ -174,6 +168,7 @@ public class FilterPanel extends JPanel implements ActionListener {
         JButton analyzeButton = new JButton(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Analyze"));
 
 		analyzeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 //				sorry Draghetto
 //				if ((SystemManager.getActiveTeamId() == 240416) && (Commons.getModel().getBasics().getTeamId() != 240416)) {
@@ -191,12 +186,11 @@ public class FilterPanel extends JPanel implements ActionListener {
 		});
 
 		downloadButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				HOLogger.instance().log(getClass(), "UPDATE for Team " + SystemManager.getActiveTeamId() + " full=" + fullUpdate);
+				HOLogger.instance().log(getClass(), "UPDATE for Team " + SystemManager.getActiveTeamId());
 				HattrickManager.downloadPlayers(SystemManager.getActiveTeamId());
-				if (fullUpdate) {
 					HattrickManager.downloadMatches(SystemManager.getActiveTeamId());
-				}
 				SystemManager.refresh();
 			}
 		});

@@ -1,10 +1,11 @@
 // %1117338229:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.theme.HOColorName;
+import ho.core.gui.theme.ThemeManager;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.vo.Team;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -51,13 +52,17 @@ public class ComboBoxRenderer extends DefaultListCellRenderer {
         }
 
         if (team.getTeamId() == SystemManager.getLeagueOpponentId()) {
-            setForeground(Color.RED);
+            setForeground(ThemeManager.getColor(HOColorName.TA_TEAM_LEAGUE_NEXT));
         } else if (team.getTeamId() == SystemManager.getCupOpponentId()) {
-            setForeground(Color.GREEN);
+            setForeground(ThemeManager.getColor(HOColorName.TA_TEAM_CUP_NEXT));
+        } else if (team.getTeamId() == SystemManager.getTournamentOpponentId()) {
+        	setForeground(ThemeManager.getColor(HOColorName.TA_TEAM_TOURNAMENT_NEXT));
+        } else if (team.isTournament()) {
+        	setForeground(ThemeManager.getColor(HOColorName.TA_TEAM_TOURNAMENT));
         } else {
-            setForeground(list.getForeground());
+        	setForeground(list.getForeground());
         }
-
         return this;
-    }
+         
+        }
 }

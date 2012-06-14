@@ -187,6 +187,10 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
 				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
 				break;
+			case SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE :
+				sql.append(" AND ( MatchTyp=" + MatchLineup.TOURNAMENTGROUP);
+				sql.append(" OR MatchTyp=" + MatchLineup.TOURNAMENTPLAYOFF + " )");
+				break;
 			}
 		return sql;
 	}
