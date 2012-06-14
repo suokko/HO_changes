@@ -25,6 +25,7 @@ import ho.core.net.OnlineWorker;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
+import ho.core.util.IOUtilities;
 import ho.module.lineup.AufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
@@ -959,12 +960,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			} catch (Exception e) {
 				HOLogger.instance().warning(HOMainFrame.class, "getRevisionNumber failed: " + e);
 			} finally {
-				if (is != null) {
-					try {
-						is.close();
-					} catch (Exception e) {
-					}
-				}
+				IOUtilities.closeQuietly(is);
 			}
 		}
 		if (revision == 0) { // to avoid multiple errors
