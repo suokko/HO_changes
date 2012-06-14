@@ -6,7 +6,6 @@
  */
 package ho.core.net;
 
-import ho.core.file.IOUtilities;
 import ho.core.file.xml.Extension;
 import ho.core.file.xml.XMLCHPPPreParser;
 import ho.core.file.xml.XMLExtensionParser;
@@ -20,6 +19,7 @@ import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
+import ho.core.util.IOUtilities;
 import ho.tool.updater.VersionInfo;
 
 import java.io.BufferedReader;
