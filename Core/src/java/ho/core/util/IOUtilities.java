@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
@@ -45,7 +44,8 @@ public class IOUtilities {
 			throws UnsupportedEncodingException, FileNotFoundException, IOException {
 		Writer writer = null;
 		try {
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding));
+			writer = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(file), encoding));
 			writer.write(content);
 		} finally {
 			closeQuietly(writer);
@@ -87,32 +87,17 @@ public class IOUtilities {
 	}
 
 	/**
-	 * Closes the given Reader. This method is null-safe, if the given reader is
-	 * null, it does nothing.
+	 * Closes the given {@link Closeable} (e.g. a writer or stream). This method
+	 * is null-safe, if the given closeable is null, it does nothing.
 	 * 
-	 * @param reader
-	 *            the reader to close.
+	 * @param closeable
+	 *            the {@link Closeable} to close (writer, stream, ...).
 	 * @throws IOException
-	 *             if an error occurs while closing the reader.
+	 *             if an error occurs while closing the closeable.
 	 */
-	public static void close(Reader reader) throws IOException {
-		if (reader != null) {
-			reader.close();
-		}
-	}
-
-	/**
-	 * Closes the given Writer. This method is null-safe, if the given writer is
-	 * null, it does nothing.
-	 * 
-	 * @param writer
-	 *            the writer to close.
-	 * @throws IOException
-	 *             if an error occurs while closing the writer.
-	 */
-	public static void close(Writer writer) throws IOException {
-		if (writer != null) {
-			writer.close();
+	public static void close(Closeable closeable) throws IOException {
+		if (closeable != null) {
+			closeable.close();
 		}
 	}
 
