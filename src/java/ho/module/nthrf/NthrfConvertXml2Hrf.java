@@ -1,5 +1,6 @@
 package ho.module.nthrf;
 
+import ho.HO;
 import ho.core.constants.TeamConfidence;
 import ho.core.constants.TeamSpirit;
 import ho.core.constants.TrainingType;
@@ -8,7 +9,6 @@ import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.file.xml.XMLManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -120,7 +120,7 @@ class NthrfConvertXml2Hrf {
 	final void createBasics(NtTeamDetailsParser details, NtPlayersParser players) throws Exception {
 		m_sHRFBuffer.append("[basics]\n");
 		m_sHRFBuffer.append("application=HO\n");
-		m_sHRFBuffer.append("appversion=" + HOMainFrame.VERSION + "\n");
+		m_sHRFBuffer.append("appversion=" + HO.VERSION + "\n");
 		m_sHRFBuffer.append("date=" + details.getFetchedDate() + "\n");
 		m_sHRFBuffer.append("season=" + "38" + "\n"); 		//TODO: Season
 		m_sHRFBuffer.append("matchround=" + "7" + "\n"); 	//TODO: MatchRound
