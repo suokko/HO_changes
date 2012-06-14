@@ -1,6 +1,7 @@
 package ho.core.util;
 
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -101,21 +102,6 @@ public class IOUtilities {
 	}
 
 	/**
-	 * Closes the given Reader quietly (no exception will be thrown). This
-	 * method is null-safe, if the given reader is null, it does nothing.
-	 * 
-	 * @param reader
-	 *            the reader to close..
-	 */
-	public static void closeQuietly(Reader reader) {
-		try {
-			close(reader);
-		} catch (IOException e) {
-			// be quiet
-		}
-	}
-
-	/**
 	 * Closes the given Writer. This method is null-safe, if the given writer is
 	 * null, it does nothing.
 	 * 
@@ -131,17 +117,21 @@ public class IOUtilities {
 	}
 
 	/**
-	 * Closes the given Writer quietly (no exception will be thrown). This
-	 * method is null-safe, if the given writer is null, it does nothing.
+	 * Closes a {@link Closeable} (e.g. a writer or stream) quietly (without
+	 * throwing any exception. This method is <code>null</code> safe, which
+	 * means that nothing will be done if <code>null</code> is provided as a
+	 * parameter.
 	 * 
-	 * @param writer
-	 *            the writer to close..
+	 * @param closeable
+	 *            the {@link Closeable} to close (writer, stream, ...).
 	 */
-	public static void closeQuietly(Writer writer) {
-		try {
-			close(writer);
-		} catch (IOException e) {
-			// be quiet
+	public static void closeQuietly(Closeable closeable) {
+		if (closeable != null) {
+			try {
+				closeable.close();
+			} catch (Exception e) {
+				// be quiet
+			}
 		}
 	}
 
