@@ -14,8 +14,6 @@ import javax.swing.JMenuItem;
 
 
 public class DebugMode {
-	/** enable functions for the developers */
-	static final boolean DEVELOPER_MODE = true;
 	
 	public static JMenu getDeveloperMenu() {
 		JMenu menu = new JMenu("Debug");
