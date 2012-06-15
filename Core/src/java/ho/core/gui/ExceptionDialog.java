@@ -38,6 +38,7 @@ public class ExceptionDialog extends JDialog {
 	private Throwable throwable;
 
 	public ExceptionDialog(String msg, Throwable t) {
+		setModal(true);
 		this.throwable = t;
 		setTitle(msg);
 		initComponents();
