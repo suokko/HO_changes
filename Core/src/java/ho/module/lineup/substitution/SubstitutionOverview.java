@@ -81,6 +81,7 @@ public class SubstitutionOverview extends JPanel {
 				row.setError(true);
 			}
 		}
+		detailsView.refresh();
 	}
 
 	private void addListeners() {
@@ -180,10 +181,11 @@ public class SubstitutionOverview extends JPanel {
 		if (!dlg.isCanceled()) {
 			Substitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
+			refresh();
 			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
 					.getModel();
-			int idx = model.getRowCount() - 1;
-			model.fireTableRowsInserted(idx, idx);
+//			int idx = model.getRowCount() - 1;
+//			model.fireTableRowsInserted(idx, idx);
 
 			for (int i = 0; i < model.getRowCount(); i++) {
 				if (model.getSubstitution(i) == sub) {
@@ -228,17 +230,6 @@ public class SubstitutionOverview extends JPanel {
 				this.rows.add(row);
 			}
 			fireTableDataChanged();
-		}
-
-		public void remove(TableRow row) {
-			this.rows.remove(row);
-			fireTableDataChanged();
-		}
-
-		public void select(Substitution substitution) {
-			for (int i = 0; i < this.rows.size(); i++) {
-
-			}
 		}
 
 		@Override
@@ -370,8 +361,8 @@ public class SubstitutionOverview extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			SubstitutionsTableModel model = (SubstitutionsTableModel) substitutionTable.getModel();
 			TableRow row = model.getRow(substitutionTable.getSelectedRow());
-			model.remove(row);
-			detailsView.refresh();
+			lineup.getSubstitutionList().remove(row.getSub());
+			refresh();
 		}
 	}
 
