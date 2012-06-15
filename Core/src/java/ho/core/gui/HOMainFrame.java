@@ -231,10 +231,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		return txt;
 	}
 
-//	public static boolean isDevelopment() {
-//		return DEVELOPMENT;
-//	}
-
 	/**
 	 * Getter for the singleton HOMainFrame instance.
 	 */
@@ -394,13 +390,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public void beenden() {
 		HOLogger.instance().debug(getClass(), "Shutting down HO!");
 
-		// Keine Sicherheitsabfrage mehr
-		// int value = JOptionPane.showConfirmDialog( this,
-		// model.HOVerwaltung.instance().getLanguageString("BeendenMeldung"),
-		// model.HOVerwaltung.instance().getLanguageString("BeendenTitel"),
-		// JOptionPane.YES_NO_OPTION);
-		// int value = JOptionPane.OK_OPTION; //Doof aber schnell zu schreiben!
-		// if ( value == JOptionPane.OK_OPTION )
 		// aktuelle UserParameter speichern
 		saveUserParameter();
 
@@ -425,15 +414,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		DBManager.instance().disconnect();
 
 		HOLogger.instance().debug(getClass(), "Disconnected");
-
-		// //Ausloggen
-		// try {
-		// if ((UserParameter.instance().logoutOnExit)
-		// && (MyConnector.instance().isAuthenticated())) {
-		// MyConnector.instance().logout();
-		// }
-		// } catch (Exception e) {
-		// }
 
 		HOLogger.instance().debug(getClass(), "Shutdown complete!");
 		// Dispose führt zu einem windowClosed, sobald alle windowClosing
@@ -463,14 +443,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				m_jtpTabbedPane.showTab(activeModules[i].getModuleId());
 		}
 
-
 		getContentPane().add(m_jtpTabbedPane, BorderLayout.CENTER);
 		m_jtpTabbedPane.setSelectedIndex(0);
-		//m_jtpTabbedPane.addChangeListener(this);
 
-		
 		getContentPane().add(getInfoPanel(), BorderLayout.SOUTH);
-
 		
 		setLocation(UserParameter.instance().hoMainFrame_PositionX,
 				UserParameter.instance().hoMainFrame_PositionY);
@@ -485,12 +461,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		((InputMap) UIManager.get("Table.ancestorInputMap"))
 				.remove(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 
-		// Falsch ( (InputMap)UIManager.get("Menu.ancestorInputMap") ).remove(
-		// KeyStroke.getKeyStroke( KeyEvent.VK_F10, 0 ) );
-		// m_jmMenuBar.getInputMap().remove( KeyStroke.getKeyStroke(
-		// KeyEvent.VK_F10, 0 ) );
-		// Datei
-		// Download HRF
 		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		m_jmDownloadItem.addActionListener(this);
 		m_jmDatei.add(m_jmDownloadItem);
@@ -512,7 +482,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jmiEPV.addActionListener(this);
 		m_jmiRatings.addActionListener(this);
 
-		//m_jmUpdating.add(m_jmPluginsRefresh);
 		m_jmUpdating.add(m_jmiHO);
 		m_jmUpdating.add(m_jmiHObeta);
 		m_jmUpdating.add(m_jmiEPV);
@@ -522,9 +491,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmDatei.add(m_jmUpdating);
 
-		// Download Spielplan
-		// m_jmFixturesItem.addActionListener ( this );
-		// m_jmDatei.add ( m_jmFixturesItem );
 		m_jmDatei.addSeparator();
 
 		// Training
@@ -559,7 +525,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(m_jmDatei);
 
-		// ///
 		// Verschiedenes
 		IModule[] activeModules = ModuleManager.instance().getModules(true);
 		for (int i = 0; i < activeModules.length; i++) {
@@ -673,9 +638,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		} catch (Exception e) {
 			HOLogger.instance().log(HOMainFrame.class, "Währungsanpassung gescheitert!");
 		}
-
-		// Tabs prüfen
-		//checkTabs();
 	}
 
 	// ------Refreshfunktionen-------------------------------
@@ -791,11 +753,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				} catch (Exception e) {
 					succ = false;
 				}
-			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { // Nimbus
-																						// is
-																						// the
-																						// default
-																						// theme
+			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { 
+				// Nimbus is the default theme
 				succ = NimbusTheme.enableNimbusTheme(size);
 			}
 			if (!succ) {
