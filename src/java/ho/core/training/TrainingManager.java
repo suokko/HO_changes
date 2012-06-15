@@ -91,8 +91,7 @@ public class TrainingManager {
         //Iterate through all training
         Iterator<TrainingPerWeek> i = inputTraining.iterator();
         while (i.hasNext()) {
-        	TrainingPerPlayer curTraining = new TrainingPerPlayer();
-            //get training to consider this round of the loop
+        	//get training to consider this round of the loop
             final TrainingPerWeek train = i.next();
             if (train.getTrainingType() == -1) {
                 continue;
@@ -103,7 +102,7 @@ public class TrainingManager {
             if (trainingDate.getTimeInMillis() >= timestamp.getTime()) {
                 return output;
             }
-            curTraining = calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
+            TrainingPerPlayer curTraining = calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
             if (curTraining != null && curTraining.getTrainingPair() != null && output != null) {
             	output.addValues(curTraining);
             }
