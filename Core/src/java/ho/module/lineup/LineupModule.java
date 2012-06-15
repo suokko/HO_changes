@@ -27,7 +27,7 @@ public final class LineupModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
-		if (HO.isDevelopment()) {
+		if (!HO.isRelease()) {
 			return new LineupMasterView();
 		}
 		return new LineupPanel();

@@ -78,7 +78,7 @@ public class SubstitutionEditView extends JPanel {
 	}
 
 	/**
-	 * Initializes the view with the given {@link ISubstitution}. The given
+	 * Initializes the view with the given {@link Substitution}. The given
 	 * object will not be changed. To retrieve the data from the view, use
 	 * {@link #getSubstitution()} method.
 	 * 

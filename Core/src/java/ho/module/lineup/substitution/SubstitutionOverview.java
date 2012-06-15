@@ -182,10 +182,9 @@ public class SubstitutionOverview extends JPanel {
 			Substitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
 			refresh();
+			
 			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
 					.getModel();
-//			int idx = model.getRowCount() - 1;
-//			model.fireTableRowsInserted(idx, idx);
 
 			for (int i = 0; i < model.getRowCount(); i++) {
 				if (model.getSubstitution(i) == sub) {
