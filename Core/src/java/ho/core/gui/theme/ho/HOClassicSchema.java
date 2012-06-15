@@ -170,8 +170,10 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(ARROW_UP, "gui/bilder/arrows/ArrowUp.gif");
 		put(ARROW_DOWN, "gui/bilder/arrows/ArrowDown.gif");
 
-		put(EXCLAMATION, "gui/bilder/exclamation.png");
-		put(EXCLAMATION_RED, "gui/bilder/exclamation-red.png");
+		put(EXCLAMATION, "gui/bilder/Fugue/exclamation.png");
+		put(EXCLAMATION_RED, "gui/bilder/Fugue/exclamation-red.png");
+		put(CONTROL_DOUBLE_090, "gui/bilder/Fugue/control-double-090.png");
+		put(CONTROL_DOUBLE_270, "gui/bilder/Fugue/control-double-270.png");
 	}
 
 	private void initBooleans() {

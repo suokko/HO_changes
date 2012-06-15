@@ -24,6 +24,7 @@ import ho.core.net.MyConnector;
 import ho.core.net.OnlineWorker;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
+import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
 import ho.module.lineup.AufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
@@ -124,7 +125,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * Singleton
 	 */
 	private HOMainFrame() {
-
+		
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
@@ -142,6 +143,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		RefreshManager.instance().registerRefreshable(this);
 
+		System.setProperty("sun.awt.exception.handler", ExceptionHandler.class.getName());
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setDefaultFont(UserParameter.instance().schriftGroesse);
