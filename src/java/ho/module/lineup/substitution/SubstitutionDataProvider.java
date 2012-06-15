@@ -15,7 +15,8 @@ import java.util.Map;
 public class SubstitutionDataProvider {
 
 	public static void getSubstitutions() {
-		List<Substitution> subs = HOVerwaltung.instance().getModel().getAufstellung().getSubstitutionList();
+		List<Substitution> subs = HOVerwaltung.instance().getModel().getAufstellung()
+				.getSubstitutionList();
 	}
 
 	public static Map<Integer, PlayerPositionItem> getLineupPositions() {
@@ -34,8 +35,10 @@ public class SubstitutionDataProvider {
 		for (int i = start; i <= end; i++) {
 			Spieler player = lineup.getPlayerByPositionID(i);
 			if (player != null) {
-				positionMap.put(new Integer(i),
-						new PlayerPositionItem(Integer.valueOf(i), lineup.getPlayerByPositionID(i)));
+				positionMap
+						.put(new Integer(i),
+								new PlayerPositionItem(Integer.valueOf(i), lineup
+										.getPlayerByPositionID(i)));
 			}
 		}
 
@@ -47,7 +50,10 @@ public class SubstitutionDataProvider {
 
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 		for (int i = start; i <= end; i++) {
-			playerItems.add(new PlayerPositionItem(Integer.valueOf(i), lineup.getPlayerByPositionID(i)));
+			Spieler player = lineup.getPlayerByPositionID(i);
+			if (player != null) {
+				playerItems.add(new PlayerPositionItem(Integer.valueOf(i), player));
+			}
 		}
 
 		return playerItems;
