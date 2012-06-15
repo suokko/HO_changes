@@ -1645,7 +1645,7 @@ public final class Spieler {
     public void calcFullSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, int stamina, Timestamp hrftimestamp) {
         TrainingPerPlayer trPlayer = TrainingManager.instance().calculateFullTrainingForPlayer(
         		this, TrainingManager.instance().getTrainingsVector(), hrftimestamp);
-        if (trPlayer != null) {
+        if (trPlayer != null && trPlayer.getTrainingWeek() != null && trPlayer.getTrainingWeek().getTrainingType() > 0) {
 	        TrainingPoints tp = trPlayer.getTrainingPair();
 	        if (tp != null && tp.getPrimary() > 0) {
 	        	

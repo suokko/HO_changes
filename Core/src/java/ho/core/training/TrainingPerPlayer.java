@@ -92,14 +92,20 @@ public class TrainingPerPlayer  {
      * add sub values of another ITrainingPerPlayer instance to this instance
      * @param values	the instance we take the values from
      */
-    public void addValues (TrainingPerPlayer values) {
-    	
+    public void addValues(TrainingPerPlayer values) {
     	if (_TrainingPair == null) {
-    		HOLogger.instance().error(getClass(), "_TrainingPair is null. Aborting addValues.");
-    		return;
+    		if (values != null && values.getTrainingPair() != null) {
+    			_TrainingPair = values.getTrainingPair();
+    		}
+    		else
+    		{
+	    		HOLogger.instance().error(getClass(), "_TrainingPair is null. Aborting addValues.");
+	    		return;
+    		}
+    	} else { 
+	    	_TrainingPair.addPrimary(values.getTrainingPair().getPrimary());
+	    	_TrainingPair.addSecondary(values.getTrainingPair().getSecondary());
     	}
-    	_TrainingPair.addPrimary(values.getTrainingPair().getPrimary());
-    	_TrainingPair.addSecondary(values.getTrainingPair().getSecondary());
     }
 	/**
 	 * Checks if trainingDate is after the last skill up in skillType
