@@ -160,7 +160,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(80);
 
             //lineup
-            createLineUp();
+            createLineUp(m_sHRFBuffer,  String.valueOf(m_htTeamdetails.get("TrainerID")), m_htNextLineup);
             waitDialog.setValue(85);
 
             //economy  
@@ -387,9 +387,9 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("placering=" + m_htLiga.get("Position") + "\n");
     }
 
-    private String getPlayerForNextLineup(String position) {
-    	if (m_htNextLineup != null) {
-    		final Object ret = m_htNextLineup.get(position);
+    private String getPlayerForNextLineup(String position, Map<?, ?> next) {
+    	if (next != null) {
+    		final Object ret = next.get(position);
     		if (ret != null) {
     			return ret.toString();
     		}
@@ -397,9 +397,9 @@ public class ConvertXml2Hrf {
     	return "0";
     }
     
-    private String getPlayerOrderForNextLineup(String position) {
-    	if (m_htNextLineup != null) {
-    		String ret = (String)m_htNextLineup.get(position);
+    private String getPlayerOrderForNextLineup(String position, Map<?, ?> map) {
+    	if (map != null) {
+    		String ret = (String)map.get(position);
     		
     		if (ret != null) {
     			ret = ret.trim();
@@ -414,67 +414,68 @@ public class ConvertXml2Hrf {
     /**
      * Erstellt die LineUp Daten
      */
-    protected final void createLineUp() throws Exception {
-        m_sHRFBuffer.append("[lineup]" + "\n");
+    public final StringBuffer createLineUp(StringBuffer buffer, String trainerId, Map<?, ?> nextLineup) throws Exception {
+    	buffer.append("[lineup]" + "\n");
 
         try {
-            m_sHRFBuffer.append("trainer=" + m_htTeamdetails.get("TrainerID") + "\n");
-            m_sHRFBuffer.append("installning=" + m_htNextLineup.get("Attitude") + "\n");
-			m_sHRFBuffer.append("tactictype="+ (m_htNextLineup.get("TacticType").toString().trim().equals("") ? "0" : m_htNextLineup.get("TacticType").toString().trim()) + "\n");
+        	buffer.append("trainer=" + trainerId + "\n");
+        	buffer.append("installning=" + nextLineup.get("Attitude") + "\n");
+        	buffer.append("tactictype="+ (nextLineup.get("TacticType").toString().trim().equals("") ? "0" : nextLineup.get("TacticType").toString().trim()) + "\n");
            
-			m_sHRFBuffer.append("keeper=" + getPlayerForNextLineup("KeeperID") + "\n");
-            m_sHRFBuffer.append("rightBack=" + getPlayerForNextLineup("RightBackID") + "\n");
-            m_sHRFBuffer.append("insideBack1=" + getPlayerForNextLineup("RightCentralDefenderID") + "\n");
-            m_sHRFBuffer.append("insideBack2=" + getPlayerForNextLineup("LeftCentralDefenderID") + "\n");
-            m_sHRFBuffer.append("insideBack3=" + getPlayerForNextLineup("MiddleCentralDefenderID") + "\n");
-            m_sHRFBuffer.append("leftBack=" + getPlayerForNextLineup("LeftBackID") + "\n");
-            m_sHRFBuffer.append("rightWinger=" + getPlayerForNextLineup("RightWingerID") + "\n");
-            m_sHRFBuffer.append("insideMid1=" + getPlayerForNextLineup("RightInnerMidfieldID") + "\n");
-            m_sHRFBuffer.append("insideMid2=" + getPlayerForNextLineup("LeftInnerMidfieldID") + "\n");
-            m_sHRFBuffer.append("insideMid3=" + getPlayerForNextLineup("CentralInnerMidfieldID") + "\n");
-            m_sHRFBuffer.append("leftWinger=" + getPlayerForNextLineup("LeftWingerID") + "\n");
-            m_sHRFBuffer.append("forward1=" + getPlayerForNextLineup("RightForwardID") + "\n");
-            m_sHRFBuffer.append("forward2=" + getPlayerForNextLineup("LeftForwardID") + "\n");
-            m_sHRFBuffer.append("forward3=" + getPlayerForNextLineup("CentralForwardID") + "\n");
-            m_sHRFBuffer.append("substBack=" + getPlayerForNextLineup("SubstBackID") + "\n");
-            m_sHRFBuffer.append("substInsideMid=" + getPlayerForNextLineup("SubstInsideMidID") + "\n");
-            m_sHRFBuffer.append("substWinger=" + getPlayerForNextLineup("SubstWingerID") + "\n");
-            m_sHRFBuffer.append("substKeeper=" + getPlayerForNextLineup("SubstKeeperID") + "\n");
-            m_sHRFBuffer.append("substForward=" + getPlayerForNextLineup("SubstForwardID") + "\n");
-            m_sHRFBuffer.append("captain=" + getPlayerForNextLineup("CaptainID") + "\n");
-            m_sHRFBuffer.append("kicker1=" + getPlayerForNextLineup("KickerID") + "\n");
+			buffer.append("keeper=" + getPlayerForNextLineup("KeeperID", nextLineup) + "\n");
+            buffer.append("rightBack=" + getPlayerForNextLineup("RightBackID", nextLineup) + "\n");
+            buffer.append("insideBack1=" + getPlayerForNextLineup("RightCentralDefenderID", nextLineup) + "\n");
+            buffer.append("insideBack2=" + getPlayerForNextLineup("LeftCentralDefenderID", nextLineup) + "\n");
+            buffer.append("insideBack3=" + getPlayerForNextLineup("MiddleCentralDefenderID", nextLineup) + "\n");
+            buffer.append("leftBack=" + getPlayerForNextLineup("LeftBackID", nextLineup) + "\n");
+            buffer.append("rightWinger=" + getPlayerForNextLineup("RightWingerID", nextLineup) + "\n");
+            buffer.append("insideMid1=" + getPlayerForNextLineup("RightInnerMidfieldID", nextLineup) + "\n");
+            buffer.append("insideMid2=" + getPlayerForNextLineup("LeftInnerMidfieldID", nextLineup) + "\n");
+            buffer.append("insideMid3=" + getPlayerForNextLineup("CentralInnerMidfieldID", nextLineup) + "\n");
+            buffer.append("leftWinger=" + getPlayerForNextLineup("LeftWingerID", nextLineup) + "\n");
+            buffer.append("forward1=" + getPlayerForNextLineup("RightForwardID", nextLineup) + "\n");
+            buffer.append("forward2=" + getPlayerForNextLineup("LeftForwardID", nextLineup) + "\n");
+            buffer.append("forward3=" + getPlayerForNextLineup("CentralForwardID", nextLineup) + "\n");
+            buffer.append("substBack=" + getPlayerForNextLineup("SubstBackID", nextLineup) + "\n");
+            buffer.append("substInsideMid=" + getPlayerForNextLineup("SubstInsideMidID", nextLineup) + "\n");
+            buffer.append("substWinger=" + getPlayerForNextLineup("SubstWingerID", nextLineup) + "\n");
+            buffer.append("substKeeper=" + getPlayerForNextLineup("SubstKeeperID", nextLineup) + "\n");
+            buffer.append("substForward=" + getPlayerForNextLineup("SubstForwardID", nextLineup) + "\n");
+            buffer.append("captain=" + getPlayerForNextLineup("CaptainID", nextLineup) + "\n");
+            buffer.append("kicker1=" + getPlayerForNextLineup("KickerID", nextLineup) + "\n");
             
-			m_sHRFBuffer.append("behrightBack=" + getPlayerOrderForNextLineup("RightBackOrder") + "\n");
-			m_sHRFBuffer.append("behinsideBack1=" + getPlayerOrderForNextLineup("RightCentralDefenderOrder") + "\n");
-			m_sHRFBuffer.append("behinsideBack2=" + getPlayerOrderForNextLineup("LeftCentralDefenderOrder") + "\n");
-			m_sHRFBuffer.append("behinsideBack3=" + getPlayerOrderForNextLineup("MiddleCentralDefenderOrder") + "\n");
-			m_sHRFBuffer.append("behleftBack=" + getPlayerOrderForNextLineup("LeftBackOrder") + "\n");
-			m_sHRFBuffer.append("behrightWinger=" + getPlayerOrderForNextLineup("RightWingerOrder") + "\n");
-			m_sHRFBuffer.append("behinsideMid1=" + getPlayerOrderForNextLineup("RightInnerMidfieldOrder") + "\n");
-			m_sHRFBuffer.append("behinsideMid2=" + getPlayerOrderForNextLineup("LeftInnerMidfieldOrder") + "\n");
-			m_sHRFBuffer.append("behinsideMid3=" + getPlayerOrderForNextLineup("CentralInnerMidfieldOrder") + "\n");
-			m_sHRFBuffer.append("behleftWinger=" + getPlayerOrderForNextLineup("LeftWingerOrder") + "\n");
-			m_sHRFBuffer.append("behforward1=" + getPlayerOrderForNextLineup("RightForwardOrder") + "\n");
-			m_sHRFBuffer.append("behforward2=" + getPlayerOrderForNextLineup("LeftForwardOrder") + "\n");
-			m_sHRFBuffer.append("behforward3=" + getPlayerOrderForNextLineup("CentralForwardOrder") + "\n");
+			buffer.append("behrightBack=" + getPlayerOrderForNextLineup("RightBackOrder", nextLineup) + "\n");
+			buffer.append("behinsideBack1=" + getPlayerOrderForNextLineup("RightCentralDefenderOrder", nextLineup) + "\n");
+			buffer.append("behinsideBack2=" + getPlayerOrderForNextLineup("LeftCentralDefenderOrder", nextLineup) + "\n");
+			buffer.append("behinsideBack3=" + getPlayerOrderForNextLineup("MiddleCentralDefenderOrder", nextLineup) + "\n");
+			buffer.append("behleftBack=" + getPlayerOrderForNextLineup("LeftBackOrder", nextLineup) + "\n");
+			buffer.append("behrightWinger=" + getPlayerOrderForNextLineup("RightWingerOrder", nextLineup) + "\n");
+			buffer.append("behinsideMid1=" + getPlayerOrderForNextLineup("RightInnerMidfieldOrder", nextLineup) + "\n");
+			buffer.append("behinsideMid2=" + getPlayerOrderForNextLineup("LeftInnerMidfieldOrder", nextLineup) + "\n");
+			buffer.append("behinsideMid3=" + getPlayerOrderForNextLineup("CentralInnerMidfieldOrder", nextLineup) + "\n");
+			buffer.append("behleftWinger=" + getPlayerOrderForNextLineup("LeftWingerOrder", nextLineup) + "\n");
+			buffer.append("behforward1=" + getPlayerOrderForNextLineup("RightForwardOrder", nextLineup) + "\n");
+			buffer.append("behforward2=" + getPlayerOrderForNextLineup("LeftForwardOrder", nextLineup) + "\n");
+			buffer.append("behforward3=" + getPlayerOrderForNextLineup("CentralForwardOrder", nextLineup) + "\n");
 			
 			for (int i = 0; i < 5; i++) {
-				if (m_htNextLineup.get("subst" + i + "playerOrderID") != null) {
-					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + m_htNextLineup.get("subst" + i + "playerOrderID") + "\n");
-					m_sHRFBuffer.append("subst" + i + "playerIn=" + m_htNextLineup.get("subst" + i + "playerIn") + "\n");
-					m_sHRFBuffer.append("subst" + i + "playerOut=" + m_htNextLineup.get("subst" + i + "playerOut") + "\n");
-					m_sHRFBuffer.append("subst" + i + "orderType=" + m_htNextLineup.get("subst" + i + "orderType") + "\n");
-					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + m_htNextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
-					m_sHRFBuffer.append("subst" + i + "pos=" + m_htNextLineup.get("subst" + i + "pos") + "\n");
-					m_sHRFBuffer.append("subst" + i + "behaviour=" + m_htNextLineup.get("subst" + i + "behaviour") + "\n");
-					m_sHRFBuffer.append("subst" + i + "card=" + m_htNextLineup.get("subst" + i + "card") + "\n");
-					m_sHRFBuffer.append("subst" + i + "standing=" + m_htNextLineup.get("subst" + i + "standing") + "\n");
+				if (nextLineup.get("subst" + i + "playerOrderID") != null) {
+					buffer.append("subst" + i + "playerOrderID=" + m_htNextLineup.get("subst" + i + "playerOrderID") + "\n");
+					buffer.append("subst" + i + "playerIn=" + m_htNextLineup.get("subst" + i + "playerIn") + "\n");
+					buffer.append("subst" + i + "playerOut=" + m_htNextLineup.get("subst" + i + "playerOut") + "\n");
+					buffer.append("subst" + i + "orderType=" + m_htNextLineup.get("subst" + i + "orderType") + "\n");
+					buffer.append("subst" + i + "matchMinuteCriteria=" + m_htNextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
+					buffer.append("subst" + i + "pos=" + m_htNextLineup.get("subst" + i + "pos") + "\n");
+					buffer.append("subst" + i + "behaviour=" + m_htNextLineup.get("subst" + i + "behaviour") + "\n");
+					buffer.append("subst" + i + "card=" + m_htNextLineup.get("subst" + i + "card") + "\n");
+					buffer.append("subst" + i + "standing=" + m_htNextLineup.get("subst" + i + "standing") + "\n");
 				}
 			}
 			
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }
+        return buffer;
     }
 
     /**

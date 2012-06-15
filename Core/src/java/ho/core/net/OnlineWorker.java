@@ -13,6 +13,7 @@ import ho.core.file.hrf.HRFStringParser;
 import ho.core.file.xml.ConvertXml2Hrf;
 import ho.core.file.xml.XMLArenaParser;
 import ho.core.file.xml.XMLMatchLineupParser;
+import ho.core.file.xml.XMLMatchOrderParser;
 import ho.core.file.xml.XMLMatchesParser;
 import ho.core.file.xml.XMLSpielplanParser;
 import ho.core.file.xml.xmlMatchArchivParser;
@@ -34,15 +35,21 @@ import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
+import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.Substitution;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -837,5 +844,55 @@ public class OnlineWorker {
 		}
 		if (haveLineups.length() > 0)
 			HOLogger.instance().log(getClass(),"Have Lineups : " + haveLineups);
+	}
+	
+
+	public Lineup getLineupbyMatchId(int matchId) {
+		
+		try {
+			
+			String xml = MyConnector.instance().getMatchOrder(matchId);
+			
+			
+			Map<String, String> map = XMLMatchOrderParser.parseMatchOrderFromString(xml);
+			ConvertXml2Hrf hrfConverter = new ConvertXml2Hrf();
+			StringBuffer buffer = new StringBuffer();
+			hrfConverter.createLineUp(buffer, 
+					String.valueOf(HOVerwaltung.instance().getModel().getTrainer().getSpielerID()), map);
+//			System.out.println("TADA XXXXXXXXXXXXXXXXXX");
+//			System.out.println(buffer);
+//			
+			
+			final ByteArrayInputStream bis = new ByteArrayInputStream(String.valueOf(buffer).getBytes("UTF-8"));
+            final InputStreamReader isr = new InputStreamReader(bis, "UTF-8");
+			BufferedReader hrfReader = new BufferedReader(isr);
+			Properties properties = new Properties();
+			
+			// Lose the first line
+			hrfReader.readLine();
+			while (hrfReader.ready()) {
+				String lineString = hrfReader.readLine();
+				// Ignore empty lines
+                if ((lineString == null) || lineString.trim().equals(""))
+                    continue;
+                int indexEqualsSign = lineString.indexOf('=');
+                if (indexEqualsSign > 0) {
+                	if(properties == null) 
+                		properties = new Properties();
+                    properties.setProperty(lineString.substring(0, indexEqualsSign)
+                                                .toLowerCase(java.util.Locale.ENGLISH),
+                                           lineString.substring(indexEqualsSign + 1));
+                }
+			}
+			
+			return new Lineup(properties);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return null;
 	}
 }
