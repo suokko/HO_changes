@@ -74,7 +74,7 @@ public class HO {
 		return DEVELOPMENT;
 	}
 
-	public boolean isRelease() {
+	public static boolean isRelease() {
 		return RELEASE;
 	}
 
