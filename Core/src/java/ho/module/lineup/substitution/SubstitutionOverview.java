@@ -230,6 +230,11 @@ public class SubstitutionOverview extends JPanel {
 			fireTableDataChanged();
 		}
 
+		public void remove(TableRow row) {
+			this.rows.remove(row);
+			fireTableDataChanged();
+		}
+
 		public void select(Substitution substitution) {
 			for (int i = 0; i < this.rows.size(); i++) {
 
@@ -363,13 +368,9 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int selectedRowIndex = substitutionTable.getSelectedRow();
-			Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
-					.getSubstitution(selectedRowIndex);
-
-			lineup.getSubstitutionList().remove(sub);
-			((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsDeleted(
-					selectedRowIndex, selectedRowIndex);
+			SubstitutionsTableModel model = (SubstitutionsTableModel) substitutionTable.getModel();
+			TableRow row = model.getRow(substitutionTable.getSelectedRow());
+			model.remove(row);
 			detailsView.refresh();
 		}
 	}
