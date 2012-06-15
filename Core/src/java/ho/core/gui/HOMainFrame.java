@@ -576,8 +576,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmMenuBar.add(m_jmAbout);
 		
-		if (DeveloperMode.DEVELOPER_MODE) {
-			m_jmMenuBar.add(DeveloperMode.getDeveloperMenu());
+		if (DebugMode.DEVELOPER_MODE) {
+			m_jmMenuBar.add(DebugMode.getDeveloperMenu());
 		}
 		
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);

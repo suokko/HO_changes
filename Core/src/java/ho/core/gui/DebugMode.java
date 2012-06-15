@@ -13,12 +13,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 
-public class DeveloperMode {
+public class DebugMode {
 	/** enable functions for the developers */
 	static final boolean DEVELOPER_MODE = true;
 	
 	public static JMenu getDeveloperMenu() {
-		JMenu menu = new JMenu("Developer");
+		JMenu menu = new JMenu("Debug");
 		menu.add(getSQLDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
 		return menu;
@@ -28,6 +28,7 @@ public class DeveloperMode {
 		JMenuItem newItem = new JMenuItem("SQL Editor");
 		newItem.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new SQLDialog().setVisible(true);
 			}
@@ -39,6 +40,7 @@ public class DeveloperMode {
 		JMenuItem newItem = new JCheckBoxMenuItem("Save downloaded XML");
 		newItem.addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				MyConnector.setDebugSave(e.getStateChange() == ItemEvent.SELECTED);
 			}
