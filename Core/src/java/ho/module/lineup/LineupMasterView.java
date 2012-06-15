@@ -41,13 +41,15 @@ public class LineupMasterView extends JPanel {
 		this.substitutionOverview = new SubstitutionOverview(hov.getModel().getAufstellung());
 		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
+		tabbedPane.addTab("test", new TestPanel());
+
 		setLayout(new BorderLayout());
 		add(tabbedPane, BorderLayout.CENTER);
 	}
 
 	private void addListeners() {
 		this.lineupPanel.addUpdateable(new Updateable() {
-			
+
 			@Override
 			public void update() {
 				System.out.println("####- update");
@@ -55,5 +57,5 @@ public class LineupMasterView extends JPanel {
 			}
 		});
 	}
-	
+
 }
