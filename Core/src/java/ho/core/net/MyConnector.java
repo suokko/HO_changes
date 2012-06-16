@@ -62,7 +62,7 @@ public class MyConnector {
 	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HO.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_TRAINING = "1.5";
-	private final static String VERSION_MATCHORDERS = "1.8";
+	private final static String VERSION_MATCHORDERS = "2.1";
 	private final static String VERSION_MATCHLINEUP = "1.8";
 	private final static String VERSION_MATCHDETAILS = "2.3";
 	private final static String VERSION_PLAYERS = "2.1";
@@ -279,22 +279,49 @@ public class MyConnector {
 		return getCHPPWebFile(url);
 	}
 
+	
 	/**
-	 * lädt die Aufstellung zu einem Spiel
+	 * Fetches the match order xml from Hattrick
+	 * @param matchId The match id to fetch the lineup for
+	 * @param matchType The match type connected to the match
+	 * @return The api content (xml)
+	 * @throws IOException
 	 */
-	public String getMatchOrder(int matchId) throws IOException {
+	public String getMatchOrder(int matchId, int matchType) throws IOException {
 		String url = htUrl + "?file=matchorders&version=" + VERSION_MATCHORDERS + "&matchID="
-				+ matchId + "&isYouth=false";
+						+ matchId;
+		
+		
+		if ((matchType == MatchLineup.TOURNAMENTGROUP)
+				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
+			url += "&sourceSystem=htointegrated";
+		}
+		
 		return getCHPPWebFile(url);
 	}
 
-	public String setMatchOrder(int matchId, String orderString) throws IOException {
+	
+	/**
+	 * Sets the match order with the provided content to the provided match.
+	 * 
+	 * @param matchId The match id to upload the order to
+	 * @param matchType The match type of the match to upload the order to
+	 * @param orderString The string with the actual orders. See the CHPP API documentation.
+	 * @return the result xml from the upload
+	 * @throws IOException
+	 */
+	public String setMatchOrder(int matchId, int matchType, String orderString) throws IOException {
 		StringBuilder urlpara = new StringBuilder();
 		urlpara.append("?file=matchorders&version=").append(VERSION_MATCHORDERS);
 		if (matchId > 0) {
 			urlpara.append("&matchID=").append(matchId);
 		}
-		urlpara.append("&isYouth=false&actionType=setmatchorder");
+		urlpara.append("&actionType=setmatchorder");
+		
+		if ((matchType == MatchLineup.TOURNAMENTGROUP)
+				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
+			urlpara.append("&sourceSystem=htointegrated");
+		}
 
 		Map<String, String> paras = new HashMap<String, String>();
 		paras.put("lineup", orderString);
