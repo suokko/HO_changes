@@ -596,17 +596,17 @@ public class OnlineWorker {
 	}
 
 	/**
-	 * Uploads the given lineup to Hattrick
+	 * Uploads the given order to Hattrick
 	 * 
 	 * @param matchId
 	 *            The id of the match in question. If left at 0 the match ID
 	 *            from the model will be used (next match).
 	 * @param lineup
 	 *            The lineup object to be uploaded
-	 * @return the response from the HT-server
+	 * @return A string response with any error message
 	 */
 
-	public final String uploadMatchOrder(int matchId, Lineup lineup) {
+	public final String uploadMatchOrder(int matchId, int matchType,  Lineup lineup) {
 
 		String result;
 		// Tell the Connector that we will require match order rights.
@@ -658,7 +658,7 @@ public class OnlineWorker {
 		orders.append("]}");
 
 		try {
-			result = MyConnector.instance().setMatchOrder(matchId, orders.toString());
+			result = MyConnector.instance().setMatchOrder(matchId, matchType, orders.toString());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -841,11 +841,17 @@ public class OnlineWorker {
 			HOLogger.instance().log(getClass(), "Have Lineups : " + haveLineups);
 	}
 
-	public Lineup getLineupbyMatchId(int matchId) {
+	/**
+	 * 
+	 * @param matchId The match ID for the match to download
+	 * @param matchType The matchTyp for the match to download
+	 * @return The Lineup object with the downloaded match data
+	 */
+	public Lineup getLineupbyMatchId(int matchId, int matchType) {
 
 		try {
 
-			String xml = MyConnector.instance().getMatchOrder(matchId);
+			String xml = MyConnector.instance().getMatchOrder(matchId, matchType);
 
 			Map<String, String> map = XMLMatchOrderParser.parseMatchOrderFromString(xml);
 			ConvertXml2Hrf hrfConverter = new ConvertXml2Hrf();
@@ -853,9 +859,6 @@ public class OnlineWorker {
 			hrfConverter.createLineUp(buffer,
 					String.valueOf(HOVerwaltung.instance().getModel().getTrainer().getSpielerID()),
 					map);
-			// System.out.println("TADA XXXXXXXXXXXXXXXXXX");
-			// System.out.println(buffer);
-			//
 
 			final ByteArrayInputStream bis = new ByteArrayInputStream(String.valueOf(buffer)
 					.getBytes("UTF-8"));
@@ -884,8 +887,17 @@ public class OnlineWorker {
 			return new Lineup(properties);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			HOMainFrame
+			.instance()
+			.getInfoPanel()
+			.setLangInfoText(
+					HOVerwaltung.instance().getLanguageString("Downloadfehler")
+							+ " : Error fetching Matchorder :", InfoPanel.FEHLERFARBE);
+			Helper.showMessage(HOMainFrame.instance(),
+			HOVerwaltung.instance().getLanguageString("Downloadfehler")
+					+ " : Error fetching Matchorder :", HOVerwaltung.instance()
+					.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			HOLogger.instance().error(getClass(), e.getMessage());
 		}
 
 		return null;
