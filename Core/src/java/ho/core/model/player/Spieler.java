@@ -1652,28 +1652,30 @@ public final class Spieler {
 		        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
 		        int trType = trPlayer.getTrainingWeek().getTrainingType();
 		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-		        
-		        int primary = wt.getPrimaryTrainingSkill();
-		        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
-	        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
-	        				this, assistants, trainerlevel, intensity, stamina), 3);
-	        		if (gain > 0) {
-	        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
-	        		}
-	        	}
+		        if (wt != null) {
+			        int primary = wt.getPrimaryTrainingSkill();
+			        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
+		        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
+		        				this, assistants, trainerlevel, intensity, stamina), 3);
+		        		if (gain > 0) {
+		        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
+		        		}
+		        	}
+		        }
 	        }
 	        if (tp != null && tp.getSecondary() > 0) {
 		        int trType = trPlayer.getTrainingWeek().getTrainingType();
 		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-		        
-		        int secondary = wt.getSecondaryTrainingSkill();
-		        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
-	        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
-	        				this, assistants, trainerlevel, intensity, stamina), 3);
-	        		if (gain > 0) {
-	        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
-	        		}
-	        	}
+		        if (wt != null) {
+			        int secondary = wt.getSecondaryTrainingSkill();
+			        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
+		        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
+		        				this, assistants, trainerlevel, intensity, stamina), 3);
+		        		if (gain > 0) {
+		        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
+		        		}
+		        	}
+		        }
 	        }
         }
     }
@@ -1698,28 +1700,30 @@ public final class Spieler {
 		        if (tp != null && tp.getPrimary() > 0) {
 			        int trType = trainingWeek.getTrainingType();
 			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			        
-			        int primary = wt.getPrimaryTrainingSkill();
-			        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
-		        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
-		        				this, assistants, trainerlevel, intensity, stamina), 3);
-		        		if (gain > 0) {
-		        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
-		        		}
-		        	}
+			        if (wt != null) {
+				        int primary = wt.getPrimaryTrainingSkill();
+				        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
+			        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
+			        				this, assistants, trainerlevel, intensity, stamina), 3);
+			        		if (gain > 0) {
+			        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
+			        		}
+			        	}
+			        }
 		        }
 		        if (tp != null && tp.getSecondary() > 0) {
 			        int trType = trainingWeek.getTrainingType();
 			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			        
-			        int secondary = wt.getSecondaryTrainingSkill();
-			        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
-		        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
-		        				this, assistants, trainerlevel, intensity, stamina), 3);
-		        		if (gain > 0) {
-		        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
-		        		}
-		        	}
+			        if (wt != null) {
+				        int secondary = wt.getSecondaryTrainingSkill();
+				        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
+			        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
+			        				this, assistants, trainerlevel, intensity, stamina), 3);
+			        		if (gain > 0) {
+			        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
+			        		}
+			        	}
+			        }
 		        }
 	    	}
     	}
