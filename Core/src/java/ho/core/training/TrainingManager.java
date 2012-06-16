@@ -165,59 +165,61 @@ public class TrainingManager {
         
         Calendar trainingDate = train.getTrainingDate();
         WeeklyTrainingType wt = WeeklyTrainingType.instance(train.getTrainingType());
-        try {
-        	List<Integer> matches = getMatchesForTraining(trainingDate);
-        	int myID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        	TrainingWeekPlayer tp = new TrainingWeekPlayer();
-            tp.Name(spieler.getName());
-        	for (int i=0; i<matches.size(); i++) {
-                final int matchId = (matches.get(i)).intValue();
-                
-                //Get the MatchLineup by id
-                MatchLineupTeam mlt = DBManager.instance().getMatchLineupTeam(matchId, myID);
-                MatchStatistics ms = new MatchStatistics(matchId, mlt);
-                
-                if (wt.getPrimaryTrainingSkillPositions() != null) {
-                	tp.addPrimarySkillPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillPositions()));
-                }
-                if (wt.getPrimaryTrainingSkillBonusPositions() != null)
-                {
-                	tp.addPrimarySkillBonusPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillBonusPositions()));
-                }
-                if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null)
-                {
-                	tp.addPrimarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillSecondaryTrainingPositions()));
-                }
-                if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
-                	tp.addPrimarySkillOsmosisPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillOsmosisTrainingPositions()));
-                }
-                if (wt.getSecondaryTrainingSkillPositions() != null) {
-                	tp.addSecondarySkillPrimaryMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillPositions()));
-                }
-                if (wt.getSecondaryTrainingSkillBonusPositions() != null)
-                {
-                	tp.addSecondarySkillBonusMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillBonusPositions()));
-                }
-                if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null)
-                {
-                	tp.addSecondarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillSecondaryTrainingPositions()));
-                }
-                if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
-                	tp.addSecondarySkillOsmosisTrainingMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillOsmosisTrainingPositions()));
-                }
-            }
-            TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
-    		if (TrainingManager.TRAININGDEBUG) {
-				HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
-            		+": Player " + spieler.getName() + " (" + playerID + ")"
-            		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
-            		+ wt.getPrimaryTraining(tp) + " primary training points and " 
-            		+ wt.getSecondaryTraining(tp) + " secondary training points");
-    		}
-            output.setTrainingPair(trp);
-            output.setTrainingWeek(train);
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),e);
+        if (wt != null) {
+	        try {
+	        	List<Integer> matches = getMatchesForTraining(trainingDate);
+	        	int myID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+	        	TrainingWeekPlayer tp = new TrainingWeekPlayer();
+	            tp.Name(spieler.getName());
+	        	for (int i=0; i<matches.size(); i++) {
+	                final int matchId = (matches.get(i)).intValue();
+	                
+	                //Get the MatchLineup by id
+	                MatchLineupTeam mlt = DBManager.instance().getMatchLineupTeam(matchId, myID);
+	                MatchStatistics ms = new MatchStatistics(matchId, mlt);
+	                
+	                if (wt.getPrimaryTrainingSkillPositions() != null) {
+	                	tp.addPrimarySkillPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillPositions()));
+	                }
+	                if (wt.getPrimaryTrainingSkillBonusPositions() != null)
+	                {
+	                	tp.addPrimarySkillBonusPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillBonusPositions()));
+	                }
+	                if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null)
+	                {
+	                	tp.addPrimarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillSecondaryTrainingPositions()));
+	                }
+	                if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
+	                	tp.addPrimarySkillOsmosisPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillOsmosisTrainingPositions()));
+	                }
+	                if (wt.getSecondaryTrainingSkillPositions() != null) {
+	                	tp.addSecondarySkillPrimaryMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillPositions()));
+	                }
+	                if (wt.getSecondaryTrainingSkillBonusPositions() != null)
+	                {
+	                	tp.addSecondarySkillBonusMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillBonusPositions()));
+	                }
+	                if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null)
+	                {
+	                	tp.addSecondarySkillSecondaryPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillSecondaryTrainingPositions()));
+	                }
+	                if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
+	                	tp.addSecondarySkillOsmosisTrainingMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getSecondaryTrainingSkillOsmosisTrainingPositions()));
+	                }
+	            }
+	            TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+	    		if (TrainingManager.TRAININGDEBUG) {
+					HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
+	            		+": Player " + spieler.getName() + " (" + playerID + ")"
+	            		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
+	            		+ wt.getPrimaryTraining(tp) + " primary training points and " 
+	            		+ wt.getSecondaryTraining(tp) + " secondary training points");
+	    		}
+	            output.setTrainingPair(trp);
+	            output.setTrainingWeek(train);
+	        } catch (Exception e) {
+	            HOLogger.instance().log(getClass(),e);
+	        }
         }
         return output;
     }

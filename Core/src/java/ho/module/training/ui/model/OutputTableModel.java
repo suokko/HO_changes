@@ -187,11 +187,15 @@ public class OutputTableModel extends AbstractTableModel {
      * @return predicted training length
      */
     private double getTrainingLength (Spieler player, int skillIndex) {
+    	double dReturn = 0;
     	WeeklyTrainingType wt = WeeklyTrainingType.instance(Skills.getTrainedSkillCode(skillIndex));
-        return wt.getTrainingLength(player, TrainingPanel.getStaffPanel().getCoTrainerNumber(),
-        		TrainingPanel.getStaffPanel().getTrainerLevelNumber(),
-        		HOVerwaltung.instance().getModel().getTeam().getTrainingslevel(),
-        		HOVerwaltung.instance().getModel().getTeam().getStaminaTrainingPart());    	
+    	if (wt != null) {
+	        dReturn = wt.getTrainingLength(player, TrainingPanel.getStaffPanel().getCoTrainerNumber(),
+	        		TrainingPanel.getStaffPanel().getTrainerLevelNumber(),
+	        		HOVerwaltung.instance().getModel().getTeam().getTrainingslevel(),
+	        		HOVerwaltung.instance().getModel().getTeam().getStaminaTrainingPart());
+    	}
+    	return dReturn;
     }
 
     /**
