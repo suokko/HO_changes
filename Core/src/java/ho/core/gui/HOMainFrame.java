@@ -320,18 +320,21 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			new OptionenDialog(this).setVisible(true);
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
-					"Depending on database volume this process takes several minutes. Start recalculation ?",
-					"Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"),
+					HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
 			}
 		} else if (source.equals(m_jmTraining2)) { // recalc training (7 weeks)
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this,
-					"Start recalculation subskill recalculation for the last 7 weeks (since "
-							+ new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())
-							+ ")?", "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, 
+					HOVerwaltung.instance().getLanguageString("subskillRecalc7w1")
+					+ " " + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())
+							+ HOVerwaltung.instance().getLanguageString("subskillRecalc7w2"),
+							HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"), 
+							JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
@@ -346,9 +349,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}   else if (source.equals(m_jmCreditsItem)) { 
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(HO.VERSION).append("\n\n");
-			text.append("2003 development started by Thomas Werth & Volker Fischer.\n");
-			text.append("Since 2006 this project is open source and developed by changing developers.");
-			JOptionPane.showMessageDialog(null, text.toString(), "Credits", JOptionPane.INFORMATION_MESSAGE);
+			text.append(HOVerwaltung.instance().getLanguageString("MenuCredits"));
+			JOptionPane.showMessageDialog(null, text.toString(), 
+					HOVerwaltung.instance().getLanguageString("MenuCreditsChoice"),
+					JOptionPane.INFORMATION_MESSAGE);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			BrowserLauncher.openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmWikiItem)) { // Forum
