@@ -79,58 +79,17 @@ public class FutureTrainingManager {
 			TrainingWeekPlayer tp = new TrainingWeekPlayer();
 			tp.Name(player.getName());
 			WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			boolean bFound = false;
-			for (int i = 0; i < wt.getPrimaryTrainingSkillPositions().length; i++)
-			{
-				if(wt.getPrimaryTrainingSkillPositions()[i] == position) {
-					tp.addPrimarySkillPositionMinutes(90);
-					bFound = true;
-					if (wt.getPrimaryTrainingSkillBonusPositions() != null) {
-						for (int j = 0; j < wt.getPrimaryTrainingSkillBonusPositions().length; j++) {
-							if (wt.getPrimaryTrainingSkillBonusPositions()[j] == position) {
-								tp.addPrimarySkillBonusPositionMinutes(90);
-								break;
-							}
-						}
-					}
-					break;
-				}
-			}
-			if(!bFound) {
-				if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null) {
-					for (int i = 0; i < wt.getPrimaryTrainingSkillSecondaryTrainingPositions().length; i++)
-					{
-						if(wt.getPrimaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
-							tp.addPrimarySkillSecondaryPositionMinutes(90);
-							bFound = true;
-							break;
-						}
-					}
-				}
-			}
-			if (!bFound) {
-				if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
-					for (int i = 0; i < wt.getPrimaryTrainingSkillOsmosisTrainingPositions().length; i++)
-					{
-						if(wt.getPrimaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
-							tp.addPrimarySkillOsmosisPositionMinutes(90);
-							bFound = true;
-							break;
-						}
-					}
-				}
-			}
-			bFound = false;
-			if (wt.getSecondaryTrainingSkillPositions() != null) {
-				for (int i = 0; i < wt.getSecondaryTrainingSkillPositions().length; i++)
+			if (wt != null) {
+				boolean bFound = false;
+				for (int i = 0; i < wt.getPrimaryTrainingSkillPositions().length; i++)
 				{
-					if(wt.getSecondaryTrainingSkillPositions()[i] == position) {
-						tp.addSecondarySkillPrimaryMinutes(90);
+					if(wt.getPrimaryTrainingSkillPositions()[i] == position) {
+						tp.addPrimarySkillPositionMinutes(90);
 						bFound = true;
-						if (wt.getSecondaryTrainingSkillBonusPositions() != null) {
-							for (int j = 0; j < wt.getSecondaryTrainingSkillBonusPositions().length; j++) {
-								if (wt.getSecondaryTrainingSkillBonusPositions()[j] == position) {
-									tp.addSecondarySkillBonusMinutes(90);
+						if (wt.getPrimaryTrainingSkillBonusPositions() != null) {
+							for (int j = 0; j < wt.getPrimaryTrainingSkillBonusPositions().length; j++) {
+								if (wt.getPrimaryTrainingSkillBonusPositions()[j] == position) {
+									tp.addPrimarySkillBonusPositionMinutes(90);
 									break;
 								}
 							}
@@ -138,37 +97,80 @@ public class FutureTrainingManager {
 						break;
 					}
 				}
-			}
-			if(!bFound) {
-				if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null) {
-					for (int i = 0; i < wt.getSecondaryTrainingSkillSecondaryTrainingPositions().length; i++)
+				if(!bFound) {
+					if (wt.getPrimaryTrainingSkillSecondaryTrainingPositions() != null) {
+						for (int i = 0; i < wt.getPrimaryTrainingSkillSecondaryTrainingPositions().length; i++)
+						{
+							if(wt.getPrimaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
+								tp.addPrimarySkillSecondaryPositionMinutes(90);
+								bFound = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!bFound) {
+					if (wt.getPrimaryTrainingSkillOsmosisTrainingPositions() != null) {
+						for (int i = 0; i < wt.getPrimaryTrainingSkillOsmosisTrainingPositions().length; i++)
+						{
+							if(wt.getPrimaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
+								tp.addPrimarySkillOsmosisPositionMinutes(90);
+								bFound = true;
+								break;
+							}
+						}
+					}
+				}
+				bFound = false;
+				if (wt.getSecondaryTrainingSkillPositions() != null) {
+					for (int i = 0; i < wt.getSecondaryTrainingSkillPositions().length; i++)
 					{
-						if(wt.getSecondaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
-							tp.addSecondarySkillSecondaryPositionMinutes(90);
+						if(wt.getSecondaryTrainingSkillPositions()[i] == position) {
+							tp.addSecondarySkillPrimaryMinutes(90);
 							bFound = true;
+							if (wt.getSecondaryTrainingSkillBonusPositions() != null) {
+								for (int j = 0; j < wt.getSecondaryTrainingSkillBonusPositions().length; j++) {
+									if (wt.getSecondaryTrainingSkillBonusPositions()[j] == position) {
+										tp.addSecondarySkillBonusMinutes(90);
+										break;
+									}
+								}
+							}
 							break;
 						}
 					}
 				}
-			}
-			if (!bFound) {
-				if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
-					for (int i = 0; i < wt.getSecondaryTrainingSkillOsmosisTrainingPositions().length; i++)
-					{
-						if(wt.getSecondaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
-							tp.addSecondarySkillOsmosisTrainingMinutes(90);
-							bFound = true;
-							break;
+				if(!bFound) {
+					if (wt.getSecondaryTrainingSkillSecondaryTrainingPositions() != null) {
+						for (int i = 0; i < wt.getSecondaryTrainingSkillSecondaryTrainingPositions().length; i++)
+						{
+							if(wt.getSecondaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
+								tp.addSecondarySkillSecondaryPositionMinutes(90);
+								bFound = true;
+								break;
+							}
 						}
 					}
 				}
+				if (!bFound) {
+					if (wt.getSecondaryTrainingSkillOsmosisTrainingPositions() != null) {
+						for (int i = 0; i < wt.getSecondaryTrainingSkillOsmosisTrainingPositions().length; i++)
+						{
+							if(wt.getSecondaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
+								tp.addSecondarySkillOsmosisTrainingMinutes(90);
+								bFound = true;
+								break;
+							}
+						}
+					}
+				}
+				TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
+				//System.out.println(wt.getName() + ", " + wt.getTrainingType() + ", Week: " + weeksPassed + ", " + player.getName() + ", Position: " + position + ", Primary: " + trp.getPrimary() + ", Secondary: " + trp.getSecondary());
+		//			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
+				// Depending on the type of training, update the proper skill with the provided training points
+							
+				processTraining(wt, trp, tw);
 			}
-			TrainingPoints trp = new TrainingPoints(wt.getPrimaryTraining(tp), wt.getSecondaryTraining(tp));
-			//System.out.println(wt.getName() + ", " + wt.getTrainingType() + ", Week: " + weeksPassed + ", " + player.getName() + ", Position: " + position + ", Primary: " + trp.getPrimary() + ", Secondary: " + trp.getSecondary());
-//			HOLogger.instance().log(getClass(),position + " " + point + " " + tw.getTyp());
-			// Depending on the type of training, update the proper skill with the provided training points
-						
-			processTraining(wt, trp, tw);
 		}		
 		FuturePlayer fp = new FuturePlayer();				
 		fp.setAttack(getFinalValue(PlayerSkill.SCORING));		

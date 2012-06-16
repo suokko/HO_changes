@@ -36,7 +36,7 @@ public abstract class WeeklyTrainingType {
 	
 	public static WeeklyTrainingType instance(int iTrainingType)
 	{
-		WeeklyTrainingType wt = CrossingWeeklyTraining.instance();
+		WeeklyTrainingType wt = null;
 		switch (iTrainingType) {
 	        case TrainingType.CROSSING_WINGER:
 				wt = CrossingWeeklyTraining.instance();
