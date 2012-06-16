@@ -111,7 +111,7 @@ public class ConvertXml2Hrf {
 			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
 				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
-					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID()));
+					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID(), 1));
 					break;
 				}
 			}
@@ -411,10 +411,15 @@ public class ConvertXml2Hrf {
     	return "0";
     }
     
-    /**
-     * Erstellt die LineUp Daten
-     */
-    public final StringBuffer createLineUp(StringBuffer buffer, String trainerId, Map<?, ?> nextLineup) throws Exception {
+   /**
+    * Creates the lineup data.
+    * @param buffer The string buffer that will be modified. Lineup info added.
+    * @param trainerId The playerId of the trainer of the club.
+    * @param nextLineup The lineup info hashmap from the parser.
+    * @return
+    * @throws Exception
+    */
+    public final void createLineUp(StringBuffer buffer, String trainerId, Map<?, ?> nextLineup) throws Exception {
     	buffer.append("[lineup]" + "\n");
 
         try {
@@ -475,7 +480,6 @@ public class ConvertXml2Hrf {
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }
-        return buffer;
     }
 
     /**
