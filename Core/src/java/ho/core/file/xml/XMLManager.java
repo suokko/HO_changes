@@ -27,11 +27,6 @@ import org.w3c.dom.Element;
  * @author thomas.werth
  */
 public class XMLManager  {
-    //~ Static fields/initializers -----------------------------------------------------------------
-
-    private static XMLManager m_clInstance;
-
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of XMLManager
@@ -39,23 +34,10 @@ public class XMLManager  {
     private XMLManager() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Get the singleton instance.
-     */
-    public static XMLManager instance() {
-        if (m_clInstance == null) {
-            m_clInstance = new XMLManager();
-        }
-
-        return m_clInstance;
-    }
-
     /**
      * liefert den Value des attributes sonst ""
      */
-    public String getAttributeValue(Element ele, String attributeName) {
+    public static String getAttributeValue(Element ele, String attributeName) {
         try {
             if ((ele != null) && (attributeName != null)) {
                 return ele.getAttribute(attributeName);
@@ -74,7 +56,7 @@ public class XMLManager  {
     /**
      * liefert den Value des ersten childes falls kein child vorhanden liefert ""
      */
-    public String getFirstChildNodeValue(Element ele) {
+    public static String getFirstChildNodeValue(Element ele) {
         try {
             if (ele.getFirstChild() != null) {
                 return ele.getFirstChild().getNodeValue();
@@ -88,7 +70,7 @@ public class XMLManager  {
     /**
      * Parse XM from file name.
      */
-    public Document parseFile(String dateiname) {
+    public static Document parseFile(String dateiname) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         Document doc = null;
@@ -101,8 +83,8 @@ public class XMLManager  {
 
             doc = builder.parse(new File(dateiname));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Parser error: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLManager.class,"Parser error: " + e);
+            HOLogger.instance().log(XMLManager.class,e);
         }
 
         return doc;
@@ -111,7 +93,7 @@ public class XMLManager  {
     /**
      * Parse XML from input stream.
      */
-	public Document parseFile(InputStream xmlStream) {
+	public static Document parseFile(InputStream xmlStream) {
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document doc = null;
@@ -120,8 +102,8 @@ public class XMLManager  {
 			builder = factory.newDocumentBuilder();
 			doc = builder.parse(xmlStream);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(), "Parser error: " + e);
-			HOLogger.instance().log(getClass(), e);
+			HOLogger.instance().log(XMLManager.class, "Parser error: " + e);
+			HOLogger.instance().log(XMLManager.class, e);
 		}
 
 		return doc;
@@ -130,7 +112,7 @@ public class XMLManager  {
     /**
      * Parse XML fro file.
      */
-    public Document parseFile(File datei) {
+    public static Document parseFile(File datei) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         Document doc = null;
@@ -143,8 +125,8 @@ public class XMLManager  {
 
             doc = builder.parse(datei);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Parser fehler: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLManager.class,"Parser fehler: " + e);
+            HOLogger.instance().log(XMLManager.class,e);
         }
 
         return doc;
@@ -153,7 +135,7 @@ public class XMLManager  {
     /**
      * parsed eine übergebene Datei
      */
-    public Document parseString(String inputString) {
+    public static Document parseString(String inputString) {
         //Fix to remove commented tag
         int indexComm = inputString.indexOf("<!--");
 
@@ -178,8 +160,8 @@ public class XMLManager  {
 
             doc = builder.parse(input);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"Parser fehler: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLManager.class,"Parser fehler: " + e);
+            HOLogger.instance().log(XMLManager.class,e);
         }
 
         return doc;
@@ -189,7 +171,7 @@ public class XMLManager  {
      * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
      * vorhanden
      */
-    public void writeXML(Document doc, String dateiname) {
+    public static void writeXML(Document doc, String dateiname) {
         //Transformer creation for DOM rewriting into XML file
         Transformer serializer = null;
         DOMSource source = null;
@@ -205,8 +187,8 @@ public class XMLManager  {
 
             serializer.transform(source, result);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLManager.writeXML: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLManager.class,"XMLManager.writeXML: " + e);
+            HOLogger.instance().log(XMLManager.class,e);
         }
     }
 
@@ -246,7 +228,7 @@ public class XMLManager  {
 	 * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
 	 * vorhanden
 	 */
-	public String getXML(Document doc) {
+	public static String getXML(Document doc) {
 		//Transformer creation for DOM rewriting into XML String
 		Transformer serializer = null;
 		DOMSource source = null;
@@ -261,8 +243,8 @@ public class XMLManager  {
 			serializer.transform(source, result);
 			xml = sw.toString();
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"XMLManager.writeXML: " + e);
-			HOLogger.instance().log(getClass(),e);
+			HOLogger.instance().log(XMLManager.class,"XMLManager.writeXML: " + e);
+			HOLogger.instance().log(XMLManager.class,e);
 		}
 		return xml;
 	}
@@ -270,28 +252,28 @@ public class XMLManager  {
 	/**
 	 * Parse the teamDetails from the given xml string.
 	 */
-	public Hashtable<String,String> parseTeamDetails(String teamDetails) {
+	public static Hashtable<String,String> parseTeamDetails(String teamDetails) {
 		return new xmlTeamDetailsParser().parseTeamdetails(teamDetails);
 	}
 
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public WorldDetailLeague[] parseWorldDetails(String worldDetails) {
+	public static  WorldDetailLeague[] parseWorldDetails(String worldDetails) {
 		return new XMLWorldDetailsParser().parseDetails(parseString(worldDetails));
 	}
 	
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public Hashtable<String,String> parseWorldDetails(String worldDetails, String leagueID) {
+	public static  Hashtable<String,String> parseWorldDetails(String worldDetails, String leagueID) {
 		return new XMLWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
 	}
 
 	/**
 	 * Parse the match lineup from the given xml string.
 	 */
-	public MatchLineup parseMatchLineup(String lineup) {
+	public static MatchLineup parseMatchLineup(String lineup) {
 		return new XMLMatchLineupParser().parseMatchLineupFromString(lineup);
 	}
 }

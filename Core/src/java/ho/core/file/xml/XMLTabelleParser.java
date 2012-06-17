@@ -40,13 +40,7 @@ public class XMLTabelleParser {
      * @return TODO Missing Return Method Documentation
      */
     public final LigaTabelle parseTabelle(String dateiname) {
-        LigaTabelle tbl = null;
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-        tbl = createTabelle(doc);
-
-        return tbl;
+        return createTabelle(XMLManager.parseFile(dateiname));
     }
 
     /**

@@ -32,12 +32,11 @@ class NtTeamDetailsParser {
 	private String fetchedDate;
 	private boolean parsingSuccess;
 
-	NtTeamDetailsParser(XMLManager xm, String xmlData) {
-		Document doc = xm.parseString(xmlData);
-	    parseDetails(xm, doc);
+	NtTeamDetailsParser(String xmlData) {
+	    parseDetails(XMLManager.parseString(xmlData));
 	}
 
-	private void parseDetails(XMLManager xm, Document doc) {
+	private void parseDetails(Document doc) {
         if (doc == null) {
             return;
         }
@@ -46,70 +45,70 @@ class NtTeamDetailsParser {
             Element root = doc.getDocumentElement();
             Element teamRoot;
             Element ele = (Element)root.getElementsByTagName("FetchedDate").item(0);
-            fetchedDate = xm.getFirstChildNodeValue(ele);
+            fetchedDate = XMLManager.getFirstChildNodeValue(ele);
 
             // root Team
             teamRoot = (Element) root.getElementsByTagName("Team").item(0);
             root = teamRoot;
             ele = (Element) root.getElementsByTagName("TeamID").item(0);
-            teamId = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            teamId = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("TeamName").item(0);
-            teamName = xm.getFirstChildNodeValue(ele);
+            teamName = XMLManager.getFirstChildNodeValue(ele);
             ele = (Element) root.getElementsByTagName("ShortTeamName").item(0);
-            teamNameShort = xm.getFirstChildNodeValue(ele);
+            teamNameShort = XMLManager.getFirstChildNodeValue(ele);
 
             // root national coach
             root = (Element) teamRoot.getElementsByTagName("NationalCoach").item(0);
             ele = (Element) root.getElementsByTagName("NationalCoachUserID").item(0);
-            coachId = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            coachId = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("NationalCoachLoginname").item(0);
-            coachName = xm.getFirstChildNodeValue(ele);
+            coachName = XMLManager.getFirstChildNodeValue(ele);
 
             // root League
             root = (Element) teamRoot.getElementsByTagName("League").item(0);
             ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-            leagueId = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            leagueId = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("LeagueName").item(0);
-            leagueName = xm.getFirstChildNodeValue(ele);
+            leagueName = XMLManager.getFirstChildNodeValue(ele);
 
             // root Trainer
             root = (Element) teamRoot.getElementsByTagName("Trainer").item(0);
             ele = (Element) root.getElementsByTagName("PlayerID").item(0);
-            trainerId = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            trainerId = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("PlayerName").item(0);
-            trainerName = xm.getFirstChildNodeValue(ele);
+            trainerName = XMLManager.getFirstChildNodeValue(ele);
 
             // root HomePage
             root = (Element) teamRoot.getElementsByTagName("HomePage").item(0);
-            homePageUrl = xm.getFirstChildNodeValue(root);
+            homePageUrl = XMLManager.getFirstChildNodeValue(root);
 
             // formation XP
             root = (Element) teamRoot.getElementsByTagName("Experience433").item(0);
-            xp433 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp433 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Experience451").item(0);
-            xp451 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp451 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Experience352").item(0);
-            xp352 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp352 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Experience532").item(0);
-            xp532 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp532 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Experience343").item(0);
-            xp343 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp343 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Experience541").item(0);
-            xp541 = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            xp541 = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
 
             // morale etc.
             root = (Element) teamRoot.getElementsByTagName("Morale").item(0);
-            morale = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            morale = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("SelfConfidence").item(0);
-            selfConfidence = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            selfConfidence = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("SupportersPopularity").item(0);
-            supportersPopularity = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            supportersPopularity = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("RatingScore").item(0);
-            ratingScore = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            ratingScore = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("FanClubSize").item(0);
-            fanclubSize = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            fanclubSize = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             root = (Element) teamRoot.getElementsByTagName("Rank").item(0);
-            rank = Integer.parseInt(xm.getFirstChildNodeValue(root));
+            rank = Integer.parseInt(XMLManager.getFirstChildNodeValue(root));
             parsingSuccess = true;
         } catch (Exception e) {
         	parsingSuccess = false;

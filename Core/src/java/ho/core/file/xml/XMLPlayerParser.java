@@ -39,13 +39,7 @@ public class XMLPlayerParser {
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
     public final Vector<Spieler> parsePlayer(String dateiname) {
-        Vector<Spieler> liste = null;
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-        liste = parseSpieler(doc);
-
-        return liste;
+        return parseSpieler(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -56,11 +50,7 @@ public class XMLPlayerParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Vector<Spieler> parsePlayer(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return parseSpieler(doc);
+        return parseSpieler(XMLManager.parseFile(datei));
     }
 
     /**

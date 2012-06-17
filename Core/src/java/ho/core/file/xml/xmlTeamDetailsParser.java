@@ -41,7 +41,7 @@ public class xmlTeamDetailsParser {
      */
     public final String fetchRegionID(String xmlFile) {
         try {
-            final Document doc = XMLManager.instance().parseString(xmlFile);
+            final Document doc = XMLManager.parseString(xmlFile);
             Element ele = null;
             Element root = null;
 
@@ -56,7 +56,7 @@ public class xmlTeamDetailsParser {
             root = (Element) root.getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("Region").item(0);
             ele = (Element) root.getElementsByTagName("RegionID").item(0);
-            return XMLManager.instance().getFirstChildNodeValue(ele);
+            return XMLManager.getFirstChildNodeValue(ele);
         } catch (Exception ex) {
             HOLogger.instance().log(getClass(),ex);
         }
@@ -74,7 +74,7 @@ public class xmlTeamDetailsParser {
     public final Hashtable<String, String> parseTeamdetails(String dateiname) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(dateiname);
+        doc = XMLManager.parseFile(dateiname);
 
         return parseDetails(doc);
     }
@@ -89,7 +89,7 @@ public class xmlTeamDetailsParser {
     public final Hashtable<?, ?> parseTeamdetails(java.io.File datei) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(datei);
+        doc = XMLManager.parseFile(datei);
 
         return parseDetails(doc);
     }
@@ -100,7 +100,7 @@ public class xmlTeamDetailsParser {
     public final Hashtable<?, ?> parseTeamdetailsFromString(String inputStream) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseString(inputStream);
+        doc = XMLManager.parseString(inputStream);
 
         return parseDetails(doc);
     }
@@ -132,51 +132,51 @@ public class xmlTeamDetailsParser {
             //Daten füllen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("FetchedDate", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("User").item(0);
             ele = (Element) root.getElementsByTagName("Loginname").item(0);
-            hash.put("Loginname", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Loginname", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastLoginDate").item(0);
-            hash.put("LastLoginDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastLoginDate", (XMLManager.getFirstChildNodeValue(ele)));
             
             // Is this in the xml? - Blaghaid
             ele = (Element) root.getElementsByTagName("Email").item(0);
-            hash.put("Email", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Email", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("ICQ").item(0);
-            hash.put("ICQ", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ICQ", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("HasSupporter").item(0);
-            hash.put("HasSupporter", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("HasSupporter", (XMLManager.getFirstChildNodeValue(ele)));
       
             //Root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
             ele = (Element) root.getElementsByTagName("TeamID").item(0);
-            hash.put("TeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("TeamName").item(0);
-            hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamName", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("HomePage").item(0);
-            hash.put("HomePage", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("HomePage", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LogoURL").item(0);
-            hash.put("LogoURL", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LogoURL", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("League").item(0);
             ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-            hash.put("LeagueID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LeagueID", (XMLManager.getFirstChildNodeValue(ele)));
 
             try {
                 //Root wechseln
                 root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
                 root = (Element) root.getElementsByTagName("LeagueLevelUnit").item(0);
                 ele = (Element) root.getElementsByTagName("LeagueLevel").item(0);
-                hash.put("LeagueLevel", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("LeagueLevel", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("LeagueLevelUnitName").item(0);
-                hash.put("LeagueLevelUnitName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("LeagueLevelUnitName", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("LeagueLevelUnitID").item(0);
-                hash.put("LeagueLevelUnitID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("LeagueLevelUnitID", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception ex) {
                 HOLogger.instance().log(getClass(),ex);
             }
@@ -185,9 +185,9 @@ public class xmlTeamDetailsParser {
                 //Root wechseln
                 root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
                 ele = (Element) root.getElementsByTagName("NumberOfVictories").item(0);
-                hash.put("NumberOfVictories", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("NumberOfVictories", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) root.getElementsByTagName("NumberOfUndefeated").item(0);
-                hash.put("NumberOfUndefeated", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("NumberOfUndefeated", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception exp) {
                 HOLogger.instance().log(getClass(),exp);
             }
@@ -196,19 +196,19 @@ public class xmlTeamDetailsParser {
             root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("Trainer").item(0);
             ele = (Element) root.getElementsByTagName("PlayerID").item(0);
-            hash.put("TrainerID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TrainerID", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln  //StadionName adden
             root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("Arena").item(0);
             ele = (Element) root.getElementsByTagName("ArenaName").item(0);
-            hash.put("ArenaName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ArenaName", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln  //RegionId
             root = (Element) doc.getDocumentElement().getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("Region").item(0);
             ele = (Element) root.getElementsByTagName("RegionID").item(0);
-            hash.put("RegionID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("RegionID", (XMLManager.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);

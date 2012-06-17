@@ -91,7 +91,7 @@ public class ConnTest {
 			br.close();
 			if (found) {
 				Document doc = null;
-		        doc = XMLManager.instance().parseString(sb.toString());
+		        doc = XMLManager.parseString(sb.toString());
 		        try {
 		        	String htserver = parseDetails(doc, log);
 		        	log.append("Test OK, Recommended HT server: " + htserver + LS);

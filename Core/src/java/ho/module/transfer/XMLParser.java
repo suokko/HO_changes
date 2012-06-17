@@ -55,12 +55,9 @@ public final class XMLParser {
     public static List<PlayerTransfer> getAllPlayerTransfers(int playerId) throws IOException {
         
     	final String xml = MyConnector.instance().getTransfersForPlayer(playerId);
-
-        final XMLManager parser = ho.core.file.xml.XMLManager.instance();
-
         final List<PlayerTransfer> transferList = new Vector<PlayerTransfer>();
 
-        final Document doc = parser.parseString(xml);
+        final Document doc = XMLManager.parseString(xml);
 
         //get Root element ('HattrickData') :
         final Element root = doc.getDocumentElement();
@@ -156,9 +153,7 @@ public final class XMLParser {
         int page = 0;
         while (stop == false) {
 	        final String xml = MyConnector.instance().getHattrickXMLFile(url+page); 
-
-	        final XMLManager parser = ho.core.file.xml.XMLManager.instance();
-	        final Document doc = parser.parseString(xml);
+	        final Document doc = XMLManager.parseString(xml);
 
 	        //get Root element ('HattrickData') :
 	        final Element root = doc.getDocumentElement();
@@ -204,7 +199,7 @@ public final class XMLParser {
 
                 if ((list != null) && (list.getLength() > 0)) {
                     final Element child = (Element) list.item(0);
-                    ho.core.file.xml.XMLManager.instance().getFirstChildNodeValue(child);
+                    ho.core.file.xml.XMLManager.getFirstChildNodeValue(child);
 
                     if ((child != null) && (element.getFirstChild() != null)) {
                         retval = child.getFirstChild().getNodeValue();

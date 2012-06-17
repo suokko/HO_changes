@@ -24,7 +24,7 @@ public class PluginIfaUtils {
 
 	private static Document getTeamDetails(int teamID) throws Exception {
 		String teamDetails = MyConnector.instance().getTeamdetails(teamID);
-		return XMLManager.instance().parseString(teamDetails);
+		return XMLManager.parseString(teamDetails);
 	}
 
 	private static String parseXmlElement(Document doc, String element,	int i, String eleText) {
@@ -34,7 +34,7 @@ public class PluginIfaUtils {
 			Element tmpEle = (Element) ele.getElementsByTagName(eleText)
 					.item(i);
 			tmpEle = (Element) tmpEle.getElementsByTagName(element).item(0);
-			value = XMLManager.instance().getFirstChildNodeValue(
+			value = XMLManager.getFirstChildNodeValue(
 					tmpEle);
 		} catch (Exception e) {
 			HOLogger.instance().error(PluginIfaUtils.class, e);
@@ -70,7 +70,7 @@ public class PluginIfaUtils {
 		StringBuilder errors = new StringBuilder();
 		String matchDate = from;
 		String matchesArchive = MyConnector.instance().getMatchArchiv(0,from,to);
-		Document doc =  XMLManager.instance().parseString(matchesArchive);
+		Document doc =  XMLManager.parseString(matchesArchive);
 		
 		int matchesCount = ((Element) doc.getDocumentElement()
 				.getElementsByTagName("MatchList").item(0))

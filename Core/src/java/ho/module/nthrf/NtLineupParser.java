@@ -24,9 +24,8 @@ class NtLineupParser {
 	private List<NtPlayerPosition> players = new ArrayList<NtPlayerPosition>(); // <NtPlayerPosition>
 	private boolean parsingSuccess;
 
-	NtLineupParser(XMLManager xm, String xmlData) {
-		Document doc = xm.parseString(xmlData);
-		parseDetails(xm, doc);
+	NtLineupParser(String xmlData) {
+		parseDetails(XMLManager.parseString(xmlData));
 	}
 
 	protected final NtPlayerPosition createPlayer(Element ele) throws Exception {
@@ -53,22 +52,22 @@ class NtLineupParser {
 		return pp;
 	}
 
-	private void parseDetails(XMLManager xm, Document doc) {
+	private void parseDetails(Document doc) {
         if (doc == null) {
             return;
         }
         try {
             Element root = doc.getDocumentElement();
             Element ele = (Element)root.getElementsByTagName("FetchedDate").item(0);
-            fetchedDate = xm.getFirstChildNodeValue(ele);
+            fetchedDate = XMLManager.getFirstChildNodeValue(ele);
             ele = (Element)root.getElementsByTagName("MatchID").item(0);
-            matchId = Long.parseLong(xm.getFirstChildNodeValue(ele));
+            matchId = Long.parseLong(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("IsYouth").item(0);
-            isYouth = Boolean.getBoolean(xm.getFirstChildNodeValue(ele).toLowerCase(java.util.Locale.ENGLISH));
+            isYouth = Boolean.getBoolean(XMLManager.getFirstChildNodeValue(ele).toLowerCase(java.util.Locale.ENGLISH));
             ele = (Element)root.getElementsByTagName("MatchType").item(0);
-            matchType = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            matchType = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("MatchDate").item(0);
-            matchDate = xm.getFirstChildNodeValue(ele);
+            matchDate = XMLManager.getFirstChildNodeValue(ele);
 
             // skip home team
             // skip away team
@@ -77,11 +76,11 @@ class NtLineupParser {
             // team
             root = (Element)root.getElementsByTagName("Team").item(0);
             ele = (Element)root.getElementsByTagName("TeamID").item(0);
-            teamId = Long.parseLong(xm.getFirstChildNodeValue(ele));
+            teamId = Long.parseLong(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("TeamName").item(0);
-            teamName = xm.getFirstChildNodeValue(ele);
+            teamName = XMLManager.getFirstChildNodeValue(ele);
             ele = (Element)root.getElementsByTagName("ExperienceLevel").item(0);
-            xpLevel = Integer.parseInt(xm.getFirstChildNodeValue(ele));
+            xpLevel = Integer.parseInt(XMLManager.getFirstChildNodeValue(ele));
 
             // lineup players
             root = (Element)root.getElementsByTagName("Lineup").item(0);
