@@ -78,7 +78,8 @@ public class TestPanel extends JPanel {
 		int matchId = elem.getMatch().getMatchID();
 
 		OnlineWorker ow = new OnlineWorker();
-		ow.setMatchOrder(matchId, HOVerwaltung.instance().getModel().getAufstellung());
+		ow.uploadMatchOrder(matchId, elem.getMatch().getMatchTyp(),
+								HOVerwaltung.instance().getModel().getAufstellung());
 	}
 
 	private class ListElement {
