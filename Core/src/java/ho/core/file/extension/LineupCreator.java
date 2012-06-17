@@ -86,7 +86,7 @@ public class LineupCreator extends XMLCreator {
 			
 			File f = new File(dir, lineupName + ".xml");
 			BufferedWriter bw = new BufferedWriter(new FileWriter(f));	
-			bw.write(XMLManager.instance().getXML(doc));				
+			bw.write(XMLManager.getXML(doc));				
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {

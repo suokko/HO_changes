@@ -48,11 +48,7 @@ public class XMLMatchesParser {
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
     public final MatchKurzInfo[] parseMatches(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
-        return createMatches(doc);
+        return createMatches(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -63,11 +59,7 @@ public class XMLMatchesParser {
      * @return TODO Missing Return Method Documentation
      */
     public final MatchKurzInfo[] parseMatches(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return createMatches(doc);
+        return createMatches(XMLManager.parseFile(datei));
     }
 
     /**
@@ -78,11 +70,7 @@ public class XMLMatchesParser {
      * @return TODO Missing Return Method Documentation
      */
     public final MatchKurzInfo[] parseMatchesFromString(String input) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(input);
-
-        return createMatches(doc);
+        return createMatches(XMLManager.parseString(input));
     }
 
     /**

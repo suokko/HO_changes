@@ -51,7 +51,7 @@ public class xmlMatchdetailsParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Matchdetails parseMachtdetailsFromString(String input) {
-        return createMatchdetails(XMLManager.instance().parseString(input));
+        return createMatchdetails(XMLManager.parseString(input));
     }
 
     /////////////////////////////////////////////////////////////////////////////////    
@@ -61,7 +61,7 @@ public class xmlMatchdetailsParser {
         Matchdetails md = null;
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(dateiname);
+        doc = XMLManager.parseFile(dateiname);
         md = createMatchdetails(doc);
 
         return md;
@@ -77,7 +77,7 @@ public class xmlMatchdetailsParser {
     public final Matchdetails parseMatchdetails(java.io.File datei) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(datei);
+        doc = XMLManager.parseFile(datei);
 
         return createMatchdetails(doc);
     }
@@ -133,10 +133,10 @@ public class xmlMatchdetailsParser {
             root = (Element) root.getElementsByTagName("Match").item(0);
             //get both teams
             ele = (Element) root.getElementsByTagName("HomeTeam").item(0);
-            final String homeTeamID = XMLManager.instance().getFirstChildNodeValue((Element) ele.getElementsByTagName("HomeTeamID")
+            final String homeTeamID = XMLManager.getFirstChildNodeValue((Element) ele.getElementsByTagName("HomeTeamID")
                                                                                                         .item(0));
 //            ele = (Element) root.getElementsByTagName("AwayTeam").item(0);
-//            final String awayTeamID = XMLManager.instance().getFirstChildNodeValue((Element) ele.getElementsByTagName("AwayTeamID")
+//            final String awayTeamID = XMLManager.getFirstChildNodeValue((Element) ele.getElementsByTagName("AwayTeamID")
 //                                                                                                        .item(0));
             
             final Vector<Vector<String>> homeTeamPlayers = parseLineup (lineup.getHeim().getAufstellung());
@@ -153,24 +153,20 @@ public class xmlMatchdetailsParser {
             	root = (Element) eventList.getElementsByTagName("Event").item(n);
 
             	//get values from xml
-            	final int minute = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("Minute")
+            	final int minute = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("Minute")
             					.item(0))))
             					.intValue();
-            	final int subjectplayerid = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectPlayerID")
+            	final int subjectplayerid = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectPlayerID")
             					.item(0))))
             					.intValue();
-            	final int subjectteamid = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectTeamID")
+            	final int subjectteamid = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("SubjectTeamID")
             					.item(0))))
             					.intValue();
-            	final int objectplayerid = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("ObjectPlayerID")
+            	final int objectplayerid = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("ObjectPlayerID")
             					.item(0))))
             					.intValue();
 
-            	String eventtext = XMLManager.instance().getFirstChildNodeValue((Element) root.getElementsByTagName("EventText")
+            	String eventtext = XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventText")
             			.item(0));
             	eventtext = eventtext.replaceAll("&lt;", "<");
             	eventtext = eventtext.replaceAll("&gt;", ">");
@@ -178,13 +174,11 @@ public class xmlMatchdetailsParser {
             	eventtext = eventtext.replaceAll("&quot;", "\"");
             	eventtext = eventtext.replaceAll("&amp;", "&");
 
-            	final int highlighttyp = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
+            	final int highlighttyp = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
             					.item(0))))
             					.intValue();
             	
-            	final int highlightsubtyp = (Integer.valueOf(XMLManager.instance()
-            			.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
+            	final int highlightsubtyp = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
             					.item(0))))
             					.intValue();
 
@@ -746,19 +740,19 @@ public class xmlMatchdetailsParser {
             /*
                //subRatings
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidfield" ).item (0);
-               md.setGuestMidfieldSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setGuestMidfieldSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingRightDef" ).item (0);
-               md.setGuestRightDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setGuestRightDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidDef" ).item (0);
-               md.setGuestMidDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setGuestMidDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftDef" ).item (0);
-               md.setGuestLeftDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setGuestLeftDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingRightAtt" ).item (0);
-               md.setGuestRightAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setGuestRightAttSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidAtt" ).item (0);
-               md.setGuestMidAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele )  );
+               md.setGuestMidAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftAtt" ).item (0);
-               md.setGuestLeftAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele )  );
+               md.setGuestLeftAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
              */
             try {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);
@@ -819,19 +813,19 @@ public class xmlMatchdetailsParser {
             /*
                //subRatings
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidfield" ).item (0);
-               md.setHomeMidfieldSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setHomeMidfieldSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingRightDef" ).item (0);
-               md.setHomeRightDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setHomeRightDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidDef" ).item (0);
-               md.setHomeMidDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setHomeMidDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftDef" ).item (0);
-               md.setHomeLeftDefSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setHomeLeftDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingRightAtt" ).item (0);
-               md.setHomeRightAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele ) );
+               md.setHomeRightAttSub ( XMLManager.getFirstChildNodeValue ( ele ) );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingMidAtt" ).item (0);
-               md.setHomeMidAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele )  );
+               md.setHomeMidAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
                ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftAtt" ).item (0);
-               md.setHomeLeftAttSub ( XMLManager.instance().getFirstChildNodeValue ( ele )  );
+               md.setHomeLeftAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
              */
             try {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);

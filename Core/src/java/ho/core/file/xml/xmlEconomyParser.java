@@ -43,7 +43,7 @@ public class xmlEconomyParser {
     public final Hashtable<?, ?> parseEconomy(String dateiname) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(dateiname);
+        doc = XMLManager.parseFile(dateiname);
 
         return parseDetails(doc);
     }
@@ -58,7 +58,7 @@ public class xmlEconomyParser {
     public final Hashtable<?, ?> parseEconomy(java.io.File datei) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(datei);
+        doc = XMLManager.parseFile(datei);
 
         return parseDetails(doc);
     }
@@ -69,7 +69,7 @@ public class xmlEconomyParser {
     public final Hashtable<?, ?> parseEconomyFromString(String inputStream) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseString(inputStream);
+        doc = XMLManager.parseString(inputStream);
 
         return parseDetails(doc);
     }
@@ -101,33 +101,33 @@ public class xmlEconomyParser {
             //Daten füllen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("FetchedDate", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("Team").item(0);
             ele = (Element) root.getElementsByTagName("TeamID").item(0);
-            hash.put("TeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("TeamName").item(0);
-            hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamName", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("Cash").item(0);
-            hash.put("Cash", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Cash", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("ExpectedCash").item(0);
-            hash.put("ExpectedCash", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ExpectedCash", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             // root =  (Element) doc.getDocumentElement().getElementsByTagName( "Team").item( 0 );
             ele = (Element) root.getElementsByTagName("SponsorsPopularity").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("SponsorsPopularity", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            if (XMLManager.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+                hash.put("SponsorsPopularity", (XMLManager.getFirstChildNodeValue(ele)));
             }
 
             ele = (Element) root.getElementsByTagName("SupportersPopularity").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+            if (XMLManager.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
             	// workaround for HT bug from 19.02.2008: copy current supporter mood level
-            	String supPop = XMLManager.instance().getFirstChildNodeValue(ele);
+            	String supPop = XMLManager.getFirstChildNodeValue(ele);
             	if (supPop == null || supPop.trim().equals("")) {
             		supPop = ""+HOVerwaltung.instance().getModel().getFinanzen().getSupporter();
             	}
@@ -135,73 +135,73 @@ public class xmlEconomyParser {
             }
 
             ele = (Element) root.getElementsByTagName("FanClubSize").item(0);
-            hash.put("FanClubSize", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("FanClubSize", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("IncomeSpectators").item(0);
-            hash.put("IncomeSpectators", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeSpectators", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("IncomeSponsors").item(0);
-            hash.put("IncomeSponsors", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeSponsors", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             //root =  (Element) root.getElementsByTagName( "League").item( 0 );
             ele = (Element) root.getElementsByTagName("IncomeFinancial").item(0);
-            hash.put("IncomeFinancial", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeFinancial", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("IncomeTemporary").item(0);
-            hash.put("IncomeTemporary", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeTemporary", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("IncomeSum").item(0);
-            hash.put("IncomeSum", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeSum", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("CostsArena").item(0);
-            hash.put("CostsArena", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsArena", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("CostsPlayers").item(0);
-            hash.put("CostsPlayers", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsPlayers", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("CostsFinancial").item(0);
-            hash.put("CostsFinancial", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsFinancial", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("CostsTemporary").item(0);
-            hash.put("CostsTemporary", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsTemporary", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("CostsStaff").item(0);
-            hash.put("CostsStaff", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsStaff", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("CostsYouth").item(0);
-            hash.put("CostsYouth", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsYouth", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("CostsSum").item(0);
-            hash.put("CostsSum", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("CostsSum", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("ExpectedWeeksTotal").item(0);
-            hash.put("ExpectedWeeksTotal", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ExpectedWeeksTotal", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("LastIncomeSpectators").item(0);
-            hash.put("LastIncomeSpectators", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastIncomeSpectators", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("LastIncomeSponsors").item(0);
-            hash.put("LastIncomeSponsors", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastIncomeSponsors", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("IncomeSpectators").item(0);
-            hash.put("IncomeSpectators", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeSpectators", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("IncomeSponsors").item(0);
-            hash.put("IncomeSponsors", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("IncomeSponsors", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastIncomeFinancial").item(0);
-            hash.put("LastIncomeFinancial", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastIncomeFinancial", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("LastIncomeTemporary").item(0);
-            hash.put("LastIncomeTemporary", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastIncomeTemporary", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastIncomeSum").item(0);
-            hash.put("LastIncomeSum", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastIncomeSum", (XMLManager.getFirstChildNodeValue(ele)));
 
             ele = (Element) root.getElementsByTagName("LastCostsArena").item(0);
-            hash.put("LastCostsArena", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsArena", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsPlayers").item(0);
-            hash.put("LastCostsPlayers", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsPlayers", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsFinancial").item(0);
-            hash.put("LastCostsFinancial", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsFinancial", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsTemporary").item(0);
-            hash.put("LastCostsTemporary", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsTemporary", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsStaff").item(0);
-            hash.put("LastCostsStaff", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsStaff", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsYouth").item(0);
-            hash.put("LastCostsYouth", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsYouth", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastCostsSum").item(0);
-            hash.put("LastCostsSum", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastCostsSum", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("LastWeeksTotal").item(0);
-            hash.put("LastWeeksTotal", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LastWeeksTotal", (XMLManager.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLExonom<Parser.parseDetails Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);

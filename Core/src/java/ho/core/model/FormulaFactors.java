@@ -184,16 +184,15 @@ public class FormulaFactors {
      * @param dateiname the filename of the xml config
      */
     public void readFromXML(String defaults) {
-		final XMLManager manager = XMLManager.instance();
 		Document doc = null;
 
 		if (new File(defaults).exists()) {
-			doc = manager.parseFile(defaults);
+			doc = XMLManager.parseFile(defaults);
 		} else {
 			HOLogger.instance().debug(getClass(), "File " + defaults + " not found");
 			try {
 				final ClassLoader loader = getClass().getClassLoader();
-				doc = manager.parseFile(loader.getResourceAsStream(defaults));
+				doc = XMLManager.parseFile(loader.getResourceAsStream(defaults));
 			} catch (Exception e) {
 				HOLogger.instance().debug(getClass(), "Error loading " + defaults + " as resource: " + e);
 			}
@@ -245,27 +244,26 @@ public class FormulaFactors {
     public FactorObject readObject(String tagname, Element root) {
         Element ele = null;
         final FactorObject factorObject = new FactorObject(null);
-        final XMLManager manager = XMLManager.instance();
         try {
             root = (Element) root.getElementsByTagName(tagname).item(0);
 
             //Daten füllen
             ele = (Element) root.getElementsByTagName("Position").item(0);
-            factorObject.setPosition(Byte.parseByte(manager.getFirstChildNodeValue(ele)));
+            factorObject.setPosition(Byte.parseByte(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("defense").item(0);
-            factorObject.setVerteidigung(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setVerteidigung(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("passing").item(0);
-            factorObject.setPasspiel(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setPasspiel(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("playmaking").item(0);
-            factorObject.setSpielaufbau(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setSpielaufbau(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("scoring").item(0);
-            factorObject.setTorschuss(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setTorschuss(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("wing").item(0);
-            factorObject.setFluegelspiel(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setFluegelspiel(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("keeper").item(0);
-            factorObject.setTorwart(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setTorwart(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("standard").item(0);
-            factorObject.setStandards(Float.parseFloat(manager.getFirstChildNodeValue(ele)));
+            factorObject.setStandards(Float.parseFloat(XMLManager.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"FormulaFactor.redxmlException gefangen: " + e);
             HOLogger.instance().log(getClass(),e);
@@ -322,7 +320,7 @@ public class FormulaFactors {
             writeFaktorObj(doc, m_clSturm, tmpEle, "FW");
 
             //doc.appendChild ( ele );
-            XMLManager.instance().writeXML(doc, filename);
+            XMLManager.writeXML(doc, filename);
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLManager.writeXML: " + e);
             HOLogger.instance().log(getClass(),e);

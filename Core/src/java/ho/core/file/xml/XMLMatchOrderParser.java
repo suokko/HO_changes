@@ -43,14 +43,11 @@ public class XMLMatchOrderParser {
 	 * Parse match orders from a file.
 	 */
 	public static Map<String, String> parseMatchOrder(File datei) {
-		Document doc = XMLManager.instance().parseFile(datei);
-		return parseDetails(doc);
+		return parseDetails(XMLManager.parseFile(datei));
 	}
 
 	public static Map<String, String> parseMatchOrderFromString(String xmlData) {
-		Document doc = null;
-		doc = XMLManager.instance().parseString(xmlData);
-		return parseDetails(doc);
+		return parseDetails(XMLManager.parseString(xmlData));
 	}
 
 	/**
@@ -64,7 +61,7 @@ public class XMLMatchOrderParser {
 		String name = "";
 
 		tmp = (Element) ele.getElementsByTagName("PlayerID").item(0);
-		spielerID = XMLManager.instance().getFirstChildNodeValue(tmp);
+		spielerID = XMLManager.getFirstChildNodeValue(tmp);
 
 		if (spielerID.trim().equals("")) {
 			spielerID = "-1";
@@ -72,17 +69,17 @@ public class XMLMatchOrderParser {
 
 		tmp = (Element) ele.getElementsByTagName("RoleID").item(0);
 		if (tmp != null) {
-			roleID = Integer.parseInt(XMLManager.instance().getFirstChildNodeValue(tmp));
+			roleID = Integer.parseInt(XMLManager.getFirstChildNodeValue(tmp));
 		}
 
 		tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
-		name = XMLManager.instance().getFirstChildNodeValue(tmp);
+		name = XMLManager.getFirstChildNodeValue(tmp);
 
 		// individual orders only for the 10 players in the lineup (starting11 -
 		// keeper)
 		if ((roleID > ISpielerPosition.keeper) && (roleID < ISpielerPosition.startReserves)) {
 			tmp = (Element) ele.getElementsByTagName("Behaviour").item(0);
-			behavior = XMLManager.instance().getFirstChildNodeValue(tmp);
+			behavior = XMLManager.getFirstChildNodeValue(tmp);
 		}
 
 		switch (roleID) {
@@ -300,37 +297,37 @@ public class XMLMatchOrderParser {
 
 		tmp = (Element) ele.getElementsByTagName("MatchMinuteCriteria").item(0);
 		if (tmp != null) {
-			matchMinuteCriteria = XMLManager.instance().getFirstChildNodeValue(tmp);
+			matchMinuteCriteria = XMLManager.getFirstChildNodeValue(tmp);
 		}
 
 		tmp = (Element) ele.getElementsByTagName("GoalDiffCriteria").item(0);
 		if (tmp != null) {
-			standing = XMLManager.instance().getFirstChildNodeValue(tmp);
+			standing = XMLManager.getFirstChildNodeValue(tmp);
 		}
 		tmp = (Element) ele.getElementsByTagName("RedCardCriteria").item(0);
 		if (tmp != null) {
-			card = XMLManager.instance().getFirstChildNodeValue(tmp);
+			card = XMLManager.getFirstChildNodeValue(tmp);
 		}
 		tmp = (Element) ele.getElementsByTagName("SubjectPlayerID").item(0);
 		if (tmp != null) {
-			playerOut = XMLManager.instance().getFirstChildNodeValue(tmp);
+			playerOut = XMLManager.getFirstChildNodeValue(tmp);
 		}
 		tmp = (Element) ele.getElementsByTagName("ObjectPlayerID").item(0);
 		if (tmp != null) {
-			playerIn = XMLManager.instance().getFirstChildNodeValue(tmp);
+			playerIn = XMLManager.getFirstChildNodeValue(tmp);
 		}
 
 		tmp = (Element) ele.getElementsByTagName("OrderType").item(0);
 		if (tmp != null) {
-			orderType = XMLManager.instance().getFirstChildNodeValue(tmp);
+			orderType = XMLManager.getFirstChildNodeValue(tmp);
 		}
 		tmp = (Element) ele.getElementsByTagName("NewPositionId").item(0);
 		if (tmp != null) {
-			pos = XMLManager.instance().getFirstChildNodeValue(tmp);
+			pos = XMLManager.getFirstChildNodeValue(tmp);
 		}
 		tmp = (Element) ele.getElementsByTagName("NewPositionBehaviour").item(0);
 		if (tmp != null) {
-			behaviour = XMLManager.instance().getFirstChildNodeValue(tmp);
+			behaviour = XMLManager.getFirstChildNodeValue(tmp);
 		}
 
 		map.put("subst" + num + "playerOrderID", playerOrderID);
@@ -369,41 +366,41 @@ public class XMLMatchOrderParser {
 			// Daten füllen
 			// Fetchdate
 			ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-			hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("FetchedDate", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("MatchID").item(0);
-			hash.put("MatchID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("MatchID", (XMLManager.getFirstChildNodeValue(ele)));
 
 			// Root wechseln
 			root = (Element) root.getElementsByTagName("MatchData").item(0);
 
-			if (!XMLManager.instance().getAttributeValue(root, "Available").trim().equalsIgnoreCase("true")) {
+			if (!XMLManager.getAttributeValue(root, "Available").trim().equalsIgnoreCase("true")) {
 				return hash;
 			}
 
 			ele = (Element) root.getElementsByTagName("Attitude").item(0);
 
-			if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-				hash.put("Attitude", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			if (XMLManager.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+				hash.put("Attitude", (XMLManager.getFirstChildNodeValue(ele)));
 			} else {
 				hash.put("Attitude", "0");
 			}
 
 			ele = (Element) root.getElementsByTagName("HomeTeamID").item(0);
-			hash.put("HomeTeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("HomeTeamID", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("HomeTeamName").item(0);
-			hash.put("HomeTeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("HomeTeamName", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("AwayTeamID").item(0);
-			hash.put("AwayTeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("AwayTeamID", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("AwayTeamName").item(0);
-			hash.put("AwayTeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("AwayTeamName", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("MatchDate").item(0);
-			hash.put("MatchDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("MatchDate", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("ArenaID").item(0);
-			hash.put("ArenaID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("ArenaID", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("ArenaName").item(0);
-			hash.put("ArenaName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("ArenaName", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("TacticType").item(0);
-			hash.put("TacticType", (XMLManager.instance().getFirstChildNodeValue(ele)));
+			hash.put("TacticType", (XMLManager.getFirstChildNodeValue(ele)));
 
 			// Root wechseln
 			Element child = (Element) root.getElementsByTagName("Lineup").item(0);

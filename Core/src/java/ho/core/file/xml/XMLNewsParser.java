@@ -41,11 +41,7 @@ public class XMLNewsParser {
      * @return TODO Missing Return Method Documentation
      */
     public final News parseNews(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(dateiname);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(dateiname));
     }
 
     /**
@@ -56,22 +52,14 @@ public class XMLNewsParser {
      * @return TODO Missing Return Method Documentation
      */
     public final News parseNews(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseFile(datei));
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     //parse public
     ////////////////////////////////////////////////////////////////////////////////
     public final News parseNewsFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(inputStream));
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +92,7 @@ public class XMLNewsParser {
 			NodeList list = root.getElementsByTagName("text");
 			for (int i = 0; (list != null) && (i < list.getLength()); i++) {
 				root = (Element) list.item(i);								
-				news.addMessage(XMLManager.instance().getFirstChildNodeValue(root));					
+				news.addMessage(XMLManager.getFirstChildNodeValue(root));					
 			}						     
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLExonom<Parser.parseDetails Exception gefangen: " + e);            
@@ -114,7 +102,7 @@ public class XMLNewsParser {
 
 	private String getTagValue(Element root, String tag) {
 		final Element ele = (Element) root.getElementsByTagName(tag).item(0);
-		return (XMLManager.instance().getFirstChildNodeValue(ele));
+		return (XMLManager.getFirstChildNodeValue(ele));
 	}
 	
 	private int getIntTagValue(Element root, String tag) {

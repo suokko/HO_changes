@@ -26,10 +26,9 @@ class NthrfUtil {
      */
     static boolean createNthrf(long teamId) {
         try {
-        	XMLManager xp = XMLManager.instance();
             MyConnector dh = MyConnector.instance();
             NthrfConvertXml2Hrf x2h = new NthrfConvertXml2Hrf();
-            x2h.createHrf(teamId, dh, xp);
+            x2h.createHrf(teamId, dh);
             JFileChooser fileChooser = new JFileChooser();
 
             final String fname = "/nt_"+teamId+"_"+new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".hrf";
@@ -88,7 +87,7 @@ class NthrfUtil {
     	List<String[]> ret = new ArrayList<String[]>();
         try {
             String xmldata = MyConnector.instance().getHattrickXMLFile("/chppxml.axd?file=team");
-            final Document doc = XMLManager.instance().parseString(xmldata);
+            final Document doc = XMLManager.parseString(xmldata);
             Element ele = null;
             Element root = null;
             Element nt = null;
@@ -105,8 +104,8 @@ class NthrfUtil {
             		nt = (Element) root.getElementsByTagName("NationalTeam").item(m);
             		ele = (Element) nt.getElementsByTagName("NationalTeamID").item(0);
             		Element eName = (Element) nt.getElementsByTagName("NationalTeamName").item(0);
-            		String tid =XMLManager.instance().getFirstChildNodeValue(ele);
-            		String name = XMLManager.instance().getFirstChildNodeValue(eName);
+            		String tid =XMLManager.getFirstChildNodeValue(ele);
+            		String name = XMLManager.getFirstChildNodeValue(eName);
             		if (tid != null && tid.length() > 0) {
 						ret.add(new String[] { tid, name });
 					}

@@ -481,7 +481,7 @@ public class XMLExporter  {
 			}
 
 			//Fertig -> saven
-			String xml = XMLManager.instance().getXML(doc);
+			String xml = XMLManager.getXML(doc);
 			HOZip zip = new HOZip(filename);
 			String xmlfile = HOVerwaltung.instance().getModel().getBasics().getTeamName() + ".xml";
 			zip.addStringEntry(xmlfile,xml);

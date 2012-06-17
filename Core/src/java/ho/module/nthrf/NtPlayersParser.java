@@ -24,18 +24,17 @@ class NtPlayersParser {
 	/**
 	 * Parse player details and store the IDs and Players in local objects.
 	 */
-	NtPlayersParser(XMLManager xm, String xmlData, MyConnector dh, HashMap<Integer, Integer> countryMapping) {
-		Document doc = xm.parseString(xmlData);
-	    parseBasics(xm, doc);
-	    parsePlayerDetails(xm, dh, countryMapping);
+	NtPlayersParser(String xmlData, MyConnector dh, HashMap<Integer, Integer> countryMapping) {
+	    parseBasics(XMLManager.parseString(xmlData));
+	    parsePlayerDetails(dh, countryMapping);
 	}
 
-	private void parsePlayerDetails(XMLManager xm, MyConnector dh, HashMap<Integer, Integer> countryMapping) {
+	private void parsePlayerDetails(MyConnector dh, HashMap<Integer, Integer> countryMapping) {
 		try {
 			for (Iterator<Long> i = playerIds.iterator(); i.hasNext(); ) {
 				Long playerId = i.next();
 				String xmlData = dh.getHattrickXMLFile("/chppxml.axd?file=playerdetails&playerId=" + playerId);
-				Element ele = xm.parseString(xmlData).getDocumentElement();
+				Element ele = XMLManager.parseString(xmlData).getDocumentElement();
 				ele = (Element)ele.getElementsByTagName("Player").item(0);
                 players.add(createPlayer(ele, countryMapping));
             }
@@ -165,18 +164,18 @@ class NtPlayersParser {
 		return player;
 	}
 
-	private void parseBasics(XMLManager xm, Document doc) {
+	private void parseBasics(Document doc) {
         if (doc == null) {
             return;
         }
         try {
             Element root = doc.getDocumentElement();
             Element ele = (Element)root.getElementsByTagName("FetchedDate").item(0);
-            fetchedDate = xm.getFirstChildNodeValue(ele);
+            fetchedDate = XMLManager.getFirstChildNodeValue(ele);
             ele = (Element)root.getElementsByTagName("TeamID").item(0);
-            teamId = Long.parseLong(xm.getFirstChildNodeValue(ele));
+            teamId = Long.parseLong(XMLManager.getFirstChildNodeValue(ele));
             ele = (Element)root.getElementsByTagName("TeamName").item(0);
-            teamName = xm.getFirstChildNodeValue(ele);
+            teamName = XMLManager.getFirstChildNodeValue(ele);
 
             // players
             root = (Element)root.getElementsByTagName("Players").item(0);
@@ -184,7 +183,7 @@ class NtPlayersParser {
         	for (int m=0; (playersNode != null && m<playersNode.getLength()); m++) {
         		ele = (Element)playersNode.item(m);
         		ele = (Element)ele.getElementsByTagName("PlayerID").item(0);
-        		playerIds.add(new Long(Long.parseLong(xm.getFirstChildNodeValue(ele))));
+        		playerIds.add(new Long(Long.parseLong(XMLManager.getFirstChildNodeValue(ele))));
         	}
         	parsingSuccess = true;
         } catch (Exception e) {

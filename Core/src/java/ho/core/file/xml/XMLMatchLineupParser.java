@@ -50,13 +50,7 @@ public class XMLMatchLineupParser {
 	// parse public
 	// //////////////////////////////////////////////////////////////////////////////
 	public final MatchLineup parseMatchLineup(String dateiname) {
-		MatchLineup ml = null;
-		Document doc = null;
-
-		doc = XMLManager.instance().parseFile(dateiname);
-		ml = createLineup(doc);
-
-		return ml;
+		return createLineup(XMLManager.parseFile(dateiname));
 	}
 
 	/**
@@ -68,11 +62,7 @@ public class XMLMatchLineupParser {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public final MatchLineup parseMatchLineup(java.io.File datei) {
-		Document doc = null;
-
-		doc = XMLManager.instance().parseFile(datei);
-
-		return createLineup(doc);
+		return createLineup(XMLManager.parseFile(datei));
 	}
 
 	/**
@@ -84,11 +74,7 @@ public class XMLMatchLineupParser {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public final MatchLineup parseMatchLineupFromString(String inputStream) {
-		Document doc = null;
-
-		doc = XMLManager.instance().parseString(inputStream);
-
-		return createLineup(doc);
+		return createLineup(XMLManager.parseString(inputStream));
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////
@@ -452,37 +438,37 @@ public class XMLMatchLineupParser {
 
 		tmp = (Element) ele.getElementsByTagName("MatchMinute").item(0);
 		if (tmp != null) {
-			matchMinuteCriteria = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			matchMinuteCriteria = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 
 		tmp = (Element) ele.getElementsByTagName("GoalDiffCriteria").item(0);
 		if (tmp != null) {
-			standing = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			standing = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 		tmp = (Element) ele.getElementsByTagName("RedCardCriteria").item(0);
 		if (tmp != null) {
-			card = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			card = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 		tmp = (Element) ele.getElementsByTagName("SubjectPlayerID").item(0);
 		if (tmp != null) {
-			playerOut = Integer.parseInt(XMLManager.instance().getFirstChildNodeValue(tmp));
+			playerOut = Integer.parseInt(XMLManager.getFirstChildNodeValue(tmp));
 		}
 		tmp = (Element) ele.getElementsByTagName("ObjectPlayerID").item(0);
 		if (tmp != null) {
-			playerIn = Integer.parseInt(XMLManager.instance().getFirstChildNodeValue(tmp));
+			playerIn = Integer.parseInt(XMLManager.getFirstChildNodeValue(tmp));
 		}
 
 		tmp = (Element) ele.getElementsByTagName("OrderType").item(0);
 		if (tmp != null) {
-			orderTypeId = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			orderTypeId = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 		tmp = (Element) ele.getElementsByTagName("NewPositionId").item(0);
 		if (tmp != null) {
-			pos = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			pos = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 		tmp = (Element) ele.getElementsByTagName("NewPositionBehaviour").item(0);
 		if (tmp != null) {
-			behaviour = Byte.parseByte(XMLManager.instance().getFirstChildNodeValue(tmp));
+			behaviour = Byte.parseByte(XMLManager.getFirstChildNodeValue(tmp));
 		}
 
 		MatchOrderType matchOrderType;

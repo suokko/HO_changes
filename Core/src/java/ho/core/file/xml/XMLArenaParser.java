@@ -40,11 +40,7 @@ public class XMLArenaParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Hashtable<?, ?> parseArena(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -55,22 +51,14 @@ public class XMLArenaParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Hashtable<?, ?> parseArena(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseFile(datei));
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     //parse public
     ////////////////////////////////////////////////////////////////////////////////
     public final Hashtable<?, ?> parseArenaFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(inputStream));
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -101,67 +89,67 @@ public class XMLArenaParser {
             //Daten füllen
             //Fetchdate
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            hash.put("FetchedDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("FetchedDate", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("Arena").item(0);
             ele = (Element) root.getElementsByTagName("ArenaID").item(0);
-            hash.put("ArenaID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ArenaID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) root.getElementsByTagName("ArenaName").item(0);
-            hash.put("ArenaName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("ArenaName", (XMLManager.getFirstChildNodeValue(ele)));
 
             tmpRoot = (Element) root.getElementsByTagName("Team").item(0);
             ele = (Element) tmpRoot.getElementsByTagName("TeamID").item(0);
-            hash.put("TeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("TeamName").item(0);
-            hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("TeamName", (XMLManager.getFirstChildNodeValue(ele)));
 
             tmpRoot = (Element) root.getElementsByTagName("League").item(0);
             ele = (Element) tmpRoot.getElementsByTagName("LeagueID").item(0);
-            hash.put("LeagueID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LeagueID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("LeagueName").item(0);
-            hash.put("LeagueName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LeagueName", (XMLManager.getFirstChildNodeValue(ele)));
 
             tmpRoot = (Element) root.getElementsByTagName("Region").item(0);
             ele = (Element) tmpRoot.getElementsByTagName("RegionID").item(0);
-            hash.put("RegionID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("RegionID", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("RegionName").item(0);
-            hash.put("RegionName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("RegionName", (XMLManager.getFirstChildNodeValue(ele)));
 
             tmpRoot = (Element) root.getElementsByTagName("CurrentCapacity").item(0);
             ele = (Element) tmpRoot.getElementsByTagName("RebuiltDate").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
-                hash.put("RebuiltDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            if (XMLManager.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+                hash.put("RebuiltDate", (XMLManager.getFirstChildNodeValue(ele)));
             }
 
             ele = (Element) tmpRoot.getElementsByTagName("Terraces").item(0);
-            hash.put("Terraces", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Terraces", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("Basic").item(0);
-            hash.put("Basic", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Basic", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("Roof").item(0);
-            hash.put("Roof", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Roof", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("VIP").item(0);
-            hash.put("VIP", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("VIP", (XMLManager.getFirstChildNodeValue(ele)));
             ele = (Element) tmpRoot.getElementsByTagName("Total").item(0);
-            hash.put("Total", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("Total", (XMLManager.getFirstChildNodeValue(ele)));
 
             tmpRoot = (Element) root.getElementsByTagName("ExpandedCapacity").item(0);
 
-            if (XMLManager.instance().getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
+            if (XMLManager.getAttributeValue(ele, "Available").trim().equalsIgnoreCase("true")) {
                 hash.put("isExpanding", "1");
                 ele = (Element) tmpRoot.getElementsByTagName("ExpansionDate").item(0);
-                hash.put("ExpansionDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExpansionDate", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) tmpRoot.getElementsByTagName("Terraces").item(0);
-                hash.put("ExTerraces", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExTerraces", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) tmpRoot.getElementsByTagName("Basic").item(0);
-                hash.put("ExBasic", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExBasic", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) tmpRoot.getElementsByTagName("Roof").item(0);
-                hash.put("ExRoof", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExRoof", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) tmpRoot.getElementsByTagName("VIP").item(0);
-                hash.put("ExVIP", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExVIP", (XMLManager.getFirstChildNodeValue(ele)));
                 ele = (Element) tmpRoot.getElementsByTagName("Total").item(0);
-                hash.put("ExTotal", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                hash.put("ExTotal", (XMLManager.getFirstChildNodeValue(ele)));
             } else {
                 hash.put("isExpanding", "0");
                 hash.put("ExpansionDate", "0");

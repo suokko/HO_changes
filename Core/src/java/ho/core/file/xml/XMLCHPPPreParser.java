@@ -17,7 +17,7 @@ public final class XMLCHPPPreParser {
 		String sReturnError = "";
 		final HOVerwaltung hov = HOVerwaltung.instance();
 		if(xmlIn.length() > 0 ) {
-	        Document doc = XMLManager.instance().parseString(xmlIn);;
+	        Document doc = XMLManager.parseString(xmlIn);;
 	        if (doc != null) {
 	        	Element ele = null;
 	            Element root = doc.getDocumentElement();
@@ -27,11 +27,11 @@ public final class XMLCHPPPreParser {
 	            		sReturnError = "CHPP " + hov.getLanguageString("Fehler");
 	            		ele = (Element) root.getElementsByTagName("ErrorCode").item(0);
 	            		if (ele != null) {
-	            			sReturnError += " - " + XMLManager.instance().getFirstChildNodeValue(ele);
+	            			sReturnError += " - " + XMLManager.getFirstChildNodeValue(ele);
 	            		}
 	            		ele = (Element) root.getElementsByTagName("Error").item(0);
 	            		if (ele != null) {
-	            			sReturnError += " - " + XMLManager.instance().getFirstChildNodeValue(ele);
+	            			sReturnError += " - " + XMLManager.getFirstChildNodeValue(ele);
 	            		}
 	            	}
 	            }

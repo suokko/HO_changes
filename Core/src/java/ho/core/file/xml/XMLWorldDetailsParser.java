@@ -25,11 +25,7 @@ class XMLWorldDetailsParser {
     }
 
     final Hashtable<String,String> parseWorldDetailsFromString(String inputStream, String leagueID) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
-        return parseDetails(doc, leagueID);
+        return parseDetails(XMLManager.parseString(inputStream), leagueID);
     }
 
     final Hashtable<String,String> parseDetails(Document doc, String leagueID) {
@@ -54,7 +50,7 @@ class XMLWorldDetailsParser {
             list = root.getElementsByTagName("League");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                tempLeagueID = XMLManager.instance().getFirstChildNodeValue((Element) ((Element) list
+                tempLeagueID = XMLManager.getFirstChildNodeValue((Element) ((Element) list
                                                                                        .item(i)).getElementsByTagName("LeagueID")
                                                                                        .item(0));
 
@@ -64,28 +60,28 @@ class XMLWorldDetailsParser {
 
                     //Land
                     ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-                    hash.put("LeagueID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("LeagueID", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("Season").item(0);
-                    hash.put("Season", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("Season", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("MatchRound").item(0);
-                    hash.put("MatchRound", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("MatchRound", (XMLManager.getFirstChildNodeValue(ele)));
 
                     //Dati
                     ele = (Element) root.getElementsByTagName("TrainingDate").item(0);
-                    hash.put("TrainingDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("TrainingDate", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("EconomyDate").item(0);
-                    hash.put("EconomyDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("EconomyDate", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("SeriesMatchDate").item(0);
-                    hash.put("SeriesMatchDate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("SeriesMatchDate", (XMLManager.getFirstChildNodeValue(ele)));
 
                     //Country
                     root = (Element) root.getElementsByTagName("Country").item(0);
                     ele = (Element) root.getElementsByTagName("CountryID").item(0);
-                    hash.put("CountryID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("CountryID", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("CurrencyName").item(0);
-                    hash.put("CurrencyName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("CurrencyName", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("CurrencyRate").item(0);
-                    hash.put("CurrencyRate", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("CurrencyRate", (XMLManager.getFirstChildNodeValue(ele)));
 
                     //fertig
                     break;
@@ -104,7 +100,6 @@ class XMLWorldDetailsParser {
         Element root = null;
         final ArrayList<WorldDetailLeague> arrayList = new ArrayList<WorldDetailLeague>();
         NodeList list = null;
-        XMLManager xml = XMLManager.instance();
         if (doc == null) {
             return new WorldDetailLeague[0];
         }
@@ -120,15 +115,15 @@ class XMLWorldDetailsParser {
                  root = (Element) list.item(i);
                  WorldDetailLeague tmp = new WorldDetailLeague();
                  ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-                 tmp.setLeagueId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                 tmp.setLeagueId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
                  ele = (Element) root.getElementsByTagName("EnglishName").item(0);
-                 tmp.setCountryName(xml.getFirstChildNodeValue(ele));
+                 tmp.setCountryName(XMLManager.getFirstChildNodeValue(ele));
                  ele = (Element) root.getElementsByTagName("ActiveUsers").item(0);
-                 tmp.setActiveUsers(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                 tmp.setActiveUsers(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
                  
                  root = (Element) root.getElementsByTagName("Country").item(0);
                   ele = (Element) root.getElementsByTagName("CountryID").item(0);
-                  tmp.setCountryId(Integer.parseInt(xml.getFirstChildNodeValue(ele)));
+                  tmp.setCountryId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
                   arrayList.add(tmp);
                 }
         } catch (Exception e) {
