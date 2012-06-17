@@ -1,27 +1,42 @@
 Changelist HO! 1.432
 ====================
 - Hattrick Organizer now requires Java 1.6 (aka JRE6). Open JDK supports older operating systems that oracle does not. Please update your Java installation if needed.
-- Added Minute based training.
-- Added age based skill drops and Osmosis training.
-- Added Tournament matches for matches tab and Team Analyzer.
+
+- Player subskills
+	. Training is now minute based. Correct counting only for matches downloaded in 1.431 or later.
+		It is possible to delete your own matches by the db cleanup tool, and download them again by
+		archive options in download. After this a full subskill recalculation could be interesting.
+	. Osmosis training has been added. A small training effect for all players on the field.
+	. Skill drops due to age at 30 or above, or at skills of 16 or above is in as a first version.
+		Speeds will require more or less tuning.
+	. Training offset has been removed, and been replaced with an option to adjust the subskill directly.
+
+- Team Analyzer
+	. All update restrictions have been removed.
+	. Tournament opponents are in, so are tournament matches.
+	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
+	. Autofilter options for tournament and those annoying masters matches that always get in the way...
+
+- Added Tournament matches.
 - New icon and startup screen.
 - Moved intern help texts and from external files to our wiki page (https://sourceforge.net/apps/trac/ho1/wiki/Manual) and link to it in the menu.
 - Made player name column width adjustable on squad tab.
 - Added half time results in matches tab.
 - Seat distribution is shown in arena section of Statistics tab.
-- Hattrick Masters matches selectable in Team Analyzer.
+- Stadium prices HT-adapted (7/10/19/35).
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 
 Language updates:
 -----------------
 - Added Japanese as new HO language (thx nomad331).
 - Updated French translations (thx davidatorus).
+- Updated German translations (thx Werder0405).
 
 ThemeManager:
 ------------
 - New keys:
-	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff
-	. Colors: matchtype.tourneyGroup.bg, matchtype.tourneyFinals.bg
+	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff, exclamation-red, exclamation, control-double-090, control-double-270
+	. Colors: matchtype.tourneyGroup.bg, matchtype.tourneyFinals.bg, teamanalyzer.teamlist.league, teamanalyzer.teamlist.cup, teamanalyzer.teamlist.nexttournament, teamanalyzer.teamlist.tournament
 - Fatcow-Theme: Added and updated some icons and colors.
 
 Plugin (Module) Updates:

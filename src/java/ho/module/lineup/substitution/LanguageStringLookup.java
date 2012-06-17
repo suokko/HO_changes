@@ -51,7 +51,7 @@ public class LanguageStringLookup {
 		case ISpielerPosition.leftCentralDefender:
 			return HOVerwaltung.instance().getLanguageString("subs.lcd");
 		case ISpielerPosition.leftBack:
-			return HOVerwaltung.instance().getLanguageString("subs.rb");
+			return HOVerwaltung.instance().getLanguageString("subs.lb");
 		case ISpielerPosition.rightWinger:
 			return HOVerwaltung.instance().getLanguageString("subs.rw");
 		case ISpielerPosition.rightInnerMidfield:
@@ -61,7 +61,7 @@ public class LanguageStringLookup {
 		case ISpielerPosition.leftInnerMidfield:
 			return HOVerwaltung.instance().getLanguageString("subs.lim");
 		case ISpielerPosition.leftWinger:
-			return HOVerwaltung.instance().getLanguageString("subs.rw");
+			return HOVerwaltung.instance().getLanguageString("subs.lw");
 		case ISpielerPosition.rightForward:
 			return HOVerwaltung.instance().getLanguageString("subs.rfw");
 		case ISpielerPosition.centralForward:
