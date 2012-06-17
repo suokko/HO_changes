@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 
 class ArenaSizer {
 
-    private static final float ADMISSION_PRICE_TERRACES = 65f;
-    private static final float ADMISSION_PRICE_BASICS = 95f;
-    private static final float ADMISSION_PRICE_ROOF = 180f;
-    private static final float ADMISSION_PRICE_VIP = 325f;
+    private static final float ADMISSION_PRICE_TERRACES = 70f;
+    private static final float ADMISSION_PRICE_BASICS = 100f;
+    private static final float ADMISSION_PRICE_ROOF = 190f;
+    private static final float ADMISSION_PRICE_VIP = 350f;
 
     private static final float MAINTENANCE_TERRACES = 5f;
     private static final float MAINTENANCE_BASICS = 7f;
@@ -57,15 +57,15 @@ class ArenaSizer {
 
         return income;
     }
-    
+
     final Stadium[] calcConstructionArenas(Stadium currentArena, int supporter){
     	Stadium arenaMax = createArena(supporter * (SUPPORTER_NORMAL.intValue()+5) ,currentArena);
         Stadium arenaNormal = createArena(supporter * SUPPORTER_NORMAL.intValue(),currentArena);
         Stadium arenaMin = createArena(supporter * (SUPPORTER_NORMAL.intValue()-5),currentArena);
         return new Stadium[]{arenaMax, arenaNormal, arenaMin};
     }
-    
-    
+
+
     final Stadium[] calcConstructionArenas(Stadium currentArena, int maxSupporter, int normalSupporter, int minSupporter){
         Stadium arenaMax = createArena(maxSupporter,currentArena);
         Stadium arenaNormal = createArena(normalSupporter,currentArena);
@@ -91,7 +91,7 @@ class ArenaSizer {
     			tmp.getAusbauLogen()));
         return tmp;
     }
-    
+
     final float calcConstructionCosts(float steh, float sitz, float dach, float logen) {
         float kosten = FIXKOSTEN / currencyFactor;
 
@@ -136,5 +136,5 @@ class ArenaSizer {
 
         return Helper.round(costs, 1);
     }
-    
+
 }

@@ -328,7 +328,7 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 				displayError("Match player must both be numbers greater than 0.");
 			} catch (Exception ex) {
 				displayError(ex.getMessage());
-			}	
+			}
 
 		}
 	}
@@ -372,7 +372,7 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 		case ISpielerPosition.leftCentralDefender :
 			return HOVerwaltung.instance().getLanguageString("subs.lcd");
 		case ISpielerPosition.leftBack :
-			return HOVerwaltung.instance().getLanguageString("subs.rb");
+			return HOVerwaltung.instance().getLanguageString("subs.lb");
 		case ISpielerPosition.rightWinger :
 			return HOVerwaltung.instance().getLanguageString("subs.rw");
 		case ISpielerPosition.rightInnerMidfield :
@@ -382,7 +382,7 @@ public class StatisticsTestFrame extends JDialog implements ActionListener{
 		case ISpielerPosition.leftInnerMidfield :
 			return HOVerwaltung.instance().getLanguageString("subs.lim");
 		case ISpielerPosition.leftWinger :
-			return HOVerwaltung.instance().getLanguageString("subs.rw");
+			return HOVerwaltung.instance().getLanguageString("subs.lw");
 		case ISpielerPosition.rightForward :
 			return HOVerwaltung.instance().getLanguageString("subs.rfw");
 		case ISpielerPosition.centralForward :
