@@ -12,6 +12,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.series.Paarung;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
@@ -63,7 +64,8 @@ final class MatchDayPanel extends JPanel implements ActionListener {
         initComponents();
     }
 
-    public void actionPerformed(ActionEvent e) {
+    @Override
+	public void actionPerformed(ActionEvent e) {
         //Das Match anzeigen
         int[] matchdata = new int[0];
 
@@ -83,14 +85,14 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                 try {
                     //Lineups
                     if (!HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchdata[0],
-                    														 1, // not tournament
+                    														 MatchType.LEAGUE, // not tournament
                     														 matchdata[1],
                                                                              matchdata[2])) {
                         //Abbruch, wenn das Lineup nicht gezogen wurde
                         return;
                     }
 
-                    if (!HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchdata[0], 1)) {
+                    if (!HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchdata[0], MatchType.LEAGUE)) {
                         //Abbruch, wenn das Details nicht gezogen wurde
                         return;
                     }

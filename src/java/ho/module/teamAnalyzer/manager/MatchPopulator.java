@@ -4,6 +4,7 @@ package ho.module.teamAnalyzer.manager;
 import ho.core.db.DBManager;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HelperWrapper;
@@ -150,7 +151,7 @@ public class MatchPopulator {
      *
      * @return TODO Missing Return Method Documentation
      */
-    private boolean downloadMatch(int matchId, int matchType) {
+    private boolean downloadMatch(int matchId, MatchType matchType) {
         return HelperWrapper.instance().downloadMatchData(matchId, matchType);
     }
 

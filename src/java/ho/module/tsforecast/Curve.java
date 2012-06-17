@@ -24,6 +24,7 @@ package ho.module.tsforecast;
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.MatchType;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ class Curve {
   static final int WEEKS_BACK = 26;
   
   static final int RESET                               = -1;
-  static final int UNKNOWN_MATCH                       = 0;
+  static final MatchType UNKNOWN_MATCH                       = MatchType.NONE;
 
   
   static final double TEAM_SPIRIT_UNKNOWN = -1D;
@@ -66,7 +67,7 @@ class Curve {
     int m_iAttitude     = ho.core.model.match.IMatchDetails.EINSTELLUNG_UNBEKANNT;
     Date m_dDate        = null; 
     int m_iMatchDay     = 0;
-    int m_iMatchType    = UNKNOWN_MATCH;
+    MatchType m_mtMatchType    = UNKNOWN_MATCH;
     int m_iPointType    = STANDARD_PT;
     String m_strTooltip = null;
 
@@ -75,21 +76,21 @@ class Curve {
         m_dSpirit    = point.m_dSpirit;
         m_iAttitude  = point.m_iAttitude;
         m_iMatchDay  = point.m_iMatchDay;
-        m_iMatchType = point.m_iMatchType;
+        m_mtMatchType = point.m_mtMatchType;
         m_iPointType = point.m_iPointType;
     }
 
-    Point( Date date, double dSpirit, int iAttitude, int iMatchDay, int iMatchType, int iPointType) {
+    Point( Date date, double dSpirit, int iAttitude, int iMatchDay, MatchType iMatchType, int iPointType) {
       m_dDate      = new Date(date.getTime());
       m_dSpirit    = dSpirit;
       m_iAttitude  = iAttitude;
       m_iMatchDay  = iMatchDay;
-      m_iMatchType = iMatchType;
+      m_mtMatchType = iMatchType;
       m_iPointType = iPointType;
     }
 
-    Point( Date date, int iAttitude, int iMatchDay, int iMatchType) {
-      this( date, TEAM_SPIRIT_UNKNOWN, iAttitude, iMatchDay, iMatchType, STANDARD_PT);
+    Point( Date date, int iAttitude, int iMatchDay, MatchType matchType) {
+      this( date, TEAM_SPIRIT_UNKNOWN, iAttitude, iMatchDay, matchType, STANDARD_PT);
     }
 
     Point( Date date, double dSpirit){
@@ -100,7 +101,8 @@ class Curve {
       this( date, dSpirit, IMatchDetails.EINSTELLUNG_UNBEKANNT, 0, UNKNOWN_MATCH, iPointType);
     }
 
-    public int compareTo(Point obj) {
+    @Override
+	public int compareTo(Point obj) {
       return m_dDate.compareTo( obj.m_dDate);
     }
   }
@@ -133,9 +135,9 @@ class Curve {
   Date getDate()                    { return m_currentPoint.m_dDate; }
   double getSpirit()                { return m_currentPoint.m_dSpirit; }
   int getAttitude()                 { return m_currentPoint.m_iAttitude; }
-  int getMatchType()                { return m_currentPoint.m_iMatchType; }
+  MatchType getMatchType()          { return m_currentPoint.m_mtMatchType; }
   int getMatchDay()                 { return m_currentPoint.m_iMatchDay; }
-  String getTooltip()			 { return m_currentPoint.m_strTooltip; }
+  String getTooltip()				{ return m_currentPoint.m_strTooltip; }
   Color getColor()                  { return m_Color; }
   int getPointType()                { return m_currentPoint.m_iPointType; }
   void setColor(Color color)        { m_Color = color; }

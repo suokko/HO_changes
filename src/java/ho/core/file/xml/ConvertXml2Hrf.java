@@ -17,6 +17,7 @@ import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.net.MyConnector;
@@ -92,7 +93,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(20);
             m_htWorld = new XMLWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(m_htTeamdetails.get("LeagueID").toString())),m_htTeamdetails.get("LeagueID").toString());
             waitDialog.setValue(25);
-            m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1, 1).toString());
+            m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1, MatchType.LEAGUE).toString());
             waitDialog.setValue(30);
             m_vSpieler = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
             waitDialog.setValue(35);
@@ -111,7 +112,8 @@ public class ConvertXml2Hrf {
 			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
 				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
-					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID(), 1));
+					// Match is always from the normal system, and league will do the trick as the type.
+					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID(), MatchType.LEAGUE));
 					break;
 				}
 			}

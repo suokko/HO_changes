@@ -5,15 +5,14 @@ import ho.core.constants.player.PlayerAbility;
 import ho.core.db.DBManager;
 import ho.core.gui.comp.entry.RatingTableEntry;
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
@@ -412,12 +411,12 @@ class StaerkenvergleichPanel extends ImagePanel {
         	m_clWetter.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[details.getWetterId()]));
         else
         	m_clWetter.setIcon(null);
-        m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(info.getMatchTyp())]));
-        String name4matchtyp = MatchLineup.getName4MatchTyp(info.getMatchTyp());
+        m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp().getIconArrayIndex()]));
+        String name4matchtyp = info.getMatchTyp().getName();
 
         if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED) 
-        		&& (info.getMatchTyp() != MatchLineup.TOURNAMENTGROUP) 
-        		&& (info.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
+        		&& (info.getMatchTyp() != MatchType.TOURNAMENTGROUP) 
+        		&& (info.getMatchTyp() != MatchType.TOURNAMENTPLAYOFF)) {
             name4matchtyp += (" ( "
             + HOVerwaltung.instance().getLanguageString("Reload_Match")
             + " )");

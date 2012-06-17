@@ -4,7 +4,7 @@ import ho.core.gui.model.ArenaStatistikModel;
 import ho.core.gui.model.ArenaStatistikTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
@@ -132,24 +132,28 @@ public class StatisticQuery {
 					break;
 
 				case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-					sql += (" AND ( MatchTyp=" + MatchLineup.QUALISPIEL);
-					sql += (" OR MatchTyp=" + MatchLineup.LIGASPIEL);
-					sql += (" OR MatchTyp=" + MatchLineup.POKALSPIEL + " )");
+					sql += (" AND ( MatchTyp=" + MatchType.QUALIFICATION.getId());
+					sql += (" OR MatchTyp=" + MatchType.LEAGUE.getId());
+					sql += (" OR MatchTyp=" + MatchType.CUP.getId() + " )");
 					break;
 
 				case SpielePanel.NUR_EIGENE_POKALSPIELE :
-					sql += (" AND MatchTyp=" + MatchLineup.POKALSPIEL);
+					sql += (" AND MatchTyp=" + MatchType.CUP.getId());
 					break;
 
 				case SpielePanel.NUR_EIGENE_LIGASPIELE :
-					sql += (" AND MatchTyp=" + MatchLineup.LIGASPIEL);
+					sql += (" AND MatchTyp=" + MatchType.LEAGUE.getId());
 					break;
 
 				case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-					sql += (" AND ( MatchTyp=" + MatchLineup.TESTSPIEL);
-					sql += (" OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL);
-					sql += (" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
-					sql += (" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
+					sql += (" AND ( MatchTyp=" + MatchType.FRIENDLYNORMAL.getId());
+					sql += (" OR MatchTyp=" + MatchType.FRIENDLYCUPRULES.getId());
+					sql += (" OR MatchTyp=" + MatchType.INTFRIENDLYCUPRULES.getId());
+					sql += (" OR MatchTyp=" + MatchType.INTFRIENDLYNORMAL.getId() + " )");
+					break;
+				case SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE :
+					sql += (" AND ( MatchTyp=" + MatchType.TOURNAMENTGROUP.getId());
+					sql += (" OR MatchTyp=" + MatchType.TOURNAMENTPLAYOFF.getId() + " )");
 					break;
 			}
 
@@ -168,7 +172,7 @@ public class StatisticQuery {
 				arenamodel.setMatchID(rs.getInt("MatchID"));
 				arenamodel.setGastTore(rs.getInt("GastTore"));
 				arenamodel.setHeimTore(rs.getInt("HeimTore"));
-				arenamodel.setMatchTyp(rs.getInt("MatchTyp"));
+				arenamodel.setMatchTyp(MatchType.getById(rs.getInt("MatchTyp")));
 				arenamodel.setMatchStatus(rs.getInt("Status"));
 				arenamodel.setTerraces(rs.getInt("soldTerraces"));
 				arenamodel.setBasics(rs.getInt("soldBasic"));

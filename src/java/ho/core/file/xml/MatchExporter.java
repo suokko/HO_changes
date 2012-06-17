@@ -6,7 +6,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchHelper;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
@@ -65,10 +64,7 @@ public class MatchExporter {
 		for (int i = 0;(matches != null) && (i < matches.length); i++) {
 			//details holen
 			Matchdetails details = DBManager.instance().getMatchDetails(matches[i].getMatchID());
-			boolean isFriendly = (matches[i].getMatchTyp() == MatchLineup.TESTSPIEL
-					|| matches[i].getMatchTyp() == MatchLineup.INT_TESTSPIEL 
-					|| matches[i].getMatchTyp() == MatchLineup.TESTPOKALSPIEL
-					|| matches[i].getMatchTyp() == MatchLineup.INT_TESTCUPSPIEL);
+			boolean isFriendly = matches[i].getMatchTyp().isFriendly();
 			if (isValidMatch(matches[i], details, startingDateForFriendlies, strict, skipPullBack) && isFriendly
 					|| isValidMatch(matches[i], details, startingDate, strict, skipPullBack) && !isFriendly ) {				
 

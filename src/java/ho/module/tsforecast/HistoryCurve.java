@@ -1,7 +1,7 @@
 package ho.module.tsforecast;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.misc.Basics;
 import ho.core.model.series.Liga;
 
@@ -103,9 +103,9 @@ public class HistoryCurve extends Curve {
                                                  +      " OR MATCHDETAILS.GASTID=" + ibasics.getTeamId() + ") "
                                                  +   "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID "
                                                  +   "and SORTDATE < '" + ibasics.getDatum() + "' and SORTDATE > '" + start + "' "
-                                                 +   "and MATCHTYP <> " + MatchLineup.LIGASPIEL
+                                                 +   "and MATCHTYP <> " + MatchType.LEAGUE.getId()
                                                  + "union "
-                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchLineup.LIGASPIEL + " as MATCHTYP, "
+                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchType.LEAGUE.getId() + " as MATCHTYP, "
                                                  +        "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
                                                  + "from PAARUNG, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
@@ -140,15 +140,15 @@ public class HistoryCurve extends Curve {
     		  Curve.Point pNextLeagueMatch;
     		  if(ibasics.getTeamId() == resultset.getInt( "HEIMID")) {
     			  pNextLeagueMatch = new Point(resultset.getTimestamp( "SORTDATE"),
-    					  resultset.getInt( "HEIMEINSTELLUNG"), i, resultset.getInt( "MATCHTYP"));
+    					  resultset.getInt( "HEIMEINSTELLUNG"), i, MatchType.getById(resultset.getInt( "MATCHTYP")));
     		  } else {
     			  pNextLeagueMatch = new Point(resultset.getTimestamp( "SORTDATE"),
-    					  resultset.getInt( "GASTEINSTELLUNG"), i, resultset.getInt( "MATCHTYP"));
+    					  resultset.getInt( "GASTEINSTELLUNG"), i, MatchType.getById(resultset.getInt( "MATCHTYP")));
     		  }
     		  m_clPoints.add( pNextLeagueMatch ); 
         
     		  // correction of matchdays at end of season for non league matches
-    		  if (pNextLeagueMatch.m_iMatchType != 1) {
+    		  if (pNextLeagueMatch.m_mtMatchType != MatchType.LEAGUE) {
     			  if( pLastLeagueMatch != null) {  //first match
     				  if( getDiffDays( pLastLeagueMatch, pNextLeagueMatch) <= 7) {//matchday stays the same
     					  continue;      

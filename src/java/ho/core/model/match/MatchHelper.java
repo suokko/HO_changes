@@ -58,7 +58,7 @@ public class MatchHelper {
 	 * @param matchId		match Id
 	 * @param matchType		match Type (league, cup, friendly...) from IMatchLineup
 	 */
-	public short getLocation(int homeTeamId, int awayTeamId, int matchId, int matchType) {
+	public short getLocation(int homeTeamId, int awayTeamId, int matchId, MatchType matchType) {
 		/**
 		 * Current progress:
 		 * =================
@@ -85,16 +85,13 @@ public class MatchHelper {
 
    		// For a league/qualification/cup game, the home team always has the home advantage (no neutral grounds) 
    		// (exception for cup finals, see below)
-   		if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.POKALSPIEL || matchType == MatchLineup.QUALISPIEL) {
+   		if (matchType == MatchType.LEAGUE || matchType == MatchType.CUP || matchType == MatchType.QUALIFICATION) {
    			if (homeTeamId == userTeamId)
    				location = IMatchDetails.LOCATION_HOME;
    		}
    		
    		// For friendlies, also check the stadium name, because we may play on neutral ground
-   		if (matchType == MatchLineup.TESTSPIEL 
-   				|| matchType == MatchLineup.TESTPOKALSPIEL 
-   				|| matchType == MatchLineup.INT_TESTSPIEL
-   				|| matchType == MatchLineup.INT_TESTCUPSPIEL) {
+   		if (matchType.isFriendly()) {
    			if (homeTeamId == userTeamId) {
    				// TODO: For now, we check the arena name and the id
    				// because old users don't have the arena id in the DB (new since 1.401)
@@ -112,8 +109,8 @@ public class MatchHelper {
    		}
    		
    		// Don't check home matches, exept for the cup (because the cup finals are on neutral ground)
-   		if (location != IMatchDetails.LOCATION_HOME || matchType == MatchLineup.POKALSPIEL) {
-   			if (matchType == MatchLineup.LIGASPIEL || matchType == MatchLineup.QUALISPIEL || matchType == MatchLineup.POKALSPIEL) {
+   		if (location != IMatchDetails.LOCATION_HOME || matchType == MatchType.CUP) {
+   			if (matchType == MatchType.LEAGUE || matchType == MatchType.QUALIFICATION || matchType == MatchType.CUP) {
    	   			/**
    	   			 * league or cup match -> check highlights
    	   			 */

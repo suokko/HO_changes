@@ -3,10 +3,10 @@ package ho.module.teamAnalyzer.ui;
 
 //import ho.module.teamAnalyzer.SystemManager;
 import ho.core.constants.player.PlayerAbility;
-import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.module.config.ModuleConfig;
 import ho.module.teamAnalyzer.SystemManager;
@@ -154,17 +154,17 @@ public class RecapPanel extends JPanel {
 
             Match match = matchDetail.getMatchDetail();
 
-            int matchType = match.getMatchType();
+            MatchType matchType = match.getMatchType();
             boolean isHomeMatch = match.isHome();
 
             // Columns 0-2
             if (isHomeMatch) {
                 rowData.add(match.getAwayTeam());
-                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(matchType)]));
+                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType.getIconArrayIndex()]));
                 rowData.add(match.getHomeGoals() + GOALS_SPACE + match.getAwayGoals());
             } else {
                 rowData.add("* " + match.getHomeTeam()); //$NON-NLS-1$
-                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(matchType)]));
+                rowData.add(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType.getIconArrayIndex()]));
                 rowData.add(match.getAwayGoals() + GOALS_SPACE + match.getHomeGoals());
             }
 
@@ -200,7 +200,7 @@ public class RecapPanel extends JPanel {
 
             // Columns 19-21
             rowData.add(matchDetail.getFormation());
-            rowData.add(new Integer(matchType));
+            rowData.add(new Integer(matchType.getId()));
             rowData.add(new Boolean(isHomeMatch));
 
             tableModel.addRow(rowData);
