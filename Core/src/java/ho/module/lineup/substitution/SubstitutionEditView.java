@@ -75,6 +75,12 @@ public class SubstitutionEditView extends JPanel {
 			this.positionComboBox.setSelectedItem(null);
 			this.positionChooser.init(lineupPositions);
 		}
+
+		this.behaviourComboBox.setModel(new DefaultComboBoxModel(SubstitutionDataProvider
+				.getBehaviourItems(!isNewBehaviour()).toArray()));
+		if (isNewBehaviour()) {
+			this.behaviourComboBox.setSelectedItem(null);
+		}
 	}
 
 	/**
@@ -307,7 +313,7 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(behaviourLabel, gbc);
 
-		this.behaviourComboBox = new JComboBox(SubstitutionDataProvider.getBehaviourItems());
+		this.behaviourComboBox = new JComboBox();
 		this.behaviourComboBox.setMinimumSize(comboBoxSize);
 		this.behaviourComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;

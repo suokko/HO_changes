@@ -110,14 +110,17 @@ public class SubstitutionDataProvider {
 	 * 
 	 * @return an array with behaviour items
 	 */
-	public static CBItem[] getBehaviourItems() {
-		CBItem[] behaviourValues = {
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehNoChange"), -1),
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehNormal"), 0),
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehOffensive"), 1),
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehDefensive"), 2),
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehToMid"), 3),
-				new CBItem(HOVerwaltung.instance().getLanguageString("subs.BehToWi"), 4) };
+	public static List<CBItem> getBehaviourItems(boolean withInheritItem) {
+		List<CBItem> behaviourValues = new ArrayList<CBItem>();
+		HOVerwaltung hov = HOVerwaltung.instance();
+		if (withInheritItem) {
+			behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehNoChange"), -1));
+		}
+		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehNormal"), 0));
+		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehOffensive"), 1));
+		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehDefensive"), 2));
+		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehToMid"), 3));
+		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehToWi"), 4));
 		return behaviourValues;
 	}
 }
