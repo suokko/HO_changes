@@ -1,9 +1,12 @@
 package ho.module.lineup;
 
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.net.OnlineWorker;
+import ho.core.util.HOLogger;
+import ho.core.util.XMLUtils;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,10 +19,14 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public class TestPanel extends JPanel {
 
@@ -78,8 +85,39 @@ public class TestPanel extends JPanel {
 		int matchId = elem.getMatch().getMatchID();
 
 		OnlineWorker ow = new OnlineWorker();
-		ow.uploadMatchOrder(matchId, elem.getMatch().getMatchTyp(),
-								HOVerwaltung.instance().getModel().getAufstellung());
+		String result = ow.uploadMatchOrder(matchId, elem.getMatch().getMatchTyp(), HOVerwaltung
+				.instance().getModel().getAufstellung());
+
+		int messageType = JOptionPane.PLAIN_MESSAGE;
+		String message = null;
+		try {
+			Document doc = XMLUtils.createDocument(result);
+			String successStr = XMLUtils.getAttributeValueFromNode(doc, "MatchData", "OrdersSet");
+			if (successStr != null) {
+				boolean success = Boolean.parseBoolean(successStr);
+				if (success) {
+					messageType = JOptionPane.PLAIN_MESSAGE;
+					message = HOVerwaltung.instance().getLanguageString("lineup.upload.success");
+				} else {
+					messageType = JOptionPane.ERROR_MESSAGE;
+					message = HOVerwaltung.instance().getLanguageString("lineup.upload.fail")
+							+ XMLUtils.getTagData(doc, "Reason");
+				}
+			} else {
+				messageType = JOptionPane.ERROR_MESSAGE;
+				message = HOVerwaltung.instance().getLanguageString(
+						"lineup.upload.result.parseerror");
+				HOLogger.instance().log(TestPanel.class, message + "\n" + result);
+			}
+		} catch (SAXException e) {
+			messageType = JOptionPane.ERROR_MESSAGE;
+			message = HOVerwaltung.instance().getLanguageString("lineup.upload.result.parseerror");
+			HOLogger.instance().log(TestPanel.class, message + "\n" + result);
+			HOLogger.instance().log(TestPanel.class, e);
+		}
+
+		JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
+				.getLanguageString("lineup.upload.title"), messageType);
 	}
 
 	private class ListElement {
