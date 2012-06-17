@@ -1,6 +1,7 @@
 // %793684749:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
 
@@ -22,7 +23,7 @@ public class SpielerMatchCBItem {
     private int m_iGastID;
     private int m_iHeimID;
     private int m_iMatchID;
-    private int m_iMatchTyp;
+    private MatchType m_mtMatchTyp;
     private int m_iPosition;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -46,7 +47,7 @@ public class SpielerMatchCBItem {
      */
     public SpielerMatchCBItem(Spieler spieler, int matchid, float rating, int positionsid,
                               String matchdate, String heimteam, int heimid, String gastteam,
-                              int gastid, int matchtyp, Matchdetails matchdetails,
+                              int gastid, MatchType matchtyp, Matchdetails matchdetails,
                               String selbstvertrauen, String stimmung) {
         m_clSpieler = spieler;
         m_iMatchID = matchid;
@@ -60,7 +61,7 @@ public class SpielerMatchCBItem {
         m_clMatchdetails = matchdetails;
         m_sSelbstvertrauen = selbstvertrauen;
         m_sStimmung = stimmung;
-        m_iMatchTyp = matchtyp;
+        m_mtMatchTyp = matchtyp;
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -160,8 +161,8 @@ public class SpielerMatchCBItem {
      *
      * @param m_iMatchTyp New value of property m_iMatchTyp.
      */
-    public final void setMatchTyp(int m_iMatchTyp) {
-        this.m_iMatchTyp = m_iMatchTyp;
+    public final void setMatchTyp(MatchType m_mtMatchTyp) {
+        this.m_mtMatchTyp = m_mtMatchTyp;
     }
 
     /**
@@ -169,8 +170,8 @@ public class SpielerMatchCBItem {
      *
      * @return Value of property m_iMatchTyp.
      */
-    public final int getMatchTyp() {
-        return m_iMatchTyp;
+    public final MatchType getMatchTyp() {
+        return m_mtMatchTyp;
     }
 
     /**

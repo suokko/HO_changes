@@ -1,7 +1,7 @@
 // %2944446152:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
 
@@ -99,7 +99,7 @@ public class MatchList {
     private boolean isAutomaticIncluded(Filter filter, Match match) {
         boolean isHome = match.isHome();
         int result = result(match);
-        int matchType = match.getMatchType();
+        MatchType matchType = match.getMatchType();
 
         if (!filter.isHomeGames() && isHome) {
             return false;
@@ -121,33 +121,29 @@ public class MatchList {
             return false;
         }
 
-        if (!filter.isLeague() && (matchType == MatchLineup.LIGASPIEL)) {
+        if (!filter.isLeague() && (matchType == MatchType.LEAGUE)) {
             return false;
         }
 
-        if (!filter.isCup() && (matchType == MatchLineup.POKALSPIEL)) {
+        if (!filter.isCup() && (matchType == MatchType.CUP)) {
             return false;
         }
 
-        if (!filter.isQualifier() && (matchType == MatchLineup.QUALISPIEL)) {
+        if (!filter.isQualifier() && (matchType == MatchType.QUALIFICATION)) {
             return false;
         }
 
-        if (!filter.isFriendly() && 
-        		((matchType == MatchLineup.TESTSPIEL) || 
-        			(matchType == MatchLineup.TESTPOKALSPIEL) ||
-        			(matchType == MatchLineup.INT_TESTSPIEL) ||
-        			(matchType == MatchLineup.INT_TESTCUPSPIEL))) {
+        if (!filter.isFriendly() && (matchType.isFriendly())) {
             return false;
         }
 
-        if (!filter.isMasters() && (matchType == MatchLineup.INTCUPSPIEL)) {
+        if (!filter.isMasters() && (matchType == MatchType.MASTERS)) {
         	return false;
         }
         
         if (!filter.isTournament() && 
-        		((matchType == MatchLineup.TOURNAMENTGROUP) ||
-        				(matchType == MatchLineup.TOURNAMENTPLAYOFF))) {
+        		((matchType == MatchType.TOURNAMENTGROUP) ||
+        				(matchType == MatchType.TOURNAMENTPLAYOFF))) {
         	return false;
         }
         

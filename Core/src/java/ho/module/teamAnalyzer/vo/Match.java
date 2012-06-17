@@ -2,7 +2,7 @@
 package ho.module.teamAnalyzer.vo;
 
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.series.Paarung;
 import ho.core.util.HTCalendar;
 import ho.core.util.HTCalendarFactory;
@@ -45,7 +45,7 @@ public class Match {
     private int matchId;
 
     /** The match type */
-    private int matchType;
+    private MatchType matchType;
 
     /** HT Season of the game */
     private int season;
@@ -92,7 +92,7 @@ public class Match {
         awayGoals = matchInfo.getToreGast();
         season = matchInfo.getSaison();
         week = matchInfo.getSpieltag();
-        matchType = MatchLineup.LIGASPIEL;
+        matchType = MatchType.LEAGUE;
         matchDate = matchInfo.getDatum();
     }
 
@@ -253,7 +253,7 @@ public class Match {
      *
      * @param i
      */
-    public void setMatchType(int i) {
+    public void setMatchType(MatchType i) {
         matchType = i;
     }
 
@@ -262,7 +262,7 @@ public class Match {
      *
      * @return
      */
-    public int getMatchType() {
+    public MatchType getMatchType() {
         return matchType;
     }
 

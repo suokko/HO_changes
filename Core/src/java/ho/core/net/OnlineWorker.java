@@ -27,6 +27,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
@@ -372,7 +373,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final boolean getMatchDetails(int matchId, int matchType) {
+	public final boolean getMatchDetails(int matchId, MatchType matchType) {
 		boolean success = true;
 		Matchdetails details = null;
 
@@ -500,7 +501,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final boolean getMatchlineup(int matchId, int matchType, int teamId1, int teamId2) {
+	public final boolean getMatchlineup(int matchId, MatchType matchType, int teamId1, int teamId2) {
 		boolean bOK = false;
 		MatchLineup lineUp1 = null;
 		MatchLineup lineUp2 = null;
@@ -606,7 +607,7 @@ public class OnlineWorker {
 	 * @return A string response with any error message
 	 */
 
-	public final String uploadMatchOrder(int matchId, int matchType,  Lineup lineup) {
+	public final String uploadMatchOrder(int matchId, MatchType matchType,  Lineup lineup) {
 
 		String result;
 		// Tell the Connector that we will require match order rights.
@@ -691,7 +692,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected final Matchdetails fetchDetails(int matchID, int matchType, LoginWaitDialog waitDialog) {
+	protected final Matchdetails fetchDetails(int matchID, MatchType matchType, LoginWaitDialog waitDialog) {
 		String matchDetails = "";
 		Matchdetails details = null;
 
@@ -745,7 +746,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected final MatchLineup fetchLineup(int matchID, int teamID, int matchType) {
+	protected final MatchLineup fetchLineup(int matchID, int teamID, MatchType matchType) {
 		String matchLineup = "";
 		MatchLineup lineUp = null;
 		boolean bOK = false;
@@ -847,7 +848,7 @@ public class OnlineWorker {
 	 * @param matchType The matchTyp for the match to download
 	 * @return The Lineup object with the downloaded match data
 	 */
-	public Lineup getLineupbyMatchId(int matchId, int matchType) {
+	public Lineup getLineupbyMatchId(int matchId, MatchType matchType) {
 
 		try {
 

@@ -19,6 +19,7 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.match.MatchesHighlightsStat;
 import ho.core.model.match.MatchesOverviewRow;
@@ -1670,7 +1671,7 @@ public class DBManager {
 						rs.getInt("HeimID"),
 						DBManager.deleteEscapeSequences(rs.getString("GastName")),
 						rs.getInt("GastID"),
-						rs.getInt("MatchTyp"),
+						MatchType.getById(rs.getInt("MatchTyp")),
 						null,
 						"",
 						"");

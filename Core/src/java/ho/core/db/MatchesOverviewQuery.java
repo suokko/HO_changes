@@ -2,7 +2,7 @@ package ho.core.db;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.match.MatchesHighlightsStat;
 import ho.core.model.match.MatchesOverviewRow;
@@ -171,25 +171,25 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 				//Nix zu tun, da die teamId die einzige Einschränkung ist
 				break;
 			case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.QUALISPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.LIGASPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.POKALSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.QUALIFICATION.getId());
+				sql.append(" OR MatchTyp=" + MatchType.LEAGUE.getId());
+				sql.append(" OR MatchTyp=" + MatchType.CUP.getId() + " )");
 				break;
 			case SpielePanel.NUR_EIGENE_POKALSPIELE :
-				sql.append(" AND MatchTyp=" + MatchLineup.POKALSPIEL);
+				sql.append(" AND MatchTyp=" + MatchType.CUP.getId());
 				break;
 			case SpielePanel.NUR_EIGENE_LIGASPIELE :
-				sql.append(" AND MatchTyp=" + MatchLineup.LIGASPIEL);
+				sql.append(" AND MatchTyp=" + MatchType.LEAGUE.getId());
 				break;
 			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.TESTSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.FRIENDLYNORMAL.getId());
+				sql.append(" OR MatchTyp=" + MatchType.FRIENDLYCUPRULES);
+				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYCUPRULES.getId());
+				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYNORMAL.getId() + " )");
 				break;
 			case SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.TOURNAMENTGROUP);
-				sql.append(" OR MatchTyp=" + MatchLineup.TOURNAMENTPLAYOFF + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.TOURNAMENTGROUP.getId());
+				sql.append(" OR MatchTyp=" + MatchType.TOURNAMENTPLAYOFF.getId() + " )");
 				break;
 			}
 		return sql;

@@ -4,9 +4,9 @@ import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
-import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchStatistics;
+import ho.core.model.match.MatchType;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendar;
@@ -289,13 +289,13 @@ public class TrainingManager {
         final String sdbquery = "SELECT MATCHID FROM MATCHESKURZINFO WHERE " + "( HEIMID=" + teamId
                                 + " OR GASTID=" + teamId + " ) " + "AND MatchDate BETWEEN '"
                                 + ots.toString() + "' AND '" + ts.toString() + "' "
-                                + " AND (MatchTyp=" + MatchLineup.QUALISPIEL
-                                + " OR MatchTyp=" + MatchLineup.LIGASPIEL
-                                + " OR MatchTyp=" + MatchLineup.POKALSPIEL
-        						+ " OR MatchTyp=" + MatchLineup.TESTSPIEL
-        						+ " OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL
-        						+ " OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL
-        						+ " OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )"
+                                + " AND (MatchTyp=" + MatchType.QUALIFICATION.getId()
+                                + " OR MatchTyp=" + MatchType.LEAGUE.getId()
+                                + " OR MatchTyp=" + MatchType.CUP.getId()
+        						+ " OR MatchTyp=" + MatchType.FRIENDLYNORMAL.getId()
+        						+ " OR MatchTyp=" + MatchType.FRIENDLYCUPRULES.getId()
+        						+ " OR MatchTyp=" + MatchType.INTFRIENDLYCUPRULES.getId()
+        						+ " OR MatchTyp=" + MatchType.INTFRIENDLYNORMAL.getId() + " )"
                                 + " ORDER BY MatchDate DESC";
 
         return sdbquery;

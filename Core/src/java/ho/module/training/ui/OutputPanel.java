@@ -6,6 +6,7 @@ package ho.module.training.ui;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchType;
 import ho.core.training.TrainingManager;
 import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
@@ -83,8 +84,8 @@ public class OutputPanel extends JPanel {
         	if (input != null) input = input.trim();
             Integer matchID = new Integer(input);
 
-            if (HelperWrapper.instance().isUserMatch(input, 1)) {
-                if (HelperWrapper.instance().downloadMatchData(matchID.intValue(), 1)) {
+            if (HelperWrapper.instance().isUserMatch(input, MatchType.LEAGUE)) {
+                if (HelperWrapper.instance().downloadMatchData(matchID.intValue(), MatchType.LEAGUE)) {
                 	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchImported"), //$NON-NLS-1$
                     		HOVerwaltung.instance().getLanguageString("ImportOK"), //$NON-NLS-1$
                                                   1); 
@@ -160,7 +161,8 @@ public class OutputPanel extends JPanel {
         JButton p_JB_berechne = new JButton(HOVerwaltung.instance().getLanguageString("Calculate")); //$NON-NLS-1$
 
         p_JB_berechne.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                @Override
+				public void actionPerformed(ActionEvent arg0) {
                 	TrainingManager.instance().recalcSubskills(true);
                     reload();
                     ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
@@ -171,7 +173,8 @@ public class OutputPanel extends JPanel {
         JButton p_JB_import = new JButton(HOVerwaltung.instance().getLanguageString("ImportMatch")); //$NON-NLS-1$
 
         p_JB_import.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                @Override
+				public void actionPerformed(ActionEvent arg0) {
                     import_matches();
                 }
             });

@@ -21,7 +21,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -42,7 +42,7 @@ final class FutureMatchBox extends JPanel {
 	private JRadioButton m_rbNORM = null;
 	private JRadioButton m_rbMOTS = null;
 
-  public FutureMatchBox( String text, String tooltip, int iCmd, int iSelected, int iType) {
+  public FutureMatchBox( String text, String tooltip, int iCmd, int iSelected, MatchType iType) {
     m_rbPIC = new JRadioButton();
     m_rbPIC.setActionCommand( "P" + iCmd);
     m_rbPIC.setToolTipText( HOVerwaltung.instance().getLanguageString("PIC"));
@@ -76,8 +76,8 @@ final class FutureMatchBox extends JPanel {
     add(m_rbMOTS, gridbagconstraints);
 
     gridbagconstraints.gridx = 3;
-    JLabel lIcon = new JLabel( ThemeManager.getIcon(HOIconName.MATCHTYPES[iType]) );
-    lIcon.setToolTipText( MatchLineup.getName4MatchTyp( iType));
+    JLabel lIcon = new JLabel( ThemeManager.getIcon(HOIconName.MATCHTYPES[iType.getIconArrayIndex()]) );
+    lIcon.setToolTipText( iType.getName());
     add( lIcon, gridbagconstraints );
 
     gridbagconstraints.gridx = 4;

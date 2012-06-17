@@ -2,12 +2,11 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.MatchesColumnModel;
-import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -53,11 +52,11 @@ public class RecapTableRenderer extends DefaultTableCellRenderer {
 			setBackground(ThemeManager.getColor(HOColorName.PLAYER_POS_BG)); 
 			setIcon(null);
 		} else {
-			int matchType = 0;
+			MatchType matchType = MatchType.NONE;
 			boolean isHomeMatch = true;
 
 			try {
-				matchType = ((Integer) table.getValueAt(row, 20)).intValue();
+				matchType = MatchType.getById((Integer) table.getValueAt(row, 20));
 				isHomeMatch = ((Boolean) table.getValueAt(row, 21)).booleanValue();
 				setBackground(MatchesColumnModel.getColor4Matchtyp(matchType));
 			} catch (Exception e) {
@@ -73,10 +72,10 @@ public class RecapTableRenderer extends DefaultTableCellRenderer {
 			case 1:
 
 				// Set icon for match type.
-				setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(matchType)]));
+				setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[matchType.getIconArrayIndex()]));
 				setText(null);
 
-				StringBuffer tipText = new StringBuffer(MatchLineup.getName4MatchTyp(matchType));
+				StringBuffer tipText = new StringBuffer(matchType.getName());
 
 				tipText.append(" - "); //$NON-NLS-1$
 

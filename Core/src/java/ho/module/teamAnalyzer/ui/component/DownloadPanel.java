@@ -3,7 +3,7 @@ package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.ui.NumberTextField;
@@ -103,9 +103,9 @@ public class DownloadPanel extends JPanel {
                 @Override
 				public void actionPerformed(ActionEvent e) {
                     int id = matchId.getValue();
-                    int type = MatchLineup.LIGASPIEL;
+                    MatchType type = MatchType.LEAGUE;
                     if (tournament.isSelected()) {
-                    	type = MatchLineup.TOURNAMENTGROUP;
+                    	type = MatchType.TOURNAMENTGROUP;
                     }
                     
 //                    if (id == 0) {

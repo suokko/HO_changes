@@ -28,7 +28,7 @@ public class MatchLineup {
     protected int m_iMatchID = -1;
 
     /** TODO Missing Parameter Documentation */
-    protected int m_iMatchTyp = -1;
+    protected MatchType m_MatchTyp = MatchType.NONE;
 
     /** TODO Missing Parameter Documentation */
     MatchLineupTeam m_clGast;
@@ -60,70 +60,7 @@ public class MatchLineup {
 	/** TODO Missing Parameter Documentation */
 	
  
-    // Tournament playoff matches
-	public static final int TOURNAMENTPLAYOFF = 51;
-    
-    // Tournament group matches
-    public static final int TOURNAMENTGROUP = 50;
-     
-	//	National teams friendly.
-	public static final int TESTLAENDERSPIEL = 12;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	National teams competition match (cup rules).	
-	public static final int LAENDERCUPSPIEL = 11;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	National teams competition match (normal rules).	
-	public static final int LAENDERSPIEL = 10;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	International friendly (cup rules).	
-	public static final int INT_TESTCUPSPIEL = 9;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	International friendly (normal rules).	
-	public static final int INT_TESTSPIEL = 8;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Masters.	
-	public static final int INTCUPSPIEL = 7;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Not currently in use, but reserved for international competition matches with normal rules (may or may not be implemented at some future point).	
-	public static final int INTSPIEL = 6;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Friendly (cup rules).	
-	public static final int TESTPOKALSPIEL = 5;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Friendly (normal rules).	
-	public static final int TESTSPIEL = 4;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Cup match (standard league cup).	
-	public static final int POKALSPIEL = 3;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	Qualification match.	
-	public static final int QUALISPIEL = 2;
-
-	/** TODO Missing Parameter Documentation */
-	
-	//	League match.	
-	public static final int LIGASPIEL = 1;
-
+   
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -343,8 +280,8 @@ public class MatchLineup {
      *
      * @param m_iMatchTyp New value of property m_iMatchTyp.
      */
-    public final void setMatchTyp(int m_iMatchTyp) {
-        this.m_iMatchTyp = m_iMatchTyp;
+    public final void setMatchTyp(MatchType matchTyp) {
+        this.m_MatchTyp = matchTyp;
     }
 
     /**
@@ -352,67 +289,11 @@ public class MatchLineup {
      *
      * @return Value of property m_iMatchTyp.
      */
-    public final int getMatchTyp() {
-        return m_iMatchTyp;
+    public final MatchType getMatchTyp() {
+        return m_MatchTyp;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param typ TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public static String getName4MatchTyp(int typ) {
-        switch (typ) {
-            case MatchLineup.LIGASPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("LigaSpiel");
-
-            case MatchLineup.POKALSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("PokalSpiel");
-
-            case MatchLineup.QUALISPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("QualifikationSpiel");
-
-            case MatchLineup.LAENDERCUPSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderCupSpiel");
-
-            case MatchLineup.INTCUPSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("IntCupSpiel");
-
-            case MatchLineup.LAENDERSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderSpiel");
-
-            case MatchLineup.INTSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("IntSpiel");
-
-            case MatchLineup.INT_TESTCUPSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlyCupSpiel");
-
-            case MatchLineup.INT_TESTSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlySpiel");
-
-            case MatchLineup.TESTLAENDERSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderFriendlySpiel");
-
-            case MatchLineup.TESTPOKALSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlyCupSpiel");
-
-            case MatchLineup.TESTSPIEL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
-
-            case MatchLineup.TOURNAMENTGROUP:
-            	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
-            	
-            case MatchLineup.TOURNAMENTPLAYOFF :
-            	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
-                
-            //Fehler?
-            default:
-                return "";
-        }
-    }
-
+    
     /**
      * Setter for property m_lDatum.
      *

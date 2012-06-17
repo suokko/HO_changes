@@ -12,7 +12,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
@@ -206,7 +206,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 		m_kurzInfo = DBManager.instance().getMatchesKurzInfo(m_TeamID);
 		for(int ii = 0; ii < m_kurzInfo.length; ii++)
 		{
-			m_HashTable_MatchTyp.put(new Integer(m_kurzInfo[ii].getMatchID()),new Integer(m_kurzInfo[ii].getMatchTyp()));
+			m_HashTable_MatchTyp.put(new Integer(m_kurzInfo[ii].getMatchID()),new Integer(m_kurzInfo[ii].getMatchTyp().getId()));
 		}
 
         // Namen der Tage in m_Ar_days schreiben
@@ -777,23 +777,25 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 					String strDatum = datum.toString().substring(0,19);
 					int matchTyp = ((Integer)m_HashTable_MatchTyp.get(new Integer(match_id))).intValue();
 
-					if(matchTyp == MatchLineup.LIGASPIEL)
+					if(matchTyp == MatchType.LEAGUE.getId())
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"L");
 					}
-					else if(matchTyp == MatchLineup.POKALSPIEL)
+					else if(matchTyp == MatchType.CUP.getId())
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"P");
 					}
-					else if(matchTyp == MatchLineup.TESTSPIEL || matchTyp == MatchLineup.TESTPOKALSPIEL)
+					else if(matchTyp == MatchType.FRIENDLYNORMAL.getId() 
+							|| matchTyp == MatchType.FRIENDLYCUPRULES.getId())
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"F");
 					}
-					else if(matchTyp == MatchLineup.INT_TESTSPIEL || matchTyp == MatchLineup.INT_TESTCUPSPIEL)
+					else if(matchTyp == MatchType.INTFRIENDLYNORMAL.getId()
+							|| matchTyp == MatchType.INTFRIENDLYCUPRULES.getId())
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"I");
 					}
-					else if(matchTyp == MatchLineup.QUALISPIEL)
+					else if(matchTyp == MatchType.QUALIFICATION.getId())
 					{
 						m_HashTable_isEvent.put(new Integer(tag),"Q");
 					}

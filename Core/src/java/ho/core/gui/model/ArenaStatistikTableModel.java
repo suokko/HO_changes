@@ -147,7 +147,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     /**
      * Get amount of columns.
      */
-    public final int getColumnCount() {
+    @Override
+	public final int getColumnCount() {
         return m_sColumnNames.length;
     }
 
@@ -180,7 +181,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     /**
      * Get amount of rows.
      */
-    public final int getRowCount() {
+    @Override
+	public final int getRowCount() {
         return (m_clData != null) ? m_clData.length : 0;
     }
 
@@ -212,7 +214,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
     /**
      * Get the value at a certain row and column.
      */
-    public final Object getValueAt(int row, int column) {
+    @Override
+	public final Object getValueAt(int row, int column) {
         if (m_clData != null) {
             return m_clData[row][column];
         }
@@ -250,8 +253,9 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    		DateFormat.getDateTimeInstance().format(match.getMatchDateAsTimestamp()),
 			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.LEFT);
 			    //Spielart
-			    m_clData[i][1] = new ColorLabelEntry(ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp()]),
-			    		match.getMatchTyp(), ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
+			    m_clData[i][1] = new ColorLabelEntry(
+			    					ThemeManager.getIcon(HOIconName.MATCHTYPES[match.getMatchTyp().getIconArrayIndex()]),
+			    		match.getMatchTyp().getId(), ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 			    //Gast
 			    m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
 			    		background, SwingConstants.LEFT);

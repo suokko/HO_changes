@@ -4,7 +4,7 @@ package ho.module.teamAnalyzer.manager;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.series.LigaTabellenEintrag;
 import ho.core.model.series.Paarung;
 import ho.module.matches.SpielePanel;
@@ -282,7 +282,7 @@ public class TeamManager {
             MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
             if ((match.getMatchStatus() != MatchKurzInfo.FINISHED)
-                && (match.getMatchTyp() == MatchLineup.QUALISPIEL)) {
+                && (match.getMatchTyp() == MatchType.QUALIFICATION)) {
                 if (match.getHeimID() == teamId) {
                     team.setName(match.getGastName());
                     team.setTeamId(match.getGastID());
@@ -329,8 +329,8 @@ public class TeamManager {
     	MatchKurzInfo[] infoarray =  DBManager.instance().getMatchesKurzInfo(teamId, MatchKurzInfo.UPCOMING);
     		
     	for (int i = 0 ; i < infoarray.length ; i++) {
-    		if ( (infoarray[i].getMatchTyp() == MatchLineup.TOURNAMENTGROUP)
-    				|| (infoarray[i].getMatchTyp() == MatchLineup.TOURNAMENTPLAYOFF)) {
+    		if ( (infoarray[i].getMatchTyp() == MatchType.TOURNAMENTGROUP)
+    				|| (infoarray[i].getMatchTyp() == MatchType.TOURNAMENTPLAYOFF)) {
     			MatchKurzInfo info = infoarray[i];
     			Team t = new Team();
     			String teamName;

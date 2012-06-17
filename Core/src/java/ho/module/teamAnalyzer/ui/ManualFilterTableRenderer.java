@@ -2,10 +2,10 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.MatchesColumnModel;
-import ho.core.gui.model.UserColumnFactory;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.match.MatchType;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -27,13 +27,13 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		int type = 0;
+		MatchType type = MatchType.NONE;
 
 		// (blaghaid fixes selection colors)
 		setForeground(Color.black);
 		
 		try {
-			type = Integer.parseInt((String) table.getValueAt(row, 7));
+			type = MatchType.getById(Integer.parseInt((String) table.getValueAt(row, 7)));
 		} catch (NumberFormatException e) {
 		}
 
@@ -51,7 +51,7 @@ public class ManualFilterTableRenderer extends DefaultTableCellRenderer {
 		}
 		
 		if (value instanceof ImageIcon) {
-			setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[UserColumnFactory.convertMatchTypetoIndex(type)]));
+			setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[type.getIconArrayIndex()]));
 			setText(null);
 		} else {
 			setIcon(null);

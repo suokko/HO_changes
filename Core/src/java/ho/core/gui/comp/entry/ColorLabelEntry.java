@@ -201,6 +201,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
        setBackground(m_clBGColor);
     }
 
+	@Override
 	public final JComponent getComponent(boolean isSelected) {
         
         if (isSelected) {
@@ -297,6 +298,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
         return m_dZahl;
     }
     
+	@Override
 	public final void clear() {
         setText("");
         setIcon(null);
@@ -307,6 +309,7 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
      * Vergleich zum Sortieren
      *
      */
+	@Override
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof ColorLabelEntry) {
             final ColorLabelEntry entry = (ColorLabelEntry) obj;
@@ -337,11 +340,13 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
     /**
      * Erstellt eine passende Komponente
      */
+	@Override
 	public final void createComponent() {
         setOpaque(true);
         setForeground(m_clFGColor);
     }
 
+	@Override
 	public final void updateComponent() {
          setBackground(m_clBGColor);
          setForeground(m_clFGColor);
