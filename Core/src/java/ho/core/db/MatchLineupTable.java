@@ -1,6 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
@@ -67,7 +68,7 @@ public final class MatchLineupTable extends AbstractTable {
 			lineup.setHeimId(rs.getInt("HeimID"));
 			lineup.setHeimName(DBManager.deleteEscapeSequences(rs.getString("HeimName")));
 			lineup.setMatchID(matchID);
-			lineup.setMatchTyp(rs.getInt("MatchTyp"));
+			lineup.setMatchTyp(MatchType.getById(rs.getInt("MatchTyp")));
 			lineup.setSpielDatum(rs.getString("MatchDate"));
 
 			lineup.setHeim(DBManager.instance().getMatchLineupTeam(matchID, lineup.getHeimId()));

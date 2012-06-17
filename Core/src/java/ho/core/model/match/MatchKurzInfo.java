@@ -47,7 +47,7 @@ public class MatchKurzInfo implements Comparable<Object> {
     private int m_iMatchStatus = -1;
 
     /** Typ des Spiels */
-    private int m_iMatchTyp = -1;
+    private MatchType m_mtMatchTyp = MatchType.NONE;
 
 	/** TODO Missing Parameter Documentation */
 	public static final int ONGOING = 3;
@@ -288,8 +288,8 @@ public class MatchKurzInfo implements Comparable<Object> {
      *
      * @param m_iMatchTyp New value of property m_iMatchTyp.
      */
-    public final void setMatchTyp(int m_iMatchTyp) {
-        this.m_iMatchTyp = m_iMatchTyp;
+    public final void setMatchTyp(MatchType matchTyp) {
+        this.m_mtMatchTyp = matchTyp;
     }
 
     /**
@@ -297,13 +297,14 @@ public class MatchKurzInfo implements Comparable<Object> {
      *
      * @return Value of property m_iMatchTyp.
      */
-    public final int getMatchTyp() {
-        return m_iMatchTyp;
+    public final MatchType getMatchTyp() {
+        return m_mtMatchTyp;
     }
 
 
     //--------------------------------------------------------------    
-    public final int compareTo(Object obj) {
+    @Override
+	public final int compareTo(Object obj) {
         if (obj instanceof MatchKurzInfo) {
             final MatchKurzInfo info = (MatchKurzInfo) obj;
 

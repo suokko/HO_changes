@@ -1,6 +1,7 @@
 // %3080703537:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 
 import java.sql.Timestamp;
@@ -35,7 +36,7 @@ public class ArenaStatistikModel {
     protected int m_iMatchStatus = -1;
 
     /** Typ des Spiels */
-    protected int m_iMatchTyp = -1;
+    protected MatchType m_mtMatchTyp = MatchType.NONE;
     private int m_iArenaGroesse;
     private int m_iFanZufriedenheit;
     private int m_iFans;
@@ -274,8 +275,8 @@ public class ArenaStatistikModel {
      *
      * @param m_iMatchTyp New value of property m_iMatchTyp.
      */
-    public final void setMatchTyp(int m_iMatchTyp) {
-        this.m_iMatchTyp = m_iMatchTyp;
+    public final void setMatchTyp(MatchType m_mtMatchTyp) {
+        this.m_mtMatchTyp = m_mtMatchTyp;
     }
 
     /**
@@ -283,8 +284,8 @@ public class ArenaStatistikModel {
      *
      * @return Value of property m_iMatchTyp.
      */
-    public final int getMatchTyp() {
-        return m_iMatchTyp;
+    public final MatchType getMatchTyp() {
+        return m_mtMatchTyp;
     }
 
     /**

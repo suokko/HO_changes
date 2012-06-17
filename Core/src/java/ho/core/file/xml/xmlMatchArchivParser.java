@@ -8,6 +8,7 @@ package ho.core.file.xml;
 
 
 import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
@@ -127,7 +128,7 @@ public class xmlMatchArchivParser {
                 tmp = (Element) ele.getElementsByTagName("MatchID").item(0);
                 spiel.setMatchID(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 tmp = (Element) ele.getElementsByTagName("MatchType").item(0);
-                spiel.setMatchTyp(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
+                spiel.setMatchTyp(MatchType.getById(Integer.parseInt(tmp.getFirstChild().getNodeValue())));
                 tmp = (Element) ele.getElementsByTagName("HomeTeam").item(0);
                 spiel.setHeimID(Integer.parseInt(((Element) tmp.getElementsByTagName("HomeTeamID")
                                                   .item(0)).getFirstChild().getNodeValue()));

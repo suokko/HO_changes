@@ -5,7 +5,7 @@ import ho.core.file.hrf.HRF;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 import ho.core.util.HTCalendarFactory;
 
@@ -162,11 +162,11 @@ public class DBCleanupTool {
 		for (MatchKurzInfo curKurzInfo : kurzInfos) {
 			Timestamp curMatchDate = curKurzInfo.getMatchDateAsTimestamp();
 			int curMatchId = curKurzInfo.getMatchID();
-			int curMatchType = curKurzInfo.getMatchTyp();
+			MatchType curMatchType = curKurzInfo.getMatchTyp();
 			boolean isMyMatch = (curKurzInfo.getHeimID() == myTeamId || curKurzInfo.getGastID() == myTeamId);
 			boolean removeMatch = false;
 			if (isMyMatch) {
-				if (isFriendlyType (curMatchType)) {
+				if (curMatchType.isFriendly()) {
 					if (removeDateOwnFriendlies != null && removeDateOwnFriendlies.after(curMatchDate)) {
 						// Remove friendly of my team
 						removeMatch = true;
@@ -176,7 +176,7 @@ public class DBCleanupTool {
 					removeMatch = true;					
 				}
 			} else {
-				if (isFriendlyType (curMatchType)) {
+				if (curMatchType.isFriendly()) {
 					if (removeDateOtherFriendlies != null && removeDateOtherFriendlies.after(curMatchDate)) {
 						// Remove friendly of other team
 						removeMatch = true;
@@ -198,19 +198,6 @@ public class DBCleanupTool {
 		HOLogger.instance().debug(getClass(), "Removed " + counter + "/" + kurzInfos.length + " matches from DB!");
 		if (counter > 0) {
 			reInitHO();
-		}
-	}
-	
-	private boolean isFriendlyType (int matchType) {
-		switch (matchType) {
-		case MatchLineup.TESTSPIEL:
-		case MatchLineup.TESTPOKALSPIEL:
-		case MatchLineup.INT_TESTSPIEL:
-		case MatchLineup.INT_TESTCUPSPIEL:
-			return true;
-			
-		default:
-			return false;
 		}
 	}
 	

@@ -3,6 +3,7 @@ package ho.module.specialEvents;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchType;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -40,8 +41,10 @@ class SpecialEventsDataAccess {
 		for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter
 				.hasNext();) {
 			MatchKurzInfo element = iter.next();
-			if (element.getMatchTyp() != 4 && element.getMatchTyp() != 5
-					&& element.getMatchTyp() != 8 && element.getMatchTyp() != 9) {
+			if (element.getMatchTyp() != MatchType.LEAGUE 
+					&& element.getMatchTyp() != MatchType.CUP
+					&& element.getMatchTyp() != MatchType.INTFRIENDLYNORMAL 
+					&& element.getMatchTyp() != MatchType.INTFRIENDLYCUPRULES) {
 				aktKurzInfos.add(element);
 			}
 		}

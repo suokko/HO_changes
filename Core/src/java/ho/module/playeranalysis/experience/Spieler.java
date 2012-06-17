@@ -235,7 +235,7 @@ final class Spieler {
 			for (Iterator<Integer> it = matchIds.iterator(); it.hasNext();) {
 				Integer mId = it.next();
 				MatchLineup lu = DBManager.instance().getMatchLineup(mId.intValue());
-				int matchtyp = lu.getMatchTyp();
+				int matchtyp = lu.getMatchTyp().getId();
 				Integer iMatchtyp = new Integer(matchtyp);
 				Timestamp spieldatum = lu.getSpielDatum();
 				Integer e = einsaetze.get(iMatchtyp);

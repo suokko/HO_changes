@@ -5,7 +5,7 @@ import ho.core.gui.comp.table.UserColumn;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 
 import java.awt.Color;
 
@@ -71,39 +71,39 @@ public final class MatchesColumnModel extends HOTableModel {
     /**
      * Get the color for a certain match type.
      */
-    public static  Color getColor4Matchtyp(int typ) {
+    public static  Color getColor4Matchtyp(MatchType typ) {
         switch (typ) {
-            case MatchLineup.LIGASPIEL:
+            case LEAGUE:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_LEAGUE_BG);
 
-            case MatchLineup.POKALSPIEL:
+            case CUP:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_CUP_BG);
 
-            case MatchLineup.QUALISPIEL:
+            case QUALIFICATION:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_QUALIFIKATION_BG);
 
-            case MatchLineup.INTCUPSPIEL:
-                return ThemeManager.getColor(HOColorName.MATCHTYPE_INT_BG);
+            case MASTERS:
+                return ThemeManager.getColor(HOColorName.MATCHTYPE_MASTERS_BG);
 
-            case MatchLineup.INTSPIEL:
+            case INTSPIEL:
                 return  ThemeManager.getColor(HOColorName.MATCHTYPE_MASTERS_BG);
 
-            case MatchLineup.INT_TESTCUPSPIEL:
-             case MatchLineup.INT_TESTSPIEL:
+            case INTFRIENDLYCUPRULES:
+            case INTFRIENDLYNORMAL:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_INTFRIENDLY_BG);
 
-            case MatchLineup.LAENDERCUPSPIEL:
-            case MatchLineup.LAENDERSPIEL:
-            case MatchLineup.TESTLAENDERSPIEL:
+            case NATIONALCOMPCUPRULES:
+            case NATIONALCOMPNORMAL:
+            case NATIONALFRIENDLY:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_NATIONAL_BG);
 
-            case MatchLineup.TESTPOKALSPIEL:
-            case MatchLineup.TESTSPIEL:
+            case FRIENDLYCUPRULES:
+            case FRIENDLYNORMAL:
                 return ThemeManager.getColor(HOColorName.MATCHTYPE_FRIENDLY_BG);
 
-            case MatchLineup.TOURNAMENTGROUP:
+            case TOURNAMENTGROUP:
             	return ThemeManager.getColor(HOColorName.MATCHTYPE_TOURNAMENT_GROUP_BG);
-            case MatchLineup.TOURNAMENTPLAYOFF:
+            case TOURNAMENTPLAYOFF:
             	return ThemeManager.getColor(HOColorName.MATCHTYPE_TOURNAMENT_FINALS_BG);
             //Fehler?
             default:

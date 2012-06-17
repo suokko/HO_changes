@@ -1,7 +1,7 @@
 package ho.core.db;
 
 import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielePanel;
 import ho.module.matches.statistics.MatchesOverviewCommonPanel;
@@ -154,25 +154,25 @@ final class MatchesKurzInfoTable extends AbstractTable {
 				//Nix zu tun, da die teamId die einzige Einschränkung ist
 				break;
 			case SpielePanel.NUR_EIGENE_PFLICHTSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.QUALISPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.LIGASPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.POKALSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.QUALIFICATION.getId());
+				sql.append(" OR MatchTyp=" + MatchType.LEAGUE.getId());
+				sql.append(" OR MatchTyp=" + MatchType.CUP.getId() + " )");
 				break;
 			case SpielePanel.NUR_EIGENE_POKALSPIELE :
-				sql.append(" AND MatchTyp=" + MatchLineup.POKALSPIEL);
+				sql.append(" AND MatchTyp=" + MatchType.CUP.getId());
 				break;
 			case SpielePanel.NUR_EIGENE_LIGASPIELE :
-				sql.append(" AND MatchTyp=" + MatchLineup.LIGASPIEL);
+				sql.append(" AND MatchTyp=" + MatchType.LEAGUE.getId());
 				break;
 			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.TESTSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.TESTPOKALSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTCUPSPIEL);
-				sql.append(" OR MatchTyp=" + MatchLineup.INT_TESTSPIEL + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.FRIENDLYNORMAL.getId());
+				sql.append(" OR MatchTyp=" + MatchType.FRIENDLYCUPRULES.getId());
+				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYCUPRULES.getId());
+				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYNORMAL.getId() + " )");
 				break;
 			case SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE :
-				sql.append(" AND ( MatchTyp=" + MatchLineup.TOURNAMENTGROUP);
-				sql.append(" OR MatchTyp=" + MatchLineup.TOURNAMENTPLAYOFF + " )");
+				sql.append(" AND ( MatchTyp=" + MatchType.TOURNAMENTGROUP.getId());
+				sql.append(" OR MatchTyp=" + MatchType.TOURNAMENTPLAYOFF.getId() + " )");
 				break;
 		}
 		return sql;
@@ -188,7 +188,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		match.setMatchID(rs.getInt("MatchID"));
 		match.setGastTore(rs.getInt("GastTore"));
 		match.setHeimTore(rs.getInt("HeimTore"));
-		match.setMatchTyp(rs.getInt("MatchTyp"));
+		match.setMatchTyp(MatchType.getById(rs.getInt("MatchTyp")));
 		match.setMatchStatus(rs.getInt("Status"));
 		match.setAufstellung(rs.getBoolean("Aufstellung"));
 		return match;

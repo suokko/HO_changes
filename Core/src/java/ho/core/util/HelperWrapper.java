@@ -11,6 +11,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 
@@ -164,7 +165,7 @@ public class HelperWrapper {
     }
 
     @Deprecated
-    public boolean isUserMatch(String matchID, int matchType) {
+    public boolean isUserMatch(String matchID, MatchType matchType) {
     	try {
           final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
           final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
@@ -183,7 +184,7 @@ public class HelperWrapper {
      * downloads all match related data and stores it in Database
      *
      */
-    public boolean downloadMatchData(int matchID, int matchType) {
+    public boolean downloadMatchData(int matchID, MatchType matchType) {
         //Spiel nicht vorhanden, dann erst runterladen!
         if (!DBManager.instance().isMatchVorhanden(matchID)) {
             try {

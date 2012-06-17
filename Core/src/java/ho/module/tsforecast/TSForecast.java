@@ -5,7 +5,7 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
 
@@ -130,7 +130,8 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 		  ModuleConfig.instance().save();
 	  }
   }
-  public void refresh() {
+  @Override
+public void refresh() {
 //    ErrorLog.writeln("refresh");
     try {
       createCurves();
@@ -142,7 +143,8 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
     m_jpGraphics.repaint();
   }
 
-  public void actionPerformed(ActionEvent actionevent) {
+  @Override
+public void actionPerformed(ActionEvent actionevent) {
     Cursor cursor = getCursor();
     setCursor(Cursor.getPredefinedCursor(3));
     try {
@@ -172,7 +174,8 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
   }
 
 
-  public void itemStateChanged(ItemEvent itemevent) {
+  @Override
+public void itemStateChanged(ItemEvent itemevent) {
 	  ModuleConfig config = ModuleConfig.instance();
     try {
     	boolean selected = itemevent.getStateChange() == ItemEvent.SELECTED;
@@ -396,9 +399,9 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
 
     for( boolean flag = m_LoepiForecast.first() && m_LoepiForecast.next(); flag;) {
       if( m_LoepiForecast.getAttitude() != IMatchDetails.EINSTELLUNG_UNBEKANNT) {
-        if(  m_LoepiForecast.getMatchType() == MatchLineup.LIGASPIEL
-          || (m_LoepiForecast.getMatchType() == MatchLineup.POKALSPIEL && bshowCupMatches)
-          || (m_LoepiForecast.getMatchType() == MatchLineup.QUALISPIEL && bshowQualMatches) ) {
+        if(  m_LoepiForecast.getMatchType() == MatchType.LEAGUE
+          || (m_LoepiForecast.getMatchType() == MatchType.CUP && bshowCupMatches)
+          || (m_LoepiForecast.getMatchType() == MatchType.QUALIFICATION && bshowQualMatches) ) {
 
           FutureMatchBox futurematchbox = new FutureMatchBox( DateFormat.getDateInstance(3).format(m_LoepiForecast.getDate()),
                                                               m_LoepiForecast.getTooltip(), iCmdID,
@@ -407,7 +410,7 @@ public class TSForecast extends	ImagePanel implements	IRefreshable, ActionListen
           gridbagconstraints.gridy++;
           m_jpGamesPanel.add(futurematchbox, gridbagconstraints);
         }
-        if( m_LoepiForecast.getMatchType() == MatchLineup.QUALISPIEL ) { // indicate end of season
+        if( m_LoepiForecast.getMatchType() == MatchType.QUALIFICATION ) { // indicate end of season
           gridbagconstraints.gridy++;
           m_jpGamesPanel.add( new JLabel( "  " + HOVerwaltung.instance().getLanguageString("EndOFSeason")), gridbagconstraints);
 //          JToolBar.Separator s = new JToolBar.Separator( new Dimension(40,40));

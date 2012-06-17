@@ -9,6 +9,7 @@ package ho.core.file.xml;
 import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
+import ho.core.model.match.MatchType;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
@@ -132,10 +133,10 @@ public class XMLMatchLineupParser {
 			ml.setGastName(ele.getElementsByTagName("AwayTeamName").item(0).getFirstChild()
 					.getNodeValue());
 			ele = (Element) root.getElementsByTagName("MatchType").item(0);
-			ml.setMatchTyp(Integer.parseInt(ele.getFirstChild().getNodeValue()));
+			ml.setMatchTyp(MatchType.getById(Integer.parseInt(ele.getFirstChild().getNodeValue())));
 
-			if ((ml.getMatchTyp() != MatchLineup.TOURNAMENTGROUP)
-					&& (ml.getMatchTyp() != MatchLineup.TOURNAMENTPLAYOFF)) {
+			if ((ml.getMatchTyp() != MatchType.TOURNAMENTGROUP)
+					&& (ml.getMatchTyp() != MatchType.TOURNAMENTPLAYOFF)) {
 				ele = (Element) root.getElementsByTagName("Arena").item(0);
 				ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0)
 						.getFirstChild().getNodeValue()));

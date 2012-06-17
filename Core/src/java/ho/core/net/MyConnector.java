@@ -15,7 +15,7 @@ import ho.core.file.xml.xmlTeamDetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
-import ho.core.model.match.MatchLineup;
+import ho.core.model.match.MatchType;
 import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
 import ho.core.util.HOLogger;
@@ -260,7 +260,7 @@ public class MyConnector {
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchLineup(int matchId, int teamId, int matchType) throws IOException {
+	public String getMatchLineup(int matchId, int teamId, MatchType matchType) throws IOException {
 		String url = htUrl + "?file=matchlineup&version=" + VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
@@ -271,10 +271,7 @@ public class MyConnector {
 			url += ("&teamID=" + teamId);
 		}
 
-		if ((matchType == MatchLineup.TOURNAMENTGROUP)
-				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
-			url += "&sourceSystem=htointegrated";
-		}
+		url += "&sourceSystem=" + matchType.getSourceString();
 
 		return getCHPPWebFile(url);
 	}
@@ -287,15 +284,10 @@ public class MyConnector {
 	 * @return The api content (xml)
 	 * @throws IOException
 	 */
-	public String getMatchOrder(int matchId, int matchType) throws IOException {
+	public String getMatchOrder(int matchId, MatchType matchType) throws IOException {
 		String url = htUrl + "?file=matchorders&version=" + VERSION_MATCHORDERS + "&matchID="
 						+ matchId;
-		
-		
-		if ((matchType == MatchLineup.TOURNAMENTGROUP)
-				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
-			url += "&sourceSystem=htointegrated";
-		}
+		url += "&sourceSystem=" + matchType.getSourceString();
 		
 		return getCHPPWebFile(url);
 	}
@@ -310,7 +302,7 @@ public class MyConnector {
 	 * @return the result xml from the upload
 	 * @throws IOException
 	 */
-	public String setMatchOrder(int matchId, int matchType, String orderString) throws IOException {
+	public String setMatchOrder(int matchId, MatchType matchType, String orderString) throws IOException {
 		StringBuilder urlpara = new StringBuilder();
 		urlpara.append("?file=matchorders&version=").append(VERSION_MATCHORDERS);
 		if (matchId > 0) {
@@ -318,10 +310,7 @@ public class MyConnector {
 		}
 		urlpara.append("&actionType=setmatchorder");
 		
-		if ((matchType == MatchLineup.TOURNAMENTGROUP)
-				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
-			urlpara.append("&sourceSystem=htointegrated");
-		}
+		urlpara.append("&sourceSystem=" + matchType.getSourceString());
 
 		Map<String, String> paras = new HashMap<String, String>();
 		paras.put("lineup", orderString);
@@ -337,15 +326,12 @@ public class MyConnector {
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchdetails(int matchId, int matchType) throws IOException {
+	public String getMatchdetails(int matchId, MatchType matchType) throws IOException {
 		String url = htUrl + "?file=matchdetails&version=" + VERSION_MATCHDETAILS;
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
-		if ((matchType == MatchLineup.TOURNAMENTGROUP)
-				|| (matchType == MatchLineup.TOURNAMENTPLAYOFF)) {
-			url += "&sourceSystem=htointegrated";
-		}
+		url += "&sourceSystem=" + matchType.getSourceString();
 		url += "&matchEvents=true";
 		return getCHPPWebFile(url);
 	}
