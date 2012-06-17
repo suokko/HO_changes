@@ -34,36 +34,35 @@ class NthrfConvertXml2Hrf {
 	/**
 	 * Create the HRF file.
 	 */
-	final String createHrf(long teamId, MyConnector dh, XMLManager xp) throws Exception {
+	final String createHrf(long teamId, MyConnector dh) throws Exception {
 		m_sHRFBuffer = new StringBuffer("");
 		helper = HelperWrapper.instance();
 		this.teamId = teamId;
 		try {
 			debug("About to load data for teamId " + teamId);
 			// leagueId / countryId
-			HashMap<Integer, Integer> countryMapping = getCountryMapping(dh, xp);
+			HashMap<Integer, Integer> countryMapping = getCountryMapping(dh);
 			debug("Got " + (countryMapping != null ? countryMapping.keySet().size() : "null") + " country mappings.");
 
 			// nt team detail
 			String xml = dh.getHattrickXMLFile("/chppxml.axd?file=nationalteamdetails&teamid=" + teamId);
-			NtTeamDetailsParser details = new NtTeamDetailsParser(xp, xml);
+			NtTeamDetailsParser details = new NtTeamDetailsParser(xml);
 			debug("Got team details");
 
 			// world details
 			xml = dh.getHattrickXMLFile("/chppxml.axd?file=worlddetails");
-			@SuppressWarnings("unchecked")
-			Hashtable<String, String> world = (Hashtable<String, String>)xp.parseWorldDetails(xml, String.valueOf(details.getLeagueId()));
+			Hashtable<String, String> world = (Hashtable<String, String>)XMLManager.parseWorldDetails(xml, String.valueOf(details.getLeagueId()));
 			debug("Got world details");
 
 			// nt players + player details
 			xml = dh.getHattrickXMLFile("/chppxml.axd?file=nationalplayers&teamid=" + teamId);
-			NtPlayersParser players = new NtPlayersParser(xp, xml, dh, countryMapping);
+			NtPlayersParser players = new NtPlayersParser(xml, dh, countryMapping);
 			NtPlayer trainer = NthrfUtil.getTrainer(players);
 			debug("Got " + ((players != null && players.getPlayerIds() != null) ? players.getPlayerIds().size() : "null") + " players and trainer");
 
 			// lineup
 			xml = dh.getHattrickXMLFile("/chppxml.axd?file=matchlineup&teamID=" + teamId);
-			NtLineupParser lineup = new NtLineupParser(xp, xml);
+			NtLineupParser lineup = new NtLineupParser(xml);
 			debug("Got lineup");
 
 			createBasics(details, players); // ok, TODO
@@ -473,14 +472,14 @@ class NthrfConvertXml2Hrf {
 	/**
 	 * Parse all leagues and (nativeLeagueId) and their countryId.
 	 */
-	HashMap<Integer, Integer> getCountryMapping(MyConnector dh, XMLManager xp) {
+	HashMap<Integer, Integer> getCountryMapping(MyConnector dh) {
 		HashMap<Integer, Integer> ret = new HashMap<Integer, Integer>(100);
 		try {
 			String str = getWorldDetailString(dh);
 			if (str == null || str.equals("")) {
 				return ret;
 			}
-			Document doc = xp.parseString(str);
+			Document doc = XMLManager.parseString(str);
 
 			Element ele = null;
 			Element root = null;
@@ -494,10 +493,10 @@ class NthrfConvertXml2Hrf {
 			for (int i = 0; (list != null) && (i < list.getLength()); i++) {
 				root = (Element) list.item(i);
 				ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-				String leagueID = xp.getFirstChildNodeValue(ele);
+				String leagueID = XMLManager.getFirstChildNodeValue(ele);
 				root = (Element) root.getElementsByTagName("Country").item(0);
 				ele = (Element) root.getElementsByTagName("CountryID").item(0);
-				String countryID = xp.getFirstChildNodeValue(ele);
+				String countryID = XMLManager.getFirstChildNodeValue(ele);
 				ret.put(new Integer(Integer.parseInt(leagueID)), new Integer(Integer.parseInt(countryID)));
 			}
 		} catch (Exception e) {

@@ -57,7 +57,7 @@ public class PlayerCreator extends XMLCreator {
 			addRoster(root, HOVerwaltung.instance().getModel().getID(),true,0);
 			File playerFile = new File(dir, "players.xml");
 			BufferedWriter bw = new BufferedWriter(new FileWriter(playerFile));
-			bw.write(XMLManager.instance().getXML(doc));
+			bw.write(XMLManager.getXML(doc));
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class PlayerCreator extends XMLCreator {
 
 			File dbFile = new File(dir, "playersdb.xml");
 			BufferedWriter bw = new BufferedWriter(new FileWriter(dbFile));
-			bw.write(XMLManager.instance().getXML(doc));
+			bw.write(XMLManager.getXML(doc));
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {

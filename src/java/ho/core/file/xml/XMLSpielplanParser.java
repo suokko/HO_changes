@@ -44,11 +44,7 @@ public class XMLSpielplanParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Spielplan parseSpielplan(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
-        return createSpielplan(doc);
+        return createSpielplan(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -59,11 +55,7 @@ public class XMLSpielplanParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Spielplan parseSpielplan(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return createSpielplan(doc);
+        return createSpielplan(XMLManager.parseFile(datei));
     }
 
     /**
@@ -74,12 +66,10 @@ public class XMLSpielplanParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Spielplan parseSpielplanFromString(String input) {
-        Document doc = null;
         Spielplan plan = null;
         try
         {
-        	doc = XMLManager.instance().parseString(input);
-        	plan = createSpielplan(doc);
+        	plan = createSpielplan(XMLManager.parseString(input));
         }
         catch (RuntimeException e) {
             HOLogger.instance().error(getClass(),"parseSpielplanFromString: " + e + "\ninput xml was:\n " + input);

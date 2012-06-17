@@ -54,7 +54,7 @@ public class TeamCreator extends XMLCreator {
 									
 			File playerFile = new File(dir, "team.xml");
 			BufferedWriter bw = new BufferedWriter(new FileWriter(playerFile));
-			bw.write(XMLManager.instance().getXML(doc));
+			bw.write(XMLManager.getXML(doc));
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {

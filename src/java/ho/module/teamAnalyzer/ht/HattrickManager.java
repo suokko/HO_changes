@@ -52,8 +52,7 @@ public class HattrickManager {
         }
 
         List<PlayerInfo> players = new ArrayList<PlayerInfo>();
-        XMLManager parser = XMLManager.instance();
-        Document dom = parser.parseString(xml);
+        Document dom = XMLManager.parseString(xml);
         Node matchesList = dom.getElementsByTagName("PlayerList").item(0);
 
         for (int i = 0; i < (matchesList.getChildNodes().getLength() / 2); i++) {
@@ -112,8 +111,7 @@ public class HattrickManager {
      */
     public static String downloadTeam(int teamId) throws Exception {
 		String xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=team&teamID=" + teamId);
-		XMLManager parser = XMLManager.instance();
-        Document dom = parser.parseString(xml);
+        Document dom = XMLManager.parseString(xml);
         Document teamDocument = dom.getElementsByTagName("Team").item(0).getOwnerDocument();
         String teamName = teamDocument.getElementsByTagName("TeamName").item(0).getFirstChild().getNodeValue();
 

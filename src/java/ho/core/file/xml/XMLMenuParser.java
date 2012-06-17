@@ -34,11 +34,7 @@ public class XMLMenuParser {
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
     public final String parseMenu(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -49,11 +45,7 @@ public class XMLMenuParser {
      * @return TODO Missing Return Method Documentation
      */
     public final String parseMenuFromFile(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseFile(datei));
     }
 
     /**
@@ -64,11 +56,7 @@ public class XMLMenuParser {
      * @return TODO Missing Return Method Documentation
      */
     public final String parseMenuFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(inputStream));
     }
 
     /////////////////////////////////////////////////////////////////////////////////    

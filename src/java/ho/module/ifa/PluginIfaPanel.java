@@ -70,11 +70,12 @@ public class PluginIfaPanel extends JPanel {
 			toolbarPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			refreshButton.addActionListener(new ActionListener() {
 				
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					String worldDetails;
 					try {
 						worldDetails = MyConnector.instance().getWorldDetails(0);
-						WorldDetailLeague[] leagues =XMLManager.instance().parseWorldDetails(worldDetails);
+						WorldDetailLeague[] leagues =XMLManager.parseWorldDetails(worldDetails);
 						DBManager.instance().saveWorldDetailLeagues(leagues);
 						WorldDetailsManager.instance().refresh();
 					} catch (IOException e1) {
@@ -92,6 +93,7 @@ public class PluginIfaPanel extends JPanel {
 			
 			imageBuilderButton.addActionListener(new ActionListener() {
 				
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					ImageBuilderDialog dialog = new ImageBuilderDialog();
 					dialog.setVisible(true);

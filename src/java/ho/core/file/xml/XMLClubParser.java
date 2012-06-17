@@ -35,13 +35,7 @@ public class XMLClubParser {
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
     public final Verein parseClub(String dateiname) {
-        Verein club = null;
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(dateiname);
-        club = parseVerein(doc);
-
-        return club;
+    	return parseVerein(XMLManager.parseFile(dateiname));
     }
 
     /**
@@ -52,11 +46,7 @@ public class XMLClubParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Verein parseClub(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseFile(datei);
-
-        return parseVerein(doc);
+        return parseVerein(XMLManager.parseFile(datei));
     }
 
     /**
@@ -67,11 +57,7 @@ public class XMLClubParser {
      * @return TODO Missing Return Method Documentation
      */
     public final java.util.Hashtable<?, ?> parseClubFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(inputStream);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(inputStream));
     }
 
     /**
@@ -96,36 +82,36 @@ public class XMLClubParser {
         try {
             //Daten füllen
             ele = (Element) root.getElementsByTagName("FetchedDate").item(0);
-            club.put("FetchedDate", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("FetchedDate", XMLManager.getFirstChildNodeValue(ele));
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("Team").item(0);
             ele = (Element) root.getElementsByTagName("TeamID").item(0);
-            club.put("TeamID", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("TeamID", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("TeamName").item(0);
-            club.put("TeamName", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("TeamName", XMLManager.getFirstChildNodeValue(ele));
 
             //nochmal root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("Specialists").item(0);
             ele = (Element) root.getElementsByTagName("Doctors").item(0);
-            club.put("Doctors", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("Doctors", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("PressSpokesmen").item(0);
-            club.put("PressSpokesmen", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("PressSpokesmen", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("AssistantTrainers").item(0);
-            club.put("AssistantTrainers", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("AssistantTrainers", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("Physiotherapists").item(0);
-            club.put("Physiotherapists", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("Physiotherapists", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("Psychologists").item(0);
-            club.put("Psychologists", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("Psychologists", XMLManager.getFirstChildNodeValue(ele));
 
             //und nochmal root wechseln
             root = (Element) doc.getDocumentElement().getElementsByTagName("YouthSquad").item(0);
             ele = (Element) root.getElementsByTagName("Investment").item(0);
-            club.put("Investment", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("Investment", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("HasPromoted").item(0);
-            club.put("HasPromoted", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("HasPromoted", XMLManager.getFirstChildNodeValue(ele));
             ele = (Element) root.getElementsByTagName("YouthLevel").item(0);
-            club.put("YouthLevel", XMLManager.instance().getFirstChildNodeValue(ele));
+            club.put("YouthLevel", XMLManager.getFirstChildNodeValue(ele));
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"XMLClubParser.createVerein Exception gefangen: " + e);
             HOLogger.instance().log(getClass(),e);

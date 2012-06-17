@@ -42,7 +42,7 @@ public class xmlMatchArchivParser {
     public final MatchKurzInfo[] parseMatches(String dateiname) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(dateiname);
+        doc = XMLManager.parseFile(dateiname);
 
         return createMatches(doc);
     }
@@ -57,7 +57,7 @@ public class xmlMatchArchivParser {
     public final MatchKurzInfo[] parseMatches(java.io.File datei) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseFile(datei);
+        doc = XMLManager.parseFile(datei);
 
         return createMatches(doc);
     }
@@ -72,7 +72,7 @@ public class xmlMatchArchivParser {
     public final MatchKurzInfo[] parseMatchesFromString(String input) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseString(input);
+        doc = XMLManager.parseString(input);
 
         return createMatches(doc);
     }

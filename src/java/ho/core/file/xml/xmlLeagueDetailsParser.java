@@ -39,7 +39,7 @@ public class xmlLeagueDetailsParser {
     public final Hashtable<?, ?> parseLeagueDetailsFromString(String inputStream, String teamID) {
         Document doc = null;
 
-        doc = XMLManager.instance().parseString(inputStream);
+        doc = XMLManager.parseString(inputStream);
 
         return parseDetails(doc, teamID);
     }
@@ -73,33 +73,32 @@ public class xmlLeagueDetailsParser {
             //Daten füllen            
             //root  =   (Element) root.getElementsByTagName ( "Team" ).item (0);    
             ele = (Element) root.getElementsByTagName("LeagueLevelUnitName").item(0);
-            hash.put("LeagueLevelUnitName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+            hash.put("LeagueLevelUnitName", (XMLManager.getFirstChildNodeValue(ele)));
 
             //Einträge adden
             list = root.getElementsByTagName("Team");
 
             for (int i = 0; (list != null) && (i < list.getLength()); i++) {
                 //Team suchen
-                if (XMLManager.instance()
-                              .getFirstChildNodeValue((Element) ((Element) list.item(i)).getElementsByTagName("TeamID")
+                if (XMLManager.getFirstChildNodeValue((Element) ((Element) list.item(i)).getElementsByTagName("TeamID")
                                                                  .item(0)).equals(teamID)) {
                     root = (Element) list.item(i);
 
                     //Land
                     ele = (Element) root.getElementsByTagName("TeamID").item(0);
-                    hash.put("TeamID", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("TeamID", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("Position").item(0);
-                    hash.put("Position", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("Position", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("TeamName").item(0);
-                    hash.put("TeamName", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("TeamName", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("Matches").item(0);
-                    hash.put("Matches", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("Matches", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("GoalsFor").item(0);
-                    hash.put("GoalsFor", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("GoalsFor", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("GoalsAgainst").item(0);
-                    hash.put("GoalsAgainst", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("GoalsAgainst", (XMLManager.getFirstChildNodeValue(ele)));
                     ele = (Element) root.getElementsByTagName("Points").item(0);
-                    hash.put("Points", (XMLManager.instance().getFirstChildNodeValue(ele)));
+                    hash.put("Points", (XMLManager.getFirstChildNodeValue(ele)));
 
                     //fertig
                     break;

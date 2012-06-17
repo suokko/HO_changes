@@ -50,7 +50,7 @@ public class StandingCreator extends XMLCreator{
 
 			File dbFile = new File(dir, "standings.xml");			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(dbFile));	
-			bw.write(XMLManager.instance().getXML(doc));				
+			bw.write(XMLManager.getXML(doc));				
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {

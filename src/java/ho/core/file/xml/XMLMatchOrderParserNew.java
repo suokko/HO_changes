@@ -100,8 +100,7 @@ public class XMLMatchOrderParserNew {
 		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 		File file = new File(
 				"/home/chr/tmp/matchorders_version_1_8_matchID_353869167_isYouth_false.xml");
-		Document doc = XMLManager.instance().parseFile(file);
-		new XMLMatchOrderParserNew(doc);
+		new XMLMatchOrderParserNew(XMLManager.parseFile(file));
 	}
 
 	private String getChildValue(Node parent, String childTagName) {

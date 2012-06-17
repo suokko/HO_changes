@@ -62,7 +62,7 @@ public class EconomyCreator extends XMLCreator {
 				addEconomy(root, tpw.getHrfId());
 			}
 
-			String xml = XMLManager.instance().getXML(doc);
+			String xml = XMLManager.getXML(doc);
 			File dbFile = new File(dir, "economydb.xml");			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(dbFile));			
 			bw.write(xml);
@@ -191,7 +191,7 @@ public class EconomyCreator extends XMLCreator {
 			
 			File dbFile = new File(dir, "economy.xml");			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(dbFile));	
-			bw.write(XMLManager.instance().getXML(doc));		
+			bw.write(XMLManager.getXML(doc));		
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {

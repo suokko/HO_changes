@@ -38,11 +38,7 @@ public class XMLExtensionParser {
      * @return TODO Missing Return Method Documentation
      */
     public final Extension parseExtension(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.instance().parseString(dateiname);
-
-        return parseDetails(doc);
+        return parseDetails(XMLManager.parseString(dateiname));
     }
 
 
@@ -78,6 +74,6 @@ public class XMLExtensionParser {
 
 	private String getTagValue(Element root, String tag) {
 		final Element ele = (Element) root.getElementsByTagName(tag).item(0);
-		return (XMLManager.instance().getFirstChildNodeValue(ele));
+		return (XMLManager.getFirstChildNodeValue(ele));
 	}
 }
