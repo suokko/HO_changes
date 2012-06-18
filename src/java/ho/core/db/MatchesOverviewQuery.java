@@ -183,7 +183,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 				break;
 			case SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE :
 				sql.append(" AND ( MatchTyp=" + MatchType.FRIENDLYNORMAL.getId());
-				sql.append(" OR MatchTyp=" + MatchType.FRIENDLYCUPRULES);
+				sql.append(" OR MatchTyp=" + MatchType.FRIENDLYCUPRULES.getId());
 				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYCUPRULES.getId());
 				sql.append(" OR MatchTyp=" + MatchType.INTFRIENDLYNORMAL.getId() + " )");
 				break;
