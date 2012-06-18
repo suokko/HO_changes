@@ -7,6 +7,10 @@ import ho.core.util.GUIUtilities;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.Substitution;
+import ho.module.lineup.substitution.plausibility.Error;
+import ho.module.lineup.substitution.plausibility.PlausibilityCheck;
+import ho.module.lineup.substitution.plausibility.Problem;
+import ho.module.lineup.substitution.plausibility.Uncertainty;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -83,12 +87,10 @@ public class SubstitutionOverview extends JPanel {
 
 		for (int i = 0; i < model.getRowCount(); i++) {
 			TableRow row = model.getRow(i);
-			if (!PlausibilityCheck.areBothPlayersInLineup(this.lineup, row.getSub())) {
-				row.setError(true);
-			}
+			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup, row.getSub()));
 		}
 		detailsView.refresh();
-		
+
 		// allow a max. of 5 subs/orders
 		boolean enableCreateActions = this.lineup.getSubstitutionList().size() < 5;
 		this.behaviorAction.setEnabled(enableCreateActions);
@@ -194,7 +196,7 @@ public class SubstitutionOverview extends JPanel {
 			Substitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
 			refresh();
-			
+
 			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
 					.getModel();
 
@@ -290,8 +292,7 @@ public class SubstitutionOverview extends JPanel {
 	 */
 	private class TableRow {
 		private Substitution sub;
-		private boolean critical;
-		private boolean error;
+		private Problem problem;
 
 		public Substitution getSub() {
 			return sub;
@@ -301,20 +302,16 @@ public class SubstitutionOverview extends JPanel {
 			this.sub = sub;
 		}
 
-		public boolean isCritical() {
-			return critical;
-		}
-
-		public void setCritical(boolean critical) {
-			this.critical = critical;
+		public boolean isUncertain() {
+			return this.problem != null && this.problem instanceof Uncertainty;
 		}
 
 		public boolean isError() {
-			return error;
+			return this.problem != null && this.problem instanceof Error;
 		}
 
-		public void setError(boolean error) {
-			this.error = error;
+		public void setProblem(Problem problem) {
+			this.problem = problem;
 		}
 	}
 
@@ -417,7 +414,7 @@ public class SubstitutionOverview extends JPanel {
 					isSelected, hasFocus, row, column);
 			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table.getModel();
 			TableRow tblRow = tblModel.getRow(row);
-			if (tblRow.isCritical()) {
+			if (tblRow.isUncertain()) {
 				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION));
 			} else if (tblRow.isError()) {
 				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION_RED));
