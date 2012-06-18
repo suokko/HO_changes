@@ -729,19 +729,26 @@ public class Lineup {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 				final MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(teamId,
 						MatchKurzInfo.UPCOMING);
-				MatchKurzInfo match;
+				MatchKurzInfo match = null;
 
 				if ((matches == null) || (matches.length < 1)) {
 					m_sLocation = IMatchDetails.LOCATION_AWAY;
-					HOLogger.instance().debug(getClass(), "no match to determine location");
+					HOLogger.instance().error(getClass(), "no match to determine location");
 					return m_sLocation;
 				}
-
-				if (matches.length > 1) {
-					final List<MatchKurzInfo> sMatches = orderMatches(matches);
-					match = sMatches.get(0);
-				} else {
-					match = matches[0];
+				
+				final List<MatchKurzInfo> sMatches = orderMatches(matches);
+				for (int i=0; i < matches.length; i++ ) {
+					match = sMatches.get(i);
+					if (match.getMatchTyp().isOfficial()) {
+						break;
+					}
+				}
+				
+				if (match == null) {
+					m_sLocation = IMatchDetails.LOCATION_AWAY;
+					HOLogger.instance().error(getClass(), "no match to determine location");
+					return m_sLocation;
 				}
 
 				m_sLocation = (match.getHeimID() == teamId) ? IMatchDetails.LOCATION_HOME
