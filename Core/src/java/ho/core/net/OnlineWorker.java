@@ -619,9 +619,11 @@ public class OnlineWorker {
 		orders.append("{\"positions\":[");
 		orders.append(createPositionString(ISpielerPosition.keeper, lineup));
 
-		for (int i = ISpielerPosition.rightBack; i <= ISpielerPosition.substForward; i++) {
+		for (int i = ISpielerPosition.rightBack; i <= ISpielerPosition.substInnerMidfield; i++) {
 			orders.append(',').append(createPositionString(i, lineup));
 		}
+		orders.append(',').append(createPositionString(ISpielerPosition.substForward, lineup));
+		orders.append(',').append(createPositionString(ISpielerPosition.substWinger, lineup));
 
 		orders.append(',').append("{\"id\":\"").append(lineup.getKapitaen());
 		orders.append("\",\"behaviour\":\"0\"}");
