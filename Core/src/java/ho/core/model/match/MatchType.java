@@ -81,6 +81,28 @@ public enum MatchType {
 		}
 	}
 	
+	/** Returns true for all normal matches. 
+	 *  Cup, League, friendlies, qualification, masters
+	 * 
+	 * @return true if the match is official
+	 */
+	public boolean isOfficial() {
+		switch (this) {
+			case LEAGUE : 
+			case CUP :
+			case FRIENDLYNORMAL : 
+			case FRIENDLYCUPRULES : 
+			case INTFRIENDLYNORMAL :
+			case INTFRIENDLYCUPRULES :
+			case MASTERS : {
+				return true;
+			}
+			default: 
+				return false;
+		}
+	}
+	
+	
 	public String getName() {
 		 switch (this) {
 	         case LEAGUE:
