@@ -20,8 +20,7 @@ public class PlausibilityCheck {
 			return Error.PLAYEROUT_NOT_IN_LINEUP;
 		}
 
-		// when NEW_BEHAVIOUR, check that behaviour is not the same like at the
-		// beginning of the match
+		// when NEW_BEHAVIOUR, check that behaviour there is really a change
 		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR) {
 			SpielerPosition pos = lineup.getPositionBySpielerId(substitution.getPlayerOut());
 			if (pos.getTaktik() == substitution.getBehaviour()) {
