@@ -42,6 +42,9 @@ public class SubstitutionOverview extends JPanel {
 	private DetailsView detailsView;
 	private EditAction editAction;
 	private RemoveAction removeAction;
+	private BehaviorAction behaviorAction;
+	private PositionSwapAction positionSwapAction;
+	private SubstitutionAction substitutionAction;
 	private Lineup lineup;
 
 	public SubstitutionOverview(Lineup lineup) {
@@ -69,6 +72,9 @@ public class SubstitutionOverview extends JPanel {
 		this.editAction.setEnabled(false);
 		this.removeAction = new RemoveAction();
 		this.removeAction.setEnabled(false);
+		this.behaviorAction = new BehaviorAction();
+		this.positionSwapAction = new PositionSwapAction();
+		this.substitutionAction = new SubstitutionAction();
 	}
 
 	private void refresh() {
@@ -82,6 +88,12 @@ public class SubstitutionOverview extends JPanel {
 			}
 		}
 		detailsView.refresh();
+		
+		// allow a max. of 5 subs/orders
+		boolean enableCreateActions = this.lineup.getSubstitutionList().size() < 5;
+		this.behaviorAction.setEnabled(enableCreateActions);
+		this.positionSwapAction.setEnabled(enableCreateActions);
+		this.substitutionAction.setEnabled(enableCreateActions);
 	}
 
 	private void addListeners() {
@@ -152,20 +164,20 @@ public class SubstitutionOverview extends JPanel {
 		gbc.gridy++;
 		gbc.insets = new Insets(10, 10, 2, 10);
 		buttonPanel.add(substitutionButton, gbc);
-		substitutionButton.setAction(new SubstitutionAction());
+		substitutionButton.setAction(this.substitutionAction);
 
 		JButton behaviorButton = new JButton();
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 10);
 		buttonPanel.add(behaviorButton, gbc);
-		behaviorButton.setAction(new BehaviorAction());
+		behaviorButton.setAction(this.behaviorAction);
 
 		JButton positionSwapButton = new JButton();
 		gbc.gridy++;
 		gbc.insets = new Insets(2, 10, 2, 10);
 		gbc.weighty = 1.0;
 		buttonPanel.add(positionSwapButton, gbc);
-		positionSwapButton.setAction(new PositionSwapAction());
+		positionSwapButton.setAction(this.positionSwapAction);
 
 		add(buttonPanel, BorderLayout.EAST);
 
