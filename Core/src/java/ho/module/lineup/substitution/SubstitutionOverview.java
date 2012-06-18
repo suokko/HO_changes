@@ -13,6 +13,7 @@ import ho.module.lineup.substitution.plausibility.Problem;
 import ho.module.lineup.substitution.plausibility.Uncertainty;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -32,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -43,6 +45,7 @@ public class SubstitutionOverview extends JPanel {
 
 	private static final long serialVersionUID = -625638866350314110L;
 	private JTable substitutionTable;
+	private JTextArea commentsTextArea;
 	private DetailsView detailsView;
 	private EditAction editAction;
 	private RemoveAction removeAction;
@@ -87,7 +90,7 @@ public class SubstitutionOverview extends JPanel {
 
 		for (int i = 0; i < model.getRowCount(); i++) {
 			TableRow row = model.getRow(i);
-			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup, row.getSub()));
+			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup, row.getSubstitution()));
 		}
 		detailsView.refresh();
 
@@ -114,15 +117,26 @@ public class SubstitutionOverview extends JPanel {
 	private void tableSelectionChanged() {
 		int selectedRowIndex = this.substitutionTable.getSelectedRow();
 		boolean enable = false;
-		Substitution substitution = null;
+		TableRow tableRow = null;
 		if (selectedRowIndex != -1) {
-			substitution = ((SubstitutionsTableModel) this.substitutionTable.getModel())
-					.getSubstitution(selectedRowIndex);
+			tableRow = ((SubstitutionsTableModel) this.substitutionTable.getModel())
+					.getRow(selectedRowIndex);
 			enable = true;
 		}
 		this.editAction.setEnabled(enable);
 		this.removeAction.setEnabled(enable);
-		this.detailsView.setSubstitution(substitution);
+		if (tableRow != null) {
+			this.detailsView.setSubstitution(tableRow.getSubstitution());
+		} else {
+			this.detailsView.setSubstitution(null);
+		}
+
+		if (tableRow != null && (tableRow.isError() || tableRow.isUncertain())) {
+			this.commentsTextArea.setText(PlausibilityCheck.getComment(tableRow.getProblem(),
+					tableRow.getSubstitution()));
+		} else {
+			this.commentsTextArea.setText("");
+		}
 	}
 
 	private void initComponents() {
@@ -130,21 +144,38 @@ public class SubstitutionOverview extends JPanel {
 		this.substitutionTable = new JTable();
 		this.substitutionTable.setModel(new SubstitutionsTableModel());
 		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane tableScrollPane = new JScrollPane();
-		tableScrollPane.getViewport().add(this.substitutionTable);
 		this.substitutionTable.getColumnModel().getColumn(0).setCellRenderer(new WarningRenderer());
 		this.substitutionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
 		this.substitutionTable.getColumnModel().getColumn(0).setMaxWidth(25);
 
+		JPanel lowerPanel = new JPanel(new GridBagLayout());
 		this.detailsView = new DetailsView();
-		add(this.detailsView, BorderLayout.SOUTH);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.weighty = 1.0;
+		lowerPanel.add(this.detailsView, gbc);
+
+		this.commentsTextArea = new JTextArea();
+		this.commentsTextArea.setEditable(false);
+		this.commentsTextArea.setOpaque(false);
+		this.commentsTextArea.setBackground(new Color(0, 0, 0, 0));
+		this.commentsTextArea.setBorder(null);
+		gbc.gridx = 1;
+		gbc.weightx = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(10, 10, 10, 10);
+		lowerPanel.add(this.commentsTextArea, gbc);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splitPane.add(tableScrollPane, 0);
-		splitPane.add(this.detailsView, 1);
+		splitPane.add(new JScrollPane(this.substitutionTable), 0);
+		splitPane.add(lowerPanel, 1);
 		splitPane.setDividerLocation(160);
-		add(splitPane, BorderLayout.CENTER);
 
+		add(splitPane, BorderLayout.CENTER);
+		add(getButtonPanel(), BorderLayout.EAST);
+	}
+
+	private JPanel getButtonPanel() {
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
 		JButton editButton = new JButton();
@@ -181,10 +212,10 @@ public class SubstitutionOverview extends JPanel {
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(this.positionSwapAction);
 
-		add(buttonPanel, BorderLayout.EAST);
-
 		GUIUtilities.equalizeComponentSizes(editButton, removeButton, substitutionButton,
 				behaviorButton, positionSwapButton);
+
+		return buttonPanel;
 	}
 
 	private void doNewOrder(MatchOrderType orderType) {
@@ -201,7 +232,7 @@ public class SubstitutionOverview extends JPanel {
 					.getModel();
 
 			for (int i = 0; i < model.getRowCount(); i++) {
-				if (model.getSubstitution(i) == sub) {
+				if (model.getRow(i).getSubstitution() == sub) {
 					this.substitutionTable.getSelectionModel().setSelectionInterval(i, i);
 				}
 			}
@@ -231,10 +262,6 @@ public class SubstitutionOverview extends JPanel {
 		private List<TableRow> rows = new ArrayList<TableRow>();
 		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards" };
 
-		public Substitution getSubstitution(int rowIndex) {
-			return this.rows.get(rowIndex).getSub();
-		}
-
 		public void setData(List<Substitution> data) {
 			this.rows.clear();
 			for (Substitution sub : data) {
@@ -257,7 +284,7 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			Substitution sub = this.rows.get(rowIndex).getSub();
+			Substitution sub = this.rows.get(rowIndex).getSubstitution();
 			switch (columnIndex) {
 			case 1:
 				return LanguageStringLookup.getOrderType(sub.getOrderType());
@@ -291,10 +318,11 @@ public class SubstitutionOverview extends JPanel {
 	 * This class is a simple container for row data.
 	 */
 	private class TableRow {
+
 		private Substitution sub;
 		private Problem problem;
 
-		public Substitution getSub() {
+		public Substitution getSubstitution() {
 			return sub;
 		}
 
@@ -308,6 +336,10 @@ public class SubstitutionOverview extends JPanel {
 
 		public boolean isError() {
 			return this.problem != null && this.problem instanceof Error;
+		}
+
+		public Problem getProblem() {
+			return problem;
 		}
 
 		public void setProblem(Problem problem) {
@@ -369,7 +401,7 @@ public class SubstitutionOverview extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			SubstitutionsTableModel model = (SubstitutionsTableModel) substitutionTable.getModel();
 			TableRow row = model.getRow(substitutionTable.getSelectedRow());
-			lineup.getSubstitutionList().remove(row.getSub());
+			lineup.getSubstitutionList().remove(row.getSubstitution());
 			refresh();
 		}
 	}
@@ -386,7 +418,7 @@ public class SubstitutionOverview extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
 			final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
-					.getSubstitution(selectedRowIndex);
+					.getRow(selectedRowIndex).getSubstitution();
 
 			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
