@@ -33,8 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
-
-
 final class FutureMatchBox extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -42,77 +40,82 @@ final class FutureMatchBox extends JPanel {
 	private JRadioButton m_rbNORM = null;
 	private JRadioButton m_rbMOTS = null;
 
-  public FutureMatchBox( String text, String tooltip, int iCmd, int iSelected, MatchType iType) {
-    m_rbPIC = new JRadioButton();
-    m_rbPIC.setActionCommand( "P" + iCmd);
-    m_rbPIC.setToolTipText( HOVerwaltung.instance().getLanguageString("PIC"));
-    
-    m_rbNORM = new JRadioButton();
-    m_rbNORM.setActionCommand( "N" + iCmd);
-    m_rbNORM.setToolTipText( HOVerwaltung.instance().getLanguageString("Normal"));
-    
-    m_rbMOTS = new JRadioButton();
-    m_rbMOTS.setActionCommand( "M" + iCmd);
-    m_rbMOTS.setToolTipText(HOVerwaltung.instance().getLanguageString("MOTS"));
-    
-    ButtonGroup buttongroup = new ButtonGroup();
-    buttongroup.add(m_rbPIC);
-    buttongroup.add(m_rbNORM);
-    buttongroup.add(m_rbMOTS);
-    setSelected( iSelected);
-    
-    GridBagLayout gridbaglayout = new GridBagLayout();
-    GridBagConstraints gridbagconstraints = new GridBagConstraints();
-    setLayout( gridbaglayout);
-    gridbagconstraints.fill = GridBagConstraints.HORIZONTAL;
+	public FutureMatchBox(String text, String tooltip, int iCmd, int iSelected,
+			MatchType iType) {
+		m_rbPIC = new JRadioButton();
+		m_rbPIC.setActionCommand("P" + iCmd);
+		m_rbPIC.setToolTipText(HOVerwaltung.instance().getLanguageString("PIC"));
 
-    gridbagconstraints.gridx = 0;
-    add(m_rbPIC, gridbagconstraints);
+		m_rbNORM = new JRadioButton();
+		m_rbNORM.setActionCommand("N" + iCmd);
+		m_rbNORM.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"Normal"));
 
-    gridbagconstraints.gridx = 1;
-    add(m_rbNORM, gridbagconstraints);
+		m_rbMOTS = new JRadioButton();
+		m_rbMOTS.setActionCommand("M" + iCmd);
+		m_rbMOTS.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"MOTS"));
 
-    gridbagconstraints.gridx = 2;
-    add(m_rbMOTS, gridbagconstraints);
+		ButtonGroup buttongroup = new ButtonGroup();
+		buttongroup.add(m_rbPIC);
+		buttongroup.add(m_rbNORM);
+		buttongroup.add(m_rbMOTS);
+		setSelected(iSelected);
 
-    gridbagconstraints.gridx = 3;
-    JLabel lIcon = new JLabel( ThemeManager.getIcon(HOIconName.MATCHTYPES[iType.getIconArrayIndex()]) );
-    lIcon.setToolTipText( iType.getName());
-    add( lIcon, gridbagconstraints );
+		GridBagLayout gridbaglayout = new GridBagLayout();
+		GridBagConstraints gridbagconstraints = new GridBagConstraints();
+		setLayout(gridbaglayout);
+		gridbagconstraints.fill = GridBagConstraints.HORIZONTAL;
 
-    gridbagconstraints.gridx = 4;
-    JLabel lText = new JLabel( "  " + text + " ", SwingConstants.LEFT);
-    lText.setToolTipText( tooltip);
-    add( lText, gridbagconstraints);
-  }
+		gridbagconstraints.gridx = 0;
+		add(m_rbPIC, gridbagconstraints);
 
-  public final int isSelected() {
-    if(m_rbMOTS.isSelected())
-      return IMatchDetails.EINSTELLUNG_MOTS;
-    else if( m_rbPIC.isSelected())
-      return IMatchDetails.EINSTELLUNG_PIC;
-    return IMatchDetails.EINSTELLUNG_NORMAL;
-  }
+		gridbagconstraints.gridx = 1;
+		add(m_rbNORM, gridbagconstraints);
 
-  public final void setSelected(int i) {
-    switch(i) {
-      case IMatchDetails.EINSTELLUNG_MOTS:
-        m_rbMOTS.setSelected(true);
-        break;
-      case IMatchDetails.EINSTELLUNG_PIC: 
-        m_rbPIC.setSelected(true);
-        break;
-      case IMatchDetails.EINSTELLUNG_NORMAL: // '\0'
-      default:
-        m_rbNORM.setSelected(true);
-        break;
-    }
-  }
+		gridbagconstraints.gridx = 2;
+		add(m_rbMOTS, gridbagconstraints);
 
-  public final void addActionListener(ActionListener actionlistener) {
-    m_rbPIC.addActionListener( actionlistener);
-    m_rbNORM.addActionListener( actionlistener);
-    m_rbMOTS.addActionListener( actionlistener);
-  }
+		gridbagconstraints.gridx = 3;
+		JLabel lIcon = new JLabel(
+				ThemeManager.getIcon(HOIconName.MATCHTYPES[iType
+						.getIconArrayIndex()]));
+		lIcon.setToolTipText(iType.getName());
+		add(lIcon, gridbagconstraints);
+
+		gridbagconstraints.gridx = 4;
+		JLabel lText = new JLabel("  " + text + " ", SwingConstants.LEFT);
+		lText.setToolTipText(tooltip);
+		add(lText, gridbagconstraints);
+	}
+
+	public final int isSelected() {
+		if (m_rbMOTS.isSelected())
+			return IMatchDetails.EINSTELLUNG_MOTS;
+		else if (m_rbPIC.isSelected())
+			return IMatchDetails.EINSTELLUNG_PIC;
+		return IMatchDetails.EINSTELLUNG_NORMAL;
+	}
+
+	public final void setSelected(int i) {
+		switch (i) {
+		case IMatchDetails.EINSTELLUNG_MOTS:
+			m_rbMOTS.setSelected(true);
+			break;
+		case IMatchDetails.EINSTELLUNG_PIC:
+			m_rbPIC.setSelected(true);
+			break;
+		case IMatchDetails.EINSTELLUNG_NORMAL: // '\0'
+		default:
+			m_rbNORM.setSelected(true);
+			break;
+		}
+	}
+
+	public final void addActionListener(ActionListener actionlistener) {
+		m_rbPIC.addActionListener(actionlistener);
+		m_rbNORM.addActionListener(actionlistener);
+		m_rbMOTS.addActionListener(actionlistener);
+	}
 
 }

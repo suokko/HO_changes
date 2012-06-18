@@ -18,7 +18,6 @@ package ho.module.tsforecast;
  * @author  michael.roux
  */
 
-
 import java.sql.SQLException;
 
 // Referenced classes of package hoplugins.tsforecast:
@@ -26,33 +25,36 @@ import java.sql.SQLException;
 
 public class LoepiCurve extends ForecastCurve {
 
-  private TrainerCurve m_TrainerCurve = null;
-  
-  public LoepiCurve( TrainerCurve t, boolean future) throws SQLException {
-    super(future);
-    m_TrainerCurve = t;
-  }
+	private TrainerCurve m_TrainerCurve = null;
 
+	public LoepiCurve(TrainerCurve t, boolean future) throws SQLException {
+		super(future);
+		m_TrainerCurve = t;
+	}
 
-  //-- protected ------------------------------------------------------------------------
+	// -- protected
+	// ------------------------------------------------------------------------
 
-//TS über 4,5:
-//TS(neu)=TS(alt)*(1-((TS(alt)-4.5)/(FQ/3))/100)
-//alte Formel: TS(neu)=TS(alt)*(1-((TS(alt)-4,5)*Faktor)/100).
-//TS unter 4,5:
-//TS(neu)=TS(alt)*(1+((TS(alt)-4.5)*(-1)*(FQ/2))/100)
-//alte Formel: TS(neu)=TS(alt)*(1+((TS(alt)-4,5)*(-1)/(Faktor/1,5))/100).
+	// TS über 4,5:
+	// TS(neu)=TS(alt)*(1-((TS(alt)-4.5)/(FQ/3))/100)
+	// alte Formel: TS(neu)=TS(alt)*(1-((TS(alt)-4,5)*Faktor)/100).
+	// TS unter 4,5:
+	// TS(neu)=TS(alt)*(1+((TS(alt)-4.5)*(-1)*(FQ/2))/100)
+	// alte Formel: TS(neu)=TS(alt)*(1+((TS(alt)-4,5)*(-1)/(Faktor/1,5))/100).
 
-  @Override
-protected double forecastUpdate(Curve.Point point1, Curve.Point point2) throws Exception {
-  
-    double dRet = point1.m_dSpirit;
-    if( dRet >= m_dGeneralSpirit) {
-      dRet *= 1.0D - (((dRet - m_dGeneralSpirit) / (m_TrainerCurve.getLeadership( point1.m_dDate) / 3D) ) / 100D);
-    } else {
-      dRet *= 1.0D + (((dRet - m_dGeneralSpirit) * -1D) * (m_TrainerCurve.getLeadership( point1.m_dDate) / 2D) / 100D);
-    }
-    return dRet;
-  }
+	@Override
+	protected double forecastUpdate(Curve.Point point1, Curve.Point point2)
+			throws Exception {
+
+		double dRet = point1.m_dSpirit;
+		if (dRet >= m_dGeneralSpirit) {
+			dRet *= 1.0D - (((dRet - m_dGeneralSpirit) / (m_TrainerCurve
+					.getLeadership(point1.m_dDate) / 3D)) / 100D);
+		} else {
+			dRet *= 1.0D + (((dRet - m_dGeneralSpirit) * -1D)
+					* (m_TrainerCurve.getLeadership(point1.m_dDate) / 2D) / 100D);
+		}
+		return dRet;
+	}
 
 }

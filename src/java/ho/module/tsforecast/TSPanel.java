@@ -474,7 +474,6 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
       if(rectangle2d.getWidth() > maxWidth) maxWidth = rectangle2d.getWidth();
     }
     return maxWidth;
-  }
-
+	}
 
 }
