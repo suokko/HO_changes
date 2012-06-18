@@ -8,7 +8,6 @@ import ho.core.module.DefaultModule;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-
 public final class TSForecastModule extends DefaultModule {
 
 	@Override
@@ -26,6 +25,7 @@ public final class TSForecastModule extends DefaultModule {
 		return new TSForecast();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_1, KeyEvent.CTRL_MASK);
 	}
