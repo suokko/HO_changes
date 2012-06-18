@@ -159,9 +159,9 @@ public void addPoint(int i, Curve.Point point) {
                                                  + "  and MATCHDATE = select MAX(MATCHDATE) "
                                                  + "    from MATCHESKURZINFO "
                                                  + "    where (HEIMID=" + ibasics.getTeamId() + " or GASTID=" + ibasics.getTeamId() + ") "
-                                                 + "      and (MATCHTYP=" + MatchType.LEAGUE 
-                                                 + "        or MATCHTYP=" + MatchType.QUALIFICATION
-                                                 + "        or MATCHTYP=" + MatchType.CUP + ")"
+                                                 + "      and (MATCHTYP=" + MatchType.LEAGUE.getId()
+                                                 + "        or MATCHTYP=" + MatchType.QUALIFICATION.getId()
+                                                 + "        or MATCHTYP=" + MatchType.CUP.getId() + ")"
                                                  + "      and STATUS=1" );
     /*
       select MATCHDATE, MATCHTYP from MATCHESKURZINFO
@@ -253,11 +253,11 @@ public void addPoint(int i, Curve.Point point) {
                                                  + "from MATCHESKURZINFO, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
                                                  +       " OR MATCHDETAILS.GASTID=" + ibasics.getTeamId() + ") "
-                                                 +   "and MATCHESKURZINFO.MATCHTYP=" + MatchType.CUP
+                                                 +   "and MATCHESKURZINFO.MATCHTYP=" + MatchType.CUP.getId()
                                                  +   "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID " 
                                                  +   "and SORTDATE < '" + ibasics.getDatum() + "' and SORTDATE > '" + start + "' "
                                                  + "union "
-                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchType.LEAGUE + " as MATCHTYP, "
+                                                 + "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "+ MatchType.LEAGUE.getId() + " as MATCHTYP, "
                                                  +        "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
                                                  + "from PAARUNG, MATCHDETAILS "
                                                  + "where (MATCHDETAILS.HEIMID=" + ibasics.getTeamId() 
