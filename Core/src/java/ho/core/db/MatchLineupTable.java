@@ -129,7 +129,7 @@ public final class MatchLineupTable extends AbstractTable {
 				sql
 					+= (lineup.getMatchID()
 						+ ","
-						+ lineup.getMatchTyp()
+						+ lineup.getMatchTyp().getId()
 						+ ", '"
 						+ DBManager.insertEscapeSequences(lineup.getHeimName())
 						+ "',"

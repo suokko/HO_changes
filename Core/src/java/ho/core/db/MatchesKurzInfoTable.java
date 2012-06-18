@@ -282,7 +282,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 			try {
 				//insert vorbereiten
 				sql = "INSERT INTO "+getTableName()+" (  MatchID, MatchTyp, HeimName, HeimID, GastName, GastID, MatchDate, HeimTore, GastTore, Aufstellung, Status ) VALUES(";
-				sql += (matches[i].getMatchID() + "," + matches[i].getMatchTyp() + ", '"
+				sql += (matches[i].getMatchID() + "," + matches[i].getMatchTyp().getId() + ", '"
 						+ DBManager.insertEscapeSequences(matches[i].getHeimName()) + "', " + matches[i].getHeimID() + ", '"
 						+ DBManager.insertEscapeSequences(matches[i].getGastName()) + "', ");
 				sql += (matches[i].getGastID() + ", '" + matches[i].getMatchDate() + "', " + matches[i].getHeimTore() + ", "
