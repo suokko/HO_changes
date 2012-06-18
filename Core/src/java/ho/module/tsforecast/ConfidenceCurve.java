@@ -44,7 +44,7 @@ class ConfidenceCurve extends Curve {
     for(boolean flag = resultset.first(); flag; flag = resultset.next()) {
       if(   start.before( resultset.getTimestamp( "DATUM")) 
          && !HOVerwaltung.instance().getModel().getBasics().getDatum().before( resultset.getTimestamp( "DATUM"))) {
-        m_clPoints.add( new Point( resultset.getTimestamp( "DATUM"), resultset.getInt( "ISELBSTVERTRAUEN")));
+        m_clPoints.add( new Point( resultset.getTimestamp( "DATUM"), 1 + resultset.getInt( "ISELBSTVERTRAUEN")));
       }
     }
   }
