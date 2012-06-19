@@ -100,6 +100,7 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 			gridbagconstraints.gridheight = -1;
 			add(m_jpGraphics, gridbagconstraints);
 
+			initCurves();
 			// createTeamData(1);
 			double d = ModuleConfig.instance().getBigDecimal(TS_GENERALSPIRIT)
 					.doubleValue();
@@ -508,6 +509,30 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		// m_LoepiForecast.setAttitudes( m_Configuration);
 		m_LoepiForecast.forecast(0);
 		m_LoepiForecast.setColor(Color.red);
+	}
+
+
+	private void initCurves() {
+
+		ModuleConfig config = ModuleConfig.instance();
+		
+		if (config.getBoolean(TS_HISTORY)) {
+			m_jpGraphics.addCurve(m_History, true);
+			m_jpGraphics.addCurve(m_Trainer);
+		}
+
+		if (config.getBoolean(TS_LOEPIFORECAST)) {
+			m_jpGraphics.addCurve(m_LoepiForecast);
+		}
+
+		if (config.getBoolean(TS_LOEPIHISTORY)) {
+			m_jpGraphics.addCurve(m_LoepiHist);
+		} 
+
+		if (config.getBoolean(TS_CONFIDENCE)) {
+			m_jpGraphics.addCurve(m_Confidence);
+
+		}
 	}
 
 }
