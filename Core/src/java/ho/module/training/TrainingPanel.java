@@ -1,6 +1,7 @@
 package ho.module.training;
 
 import ho.core.gui.IRefreshable;
+import ho.core.gui.RefreshManager;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
@@ -88,7 +89,7 @@ public class TrainingPanel extends JPanel implements IRefreshable {
             mainPanel.setOpaque(false);
             add(mainPanel, BorderLayout.CENTER);
             
-            //RefreshManager.instance().registerRefreshable(this);
+            RefreshManager.instance().registerRefreshable(this);
         } catch (RuntimeException e) {
             HOLogger.instance().log(TrainingPanel.class, e);
         }
