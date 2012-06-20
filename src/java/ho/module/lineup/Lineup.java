@@ -413,7 +413,7 @@ public class Lineup {
 	 * Get the best players for penalty kicks.
 	 */
 	public final int[] getBestElferKicker() {
-		List<Integer> list = m_clAssi.setElferKicker(HOVerwaltung.instance().getModel()
+		List<Integer> list = m_clAssi.getElferKicker(HOVerwaltung.instance().getModel()
 				.getAllSpieler(), m_vPositionen);
 		
 		int[] arr = new int[list.size()];

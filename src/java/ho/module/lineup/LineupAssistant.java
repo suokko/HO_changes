@@ -124,7 +124,7 @@ public class LineupAssistant {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final List<Integer> setElferKicker(Vector<Spieler> vSpieler,
+	public final List<Integer> getElferKicker(Vector<Spieler> vSpieler,
 			Vector<ISpielerPosition> positionen) {
 		List<Integer> penaltyShooters = new ArrayList<Integer>();
 
