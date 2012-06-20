@@ -1,7 +1,13 @@
 package ho.core.training;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import ho.core.constants.player.PlayerSkill;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HOLogger;
 
 
 public class SkillDrops {
@@ -15,21 +21,24 @@ public class SkillDrops {
 	//	Winger
 	//	Scoring
 	
+	private static int LINES = 13;
+	private static int LINE_LENGTH = 8;
+	
+	
 	private static double[][] keeper = {
-		{7.2, 8.6, 10.4, 99, 99, 99,  99, 99},   // 23
-		{5.4, 6.6, 8.0, 9.8, 99, 99,  99, 99}, // 22
-		{4.0, 5.0, 6.2, 7.6, 9.6, 99, 99, 99},  //21
-		{2.8,  3.6,  4.6,  5.8,  7.7,  99,  99,  99}, //20
-		{1.8,  2.4,  3.2,  4.3,  6.1,  8.5,  99,  99}, //19
-		{1.0,  1.5,  2.1,  3.1,  4.9,  7.3,  99,  99}, //18
-		{0.5,  0.9,  1.4,  2.3,  4.0,  6.3,  10.6,  99}, //17
-		{0.1,  0.4,  0.8,  1.6,  3.2,  5.4,  9.3,  99}, //16
-		{0,  0.2,  0.4,  1.0,  2.4,  4.4,  7.6,  12.4}, //15
-		{0,  0.1,  0.2,  0.7,  1.8,  3.6,  6.0,  9.0}, //14
-		{0,  0,  0.2,  0.5,  1.2,  2.7,  4.5,  6.6}, //13
-		{0,  0,  0.2,  0.5,  0.9,  1.9,  3.0,  4.8}, //12
-		{0,  0,  0.1,  0.4,  0.8,  1.5,  2.4,  4.0}};//11
-	// Lines are from left, 29 and under, 30, 31, ...., 36
+		{7.2, 8.6, 10.4, 99, 99, 99,  99, 99},
+		{5.4, 6.6, 8.0, 9.8, 99, 99,  99, 99},
+		{4.0, 5.0, 6.2, 7.6, 9.6, 99, 99, 99},
+		{2.8,  3.6,  4.6,  5.8,  7.7,  99,  99,  99},
+		{1.8,  2.4,  3.2,  4.3,  6.1,  8.5,  99,  99},
+		{1.0,  1.5,  2.1,  3.1,  4.9,  7.3,  99,  99},
+		{0.5,  0.9,  1.4,  2.3,  4.0,  6.3,  10.6,  99},
+		{0.1,  0.4,  0.8,  1.6,  3.2,  5.4,  9.3,  99},
+		{0,  0.2,  0.4,  1.0,  2.4,  4.4,  7.6,  12.4},
+		{0,  0.1,  0.2,  0.7,  1.8,  3.6,  6.0,  9.0},
+		{0,  0,  0.2,  0.5,  1.2,  2.7,  4.5,  6.6},
+		{0,  0,  0.2,  0.5,  0.9,  1.9,  3.0,  4.8},
+		{0,  0,  0.1,  0.4,  0.8,  1.5,  2.4,  4.0}};
 	
 	
 	private static double[][] defending =  {
@@ -92,6 +101,38 @@ public class SkillDrops {
 		{0, 1, 1.7, 2.6, 3.9, 5.5, 8, 12},
 		{0, 1, 1.6, 2.5, 3.8, 5.3, 7.4, 10.8}};
 	
+
+	private static double[][] passing = {
+		{7.2, 9, 99, 99, 99, 99, 99, 99},
+		{5.4, 7.1, 8.9, 11.4, 99, 99, 99, 99}, 
+		{4, 5.6, 7.3, 9.7, 12.4, 16.4, 99, 99},
+		{2.8, 4.3, 5.9, 8.2, 10.8, 14.5, 99, 99},
+		{1.8, 3.2, 4.5, 6.7, 9.4, 13, 99, 99},
+		{1, 2.2, 3.3, 5.3, 7.9, 11.3, 16.3, 99},
+		{0.5, 1.7, 2.7, 4.6, 7, 10.2, 14.8, 99},
+		{0.1, 1.3, 2.3, 4.1, 6.2, 9.1, 13.2, 99},
+		{0, 1.1, 2, 3.5, 5.4, 8.1, 11.8, 17.4},
+		{0, 1, 1.8, 3, 4.5, 7.1, 10.4, 15.6},
+		{0, 1, 1.7, 2.7, 4.1, 6.3, 9.2, 13.8},
+		{0, 1, 1.7, 2.6, 3.9, 5.5, 8, 12},
+		{0, 1, 1.6, 2.5, 3.8, 5.3, 7.4, 10.8}};
+	
+
+	private static double[][] setpieces = {
+		{7.2, 9, 99, 99, 99, 99, 99, 99},
+		{5.4, 7.1, 8.9, 11.4, 99, 99, 99, 99}, 
+		{4, 5.6, 7.3, 9.7, 12.4, 16.4, 99, 99},
+		{2.8, 4.3, 5.9, 8.2, 10.8, 14.5, 99, 99},
+		{1.8, 3.2, 4.5, 6.7, 9.4, 13, 99, 99},
+		{1, 2.2, 3.3, 5.3, 7.9, 11.3, 16.3, 99},
+		{0.5, 1.7, 2.7, 4.6, 7, 10.2, 14.8, 99},
+		{0.1, 1.3, 2.3, 4.1, 6.2, 9.1, 13.2, 99},
+		{0, 1.1, 2, 3.5, 5.4, 8.1, 11.8, 17.4},
+		{0, 1, 1.8, 3, 4.5, 7.1, 10.4, 15.6},
+		{0, 1, 1.7, 2.7, 4.1, 6.3, 9.2, 13.8},
+		{0, 1, 1.7, 2.6, 3.9, 5.5, 8, 12},
+		{0, 1, 1.6, 2.5, 3.8, 5.3, 7.4, 10.8}};
+	
 	boolean active = true;
 	private SkillDrops drops;
 	private static SkillDrops instance = null;
@@ -107,6 +148,7 @@ public class SkillDrops {
 			ModuleConfig.instance().setBoolean(key, true);
 			ModuleConfig.instance().save();
 		}
+		readArrays();
 	}
 	
 	public boolean isActive() {
@@ -165,12 +207,12 @@ public class SkillDrops {
 			}
 			case PlayerSkill.PASSING : {
 				// Ad hoc value choice
-				array = scoring;
+				array = passing;
 				break;
 			}
 			case PlayerSkill.SET_PIECES : {
 				//Ad hoc value choice
-				array = scoring;
+				array = setpieces;
 				break;
 			}
 
@@ -183,5 +225,86 @@ public class SkillDrops {
 		int row = 11 - Math.min(11,  Math.max(0,  skill - 12));
 
 		return (float) array[row][col];
+	}
+	
+	
+	private double[][] readArrayFromFile (String fileName) {
+		
+		try {
+			List<double[]> lines = new ArrayList<double[]>();
+		
+			Scanner fileIn = new Scanner(new File("prediction/skilldrops/" + fileName));
+			while (fileIn.hasNextLine()) {
+			    // read a line, and turn it into the characters
+			    String[] oneLine = fileIn.nextLine().split(",");
+			    if (oneLine.length != LINE_LENGTH) {
+			    	HOLogger.instance().error(getClass(), "Failed to read skill drop file: " 
+			    											+ fileName + ". error in line length");
+			    	return null;
+			    }
+			    
+			    double[] doubleLine = new double[oneLine.length];
+			    
+			    // we turn the characters into doubles
+			    for(int i =0; i < doubleLine.length; i++){
+			        if (oneLine[i].trim().equals(""))
+			            doubleLine[i] = 0;
+			        else
+			            doubleLine[i] = Double.parseDouble(oneLine[i].trim());
+			    }
+			    // and then add the int[] to our output
+			    lines.add(doubleLine);
+			
+			}
+			if (lines.size() != LINES) {
+				HOLogger.instance().error(getClass(), "Failed to read skill drop file: " 
+														+ fileName + ". wrong number of lines");
+				return null;
+			}
+		
+			return lines.toArray(new double[lines.size()][]);
+		} catch (Exception e) {
+			HOLogger.instance().error(getClass(), "Failed to read skill drop file: " + fileName + ". " + e.getMessage());
+			return null;
+		}
+	}
+	
+	private void readArrays() {
+		double[][] tmp;
+		
+		tmp = readArrayFromFile("keeper");
+		if (tmp != null) {
+			keeper = tmp;
+		}
+		
+		tmp = readArrayFromFile("defending");
+		if (tmp != null) {
+			defending = tmp;
+		}
+		
+		tmp = readArrayFromFile("playmaking");
+		if (tmp != null) {
+			playmaking = tmp;
+		}
+		
+		tmp = readArrayFromFile("winger");
+		if (tmp != null) {
+			winger = tmp;
+		}
+		
+		tmp = readArrayFromFile("scoring");
+		if (tmp != null) {
+			scoring = tmp;
+		}
+		
+		tmp = readArrayFromFile("passing");
+		if (tmp != null) {
+			passing = tmp;
+		}
+
+		tmp = readArrayFromFile("setpieces");
+		if (tmp != null) {
+			setpieces = tmp;
+		}
 	}
 }
