@@ -308,7 +308,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     		default: 
     		{
     			// Special check here for the replaced players, we got a range of at least 3...
-    			if ((posid >= ISpielerPosition.ausgewechselt) && (posid < ISpielerPosition.ausgewechseltEnd)) {
+    			if ((posid >= ISpielerPosition.ausgewechselt) && (posid <= ISpielerPosition.ausgewechseltEnd)) {
     				m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
     			break;
     			} else {
