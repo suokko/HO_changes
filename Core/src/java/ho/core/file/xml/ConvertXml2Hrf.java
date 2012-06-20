@@ -479,6 +479,11 @@ public class ConvertXml2Hrf {
 				}
 			}
 			
+			for (int i = 0; i < 11; i++) {
+				String key = "PenaltyTaker" + i;
+				buffer.append("penalty" + i + "=" + getPlayerForNextLineup(key, nextLineup) + "\n");
+			}
+			
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }

@@ -243,6 +243,13 @@ public class XMLMatchOrderParser {
 			map.put("CaptainName", name);
 			break;
 		}
+		
+		// Penalty positions
+		for (int i = ISpielerPosition.penaltyTaker1 ; i <= ISpielerPosition.penaltyTaker11 ; i++) {
+			if (roleID == i) {
+				map.put("PenaltyTaker" + (i - ISpielerPosition.penaltyTaker1 ), spielerID);
+			}
+		}
 	}
 
 	private static void addAdditionalPlayer(Map<String, String> map, int roleID, String spielerID,

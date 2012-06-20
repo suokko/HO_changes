@@ -64,7 +64,8 @@ public class Lineup {
 	/** positions */
 	private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 	private List<Substitution> substitutions = new ArrayList<Substitution>();
-
+	private List<ISpielerPosition> m_vPenaltyTakers = new ArrayList<ISpielerPosition>();
+	
 	/** Attitude */
 	private int m_iAttitude;
 
@@ -200,6 +201,14 @@ public class Lineup {
 				} else {
 					break;
 				}
+			}
+			
+			//Add the penalty takers
+			
+			for (int i = 0; i < 11; i++) {
+				m_vPenaltyTakers.add(			
+						new SpielerPosition(i + ISpielerPosition.penaltyTaker1,
+						Integer.parseInt(properties.getProperty("penalty" + i, "0")), (byte) 0));
 			}
 
 		} catch (Exception e) {
@@ -1701,6 +1710,10 @@ public class Lineup {
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
+		
+		for (int i = 0; i < 10; i++) {
+			m_vPenaltyTakers.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, 0, (byte) 0));
+		}
 	}
 
 	/**

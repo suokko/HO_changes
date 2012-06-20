@@ -257,7 +257,7 @@ public class XMLMatchLineupParser {
 			// rating nur für leute die gespielt haben
 			if ((roleID >= ISpielerPosition.startLineup)
 					&& (roleID < ISpielerPosition.startReserves)
-					|| ((roleID >= ISpielerPosition.ausgewechselt) && (roleID < ISpielerPosition.ausgewechseltEnd))) {
+					|| ((roleID >= ISpielerPosition.ausgewechselt) && (roleID <= ISpielerPosition.ausgewechseltEnd))) {
 				tmp = (Element) ele.getElementsByTagName("RatingStars").item(0);
 				rating = Double
 						.parseDouble(tmp.getFirstChild().getNodeValue().replaceAll(",", "."));
@@ -369,7 +369,7 @@ public class XMLMatchLineupParser {
 			MatchLineupPlayer player = createPlayer((Element) list.item(i));
 			if (team.getPlayerByID(player.getSpielerId()) != null) {
 				if ((player.getId() >= ISpielerPosition.ausgewechselt)
-						&& (player.getId() < ISpielerPosition.ausgewechseltEnd)) {
+						&& (player.getId() <= ISpielerPosition.ausgewechseltEnd)) {
 
 					// MatchLineup API bug, he is still on the pitch, so skip
 					continue;

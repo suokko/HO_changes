@@ -91,9 +91,22 @@ public interface ISpielerPosition {
 
     //oder grösser
     public static final int ausgewechselt = 19;
-    
+
     /** Last field to check for substituted. Needed after 553 due to higher role IDs */
-    public static final int ausgewechseltEnd = 29;
+    public static final int ausgewechseltEnd = 21;
+
+    public static final int penaltyTaker1 = 22;
+    public static final int penaltyTaker2 = 23;
+    public static final int penaltyTaker3 = 24;
+    public static final int penaltyTaker4 = 25;
+    public static final int penaltyTaker5 = 26;
+    public static final int penaltyTaker6 = 27;
+    public static final int penaltyTaker7 = 28;
+    public static final int penaltyTaker8 = 29;
+    public static final int penaltyTaker9 = 30;
+    public static final int penaltyTaker10 = 31;
+    public static final int penaltyTaker11 = 32;
+    
     
     /** ab welccher PositionsID gehört Pos zur Reserve Bank */
 
