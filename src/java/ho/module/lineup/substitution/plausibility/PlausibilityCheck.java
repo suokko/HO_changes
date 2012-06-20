@@ -11,6 +11,19 @@ import ho.module.lineup.substitution.model.Substitution;
 public class PlausibilityCheck {
 
 	public static Problem checkForProblem(Lineup lineup, Substitution substitution) {
+		if (substitution.getOrderType() == MatchOrderType.SUBSTITUTION
+				&& (substitution.getPlayerIn() == -1 || substitution.getPlayerOut() == -1)) {
+			return Error.SUBSTITUTION_PLAYER_MISSING;
+		}
+		if (substitution.getOrderType() == MatchOrderType.POSITION_SWAP
+				&& (substitution.getPlayerIn() == -1 || substitution.getPlayerOut() == -1)) {
+			return Error.POSITIONSWAP_PLAYER_MISSING;
+		}
+		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR
+				&& substitution.getPlayerOut() == -1) {
+			return Error.NEWBEHAVIOUR_PLAYER_MISSING;
+		}
+
 		// first, check if players in lineup. note: when NEW_BEHAVIOUR, there is
 		// only one player involved
 		if (substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR
@@ -41,6 +54,15 @@ public class PlausibilityCheck {
 				return HOVerwaltung.instance().getLanguageString(
 						"subs.plausibility.playerOut.notInLineup",
 						getPlayerOut(substitution).getName());
+			case POSITIONSWAP_PLAYER_MISSING:
+				return HOVerwaltung.instance().getLanguageString(
+						"subs.plausibility.positionswap.playermissing");
+			case SUBSTITUTION_PLAYER_MISSING:
+				return HOVerwaltung.instance().getLanguageString(
+						"subs.plausibility.substitution.playermissing");
+			case NEWBEHAVIOUR_PLAYER_MISSING:
+				return HOVerwaltung.instance().getLanguageString(
+						"subs.plausibility.newbehaviour.playermissing");
 			}
 		} else if (problem instanceof Uncertainty) {
 			switch ((Uncertainty) problem) {
