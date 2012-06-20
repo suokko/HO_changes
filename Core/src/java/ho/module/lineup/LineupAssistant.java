@@ -118,19 +118,9 @@ public class LineupAssistant {
      */
     public final int[] setElferKicker(Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
         final int[] bestElfer = new int[11];
-//        int kicker = HOVerwaltung.instance().getModel().getAufstellung().getKicker();
-
         initElferKicker(bestElfer);
 
         for (int i = 0; (bestElfer != null) && (i < bestElfer.length); i++) {
-
-// The sp taker is no longer required to be first in a shootout.
-//        	//erster Schütze ist der Standard schütze
-//            if ((i == 0) && (kicker > 0)) {
-//                bestElfer[0] = kicker;
-//                continue;
-//            }
-
             bestElfer[i] = getBestFreeElferKicker(bestElfer, vSpieler, positionen);
         }
 
