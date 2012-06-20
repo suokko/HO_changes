@@ -14,9 +14,9 @@ import javax.swing.ListSelectionModel;
 
 
 /**
- * Zeigt die besten Elfmeterschützen für die aktuelle Aufstellung an
+ * Shows the best penalty shooters from the current lineup.
  */
-public class ElfmeterSchuetzenDialog extends JDialog {
+public class PenaltyShootersDialog extends JDialog {
 	
 	private static final long serialVersionUID = -7330144318224339032L;
 	
@@ -27,7 +27,7 @@ public class ElfmeterSchuetzenDialog extends JDialog {
      *
      * @param owner TODO Missing Constructuor Parameter Documentation
      */
-    public ElfmeterSchuetzenDialog(JFrame owner) {
+    public PenaltyShootersDialog(JFrame owner) {
         super(owner,
               ho.core.model.HOVerwaltung.instance().getLanguageString("Elfmeterschuetzen"));
         initComponents();
