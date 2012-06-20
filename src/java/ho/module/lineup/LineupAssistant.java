@@ -97,7 +97,7 @@ public class LineupAssistant {
                 curValue *= 1.1;
             }
 
-            if ((isSpielerInAnfangsElf(spieler.getSpielerID(), positionen))
+            if ((isSpielerAufgestellt(spieler.getSpielerID(), positionen))
                 && (!isSpielerInElferListe(liste, spieler.getSpielerID()))
                 && (curValue > maxValue)) {
                 maxValue = curValue;
