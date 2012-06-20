@@ -82,32 +82,25 @@ public class LineupAssistant {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final int getBestFreeElferKicker(List<Integer> liste, Vector<Spieler> vSpieler,
-			Vector<ISpielerPosition> positionen) {
-		Spieler spieler = null;
+	public final int getBestFreeElferKicker(List<Integer> liste, List<Spieler> players,
+			List<ISpielerPosition> positionen) {
+		
 		float maxValue = -1;
 		float curValue = -1;
-
-		// Another attempt to avoid Temp1 being in all penalty lists if less
-		// than 11 are fielded
-		// -1 is the Temp1 ID.
-		// int bestPlayerID = -1;
-
 		int bestPlayerID = 0;
 
-		for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-			spieler = (Spieler) vSpieler.elementAt(i);
-			curValue = (spieler.getErfahrung() * 1.5f)
-					+ (((spieler.getStandards() * 7.0f) / 10.0f) + ((spieler.getTorschuss() * 3.0f) / 10.0f));
+		for (Spieler player : players) {
+			curValue = (player.getErfahrung() * 1.5f)
+					+ (((player.getStandards() * 7.0f) / 10.0f) + ((player.getTorschuss() * 3.0f) / 10.0f));
 
-			if (spieler.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
+			if (player.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
 				curValue *= 1.1;
 			}
 
-			if ((isSpielerAufgestellt(spieler.getSpielerID(), positionen))
-					&& (!liste.contains(Integer.valueOf(spieler.getSpielerID())) && (curValue > maxValue))) {
+			if ((isSpielerAufgestellt(player.getSpielerID(), positionen))
+					&& (!liste.contains(Integer.valueOf(player.getSpielerID())) && (curValue > maxValue))) {
 				maxValue = curValue;
-				bestPlayerID = spieler.getSpielerID();
+				bestPlayerID = player.getSpielerID();
 			}
 		}
 
@@ -124,13 +117,13 @@ public class LineupAssistant {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final List<Integer> getElferKicker(Vector<Spieler> vSpieler,
-			Vector<ISpielerPosition> positionen) {
+	public final List<Integer> getElferKicker(List<Spieler> players,
+			List<ISpielerPosition> positions) {
 		List<Integer> penaltyShooters = new ArrayList<Integer>();
 
-		for (ISpielerPosition position : positionen) {
-			penaltyShooters.add(Integer.valueOf(getBestFreeElferKicker(penaltyShooters, vSpieler,
-					positionen)));
+		for (ISpielerPosition position : positions) {
+			penaltyShooters.add(Integer.valueOf(getBestFreeElferKicker(penaltyShooters, players,
+					positions)));
 		}
 
 		return penaltyShooters;
@@ -146,10 +139,12 @@ public class LineupAssistant {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positionen) {
-		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-			if (((SpielerPosition) positionen.get(i)).getSpielerId() == spielerId) {
-				return true;
+	public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positions) {
+		if (positions != null) {
+			for (ISpielerPosition position : positions) {
+				if (((SpielerPosition) position).getSpielerId() == spielerId) {
+					return true;
+				}
 			}
 		}
 
