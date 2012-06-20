@@ -11,13 +11,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 public class LineupCreator extends XMLCreator {
 
@@ -50,7 +50,7 @@ public class LineupCreator extends XMLCreator {
 			Document doc = builder.newDocument();
 			Element root = doc.createElement("lineup");
 			doc.appendChild(root);
-			
+
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.keeper));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.rightBack));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.leftCentralDefender));
@@ -71,22 +71,22 @@ public class LineupCreator extends XMLCreator {
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substInnerMidfield));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substWinger));
 			addLineupSpot(root, lineup.getPositionById(ISpielerPosition.substForward));
-			
-			Element penaltyTakers = doc.createElement("penaltyTakers");
-			root.appendChild(penaltyTakers);					
 
-			for (int i = 0; i < lineup.getBestElferKicker().length; i++) {
-				int id = lineup.getBestElferKicker()[i];
-				penaltyTakers.appendChild(createNode(doc,"id", id+""));
+			Element penaltyTakers = doc.createElement("penaltyTakers");
+			root.appendChild(penaltyTakers);
+
+			List<Integer> list = lineup.getBestElferKicker();
+			for (Integer id : list) {
+				penaltyTakers.appendChild(createNode(doc, "id", String.valueOf(id)));
 			}
-			root.appendChild(createNode(doc,"captain", lineup.getKapitaen()+""));
-			root.appendChild(createNode(doc,"kicker", lineup.getKicker()+""));
-			root.appendChild(createNode(doc,"tacticType", lineup.getTacticType()+""));
-			root.appendChild(createNode(doc,"matchType", lineup.getAttitude()+""));
-			
+			root.appendChild(createNode(doc, "captain", String.valueOf(lineup.getKapitaen())));
+			root.appendChild(createNode(doc, "kicker", String.valueOf(lineup.getKicker())));
+			root.appendChild(createNode(doc, "tacticType", String.valueOf(lineup.getTacticType())));
+			root.appendChild(createNode(doc, "matchType", String.valueOf(lineup.getAttitude())));
+
 			File f = new File(dir, lineupName + ".xml");
-			BufferedWriter bw = new BufferedWriter(new FileWriter(f));	
-			bw.write(XMLManager.getXML(doc));				
+			BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+			bw.write(XMLManager.getXML(doc));
 			bw.flush();
 			bw.close();
 		} catch (Exception e) {
@@ -94,22 +94,21 @@ public class LineupCreator extends XMLCreator {
 		}
 	}
 
-
 	private static void addLineupSpot(Element root, SpielerPosition position) throws IOException {
 		Document doc = root.getOwnerDocument();
 		Element main = doc.createElement("position");
-		root.appendChild(main);		
-				
+		root.appendChild(main);
+
 		if (position == null) {
-			main.appendChild(createNode(doc,"code", "0"));
-			main.appendChild(createNode(doc,"player", "-1"));
-			main.appendChild(createNode(doc,"tactic", "0"));
+			main.appendChild(createNode(doc, "code", "0"));
+			main.appendChild(createNode(doc, "player", "-1"));
+			main.appendChild(createNode(doc, "tactic", "0"));
 
 		} else {
-			main.appendChild(createNode(doc,"code", position.getId()+""));
-			main.appendChild(createNode(doc,"player", position.getSpielerId()+""));
-			main.appendChild(createNode(doc,"tactic", position.getTaktik()+""));			
+			main.appendChild(createNode(doc, "code", position.getId() + ""));
+			main.appendChild(createNode(doc, "player", position.getSpielerId() + ""));
+			main.appendChild(createNode(doc, "tactic", position.getTaktik() + ""));
 		}
 	}
-	
+
 }
