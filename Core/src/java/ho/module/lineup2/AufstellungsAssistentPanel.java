@@ -17,7 +17,7 @@ import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
-import ho.module.lineup.ElfmeterSchuetzenDialog;
+import ho.module.lineup.PenaltyShootersDialog;
 import ho.module.lineup.LineupAssistant;
 import ho.module.lineup.LineupAssistantSelectorOverlay;
 
@@ -199,7 +199,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			displayGUI();
 
 		} else if (actionEvent.getSource().equals(m_jbElfmeter)) {
-			new ElfmeterSchuetzenDialog(mainFrame);
+			new PenaltyShootersDialog(mainFrame);
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
 				|| actionEvent.getSource().equals(m_jchLast)) {
 			mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
