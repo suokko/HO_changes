@@ -118,7 +118,6 @@ public class LineupAssistant {
      */
     public final int[] setElferKicker(Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
         final int[] bestElfer = new int[11];
-        initElferKicker(bestElfer);
 
         for (int i = 0; (bestElfer != null) && (i < bestElfer.length); i++) {
             bestElfer[i] = getBestFreeElferKicker(bestElfer, vSpieler, positionen);
@@ -493,20 +492,6 @@ public class LineupAssistant {
         //sturm
         doReserveSpielerAufstellen(ISpielerPosition.FORWARD, mitForm,
                                    ignoreVerletzung, ignoreSperre, spieler, positionen);
-    }
-
-    /**
-     * initialisiert die Liste
-     *
-     * @param liste TODO Missing Constructuor Parameter Documentation
-     */
-    public final void initElferKicker(int[] liste) {
-        for (int i = 0; (liste != null) && (i < liste.length); i++) {
-          
-        	// This should cure the issue with first temp player filling penalty spots if less than 11 on field.
-        	liste[i] = 0;
-        	//  liste[i] = -1;
-        }
     }
 
     /**
