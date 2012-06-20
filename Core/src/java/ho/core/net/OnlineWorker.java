@@ -49,6 +49,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
@@ -631,10 +632,10 @@ public class OnlineWorker {
 		orders.append("\",\"behaviour\":\"0\"}");
 
 		// Some better source wanted...
-		int[] shooters = lineup.getBestElferKicker();
+		List<Integer> shooters = lineup.getBestElferKicker();
 
-		for (int i = 0; i < shooters.length; i++) {
-			orders.append(',').append("{\"id\":\"").append(shooters[i]);
+		for (Integer id: shooters) {
+			orders.append(',').append("{\"id\":\"").append(id);
 			orders.append("\" , \"behaviour\":\"0\"}");
 		}
 
