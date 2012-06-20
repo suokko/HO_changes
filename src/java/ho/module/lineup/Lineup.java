@@ -65,7 +65,7 @@ public class Lineup {
 	private Vector<ISpielerPosition> m_vPositionen = new Vector<ISpielerPosition>();
 	private List<Substitution> substitutions = new ArrayList<Substitution>();
 	private List<ISpielerPosition> m_vPenaltyTakers = new ArrayList<ISpielerPosition>();
-	
+
 	/** Attitude */
 	private int m_iAttitude;
 
@@ -202,12 +202,11 @@ public class Lineup {
 					break;
 				}
 			}
-			
-			//Add the penalty takers
-			
+
+			// Add the penalty takers
+
 			for (int i = 0; i < 11; i++) {
-				m_vPenaltyTakers.add(			
-						new SpielerPosition(i + ISpielerPosition.penaltyTaker1,
+				m_vPenaltyTakers.add(new SpielerPosition(i + ISpielerPosition.penaltyTaker1,
 						Integer.parseInt(properties.getProperty("penalty" + i, "0")), (byte) 0));
 			}
 
@@ -414,8 +413,14 @@ public class Lineup {
 	 * Get the best players for penalty kicks.
 	 */
 	public final int[] getBestElferKicker() {
-		return m_clAssi.setElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(),
-				m_vPositionen);
+		List<Integer> list = m_clAssi.setElferKicker(HOVerwaltung.instance().getModel()
+				.getAllSpieler(), m_vPositionen);
+		
+		int[] arr = new int[list.size()];
+		for (int i=0;i<list.size(); i++) {
+			arr[i] = list.get(i).intValue();
+		}
+		return arr;
 	}
 
 	/**
@@ -745,15 +750,15 @@ public class Lineup {
 					HOLogger.instance().error(getClass(), "no match to determine location");
 					return m_sLocation;
 				}
-				
+
 				final List<MatchKurzInfo> sMatches = orderMatches(matches);
-				for (int i=0; i < matches.length; i++ ) {
+				for (int i = 0; i < matches.length; i++) {
 					match = sMatches.get(i);
 					if (match.getMatchTyp().isOfficial()) {
 						break;
 					}
 				}
-				
+
 				if (match == null) {
 					m_sLocation = IMatchDetails.LOCATION_AWAY;
 					HOLogger.instance().error(getClass(), "no match to determine location");
@@ -1710,9 +1715,10 @@ public class Lineup {
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substWinger, 0, (byte) 0));
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substKeeper, 0, (byte) 0));
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
-		
+
 		for (int i = 0; i < 10; i++) {
-			m_vPenaltyTakers.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, 0, (byte) 0));
+			m_vPenaltyTakers.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, 0,
+					(byte) 0));
 		}
 	}
 

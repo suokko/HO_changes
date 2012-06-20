@@ -12,852 +12,878 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-
 public class LineupAssistant {
- 
-    /** Order for lineup assistent */
-    public static final byte AW_MF_ST = 0;
 
-    /** TODO Missing Parameter Documentation */
-    public static final byte AW_ST_MF = 1;
+	/** Order for lineup assistent */
+	public static final byte AW_MF_ST = 0;
 
-    /** TODO Missing Parameter Documentation */
-    public static final byte MF_ST_AW = 2;
+	/** TODO Missing Parameter Documentation */
+	public static final byte AW_ST_MF = 1;
 
-    /** TODO Missing Parameter Documentation */
-    public static final byte MF_AW_ST = 3;
+	/** TODO Missing Parameter Documentation */
+	public static final byte MF_ST_AW = 2;
 
-    /** TODO Missing Parameter Documentation */
-    public static final byte ST_AW_MF = 4;
+	/** TODO Missing Parameter Documentation */
+	public static final byte MF_AW_ST = 3;
 
-    /** TODO Missing Parameter Documentation */
-    public static final byte ST_MF_AW = 5;
-    //~ Instance fields ----------------------------------------------------------------------------
+	/** TODO Missing Parameter Documentation */
+	public static final byte ST_AW_MF = 4;
 
-    /*gibt die mindeststärke für einen Spieler an für seine Idealpos*/
+	/** TODO Missing Parameter Documentation */
+	public static final byte ST_MF_AW = 5;
+	// ~ Instance fields
+	// ----------------------------------------------------------------------------
 
-    //protected float m_fMinIdealPosStk       =   3.5f;
+	/* gibt die mindeststärke für einen Spieler an für seine Idealpos */
 
-    /** Position die zu besetzen sind */
+	// protected float m_fMinIdealPosStk = 3.5f;
 
-    //protected Vector    m_vPositionen   =   new Vector();
+	/** Position die zu besetzen sind */
 
-    /** Spieler die aufzustellen sind */
+	// protected Vector m_vPositionen = new Vector();
 
-    //protected Vector    m_vSpieler      =   new Vector();
+	/** Spieler die aufzustellen sind */
 
-    /** gibt an wie auf Wettereinfluss reagiert werden soll in Prozent */
+	// protected Vector m_vSpieler = new Vector();
 
-    //20%
-    private float m_fWetterBonus = 0.2f;
+	/** gibt an wie auf Wettereinfluss reagiert werden soll in Prozent */
 
-    /** gibt das Wetter an */
-    private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
+	// 20%
+	private float m_fWetterBonus = 0.2f;
 
-    //~ Constructors -------------------------------------------------------------------------------
+	/** gibt das Wetter an */
+	private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
 
-    /**
-     * Creates a new instance of Aufstellungsassistent
-     */
-    public LineupAssistant() {
-    }
+	// ~ Constructors
+	// -------------------------------------------------------------------------------
 
-    //~ Methods ------------------------------------------------------------------------------------
+	/**
+	 * Creates a new instance of Aufstellungsassistent
+	 */
+	public LineupAssistant() {
+	}
 
-    /**
-     * findet den besten noch freien Kicker für einen Elfer
-     *
-     * @param liste TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final int getBestFreeElferKicker(int[] liste, Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
-        Spieler spieler = null;
-        float maxValue = -1;
-        float curValue = -1;
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
-        // Another attempt to avoid Temp1 being in all penalty lists if less than 11 are fielded
-        // -1 is the Temp1 ID.
-        // int bestPlayerID = -1;
+	/**
+	 * findet den besten noch freien Kicker für einen Elfer
+	 * 
+	 * @param liste
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public final int getBestFreeElferKicker(List<Integer> liste, Vector<Spieler> vSpieler,
+			Vector<ISpielerPosition> positionen) {
+		Spieler spieler = null;
+		float maxValue = -1;
+		float curValue = -1;
 
-        int bestPlayerID = 0;
+		// Another attempt to avoid Temp1 being in all penalty lists if less
+		// than 11 are fielded
+		// -1 is the Temp1 ID.
+		// int bestPlayerID = -1;
 
-        for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-            spieler = (Spieler) vSpieler.elementAt(i);
-            curValue = (spieler.getErfahrung() * 1.5f)
-                       + (((spieler.getStandards() * 7.0f) / 10.0f)
-                       + ((spieler.getTorschuss() * 3.0f) / 10.0f));
+		int bestPlayerID = 0;
 
-            if (spieler.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
-                curValue *= 1.1;
-            }
+		for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
+			spieler = (Spieler) vSpieler.elementAt(i);
+			curValue = (spieler.getErfahrung() * 1.5f)
+					+ (((spieler.getStandards() * 7.0f) / 10.0f) + ((spieler.getTorschuss() * 3.0f) / 10.0f));
 
-            if ((isSpielerAufgestellt(spieler.getSpielerID(), positionen))
-                && (!isSpielerInElferListe(liste, spieler.getSpielerID()))
-                && (curValue > maxValue)) {
-                maxValue = curValue;
-                bestPlayerID = spieler.getSpielerID();
-            }
-        }
-
-        return bestPlayerID;
-    }
-
-    /**
-     * erstellt die beste Elfmeterreihenfolge
-     *
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final int[] setElferKicker(Vector<Spieler> vSpieler, Vector<ISpielerPosition> positionen) {
-        final int[] bestElfer = new int[11];
-
-        for (int i = 0; (bestElfer != null) && (i < bestElfer.length); i++) {
-            bestElfer[i] = getBestFreeElferKicker(bestElfer, vSpieler, positionen);
-        }
-
-        return bestElfer;
-    }
-
-    /**
-     * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
-     *
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positionen) {
-        for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-            if (((SpielerPosition) positionen.get(i)).getSpielerId() == spielerId) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * gibt an ob der Spieler von beginn an Spielt
-     *
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean isSpielerInAnfangsElf(int spielerId, Vector<ISpielerPosition> positionen) {
-        for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-            if ((((SpielerPosition) positionen.elementAt(i)).getId() < ISpielerPosition.startReserves)
-                && (((SpielerPosition) positionen.elementAt(i))
-                    .getSpielerId() == spielerId)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * gibt an ob der Spieler schon in der Liste ist
-     *
-     * @param liste TODO Missing Constructuor Parameter Documentation
-     * @param spielerId TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean isSpielerInElferListe(int[] liste, int spielerId) {
-        for (int i = 0; (liste != null) && (i < liste.length); i++) {
-            if (liste[i] == spielerId) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * übernimmt das automatische Aufstellen
-     *
-     * @param positionen die zu besetzenden Positionen
-     * @param spieler die aufszustellenden Spieler
-     * @param reihenfolge Reihenfolge in der die Mannschaftsteile besetzt werden sollen
-     * @param mitForm Formberücksichtigung
-     * @param idealPosFirst IdealPosition berücksichtigen ?
-     * @param ignoreVerletzung auch Verletzte aufstellen ?
-     * @param ignoreSperre auch gesperrte aufstellen ?
-     * @param wetterBonus Schwellwert der angibt an wie auf WetterEffekte reagiert werden soll
-     * @param wetter das aktuelle Wetter
-     */
-    public final void doAufstellung(List<ISpielerPosition> positionen, List<Spieler> spieler, byte reihenfolge,
-                                    boolean mitForm, boolean idealPosFirst,
-                                    boolean ignoreVerletzung, boolean ignoreSperre,
-                                    float wetterBonus, int wetter) {
-        //m_vPositionen   =   new Vector ( positionen );
-        //m_vSpieler      =   new Vector( spieler );
-
-    	positionen = filterPositions(positionen);
-
-    	m_fWetterBonus = wetterBonus;
-        m_iWetter = wetter;
-
-        //nur spieler auf idealpos aufstellen
-        if (idealPosFirst) {
-            //Wert speichern
-            float backup = ho.core.model.UserParameter.instance().MinIdealPosStk;
-
-            //Maimum von beiden für Berechnung verwenden
-            ho.core.model.UserParameter.instance().MinIdealPosStk = Math.max(calcAveragePosValue(spieler),
-                                                                   ho.core.model.UserParameter.instance().MinIdealPosStk);
-
-            doSpielerAufstellenIdealPos(ISpielerPosition.KEEPER,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER_TOWING,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER_OFF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.BACK,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.BACK_TOMID,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.BACK_OFF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.BACK_DEF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_OFF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_DEF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_TOWING,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.WINGER,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_OFF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_DEF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_TOMID,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD, mitForm,
-                                        ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD_DEF,
-                                        mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-            doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD_TOWING,
-                    				    mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
-
-            //Wert wieder zurücksetzen
-            ho.core.model.UserParameter.instance().MinIdealPosStk = backup;
-        }
-
-        //falls tw unbesetzt
-        doSpielerAufstellen(ISpielerPosition.KEEPER, mitForm,
-                            ignoreVerletzung, ignoreSperre, spieler, positionen);
-
-        
-        byte [] order = null;
-        //nun reihenfolge beachten und unbesetzte füllen
-        switch (reihenfolge) {
-            case AW_MF_ST:
-
-            	order = new byte[18];
-            	// DEFENCE
-            	order[0]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[1]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[2]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[3]=ISpielerPosition.BACK;
-            	order[4]=ISpielerPosition.BACK_DEF;
-                order[5]=ISpielerPosition.BACK_OFF;
-                order[6]=ISpielerPosition.BACK_TOMID;
-                //MIDFIELD
-                order[7]=ISpielerPosition.MIDFIELDER;
-                order[8]=ISpielerPosition.MIDFIELDER_OFF;
-                order[9]=ISpielerPosition.MIDFIELDER_DEF;
-                order[10]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[11]=ISpielerPosition.WINGER;
-               	order[12]=ISpielerPosition.WINGER_DEF;
-               	order[13]=ISpielerPosition.WINGER_OFF;
-               	order[14]=ISpielerPosition.WINGER_TOMID;
-               	// FORWARD
-               	order[15]=ISpielerPosition.FORWARD;
-               	order[16]=ISpielerPosition.FORWARD_DEF;
-            	order[17]=ISpielerPosition.FORWARD_TOWING;
-                break;
-
-            case AW_ST_MF:
-
-            	order = new byte[18];
-//				 DEFENCE
-            	order[0]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[1]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[2]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[3]=ISpielerPosition.BACK;
-            	order[4]=ISpielerPosition.BACK_DEF;
-                order[5]=ISpielerPosition.BACK_OFF;
-                order[6]=ISpielerPosition.BACK_TOMID;
-//              FORWARD
-               	order[7]=ISpielerPosition.FORWARD;
-               	order[8]=ISpielerPosition.FORWARD_DEF;
-            	order[9]=ISpielerPosition.FORWARD_TOWING;
-                
-                //MIDFIELD
-                order[10]=ISpielerPosition.MIDFIELDER;
-                order[11]=ISpielerPosition.MIDFIELDER_OFF;
-                order[12]=ISpielerPosition.MIDFIELDER_DEF;
-                order[13]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[14]=ISpielerPosition.WINGER;
-               	order[15]=ISpielerPosition.WINGER_DEF;
-               	order[16]=ISpielerPosition.WINGER_OFF;
-               	order[17]=ISpielerPosition.WINGER_TOMID;
-               	
-                break;
-
-            case MF_AW_ST:
-
-            	order = new byte[18];
-            	
-                //MIDFIELD
-                order[0]=ISpielerPosition.MIDFIELDER;
-                order[1]=ISpielerPosition.MIDFIELDER_OFF;
-                order[2]=ISpielerPosition.MIDFIELDER_DEF;
-                order[3]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[4]=ISpielerPosition.WINGER;
-               	order[5]=ISpielerPosition.WINGER_DEF;
-               	order[6]=ISpielerPosition.WINGER_OFF;
-               	order[7]=ISpielerPosition.WINGER_TOMID;
-//              DEFENCE
-            	order[8]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[9]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[10]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[11]=ISpielerPosition.BACK;
-            	order[12]=ISpielerPosition.BACK_DEF;
-                order[13]=ISpielerPosition.BACK_OFF;
-                order[14]=ISpielerPosition.BACK_TOMID;
-               	// FORWARD
-               	order[15]=ISpielerPosition.FORWARD;
-               	order[16]=ISpielerPosition.FORWARD_DEF;
-            	order[17]=ISpielerPosition.FORWARD_TOWING;
-                break;
-
-            case MF_ST_AW:
-
-           	order = new byte[18];
-            	
-                //MIDFIELD
-                order[0]=ISpielerPosition.MIDFIELDER;
-                order[1]=ISpielerPosition.MIDFIELDER_OFF;
-                order[2]=ISpielerPosition.MIDFIELDER_DEF;
-                order[3]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[4]=ISpielerPosition.WINGER;
-               	order[5]=ISpielerPosition.WINGER_DEF;
-               	order[6]=ISpielerPosition.WINGER_OFF;
-               	order[7]=ISpielerPosition.WINGER_TOMID;
-// FORWARD
-               	order[8]=ISpielerPosition.FORWARD;
-               	order[9]=ISpielerPosition.FORWARD_DEF;
-            	order[10]=ISpielerPosition.FORWARD_TOWING;
-//              DEFENCE
-            	order[11]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[12]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[13]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[14]=ISpielerPosition.BACK;
-            	order[15]=ISpielerPosition.BACK_DEF;
-                order[16]=ISpielerPosition.BACK_OFF;
-                order[17]=ISpielerPosition.BACK_TOMID;
-
-                break;
-
-            case ST_MF_AW:
-
-            	order = new byte[18];
-
-//              FORWARD
-               	order[0]=ISpielerPosition.FORWARD;
-               	order[1]=ISpielerPosition.FORWARD_DEF;
-            	order[2]=ISpielerPosition.FORWARD_TOWING;
-                //MIDFIELD
-                order[3]=ISpielerPosition.MIDFIELDER;
-                order[4]=ISpielerPosition.MIDFIELDER_OFF;
-                order[5]=ISpielerPosition.MIDFIELDER_DEF;
-                order[6]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[7]=ISpielerPosition.WINGER;
-               	order[8]=ISpielerPosition.WINGER_DEF;
-               	order[9]=ISpielerPosition.WINGER_OFF;
-               	order[10]=ISpielerPosition.WINGER_TOMID;
-
-            	// DEFENCE
-            	order[11]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[12]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[13]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[14]=ISpielerPosition.BACK;
-            	order[15]=ISpielerPosition.BACK_DEF;
-                order[16]=ISpielerPosition.BACK_OFF;
-                order[17]=ISpielerPosition.BACK_TOMID;
-                break;
-
-            case ST_AW_MF:
-
-            	order = new byte[18];
-//            	 FORWARD
-               	order[0]=ISpielerPosition.FORWARD;
-               	order[1]=ISpielerPosition.FORWARD_DEF;
-            	order[2]=ISpielerPosition.FORWARD_TOWING;
-            	// DEFENCE
-            	order[3]=ISpielerPosition.CENTRAL_DEFENDER;
-            	order[4]=ISpielerPosition.CENTRAL_DEFENDER_TOWING;
-            	order[5]=ISpielerPosition.CENTRAL_DEFENDER_OFF;
-            	order[6]=ISpielerPosition.BACK;
-            	order[7]=ISpielerPosition.BACK_DEF;
-                order[8]=ISpielerPosition.BACK_OFF;
-                order[9]=ISpielerPosition.BACK_TOMID;
-                //MIDFIELD
-                order[10]=ISpielerPosition.MIDFIELDER;
-                order[11]=ISpielerPosition.MIDFIELDER_OFF;
-                order[12]=ISpielerPosition.MIDFIELDER_DEF;
-                order[13]=ISpielerPosition.MIDFIELDER_TOWING;
-                order[14]=ISpielerPosition.WINGER;
-               	order[15]=ISpielerPosition.WINGER_DEF;
-               	order[16]=ISpielerPosition.WINGER_OFF;
-               	order[17]=ISpielerPosition.WINGER_TOMID;
-               	
-                break;
-                
-
-            default:
-                return;
-
-            //break;
-        }
-
-        if(order != null){
-        	for (int i = 0; i < order.length; i++) {
-        		doSpielerAufstellen(order[i], mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
+			if (spieler.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
+				curValue *= 1.1;
 			}
-        }
-        
-        
-        
-        
-        //ReserveSpieler besetzen
-        //Reserve
-        if (idealPosFirst) {
-            //TW
-            doReserveSpielerAufstellenIdealPos(ISpielerPosition.KEEPER,
-                                               mitForm, ignoreVerletzung, ignoreSperre, spieler,
-                                               positionen);
 
-            //abwehr
-            doReserveSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER,
-                                               mitForm, ignoreVerletzung, ignoreSperre, spieler,
-                                               positionen);
+			if ((isSpielerAufgestellt(spieler.getSpielerID(), positionen))
+					&& (!liste.contains(Integer.valueOf(spieler.getSpielerID())) && (curValue > maxValue))) {
+				maxValue = curValue;
+				bestPlayerID = spieler.getSpielerID();
+			}
+		}
 
-            //mittelfeld
-            doReserveSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER,
-                                               mitForm, ignoreVerletzung, ignoreSperre, spieler,
-                                               positionen);
-            doReserveSpielerAufstellenIdealPos(ISpielerPosition.WINGER,
-                                               mitForm, ignoreVerletzung, ignoreSperre, spieler,
-                                               positionen);
+		return bestPlayerID;
+	}
 
-            //sturm
-            doReserveSpielerAufstellenIdealPos(ISpielerPosition.FORWARD,
-                                               mitForm, ignoreVerletzung, ignoreSperre, spieler,
-                                               positionen);
-        }
+	/**
+	 * erstellt die beste Elfmeterreihenfolge
+	 * 
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public final List<Integer> setElferKicker(Vector<Spieler> vSpieler,
+			Vector<ISpielerPosition> positionen) {
+		List<Integer> penaltyShooters = new ArrayList<Integer>();
 
-        //und nochmal für alle unbesetzten
-        //TW
-        doReserveSpielerAufstellen(ISpielerPosition.KEEPER, mitForm,
-                                   ignoreVerletzung, ignoreSperre, spieler, positionen);
+		for (ISpielerPosition position : positionen) {
+			penaltyShooters.add(Integer.valueOf(getBestFreeElferKicker(penaltyShooters, vSpieler,
+					positionen)));
+		}
 
-        //abwehr
-        doReserveSpielerAufstellen(ISpielerPosition.CENTRAL_DEFENDER,
-                                   mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
+		return penaltyShooters;
+	}
 
-        //mittelfeld
-        doReserveSpielerAufstellen(ISpielerPosition.MIDFIELDER, mitForm,
-                                   ignoreVerletzung, ignoreSperre, spieler, positionen);
-        doReserveSpielerAufstellen(ISpielerPosition.WINGER,
-                                   mitForm, ignoreVerletzung, ignoreSperre, spieler, positionen);
+	/**
+	 * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
+	 * 
+	 * @param spielerId
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positionen) {
+		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
+			if (((SpielerPosition) positionen.get(i)).getSpielerId() == spielerId) {
+				return true;
+			}
+		}
 
-        //sturm
-        doReserveSpielerAufstellen(ISpielerPosition.FORWARD, mitForm,
-                                   ignoreVerletzung, ignoreSperre, spieler, positionen);
-    }
+		return false;
+	}
 
-    /**
-     * resetet alle Verbindungen zwischen Position und Spieler
-     *
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     */
-    public final void resetPositionsbesetzungen(Vector<ISpielerPosition> positionen) {
-        for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
-            ((ho.core.model.player.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
-        }
-    }
+	/**
+	 * gibt an ob der Spieler von beginn an Spielt
+	 * 
+	 * @param spielerId
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public final boolean isSpielerInAnfangsElf(int spielerId, Vector<ISpielerPosition> positionen) {
+		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
+			if ((((SpielerPosition) positionen.elementAt(i)).getId() < ISpielerPosition.startReserves)
+					&& (((SpielerPosition) positionen.elementAt(i)).getSpielerId() == spielerId)) {
+				return true;
+			}
+		}
 
-    /**
-     * liefert aus dem eigenen Vector mit Spielern den besten für die angefordertet Position der
-     * noch nicht aufgestellt ist
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final ho.core.model.player.Spieler getBestSpieler(byte position,
-                                                                      boolean mitForm,
-                                                                      boolean ignoreVerletzung,
-                                                                      boolean ignoreSperre,
-                                                                      List<Spieler> vSpieler,
-                                                                      List<ISpielerPosition> positionen) {
-        ho.core.model.player.Spieler spieler = null;
-        ho.core.model.player.Spieler bestSpieler = null;
-        float bestStk = -1.0f;
-        float aktuStk = 0.0f;
+		return false;
+	}
 
-        for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-            spieler = (ho.core.model.player.Spieler) vSpieler.get(i);
+	/**
+	 * übernimmt das automatische Aufstellen
+	 * 
+	 * @param positionen
+	 *            die zu besetzenden Positionen
+	 * @param spieler
+	 *            die aufszustellenden Spieler
+	 * @param reihenfolge
+	 *            Reihenfolge in der die Mannschaftsteile besetzt werden sollen
+	 * @param mitForm
+	 *            Formberücksichtigung
+	 * @param idealPosFirst
+	 *            IdealPosition berücksichtigen ?
+	 * @param ignoreVerletzung
+	 *            auch Verletzte aufstellen ?
+	 * @param ignoreSperre
+	 *            auch gesperrte aufstellen ?
+	 * @param wetterBonus
+	 *            Schwellwert der angibt an wie auf WetterEffekte reagiert
+	 *            werden soll
+	 * @param wetter
+	 *            das aktuelle Wetter
+	 */
+	public final void doAufstellung(List<ISpielerPosition> positionen, List<Spieler> spieler,
+			byte reihenfolge, boolean mitForm, boolean idealPosFirst, boolean ignoreVerletzung,
+			boolean ignoreSperre, float wetterBonus, int wetter) {
+		// m_vPositionen = new Vector ( positionen );
+		// m_vSpieler = new Vector( spieler );
 
-            //stk inklusive Wetter effekt errechnen
-            aktuStk = spieler.calcPosValue(position, mitForm);
-            aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
+		positionen = filterPositions(positionen);
 
-            if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))
-                && ((bestSpieler == null) || (bestStk < aktuStk))
-                && ((ignoreSperre) || (!spieler.isGesperrt()))
-                && ((ignoreVerletzung) || (spieler.getVerletzt() < 1))
-                && (spieler.isSpielberechtigt())) {
-                bestSpieler = spieler;
-                bestStk = aktuStk;
-            }
-        }
+		m_fWetterBonus = wetterBonus;
+		m_iWetter = wetter;
 
-        return bestSpieler;
-    }
+		// nur spieler auf idealpos aufstellen
+		if (idealPosFirst) {
+			// Wert speichern
+			float backup = ho.core.model.UserParameter.instance().MinIdealPosStk;
 
-    /**
-     * liefert aus dem eigenen Vector mit Spielern den besten für die angefordertet Position der
-     * noch nicht aufgestellt ist
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final Spieler getBestSpielerIdealPosOnly(byte position,
-                                                                                  boolean mitForm,
-                                                                                  boolean ignoreVerletzung,
-                                                                                  boolean ignoreSperre,
-                                                                                  List<Spieler> vSpieler,
-                                                                                  List<ISpielerPosition> positionen) {
-        Spieler spieler = null;
-        Spieler bestSpieler = null;
-        float bestStk = -1.0f;
-        float aktuStk = 0.0f;
+			// Maimum von beiden für Berechnung verwenden
+			ho.core.model.UserParameter.instance().MinIdealPosStk = Math.max(
+					calcAveragePosValue(spieler),
+					ho.core.model.UserParameter.instance().MinIdealPosStk);
 
-        for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
-            //Spieler holen
-            spieler = (Spieler) vSpieler.get(i);
+			doSpielerAufstellenIdealPos(ISpielerPosition.KEEPER, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER_TOWING, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER_OFF, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.BACK, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.BACK_TOMID, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.BACK_OFF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.BACK_DEF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_OFF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_DEF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER_TOWING, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.WINGER, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_OFF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_DEF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.WINGER_TOMID, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD_DEF, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+			doSpielerAufstellenIdealPos(ISpielerPosition.FORWARD_TOWING, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
 
-            //stk inklusive Wetter effekt errechnen
-            aktuStk = spieler.calcPosValue(position, mitForm);
-            aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
+			// Wert wieder zurücksetzen
+			ho.core.model.UserParameter.instance().MinIdealPosStk = backup;
+		}
 
-            //Idealpos STK muss > mindestwert sein
-            if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))
-                && (spieler.getIdealPosition() == position)
-                && ((bestSpieler == null) || (bestStk < aktuStk))
-                && ((ignoreSperre) || (!spieler.isGesperrt()))
-                && ((ignoreVerletzung) || (spieler.getVerletzt() < 1))
-                && (aktuStk > ho.core.model.UserParameter.instance().MinIdealPosStk)
-                && (!spieler.isTrainer())
-                && (spieler.isSpielberechtigt())) {
-                bestSpieler = spieler;
-                bestStk = aktuStk;
-            }
-        }
+		// falls tw unbesetzt
+		doSpielerAufstellen(ISpielerPosition.KEEPER, mitForm, ignoreVerletzung, ignoreSperre,
+				spieler, positionen);
 
-        return bestSpieler;
-    }
+		byte[] order = null;
+		// nun reihenfolge beachten und unbesetzte füllen
+		switch (reihenfolge) {
+		case AW_MF_ST:
 
-    /**
-     * besetzt die Torwart Positionen im Vector m_vPositionen
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     */
-    protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
-                                                    boolean ignoreVerletzung, boolean ignoreSperre,
-                                                    List<Spieler> vSpieler, List<ISpielerPosition> positionen) {
-        SpielerPosition pos = null;
-        Spieler spieler = null;
+			order = new byte[18];
+			// DEFENCE
+			order[0] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[1] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[2] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[3] = ISpielerPosition.BACK;
+			order[4] = ISpielerPosition.BACK_DEF;
+			order[5] = ISpielerPosition.BACK_OFF;
+			order[6] = ISpielerPosition.BACK_TOMID;
+			// MIDFIELD
+			order[7] = ISpielerPosition.MIDFIELDER;
+			order[8] = ISpielerPosition.MIDFIELDER_OFF;
+			order[9] = ISpielerPosition.MIDFIELDER_DEF;
+			order[10] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[11] = ISpielerPosition.WINGER;
+			order[12] = ISpielerPosition.WINGER_DEF;
+			order[13] = ISpielerPosition.WINGER_OFF;
+			order[14] = ISpielerPosition.WINGER_TOMID;
+			// FORWARD
+			order[15] = ISpielerPosition.FORWARD;
+			order[16] = ISpielerPosition.FORWARD_DEF;
+			order[17] = ISpielerPosition.FORWARD_TOWING;
+			break;
 
-        for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
-             i++) {
-            pos = (SpielerPosition) positionen.get(i);
+		case AW_ST_MF:
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() < ISpielerPosition.startReserves)) {
-                continue;
-            }
+			order = new byte[18];
+			// DEFENCE
+			order[0] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[1] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[2] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[3] = ISpielerPosition.BACK;
+			order[4] = ISpielerPosition.BACK_DEF;
+			order[5] = ISpielerPosition.BACK_OFF;
+			order[6] = ISpielerPosition.BACK_TOMID;
+			// FORWARD
+			order[7] = ISpielerPosition.FORWARD;
+			order[8] = ISpielerPosition.FORWARD_DEF;
+			order[9] = ISpielerPosition.FORWARD_TOWING;
 
-            //nur exacte Pos
-            if (pos.getPosition() == position) {
-                spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
-                                         vSpieler, positionen);
+			// MIDFIELD
+			order[10] = ISpielerPosition.MIDFIELDER;
+			order[11] = ISpielerPosition.MIDFIELDER_OFF;
+			order[12] = ISpielerPosition.MIDFIELDER_DEF;
+			order[13] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[14] = ISpielerPosition.WINGER;
+			order[15] = ISpielerPosition.WINGER_DEF;
+			order[16] = ISpielerPosition.WINGER_OFF;
+			order[17] = ISpielerPosition.WINGER_TOMID;
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
-    }
+			break;
 
-    /**
-     * besetzt die Torwart Positionen im Vector m_vPositionen
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     */
-    protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
-                                                            boolean ignoreVerletzung,
-                                                            boolean ignoreSperre, List<Spieler> vSpieler,
-                                                            List<ISpielerPosition> positionen) {
-        SpielerPosition pos = null;
-        Spieler spieler = null;
+		case MF_AW_ST:
 
-        for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
-             i++) {
-            pos = (ho.core.model.player.SpielerPosition) positionen.get(i);
+			order = new byte[18];
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() < ISpielerPosition.startReserves)) {
-                continue;
-            }
+			// MIDFIELD
+			order[0] = ISpielerPosition.MIDFIELDER;
+			order[1] = ISpielerPosition.MIDFIELDER_OFF;
+			order[2] = ISpielerPosition.MIDFIELDER_DEF;
+			order[3] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[4] = ISpielerPosition.WINGER;
+			order[5] = ISpielerPosition.WINGER_DEF;
+			order[6] = ISpielerPosition.WINGER_OFF;
+			order[7] = ISpielerPosition.WINGER_TOMID;
+			// DEFENCE
+			order[8] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[9] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[10] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[11] = ISpielerPosition.BACK;
+			order[12] = ISpielerPosition.BACK_DEF;
+			order[13] = ISpielerPosition.BACK_OFF;
+			order[14] = ISpielerPosition.BACK_TOMID;
+			// FORWARD
+			order[15] = ISpielerPosition.FORWARD;
+			order[16] = ISpielerPosition.FORWARD_DEF;
+			order[17] = ISpielerPosition.FORWARD_TOWING;
+			break;
 
-            //nur exakte Position
-            if (pos.getPosition() == position) {
-                spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
-                                                     ignoreSperre, vSpieler, positionen);
+		case MF_ST_AW:
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
-    }
+			order = new byte[18];
 
-    /**
-     * besetzt die Torwart Positionen im Vector m_vPositionen
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     */
-    protected final void doSpielerAufstellen(byte position, boolean mitForm,
-                                             boolean ignoreVerletzung, boolean ignoreSperre,
-                                             List<Spieler> vSpieler, List<ISpielerPosition> positionen) {
-        SpielerPosition pos = null;
-        Spieler spieler = null;
-        final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
+			// MIDFIELD
+			order[0] = ISpielerPosition.MIDFIELDER;
+			order[1] = ISpielerPosition.MIDFIELDER_OFF;
+			order[2] = ISpielerPosition.MIDFIELDER_DEF;
+			order[3] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[4] = ISpielerPosition.WINGER;
+			order[5] = ISpielerPosition.WINGER_DEF;
+			order[6] = ISpielerPosition.WINGER_OFF;
+			order[7] = ISpielerPosition.WINGER_TOMID;
+			// FORWARD
+			order[8] = ISpielerPosition.FORWARD;
+			order[9] = ISpielerPosition.FORWARD_DEF;
+			order[10] = ISpielerPosition.FORWARD_TOWING;
+			// DEFENCE
+			order[11] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[12] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[13] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[14] = ISpielerPosition.BACK;
+			order[15] = ISpielerPosition.BACK_DEF;
+			order[16] = ISpielerPosition.BACK_OFF;
+			order[17] = ISpielerPosition.BACK_TOMID;
 
-        for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
-             i++) {
-            pos = (SpielerPosition) positionen.get(i);
+			break;
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() >= ISpielerPosition.startReserves)) {
-                continue;
-            }
+		case ST_MF_AW:
 
-            //nur exacte Pos
-            if (pos.getPosition() == position) {
-                //die zus XYZ Positionen nur vormerken
-//                if ((pos.getTaktik() == plugins.ISpielerPosition.ZUS_STUERMER)
-//                    || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_STUERMER_DEF)
-//                    || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_MITTELFELD)
-//                    || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_INNENV)) {
-//                    zusPos.add(pos);
-//                    continue;
-//                }
+			order = new byte[18];
 
-                spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
-                                         vSpieler, positionen);
+			// FORWARD
+			order[0] = ISpielerPosition.FORWARD;
+			order[1] = ISpielerPosition.FORWARD_DEF;
+			order[2] = ISpielerPosition.FORWARD_TOWING;
+			// MIDFIELD
+			order[3] = ISpielerPosition.MIDFIELDER;
+			order[4] = ISpielerPosition.MIDFIELDER_OFF;
+			order[5] = ISpielerPosition.MIDFIELDER_DEF;
+			order[6] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[7] = ISpielerPosition.WINGER;
+			order[8] = ISpielerPosition.WINGER_DEF;
+			order[9] = ISpielerPosition.WINGER_OFF;
+			order[10] = ISpielerPosition.WINGER_TOMID;
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
+			// DEFENCE
+			order[11] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[12] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[13] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[14] = ISpielerPosition.BACK;
+			order[15] = ISpielerPosition.BACK_DEF;
+			order[16] = ISpielerPosition.BACK_OFF;
+			order[17] = ISpielerPosition.BACK_TOMID;
+			break;
 
-        //nun die zus XYZ Positionen füllen
-        for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
-            pos = (SpielerPosition) zusPos.elementAt(i);
+		case ST_AW_MF:
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() >= ISpielerPosition.startReserves)) {
-                continue;
-            }
+			order = new byte[18];
+			// FORWARD
+			order[0] = ISpielerPosition.FORWARD;
+			order[1] = ISpielerPosition.FORWARD_DEF;
+			order[2] = ISpielerPosition.FORWARD_TOWING;
+			// DEFENCE
+			order[3] = ISpielerPosition.CENTRAL_DEFENDER;
+			order[4] = ISpielerPosition.CENTRAL_DEFENDER_TOWING;
+			order[5] = ISpielerPosition.CENTRAL_DEFENDER_OFF;
+			order[6] = ISpielerPosition.BACK;
+			order[7] = ISpielerPosition.BACK_DEF;
+			order[8] = ISpielerPosition.BACK_OFF;
+			order[9] = ISpielerPosition.BACK_TOMID;
+			// MIDFIELD
+			order[10] = ISpielerPosition.MIDFIELDER;
+			order[11] = ISpielerPosition.MIDFIELDER_OFF;
+			order[12] = ISpielerPosition.MIDFIELDER_DEF;
+			order[13] = ISpielerPosition.MIDFIELDER_TOWING;
+			order[14] = ISpielerPosition.WINGER;
+			order[15] = ISpielerPosition.WINGER_DEF;
+			order[16] = ISpielerPosition.WINGER_OFF;
+			order[17] = ISpielerPosition.WINGER_TOMID;
 
-            //nur diese Pos
-            if (pos.getPosition() == position) {
-                spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
-                                         vSpieler, positionen);
+			break;
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
-    }
+		default:
+			return;
 
-    /**
-     * besetzt die Torwart Positionen im Vector m_vPositionen
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     * @param ignoreVerletzung TODO Missing Constructuor Parameter Documentation
-     * @param ignoreSperre TODO Missing Constructuor Parameter Documentation
-     * @param vSpieler TODO Missing Constructuor Parameter Documentation
-     * @param positionen TODO Missing Constructuor Parameter Documentation
-     */
-    protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
-                                                     boolean ignoreVerletzung,
-                                                     boolean ignoreSperre, List<Spieler> vSpieler,
-                                                     List<ISpielerPosition> positionen) {
-       SpielerPosition pos = null;
-        Spieler spieler = null;
-        final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
+			// break;
+		}
 
-        for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size());
-             i++) {
-            pos = (SpielerPosition) positionen.get(i);
+		if (order != null) {
+			for (int i = 0; i < order.length; i++) {
+				doSpielerAufstellen(order[i], mitForm, ignoreVerletzung, ignoreSperre, spieler,
+						positionen);
+			}
+		}
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() >= ISpielerPosition.startReserves)) {
-                continue;
-            }
+		// ReserveSpieler besetzen
+		// Reserve
+		if (idealPosFirst) {
+			// TW
+			doReserveSpielerAufstellenIdealPos(ISpielerPosition.KEEPER, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
 
-            //nur exakte Position
-            if (pos.getPosition() == position) {
-                //die zus XYZ Positionen nur vormerken
-//                if ((pos.getTaktik() == ISpielerPosition.ZUS_STUERMER)
-//                    || (pos.getTaktik() == ISpielerPosition.ZUS_STUERMER_DEF)
-//                    || (pos.getTaktik() == ISpielerPosition.ZUS_MITTELFELD)
-//                    || (pos.getTaktik() == ISpielerPosition.ZUS_INNENV)) {
-//                    zusPos.add(pos);
-//                    continue;
-//                }
+			// abwehr
+			doReserveSpielerAufstellenIdealPos(ISpielerPosition.CENTRAL_DEFENDER, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
 
-                spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
-                                                     ignoreSperre, vSpieler, positionen);
+			// mittelfeld
+			doReserveSpielerAufstellenIdealPos(ISpielerPosition.MIDFIELDER, mitForm,
+					ignoreVerletzung, ignoreSperre, spieler, positionen);
+			doReserveSpielerAufstellenIdealPos(ISpielerPosition.WINGER, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
+			// sturm
+			doReserveSpielerAufstellenIdealPos(ISpielerPosition.FORWARD, mitForm, ignoreVerletzung,
+					ignoreSperre, spieler, positionen);
+		}
 
-        //nun die zus XYZ Positionen füllen
-        for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
-            pos = (SpielerPosition) zusPos.elementAt(i);
+		// und nochmal für alle unbesetzten
+		// TW
+		doReserveSpielerAufstellen(ISpielerPosition.KEEPER, mitForm, ignoreVerletzung,
+				ignoreSperre, spieler, positionen);
 
-            //bereits vergebene Positionen ignorieren und ReserveBank leer lassen
-            if ((pos.getSpielerId() > 0)
-                || (pos.getId() >= ISpielerPosition.startReserves)) {
-                continue;
-            }
+		// abwehr
+		doReserveSpielerAufstellen(ISpielerPosition.CENTRAL_DEFENDER, mitForm, ignoreVerletzung,
+				ignoreSperre, spieler, positionen);
 
-            //nur diese Pos
-            if (pos.getPosition() == position) {
-                spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
-                                                     ignoreSperre, vSpieler, positionen);
+		// mittelfeld
+		doReserveSpielerAufstellen(ISpielerPosition.MIDFIELDER, mitForm, ignoreVerletzung,
+				ignoreSperre, spieler, positionen);
+		doReserveSpielerAufstellen(ISpielerPosition.WINGER, mitForm, ignoreVerletzung,
+				ignoreSperre, spieler, positionen);
 
-                //position besetzen
-                if (spieler != null) {
-                    pos.setSpielerId(spieler.getSpielerID());
-                }
-            }
-        }
-    }
+		// sturm
+		doReserveSpielerAufstellen(ISpielerPosition.FORWARD, mitForm, ignoreVerletzung,
+				ignoreSperre, spieler, positionen);
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private float calcAveragePosValue(List<Spieler> spieler) {
-        float average = 0.0f;
-        Spieler player = null;
+	/**
+	 * resetet alle Verbindungen zwischen Position und Spieler
+	 * 
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	public final void resetPositionsbesetzungen(Vector<ISpielerPosition> positionen) {
+		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
+			((ho.core.model.player.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
+		}
+	}
 
-        if (spieler == null) {
-            return 0.0f;
-        }
+	/**
+	 * liefert aus dem eigenen Vector mit Spielern den besten für die
+	 * angefordertet Position der noch nicht aufgestellt ist
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	protected final ho.core.model.player.Spieler getBestSpieler(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		ho.core.model.player.Spieler spieler = null;
+		ho.core.model.player.Spieler bestSpieler = null;
+		float bestStk = -1.0f;
+		float aktuStk = 0.0f;
 
-        for (int i = 0; i < spieler.size(); i++) {
-            player = ((Spieler) spieler.get(i));
-            average += player.calcPosValue(player.getIdealPosition(), true);
-        }
+		for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
+			spieler = (ho.core.model.player.Spieler) vSpieler.get(i);
 
-        average = ho.core.util.Helper.round(average / spieler.size(), 2);
+			// stk inklusive Wetter effekt errechnen
+			aktuStk = spieler.calcPosValue(position, mitForm);
+			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
 
-        return average;
-    }
-    
-    private Vector<ISpielerPosition> filterPositions(List<ISpielerPosition> positions) {
-    	// Remove "red" positions from the position selection of the AssistantPanel.
-    	Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
-    	java.util.HashMap<Integer, Boolean> statusMap = 
-    		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getPositionStatuses();
-    	for (int i = 0 ; i < positions.size() ; i++) {
-    		SpielerPosition pos = (SpielerPosition)positions.get(i);
-    		if ((!statusMap.containsKey(pos.getId())) || (statusMap.get(pos.getId()))) {
-    			returnVec.add(pos);
-    		} else {
-    		}
-    	}
-    	return returnVec;
-    }
-    
+			if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))
+					&& ((bestSpieler == null) || (bestStk < aktuStk))
+					&& ((ignoreSperre) || (!spieler.isGesperrt()))
+					&& ((ignoreVerletzung) || (spieler.getVerletzt() < 1))
+					&& (spieler.isSpielberechtigt())) {
+				bestSpieler = spieler;
+				bestStk = aktuStk;
+			}
+		}
+
+		return bestSpieler;
+	}
+
+	/**
+	 * liefert aus dem eigenen Vector mit Spielern den besten für die
+	 * angefordertet Position der noch nicht aufgestellt ist
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	protected final Spieler getBestSpielerIdealPosOnly(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		Spieler spieler = null;
+		Spieler bestSpieler = null;
+		float bestStk = -1.0f;
+		float aktuStk = 0.0f;
+
+		for (int i = 0; (vSpieler != null) && (i < vSpieler.size()); i++) {
+			// Spieler holen
+			spieler = (Spieler) vSpieler.get(i);
+
+			// stk inklusive Wetter effekt errechnen
+			aktuStk = spieler.calcPosValue(position, mitForm);
+			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
+
+			// Idealpos STK muss > mindestwert sein
+			if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))
+					&& (spieler.getIdealPosition() == position)
+					&& ((bestSpieler == null) || (bestStk < aktuStk))
+					&& ((ignoreSperre) || (!spieler.isGesperrt()))
+					&& ((ignoreVerletzung) || (spieler.getVerletzt() < 1))
+					&& (aktuStk > ho.core.model.UserParameter.instance().MinIdealPosStk)
+					&& (!spieler.isTrainer()) && (spieler.isSpielberechtigt())) {
+				bestSpieler = spieler;
+				bestStk = aktuStk;
+			}
+		}
+
+		return bestSpieler;
+	}
+
+	/**
+	 * besetzt die Torwart Positionen im Vector m_vPositionen
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		SpielerPosition pos = null;
+		Spieler spieler = null;
+
+		for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size()); i++) {
+			pos = (SpielerPosition) positionen.get(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() < ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur exacte Pos
+			if (pos.getPosition() == position) {
+				spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
+						vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+	}
+
+	/**
+	 * besetzt die Torwart Positionen im Vector m_vPositionen
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		SpielerPosition pos = null;
+		Spieler spieler = null;
+
+		for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size()); i++) {
+			pos = (ho.core.model.player.SpielerPosition) positionen.get(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() < ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur exakte Position
+			if (pos.getPosition() == position) {
+				spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
+						ignoreSperre, vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+	}
+
+	/**
+	 * besetzt die Torwart Positionen im Vector m_vPositionen
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	protected final void doSpielerAufstellen(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		SpielerPosition pos = null;
+		Spieler spieler = null;
+		final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
+
+		for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size()); i++) {
+			pos = (SpielerPosition) positionen.get(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() >= ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur exacte Pos
+			if (pos.getPosition() == position) {
+				// die zus XYZ Positionen nur vormerken
+				// if ((pos.getTaktik() ==
+				// plugins.ISpielerPosition.ZUS_STUERMER)
+				// || (pos.getTaktik() ==
+				// plugins.ISpielerPosition.ZUS_STUERMER_DEF)
+				// || (pos.getTaktik() ==
+				// plugins.ISpielerPosition.ZUS_MITTELFELD)
+				// || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_INNENV))
+				// {
+				// zusPos.add(pos);
+				// continue;
+				// }
+
+				spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
+						vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+
+		// nun die zus XYZ Positionen füllen
+		for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
+			pos = (SpielerPosition) zusPos.elementAt(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() >= ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur diese Pos
+			if (pos.getPosition() == position) {
+				spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
+						vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+	}
+
+	/**
+	 * besetzt die Torwart Positionen im Vector m_vPositionen
+	 * 
+	 * @param position
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param mitForm
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreVerletzung
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param ignoreSperre
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param vSpieler
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param positionen
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
+			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
+			List<ISpielerPosition> positionen) {
+		SpielerPosition pos = null;
+		Spieler spieler = null;
+		final Vector<ISpielerPosition> zusPos = new Vector<ISpielerPosition>();
+
+		for (int i = 0; (positionen != null) && (vSpieler != null) && (i < positionen.size()); i++) {
+			pos = (SpielerPosition) positionen.get(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() >= ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur exakte Position
+			if (pos.getPosition() == position) {
+				// die zus XYZ Positionen nur vormerken
+				// if ((pos.getTaktik() == ISpielerPosition.ZUS_STUERMER)
+				// || (pos.getTaktik() == ISpielerPosition.ZUS_STUERMER_DEF)
+				// || (pos.getTaktik() == ISpielerPosition.ZUS_MITTELFELD)
+				// || (pos.getTaktik() == ISpielerPosition.ZUS_INNENV)) {
+				// zusPos.add(pos);
+				// continue;
+				// }
+
+				spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
+						ignoreSperre, vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+
+		// nun die zus XYZ Positionen füllen
+		for (int i = 0; (zusPos != null) && (vSpieler != null) && (i < zusPos.size()); i++) {
+			pos = (SpielerPosition) zusPos.elementAt(i);
+
+			// bereits vergebene Positionen ignorieren und ReserveBank leer
+			// lassen
+			if ((pos.getSpielerId() > 0) || (pos.getId() >= ISpielerPosition.startReserves)) {
+				continue;
+			}
+
+			// nur diese Pos
+			if (pos.getPosition() == position) {
+				spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
+						ignoreSperre, vSpieler, positionen);
+
+				// position besetzen
+				if (spieler != null) {
+					pos.setSpielerId(spieler.getSpielerID());
+				}
+			}
+		}
+	}
+
+	/**
+	 * TODO Missing Method Documentation
+	 * 
+	 * @param spieler
+	 *            TODO Missing Method Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	private float calcAveragePosValue(List<Spieler> spieler) {
+		float average = 0.0f;
+		Spieler player = null;
+
+		if (spieler == null) {
+			return 0.0f;
+		}
+
+		for (int i = 0; i < spieler.size(); i++) {
+			player = ((Spieler) spieler.get(i));
+			average += player.calcPosValue(player.getIdealPosition(), true);
+		}
+
+		average = ho.core.util.Helper.round(average / spieler.size(), 2);
+
+		return average;
+	}
+
+	private Vector<ISpielerPosition> filterPositions(List<ISpielerPosition> positions) {
+		// Remove "red" positions from the position selection of the
+		// AssistantPanel.
+		Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
+		java.util.HashMap<Integer, Boolean> statusMap = HOMainFrame.instance()
+				.getAufstellungsPanel().getAufstellungsAssitentPanel().getPositionStatuses();
+		for (int i = 0; i < positions.size(); i++) {
+			SpielerPosition pos = (SpielerPosition) positions.get(i);
+			if ((!statusMap.containsKey(pos.getId())) || (statusMap.get(pos.getId()))) {
+				returnVec.add(pos);
+			} else {
+			}
+		}
+		return returnVec;
+	}
+
 }
