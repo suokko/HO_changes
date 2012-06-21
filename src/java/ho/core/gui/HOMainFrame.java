@@ -83,7 +83,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
 	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
 	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Module"));
-	
+
 	// Menus
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
@@ -125,7 +125,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * Singleton
 	 */
 	private HOMainFrame() {
-		
+
 		// Log HO! version
 		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
 
@@ -145,7 +145,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		System.setProperty("sun.awt.exception.handler", ExceptionHandler.class.getName());
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setDefaultFont(UserParameter.instance().schriftGroesse);
@@ -178,10 +178,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * This method creates a MacOS specific listener for the quit operation
 	 * ("Command-Q")
-	 * 
+	 *
 	 * We need to use reflections here, because the com.apple.eawt.* classes are
 	 * Apple specific
-	 * 
+	 *
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -303,7 +303,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	public SpielePanel getMatchesPanel(){
 		return ((SpielePanel)getTabbedPane().getModulePanel(IModule.MATCHES));
 	}
-	
+
 	/**
 	 * Handle action events.
 	 */
@@ -329,12 +329,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this, 
-					HOVerwaltung.instance().getLanguageString("subskillRecalc7w1")
-					+ " " + new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())
-							+ HOVerwaltung.instance().getLanguageString("subskillRecalc7w2"),
-							HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"), 
-							JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if (JOptionPane.showConfirmDialog(this,
+					HOVerwaltung.instance().getLanguageString("subskillRecalc7w",new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())),
+					HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
 				HOVerwaltung.instance().recalcSubskills(true, from);
 			}
@@ -346,11 +344,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			FullScreen.instance().restoreNormalMode(this);
 			// Fire CloseEvent, so all Plugins get informed
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		}   else if (source.equals(m_jmCreditsItem)) { 
+		}   else if (source.equals(m_jmCreditsItem)) {
 			StringBuilder text = new StringBuilder(200);
 			text.append("Hattrick Organizer ").append(HO.VERSION).append("\n\n");
 			text.append(HOVerwaltung.instance().getLanguageString("MenuCredits"));
-			JOptionPane.showMessageDialog(null, text.toString(), 
+			JOptionPane.showMessageDialog(null, text.toString(),
 					HOVerwaltung.instance().getLanguageString("MenuCreditsChoice"),
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
@@ -373,7 +371,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			UpdateController.check4EPVUpdate();
 		} else if (source.equals(m_jmiRatings)) {
 			UpdateController.check4RatingsUpdate();
-		} 
+		}
 		HOMainFrame.setHOStatus(HOMainFrame.READY);
 	}
 
@@ -408,10 +406,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		FormulaFactors.instance().save();
 
 		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
-		
+
 		// Save module configs
 		ModuleConfig.instance().save();
-		
+
 		HOLogger.instance().debug(getClass(), "Module configurations saved");
 
 		// Disconnect
@@ -451,7 +449,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		m_jtpTabbedPane.setSelectedIndex(0);
 
 		getContentPane().add(getInfoPanel(), BorderLayout.SOUTH);
-		
+
 		setLocation(UserParameter.instance().hoMainFrame_PositionX,
 				UserParameter.instance().hoMainFrame_PositionY);
 		setSize(UserParameter.instance().hoMainFrame_width, UserParameter.instance().hoMainFrame_height);
@@ -537,13 +535,13 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				showTabMenuItem.setAccelerator(activeModules[i].getKeyStroke());
 				showTabMenuItem.putClientProperty("MODULE", activeModules[i]);
 				showTabMenuItem.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JMenuItem item = (JMenuItem)e.getSource();
 						IModule module = (IModule)item.getClientProperty("MODULE");
 						getTabbedPane().showTab(module.getModuleId());
-						
+
 					}
 				});
 				m_jmVerschiedenes.add(showTabMenuItem);
@@ -552,7 +550,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				m_jmModuleMenu.add(activeModules[i].getMenu());
 			}
 		}
-		
+
 
 		// About
 		m_jmHomepageItem.addActionListener(this);
@@ -566,24 +564,24 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 		m_jmWikiItem.addActionListener(this);
 		m_jmAbout.add(m_jmWikiItem);
-		
+
 		m_jmAbout.addSeparator();
 
 		m_jmCreditsItem.addActionListener(this);
 		m_jmAbout.add(m_jmCreditsItem);
 
-		
+
 		// add Top Level Menus
 		m_jmMenuBar.add(m_jmVerschiedenes);
 		m_jmMenuBar.add(new ToolManager().getToolMenu());
 		m_jmMenuBar.add(m_jmModuleMenu);
 
 		m_jmMenuBar.add(m_jmAbout);
-		
+
 		if (!HO.isRelease()) {
 			m_jmMenuBar.add(DebugMode.getDeveloperMenu());
 		}
-		
+
 		SwingUtilities.updateComponentTreeUI(m_jmMenuBar);
 
 		// Adden
@@ -672,7 +670,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
-	 * 
+	 *
 	 * @param tabnumber
 	 *            number of the tab to show
 	 */
@@ -690,7 +688,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * This is initiated through the call to dispose(). System.exit is called
 	 * only in the case when @see beenden() is called in advance. This event is
 	 * called when switching into full screen mode, too.
-	 * 
+	 *
 	 * @param windowEvent
 	 *            is ignored
 	 */
@@ -757,7 +755,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 				} catch (Exception e) {
 					succ = false;
 				}
-			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) { 
+			} else if (!"Classic".equalsIgnoreCase(UserParameter.instance().skin)) {
 				// Nimbus is the default theme
 				succ = NimbusTheme.enableNimbusTheme(size);
 			}
@@ -802,7 +800,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		parameter.hoMainFrame_PositionY = Math.max(getLocation().y, 0);
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - parameter.hoMainFrame_PositionX);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
-		
+
 		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
 
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
