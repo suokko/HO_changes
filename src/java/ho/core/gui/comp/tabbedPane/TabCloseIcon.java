@@ -17,7 +17,6 @@ import javax.swing.JTabbedPane;
 final class TabCloseIcon implements Icon {
 	private final Icon mIcon = ThemeManager.getIcon(HOIconName.TABBEDPANE_CLOSE);
 	private transient Rectangle mPosition = null;
-	private final static int mIconPosOffset = 6;
 	
 	TabCloseIcon(final JTabbedPane mTabbedPane){
 		mTabbedPane.addMouseListener( new MouseAdapter()
@@ -43,8 +42,8 @@ final class TabCloseIcon implements Icon {
 	 */
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y){
-		mPosition = new Rectangle( x + mIconPosOffset,y, getIconWidth(), getIconHeight() );
-		mIcon.paintIcon(c, g, x + mIconPosOffset, y );
+		mPosition = new Rectangle( x, y, getIconWidth(), getIconHeight() );
+		mIcon.paintIcon(c, g, x, y );
 	}
 	
 	
