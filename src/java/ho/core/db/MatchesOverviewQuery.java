@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 class MatchesOverviewQuery  {
 	final static String KEY = "MatchesOverviewQuery";
-	
-	
+
+
 	/**
-	 *  
+	 *
 	 * @param teamId
 	 * @param matchtype
 	 * @param statistic
@@ -39,7 +39,7 @@ class MatchesOverviewQuery  {
 			case MatchesOverviewCommonPanel.LeadingHTLosingFT:
 			case MatchesOverviewCommonPanel.TrailingHTWinningFT:
 				return getChangeGameStat(teamId,matchtype,statistic);
-		
+
 			case MatchesOverviewCommonPanel.WonWithoutOppGoal:
 				whereHomeClause=" AND HEIMTORE > GASTTORE AND GASTTORE = 0 )";
 				whereAwayClause=" AND HEIMTORE < GASTTORE AND HEIMTORE = 0 ))";
@@ -71,7 +71,7 @@ class MatchesOverviewQuery  {
 		}
 		return tmp;
 	}
-	
+
 	static int getChangeGameStat(int teamId, int matchtype, int statistic){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
@@ -88,7 +88,7 @@ class MatchesOverviewQuery  {
 			break;
 		}
 		sql.append(getMatchTypWhereClause(matchtype));
-		
+
 		rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
 		try {
 			for (int i = 0; rs.next(); i++) {
@@ -98,19 +98,19 @@ class MatchesOverviewQuery  {
 			HOLogger.instance().log(MatchesOverviewQuery.class,e);
 		}
 		return tmp;
-		
+
 	}
-	
+
 	/**
-	 * SELECT TYP, COUNT(*)  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID 
+	 * SELECT TYP, COUNT(*)  FROM  MATCHHIGHLIGHTS join MATCHESKURZINFO ON MATCHHIGHLIGHTS.MATCHID = MATCHESKURZINFO.MATCHID
 WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING TYP in (1,2) ORDER BY TYP
 	 * @param teamId
 	 * @return
 	 */
-	
+
 	public static MatchesHighlightsStat[] getChancesStat(boolean ownTeam, int matchtype ){
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		
+
 		MatchesHighlightsStat[] rows = new MatchesHighlightsStat[12];
 		rows[0] = new MatchesHighlightsStat("highlight_penalty", "4,14,24,34,54,64,74,84");
 		rows[1] = new MatchesHighlightsStat("highlight_freekick", "0,10,20,30,50,60,70,80");
@@ -125,15 +125,15 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows[9] = new MatchesHighlightsStat("highlight_yellowcard","5", "10,11");
 		rows[10] = new MatchesHighlightsStat("highlight_redcard","5", "12,13,14");
 		rows[11] = new MatchesHighlightsStat("Verletzt","0","90,91,92,93,94,95,96,97");
-		
+
 		for (int i = 0; i < rows.length; i++) {
 			if(!rows[i].isTitle())
 				fillMatchesOverviewChanceRow(ownTeam, teamId, rows[i], matchtype);
 		}
 		return rows;
 	}
-	
-	
+
+
 	private static void fillMatchesOverviewChanceRow(boolean ownTeam, int teamId, MatchesHighlightsStat row, int matchtype){
 		StringBuilder sql = new StringBuilder(200);
 		ResultSet rs = null;
@@ -162,7 +162,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			HOLogger.instance().log(MatchesOverviewQuery.class, e);
 		}
 	}
-	
+
 	private static StringBuilder getMatchTypWhereClause(int matchtype){
 		StringBuilder sql = new StringBuilder(50);
 		switch (matchtype) {
@@ -194,7 +194,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			}
 		return sql;
 	}
-	
+
 	static MatchesOverviewRow[] getMatchesOverviewValues(int matchtype){
 		ArrayList<MatchesOverviewRow> rows = new ArrayList<MatchesOverviewRow>(20);
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("AlleSpiele"), MatchesOverviewRow.TYPE_ALL));
@@ -205,8 +205,10 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows.add(new MatchesOverviewRow("5-2-3", MatchesOverviewRow.TYPE_SYSTEM));
 		rows.add(new MatchesOverviewRow("4-5-1", MatchesOverviewRow.TYPE_SYSTEM));
 		rows.add(new MatchesOverviewRow("4-4-2", MatchesOverviewRow.TYPE_SYSTEM));
-		rows.add(new MatchesOverviewRow("4-3-3",MatchesOverviewRow.TYPE_SYSTEM));
+		rows.add(new MatchesOverviewRow("4-3-3", MatchesOverviewRow.TYPE_SYSTEM));
 		rows.add(new MatchesOverviewRow("3-5-2", MatchesOverviewRow.TYPE_SYSTEM));
+		rows.add(new MatchesOverviewRow("3-4-3", MatchesOverviewRow.TYPE_SYSTEM));
+		rows.add(new MatchesOverviewRow("2-5-3", MatchesOverviewRow.TYPE_SYSTEM));
 		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Taktik"), MatchesOverviewRow.TYPE_TITLE));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_NORMAL), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_NORMAL));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_PRESSING), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_PRESSING));
@@ -228,9 +230,9 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		setMatchesOverviewValues(rows,matchtype,false);
 		return rows.toArray(new MatchesOverviewRow[rows.size()]);
 	}
-	
-	
-	
+
+
+
 	private static void setMatchesOverviewValues(ArrayList<MatchesOverviewRow> rows,int matchtype, boolean home){
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		StringBuilder whereClause = new StringBuilder(100);
@@ -240,11 +242,11 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		setFormationRows(rows,whereClause, home);
 		setRows(rows, whereClause, home);
 	}
-	
+
 	private static void setFormationRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause, boolean home){
-		
+
 		StringBuilder sql = new StringBuilder(500);
-		sql.append("select MATCHID,HEIMTORE,GASTTORE, "); 
+		sql.append("select MATCHID,HEIMTORE,GASTTORE, ");
 		sql.append("LOCATE('5-5-0',MATCHREPORT) AS F550,");
 		sql.append("LOCATE('5-4-1',MATCHREPORT) AS F541,");
 		sql.append("LOCATE('5-3-2',MATCHREPORT) AS F532,");
@@ -252,13 +254,15 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		sql.append("LOCATE('4-5-1',MATCHREPORT) AS F451,");
 		sql.append("LOCATE('4-4-2',MATCHREPORT) AS F442,");
 		sql.append("LOCATE('4-3-3',MATCHREPORT) AS F433,");
-		sql.append("LOCATE('3-5-2',MATCHREPORT) AS F352");
+		sql.append("LOCATE('3-5-2',MATCHREPORT) AS F352,");
+		sql.append("LOCATE('3-4-3',MATCHREPORT) AS F343,");
+		sql.append("LOCATE('2-5-3',MATCHREPORT) AS F253");
 		sql.append(" FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ");
 		sql.append(" where 1=1 ");
 		sql.append(whereClause);
 		try{
 			ResultSet rs = DBManager.instance().getAdapter().executeQuery(sql.toString());
-			
+
 			while(rs.next()){
 				String[] fArray = {"0","",""};
 				setSystem(rs.getInt("F550"), "5-5-0", fArray);
@@ -269,6 +273,8 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 				setSystem(rs.getInt("F442"), "4-4-2", fArray);
 				setSystem(rs.getInt("F433"), "4-3-3", fArray);
 				setSystem(rs.getInt("F352"), "3-5-2", fArray);
+				setSystem(rs.getInt("F343"), "3-4-3", fArray);
+				setSystem(rs.getInt("F253"), "2-5-3", fArray);
 				for (int i = 1; i <rows.size(); i++) {
 					String txt = home?fArray[1]:fArray[2].length()==0?fArray[1]:fArray[2];
 
@@ -278,11 +284,11 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 				}
 			}
 			} catch(Exception e){
-				
+
 				HOLogger.instance().log(MatchesOverviewQuery.class,e);
 			}
 	}
-	
+
 	private static void setSystem(int column,String formation, String[] fArray){
 		int max = Integer.parseInt(fArray[0]);
 		if(column > 0){
@@ -298,7 +304,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			}
 		}
 	}
-	
+
 	private static void setRows(ArrayList<MatchesOverviewRow> rows,StringBuilder whereClause,boolean home){
 		for (int i = 1; i < rows.size(); i++) {
 			if(rows.get(i).getTypeValue() > Integer.MIN_VALUE){
@@ -307,7 +313,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			}
 		}
 	}
-	
+
 	private static void setMatchesOverviewRow(MatchesOverviewRow row,String whereClause, boolean home){
 		StringBuilder sql = new StringBuilder(500);
 		String from = " FROM MATCHDETAILS inner join MATCHESKURZINFO ON MATCHDETAILS.MATCHID = MATCHESKURZINFO.MATCHID ";
