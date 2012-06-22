@@ -17,8 +17,10 @@ import javax.swing.JTabbedPane;
 final class TabCloseIcon implements Icon {
 	private final Icon mIcon = ThemeManager.getIcon(HOIconName.TABBEDPANE_CLOSE);
 	private transient Rectangle mPosition = null;
+	private int xOffset = 0;
 	
-	TabCloseIcon(final JTabbedPane mTabbedPane){
+	TabCloseIcon(final JTabbedPane mTabbedPane, int xOffset){
+		this.xOffset = xOffset;
 		mTabbedPane.addMouseListener( new MouseAdapter()
 		{
 			@Override 
@@ -38,12 +40,12 @@ final class TabCloseIcon implements Icon {
 	
 	/**
 	 * when painting, remember last position painted.
-	 * add extra 6 pixels to make sure the icon is on the right of the tab
+	 * add extra xOffset pixels to allow for Nimbus skin
 	 */
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y){
-		mPosition = new Rectangle( x, y, getIconWidth(), getIconHeight() );
-		mIcon.paintIcon(c, g, x, y );
+		mPosition = new Rectangle( x + xOffset, y, getIconWidth(), getIconHeight() );
+		mIcon.paintIcon(c, g, x + xOffset, y );
 	}
 	
 	
