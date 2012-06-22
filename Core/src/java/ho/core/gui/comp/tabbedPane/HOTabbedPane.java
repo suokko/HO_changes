@@ -7,6 +7,7 @@ import java.awt.Component;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 
 public final class HOTabbedPane extends JTabbedPane {
 
@@ -17,9 +18,15 @@ public final class HOTabbedPane extends JTabbedPane {
 	}
 	
 	public void addTab(String title, Component component, boolean closeIcon) {
+		int xOffset = 0;
 		super.addTab(title, component);
-		if(closeIcon)
-			setIconAt(getComponentCount()-1, new TabCloseIcon(this));
+		if(closeIcon) {
+			// Nimbus skin is the only one to put the icon on the right, which we need to move away from title text
+			if (UIManager.getLookAndFeel().getName().equalsIgnoreCase("Nimbus")) {
+				xOffset = 6;
+			}
+			setIconAt(getComponentCount()-1, new TabCloseIcon(this, xOffset));
+		}
 	}
 
 	public void showTab(int moduleId){
