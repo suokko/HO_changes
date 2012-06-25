@@ -174,13 +174,12 @@ public class xmlMatchdetailsParser {
             	eventtext = eventtext.replaceAll("&quot;", "\"");
             	eventtext = eventtext.replaceAll("&amp;", "&");
 
-            	final int highlighttyp = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventVariation")
+            	// Convert the ID to type and subtype.
+            	int eventKey = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
             					.item(0))))
-            					.intValue();
-            	
-            	final int highlightsubtyp = (Integer.valueOf(XMLManager.getFirstChildNodeValue((Element) root.getElementsByTagName("EventTypeID")
-            					.item(0))))
-            					.intValue();
+								.intValue();
+            	final int highlighttyp = (int) Math.floor(eventKey/100);
+            	final int highlightsubtyp = eventKey - highlighttyp*100;
 
             	//determine new score
             	if (highlighttyp == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
