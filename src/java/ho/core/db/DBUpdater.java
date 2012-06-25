@@ -56,7 +56,7 @@ final class DBUpdater {
 					case 10: 
 						updateDBv11();
 					case 11:
-						updateDBv12();
+						updateDBv12(DBVersion, version);
 					case 12:
 						updateDBv13(DBVersion, version);
 					case 13:
@@ -185,7 +185,7 @@ final class DBUpdater {
 	/**
 	 * Update database to version 12.
 	 */
-	private void updateDBv12() throws Exception {
+	private void updateDBv12(int DBVersion, int version) throws Exception {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
 		
@@ -214,7 +214,15 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
 		m_clJDBCAdapter.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
 
-		dbZugriff.saveUserParameter("DBVersion", 12); 
+		
+		// Follow this pattern in the future. Only set db version if not development, or
+		// if the current db is more than one version old. The last update should be made
+		// during first run of a non development version.
+		            
+		if ((version == (DBVersion - 1) && !HO.isDevelopment()) 
+				|| (version < (DBVersion - 1))) {
+			dbZugriff.saveUserParameter("DBVersion", 12);
+		}
 	}
 	
 	private void updateDBv13(int DBVersion, int version) {
@@ -270,9 +278,9 @@ final class DBUpdater {
 		else
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "+IfaMatchTable.TABLENAME);
 
-		// Always set field DBVersion to the new value as last action.
-		// Do not use DBVersion but the value, as update packs might
-		// do version checking again before applying!
+		// Follow this pattern in the future. Only set db version if not development, or
+		// if the current db is more than one version old. The last update should be made
+		// during first run of a non development version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) { 
 			 dbZugriff.saveUserParameter("DBVersion", 13); 
 		} 
@@ -283,6 +291,10 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sCharakter");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
+		
+		// Follow this pattern in the future. Only set db version if not development, or
+		// if the current db is more than one version old. The last update should be made
+		// during first run of a non development version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
 			dbZugriff.saveUserParameter("DBVersion", 14); 
 		}
