@@ -28,12 +28,12 @@ import javax.swing.event.ListSelectionListener;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class TestPanel extends JPanel {
+public class UploadDownloadPanel extends JPanel {
 
 	private static final long serialVersionUID = -5314050322847463180L;
 	private JList matchList;
 
-	public TestPanel() {
+	public UploadDownloadPanel() {
 		initComponents();
 	}
 
@@ -107,13 +107,13 @@ public class TestPanel extends JPanel {
 				messageType = JOptionPane.ERROR_MESSAGE;
 				message = HOVerwaltung.instance().getLanguageString(
 						"lineup.upload.result.parseerror");
-				HOLogger.instance().log(TestPanel.class, message + "\n" + result);
+				HOLogger.instance().log(UploadDownloadPanel.class, message + "\n" + result);
 			}
 		} catch (SAXException e) {
 			messageType = JOptionPane.ERROR_MESSAGE;
 			message = HOVerwaltung.instance().getLanguageString("lineup.upload.result.parseerror");
-			HOLogger.instance().log(TestPanel.class, message + "\n" + result);
-			HOLogger.instance().log(TestPanel.class, e);
+			HOLogger.instance().log(UploadDownloadPanel.class, message + "\n" + result);
+			HOLogger.instance().log(UploadDownloadPanel.class, e);
 		}
 
 		JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
