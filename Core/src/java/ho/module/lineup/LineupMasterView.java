@@ -41,7 +41,7 @@ public class LineupMasterView extends JPanel {
 		this.substitutionOverview = new SubstitutionOverview(hov.getModel().getAufstellung());
 		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
-		tabbedPane.addTab("test", new TestPanel());
+		tabbedPane.addTab("test", new UploadDownloadPanel());
 
 		setLayout(new BorderLayout());
 		add(tabbedPane, BorderLayout.CENTER);
