@@ -196,9 +196,8 @@ public class UploadDownloadPanel extends JPanel {
 			this.data = new ArrayList<MatchKurzInfo>(list);
 		}
 
-		public MatchKurzInfo getMatch(int row) {
-			System.out.println(row);
-			return this.data.get(row);
+		public MatchKurzInfo getMatch(int modelRowIndex) {
+			return this.data.get(modelRowIndex);
 		}
 
 		public void setData(List<MatchKurzInfo> list) {
