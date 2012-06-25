@@ -59,7 +59,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     private int m_iHomeTacticType;
     private int m_iMatchID = -1;
 
-    //0=Regen,1=Bewölkt,2=wolkig,3=Sonne
+    //0=Regen,1=BewÃ¶lkt,2=wolkig,3=Sonne
     private int m_iWetterId = -1;
 
     private int m_iZuschauer;
@@ -91,7 +91,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param einstellung TODO Missing Constructuor Parameter Documentation
      *
@@ -118,7 +118,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     ////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Gibt den Namen zu einer Bewertungzurück
+     * Gibt den Namen zu einer BewertungzurÃ¼ck
      *
      * @param taktikTyp TODO Missing Constructuor Parameter Documentation
      *
@@ -156,7 +156,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     public final int getGuestHalfTimeGoals() {
     	Vector<MatchHighlight> highLights = getHighlights();
     	for (MatchHighlight iMatchHighlight : highLights) {
-			if(iMatchHighlight.getHighlightSubTyp() == 45)
+			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getGastTore();
 		}
     	return -1;
@@ -165,7 +165,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 	public final int getHomeHalfTimeGoals() {
 		Vector<MatchHighlight> highLights = getHighlights();
     	for (MatchHighlight iMatchHighlight : highLights) {
-			if(iMatchHighlight.getHighlightSubTyp() == 45)
+			if(iMatchHighlight.getHighlightTyp() == 0 && iMatchHighlight.getHighlightSubTyp() == 45)
 				return iMatchHighlight.getHeimTore();
 		}
     	return -1;
@@ -334,7 +334,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     }
 
     /**
-     * Gibt die Gesamtstärke zurück, Absolut oder durch die Anzahl der Summanten geteilt
+     * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
      *
      * @param absolut TODO Missing Constructuor Parameter Documentation
      *
@@ -614,7 +614,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     }
 
     /**
-     * Gibt die Gesamtstärke zurück, Absolut oder durch die Anzahl der Summanten geteilt
+     * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
      *
      * @param absolut TODO Missing Constructuor Parameter Documentation
      *
