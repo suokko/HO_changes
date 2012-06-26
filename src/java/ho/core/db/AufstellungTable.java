@@ -158,8 +158,8 @@ final class AufstellungTable extends AbstractTable {
 			DBManager.instance().saveSystemPositionen(hrfId, aufstellung.getPositionen(), name);
 
 			// Save Substitutions
-			DBManager.instance().storeMatchSubstitutionsByHrf(hrfId,
-					aufstellung.getSubstitutionList(), name);
+			((MatchSubstitutionTable)(DBManager.instance().getTable(MatchSubstitutionTable.TABLENAME)))
+					.storeMatchSubstitutionsByHrf(hrfId,aufstellung.getSubstitutionList(), name);
 
 		}
 	}

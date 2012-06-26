@@ -6,7 +6,6 @@
  */
 package ho.core.file.xml;
 
-import ho.core.db.DBManager;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchLineup;
@@ -50,19 +49,19 @@ public class xmlMatchdetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Matchdetails parseMachtdetailsFromString(String input) {
-        return createMatchdetails(XMLManager.parseString(input));
+    public final Matchdetails parseMachtdetailsFromString(String input, MatchLineup matchLineup) {
+        return createMatchdetails(XMLManager.parseString(input), matchLineup);
     }
 
     /////////////////////////////////////////////////////////////////////////////////    
     //parse public
     ////////////////////////////////////////////////////////////////////////////////    
-    public final Matchdetails parseMatchdetails(String dateiname) {
+    public final Matchdetails parseMatchdetails(String dateiname, MatchLineup matchLineup) {
         Matchdetails md = null;
         Document doc = null;
 
         doc = XMLManager.parseFile(dateiname);
-        md = createMatchdetails(doc);
+        md = createMatchdetails(doc, matchLineup);
 
         return md;
     }
@@ -74,18 +73,18 @@ public class xmlMatchdetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Matchdetails parseMatchdetails(java.io.File datei) {
+    public final Matchdetails parseMatchdetails(java.io.File datei, MatchLineup matchLineup) {
         Document doc = null;
 
         doc = XMLManager.parseFile(datei);
 
-        return createMatchdetails(doc);
+        return createMatchdetails(doc, matchLineup);
     }
 
     /////////////////////////////////////////////////////////////////////////////////    
     //Parser Helper private
     ////////////////////////////////////////////////////////////////////////////////    
-    protected final Matchdetails createMatchdetails(Document doc) {
+    protected final Matchdetails createMatchdetails(Document doc, MatchLineup matchLineup) {
         Matchdetails md = null;
 
         if (doc != null) {
@@ -94,10 +93,10 @@ public class xmlMatchdetailsParser {
 
                 readGeneral(doc, md);
                 // Match lineup needs to be available, if not -> ignore match highlights/report
-                if (!DBManager.instance().isMatchLineupVorhanden(md.getMatchID())) {
-                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available first!");
+                if (matchLineup == null) {
+                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available!");
                 } else {
-                    readHighlights(doc, md);
+                    readHighlights(doc, md, matchLineup);
                     parseMatchReport(md);
                 }
                 readArena(doc, md);
@@ -119,10 +118,9 @@ public class xmlMatchdetailsParser {
      * @param md	match details
      *
      */
-    private final void readHighlights(Document doc, Matchdetails md) {
+    private final void readHighlights(Document doc, Matchdetails md, MatchLineup lineup) {
         final Vector<MatchHighlight> myHighlights = new Vector<MatchHighlight>();
         final Vector<Integer> broken = new Vector<Integer>();
-        final MatchLineup lineup = DBManager.instance().getMatchLineup(md.getMatchID());
         Element ele = null;
         Element eventList = null;
         Element root = null;

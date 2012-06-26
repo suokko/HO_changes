@@ -152,8 +152,13 @@ public class XMLMatchesParser {
                     tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                     spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 } else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
-                    tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
-                    spiel.setOrdersGiven(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
+                	try {
+	                	tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
+	                	spiel.setOrdersGiven(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
+                	} catch (Exception e) {
+                		// We will end up here if the match is not the user's
+                		spiel.setOrdersGiven(false);
+                	}
                 }
 
                 //In Vector adden
