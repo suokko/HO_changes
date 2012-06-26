@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -81,10 +83,18 @@ public class UploadDownloadPanel extends JPanel {
 		this.matchesTable.setModel(model);
 		this.matchesTable.setAutoCreateRowSorter(true);
 		this.matchesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		// as default, sort by date
+		List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		this.matchesTable.getRowSorter().setSortKeys(sortKeys);
+
+		// TODO use column identifiers instead of index
 		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);
 		matchTypeColumn.setCellRenderer(new MatchTypeCellRenderer());
 		matchTypeColumn.setMaxWidth(25);
 
+		// TODO use column identifiers instead of index
 		TableColumn ordersSetColumn = this.matchesTable.getColumnModel().getColumn(5);
 		ordersSetColumn.setCellRenderer(new OrdersSetCellRenderer());
 		ordersSetColumn.setMaxWidth(25);
@@ -107,7 +117,7 @@ public class UploadDownloadPanel extends JPanel {
 	private List<MatchKurzInfo> getMatchesFromDB() {
 		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
 				HOVerwaltung.instance().getModel().getBasics().getTeamId());
-		
+
 		Timestamp today = new Timestamp(System.currentTimeMillis());
 		List<MatchKurzInfo> data = new ArrayList<MatchKurzInfo>();
 		for (MatchKurzInfo match : matches) {
