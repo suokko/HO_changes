@@ -76,18 +76,7 @@ public class UploadDownloadPanel extends JPanel {
 		GUIUtilities.equalizeComponentSizes(this.refreshButton, this.uploadButton,
 				this.downloadButton);
 
-		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
-				HOVerwaltung.instance().getModel().getBasics().getTeamId());
-
-		Timestamp today = new Timestamp(System.currentTimeMillis());
-		List<MatchKurzInfo> data = new ArrayList<MatchKurzInfo>();
-		for (MatchKurzInfo match : matches) {
-			if (match.getMatchDateAsTimestamp().after(today)) {
-				data.add(match);
-			}
-		}
-
-		MatchesTableModel model = new MatchesTableModel(data);
+		MatchesTableModel model = new MatchesTableModel(getMatchesFromDB());
 		this.matchesTable = new JTable();
 		this.matchesTable.setModel(model);
 		this.matchesTable.setAutoCreateRowSorter(true);
@@ -113,6 +102,20 @@ public class UploadDownloadPanel extends JPanel {
 		gbc.gridx = 1;
 		gbc.anchor = GridBagConstraints.NORTH;
 		add(buttonPanel, gbc);
+	}
+
+	private List<MatchKurzInfo> getMatchesFromDB() {
+		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
+				HOVerwaltung.instance().getModel().getBasics().getTeamId());
+		
+		Timestamp today = new Timestamp(System.currentTimeMillis());
+		List<MatchKurzInfo> data = new ArrayList<MatchKurzInfo>();
+		for (MatchKurzInfo match : matches) {
+			if (match.getMatchDateAsTimestamp().after(today)) {
+				data.add(match);
+			}
+		}
+		return data;
 	}
 
 	private void upload() {
@@ -155,7 +158,9 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void refreshMatchListFromHT() {
-
+		OnlineWorker ow = new OnlineWorker();
+		ow.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true);
+		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
 	private MatchKurzInfo getSelectedMatch() {
@@ -217,6 +222,7 @@ public class UploadDownloadPanel extends JPanel {
 
 		public void setData(List<MatchKurzInfo> list) {
 			this.data = new ArrayList<MatchKurzInfo>(list);
+			fireTableDataChanged();
 		}
 
 		@Override
