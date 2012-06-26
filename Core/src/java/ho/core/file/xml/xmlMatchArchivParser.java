@@ -143,7 +143,7 @@ public class xmlMatchArchivParser {
                 spiel.setHeimTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
                 spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                spiel.setAufstellung(true);
+                spiel.setOrdersGiven(true);
                 spiel.setMatchStatus(MatchKurzInfo.FINISHED);
 
                 //In Vector adden
