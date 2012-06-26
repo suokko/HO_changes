@@ -155,12 +155,10 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == m_jbReloadMatch) {
             final int matchid = matchShortInfo.getMatchID();
-			HOMainFrame.instance().getOnlineWorker().getMatchlineup(matchShortInfo.getMatchID(),
+			HOMainFrame.instance().getOnlineWorker().downloadMatchData(
+					matchShortInfo.getMatchID(), 
 					matchShortInfo.getMatchTyp(),
-					matchShortInfo.getHeimID(), matchShortInfo.getGastID());
-			HOMainFrame.instance().getOnlineWorker().getMatchDetails(
-					matchShortInfo.getMatchID(), matchShortInfo.getMatchTyp());
-			DBManager.instance().updateMatch(matchShortInfo.getMatchID());
+					true);
 			RefreshManager.instance().doReInit();
 			showMatch(matchid);
         } else if (e.getSource() == deleteButton ) {

@@ -81,14 +81,19 @@ public final class MatchLineupTeamTable extends AbstractTable {
 				sql += (matchID + "," + team.getErfahrung() + ", '" + DBManager.insertEscapeSequences(team.getTeamName()) + "'," + team.getTeamID() + " )");
 				adapter.executeUpdate(sql);
 
-				//Einträge noch saven
+				//Store players
 				for (int i = 0; i < team.getAufstellung().size(); i++) {
-					DBManager.instance().storeMatchLineupPlayer((MatchLineupPlayer) team.getAufstellung().elementAt(i), matchID, team.getTeamID());
+					
+					((MatchLineupPlayerTable) DBManager.instance().getTable(
+							MatchLineupPlayerTable.TABLENAME)).storeMatchLineupPlayer(
+									(MatchLineupPlayer) team.getAufstellung().elementAt(i),
+									matchID, team.getTeamID());
 				}
 				
-				// Store Substitution
+				// Store Substitutions
 				
-				DBManager.instance().storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), team.getSubstitutions());
+				((MatchSubstitutionTable) DBManager.instance().getTable(MatchSubstitutionTable.TABLENAME))
+						.storeMatchSubstitutionsByMatchTeam(matchID, team.getTeamID(), team.getSubstitutions());
 				
 				
 			} catch (Exception e) {

@@ -242,7 +242,8 @@ final class MatchDetailsTable extends AbstractTable {
 				adapter.executeUpdate(sql);
 
 				//Highlights
-				DBManager.instance().storeMatchHighlights(details);
+				((MatchHighlightsTable) DBManager.instance().getTable(MatchHighlightsTable.TABLENAME))
+											.storeMatchHighlights(details);
 
 				//Workaround, wenn das Spiel nicht auf Finished gesetzt wird in den MatchKurzInfos
 				if (details.getZuschauer() > 0) {

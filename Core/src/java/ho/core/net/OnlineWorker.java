@@ -355,26 +355,22 @@ public class OnlineWorker {
 			if ((DBManager.instance().isMatchVorhanden(matches[i].getMatchID()))
 					&& (!DBManager.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
 					&& (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
-				getMatchlineup(matches[i].getMatchID(), matches[i].getMatchTyp(),
-						matches[i].getHeimID(), matches[i].getGastID());
-				if (getMatchDetails(matches[i].getMatchID(), matches[i].getMatchTyp())) {
-					DBManager.instance().updateMatch(matches[i].getMatchID());
-				} else
-					return false;
+				downloadMatchData(matches[i].getMatchID(), matches[i].getMatchTyp(), false);
 			}
 		}
 		return true;
 	}
 
 	/**
-	 * DOCUMENT ME!
+	 * Download the match details
 	 * 
 	 * @param matchId
-	 *            Die ID des Matches
+	 * @param matchType
+	 * @param lineup Needed for highlights parse. If null, there will be no highlights or report.
 	 * 
-	 * @return TODO Missing Return Method Documentation
+	 * @return The details object
 	 */
-	public final boolean getMatchDetails(int matchId, MatchType matchType) {
+	private final Matchdetails getMatchDetails(int matchId, MatchType matchType, MatchLineup lineup) {
 		boolean success = true;
 		Matchdetails details = null;
 
@@ -382,24 +378,116 @@ public class OnlineWorker {
 		waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
-		details = fetchDetails(matchId, matchType, waitDialog);
-
-		if (details != null) {
-			DBManager.instance().storeMatchDetails(details);
-		} else {
-			success = false;
-		}
+		details = fetchDetails(matchId, matchType, lineup, waitDialog);
 
 		waitDialog.setValue(100);
 		waitDialog.setVisible(false);
-
-		return success;
+		if (details != null) {
+			return details;
+		} else {
+			return null;
+		}
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////
 	// MATCHES
 	// //////////////////////////////////////////////////////////////////////////////
 
+	
+	/**
+	 * Downloads a match with the given criteria and stores it in the database.
+	 * If a match is already in the db, and refresh is false, nothing is downloaded.
+	 * 
+	 * @param matchId ID for the match to be downloaded
+	 * @param matchType matchType for the match to be downloaded.
+	 * @param refresh If true the match will always be downloaded.
+	 * 
+	 * @return true if the match is in the db afterwards
+	 */
+	public boolean downloadMatchData(int matchid, MatchType matchType, boolean refresh) {
+	
+		// Only download if not present in the database, or if refresh is true
+		if (refresh ||
+				!DBManager.instance().isMatchVorhanden(matchid) 
+				|| !DBManager.instance().isMatchLineupVorhanden(matchid)) {
+			try {
+				int heimId = 0;
+				int gastId = 0;
+				MatchKurzInfo info = null;
+				Matchdetails details; 
+				
+				// Check if teams IDs are stored somewhere
+				if (DBManager.instance().isMatchVorhanden(matchid)) {
+					info = DBManager.instance().getMatchesKurzInfoByMatchID(matchid);
+					heimId = info.getHeimID();
+					gastId = info.getGastID();
+				}
+
+				// If ids not found, download matchdetails to obtain them. Highlights will be missing.
+				if ((heimId == 0) || (gastId == 0)) {
+					details = getMatchDetails(matchid, matchType, null);
+					heimId = details.getHeimId();
+					gastId = details.getGastId();
+				}
+				
+				final MatchLineup lineup = getMatchlineup(matchid, matchType, heimId, gastId);
+
+				if (lineup == null) {
+					// Info
+					HOMainFrame
+							.instance()
+							.getInfoPanel()
+							.setLangInfoText(
+									HOVerwaltung.instance().getLanguageString("Downloadfehler")
+											+ " : Error fetching Matchlineup :", InfoPanel.FEHLERFARBE);
+					Helper.showMessage(HOMainFrame.instance(),
+							HOVerwaltung.instance().getLanguageString("Downloadfehler")
+									+ " : Error fetching Matchlineup :", HOVerwaltung.instance()
+									.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+					waitDialog.setVisible(false);
+					return false;
+				}
+
+				// Get details with highlights.
+				details = getMatchDetails(matchid, matchType, lineup);
+				
+				if (details == null) {
+					HOLogger.instance().error(getClass(), "Error downloading match. Details is null: " + matchid);
+					return false;
+				}
+				
+				
+				//Create the MatchKurzInfo even if we got an old one.
+				info = new MatchKurzInfo();
+				info.setOrdersGiven(true);
+				info.setGastID(lineup.getGastId());
+				info.setGastName(lineup.getGastName());
+				info.setGastTore(details.getGuestGoals());
+				info.setHeimID(lineup.getHeimId());
+				info.setHeimName(lineup.getHeimName());
+				info.setHeimTore(details.getHomeGoals());
+				info.setMatchDate(lineup.getStringSpielDate());
+				info.setMatchID(matchid);
+				info.setMatchStatus(MatchKurzInfo.FINISHED);
+				info.setMatchTyp(lineup.getMatchTyp());
+
+
+				boolean success = DBManager.instance().storeMatch(info, details, lineup);
+				if (!success) {
+					return false;
+				}
+			} catch (Exception ex) {
+				HOLogger.instance().error(getClass(),"downloadMatchData:  Error in downloading match: "
+						+ ex);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	
+	
 	/**
 	 * saugt den Spielplan
 	 * 
@@ -459,24 +547,13 @@ public class OnlineWorker {
 			// Automatically download all MatchLineups
 			for (int i = 0; (matches != null) && (i < matches.length); i++) {
 				int curMatchId = matches[i].getMatchID();
-				Matchdetails curDetails = DBManager.instance().getMatchDetails(curMatchId);
-				// No match in DB
 				if (DBManager.instance().isMatchVorhanden(curMatchId)
 						&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
-						&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId)
-								|| curDetails == null || curDetails.getMatchreport() == null || curDetails
-								.getMatchreport().trim().length() == 0)) {
+						&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId))) {
 
-					boolean retLineup = getMatchlineup(curMatchId, matches[i].getMatchTyp(),
-							matches[i].getHeimID(), matches[i].getGastID());
-					boolean retDetails = getMatchDetails(curMatchId, matches[i].getMatchTyp());
-					if (retDetails) {
-						HOLogger.instance().debug(
-								getClass(),
-								"Match " + curMatchId + ", getMatchLineup(): " + retLineup
-										+ ", getMatchDetails(): " + retDetails);
-						DBManager.instance().updateMatch(matches[i].getMatchID());
-					} else {
+					// No match in DB
+					boolean result = downloadMatchData(curMatchId, matches[i].getMatchTyp(), false);
+					if (!result) {
 						bOK = false;
 						break;
 					}
@@ -502,7 +579,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public final boolean getMatchlineup(int matchId, MatchType matchType, int teamId1, int teamId2) {
+	private final MatchLineup getMatchlineup(int matchId, MatchType matchType, int teamId1, int teamId2) {
 		boolean bOK = false;
 		MatchLineup lineUp1 = null;
 		MatchLineup lineUp2 = null;
@@ -538,10 +615,9 @@ public class OnlineWorker {
 						lineUp1.setGast((MatchLineupTeam) lineUp2.getGast());
 				}
 			}
-			DBManager.instance().storeMatchLineup(lineUp1);
 		}
 		waitDialog.setVisible(false);
-		return bOK;
+		return lineUp1;
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////
@@ -695,7 +771,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected final Matchdetails fetchDetails(int matchID, MatchType matchType, LoginWaitDialog waitDialog) {
+	private final Matchdetails fetchDetails(int matchID, MatchType matchType, MatchLineup lineup, LoginWaitDialog waitDialog) {
 		String matchDetails = "";
 		Matchdetails details = null;
 
@@ -708,7 +784,7 @@ public class OnlineWorker {
 			}
 			waitDialog.setValue(20);
 			final xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
-			details = parser.parseMachtdetailsFromString(matchDetails);
+			details = parser.parseMachtdetailsFromString(matchDetails, lineup);
 			waitDialog.setValue(40);
 			if (details == null) {
 				HOLogger.instance().warning(getClass(),
@@ -816,24 +892,18 @@ public class OnlineWorker {
 		final MatchKurzInfo[] infos = DBManager.instance().getMatchesKurzInfo(-1);
 		String haveLineups = "";
 		boolean bOK = false;
-		OnlineWorker ow = HOMainFrame.instance().getOnlineWorker();
 		for (int i = 0; i < infos.length; i++) {
 			int curMatchId = infos[i].getMatchID();
 			if (!DBManager.instance().isMatchLineupVorhanden(curMatchId)) {
 				// Check if the lineup is available
 				if (infos[i].getMatchStatus() == MatchKurzInfo.FINISHED) {
-					HOLogger.instance().log(getClass(), "Get Lineup : " + curMatchId);
-					bOK = ow.getMatchlineup(curMatchId, infos[i].getMatchTyp(),
-							infos[i].getHeimID(), infos[i].getGastID());
-					if (bOK) {
-						bOK = ow.getMatchDetails(curMatchId, infos[i].getMatchTyp());
-						if (!bOK) {
-							break;
-						}
-					} else
+					HOLogger.instance().debug(getClass(), "Get Lineup : " + curMatchId);
+					bOK = downloadMatchData(curMatchId, infos[i].getMatchTyp(), false);
+					if (!bOK) {
 						break;
+					}
 				} else
-					HOLogger.instance().log(getClass(), "Not Played : " + curMatchId);
+					HOLogger.instance().debug(getClass(), "Not Played : " + curMatchId);
 			} else {
 				// Match lineup already available
 				if (haveLineups.length() > 0)
@@ -842,7 +912,7 @@ public class OnlineWorker {
 			}
 		}
 		if (haveLineups.length() > 0)
-			HOLogger.instance().log(getClass(), "Have Lineups : " + haveLineups);
+			HOLogger.instance().debug(getClass(), "Have Lineups : " + haveLineups);
 	}
 
 	/**

@@ -591,21 +591,6 @@ public class DBManager {
 			teamID);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 */
-	protected void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
-		(
-			(MatchLineupPlayerTable) getTable(
-				MatchLineupPlayerTable.TABLENAME)).storeMatchLineupPlayer(
-			player,
-			matchID,
-			teamID);
-	}
 	
 //	/**
 //	 * Deletes the given player based on teamID and matchID.
@@ -1013,32 +998,10 @@ public class DBManager {
 		return ((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).isMatchLineupVorhanden(
 			matchid);
 	}
-
-	/**
-	 * speichert ein Matchlineup
-	 *
-	 * @param lineup TODO Missing Constructuor Parameter Documentation
-	 */
-	public void storeMatchLineup(MatchLineup lineup) {
-		((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).storeMatchLineup(lineup);
-	}
-
 	
-	/**
-	 * Updates an existing match lineup with the data provided
-	 * 
-	 * @param matchId the matchId of the match to be updated
-	 * @param matchLineup the lineup object containing the data
-	 */
-	public void updateMatchLineup(MatchLineup lineup) {
-		((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).updateMatchLineup(lineup);
-	}
 	
 	//	------------------------------- MatchesKurzInfoTable -------------------------------------------------
 
-	public void updateMatch(int matchId) {
-        updateMatchLineup(getMatchLineup(matchId));
-    }
 	/**
 	 * Ist das Match schon in der Datenbank vorhanden?
 	 *
@@ -1050,6 +1013,17 @@ public class DBManager {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).isMatchVorhanden(matchid);
 	}
 
+	/**
+	 * Returns the MatchKurzInfo for the match. Returns null if not found.
+	 *
+	 * @param matchid The ID for the match
+	 * @return The kurz info object or null
+	 */
+	public MatchKurzInfo getMatchesKurzInfoByMatchID(int matchid) {
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).getMatchesKurzInfoByMatchID(matchid);
+	}
+	
+	
 	/**
 	 * Get all matches for the given team from the database.
 	 * 
@@ -1169,24 +1143,6 @@ public class DBManager {
 	 */
 	public List<Substitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).getMatchSubstitutionsByHrf(hrfId, lineupName);
-	}
-	
-
-	/**
-	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
-	 * All previous substitutions for the team/match combination will be deleted.
-	 */
-	public void storeMatchSubstitutionsByMatchTeam(int matchId, int teamId, List<Substitution> subs) {	
-		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByMatchTeam(matchId, teamId, subs);
-		
-	}
-		
-	/**
-	 * Stores the substitutions in the database. The ID for each substitution must be unique for the match.
-	 * All previous substitutions for the hrf will be deleted.
-	 */
-	public void storeMatchSubstitutionsByHrf(int hrfId, List<Substitution> subs, String lineupName) {
-		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME)).storeMatchSubstitutionsByHrf(hrfId, subs, lineupName);
 	}
 	
 	
@@ -1381,17 +1337,6 @@ public class DBManager {
 			teamID);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param team TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 */
-	protected void storeMatchLineupTeam(MatchLineupTeam team, int matchID) {
-		((MatchLineupTeamTable) getTable(MatchLineupTeamTable.TABLENAME)).storeMatchLineupTeam(
-			team,
-			matchID);
-	}
 
 	//	------------------------------- UserParameterTable -------------------------------------------------
 
@@ -1474,14 +1419,6 @@ public class DBManager {
 		return MatchesOverviewQuery.getMatchesOverviewValues(matchtype);
 	}
 	
-	/**
-	 * speichert die MatchDetails
-	 *
-	 * @param details TODO Missing Constructuor Parameter Documentation
-	 */
-	public void storeMatchDetails(Matchdetails details) {
-		((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).storeMatchDetails(details);
-	}
 	//	------------------------------- MatchHighlightsTable -------------------------------------------------
 
 	/**
@@ -1491,7 +1428,7 @@ public class DBManager {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected Vector<MatchHighlight> getMatchHighlights(int matchId) {
+	public Vector<MatchHighlight> getMatchHighlights(int matchId) {
 		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlights(
 			matchId);
 	}
@@ -1504,16 +1441,8 @@ public class DBManager {
 	public Vector<MatchHighlight> getMatchHighlightsByTypIdAndPlayerId(int type, int playerId) {
 		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).getMatchHighlightsByTypIdAndPlayerId(type,playerId);
 	}
-	/**
-	 * Speichert die Highlights zu einem Spiel
-	 *
-	 * @param details TODO Missing Constructuor Parameter Documentation
-	 */
-	protected void storeMatchHighlights(Matchdetails details) {
-		((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME)).storeMatchHighlights(
-			details);
-	}
-
+	
+	
 	// Transfer
 	
 	 public List<PlayerTransfer> getTransfers(int playerid, boolean allTransfers){
@@ -1745,6 +1674,8 @@ public class DBManager {
 		getTable(LigaTable.TABLENAME).delete(where, value);
 		getTable(VereinTable.TABLENAME).delete(where, value);
 		getTable(AufstellungTable.TABLENAME).delete(where, value);
+		((MatchSubstitutionTable)getTable(MatchSubstitutionTable.TABLENAME))
+									.deleteAllMatchSubstitutionsByHrfId(hrfid);
 
 		getTable(PositionenTable.TABLENAME).delete(where, value);
 		getTable(TeamTable.TABLENAME).delete(where, value);
@@ -1756,9 +1687,9 @@ public class DBManager {
 	}
 
 	/**
-	 * Löscht alle Daten zu dem Match
+	 * Deletes all data for the given match
 	 *
-	 * @param matchid TODO Missing Constructuor Parameter Documentation
+	 * @param matchid The matchid. Must be larger than 0.
 	 */
 	public void deleteMatch(int matchid) {
 		final String[] whereSpalten = { "MatchID" };
@@ -1769,7 +1700,46 @@ public class DBManager {
 		getTable(MatchLineupTeamTable.TABLENAME).delete(whereSpalten, whereValues);
 		getTable(MatchLineupPlayerTable.TABLENAME).delete(whereSpalten, whereValues);
 		getTable(MatchesKurzInfoTable.TABLENAME).delete(whereSpalten, whereValues);
-
+		((MatchSubstitutionTable)getTable(MatchSubstitutionTable.TABLENAME))
+				.deleteAllMatchSubstitutionsByMatchId(matchid);
+	}
+	
+	
+	/**
+	 * Stores the given match info. If info is missing, or the info are not for the same match,
+	 * nothing is stored and false is returned. If the store is successful, true is returned.
+	 * 
+	 * If status of the info is not FINISHED, nothing is stored, and false is also returned.
+	 * 
+	 * @param info The MatchKurzInfo for the match
+	 * @param details The MatchDetails for the match
+	 * @param lineup The MatchLineup for the match
+	 * @return true if the match is stored. False if not
+	 */
+	public boolean storeMatch(MatchKurzInfo info, Matchdetails details, MatchLineup lineup) {
+		
+		if ((info == null) || (details == null) || (lineup == null)) {
+			return false;
+		}
+		
+		if ((info.getMatchID() == details.getMatchID())
+				&& (info.getMatchID() == lineup.getMatchID())
+				&& (info.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+			
+			deleteMatch(info.getMatchID());
+			
+			MatchKurzInfo[] matches = new MatchKurzInfo[1];
+			matches[0] = info;
+			((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).storeMatchKurzInfos(matches);
+		
+			((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).storeMatchDetails(details);
+			((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).storeMatchLineup(lineup);
+			
+			
+			
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -1970,8 +1940,4 @@ public class DBManager {
 
 		return buffer.toString();
 	}
-
-
-
-
 }

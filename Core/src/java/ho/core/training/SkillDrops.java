@@ -133,7 +133,7 @@ public class SkillDrops {
 		{0, 1, 1.7, 2.6, 3.9, 5.5, 8, 12},
 		{0, 1, 1.6, 2.5, 3.8, 5.3, 7.4, 10.8}};
 	
-	boolean active = true;
+	private boolean active = true;
 	private SkillDrops drops;
 	private static SkillDrops instance = null;
 	

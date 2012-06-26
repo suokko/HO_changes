@@ -6,16 +6,20 @@ import ho.core.constants.TrainingType;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.training.SkillDrops;
 import ho.core.training.WeeklyTrainingType;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 /**
  * Optionen für das Training
  */
-final class TrainingsOptionenPanel extends ImagePanel {
+final class TrainingsOptionenPanel extends ImagePanel implements ActionListener {
     //~ Static / Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
@@ -31,6 +35,8 @@ final class TrainingsOptionenPanel extends ImagePanel {
     private TrainingAdjustmentPanel m_jtapGoalkeeping;
     private TrainingAdjustmentPanel m_jtapDefending;
     private TrainingAdjustmentPanel m_jtapOsmosis;
+    
+    private JCheckBox m_jcSkillDrops = new JCheckBox(HOVerwaltung.instance().getLanguageString("skillDrops"));
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -60,6 +66,8 @@ final class TrainingsOptionenPanel extends ImagePanel {
         UserParameter.temp().TrainerFaktor = m_jtapCoachFactor.getValue();
         UserParameter.temp().TRAINING_OFFSET_ASSISTANTS = m_jtapAssisstantFactor.getValue();
         UserParameter.temp().TRAINING_OFFSET_INTENSITY = m_jtapIntensityFactor.getValue();
+        SkillDrops.instance().setActive(m_jcSkillDrops.isSelected());
+        
         OptionManager.instance().setReInitNeeded();
     }
 
@@ -123,5 +131,21 @@ final class TrainingsOptionenPanel extends ImagePanel {
         m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
         		WeeklyTrainingType.BASE_INTENSITY_FACTOR, UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
         add(m_jtapIntensityFactor);
+    
+        m_jcSkillDrops.setSelected(SkillDrops.instance().isActive());
+        m_jcSkillDrops.addActionListener(this);
+        add(m_jcSkillDrops);
     }
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		System.out.println("Check is:" + m_jcSkillDrops.isSelected());
+		if ((event.getSource() == m_jcSkillDrops) 
+				&& (m_jcSkillDrops.isSelected() != SkillDrops.instance().isActive())) {
+			SkillDrops.instance().setActive(m_jcSkillDrops.isSelected());
+		}
+		
+	}
+	
+	
 }

@@ -2,12 +2,12 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;
@@ -152,7 +152,7 @@ public class MatchPopulator {
      * @return TODO Missing Return Method Documentation
      */
     private boolean downloadMatch(int matchId, MatchType matchType) {
-        return HelperWrapper.instance().downloadMatchData(matchId, matchType);
+        return HOMainFrame.instance().getOnlineWorker().downloadMatchData(matchId, matchType, false);
     }
 
     /**

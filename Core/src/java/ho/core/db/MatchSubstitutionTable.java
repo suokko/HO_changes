@@ -178,5 +178,24 @@ public class MatchSubstitutionTable extends AbstractTable {
 
 		return subst;
 	}
+	
+	protected void deleteAllMatchSubstitutionsByMatchId(int matchId) {
+		if (matchId <= 0) {
+			return;
+		}
+		final String[] where = { "MatchID", "HrfID" };
+		final String[] values = { String.valueOf(matchId), String.valueOf(DUMMY)};
+		delete(where, values);
+	}
+	
+	protected void deleteAllMatchSubstitutionsByHrfId (int hrfId) {
+		if (hrfId <= 0) {
+			return;
+		}
+		final String[] where = { "MatchID", "HrfID" };
+		final String[] values = { String.valueOf(DUMMY), String.valueOf(hrfId)};
+		delete(where, values);
+		
+	}
 
 }

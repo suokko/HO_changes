@@ -3,6 +3,7 @@ package ho.module.training.ui;
 
 
 
+import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -85,7 +86,8 @@ public class OutputPanel extends JPanel {
             Integer matchID = new Integer(input);
 
             if (HelperWrapper.instance().isUserMatch(input, MatchType.LEAGUE)) {
-                if (HelperWrapper.instance().downloadMatchData(matchID.intValue(), MatchType.LEAGUE)) {
+                if (HOMainFrame.instance().getOnlineWorker()
+                		.downloadMatchData(matchID.intValue(), MatchType.LEAGUE, false)) {
                 	Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchImported"), //$NON-NLS-1$
                     		HOVerwaltung.instance().getLanguageString("ImportOK"), //$NON-NLS-1$
                                                   1); 

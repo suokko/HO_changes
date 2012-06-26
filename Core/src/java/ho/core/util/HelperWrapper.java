@@ -6,13 +6,8 @@
  */
 package ho.core.util;
 
-import ho.core.db.DBManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchType;
-import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 
 import java.text.ParseException;
@@ -169,7 +164,7 @@ public class HelperWrapper {
     	try {
           final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
           final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
-                                                                           .parseMachtdetailsFromString(input);
+                                                                           .parseMachtdetailsFromString(input, null);
           final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
           return ((mdetails.getHeimId() == teamID) || (mdetails.getGastId() == teamID));
@@ -179,74 +174,4 @@ public class HelperWrapper {
 
       return false;
     }
-
-    /**
-     * downloads all match related data and stores it in Database
-     *
-     */
-    public boolean downloadMatchData(int matchID, MatchType matchType) {
-        //Spiel nicht vorhanden, dann erst runterladen!
-        if (!DBManager.instance().isMatchVorhanden(matchID)) {
-            try {
-                //details
-                if (HOMainFrame.instance().getOnlineWorker()
-                			.getMatchDetails(matchID, matchType)) {
-                    Matchdetails details = DBManager.instance().getMatchDetails(matchID);
-
-                    //Lineups
-                    HOMainFrame.instance().getOnlineWorker()
-                         	.getMatchlineup(matchID, matchType,
-                         			details.getHeimId(),
-                         			details.getGastId());
-
-                    //Workaround
-                    // Lineups *must* be available before the match highlights / report
-                    // can be parsed in getMatchDetails()
-                    // If these informations are still missing, we re-fetch them now
-                    if (details == null || details.getMatchreport() == null || details.getMatchreport().trim().length() == 0) {
-                    	// Fetch matchDetails again
-                    	HOLogger.instance().debug(getClass(), "Fetching missing match highlights / report");
-                    	HOMainFrame.instance().getOnlineWorker().getMatchDetails(matchID, matchType);
-                    	details = DBManager.instance().getMatchDetails(matchID);
-                    }
-
-                    //MatchKurzInfo muss hier erstellt werden!!
-                    final MatchLineup lineup = DBManager.instance()
-                                                                                      .getMatchLineup(matchID);
-
-                    if (lineup != null) {
-                        final MatchKurzInfo info = new MatchKurzInfo();
-
-                        //?
-                        info.setOrdersGiven(true);
-                        info.setGastID(lineup.getGastId());
-                        info.setGastName(lineup.getGastName());
-                        info.setGastTore(details.getGuestGoals());
-                        info.setHeimID(lineup.getHeimId());
-                        info.setHeimName(lineup.getHeimName());
-                        info.setHeimTore(details.getHomeGoals());
-                        info.setMatchDate(lineup.getStringSpielDate());
-                        info.setMatchID(matchID);
-                        info.setMatchStatus(MatchKurzInfo.FINISHED);
-                        info.setMatchTyp(lineup.getMatchTyp());
-
-                        final MatchKurzInfo[] infos = {info};
-                        DBManager.instance().storeMatchKurzInfos(infos);
-                    }
-
-                    DBManager.instance().updateMatch( matchID);
-                } else {
-                    return false;
-                }
-            } catch (Exception ex) {
-                //Fehler!
-                HOLogger.instance().log(getClass(),"SpieltagPanel.actionPerformed:  Fehler beim Download eines Spieles : "
-                                   + ex);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
 }
