@@ -153,7 +153,7 @@ public class XMLMatchesParser {
                     spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
                 } else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
                     tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
-                    spiel.setAufstellung(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
+                    spiel.setOrdersGiven(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
                 }
 
                 //In Vector adden

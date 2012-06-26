@@ -104,7 +104,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                         final MatchKurzInfo info = new MatchKurzInfo();
 
                         //?
-                        info.setAufstellung(true);
+                        info.setOrdersGiven(true);
                         info.setGastID(lineup.getGastId());
                         info.setGastName(lineup.getGastName());
                         info.setGastTore(matchdata[4]);
