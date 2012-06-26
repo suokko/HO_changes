@@ -75,7 +75,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
      * TODO Missing Method Documentation
      */
     private void initComponents() {
-    	setLayout(new GridLayout(14, 1, 4, 4));
+    	setLayout(new GridLayout(15, 1, 4, 0));
 
         JLabel label = new JLabel("   " + 
         		ho.core.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
