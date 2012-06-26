@@ -647,8 +647,8 @@ public class OnlineWorker {
 		Iterator<Substitution> iter = lineup.getSubstitutionList().iterator();
 		while (iter.hasNext()) {
 			Substitution sub = iter.next();
-			orders.append("{\"playerin\":\"").append(sub.getPlayerIn()).append("\",");
-			orders.append("\"playerout\":\"").append(sub.getPlayerOut()).append("\",");
+			orders.append("{\"playerin\":\"").append(sub.getObjectPlayerID()).append("\",");
+			orders.append("\"playerout\":\"").append(sub.getSubjectPlayerID()).append("\",");
 			orders.append("\"orderType\":\"").append(sub.getOrderType().getId()).append("\",");
 			orders.append("\"min\":\"").append(sub.getMatchMinuteCriteria()).append("\",");
 			orders.append("\"pos\":\"").append(sub.getPos()).append("\",");

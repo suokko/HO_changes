@@ -12,30 +12,30 @@ public class PlausibilityCheck {
 
 	public static Problem checkForProblem(Lineup lineup, Substitution substitution) {
 		if (substitution.getOrderType() == MatchOrderType.SUBSTITUTION
-				&& (substitution.getPlayerIn() == -1 || substitution.getPlayerOut() == -1)) {
+				&& (substitution.getObjectPlayerID() == -1 || substitution.getSubjectPlayerID() == -1)) {
 			return Error.SUBSTITUTION_PLAYER_MISSING;
 		}
 		if (substitution.getOrderType() == MatchOrderType.POSITION_SWAP
-				&& (substitution.getPlayerIn() == -1 || substitution.getPlayerOut() == -1)) {
+				&& (substitution.getObjectPlayerID() == -1 || substitution.getSubjectPlayerID() == -1)) {
 			return Error.POSITIONSWAP_PLAYER_MISSING;
 		}
 		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR
-				&& substitution.getPlayerOut() == -1) {
+				&& substitution.getSubjectPlayerID() == -1) {
 			return Error.NEWBEHAVIOUR_PLAYER_MISSING;
 		}
 
 		// first, check if players in lineup. note: when NEW_BEHAVIOUR, there is
 		// only one player involved
 		if (substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR
-				&& !lineup.isSpielerAufgestellt(substitution.getPlayerIn())) {
+				&& !lineup.isSpielerAufgestellt(substitution.getObjectPlayerID())) {
 			return Error.PLAYERIN_NOT_IN_LINEUP;
-		} else if (!lineup.isSpielerAufgestellt(substitution.getPlayerOut())) {
+		} else if (!lineup.isSpielerAufgestellt(substitution.getSubjectPlayerID())) {
 			return Error.PLAYEROUT_NOT_IN_LINEUP;
 		}
 
 		// when NEW_BEHAVIOUR, check that behaviour there is really a change
 		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR) {
-			SpielerPosition pos = lineup.getPositionBySpielerId(substitution.getPlayerOut());
+			SpielerPosition pos = lineup.getPositionBySpielerId(substitution.getSubjectPlayerID());
 			if (pos.getTaktik() == substitution.getBehaviour()) {
 				return Uncertainty.SAME_TACTIC;
 			}
@@ -77,10 +77,10 @@ public class PlausibilityCheck {
 	}
 
 	private static Spieler getPlayerIn(Substitution substitution) {
-		return HOVerwaltung.instance().getModel().getSpieler(substitution.getPlayerIn());
+		return HOVerwaltung.instance().getModel().getSpieler(substitution.getObjectPlayerID());
 	}
 
 	private static Spieler getPlayerOut(Substitution substitution) {
-		return HOVerwaltung.instance().getModel().getSpieler(substitution.getPlayerOut());
+		return HOVerwaltung.instance().getModel().getSpieler(substitution.getSubjectPlayerID());
 	}
 }

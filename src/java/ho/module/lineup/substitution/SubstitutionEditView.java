@@ -94,22 +94,22 @@ public class SubstitutionEditView extends JPanel {
 	public void init(Substitution sub) {
 		this.orderType = sub.getOrderType();
 
-		if (sub.getPlayerOut() != -1) {
+		if (sub.getSubjectPlayerID() != -1) {
 			ComboBoxModel model = this.playerComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
 				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
-						.getPlayerOut()) {
+						.getSubjectPlayerID()) {
 					playerComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
 			}
 		}
 
-		if (!isNewBehaviour() && sub.getPlayerIn() != -1) {
+		if (!isNewBehaviour() && sub.getObjectPlayerID() != -1) {
 			ComboBoxModel model = this.playerInComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
 				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
-						.getPlayerIn()) {
+						.getObjectPlayerID()) {
 					playerInComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -150,7 +150,7 @@ public class SubstitutionEditView extends JPanel {
 		sub.setOrderType(this.orderType);
 		PlayerPositionItem item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
 		if (item != null) {
-			sub.setPlayerIn(item.getSpieler().getSpielerID());
+			sub.setObjectPlayerID(item.getSpieler().getSpielerID());
 		}
 
 		// sub.setPlayerOrderId(id); ???????????
@@ -166,15 +166,15 @@ public class SubstitutionEditView extends JPanel {
 
 		item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
 		if (item != null) {
-			sub.setPlayerOut(item.getSpieler().getSpielerID());
+			sub.setSubjectPlayerID(item.getSpieler().getSpielerID());
 		}
 		if (isPositionSwap() || isSubstitution()) {
 			item = (PlayerPositionItem) this.playerInComboBox.getSelectedItem();
 			if (item != null) {
-				sub.setPlayerIn(item.getSpieler().getSpielerID());
+				sub.setObjectPlayerID(item.getSpieler().getSpielerID());
 			}
 		} else if (isNewBehaviour()) {
-			sub.setPlayerIn(-1);
+			sub.setObjectPlayerID(-1);
 		}
 		return sub;
 	}

@@ -185,8 +185,8 @@ public class Lineup {
 					Substitution sub = new Substitution();
 					sub.setPlayerOrderId(Integer.parseInt(properties.getProperty("subst" + i
 							+ "playerorderid")));
-					sub.setPlayerIn(playerIn);
-					sub.setPlayerOut(playerOut);
+					sub.setObjectPlayerID(playerIn);
+					sub.setSubjectPlayerID(playerOut);
 					sub.setOrderType(matchOrderType);
 					sub.setMatchMinuteCriteria(Byte.parseByte(properties.getProperty("subst" + i
 							+ "matchminutecriteria")));
@@ -1290,9 +1290,9 @@ public class Lineup {
 					properties.setProperty("subst" + i + "playerorderid",
 							String.valueOf(sub.getPlayerOrderId()));
 					properties.setProperty("subst" + i + "playerin",
-							String.valueOf(sub.getPlayerIn()));
+							String.valueOf(sub.getObjectPlayerID()));
 					properties.setProperty("subst" + i + "playerout",
-							String.valueOf(sub.getPlayerOut()));
+							String.valueOf(sub.getSubjectPlayerID()));
 					properties.setProperty("subst" + i + "ordertype",
 							String.valueOf(sub.getOrderType().getId()));
 					properties.setProperty("subst" + i + "matchminutecriteria",
