@@ -218,7 +218,7 @@ public class HelperWrapper {
                         final MatchKurzInfo info = new MatchKurzInfo();
 
                         //?
-                        info.setAufstellung(true);
+                        info.setOrdersGiven(true);
                         info.setGastID(lineup.getGastId());
                         info.setGastName(lineup.getGastName());
                         info.setGastTore(details.getGuestGoals());

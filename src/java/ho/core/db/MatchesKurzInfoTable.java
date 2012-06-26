@@ -190,7 +190,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 		match.setHeimTore(rs.getInt("HeimTore"));
 		match.setMatchTyp(MatchType.getById(rs.getInt("MatchTyp")));
 		match.setMatchStatus(rs.getInt("Status"));
-		match.setAufstellung(rs.getBoolean("Aufstellung"));
+		match.setOrdersGiven(rs.getBoolean("Aufstellung"));
 		return match;
 	}
 	
@@ -286,7 +286,7 @@ final class MatchesKurzInfoTable extends AbstractTable {
 						+ DBManager.insertEscapeSequences(matches[i].getHeimName()) + "', " + matches[i].getHeimID() + ", '"
 						+ DBManager.insertEscapeSequences(matches[i].getGastName()) + "', ");
 				sql += (matches[i].getGastID() + ", '" + matches[i].getMatchDate() + "', " + matches[i].getHeimTore() + ", "
-						+ matches[i].getGastTore() + ", " + matches[i].isAufstellung() + ", " + matches[i].getMatchStatus() + " )");
+						+ matches[i].getGastTore() + ", " + matches[i].isOrdersGiven() + ", " + matches[i].getMatchStatus() + " )");
 				adapter.executeUpdate(sql);
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchKurzInfos Error" + e);
