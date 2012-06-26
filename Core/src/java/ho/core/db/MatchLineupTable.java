@@ -116,7 +116,7 @@ public final class MatchLineupTable extends AbstractTable {
 	 */
 	void storeMatchLineup(MatchLineup lineup) {
 		if (lineup != null) {
-			//Vorhandene Einträge entfernen
+			//There should never be anything to delete, but...
 			final String[] where = { "MatchID" };
 			final String[] werte = { "" + lineup.getMatchID()};			
 			delete(where, werte);
@@ -149,25 +149,17 @@ public final class MatchLineupTable extends AbstractTable {
 						+ "' )");
 				adapter.executeUpdate(sql);
 
-				//Einträge noch saven
-				DBManager.instance().storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getHeim(), lineup.getMatchID());
-				DBManager.instance().storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getGast(), lineup.getMatchID());
+				
+				((MatchLineupTeamTable) DBManager.instance().getTable(MatchLineupTeamTable.TABLENAME))
+							.storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getHeim(),
+									lineup.getMatchID());
+				((MatchLineupTeamTable) DBManager.instance().getTable(MatchLineupTeamTable.TABLENAME))
+							.storeMatchLineupTeam((ho.core.model.match.MatchLineupTeam) lineup.getGast(),
+									lineup.getMatchID());
 			} catch (Exception e) {
 				HOLogger.instance().log(getClass(),"DB.storeMatchLineup Error" + e);
 				HOLogger.instance().log(getClass(),e);
 			}
 		}
 	}
-	
-	void updateMatchLineup(MatchLineup lineup) {
-		
-		// first - delete all old players.
-		((MatchLineupPlayerTable) DBManager.instance().getTable(MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayers(lineup.getMatchID());
-		
-		// and store new
-		storeMatchLineup(lineup);
-		
-		// Substitutions should be safely taken care of without a special delete
-	}
-	
 }

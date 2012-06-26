@@ -7,7 +7,6 @@ import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.player.ISpielerPosition;
-import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -269,7 +268,7 @@ public class AufstellungsSternePanel extends RasenPanel {
 				}
 
 				default:
-					HOLogger.instance().log(getClass(), getClass().getName() + ": Unknown player position: " + player.getPosition());
+//					HOLogger.instance().log(getClass(), getClass().getName() + ": Unknown player position: " + player.getPosition());
 				}
 			}
 		}

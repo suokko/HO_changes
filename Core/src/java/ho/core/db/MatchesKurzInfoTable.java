@@ -266,7 +266,32 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	MatchKurzInfo[] getMatchesKurzInfo(final int teamId) {
 		return getMatchesKurzInfo(teamId, -1);
 	}
+	
+	/**
+	 * Returns the MatchKurzInfo for the match. Returns null if not found.
+	 * @param matchid The ID for the match
+	 * @return The kurz info object or null
+	 */
+	MatchKurzInfo getMatchesKurzInfoByMatchID(int matchid) {
+		
+		
+		try {
+			final String sql = "SELECT * FROM "+getTableName()+" WHERE MatchId=" + matchid;
+			final ResultSet rs = adapter.executeQuery(sql);
 
+			rs.beforeFirst();
+			if (rs.next()) {
+				return createMatchKurzInfo(rs);
+			}
+		} catch (SQLException e) {
+			
+			HOLogger.instance().error(getClass(),"DB.getMatchesKurzInfo Error" + e);
+		}
+		
+		return null;
+	}
+	
+	
 	/**
 	 * Saves matches into the databse.
 	 */

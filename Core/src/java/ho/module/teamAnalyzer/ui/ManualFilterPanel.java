@@ -7,12 +7,12 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.db.DBManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
-import ho.core.util.HelperWrapper;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.manager.MatchManager;
 import ho.module.teamAnalyzer.ui.model.UiFilterTableModel;
@@ -102,7 +102,7 @@ public class ManualFilterPanel extends JPanel {
 				matchIds.add(element);
 			}
 
-			rowData.add("" + element.getMatchType());
+			rowData.add("" + element.getMatchType().getId());
 			tableModel.addRow(rowData);
 		}
 
@@ -162,7 +162,7 @@ public class ManualFilterPanel extends JPanel {
 					if (!status.equalsIgnoreCase("true")) {
 						int id = availableMatches.get(row).getMatchId();
 						MatchType type = availableMatches.get(row).getMatchType();
-						downloadDone = HelperWrapper.instance().downloadMatchData(id, type);
+						downloadDone = HOMainFrame.instance().getOnlineWorker().downloadMatchData(id, type, false);
 					}
 
 					e.consume();

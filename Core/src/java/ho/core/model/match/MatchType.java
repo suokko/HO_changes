@@ -3,7 +3,7 @@ package ho.core.model.match;
 
 public enum MatchType {
 
-	NONE((int) -1),
+	NONE((int) 0),
 	LEAGUE((int) 1),
 	QUALIFICATION((int) 2),
 	CUP((int) 3),

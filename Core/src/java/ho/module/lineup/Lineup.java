@@ -786,7 +786,7 @@ public class Lineup {
 	 */
 	private List<MatchKurzInfo> orderMatches(MatchKurzInfo[] inMatches) {
 		final List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
-		if (inMatches != null && inMatches.length > 1) {
+		if (inMatches != null && inMatches.length > 0) {
 			for (MatchKurzInfo m : inMatches) {
 				matches.add(m);
 			}
