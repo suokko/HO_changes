@@ -1,10 +1,20 @@
 package ho.module.lineup.substitution.plausibility;
 
-
 public enum Error implements Problem {
-	NEWBEHAVIOUR_PLAYER_MISSING,
-	SUBSTITUTION_PLAYER_MISSING,
-	POSITIONSWAP_PLAYER_MISSING,
-	PLAYERIN_NOT_IN_LINEUP,
-	PLAYEROUT_NOT_IN_LINEUP;
+	NEWBEHAVIOUR_PLAYER_MISSING("subs.plausibility.newbehaviour.playermissing"),
+	SUBSTITUTION_PLAYER_MISSING("subs.plausibility.substitution.playermissing"),
+	POSITIONSWAP_PLAYER_MISSING("subs.plausibility.positionswap.playermissing"),
+	PLAYERIN_NOT_IN_LINEUP("subs.plausibility.playerIn.notInLineup"),
+	PLAYEROUT_NOT_IN_LINEUP("subs.plausibility.playerOut.notInLineup");
+
+	private String languageKey;
+
+	private Error(String languageKey) {
+		this.languageKey = languageKey;
+	}
+
+	@Override
+	public String getLanguageKey() {
+		return this.languageKey;
+	}
 }

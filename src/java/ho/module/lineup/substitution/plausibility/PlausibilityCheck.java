@@ -47,27 +47,18 @@ public class PlausibilityCheck {
 		if (problem instanceof Error) {
 			switch ((Error) problem) {
 			case PLAYERIN_NOT_IN_LINEUP:
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.plausibility.playerIn.notInLineup",
+				return HOVerwaltung.instance().getLanguageString(problem.getLanguageKey(),
 						getPlayerIn(substitution).getName());
 			case PLAYEROUT_NOT_IN_LINEUP:
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.plausibility.playerOut.notInLineup",
+				return HOVerwaltung.instance().getLanguageString(problem.getLanguageKey(),
 						getPlayerOut(substitution).getName());
-			case POSITIONSWAP_PLAYER_MISSING:
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.plausibility.positionswap.playermissing");
-			case SUBSTITUTION_PLAYER_MISSING:
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.plausibility.substitution.playermissing");
-			case NEWBEHAVIOUR_PLAYER_MISSING:
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.plausibility.newbehaviour.playermissing");
+			default:
+				return HOVerwaltung.instance().getLanguageString(problem.getLanguageKey());
 			}
 		} else if (problem instanceof Uncertainty) {
 			switch ((Uncertainty) problem) {
 			case SAME_TACTIC:
-				return HOVerwaltung.instance().getLanguageString("subs.plausibility.sameTactic",
+				return HOVerwaltung.instance().getLanguageString(problem.getLanguageKey(),
 						getPlayerOut(substitution).getName(),
 						LanguageStringLookup.getBehaviour(substitution.getBehaviour()));
 			}
