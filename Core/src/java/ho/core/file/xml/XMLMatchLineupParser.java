@@ -411,11 +411,11 @@ public class XMLMatchLineupParser {
 			substitutions.add(s);
 			// We need to make sure the players involved are in the team lineup
 			// If missing, we only know the ID
-			if ((s.getPlayerIn() > 0) && (team.getPlayerByID(s.getPlayerIn()) == null)) {
-				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getPlayerIn(), -1d, "", -1));
+			if ((s.getObjectPlayerID() > 0) && (team.getPlayerByID(s.getObjectPlayerID()) == null)) {
+				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getObjectPlayerID(), -1d, "", -1));
 			}
-			if ((s.getPlayerOut() > 0) && (team.getPlayerByID(s.getPlayerOut()) == null)) {
-				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getPlayerOut(), -1d, "", -1));
+			if ((s.getSubjectPlayerID() > 0) && (team.getPlayerByID(s.getSubjectPlayerID()) == null)) {
+				team.add2Aufstellung(new MatchLineupPlayer(-1, -1, s.getSubjectPlayerID(), -1d, "", -1));
 			}
 		}
 		team.setSubstitutions(substitutions);

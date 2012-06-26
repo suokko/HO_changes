@@ -7,10 +7,10 @@ package ho.module.lineup.substitution.model;
  * 
  */
 public class Substitution {
-	
+
 	private int playerOrderID = -1;
-	private int playerIn = -1;
-	private int playerOut = -1;
+	private int objectPlayerID = -1;
+	private int subjectPlayerID = -1;
 	private MatchOrderType orderType = MatchOrderType.SUBSTITUTION;
 	private byte matchMinuteCriteria = -1;
 	private byte pos = -1;
@@ -18,11 +18,12 @@ public class Substitution {
 	private RedCardCriteria card = RedCardCriteria.IGNORE;
 	private GoalDiffCriteria standing = GoalDiffCriteria.ANY_STANDING;
 
-	public Substitution(int playerOrderID, int playerIn, int playerOut, MatchOrderType orderType,
-			byte matchMinuteCriteria, byte pos, byte behaviour, RedCardCriteria card, GoalDiffCriteria standing) {
+	public Substitution(int playerOrderID, int playerIn, int subjectPlayerID,
+			MatchOrderType orderType, byte matchMinuteCriteria, byte pos, byte behaviour,
+			RedCardCriteria card, GoalDiffCriteria standing) {
 		this.playerOrderID = playerOrderID;
-		this.playerIn = playerIn;
-		this.playerOut = playerOut;
+		this.objectPlayerID = playerIn;
+		this.subjectPlayerID = subjectPlayerID;
 		this.orderType = orderType;
 		this.matchMinuteCriteria = matchMinuteCriteria;
 		this.pos = pos;
@@ -42,20 +43,33 @@ public class Substitution {
 		this.playerOrderID = id;
 	}
 
-	public int getPlayerIn() {
-		return playerIn;
+	/**
+	 * Gets the ID of the the player entering, or if position swap, the player
+	 * to swap with.
+	 * 
+	 * @return the id of the player entering
+	 */
+	public int getObjectPlayerID() {
+		return objectPlayerID;
 	}
 
-	public void setPlayerIn(int playerIn) {
-		this.playerIn = playerIn;
+	public void setObjectPlayerID(int objectPlayerID) {
+		this.objectPlayerID = objectPlayerID;
 	}
 
-	public int getPlayerOut() {
-		return playerOut;
+	/**
+	 * Gets the ID of the affected player. If substitution: the player leaving.
+	 * If behaviour change: the player changing his behaviour. If position swap:
+	 * the first player that will change his position.
+	 * 
+	 * @return the id of the affected player.
+	 */
+	public int getSubjectPlayerID() {
+		return subjectPlayerID;
 	}
 
-	public void setPlayerOut(int playerOut) {
-		this.playerOut = playerOut;
+	public void setSubjectPlayerID(int subjectPlayerID) {
+		this.subjectPlayerID = subjectPlayerID;
 	}
 
 	public MatchOrderType getOrderType() {
@@ -120,9 +134,9 @@ public class Substitution {
 		setRedCardCriteria(other.getRedCardCriteria());
 		setMatchMinuteCriteria(other.getMatchMinuteCriteria());
 		setOrderType(other.getOrderType());
-		setPlayerIn(other.getPlayerIn());
+		setObjectPlayerID(other.getObjectPlayerID());
 		setPlayerOrderId(other.getPlayerOrderId());
-		setPlayerOut(other.getPlayerOut());
+		setSubjectPlayerID(other.getSubjectPlayerID());
 		setPos(other.getPos());
 		setStanding(other.getStanding());
 	}

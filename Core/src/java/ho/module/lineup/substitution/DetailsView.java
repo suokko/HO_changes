@@ -57,11 +57,11 @@ public class DetailsView extends JPanel {
 
 	private void updateView() {
 		if (this.substitution != null) {
-			String color = (this.substitution.getPlayerOut() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			String color = (this.substitution.getSubjectPlayerID() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.firstPlayerEntry.setBGColor(ThemeManager.getColor(color));
 
-			color = (this.substitution.getPlayerIn() != -1 && this.substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getObjectPlayerID() != -1 && this.substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.secondPlayerEntry.setBGColor(ThemeManager.getColor(color));
 
@@ -130,10 +130,10 @@ public class DetailsView extends JPanel {
 			HOModel hoModel = HOVerwaltung.instance().getModel();
 			orderType = LanguageStringLookup.getOrderType(this.substitution.getOrderType());
 
-			Spieler out = hoModel.getSpieler(this.substitution.getPlayerOut());
+			Spieler out = hoModel.getSpieler(this.substitution.getSubjectPlayerID());
 			playerOut = (out != null) ? out.getName() : "";
-			if (this.substitution.getPlayerOut() != this.substitution.getPlayerIn()) {
-				Spieler in = hoModel.getSpieler(this.substitution.getPlayerIn());
+			if (this.substitution.getSubjectPlayerID() != this.substitution.getObjectPlayerID()) {
+				Spieler in = hoModel.getSpieler(this.substitution.getObjectPlayerID());
 				playerIn = (in != null) ? in.getName() : "";
 			}
 

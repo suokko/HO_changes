@@ -58,14 +58,14 @@ public class XMLMatchOrderParserNew {
 				"GoalDiffCriteria"))));
 		sub.setRedCardCriteria(RedCardCriteria.getById(Byte.parseByte(getChildValue(orderNode,
 				"RedCardCriteria"))));
-		sub.setPlayerOut(Integer.parseInt(getChildValue(orderNode, "SubjectPlayerID")));
-		sub.setPlayerIn(Integer.parseInt(getChildValue(orderNode, "ObjectPlayerID")));
+		sub.setSubjectPlayerID(Integer.parseInt(getChildValue(orderNode, "SubjectPlayerID")));
+		sub.setObjectPlayerID(Integer.parseInt(getChildValue(orderNode, "ObjectPlayerID")));
 		byte orderTypeId = Byte.parseByte(getChildValue(orderNode, "OrderType"));
 		MatchOrderType matchOrderType;
 		if (orderTypeId == 3) {
 			matchOrderType = MatchOrderType.POSITION_SWAP;
 		} else {
-			if (sub.getPlayerIn() == sub.getPlayerOut()) {
+			if (sub.getObjectPlayerID() == sub.getSubjectPlayerID()) {
 				matchOrderType = MatchOrderType.NEW_BEHAVIOUR;
 			} else {
 				matchOrderType = MatchOrderType.SUBSTITUTION;
