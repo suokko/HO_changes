@@ -53,7 +53,6 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void initComponents() {
-
 		this.refreshButton = new JButton("refresh list");
 		this.downloadButton = new JButton("download lineup");
 		this.downloadButton.setEnabled(false);
@@ -96,6 +95,10 @@ public class UploadDownloadPanel extends JPanel {
 		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);
 		matchTypeColumn.setCellRenderer(new MatchTypeCellRenderer());
 		matchTypeColumn.setMaxWidth(25);
+
+		TableColumn ordersSetColumn = this.matchesTable.getColumnModel().getColumn(5);
+		ordersSetColumn.setCellRenderer(new OrdersSetCellRenderer());
+		ordersSetColumn.setMaxWidth(25);
 
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -151,6 +154,10 @@ public class UploadDownloadPanel extends JPanel {
 				.getLanguageString("lineup.upload.title"), messageType);
 	}
 
+	private void refreshMatchListFromHT() {
+
+	}
+
 	private MatchKurzInfo getSelectedMatch() {
 		int tableIndex = this.matchesTable.getSelectedRow();
 		if (tableIndex != -1) {
@@ -166,6 +173,14 @@ public class UploadDownloadPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				upload();
+			}
+		});
+
+		this.refreshButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refreshMatchListFromHT();
 			}
 		});
 
@@ -186,7 +201,7 @@ public class UploadDownloadPanel extends JPanel {
 
 		private static final long serialVersionUID = 7917970964575188677L;
 		private List<MatchKurzInfo> data;
-		private String[] columns = { "Datum", "", "Heim", "Gast", "ID" };
+		private String[] columns = { "Datum", "", "Heim", "Gast", "ID", "" };
 
 		public MatchesTableModel() {
 			this.data = new ArrayList<MatchKurzInfo>();
@@ -233,7 +248,8 @@ public class UploadDownloadPanel extends JPanel {
 				return match.getGastName();
 			case 4:
 				return match.getMatchID();
-
+			case 5:
+				return match.isOrdersGiven();
 			}
 			return null;
 		}
@@ -252,6 +268,25 @@ public class UploadDownloadPanel extends JPanel {
 			MatchType type = (MatchType) value;
 			Icon icon = ThemeManager.getIcon(HOIconName.MATCHTYPES[type.getIconArrayIndex()]);
 			component.setIcon(icon);
+			return component;
+		}
+	}
+
+	private class OrdersSetCellRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = -6068887874289410058L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, value,
+					isSelected, hasFocus, row, column);
+			component.setText(null);
+			if ((Boolean) value) {
+				component.setIcon(ThemeManager.getIcon(HOIconName.ORDER_SET));
+			} else {
+				component.setIcon(null);
+			}
 			return component;
 		}
 	}

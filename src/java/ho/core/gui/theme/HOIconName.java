@@ -106,5 +106,6 @@ public interface HOIconName {
 	public static final String EXCLAMATION = "exclamation";
 	public static final String CONTROL_DOUBLE_090 = "control-double-090";
 	public static final String CONTROL_DOUBLE_270 = "control-double-270";
+	public static final String ORDER_SET = "order_set";
 
 }
