@@ -72,7 +72,7 @@ public class MatchStatistics {
 				break;
 			}
 
-			if ((sub.getPlayerIn() == spielerId) || (sub.getPlayerOut() == spielerId)) {
+			if ((sub.getObjectPlayerID() == spielerId) || (sub.getSubjectPlayerID() == spielerId)) {
 
 				int newpos = getPlayerFieldPositionAtMinute(spielerId, sub.getMatchMinuteCriteria());
 				boolean newPosAccepted = isInAcceptedPositions(newpos, accepted);
@@ -136,21 +136,21 @@ public class MatchStatistics {
 
 		Substitution tmpSub = substitutions.get(arrIndex);
 
-		if ((tmpSub.getPlayerIn() != spielerId) && (tmpSub.getPlayerOut() != spielerId)) {
+		if ((tmpSub.getObjectPlayerID() != spielerId) && (tmpSub.getSubjectPlayerID() != spielerId)) {
 			// This substitution is not exciting, check the next one
 			return getPlayerFieldPostitionAfterSubstitution(spielerId, arrIndex - 1, substitutions);
 		}
 
 		for (int i = arrIndex; i >= 0; i--) {
 			tmpSub = substitutions.get(i);
-			if (tmpSub.getPlayerOut() == spielerId) {
+			if (tmpSub.getSubjectPlayerID() == spielerId) {
 
-				if (tmpSub.getPlayerIn() == spielerId) {
+				if (tmpSub.getObjectPlayerID() == spielerId) {
 					// Repositioning
 					return tmpSub.getPos();
 				}
 
-				if ((tmpSub.getPlayerIn() == 0) && (tmpSub.getPos() == 0)) {
+				if ((tmpSub.getObjectPlayerID() == 0) && (tmpSub.getPos() == 0)) {
 					// Sent off or no sub after injury
 					return -1;
 				}
@@ -172,7 +172,7 @@ public class MatchStatistics {
 								+ matchId + " " + spielerId + " " + tmpSub.getPlayerOrderId());
 			}
 
-			if (tmpSub.getPlayerIn() == spielerId) {
+			if (tmpSub.getObjectPlayerID() == spielerId) {
 				// Repositioning is already caught.
 				// Sent off does not exist here.
 
@@ -187,7 +187,7 @@ public class MatchStatistics {
 					// We figure this out by asking where he was at the end of
 					// the previous sub
 					// object (it is safe no matter the value of i).
-					return getPlayerFieldPostitionAfterSubstitution(tmpSub.getPlayerOut(), i - 1,
+					return getPlayerFieldPostitionAfterSubstitution(tmpSub.getSubjectPlayerID(), i - 1,
 							substitutions);
 				}
 
@@ -234,7 +234,7 @@ public class MatchStatistics {
 				continue;
 			}
 
-			if ((tmpSub.getPlayerOut() == spielerId) || (tmpSub.getPlayerIn() == spielerId)) {
+			if ((tmpSub.getSubjectPlayerID() == spielerId) || (tmpSub.getObjectPlayerID() == spielerId)) {
 				return getPlayerFieldPostitionAfterSubstitution(spielerId, i, substitutions);
 			}
 		}
