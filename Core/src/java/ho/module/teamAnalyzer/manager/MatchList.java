@@ -1,7 +1,7 @@
 // %2944446152:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
-import ho.core.model.match.MatchType;
+import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
 import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
 
@@ -64,7 +64,7 @@ public class MatchList {
             for (Iterator<Match> iter = matchList.iterator(); iter.hasNext();) {
                 Match match = iter.next();
 
-                if (isAutomaticIncluded(filter, match)) {
+                if (TeamAnalyzerPanel.filter.isAcceptedMatch(match)) {
                     list.add(match);
                     counter++;
                 }
@@ -86,68 +86,6 @@ public class MatchList {
         }
 
         return list;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param filter TODO Missing Method Parameter Documentation
-     * @param match TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private boolean isAutomaticIncluded(Filter filter, Match match) {
-        boolean isHome = match.isHome();
-        int result = result(match);
-        MatchType matchType = match.getMatchType();
-
-        if (!filter.isHomeGames() && isHome) {
-            return false;
-        }
-
-        if (!filter.isAwayGames() && !isHome) {
-            return false;
-        }
-
-        if (!filter.isDefeat() && (result == -1)) {
-            return false;
-        }
-
-        if (!filter.isDraw() && (result == 0)) {
-            return false;
-        }
-
-        if (!filter.isWin() && (result == 1)) {
-            return false;
-        }
-
-        if (!filter.isLeague() && (matchType == MatchType.LEAGUE)) {
-            return false;
-        }
-
-        if (!filter.isCup() && (matchType == MatchType.CUP)) {
-            return false;
-        }
-
-        if (!filter.isQualifier() && (matchType == MatchType.QUALIFICATION)) {
-            return false;
-        }
-
-        if (!filter.isFriendly() && (matchType.isFriendly())) {
-            return false;
-        }
-
-        if (!filter.isMasters() && (matchType == MatchType.MASTERS)) {
-        	return false;
-        }
-        
-        if (!filter.isTournament() && 
-        		((matchType == MatchType.TOURNAMENTGROUP) ||
-        				(matchType == MatchType.TOURNAMENTPLAYOFF))) {
-        	return false;
-        }
-        
-        return true;
     }
     
     /**

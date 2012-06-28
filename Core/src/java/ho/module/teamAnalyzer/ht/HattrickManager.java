@@ -1,16 +1,21 @@
 // %1667190662:hoplugins.teamAnalyzer.ht%
 package ho.module.teamAnalyzer.ht;
 
+import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.net.MyConnector;
+import ho.core.net.OnlineWorker;
 import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
+import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -28,13 +33,65 @@ public class HattrickManager {
 
     /**
      * Method that download from Hattrick the available matches for the team
+     * If manual filter, the last 30 is made available.
+     * If auto filter, enough matches to supply the filter needs are available.
+     * Recent tournament are added if on manual, or if they are wanted, in addition to
+     * the number specified.
      *
      * @param teamId teamid to download matches for
+     * @param filter the match filter object.
      */
-    public static void downloadMatches(final int teamId) {
-    		final GregorianCalendar start = new GregorianCalendar();
-    		start.add(Calendar.MONTH, -3);
-    		HOMainFrame.instance().getOnlineWorker().getMatchArchive(teamId, start);
+    public static void downloadMatches(final int teamId, Filter filter) {
+   		final GregorianCalendar start = new GregorianCalendar();
+   		List<MatchKurzInfo> matches;
+   		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
+   		
+   		int limit = Math.min(filter.getNumber(), 50);
+   		
+   		// If on manual, disable all filters, and download 30 matches.
+   		if (!filter.isAutomatic()) {
+   			limit = 30;
+   		}
+   		
+	    start.add(Calendar.MONTH, -8);
+	    matches = worker.getMatchArchive(teamId, start, false);
+	    Collections.reverse(matches); // Newest first
+	    for (MatchKurzInfo match : matches) {
+	    	if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+	    		continue;
+	    	}
+	    	
+	    	if (!filter.isAutomatic() 
+	    		||	(filter.isAcceptedMatch(new Match(match))
+	    				&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID()))) {
+	    		
+	    		worker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
+   			}
+	    	
+	    	limit--;
+	    	if (limit < 1) {
+	    		break;
+	    	}
+   		}
+	    
+	    // Look for tournament matches if they are included in filter.
+	    
+	    if (!filter.isAutomatic() || filter.isTournament()) {
+		    // Current matches includes tournament matches
+	    	matches = worker.getMatches(teamId, true, false, false);
+	   		// newest first
+	   		Collections.reverse(matches);
+	   		
+	   		// Only store tournament matches
+	   		for (MatchKurzInfo match : matches) {
+	   			if (filter.isAcceptedMatch(new Match(match)) 
+	   					&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID())
+	   					&& match.getMatchTyp().isTournament()) {
+	   				
+	   				worker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
+	   			}
+	   		}
+	    }
     }
 
     /**
