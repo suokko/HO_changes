@@ -33,9 +33,9 @@ import org.w3c.dom.NodeList;
 
 /**
  * DOCUMENT ME!
- * 
+ *
  * @author Thorsten Dietz
- * 
+ *
  * @since 1.35
  */
 public final class UpdateController {
@@ -167,8 +167,8 @@ public final class UpdateController {
 	 */
 	public static void check4update() {
 		VersionInfo version = MyConnector.instance().getLatestVersion();
-		if (version != null && 
-				(version.getVersion() > HO.VERSION || 
+		if (version != null &&
+				(version.getVersion() > HO.VERSION ||
 				(version.getVersion() == HO.VERSION && HO.isDevelopment()))
 			) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
@@ -266,7 +266,7 @@ public final class UpdateController {
 			}
 		} else
 			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
-					+ "(" + HOParameter.instance().EpvRelease + ")", HOVerwaltung.instance()
+					+ " (" + HOParameter.instance().EpvRelease + ").", HOVerwaltung.instance()
 					.getLanguageString("EPV"), JOptionPane.INFORMATION_MESSAGE);
 
 	}
@@ -301,7 +301,7 @@ public final class UpdateController {
 						+ HOParameter.instance().RatingsRelease);
 		if (data != null && HO.VERSION >= data.getMinimumHOVersion()
 				&& data.getRelease() > HOParameter.instance().RatingsRelease) {
-			// Infro anzeigen das es ein Update gibt
+			// Info anzeigen das es ein Update gibt
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
 					.getLanguageString("updateFile"), HOVerwaltung.instance().getLanguageString("Ratings")
 					+ "?", JOptionPane.YES_NO_OPTION);
@@ -311,7 +311,7 @@ public final class UpdateController {
 			}
 		} else
 			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
-					+ "(" + HOParameter.instance().RatingsRelease + ")", HOVerwaltung.instance()
+					+ " (" + HOParameter.instance().RatingsRelease + ").", HOVerwaltung.instance()
 					.getLanguageString("Ratings"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
