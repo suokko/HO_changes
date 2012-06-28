@@ -190,7 +190,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				HOLogger.instance().log(getClass(), "UPDATE for Team " + SystemManager.getActiveTeamId());
 				HattrickManager.downloadPlayers(SystemManager.getActiveTeamId());
-					HattrickManager.downloadMatches(SystemManager.getActiveTeamId());
+					HattrickManager.downloadMatches(SystemManager.getActiveTeamId(), TeamAnalyzerPanel.filter);
 				SystemManager.refresh();
 			}
 		});

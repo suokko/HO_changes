@@ -45,6 +45,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -52,7 +54,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -269,16 +270,17 @@ public class OnlineWorker {
 	 *            null falls unnötig sonst im Format 2004-02-01
 	 * @param firstDate
 	 *            null falls unnötig sonst im Format 2004-02-01
+	 * @param store True if matches are to be downloaded and stored. False if only a match list is wanted.
 	 * 
-	 * @return TODO Missing Return Method Documentation
+	 * @return The list of MatchKurzInfo. This can be null on error, or empty.
 	 */
-	public final boolean getMatchArchive(int teamId, GregorianCalendar firstDate) {
+	public final List<MatchKurzInfo> getMatchArchive(int teamId, GregorianCalendar firstDate, boolean store) {
 		String matchesString = "";
-		MatchKurzInfo[] matches = null;
-		final Vector<MatchKurzInfo> allMatches = new Vector<MatchKurzInfo>();
+		final List<MatchKurzInfo> allMatches = new ArrayList<MatchKurzInfo>();
 		final GregorianCalendar tempBeginn = firstDate;
 		final GregorianCalendar endDate = new GregorianCalendar();
 		endDate.setTimeInMillis(System.currentTimeMillis());
+		MatchKurzInfo[] matches = null;
 
 		final GregorianCalendar tempEnd = new GregorianCalendar();
 		tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
@@ -314,16 +316,15 @@ public class OnlineWorker {
 						HOVerwaltung.instance().getLanguageString("Fehler"),
 						JOptionPane.ERROR_MESSAGE);
 				waitDialog.setVisible(false);
-				return false;
+				return null;
 			}
 
 			final xmlMatchArchivParser parser = new xmlMatchArchivParser();
 			waitDialog.setValue(40);
 			matches = parser.parseMatchesFromString(matchesString);
 
-			// zu Vector adden
-			for (int i = 0; i < matches.length; i++)
-				allMatches.add(matches[i]);
+			// Add the new matches to the list of all matches
+			allMatches.addAll(Arrays.asList(matches));
 
 			// Zeitfenster neu setzen
 			tempBeginn.add(Calendar.MONTH, 3);
@@ -337,29 +338,26 @@ public class OnlineWorker {
 			strDateLast = HT_FORMAT.format(tempEnd.getTime());
 		}
 
-		waitDialog.setValue(60);
-		matches = new MatchKurzInfo[allMatches.size()];
-		Helper.copyVector2Array(allMatches, matches);
-		waitDialog.setValue(80);
+		// Store in the db if store is true
+		if (store && (allMatches.size() > 0)) {
+			
+			waitDialog.setValue(80);
+			DBManager.instance().storeMatchKurzInfos(allMatches.toArray(new MatchKurzInfo[0]));
 
-		// Ab in die DB packen
-		if (matches != null)
-			DBManager.instance().storeMatchKurzInfos(matches);
-
-		waitDialog.setValue(100);
-		waitDialog.setVisible(false);
-
-		// Automatisch alle MatchLineups runterladen
-		for (int i = 0; (matches != null) && (i < matches.length); i++) {
-			// Match noch nicht in der DB
-			if ((DBManager.instance().isMatchVorhanden(matches[i].getMatchID()))
-					&& (!DBManager.instance().isMatchLineupVorhanden(matches[i].getMatchID()))
-					&& (matches[i].getMatchStatus() == MatchKurzInfo.FINISHED)) {
-				downloadMatchData(matches[i].getMatchID(), matches[i].getMatchTyp(), false);
+			// Store full info for all matches
+			for (MatchKurzInfo match : allMatches) {
+				// Only if not in the db
+				if ((DBManager.instance().isMatchVorhanden(match.getMatchID()))
+						&& (!DBManager.instance().isMatchLineupVorhanden(match.getMatchID()))
+						&& (match.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+					downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
+				}
 			}
 		}
-		return true;
+		waitDialog.setVisible(false);
+		return allMatches;
 	}
+	
 
 	/**
 	 * Download the match details
@@ -444,7 +442,7 @@ public class OnlineWorker {
 							HOVerwaltung.instance().getLanguageString("Downloadfehler")
 									+ " : Error fetching Matchlineup :", HOVerwaltung.instance()
 									.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
-					waitDialog.setVisible(false);
+					
 					return false;
 				}
 
@@ -474,11 +472,13 @@ public class OnlineWorker {
 
 				boolean success = DBManager.instance().storeMatch(info, details, lineup);
 				if (!success) {
+					waitDialog.setVisible(false);
 					return false;
 				}
 			} catch (Exception ex) {
 				HOLogger.instance().error(getClass(),"downloadMatchData:  Error in downloading match: "
 						+ ex);
+				waitDialog.setVisible(false);
 				return false;
 			}
 		}
@@ -495,19 +495,22 @@ public class OnlineWorker {
 	 *            angabe der Saison ( optinal &lt; 1 für aktuelle
 	 * @param forceRefresh
 	 *            TODO Missing Constructuor Parameter Documentation
+	 * @param store
+	 * 				true if the full match details are to be stored, false if not.
+	 * @param upcoming true if upcoming matches should be included
 	 * 
-	 * @return TODO Missing Return Method Documentation
+	 * @return The list of MatchKurzInfos found or null if an exception occurred.
 	 */
-	public final boolean getMatches(int teamId, boolean forceRefresh) {
+	public final List<MatchKurzInfo> getMatches(int teamId, boolean forceRefresh, boolean store, boolean upcoming) {
 		String matchesString = "";
-		MatchKurzInfo[] matches = null;
+		List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
 		boolean bOK = false;
 		waitDialog = new LoginWaitDialog(HOMainFrame.instance());
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
-
+		
 		try {
-			matchesString = MyConnector.instance().getMatches(teamId, forceRefresh);
+			matchesString = MyConnector.instance().getMatches(teamId, forceRefresh, upcoming);
 			bOK = (matchesString != null && matchesString.length() > 0);
 			if (bOK)
 				waitDialog.setValue(50);
@@ -527,40 +530,38 @@ public class OnlineWorker {
 							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
 			HOLogger.instance().log(getClass(), e);
 			waitDialog.setVisible(false);
-			return false;
+			return null;
 		}
 		if (bOK) {
 			final XMLMatchesParser parser = new XMLMatchesParser();
-			waitDialog.setValue(70);
-			matches = parser.parseMatchesFromString(matchesString);
+			matches = Arrays.asList(parser.parseMatchesFromString(matchesString));
 
-			waitDialog.setValue(80);
+			// Store in DB if store is true
+			if (store) {
+				waitDialog.setValue(80);
+				DBManager.instance().storeMatchKurzInfos(matches.toArray(new MatchKurzInfo[0]));
 
-			// Store in DB
-			if (matches != null) {
-				DBManager.instance().storeMatchKurzInfos(matches);
-			}
+				waitDialog.setValue(100);
 
-			waitDialog.setValue(100);
-			waitDialog.setVisible(false);
+				// Automatically download all MatchLineups
+				for (MatchKurzInfo match : matches) {
+					int curMatchId = match.getMatchID();
+					if (DBManager.instance().isMatchVorhanden(curMatchId)
+							&& match.getMatchStatus() == MatchKurzInfo.FINISHED
+							&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId))) {
 
-			// Automatically download all MatchLineups
-			for (int i = 0; (matches != null) && (i < matches.length); i++) {
-				int curMatchId = matches[i].getMatchID();
-				if (DBManager.instance().isMatchVorhanden(curMatchId)
-						&& matches[i].getMatchStatus() == MatchKurzInfo.FINISHED
-						&& (!DBManager.instance().isMatchLineupVorhanden(curMatchId))) {
-
-					// No match in DB
-					boolean result = downloadMatchData(curMatchId, matches[i].getMatchTyp(), false);
-					if (!result) {
-						bOK = false;
-						break;
+						// No match in DB
+						boolean result = downloadMatchData(curMatchId, match.getMatchTyp(), false);
+						if (!result) {
+							bOK = false;
+							break;
+						}
 					}
 				}
 			}
 		}
-		return bOK;
+		waitDialog.setVisible(false);
+		return matches;
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////

@@ -79,6 +79,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	// ------------------------------------------------------------------------------------
 
 	// ------------------------------------------------------------------------
+	@Override
 	public final void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(m_jchOldFixtures)) {
 			m_jlOldSeasons.setEnabled(m_jchOldFixtures.isSelected());
@@ -225,7 +226,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		HOModel model = hov.getModel();
 		if (m_jchOwnFixtures.isSelected()) {
 			// Only get lineups for own fixtures
-			bOK = worker.getMatches(model.getBasics().getTeamId(), false);
+			bOK = (worker.getMatches(model.getBasics().getTeamId(), false, true, true) != null);
 			if (bOK) {
 				worker.getAllLineups();
 				StadiumCreator.extractHistoric();
@@ -234,7 +235,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		if (bOK && m_jchMatchArchive.isSelected()) {
 			final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
 			tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-			bOK = worker.getMatchArchive(model.getBasics().getTeamId(), tempdate);
+			bOK = (worker.getMatchArchive(model.getBasics().getTeamId(), tempdate, true) != null);
 			if (bOK) {
 				// Get all lineups for matches, if they don't exist already
 				worker.getAllLineups();

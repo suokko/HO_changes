@@ -1,7 +1,6 @@
 // %3124307367:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
-
 import ho.core.module.config.ModuleConfig;
 
 import java.util.List;
@@ -153,7 +152,10 @@ public class Filter {
 
     /** Maximum number of games */
     public void setNumber(int i) {
-        number = i;
+        number = Math.min(i, 99);
+        if (number < 0) {
+        	number = 0;
+        }
     }
 
     /** Maximum number of games */
@@ -183,6 +185,55 @@ public class Filter {
 
     public boolean isWin() {
         return win;
+    }
+    
+    public boolean isAcceptedMatch(Match match) {
+    	
+    	// Check home and away
+    	if ((!homeGames && match.isHome())
+    			|| (!awayGames && !match.isHome())) {
+    		return false;
+    	}
+    	
+    	// if we care about result, check result
+    	if (!draw && (match.getAwayGoals() == match.getHomeGoals())) {
+    		return false;
+    	}
+
+    	boolean homeWin = (match.getHomeGoals() > match.getAwayGoals());
+    	
+    	if (!win && ((homeWin && match.isHome()) || (!homeWin && !match.isHome()))) {
+    	   	return false;
+    	}
+    	
+    	if (!defeat && ((!homeWin && match.isHome()) || (homeWin && !match.isHome()))) {
+    		return false;
+    	}
+    	
+    	// Match types
+    	
+    	if (match.getMatchType().isFriendly()) {
+    		return friendly;
+    	}
+    	
+    	if (match.getMatchType().isTournament()) {
+    		return tournament;
+    	}
+    	
+    	switch (match.getMatchType()) {
+    	case LEAGUE : 
+    		return league;
+    	case CUP :
+    		return cup;
+    	case MASTERS :
+    		return masters;
+    	case QUALIFICATION :
+    		return qualifier;
+   	
+    	}
+    	
+    	
+    	return false;
     }
     
     private void loadFilters() {

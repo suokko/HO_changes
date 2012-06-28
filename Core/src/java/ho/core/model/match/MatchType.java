@@ -102,6 +102,15 @@ public enum MatchType {
 				return false;
 		}
 	}
+	
+	public boolean isTournament() {
+		switch (this) {
+			case TOURNAMENTGROUP:
+			case TOURNAMENTPLAYOFF:
+				return true;
+			default: return false;
+		}
+	}
 
 
 	public String getName() {

@@ -17,6 +17,8 @@ Changelist HO! 1.432
 
 - Team Analyzer
 	. All update restrictions have been removed.
+	. Update will now download the matches to fill out your autofilter request, or the 30 last opponent matches
+		if a manual filter is selected.
 	. Tournament opponents are in, so are tournament matches.
 	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
 	. Autofilter options for tournament and those annoying masters matches that always get in the way...

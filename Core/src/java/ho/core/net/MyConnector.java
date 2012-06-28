@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -339,13 +340,27 @@ public class MyConnector {
 	/**
 	 * Get Matches
 	 */
-	public String getMatches(int teamId, boolean forceRefresh) throws IOException {
+	public String getMatches(int teamId, boolean forceRefresh, boolean upcoming) throws IOException {
 		String url = htUrl + "?file=matches&version=2.6";
 
 		if (teamId > 0)
 			url += "&teamID=" + teamId;
 		if (forceRefresh)
 			url += "&actionType=refreshCache";
+		
+		
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		if (upcoming) {
+			cal.add(java.util.Calendar.MONTH, 5);
+		} 
+		// Paranoia against inaccurate system clock.
+		cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
+		
+		url += "&LastMatchDate=";
+		url += new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		
+		
 		return getCHPPWebFile(url);
 	}
 

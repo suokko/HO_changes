@@ -2,14 +2,11 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.MatchLineupTeam;
-import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.module.teamAnalyzer.SystemManager;
-import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.MatchDetail;
 import ho.module.teamAnalyzer.vo.MatchRating;
@@ -63,9 +60,6 @@ public class MatchPopulator {
         for (Iterator<Match> iter = matches.iterator(); iter.hasNext();) {
         	bOK = true;
             Match element = iter.next();
-            if (!DBManager.instance().isMatchVorhanden(element.getMatchId()) && HattrickManager.isDownloadAllowed(element)) {
-            	bOK = downloadMatch(element.getMatchId(), element.getMatchType());
-            }
             if (bOK) {
 	            try {
 	                MatchDetail md = populateMatch(element);
@@ -142,17 +136,6 @@ public class MatchPopulator {
         }
 
         return mr;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private boolean downloadMatch(int matchId, MatchType matchType) {
-        return HOMainFrame.instance().getOnlineWorker().downloadMatchData(matchId, matchType, false);
     }
 
     /**
