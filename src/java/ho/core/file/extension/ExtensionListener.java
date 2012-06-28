@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class ExtensionListener implements Runnable {
 
+	@Override
 	public void run() {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		File dir = new File("Info/" + teamId);
@@ -98,7 +99,7 @@ public class ExtensionListener implements Runnable {
 	private void matchUpdate() {
 		JOptionPane.showMessageDialog(HOMainFrame.instance(), "Match Update HOE");
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		if (HOMainFrame.instance().getOnlineWorker().getMatches(teamId, false)) {
+		if (HOMainFrame.instance().getOnlineWorker().getMatches(teamId, false, true, false) != null) {
 			HOMainFrame.instance().getOnlineWorker().getAllLineups();
 			StadiumCreator.extractHistoric();
 		}

@@ -105,7 +105,7 @@ public class ConvertXml2Hrf {
 
             //MatchOrder
             waitDialog.setValue(50);
-            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false));
+            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false, true));
             waitDialog.setValue(52);
 
             // Automatisch alle MatchLineups runterladen
@@ -122,7 +122,7 @@ public class ConvertXml2Hrf {
 
             // Team ermitteln, für Ratings der Player wichtig
             if (m_clLineUp != null) {
-                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID(), m_clLineUp.getMatchTyp()), m_clLineUp);
+                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID(), m_clLineUp.getMatchTyp()), null);
 
                 if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdetails.get("TeamID").toString())) {
                     m_clTeam = (ho.core.model.match.MatchLineupTeam) m_clLineUp.getHeim();
