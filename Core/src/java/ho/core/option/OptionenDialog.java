@@ -84,21 +84,21 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
      * @param windowEvent TODO Missing Method Parameter Documentation
      */
     public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
-    	
+
     	ho.core.model.UserParameter.saveTempParameter();
     	ModuleConfig.instance().save();
 		if (OptionManager.instance().isRestartNeeded()) {
 	            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
 	            		"", JOptionPane.INFORMATION_MESSAGE);
 	    }
-		
+
 		if (OptionManager.instance().isReInitNeeded()) {
 			final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-	        waitdialog.setVisible(true);		        
+	        waitdialog.setVisible(true);
 	        RefreshManager.instance().doReInit();
 	        waitdialog.setVisible(false);
 		}
-				       
+
 
 		OptionManager.deleteInstance();
 		setVisible(false);
@@ -173,7 +173,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
                           new JScrollPane(m_jpTrainingsOptionen));
 
         m_jpUserOptionen = new UserPanel();
-        tabbedPane.addTab("User", new JScrollPane(m_jpUserOptionen));
+        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Info.users"), new JScrollPane(m_jpUserOptionen));
 
 		// HO Check
 		hoConnectionOptions = new CheckOptionPanel();
@@ -183,12 +183,12 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
         m_jpDownloadPanel = new DownloadPanel();
         tabbedPane.addTab(ho.core.model.HOVerwaltung.instance().getLanguageString("Download"),
                           new JScrollPane(m_jpDownloadPanel));
-		
+
 //		 HO Check
 		m_jpUserColumns = new UserColumnsPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"),new JScrollPane(m_jpUserColumns));
 
-		
+
         //Tabs der plugins
         for (int i = 0;
              (i < HOMainFrame.instance().getOptionPanelNames().size())
@@ -237,7 +237,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		    }
 			if (OptionManager.instance().isReInitNeeded()) {
 				final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-		        waitdialog.setVisible(true);		        
+		        waitdialog.setVisible(true);
 		        RefreshManager.instance().doReInit();
 		        waitdialog.setVisible(false);
 			}
