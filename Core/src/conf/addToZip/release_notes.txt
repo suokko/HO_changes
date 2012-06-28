@@ -26,6 +26,7 @@ Changelist HO! 1.432
 - Seat distribution is shown in arena section of Statistics tab.
 - Stadium prices HT-adapted (7/10/19/35).
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
+- TS Forecast Module should now display confidence at the correct level.
 
 Language updates:
 -----------------
