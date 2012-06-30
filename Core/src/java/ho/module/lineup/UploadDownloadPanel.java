@@ -55,10 +55,13 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void initComponents() {
-		this.refreshButton = new JButton("refresh list");
-		this.downloadButton = new JButton("download lineup");
+		this.refreshButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.refresh"));
+		this.downloadButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.download"));
 		this.downloadButton.setEnabled(false);
-		this.uploadButton = new JButton("upload lineup");
+		this.uploadButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.upload"));
 		this.uploadButton.setEnabled(false);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -131,8 +134,8 @@ public class UploadDownloadPanel extends JPanel {
 	private void upload() {
 		MatchKurzInfo match = getSelectedMatch();
 
-		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(), HOVerwaltung
-				.instance().getModel().getAufstellung());
+		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(),
+				HOVerwaltung.instance().getModel().getAufstellung());
 
 		int messageType = JOptionPane.PLAIN_MESSAGE;
 		String message = null;
@@ -167,7 +170,8 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void refreshMatchListFromHT() {
-		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true, true, false);
+		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true,
+				true, false);
 		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
@@ -214,13 +218,15 @@ public class UploadDownloadPanel extends JPanel {
 
 		private static final long serialVersionUID = 7917970964575188677L;
 		private List<MatchKurzInfo> data;
-		private String[] columns = { "Datum", "", "Heim", "Gast", "ID", "" };
+		private String[] columns;
 
 		public MatchesTableModel() {
+			initColumnNames();
 			this.data = new ArrayList<MatchKurzInfo>();
 		}
 
 		public MatchesTableModel(List<MatchKurzInfo> list) {
+			initColumnNames();
 			this.data = new ArrayList<MatchKurzInfo>(list);
 		}
 
@@ -266,6 +272,20 @@ public class UploadDownloadPanel extends JPanel {
 				return match.isOrdersGiven();
 			}
 			return null;
+		}
+
+		private void initColumnNames() {
+			this.columns = new String[6];
+			this.columns[0] = HOVerwaltung.instance().getLanguageString(
+					"lineup.upload.colheadline.date");
+			this.columns[1] = "";
+			this.columns[2] = HOVerwaltung.instance().getLanguageString(
+					"lineup.upload.colheadline.hometeam");
+			this.columns[3] = HOVerwaltung.instance().getLanguageString(
+					"lineup.upload.colheadline.awayteam");
+			this.columns[4] = HOVerwaltung.instance().getLanguageString(
+					"lineup.upload.colheadline.matchid");
+			this.columns[5] = "";
 		}
 	}
 
