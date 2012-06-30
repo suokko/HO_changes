@@ -7,6 +7,10 @@
 package ho.core.model.match;
 
 import ho.core.util.HOLogger;
+import ho.core.util.StringUtilities;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * DOCUMENT ME!
@@ -50,6 +54,8 @@ public class MatchKurzInfo implements Comparable<Object> {
 	/** Typ des Spiels */
 	private MatchType m_mtMatchTyp = MatchType.NONE;
 
+	private Timestamp matchDateTimestamp;
+
 	/** TODO Missing Parameter Documentation */
 	public static final int ONGOING = 3;
 
@@ -58,22 +64,6 @@ public class MatchKurzInfo implements Comparable<Object> {
 
 	/** TODO Missing Parameter Documentation */
 	public static final int FINISHED = 1;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
-
-	// //////////////////////////////////////////////////////////////////////////////
-	// Konstruktor
-	// //////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Creates a new instance of MatchKurzInfo
-	 */
-	public MatchKurzInfo() {
-	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * Setter for the ordersGiven property which indicates if orders for this
@@ -220,6 +210,8 @@ public class MatchKurzInfo implements Comparable<Object> {
 	 */
 	public final void setMatchDate(java.lang.String m_sMatchDate) {
 		this.m_sMatchDate = m_sMatchDate;
+		// ensures that getMatchDateAsTimestamp() will regenerate the timestamp
+		this.matchDateTimestamp = null;
 	}
 
 	/**
@@ -237,25 +229,29 @@ public class MatchKurzInfo implements Comparable<Object> {
 	 * @return Value of property m_lDatum.
 	 */
 	public final java.sql.Timestamp getMatchDateAsTimestamp() {
-		try {
-			// Hattrick
-			final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss", java.util.Locale.GERMANY);
-
-			return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
-		} catch (Exception e) {
-			try {
-				// Hattrick
-				final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat(
-						"yyyy-MM-dd", java.util.Locale.GERMANY);
-
-				return new java.sql.Timestamp(simpleFormat.parse(m_sMatchDate).getTime());
-			} catch (Exception ex) {
-				HOLogger.instance().log(getClass(), ex);
+		if (this.matchDateTimestamp == null) {
+			if (!StringUtilities.isEmpty(this.m_sMatchDate)) {
+				try {
+					// Hattrick
+					SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					this.matchDateTimestamp = new Timestamp(simpleFormat.parse(m_sMatchDate)
+							.getTime());
+				} catch (Exception e) {
+					try {
+						// Hattrick
+						SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+						this.matchDateTimestamp = new Timestamp(simpleFormat.parse(m_sMatchDate)
+								.getTime());
+					} catch (Exception ex) {
+						HOLogger.instance().log(getClass(), ex);
+					}
+				}
+			} else {
+				this.matchDateTimestamp = null;
 			}
 		}
 
-		return null;
+		return this.matchDateTimestamp;
 	}
 
 	/**
