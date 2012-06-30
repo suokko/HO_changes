@@ -12,6 +12,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
 import ho.core.model.series.Paarung;
+import ho.core.net.OnlineWorker;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.StringUtilities;
@@ -81,7 +82,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
             //Spiel nicht vorhanden, dann erst runterladen!
             if (!DBManager.instance().isMatchVorhanden(matchdata[0])) {
             	
-            	HOMainFrame.instance().getOnlineWorker().downloadMatchData(
+            	OnlineWorker.downloadMatchData(
             							matchdata[0],
             							MatchType.LEAGUE, // not tournament
             							false);

@@ -2,10 +2,10 @@
 package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
+import ho.core.net.OnlineWorker;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 
 import java.awt.GridBagConstraints;
@@ -114,7 +114,7 @@ public class DownloadPanel extends JPanel {
 //                        return;
 //                    }
 
-                    if (HOMainFrame.instance().getOnlineWorker().downloadMatchData(id, type, false)) {
+                    if (OnlineWorker.downloadMatchData(id, type, false)) {
 	
                     	Matchdetails md = DBManager.instance().getMatchDetails(id);
 	

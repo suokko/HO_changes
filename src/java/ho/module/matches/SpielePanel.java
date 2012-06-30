@@ -20,6 +20,7 @@ import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.module.IModule;
+import ho.core.net.OnlineWorker;
 import ho.core.prediction.MatchEnginePanel;
 import ho.core.prediction.MatchPredictionDialog;
 import ho.core.prediction.engine.MatchPredictionManager;
@@ -155,8 +156,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == m_jbReloadMatch) {
             final int matchid = matchShortInfo.getMatchID();
-			HOMainFrame.instance().getOnlineWorker().downloadMatchData(
-					matchShortInfo.getMatchID(), 
+            OnlineWorker.downloadMatchData(matchShortInfo.getMatchID(), 
 					matchShortInfo.getMatchTyp(),
 					true);
 			RefreshManager.instance().doReInit();
