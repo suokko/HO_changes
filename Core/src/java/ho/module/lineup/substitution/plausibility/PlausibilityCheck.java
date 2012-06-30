@@ -12,15 +12,15 @@ public class PlausibilityCheck {
 
 	public static Problem checkForProblem(Lineup lineup, Substitution substitution) {
 		if (substitution.getOrderType() == MatchOrderType.SUBSTITUTION
-				&& (substitution.getObjectPlayerID() == -1 || substitution.getSubjectPlayerID() == -1)) {
+				&& (substitution.getObjectPlayerID() <= 0 || substitution.getSubjectPlayerID() <= 0)) {
 			return Error.SUBSTITUTION_PLAYER_MISSING;
 		}
 		if (substitution.getOrderType() == MatchOrderType.POSITION_SWAP
-				&& (substitution.getObjectPlayerID() == -1 || substitution.getSubjectPlayerID() == -1)) {
+				&& (substitution.getObjectPlayerID() <= 0 || substitution.getSubjectPlayerID() <= 0)) {
 			return Error.POSITIONSWAP_PLAYER_MISSING;
 		}
 		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR
-				&& substitution.getSubjectPlayerID() == -1) {
+				&& substitution.getSubjectPlayerID() <= 0) {
 			return Error.NEWBEHAVIOUR_PLAYER_MISSING;
 		}
 
