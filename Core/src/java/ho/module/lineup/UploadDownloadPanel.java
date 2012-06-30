@@ -57,11 +57,17 @@ public class UploadDownloadPanel extends JPanel {
 	private void initComponents() {
 		this.refreshButton = new JButton(HOVerwaltung.instance().getLanguageString(
 				"lineup.upload.btn.refresh"));
+		this.refreshButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.refresh.tooltip"));
 		this.downloadButton = new JButton(HOVerwaltung.instance().getLanguageString(
 				"lineup.upload.btn.download"));
+		this.downloadButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.download.tooltip"));
 		this.downloadButton.setEnabled(false);
 		this.uploadButton = new JButton(HOVerwaltung.instance().getLanguageString(
 				"lineup.upload.btn.upload"));
+		this.uploadButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.upload.tooltip"));
 		this.uploadButton.setEnabled(false);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
