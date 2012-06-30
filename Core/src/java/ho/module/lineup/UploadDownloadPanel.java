@@ -169,7 +169,7 @@ public class UploadDownloadPanel extends JPanel {
 
 	private void refreshMatchListFromHT() {
 		OnlineWorker ow = new OnlineWorker();
-		ow.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true);
+		ow.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true, true, false);
 		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
