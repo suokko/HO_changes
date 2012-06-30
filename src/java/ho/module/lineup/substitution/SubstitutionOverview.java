@@ -440,7 +440,7 @@ public class SubstitutionOverview extends JPanel {
 				sub.merge(dlg.getSubstitution());
 				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
 						selectedRowIndex, selectedRowIndex);
-				detailsView.refresh();
+				refresh();
 			}
 		}
 	}
