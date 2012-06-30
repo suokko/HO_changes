@@ -19,6 +19,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +98,10 @@ public class UploadDownloadPanel extends JPanel {
 		List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
 		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
 		this.matchesTable.getRowSorter().setSortKeys(sortKeys);
+
+		// TODO use column identifiers instead of index
+		TableColumn dateColumn = this.matchesTable.getColumnModel().getColumn(0);
+		dateColumn.setCellRenderer(new DateRenderer());
 
 		// TODO use column identifiers instead of index
 		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);
@@ -278,7 +283,7 @@ public class UploadDownloadPanel extends JPanel {
 			MatchKurzInfo match = this.data.get(rowIndex);
 			switch (columnIndex) {
 			case 0:
-				return match.getMatchDate();
+				return match.getMatchDateAsTimestamp();
 			case 1:
 				return match.getMatchTyp();
 			case 2:
@@ -332,15 +337,30 @@ public class UploadDownloadPanel extends JPanel {
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value,
 				boolean isSelected, boolean hasFocus, int row, int column) {
-			JLabel component = (JLabel) super.getTableCellRendererComponent(table, value,
-					isSelected, hasFocus, row, column);
-			component.setText(null);
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
+					hasFocus, row, column);
 			if ((Boolean) value) {
 				component.setIcon(ThemeManager.getIcon(HOIconName.ORDER_SET));
 			} else {
 				component.setIcon(null);
 			}
 			return component;
+		}
+	}
+
+	private class DateRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = -5869341433817862361L;
+		private DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+				DateFormat.SHORT);
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+
+			String dateString = this.format.format((Timestamp) value);
+			return super.getTableCellRendererComponent(table, dateString, isSelected, hasFocus,
+					row, column);
 		}
 	}
 }
