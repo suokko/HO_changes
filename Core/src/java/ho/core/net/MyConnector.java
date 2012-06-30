@@ -961,18 +961,9 @@ public class MyConnector {
 			outDir.mkdirs();
 		}
 
-		// for the filename, replace everything which is not a letter or digit
-		// with an underscore
-		char[] urlData = url.toCharArray();
-		for (int i = 0; i < urlData.length; i++) {
-			if (!Character.isLetterOrDigit(urlData[i])) {
-				urlData[i] = '_';
-			}
-		}
-
 		Date downloadDate = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss");
-		String outFileName = df.format(downloadDate) + "-" + String.valueOf(urlData) + ".txt";
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss-S");
+		String outFileName = df.format(downloadDate) + ".txt";
 		File outFile = new File(outDir, outFileName);
 
 		df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
