@@ -44,7 +44,6 @@ public class HattrickManager {
     public static void downloadMatches(final int teamId, Filter filter) {
    		final GregorianCalendar start = new GregorianCalendar();
    		List<MatchKurzInfo> matches;
-   		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
    		
    		int limit = Math.min(filter.getNumber(), 50);
    		
@@ -54,7 +53,7 @@ public class HattrickManager {
    		}
    		
 	    start.add(Calendar.MONTH, -8);
-	    matches = worker.getMatchArchive(teamId, start, false);
+	    matches = OnlineWorker.getMatchArchive(teamId, start, false);
 	    Collections.reverse(matches); // Newest first
 	    for (MatchKurzInfo match : matches) {
 	    	if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
@@ -65,7 +64,7 @@ public class HattrickManager {
 	    		||	(filter.isAcceptedMatch(new Match(match))
 	    				&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID()))) {
 	    		
-	    		worker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
+	    		OnlineWorker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
    			}
 	    	
 	    	limit--;
@@ -78,7 +77,7 @@ public class HattrickManager {
 	    
 	    if (!filter.isAutomatic() || filter.isTournament()) {
 		    // Current matches includes tournament matches
-	    	matches = worker.getMatches(teamId, true, false, false);
+	    	matches = OnlineWorker.getMatches(teamId, true, false, false);
 	   		// newest first
 	   		Collections.reverse(matches);
 	   		
@@ -88,7 +87,7 @@ public class HattrickManager {
 	   					&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID())
 	   					&& match.getMatchTyp().isTournament()) {
 	   				
-	   				worker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
+	   				OnlineWorker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
 	   			}
 	   		}
 	    }

@@ -21,7 +21,6 @@ import ho.core.module.ModuleManager;
 import ho.core.module.config.ModuleConfig;
 import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
-import ho.core.net.OnlineWorker;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.ExceptionHandler;
@@ -110,7 +109,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
 	// Components
 	private HOTabbedPane m_jtpTabbedPane;
-	private OnlineWorker m_clOnlineWorker = new OnlineWorker();
 
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
@@ -284,13 +282,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		}
 		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWetter();
 
-	}
-
-	/**
-	 * Get the online worker object.
-	 */
-	public OnlineWorker getOnlineWorker() {
-		return m_clOnlineWorker;
 	}
 
 	/**
