@@ -250,6 +250,16 @@ public class SubstitutionOverview extends JPanel {
 		return dlg;
 	}
 
+	private void selectSubstitution(Substitution sub) {
+		SubstitutionsTableModel tblModel = (SubstitutionsTableModel) this.substitutionTable
+				.getModel();
+		for (int i = 0; i < tblModel.getRowCount(); i++) {
+			if (tblModel.getRow(i).getSubstitution() == sub) {
+				this.substitutionTable.getSelectionModel().setSelectionInterval(i, i);
+			}
+		}
+	}
+
 	/**
 	 * TableModel for the overview table where existing substitutions are
 	 * listed.
@@ -302,7 +312,7 @@ public class SubstitutionOverview extends JPanel {
 				return LanguageStringLookup.getOrderType(sub.getOrderType());
 			case 2:
 				if (sub.getMatchMinuteCriteria() > 0) {
-					return 	HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
+					return HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
 							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
@@ -441,6 +451,7 @@ public class SubstitutionOverview extends JPanel {
 				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
 						selectedRowIndex, selectedRowIndex);
 				refresh();
+				selectSubstitution(sub);
 			}
 		}
 	}
