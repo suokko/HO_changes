@@ -22,17 +22,20 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -111,6 +114,10 @@ public class SubstitutionOverview extends JPanel {
 						}
 					}
 				});
+
+		this.substitutionTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "edit");
+		this.substitutionTable.getActionMap().put("edit", this.editAction);
 	}
 
 	private void tableSelectionChanged() {
@@ -438,20 +445,22 @@ public class SubstitutionOverview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedRowIndex = substitutionTable.getSelectedRow();
-			final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
-					.getRow(selectedRowIndex).getSubstitution();
+			if (selectedRowIndex != -1) {
+				final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+						.getRow(selectedRowIndex).getSubstitution();
 
-			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
-			dlg.setLocationRelativeTo(SubstitutionOverview.this);
-			dlg.init(sub);
-			dlg.setVisible(true);
+				SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
+				dlg.setLocationRelativeTo(SubstitutionOverview.this);
+				dlg.init(sub);
+				dlg.setVisible(true);
 
-			if (!dlg.isCanceled()) {
-				sub.merge(dlg.getSubstitution());
-				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
-						selectedRowIndex, selectedRowIndex);
-				refresh();
-				selectSubstitution(sub);
+				if (!dlg.isCanceled()) {
+					sub.merge(dlg.getSubstitution());
+					((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
+							selectedRowIndex, selectedRowIndex);
+					refresh();
+					selectSubstitution(sub);
+				}
 			}
 		}
 	}
