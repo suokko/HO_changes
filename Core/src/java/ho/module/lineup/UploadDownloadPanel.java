@@ -182,7 +182,7 @@ public class UploadDownloadPanel extends JPanel {
 
 	private void refreshMatchListFromHT() {
 		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true,
-				true, false);
+				true, true);
 		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
