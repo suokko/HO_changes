@@ -9,6 +9,7 @@ package ho.core.file.extension;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.net.OnlineWorker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,13 +49,13 @@ public class ExtensionListener implements Runnable {
 								"Training Update HOE");
 							hoe.remove("trainingUpdate");
 							processed = true;
-							HOMainFrame.instance().getOnlineWorker().getHrf();
+							OnlineWorker.getHrf();
 						}
 						if (hoe.getProperty("economyUpdate", "off").equalsIgnoreCase("on")) {
 							JOptionPane.showMessageDialog(
 								HOMainFrame.instance(),
 								"Economy Update HOE");
-							HOMainFrame.instance().getOnlineWorker().getHrf();
+							OnlineWorker.getHrf();
 							hoe.remove("economyUpdate");
 							processed = true;
 						}
@@ -92,15 +93,15 @@ public class ExtensionListener implements Runnable {
 
 	private void seriesUpdate() {
 		JOptionPane.showMessageDialog(HOMainFrame.instance(), "Series Update HOE");
-		HOMainFrame.instance().getOnlineWorker().getSpielplan(-1, -1);
+		OnlineWorker.getSpielplan(-1, -1);
 		StandingCreator.extractActual();
 	}
 
 	private void matchUpdate() {
 		JOptionPane.showMessageDialog(HOMainFrame.instance(), "Match Update HOE");
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		if (HOMainFrame.instance().getOnlineWorker().getMatches(teamId, false, true, false) != null) {
-			HOMainFrame.instance().getOnlineWorker().getAllLineups();
+		if (OnlineWorker.getMatches(teamId, false, true, false) != null) {
+			OnlineWorker.getAllLineups();
 			StadiumCreator.extractHistoric();
 		}
 	}

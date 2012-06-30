@@ -64,24 +64,16 @@ import javax.swing.JOptionPane;
  * @author thomas.werth
  */
 public class OnlineWorker {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
 
 	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	/** wait Dialog */
 	protected static LoginWaitDialog waitDialog;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
-
+	
 	/**
-	 * Creates a new instance of OnlineWorker
+	 * Utility class - private constructor enforces noninstantiability.
 	 */
-	public OnlineWorker() {
+	private OnlineWorker() {
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	// //////////////////////////////////////////////////////////////////////////////
 	// HRF
@@ -92,7 +84,7 @@ public class OnlineWorker {
 	 * 
 	 * @return True if all OK, false if something went wrong
 	 */
-	public final boolean getHrf() {
+	public static boolean getHrf() {
 		String hrf = "";
 		boolean bOK = false;
 		int value;
@@ -176,12 +168,12 @@ public class OnlineWorker {
 
 						// If training update happened, regenerate HOE Files
 						if (homodel.getXtraDaten().getTrainingDate().after(lastTrainingDate)) {
-							HOLogger.instance().log(getClass(), "Regenerate HOE Training Files");
+							HOLogger.instance().log(OnlineWorker.class, "Regenerate HOE Training Files");
 							FileExtensionManager.trainingUpdate();
 						}
 						// If economy update happened, regenerate HOE Files
 						if (homodel.getXtraDaten().getEconomyDate().after(lastEconomyDate)) {
-							HOLogger.instance().log(getClass(), "Regenerate HOE Economy Files");
+							HOLogger.instance().log(OnlineWorker.class, "Regenerate HOE Economy Files");
 							FileExtensionManager.economyUpate();
 						}
 					}
@@ -274,7 +266,7 @@ public class OnlineWorker {
 	 * 
 	 * @return The list of MatchKurzInfo. This can be null on error, or empty.
 	 */
-	public final List<MatchKurzInfo> getMatchArchive(int teamId, GregorianCalendar firstDate, boolean store) {
+	public static List<MatchKurzInfo> getMatchArchive(int teamId, GregorianCalendar firstDate, boolean store) {
 		String matchesString = "";
 		final List<MatchKurzInfo> allMatches = new ArrayList<MatchKurzInfo>();
 		final GregorianCalendar tempBeginn = firstDate;
@@ -368,7 +360,7 @@ public class OnlineWorker {
 	 * 
 	 * @return The details object
 	 */
-	private final Matchdetails getMatchDetails(int matchId, MatchType matchType, MatchLineup lineup) {
+	private static Matchdetails getMatchDetails(int matchId, MatchType matchType, MatchLineup lineup) {
 		boolean success = true;
 		Matchdetails details = null;
 
@@ -402,7 +394,7 @@ public class OnlineWorker {
 	 * 
 	 * @return true if the match is in the db afterwards
 	 */
-	public boolean downloadMatchData(int matchid, MatchType matchType, boolean refresh) {
+	public static boolean downloadMatchData(int matchid, MatchType matchType, boolean refresh) {
 	
 		// Only download if not present in the database, or if refresh is true
 		if (refresh ||
@@ -450,7 +442,7 @@ public class OnlineWorker {
 				details = getMatchDetails(matchid, matchType, lineup);
 				
 				if (details == null) {
-					HOLogger.instance().error(getClass(), "Error downloading match. Details is null: " + matchid);
+					HOLogger.instance().error(OnlineWorker.class, "Error downloading match. Details is null: " + matchid);
 					return false;
 				}
 				
@@ -476,7 +468,7 @@ public class OnlineWorker {
 					return false;
 				}
 			} catch (Exception ex) {
-				HOLogger.instance().error(getClass(),"downloadMatchData:  Error in downloading match: "
+				HOLogger.instance().error(OnlineWorker.class,"downloadMatchData:  Error in downloading match: "
 						+ ex);
 				waitDialog.setVisible(false);
 				return false;
@@ -501,7 +493,7 @@ public class OnlineWorker {
 	 * 
 	 * @return The list of MatchKurzInfos found or null if an exception occurred.
 	 */
-	public final List<MatchKurzInfo> getMatches(int teamId, boolean forceRefresh, boolean store, boolean upcoming) {
+	public static List<MatchKurzInfo> getMatches(int teamId, boolean forceRefresh, boolean store, boolean upcoming) {
 		String matchesString = "";
 		List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
 		boolean bOK = false;
@@ -528,7 +520,7 @@ public class OnlineWorker {
 					HOVerwaltung.instance().getLanguageString("Downloadfehler")
 							+ " : Error fetching matches : " + e, HOVerwaltung.instance()
 							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
-			HOLogger.instance().log(getClass(), e);
+			HOLogger.instance().log(OnlineWorker.class, e);
 			waitDialog.setVisible(false);
 			return null;
 		}
@@ -580,7 +572,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	private final MatchLineup getMatchlineup(int matchId, MatchType matchType, int teamId1, int teamId2) {
+	private static MatchLineup getMatchlineup(int matchId, MatchType matchType, int teamId1, int teamId2) {
 		boolean bOK = false;
 		MatchLineup lineUp1 = null;
 		MatchLineup lineUp2 = null;
@@ -635,7 +627,7 @@ public class OnlineWorker {
 	 * 
 	 * @return true on sucess, false on failure
 	 */
-	public final boolean getSpielplan(int season, int leagueID) {
+	public static boolean getSpielplan(int season, int leagueID) {
 		boolean bOK = false;
 		String leagueFixtures = "";
 		HOVerwaltung hov = HOVerwaltung.instance();
@@ -647,7 +639,7 @@ public class OnlineWorker {
 			bOK = (leagueFixtures != null && leagueFixtures.length() > 0);
 			waitDialog.setValue(50);
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(), e);
+			HOLogger.instance().log(OnlineWorker.class, e);
 			HOMainFrame
 					.instance()
 					.getInfoPanel()
@@ -685,7 +677,7 @@ public class OnlineWorker {
 	 * @return A string response with any error message
 	 */
 
-	public final String uploadMatchOrder(int matchId, MatchType matchType,  Lineup lineup) {
+	public static String uploadMatchOrder(int matchId, MatchType matchType,  Lineup lineup) {
 
 		String result;
 		// Tell the Connector that we will require match order rights.
@@ -744,11 +736,11 @@ public class OnlineWorker {
 			throw new RuntimeException(e);
 		}
 
-		HOLogger.instance().debug(getClass(), "Upload done:\n" + result);
+		HOLogger.instance().debug(OnlineWorker.class, "Upload done:\n" + result);
 		return result;
 	}
 
-	private String createPositionString(int roleId, ho.module.lineup.Lineup lineup) {
+	private static String createPositionString(int roleId, ho.module.lineup.Lineup lineup) {
 
 		int id = 0;
 		int behaviour = 0;
@@ -772,14 +764,14 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	private final Matchdetails fetchDetails(int matchID, MatchType matchType, MatchLineup lineup, LoginWaitDialog waitDialog) {
+	private static Matchdetails fetchDetails(int matchID, MatchType matchType, MatchLineup lineup, LoginWaitDialog waitDialog) {
 		String matchDetails = "";
 		Matchdetails details = null;
 
 		try {
 			matchDetails = MyConnector.instance().getMatchdetails(matchID, matchType);
 			if (matchDetails.length() == 0) {
-				HOLogger.instance().warning(getClass(),
+				HOLogger.instance().warning(OnlineWorker.class,
 						"Unable to fetch details for match " + matchID);
 				return null;
 			}
@@ -788,7 +780,7 @@ public class OnlineWorker {
 			details = parser.parseMachtdetailsFromString(matchDetails, lineup);
 			waitDialog.setValue(40);
 			if (details == null) {
-				HOLogger.instance().warning(getClass(),
+				HOLogger.instance().warning(OnlineWorker.class,
 						"Unable to fetch details for match " + matchID);
 				return null;
 			}
@@ -826,7 +818,7 @@ public class OnlineWorker {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	protected final MatchLineup fetchLineup(int matchID, int teamID, MatchType matchType) {
+	protected static MatchLineup fetchLineup(int matchID, int teamID, MatchType matchType) {
 		String matchLineup = "";
 		MatchLineup lineUp = null;
 		boolean bOK = false;
@@ -870,7 +862,7 @@ public class OnlineWorker {
 	 * @return The saved file
 	 * @throws IOException
 	 */
-	protected final File saveFile(String fileName, String content) throws IOException {
+	protected static File saveFile(String fileName, String content) throws IOException {
 		java.io.OutputStreamWriter outWrit = null;
 		java.io.File outFile = null;
 		java.io.BufferedWriter out = null;
@@ -889,7 +881,7 @@ public class OnlineWorker {
 	/**
 	 * Get all lineups for MatchKurzInfos, if they're not there already
 	 */
-	public void getAllLineups() {
+	public static void getAllLineups() {
 		final MatchKurzInfo[] infos = DBManager.instance().getMatchesKurzInfo(-1);
 		String haveLineups = "";
 		boolean bOK = false;
@@ -898,13 +890,13 @@ public class OnlineWorker {
 			if (!DBManager.instance().isMatchLineupVorhanden(curMatchId)) {
 				// Check if the lineup is available
 				if (infos[i].getMatchStatus() == MatchKurzInfo.FINISHED) {
-					HOLogger.instance().debug(getClass(), "Get Lineup : " + curMatchId);
+					HOLogger.instance().debug(OnlineWorker.class, "Get Lineup : " + curMatchId);
 					bOK = downloadMatchData(curMatchId, infos[i].getMatchTyp(), false);
 					if (!bOK) {
 						break;
 					}
 				} else
-					HOLogger.instance().debug(getClass(), "Not Played : " + curMatchId);
+					HOLogger.instance().debug(OnlineWorker.class, "Not Played : " + curMatchId);
 			} else {
 				// Match lineup already available
 				if (haveLineups.length() > 0)
@@ -913,7 +905,7 @@ public class OnlineWorker {
 			}
 		}
 		if (haveLineups.length() > 0)
-			HOLogger.instance().debug(getClass(), "Have Lineups : " + haveLineups);
+			HOLogger.instance().debug(OnlineWorker.class, "Have Lineups : " + haveLineups);
 	}
 
 	/**
@@ -922,7 +914,7 @@ public class OnlineWorker {
 	 * @param matchType The matchTyp for the match to download
 	 * @return The Lineup object with the downloaded match data
 	 */
-	public Lineup getLineupbyMatchId(int matchId, MatchType matchType) {
+	public static Lineup getLineupbyMatchId(int matchId, MatchType matchType) {
 
 		try {
 
@@ -972,7 +964,7 @@ public class OnlineWorker {
 			HOVerwaltung.instance().getLanguageString("Downloadfehler")
 					+ " : Error fetching Matchorder :", HOVerwaltung.instance()
 					.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
-			HOLogger.instance().error(getClass(), e.getMessage());
+			HOLogger.instance().error(OnlineWorker.class, e.getMessage());
 		}
 
 		return null;

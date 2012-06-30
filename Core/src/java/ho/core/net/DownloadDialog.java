@@ -222,29 +222,28 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 */
 	private void startDownload() {
 		boolean bOK = true;
-		OnlineWorker worker = HOMainFrame.instance().getOnlineWorker();
 		HOModel model = hov.getModel();
 		if (m_jchOwnFixtures.isSelected()) {
 			// Only get lineups for own fixtures
-			bOK = (worker.getMatches(model.getBasics().getTeamId(), false, true, true) != null);
+			bOK = (OnlineWorker.getMatches(model.getBasics().getTeamId(), false, true, true) != null);
 			if (bOK) {
-				worker.getAllLineups();
+				OnlineWorker.getAllLineups();
 				StadiumCreator.extractHistoric();
 			}
 		}
 		if (bOK && m_jchMatchArchive.isSelected()) {
 			final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
 			tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-			bOK = (worker.getMatchArchive(model.getBasics().getTeamId(), tempdate, true) != null);
+			bOK = (OnlineWorker.getMatchArchive(model.getBasics().getTeamId(), tempdate, true) != null);
 			if (bOK) {
 				// Get all lineups for matches, if they don't exist already
-				worker.getAllLineups();
+				OnlineWorker.getAllLineups();
 			}
 		}
 		
 		if (bOK && m_jchFixtures.isSelected()) {
 			// Always get actual season and league
-			bOK = worker.getSpielplan(-1, -1);
+			bOK = OnlineWorker.getSpielplan(-1, -1);
 			if (bOK){
 				StandingCreator.extractActual();
 			}
@@ -263,7 +262,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 						final int ligaid = auswahlDialog.getLigaID();
 
 						if (ligaid > -2) {
-							bOK = worker.getSpielplan(saisonid, ligaid);
+							bOK = OnlineWorker.getSpielplan(saisonid, ligaid);
 						}
 						if (!bOK) {
 							break;
@@ -274,7 +273,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		}
 		// Lastly, so that the matches for training are there
 		if (bOK && m_jchHRF.isSelected()) {
-				worker.getHrf();
+			OnlineWorker.getHrf();
 		}
 	}
 }

@@ -131,8 +131,7 @@ public class UploadDownloadPanel extends JPanel {
 	private void upload() {
 		MatchKurzInfo match = getSelectedMatch();
 
-		OnlineWorker ow = new OnlineWorker();
-		String result = ow.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(), HOVerwaltung
+		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(), HOVerwaltung
 				.instance().getModel().getAufstellung());
 
 		int messageType = JOptionPane.PLAIN_MESSAGE;
@@ -168,8 +167,7 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void refreshMatchListFromHT() {
-		OnlineWorker ow = new OnlineWorker();
-		ow.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true, true, false);
+		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true, true, false);
 		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
