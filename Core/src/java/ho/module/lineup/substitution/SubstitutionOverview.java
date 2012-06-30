@@ -22,7 +22,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,7 +259,20 @@ public class SubstitutionOverview extends JPanel {
 
 		private static final long serialVersionUID = 6969656858380680460L;
 		private List<TableRow> rows = new ArrayList<TableRow>();
-		private String[] columnNames = new String[] { "", "Order", "When", "Standing", "Red cards" };
+		private String[] columnNames;
+
+		public SubstitutionsTableModel() {
+			this.columnNames = new String[5];
+			this.columnNames[0] = "";
+			this.columnNames[1] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.order");
+			this.columnNames[2] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.when");
+			this.columnNames[3] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.standing");
+			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.cards");
+		}
 
 		public void setData(List<Substitution> data) {
 			this.rows.clear();
@@ -290,8 +302,7 @@ public class SubstitutionOverview extends JPanel {
 				return LanguageStringLookup.getOrderType(sub.getOrderType());
 			case 2:
 				if (sub.getMatchMinuteCriteria() > 0) {
-					return MessageFormat.format(
-							HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX"),
+					return 	HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
 							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
