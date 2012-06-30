@@ -175,6 +175,11 @@ public class UploadDownloadPanel extends JPanel {
 				.getLanguageString("lineup.upload.title"), messageType);
 	}
 
+	private void download() {
+		MatchKurzInfo match = getSelectedMatch();
+		OnlineWorker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), true);
+	}
+
 	private void refreshMatchListFromHT() {
 		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true,
 				true, false);
@@ -204,6 +209,14 @@ public class UploadDownloadPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refreshMatchListFromHT();
+			}
+		});
+
+		this.downloadButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				download();
 			}
 		});
 
