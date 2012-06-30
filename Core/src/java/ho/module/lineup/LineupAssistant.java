@@ -35,40 +35,12 @@ public class LineupAssistant {
 
 	/** TODO Missing Parameter Documentation */
 	public static final byte ST_MF_AW = 5;
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	/* gibt die mindeststärke für einen Spieler an für seine Idealpos */
-
-	// protected float m_fMinIdealPosStk = 3.5f;
-
-	/** Position die zu besetzen sind */
-
-	// protected Vector m_vPositionen = new Vector();
-
-	/** Spieler die aufzustellen sind */
-
-	// protected Vector m_vSpieler = new Vector();
 
 	/** gibt an wie auf Wettereinfluss reagiert werden soll in Prozent */
-
-	// 20%
 	private float m_fWetterBonus = 0.2f;
 
 	/** gibt das Wetter an */
 	private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
-
-	/**
-	 * Creates a new instance of Aufstellungsassistent
-	 */
-	public LineupAssistant() {
-	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * findet den besten noch freien Kicker für einen Elfer
@@ -717,19 +689,6 @@ public class LineupAssistant {
 
 			// nur exacte Pos
 			if (pos.getPosition() == position) {
-				// die zus XYZ Positionen nur vormerken
-				// if ((pos.getTaktik() ==
-				// plugins.ISpielerPosition.ZUS_STUERMER)
-				// || (pos.getTaktik() ==
-				// plugins.ISpielerPosition.ZUS_STUERMER_DEF)
-				// || (pos.getTaktik() ==
-				// plugins.ISpielerPosition.ZUS_MITTELFELD)
-				// || (pos.getTaktik() == plugins.ISpielerPosition.ZUS_INNENV))
-				// {
-				// zusPos.add(pos);
-				// continue;
-				// }
-
 				spieler = getBestSpieler(position, mitForm, ignoreVerletzung, ignoreSperre,
 						vSpieler, positionen);
 
@@ -797,15 +756,6 @@ public class LineupAssistant {
 
 			// nur exakte Position
 			if (pos.getPosition() == position) {
-				// die zus XYZ Positionen nur vormerken
-				// if ((pos.getTaktik() == ISpielerPosition.ZUS_STUERMER)
-				// || (pos.getTaktik() == ISpielerPosition.ZUS_STUERMER_DEF)
-				// || (pos.getTaktik() == ISpielerPosition.ZUS_MITTELFELD)
-				// || (pos.getTaktik() == ISpielerPosition.ZUS_INNENV)) {
-				// zusPos.add(pos);
-				// continue;
-				// }
-
 				spieler = getBestSpielerIdealPosOnly(position, mitForm, ignoreVerletzung,
 						ignoreSperre, vSpieler, positionen);
 
