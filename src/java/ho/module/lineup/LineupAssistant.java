@@ -8,6 +8,7 @@ package ho.module.lineup;
 
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.gui.HOMainFrame;
+import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
@@ -56,7 +57,7 @@ public class LineupAssistant {
 	 */
 	public final int getBestFreeElferKicker(List<Integer> liste, List<Spieler> players,
 			List<ISpielerPosition> positionen) {
-		
+
 		float maxValue = -1;
 		float curValue = -1;
 		int bestPlayerID = 0;
@@ -467,6 +468,24 @@ public class LineupAssistant {
 		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
 			((ho.core.model.player.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
 		}
+	}
+
+	/**
+	 * Checks if there is a player with a specified id in the current team.
+	 * 
+	 * @param playerID
+	 *            the id of the player
+	 * @return <code>true</code> if there is player with the specified id in the
+	 *         team, <code>false</code> otherwise.
+	 */
+	public static boolean isPlayerInTeam(int playerID) {
+		List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+		for (Spieler player : players) {
+			if (player.getSpielerID() == playerID) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
