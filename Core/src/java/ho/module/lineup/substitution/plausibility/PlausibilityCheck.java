@@ -4,38 +4,51 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 import ho.module.lineup.Lineup;
+import ho.module.lineup.LineupAssistant;
 import ho.module.lineup.substitution.LanguageStringLookup;
-import ho.module.lineup.substitution.model.MatchOrderType;
+import static ho.module.lineup.substitution.model.MatchOrderType.*;
 import ho.module.lineup.substitution.model.Substitution;
 
 public class PlausibilityCheck {
 
 	public static Problem checkForProblem(Lineup lineup, Substitution substitution) {
-		if (substitution.getOrderType() == MatchOrderType.SUBSTITUTION
-				&& (substitution.getObjectPlayerID() <= 0 || substitution.getSubjectPlayerID() <= 0)) {
-			return Error.SUBSTITUTION_PLAYER_MISSING;
-		}
-		if (substitution.getOrderType() == MatchOrderType.POSITION_SWAP
-				&& (substitution.getObjectPlayerID() <= 0 || substitution.getSubjectPlayerID() <= 0)) {
-			return Error.POSITIONSWAP_PLAYER_MISSING;
-		}
-		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR
-				&& substitution.getSubjectPlayerID() <= 0) {
-			return Error.NEWBEHAVIOUR_PLAYER_MISSING;
+		int subjectPlayerID = substitution.getSubjectPlayerID();
+		int objectPlayerID = substitution.getObjectPlayerID();
+
+		// check if there is a subjectPlayer
+		if (subjectPlayerID <= 0 || !LineupAssistant.isPlayerInTeam(subjectPlayerID)) {
+			if (substitution.getOrderType() == SUBSTITUTION) {
+				return Error.SUBSTITUTION_PLAYER_MISSING;
+			} else if (substitution.getOrderType() == POSITION_SWAP) {
+				return Error.POSITIONSWAP_PLAYER_MISSING;
+			} else if (substitution.getOrderType() == NEW_BEHAVIOUR) {
+				return Error.NEWBEHAVIOUR_PLAYER_MISSING;
+			}
 		}
 
-		// first, check if players in lineup. note: when NEW_BEHAVIOUR, there is
-		// only one player involved
-		if (substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR
-				&& !lineup.isSpielerAufgestellt(substitution.getObjectPlayerID())) {
+		// check if there is a objectPlayerID (not relevant for NEW_BEHAVIOUR)
+		if (substitution.getOrderType() != NEW_BEHAVIOUR) {
+			if (objectPlayerID <= 0 || !LineupAssistant.isPlayerInTeam(objectPlayerID)) {
+				if (substitution.getOrderType() == SUBSTITUTION) {
+					return Error.SUBSTITUTION_PLAYER_MISSING;
+				} else if (substitution.getOrderType() == POSITION_SWAP) {
+					return Error.POSITIONSWAP_PLAYER_MISSING;
+				}
+			}
+		}
+
+		// check if players in lineup. (for NEW_BEHAVIOUR, there is only one
+		// player involved)
+		if (substitution.getOrderType() != NEW_BEHAVIOUR
+				&& !lineup.isSpielerAufgestellt(objectPlayerID)) {
 			return Error.PLAYERIN_NOT_IN_LINEUP;
-		} else if (!lineup.isSpielerAufgestellt(substitution.getSubjectPlayerID())) {
+		} else if (!lineup.isSpielerAufgestellt(subjectPlayerID)) {
 			return Error.PLAYEROUT_NOT_IN_LINEUP;
 		}
 
 		// when NEW_BEHAVIOUR, check that behaviour there is really a change
-		if (substitution.getOrderType() == MatchOrderType.NEW_BEHAVIOUR) {
-			SpielerPosition pos = lineup.getPositionBySpielerId(substitution.getSubjectPlayerID());
+		if (substitution.getOrderType() == NEW_BEHAVIOUR) {
+			SpielerPosition pos = lineup.getPositionBySpielerId(subjectPlayerID);
 			if (pos.getTaktik() == substitution.getBehaviour()) {
 				return Uncertainty.SAME_TACTIC;
 			}
