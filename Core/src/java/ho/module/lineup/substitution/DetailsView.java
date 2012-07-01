@@ -13,7 +13,6 @@ import ho.module.lineup.substitution.model.RedCardCriteria;
 import ho.module.lineup.substitution.model.Substitution;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,14 +29,14 @@ public class DetailsView extends JPanel {
 			Helper.calcCellWidth(18));
 	private static final long serialVersionUID = -8046083206070885556L;
 	private Substitution substitution;
-	private ColorLabelEntry orderTypeEntry;
-	private ColorLabelEntry firstPlayerEntry;
-	private ColorLabelEntry secondPlayerEntry;
-	private ColorLabelEntry whenEntry;
-	private ColorLabelEntry newBehaviourEntry;
-	private ColorLabelEntry newPositionEntry;
-	private ColorLabelEntry standingEntry;
-	private ColorLabelEntry redCardsEntry;
+	private JLabel orderTypeEntry;
+	private JLabel firstPlayerEntry;
+	private JLabel secondPlayerEntry;
+	private JLabel whenEntry;
+	private JLabel newBehaviourEntry;
+	private JLabel newPositionEntry;
+	private JLabel standingEntry;
+	private JLabel redCardsEntry;
 	private JLabel playerLabel;
 	private JLabel playerInLabel;
 
@@ -59,31 +58,32 @@ public class DetailsView extends JPanel {
 		if (this.substitution != null) {
 			String color = (this.substitution.getSubjectPlayerID() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.firstPlayerEntry.setBGColor(ThemeManager.getColor(color));
+			this.firstPlayerEntry.setBackground(ThemeManager.getColor(color));
 
-			color = (this.substitution.getObjectPlayerID() != -1 && this.substitution.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getObjectPlayerID() != -1 && this.substitution
+					.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.secondPlayerEntry.setBGColor(ThemeManager.getColor(color));
+			this.secondPlayerEntry.setBackground(ThemeManager.getColor(color));
 
 			color = (this.substitution.getMatchMinuteCriteria() > 0) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.whenEntry.setBGColor(ThemeManager.getColor(color));
+			this.whenEntry.setBackground(ThemeManager.getColor(color));
 
 			color = (this.substitution.getPos() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.newPositionEntry.setBGColor(ThemeManager.getColor(color));
+			this.newPositionEntry.setBackground(ThemeManager.getColor(color));
 
 			color = (this.substitution.getBehaviour() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.newBehaviourEntry.setBGColor(ThemeManager.getColor(color));
+			this.newBehaviourEntry.setBackground(ThemeManager.getColor(color));
 
 			color = (this.substitution.getRedCardCriteria() != RedCardCriteria.IGNORE) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.redCardsEntry.setBGColor(ThemeManager.getColor(color));
+			this.redCardsEntry.setBackground(ThemeManager.getColor(color));
 
 			color = (this.substitution.getStanding() != GoalDiffCriteria.ANY_STANDING) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
-			this.standingEntry.setBGColor(ThemeManager.getColor(color));
+			this.standingEntry.setBackground(ThemeManager.getColor(color));
 
 			switch (this.substitution.getOrderType()) {
 			case SUBSTITUTION:
@@ -106,13 +106,13 @@ public class DetailsView extends JPanel {
 			this.playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
 
 			Color color = ThemeManager.getColor(HOColorName.TABLEENTRY_BG);
-			this.firstPlayerEntry.setBGColor(color);
-			this.secondPlayerEntry.setBGColor(color);
-			this.whenEntry.setBGColor(color);
-			this.newPositionEntry.setBGColor(color);
-			this.newBehaviourEntry.setBGColor(color);
-			this.redCardsEntry.setBGColor(color);
-			this.standingEntry.setBGColor(color);
+			this.firstPlayerEntry.setBackground(color);
+			this.secondPlayerEntry.setBackground(color);
+			this.whenEntry.setBackground(color);
+			this.newPositionEntry.setBackground(color);
+			this.newBehaviourEntry.setBackground(color);
+			this.redCardsEntry.setBackground(color);
+			this.standingEntry.setBackground(color);
 		}
 	}
 
@@ -172,16 +172,13 @@ public class DetailsView extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(10, 10, 2, 2);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Order")), gbc);
 
-		this.orderTypeEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
-		this.orderTypeEntry.setBold(true);
+		this.orderTypeEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(10, 2, 2, 10);
-		Component component = this.orderTypeEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.orderTypeEntry, gbc);
 
 		// Player (Out/Reposition)
 		gbc.gridx = 0;
@@ -190,13 +187,10 @@ public class DetailsView extends JPanel {
 		this.playerLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.Out"));
 		add(this.playerLabel, gbc);
 
-		this.firstPlayerEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.firstPlayerEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.firstPlayerEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.firstPlayerEntry, gbc);
 
 		// Player (In/With)
 		gbc.gridx = 0;
@@ -205,13 +199,10 @@ public class DetailsView extends JPanel {
 		this.playerInLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.In"));
 		add(this.playerInLabel, gbc);
 
-		this.secondPlayerEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.secondPlayerEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.secondPlayerEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.secondPlayerEntry, gbc);
 
 		// When
 		gbc.gridx = 0;
@@ -219,13 +210,10 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.When")), gbc);
 
-		this.whenEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.whenEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.whenEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.whenEntry, gbc);
 
 		// New behaviour
 		gbc.gridx = 0;
@@ -233,13 +221,10 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Behavior")), gbc);
 
-		this.newBehaviourEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.newBehaviourEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.newBehaviourEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.newBehaviourEntry, gbc);
 
 		// New position
 		gbc.gridx = 0;
@@ -247,13 +232,10 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Position")), gbc);
 
-		this.newPositionEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.newPositionEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.newPositionEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.newPositionEntry, gbc);
 
 		// Red Cards
 		gbc.gridx = 0;
@@ -261,13 +243,10 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.RedCard")), gbc);
 
-		this.redCardsEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.redCardsEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.redCardsEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.redCardsEntry, gbc);
 
 		// Standing
 		gbc.gridx = 0;
@@ -275,13 +254,10 @@ public class DetailsView extends JPanel {
 		gbc.insets = new Insets(2, 10, 2, 2);
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("subs.Standing")), gbc);
 
-		this.standingEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-				ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
+		this.standingEntry = createValueLabel();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 10);
-		component = this.standingEntry.getComponent(false);
-		component.setPreferredSize(COMPONENTENSIZE);
-		add(component, gbc);
+		add(this.standingEntry, gbc);
 
 		// dummy label to consume all extra space
 		JLabel dummy = new JLabel("");
@@ -290,5 +266,15 @@ public class DetailsView extends JPanel {
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		add(dummy, gbc);
+	}
+
+	private JLabel createValueLabel() {
+		JLabel label = new JLabel("", SwingConstants.LEFT);
+		label.setForeground(ColorLabelEntry.FG_STANDARD);
+		label.setBackground(ColorLabelEntry.BG_STANDARD);
+		label.setOpaque(true);
+		label.setPreferredSize(COMPONENTENSIZE);
+		label.setMinimumSize(COMPONENTENSIZE);
+		return label;
 	}
 }
