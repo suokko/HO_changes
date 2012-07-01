@@ -13,6 +13,7 @@ Changelist HO! 1.432
 
 - Team Analyzer
 	. All update restrictions have been removed.
+	. Update will now download the matches to fill out your autofilter request, or the 30 last opponent matches if a manual filter is selected.
 	. Tournament opponents are in, so are tournament matches.
 	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
 	. Autofilter options for tournament and those annoying masters matches that always get in the way...
@@ -37,7 +38,7 @@ Language updates:
 ThemeManager:
 ------------
 - New keys:
-	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff, exclamation-red, exclamation, control-double-090, control-double-270
+	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff, exclamation-red, exclamation, control-double-090, control-double-270, order_set
 	. Colors: matchtype.tourneyGroup.bg, matchtype.tourneyFinals.bg, teamanalyzer.teamlist.league, teamanalyzer.teamlist.cup, teamanalyzer.teamlist.nexttournament, teamanalyzer.teamlist.tournament
 - Fatcow-Theme: Added and updated some icons and colors.
 
