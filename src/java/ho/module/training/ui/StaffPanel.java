@@ -4,9 +4,12 @@ package ho.module.training.ui;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -15,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-
 /**
  * Panel where the user can specify a different number of assistant and coach level for testing
  * effects
@@ -23,27 +25,17 @@ import javax.swing.JScrollPane;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class StaffPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 562783276216709022L;
 
 	/** Number of Assistant ComboBox */
-    private JComboBox coTrainer;
-
-
+    private JComboBox coTrainerCombo;
     /** The combo boxes */
-    private JComboBox trainerLevel;
-
+    private JComboBox trainerLevelCombo;
     /** the current number of coTrainer */
     private int coTrainerNumber;
-
     /** the current level of the coach */
     private int trainerLevelNumber;
-
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new StaffPanel object.
@@ -52,8 +44,6 @@ public class StaffPanel extends JPanel {
         super();
         jbInit();
     }
-
-    //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * Returns the number of Assistant Trainer
@@ -82,17 +72,6 @@ public class StaffPanel extends JPanel {
     }
 
     /**
-     * Populate the Assistant Trainer combobox
-     */
-    private void setAssistantComboBox() {
-        coTrainer = new JComboBox();
-
-        for (int i = 0; i < 11; i++) {
-            coTrainer.addItem(new Integer(i));
-        }
-    }
-
-    /**
      * TODO Missing Method Documentation
      *
      * @param value TODO Missing Method Parameter Documentation
@@ -103,8 +82,9 @@ public class StaffPanel extends JPanel {
         }
 
         try {
-            coTrainer.setSelectedIndex(value);
+            coTrainerCombo.setSelectedIndex(value);
         } catch (Exception e) {
+        	HOLogger.instance().log(StaffPanel.class, e);
         }
     }
 
@@ -119,19 +99,9 @@ public class StaffPanel extends JPanel {
         }
 
         try {
-            trainerLevel.setSelectedIndex(value);
+            trainerLevelCombo.setSelectedIndex(value);
         } catch (Exception e) {
-        }
-    }
-
-    /**
-     * Populate the Trainer Level combobox
-     */
-    private void setTrainerComboBox() {
-        trainerLevel = new JComboBox();
-
-        for (int i = 1; i < 9; i++) {
-            trainerLevel.addItem(PlayerAbility.getNameForSkill(i, false));
+        	HOLogger.instance().log(StaffPanel.class, e);
         }
     }
 
@@ -141,23 +111,27 @@ public class StaffPanel extends JPanel {
     private void jbInit() {
         HOVerwaltung hoV = HOVerwaltung.instance();
         JPanel main = new ImagePanel();
-
-        main.setLayout(new GridLayout(3, 2));
+        main.setLayout(new GridBagLayout());
 
         // initiates the co trainer combo box with the actual number of co trainer
-        setAssistantComboBox();
+        coTrainerCombo = new JComboBox();
+        for (int i = 0; i < 11; i++) {
+            coTrainerCombo.addItem(new Integer(i));
+        }
 
         try {
             coTrainerNumber = hoV.getModel().getVerein().getCoTrainer();
         } catch (RuntimeException e3) {
+        	HOLogger.instance().log(StaffPanel.class, e3);
             coTrainerNumber = 0;
         }
 
         setCoTrainer(coTrainerNumber);
-        coTrainer.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
+        coTrainerCombo.addItemListener(new ItemListener() {
+                @Override
+				public void itemStateChanged(ItemEvent e) {
                     // Sets new number of cotrainer
-                    Integer n = (Integer) coTrainer.getSelectedItem();
+                    Integer n = (Integer) coTrainerCombo.getSelectedItem();
 
                     coTrainerNumber = n.intValue();
                     // refresh player detail and prevision with the new staff settings
@@ -166,27 +140,47 @@ public class StaffPanel extends JPanel {
             });
 
         // initiates the coach combo box with the actual level of coach
-        setTrainerComboBox();
+        trainerLevelCombo = new JComboBox();
+        for (int i = 1; i < 9; i++) {
+            trainerLevelCombo.addItem(PlayerAbility.getNameForSkill(i, false));
+        }
 
         try {
             trainerLevelNumber = hoV.getModel().getTrainer().getTrainer();
         } catch (RuntimeException e1) {
+        	HOLogger.instance().log(StaffPanel.class, e1);
             trainerLevelNumber = 4;
         }
 
         setTrainer(trainerLevelNumber - 1);
-        trainerLevel.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
+        trainerLevelCombo.addItemListener(new ItemListener() {
+                @Override
+				public void itemStateChanged(ItemEvent e) {
                     // sets the new coach ability, recalculate data and  refresh
-                    trainerLevelNumber = trainerLevel.getSelectedIndex() + 1;
+                    trainerLevelNumber = trainerLevelCombo.getSelectedIndex() + 1;
                     ho.module.training.TrainingPanel.refreshPlayerDetail();
                 }
             });
 
-        main.add(new JLabel(hoV.getLanguageString("Trainerlevel"))); //$NON-NLS-1$
-        main.add(trainerLevel);
-        main.add(new JLabel(hoV.getLanguageString("CoTrainer"))); //$NON-NLS-1$
-        main.add(coTrainer);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(6, 6, 4, 2);
+        main.add(new JLabel(hoV.getLanguageString("Trainerlevel")), gbc);
+        gbc.gridx = 1;
+        gbc.insets = new Insets(6, 2, 4, 6);
+        main.add(trainerLevelCombo, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(4, 6, 6, 2);
+        main.add(new JLabel(hoV.getLanguageString("CoTrainer")), gbc);
+        gbc.gridx = 1;
+        gbc.insets = new Insets(4, 2, 6, 6);
+        main.add(coTrainerCombo, gbc);
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        // dummy component to consume all extra space
+        main.add(new JPanel(), gbc);
         setOpaque(false);
         setLayout(new BorderLayout());
         add(new JScrollPane(main), BorderLayout.CENTER);
