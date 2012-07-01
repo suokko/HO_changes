@@ -198,7 +198,7 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 
 	/**
 	 * key-Syntax => javaComponent.[hoComponent].property || name
-	 * 
+	 *
 	 */
 	private void initColors() {
 		put(PANEL_BG, "white");
@@ -312,24 +312,24 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(STAT_LODDAR, new Color(150, 20, 20));
 
 		// matchtypes
+		put(MATCHTYPE_BG, "white");
 		put(MATCHTYPE_LEAGUE_BG, "lightYellow");
 		put(MATCHTYPE_QUALIFIKATION_BG, new Color(255, 200, 200));
 		put(MATCHTYPE_CUP_BG, new Color(200, 255, 200));
-		put(MATCHTYPE_BG, "white");
 		put(MATCHTYPE_FRIENDLY_BG, Color.WHITE);
 		put(MATCHTYPE_INT_BG, "light_gray");
-		put(MATCHTYPE_MASTERS_BG, "light_gray");
+		put(MATCHTYPE_MASTERS_BG, new Color(255, 215, 120));
 		put(MATCHTYPE_INTFRIENDLY_BG, "white");
-		put(MATCHTYPE_NATIONAL_BG, new Color(220, 220, 255));
+		put(MATCHTYPE_NATIONAL_BG, new Color(240, 220, 255));
 		put(MATCHTYPE_TOURNAMENT_GROUP_BG, new Color(218, 237, 247));
 		put(MATCHTYPE_TOURNAMENT_FINALS_BG, new Color(218, 237, 247));
 
 		// 1.431
 		put(MATCHDETAILS_PROGRESSBAR_GREEN, new Color(0, 124, 0));
 		put(MATCHDETAILS_PROGRESSBAR_RED, new Color(124, 0, 0));
-		
+
 		// 1.432
-		
+
 		// Team Analyzer
 		put(TA_TEAM_LEAGUE_NEXT, Color.RED);
 		put(TA_TEAM_CUP_NEXT, Color.GREEN);
