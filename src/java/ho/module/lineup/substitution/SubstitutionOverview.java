@@ -13,7 +13,6 @@ import ho.module.lineup.substitution.plausibility.Problem;
 import ho.module.lineup.substitution.plausibility.Uncertainty;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,7 +34,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -47,7 +46,7 @@ public class SubstitutionOverview extends JPanel {
 
 	private static final long serialVersionUID = -625638866350314110L;
 	private JTable substitutionTable;
-	private JTextArea commentsTextArea;
+	private MessageBox messageBox;
 	private DetailsView detailsView;
 	private EditAction editAction;
 	private RemoveAction removeAction;
@@ -137,12 +136,19 @@ public class SubstitutionOverview extends JPanel {
 			this.detailsView.setSubstitution(null);
 		}
 
-		if (tableRow != null && (tableRow.isError() || tableRow.isUncertain())) {
-			this.commentsTextArea.setText(PlausibilityCheck.getComment(tableRow.getProblem(),
+		Icon icon = null;
+		if (tableRow != null && tableRow.getProblem() != null) {
+			this.messageBox.setMessage(PlausibilityCheck.getComment(tableRow.getProblem(),
 					tableRow.getSubstitution()));
+			if (tableRow.isUncertain()) {
+				icon = ThemeManager.getIcon(HOIconName.EXCLAMATION);
+			} else if (tableRow.isError()) {
+				icon = ThemeManager.getIcon(HOIconName.EXCLAMATION_RED);
+			}
 		} else {
-			this.commentsTextArea.setText("");
+			this.messageBox.setMessage("");
 		}
+		this.messageBox.setIcon(icon);
 	}
 
 	private void initComponents() {
@@ -161,16 +167,12 @@ public class SubstitutionOverview extends JPanel {
 		gbc.weighty = 1.0;
 		lowerPanel.add(this.detailsView, gbc);
 
-		this.commentsTextArea = new JTextArea();
-		this.commentsTextArea.setEditable(false);
-		this.commentsTextArea.setOpaque(false);
-		this.commentsTextArea.setBackground(new Color(0, 0, 0, 0));
-		this.commentsTextArea.setBorder(null);
+		this.messageBox = new MessageBox();
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
-		gbc.fill = GridBagConstraints.BOTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(10, 10, 10, 10);
-		lowerPanel.add(this.commentsTextArea, gbc);
+		lowerPanel.add(this.messageBox, gbc);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane.add(new JScrollPane(this.substitutionTable), 0);
