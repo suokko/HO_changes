@@ -1,126 +1,125 @@
 // %2655100108:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
+import ho.core.db.DBManager;
+import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
+import ho.core.gui.comp.table.ToolTipHeader;
 import ho.core.gui.model.SpielerPositionTableModel;
 import ho.core.util.Helper;
+
+import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-
-
 /**
  * TODO Missing Class Documentation
- *
+ * 
  * @author TODO Author Name
  */
 final class SpielerPositionTable extends JTable {
-	
+
 	private static final long serialVersionUID = 6625601251606134493L;
-	
-    //~ Instance fields ----------------------------------------------------------------------------
+	private SpielerPositionTableModel m_clTableModel;
+	private TableSorter m_clTableSorter;
+	private int m_iSpielerId = -1;
 
-	//TableSorter sorter;
-    private SpielerPositionTableModel m_clTableModel;
-    private TableSorter m_clTableSorter;
+	// ~ Constructors
+	// -------------------------------------------------------------------------------
 
-    //private DragSource                  m_clDragsource  =   null;
-    private int m_iSpielerId = -1;
+	/**
+	 * Creates a new SpielerPositionTable object.
+	 * 
+	 * @param spielerid
+	 *            TODO Missing Constructuor Parameter Documentation
+	 */
+	protected SpielerPositionTable(int spielerid) {
+		super();
+		m_iSpielerId = spielerid;
+		initModel();
+		setDefaultRenderer(Object.class, new HODefaultTableCellRenderer());
+		setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
+	}
 
-    //~ Constructors -------------------------------------------------------------------------------
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
-    /**
-     * Creates a new SpielerPositionTable object.
-     *
-     * @param spielerid TODO Missing Constructuor Parameter Documentation
-     */
-    protected SpielerPositionTable(int spielerid) {
-        super();
+	/**
+	 * TODO Missing Method Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public TableSorter getSorter() {
+		return m_clTableSorter;
+	}
 
-        m_iSpielerId = spielerid;
+	// ----------------Listener-------------------------------------------
+	public void refresh(int spielerid) {
+		m_iSpielerId = spielerid;
+		initModel();
+		repaint();
+	}
 
-        initModel();
-        setDefaultRenderer(java.lang.Object.class,
-                           new ho.core.gui.comp.renderer.HODefaultTableCellRenderer());
-        setSelectionBackground(ho.core.gui.comp.renderer.HODefaultTableCellRenderer.SELECTION_BG);
-    }
+	/**
+	 * Initialisiert das Model
+	 */
+	private void initModel() {
+		setOpaque(false);
 
-    //~ Methods ------------------------------------------------------------------------------------
+		if (m_clTableModel == null) {
+			Vector<float[]> bewertungen;
+			if (m_iSpielerId != -1) {
+				bewertungen = DBManager.instance().getAlleBewertungen(m_iSpielerId);
+			} else {
+				bewertungen = new Vector<float[]>();
+			}
+			m_clTableModel = new SpielerPositionTableModel(bewertungen);
+			m_clTableSorter = new TableSorter(m_clTableModel, -1, -1);
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public TableSorter getSorter() {
-        return m_clTableSorter;
-    }
+			ToolTipHeader header = new ToolTipHeader(getColumnModel());
+			header.setToolTipStrings(m_clTableModel.m_sToolTipStrings);
+			header.setToolTipText("");
+			setTableHeader(header);
 
-    //----------------Listener-------------------------------------------
-    public void refresh(int spielerid) {
-        m_iSpielerId = spielerid;
+			setModel(m_clTableSorter);
 
-        initModel();
+			final TableColumnModel tableColumnModel = getColumnModel();
 
-        repaint();
-    }
+			for (int i = 0; i < 4; i++) {
+				tableColumnModel.getColumn(i).setIdentifier(new Integer(i));
+			}
 
-    /**
-     * Initialisiert das Model
-     */
-    private void initModel() {
-        setOpaque(false);
+			m_clTableSorter.addMouseListenerToHeaderInTable(this);
+		} else {
+			// Werte neu setzen
+			m_clTableModel.setValues(ho.core.db.DBManager.instance().getAlleBewertungen(
+					m_iSpielerId));
+			m_clTableSorter.reallocateIndexes();
+		}
 
-        if (m_clTableModel == null) {
-            m_clTableModel = new SpielerPositionTableModel(ho.core.db.DBManager.instance()
-                                                                                                  .getAlleBewertungen(m_iSpielerId));
-            m_clTableSorter = new TableSorter(m_clTableModel, -1, -1);
+		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-            final ho.core.gui.comp.table.ToolTipHeader header = new ho.core.gui.comp.table.ToolTipHeader(getColumnModel());
-            header.setToolTipStrings(m_clTableModel.m_sToolTipStrings);
-            header.setToolTipText("");
-            setTableHeader(header);
+		final TableColumnModel tableColumnModel = getColumnModel();
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0)))
+				.setPreferredWidth(Helper.calcCellWidth(200));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0)))
+				.setMinWidth(Helper.calcCellWidth(20));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1)))
+				.setMinWidth(Helper.calcCellWidth(20));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1)))
+				.setPreferredWidth(Helper.calcCellWidth(180));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2)))
+				.setMinWidth(Helper.calcCellWidth(20));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2)))
+				.setPreferredWidth(Helper.calcCellWidth(180));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3)))
+				.setMinWidth(Helper.calcCellWidth(20));
+		tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3)))
+				.setPreferredWidth(Helper.calcCellWidth(180));
+		setSelectionMode(0);
+		setRowSelectionAllowed(true);
 
-            setModel(m_clTableSorter);
-
-            final TableColumnModel tableColumnModel = getColumnModel();
-
-            for (int i = 0; i < 4; i++) {
-                tableColumnModel.getColumn(i).setIdentifier(new Integer(i));
-            }
-
-            m_clTableSorter.addMouseListenerToHeaderInTable(this);
-        } else {
-            //Werte neu setzen
-            m_clTableModel.setValues(ho.core.db.DBManager.instance()
-                                                                            .getAlleBewertungen(m_iSpielerId));
-            m_clTableSorter.reallocateIndexes();
-        }
-
-        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        final TableColumnModel tableColumnModel = getColumnModel();
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0)))
-                        .setPreferredWidth(Helper.calcCellWidth(200));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(0))).setMinWidth(Helper.calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1))).setMinWidth(Helper.calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(1)))
-                        .setPreferredWidth(Helper.calcCellWidth(180));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2))).setMinWidth(Helper.calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(2)))
-                        .setPreferredWidth(Helper.calcCellWidth(180));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3))).setMinWidth(Helper.calcCellWidth(20));
-        tableColumnModel.getColumn(tableColumnModel.getColumnIndex(Integer.valueOf(3)))
-                        .setPreferredWidth(Helper.calcCellWidth(180));
-        setSelectionMode(0);
-        setRowSelectionAllowed(true);
-
-        m_clTableSorter.initsort();
-
-        //setGridColor(new Color(220, 220, 220));
-        //getTableHeader().setReorderingAllowed( false );
-        //m_clDragsource = new DragSource();
-        //m_clDragsource.createDefaultDragGestureRecognizer( this, 1, this );
-    }
+		m_clTableSorter.initsort();
+	}
 }
