@@ -103,7 +103,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	private final JMenuItem m_jmiHO = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO"));
 	private final JMenuItem m_jmiHObeta = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO") + " ("
 			+ HOVerwaltung.instance().getLanguageString("Beta") + ")");
-	private final JMenuItem m_jmiEPV = new JMenuItem(HOVerwaltung.instance().getLanguageString("EPV"));
 	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ratings"));
 
 	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
@@ -358,8 +357,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			UpdateController.check4update();
 		} else if (source.equals(m_jmiHObeta)) {
 			UpdateController.check4latestbeta();
-		} else if (source.equals(m_jmiEPV)) {
-			UpdateController.check4EPVUpdate();
 		} else if (source.equals(m_jmiRatings)) {
 			UpdateController.check4RatingsUpdate();
 		}
@@ -472,12 +469,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 			m_jmiHO.addActionListener(this);
 			m_jmiHObeta.addActionListener(this);
 		}
-		m_jmiEPV.addActionListener(this);
 		m_jmiRatings.addActionListener(this);
 
 		m_jmUpdating.add(m_jmiHO);
 		m_jmUpdating.add(m_jmiHObeta);
-		m_jmUpdating.add(m_jmiEPV);
 		m_jmUpdating.add(m_jmiRatings);
 		m_jmUpdating.add(m_jmiLanguages);
 		m_jmUpdating.add(m_jmiFlags);
