@@ -183,6 +183,12 @@ public class UploadDownloadPanel extends JPanel {
 	private void download() {
 		MatchKurzInfo match = getSelectedMatch();
 		Lineup lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
+		if (lineup != null) {
+			int messageType = JOptionPane.PLAIN_MESSAGE;
+			String message = HOVerwaltung.instance().getLanguageString("lineup.download.success");
+			JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
+					.getLanguageString("lineup.download.title"), messageType);
+		}
 		HOVerwaltung.instance().getModel().setAufstellung(lineup);
 		HOMainFrame.instance().getAufstellungsPanel().update();
 	}
