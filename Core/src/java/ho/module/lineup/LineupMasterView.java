@@ -2,6 +2,7 @@ package ho.module.lineup;
 
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
+import ho.module.lineup.penalties.PenaltyShootersView;
 import ho.module.lineup.substitution.SubstitutionOverview;
 
 import java.awt.BorderLayout;
@@ -21,6 +22,7 @@ public class LineupMasterView extends JPanel {
 	private static final long serialVersionUID = 6557097920433876610L;
 	private LineupPanel lineupPanel;
 	private SubstitutionOverview substitutionOverview;
+	private PenaltyShootersView penaltyShootersView;
 
 	public LineupMasterView() {
 		initComponents();
@@ -41,6 +43,9 @@ public class LineupMasterView extends JPanel {
 		this.substitutionOverview = new SubstitutionOverview(hov.getModel().getAufstellung());
 		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
+		this.penaltyShootersView = new PenaltyShootersView();
+		tabbedPane.addTab(hov.getLanguageString("lineup.penaltyshooters.tab.title"), this.penaltyShootersView);
+		
 		tabbedPane.addTab(hov.getLanguageString("lineup.upload.tab.title"),
 				new UploadDownloadPanel());
 
