@@ -474,6 +474,7 @@ public class OnlineWorker {
 				return false;
 			}
 		}
+		waitDialog.setVisible(false);
 		return true;
 	}
 	
@@ -805,6 +806,7 @@ public class OnlineWorker {
 			waitDialog.setVisible(false);
 			return null;
 		}
+		waitDialog.setVisible(false);
 		return details;
 	}
 
