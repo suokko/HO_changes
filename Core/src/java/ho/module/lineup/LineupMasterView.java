@@ -44,7 +44,7 @@ public class LineupMasterView extends JPanel {
 		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
 		this.penaltyShootersView = new PenaltyShootersView();
-		tabbedPane.addTab(hov.getLanguageString("lineup.penaltyshooters.tab.title"), this.penaltyShootersView);
+		tabbedPane.addTab(hov.getLanguageString("Elfmeterschuetzen"), this.penaltyShootersView);
 		
 		tabbedPane.addTab(hov.getLanguageString("lineup.upload.tab.title"),
 				new UploadDownloadPanel());
