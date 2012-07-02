@@ -22,6 +22,8 @@ import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,10 +71,10 @@ public class SubstitutionOverview extends JPanel {
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
+		refresh();
 		if (this.substitutionTable.getRowCount() > 0) {
 			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
 		}
-		refresh();
 	}
 
 	private void createActions() {
@@ -113,6 +115,15 @@ public class SubstitutionOverview extends JPanel {
 						}
 					}
 				});
+
+		this.substitutionTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+					editSelectedSubstitution();
+				}
+			}
+		});
 
 		this.substitutionTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "edit");
@@ -265,6 +276,27 @@ public class SubstitutionOverview extends JPanel {
 		for (int i = 0; i < tblModel.getRowCount(); i++) {
 			if (tblModel.getRow(i).getSubstitution() == sub) {
 				this.substitutionTable.getSelectionModel().setSelectionInterval(i, i);
+			}
+		}
+	}
+
+	private void editSelectedSubstitution() {
+		int selectedRowIndex = substitutionTable.getSelectedRow();
+		if (selectedRowIndex != -1) {
+			final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+					.getRow(selectedRowIndex).getSubstitution();
+
+			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
+			dlg.setLocationRelativeTo(SubstitutionOverview.this);
+			dlg.init(sub);
+			dlg.setVisible(true);
+
+			if (!dlg.isCanceled()) {
+				sub.merge(dlg.getSubstitution());
+				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
+						selectedRowIndex, selectedRowIndex);
+				refresh();
+				selectSubstitution(sub);
 			}
 		}
 	}
@@ -446,24 +478,7 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int selectedRowIndex = substitutionTable.getSelectedRow();
-			if (selectedRowIndex != -1) {
-				final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
-						.getRow(selectedRowIndex).getSubstitution();
-
-				SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
-				dlg.setLocationRelativeTo(SubstitutionOverview.this);
-				dlg.init(sub);
-				dlg.setVisible(true);
-
-				if (!dlg.isCanceled()) {
-					sub.merge(dlg.getSubstitution());
-					((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
-							selectedRowIndex, selectedRowIndex);
-					refresh();
-					selectSubstitution(sub);
-				}
-			}
+			editSelectedSubstitution();
 		}
 	}
 
