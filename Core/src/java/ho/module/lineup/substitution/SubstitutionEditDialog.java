@@ -16,10 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-
 
 public class SubstitutionEditDialog extends JDialog {
 
@@ -53,7 +54,7 @@ public class SubstitutionEditDialog extends JDialog {
 	public Substitution getSubstitution() {
 		return this.behaviourView.getSubstitution();
 	}
-	
+
 	private void initDialog() {
 		setDlgTitle();
 		initComponents();
@@ -105,14 +106,21 @@ public class SubstitutionEditDialog extends JDialog {
 				dispose();
 			}
 		});
-		cancelButton.addActionListener(new ActionListener() {
+
+		Action cancelAction = new AbstractAction() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				canceled = true;
 				dispose();
 			}
-		});
+
+		};
+		cancelAction.putValue(Action.NAME, HOVerwaltung.instance().getLanguageString("subs.Cancel"));
+		cancelButton.setAction(cancelAction);
+		GUIUtilities.decorateWithActionOnESC(this, cancelAction);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
