@@ -467,15 +467,15 @@ public class ConvertXml2Hrf {
 			
 			for (int i = 0; i < 5; i++) {
 				if (nextLineup.get("subst" + i + "playerOrderID") != null) {
-					buffer.append("subst" + i + "playerOrderID=" + m_htNextLineup.get("subst" + i + "playerOrderID") + "\n");
-					buffer.append("subst" + i + "playerIn=" + m_htNextLineup.get("subst" + i + "playerIn") + "\n");
-					buffer.append("subst" + i + "playerOut=" + m_htNextLineup.get("subst" + i + "playerOut") + "\n");
-					buffer.append("subst" + i + "orderType=" + m_htNextLineup.get("subst" + i + "orderType") + "\n");
-					buffer.append("subst" + i + "matchMinuteCriteria=" + m_htNextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
-					buffer.append("subst" + i + "pos=" + m_htNextLineup.get("subst" + i + "pos") + "\n");
-					buffer.append("subst" + i + "behaviour=" + m_htNextLineup.get("subst" + i + "behaviour") + "\n");
-					buffer.append("subst" + i + "card=" + m_htNextLineup.get("subst" + i + "card") + "\n");
-					buffer.append("subst" + i + "standing=" + m_htNextLineup.get("subst" + i + "standing") + "\n");
+					buffer.append("subst" + i + "playerOrderID=" + nextLineup.get("subst" + i + "playerOrderID") + "\n");
+					buffer.append("subst" + i + "playerIn=" + nextLineup.get("subst" + i + "playerIn") + "\n");
+					buffer.append("subst" + i + "playerOut=" + nextLineup.get("subst" + i + "playerOut") + "\n");
+					buffer.append("subst" + i + "orderType=" + nextLineup.get("subst" + i + "orderType") + "\n");
+					buffer.append("subst" + i + "matchMinuteCriteria=" + nextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
+					buffer.append("subst" + i + "pos=" + nextLineup.get("subst" + i + "pos") + "\n");
+					buffer.append("subst" + i + "behaviour=" + nextLineup.get("subst" + i + "behaviour") + "\n");
+					buffer.append("subst" + i + "card=" + nextLineup.get("subst" + i + "card") + "\n");
+					buffer.append("subst" + i + "standing=" + nextLineup.get("subst" + i + "standing") + "\n");
 				}
 			}
 			

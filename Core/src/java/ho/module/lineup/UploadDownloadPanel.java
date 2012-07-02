@@ -182,7 +182,9 @@ public class UploadDownloadPanel extends JPanel {
 
 	private void download() {
 		MatchKurzInfo match = getSelectedMatch();
-		OnlineWorker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), true);
+		Lineup lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
+		HOVerwaltung.instance().getModel().setAufstellung(lineup);
+		HOMainFrame.instance().getAufstellungsPanel().update();
 	}
 
 	private void refreshMatchListFromHT() {
