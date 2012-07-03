@@ -162,7 +162,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(80);
 
             //lineup
-            createLineUp(m_sHRFBuffer,  String.valueOf(m_htTeamdetails.get("TrainerID")), m_htNextLineup);
+            m_sHRFBuffer.append(createLineUp(String.valueOf(m_htTeamdetails.get("TrainerID")), m_htNextLineup));
             waitDialog.setValue(85);
 
             //economy  
@@ -421,7 +421,8 @@ public class ConvertXml2Hrf {
     * @return
     * @throws Exception
     */
-    public final void createLineUp(StringBuffer buffer, String trainerId, Map<?, ?> nextLineup) throws Exception {
+    public final String createLineUp(String trainerId, Map<?, ?> nextLineup) throws Exception {
+    	StringBuilder buffer = new StringBuilder();
     	buffer.append("[lineup]" + "\n");
 
         try {
@@ -487,6 +488,7 @@ public class ConvertXml2Hrf {
         } catch (Exception e) {
         	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
         }
+        return buffer.toString();
     }
 
     /**

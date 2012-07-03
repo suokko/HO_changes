@@ -188,9 +188,9 @@ public class UploadDownloadPanel extends JPanel {
 			String message = HOVerwaltung.instance().getLanguageString("lineup.download.success");
 			JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
 					.getLanguageString("lineup.download.title"), messageType);
+			HOVerwaltung.instance().getModel().setAufstellung(lineup);
+			HOMainFrame.instance().getAufstellungsPanel().update();
 		}
-		HOVerwaltung.instance().getModel().setAufstellung(lineup);
-		HOMainFrame.instance().getAufstellungsPanel().update();
 	}
 
 	private void refreshMatchListFromHT() {

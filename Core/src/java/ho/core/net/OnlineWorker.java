@@ -35,6 +35,7 @@ import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
+import ho.core.util.StringUtilities;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.Substitution;
@@ -912,36 +913,53 @@ public class OnlineWorker {
 
 	/**
 	 * 
-	 * @param matchId The match ID for the match to download
-	 * @param matchType The matchTyp for the match to download
+	 * @param matchId
+	 *            The match ID for the match to download
+	 * @param matchType
+	 *            The matchTyp for the match to download
 	 * @return The Lineup object with the downloaded match data
 	 */
 	public static Lineup getLineupbyMatchId(int matchId, MatchType matchType) {
 
 		try {
-
 			String xml = MyConnector.instance().getMatchOrder(matchId, matchType);
+			if (!StringUtilities.isEmpty(xml)) {
+				Map<String, String> map = XMLMatchOrderParser.parseMatchOrderFromString(xml);
+				ConvertXml2Hrf hrfConverter = new ConvertXml2Hrf();
+				String trainerID = String.valueOf(HOVerwaltung.instance().getModel().getTrainer()
+						.getSpielerID());
+				String lineupData = hrfConverter.createLineUp(trainerID, map);
+				return new Lineup(getProperties(lineupData));
+			}
+		} catch (Exception e) {
+			HOMainFrame
+					.instance()
+					.getInfoPanel()
+					.setLangInfoText(
+							HOVerwaltung.instance().getLanguageString("Downloadfehler")
+									+ " : Error fetching Matchorder :", InfoPanel.FEHLERFARBE);
+			Helper.showMessage(HOMainFrame.instance(),
+					HOVerwaltung.instance().getLanguageString("Downloadfehler")
+							+ " : Error fetching Matchorder :", HOVerwaltung.instance()
+							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			HOLogger.instance().error(OnlineWorker.class, e.getMessage());
+		}
 
-			Map<String, String> map = XMLMatchOrderParser.parseMatchOrderFromString(xml);
-			ConvertXml2Hrf hrfConverter = new ConvertXml2Hrf();
-			StringBuffer buffer = new StringBuffer();
-			hrfConverter.createLineUp(buffer,
-					String.valueOf(HOVerwaltung.instance().getModel().getTrainer().getSpielerID()),
-					map);
+		return null;
+	}
+	
+	private static Properties getProperties(String data) throws IOException {
+		ByteArrayInputStream bis = new ByteArrayInputStream(data.getBytes("UTF-8"));
+		InputStreamReader isr = new InputStreamReader(bis, "UTF-8");
+		BufferedReader hrfReader = new BufferedReader(isr);
+		Properties properties = new Properties();
 
-			final ByteArrayInputStream bis = new ByteArrayInputStream(String.valueOf(buffer)
-					.getBytes("UTF-8"));
-			final InputStreamReader isr = new InputStreamReader(bis, "UTF-8");
-			BufferedReader hrfReader = new BufferedReader(isr);
-			Properties properties = new Properties();
-
-			// Lose the first line
-			hrfReader.readLine();
-			while (hrfReader.ready()) {
-				String lineString = hrfReader.readLine();
-				// Ignore empty lines
-				if ((lineString == null) || lineString.trim().equals(""))
-					continue;
+		// Lose the first line
+		hrfReader.readLine();
+		while (hrfReader.ready()) {
+			String lineString = hrfReader.readLine();
+			// Ignore empty lines
+			if (!StringUtilities.isEmpty(lineString)) {
 				int indexEqualsSign = lineString.indexOf('=');
 				if (indexEqualsSign > 0) {
 					properties.setProperty(
@@ -950,23 +968,7 @@ public class OnlineWorker {
 							lineString.substring(indexEqualsSign + 1));
 				}
 			}
-
-			return new Lineup(properties);
-
-		} catch (Exception e) {
-			HOMainFrame
-			.instance()
-			.getInfoPanel()
-			.setLangInfoText(
-					HOVerwaltung.instance().getLanguageString("Downloadfehler")
-							+ " : Error fetching Matchorder :", InfoPanel.FEHLERFARBE);
-			Helper.showMessage(HOMainFrame.instance(),
-			HOVerwaltung.instance().getLanguageString("Downloadfehler")
-					+ " : Error fetching Matchorder :", HOVerwaltung.instance()
-					.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
-			HOLogger.instance().error(OnlineWorker.class, e.getMessage());
 		}
-
-		return null;
+		return properties;
 	}
 }
