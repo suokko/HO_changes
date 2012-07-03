@@ -944,8 +944,6 @@ public class OnlineWorker {
 					continue;
 				int indexEqualsSign = lineString.indexOf('=');
 				if (indexEqualsSign > 0) {
-					if (properties == null)
-						properties = new Properties();
 					properties.setProperty(
 							lineString.substring(0, indexEqualsSign).toLowerCase(
 									java.util.Locale.ENGLISH),
