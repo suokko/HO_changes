@@ -41,38 +41,26 @@ import java.util.Vector;
  * @author thomas.werth
  */
 public class ConvertXml2Hrf {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    protected Hashtable<?, ?> m_htArena;
-    protected Hashtable<?, ?> m_htClub;
-    protected Hashtable<?, ?> m_htEconomy;
-    protected Hashtable<?, ?> m_htLiga;
-    protected Map<?, ?> m_htNextLineup;
-    protected Hashtable<?, ?> m_htTeamdetails;
-    protected Hashtable<?, ?> m_htTraining;
-    protected Hashtable<?, ?> m_htWorld;
-    protected MatchLineup m_clLineUp;
-    protected MatchLineupTeam m_clTeam;
-
-    protected StringBuffer m_sHRFBuffer;
+    private Hashtable<?, ?> m_htArena;
+    private Hashtable<?, ?> m_htClub;
+    private Hashtable<?, ?> m_htEconomy;
+    private Hashtable<?, ?> m_htLiga;
+    private Map<?, ?> m_htNextLineup;
+    private Hashtable<?, ?> m_htTeamdetails;
+    private Hashtable<?, ?> m_htTraining;
+    private Hashtable<?, ?> m_htWorld;
+    private MatchLineup m_clLineUp;
+    private MatchLineupTeam m_clTeam;
+    private StringBuffer m_sHRFBuffer;
 
     //enthält eine Liste an Hashtable die je einen Spieler beschreiben
-    protected Vector<?> m_vSpieler;
+    private Vector<?> m_vSpieler;
 
     //MatchOrder
-    protected MatchKurzInfo[] m_aMatches;
-    int m_iLastAttitude;
-    int m_iLastTactic;
-
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * Creates a new instance of ConvertXml2Hrf
-     */
-    public ConvertXml2Hrf() {
-    }
-
-    //~ Methods ------------------------------------------------------------------------------------
+    private MatchKurzInfo[] m_aMatches;
+    private int m_iLastAttitude;
+    private int m_iLastTactic;
 
     /**
      * Create the HRF data and return it in one string. 
