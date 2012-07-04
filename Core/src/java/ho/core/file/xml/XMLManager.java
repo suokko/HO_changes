@@ -254,7 +254,7 @@ public class XMLManager  {
 	 * Parse the teamDetails from the given xml string.
 	 */
 	public static Map<String,String> parseTeamDetails(String teamDetails) {
-		return xmlTeamDetailsParser.parseTeamdetails(teamDetails);
+		return XMLTeamDetailsParser.parseTeamdetails(teamDetails);
 	}
 
 	/**
