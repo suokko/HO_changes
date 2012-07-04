@@ -188,23 +188,23 @@ public class ConvertXml2Hrf {
      * Create the arena data.
      */
     protected final void createArena() throws Exception {
-        m_sHRFBuffer.append("[arena]" + "\n");
-        m_sHRFBuffer.append("arenaname=" + m_htArena.get("ArenaName") + "\n");
-        m_sHRFBuffer.append("arenaid=" + m_htArena.get("ArenaID") + "\n");
-        m_sHRFBuffer.append("antalStaplats=" + m_htArena.get("Terraces") + "\n");
-        m_sHRFBuffer.append("antalSitt=" + m_htArena.get("Basic") + "\n");
-        m_sHRFBuffer.append("antalTak=" + m_htArena.get("Roof") + "\n");
-        m_sHRFBuffer.append("antalVIP=" + m_htArena.get("VIP") + "\n");
-        m_sHRFBuffer.append("seatTotal=" + m_htArena.get("Total") + "\n");
-        m_sHRFBuffer.append("expandingStaplats=" + m_htArena.get("ExTerraces") + "\n");
-        m_sHRFBuffer.append("expandingSitt=" + m_htArena.get("ExBasic") + "\n");
-        m_sHRFBuffer.append("expandingTak=" + m_htArena.get("ExRoof") + "\n");
-        m_sHRFBuffer.append("expandingVIP=" + m_htArena.get("ExVIP") + "\n");
-        m_sHRFBuffer.append("expandingSseatTotal=" + m_htArena.get("ExTotal") + "\n");
-        m_sHRFBuffer.append("isExpanding=" + m_htArena.get("isExpanding") + "\n");
+        m_sHRFBuffer.append("[arena]").append('\n');
+        m_sHRFBuffer.append("arenaname=").append(m_htArena.get("ArenaName")).append('\n');
+        m_sHRFBuffer.append("arenaid=").append(m_htArena.get("ArenaID")).append('\n');
+        m_sHRFBuffer.append("antalStaplats=").append(m_htArena.get("Terraces")).append('\n');
+        m_sHRFBuffer.append("antalSitt=").append(m_htArena.get("Basic")).append('\n');
+        m_sHRFBuffer.append("antalTak=").append(m_htArena.get("Roof")).append('\n');
+        m_sHRFBuffer.append("antalVIP=").append(m_htArena.get("VIP")).append('\n');
+        m_sHRFBuffer.append("seatTotal=").append(m_htArena.get("Total")).append('\n');
+        m_sHRFBuffer.append("expandingStaplats=").append(m_htArena.get("ExTerraces")).append('\n');
+        m_sHRFBuffer.append("expandingSitt=").append(m_htArena.get("ExBasic")).append('\n');
+        m_sHRFBuffer.append("expandingTak=").append(m_htArena.get("ExRoof")).append('\n');
+        m_sHRFBuffer.append("expandingVIP=").append(m_htArena.get("ExVIP")).append('\n');
+        m_sHRFBuffer.append("expandingSseatTotal=").append(m_htArena.get("ExTotal")).append('\n');
+        m_sHRFBuffer.append("isExpanding=").append(m_htArena.get("isExpanding")).append('\n');
 
         //Achtung bei keiner Erweiterung = 0!
-        m_sHRFBuffer.append("ExpansionDate=" + m_htArena.get("ExpansionDate") + "\n");
+        m_sHRFBuffer.append("ExpansionDate=").append(m_htArena.get("ExpansionDate")).append('\n');
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -217,21 +217,20 @@ public class ConvertXml2Hrf {
     protected final void createBasics() throws Exception {
         m_sHRFBuffer.append("[basics]\n");
         m_sHRFBuffer.append("application=HO\n");
-        m_sHRFBuffer.append("appversion=" + ho.HO.VERSION + "\n");
-        m_sHRFBuffer.append("date=" + m_htTeamdetails.get("FetchedDate") + "\n");
-        m_sHRFBuffer.append("season=" + m_htWorld.get("Season") + "\n");
-        m_sHRFBuffer.append("matchround=" + m_htWorld.get("MatchRound") + "\n");
-        m_sHRFBuffer.append("teamID=" + m_htTeamdetails.get("TeamID") + "\n");
-        m_sHRFBuffer.append("teamName=" + m_htTeamdetails.get("TeamName") + "\n");
-        m_sHRFBuffer.append("owner=" + m_htTeamdetails.get("Loginname") + "\n");
-        m_sHRFBuffer.append("ownerEmail=" + m_htTeamdetails.get("Email") + "\n");
-        m_sHRFBuffer.append("ownerICQ=" + m_htTeamdetails.get("ICQ") + "\n");
-        m_sHRFBuffer.append("ownerHomepage=" + m_htTeamdetails.get("HomePage") + "\n");
-        m_sHRFBuffer.append("countryID=" + m_htWorld.get("CountryID") + "\n");
-        m_sHRFBuffer.append("leagueID=" + m_htTeamdetails.get("LeagueID") + "\n");
-//        m_sHRFBuffer.append("arenaID=" + m_htArena.get("ArenaID") + "\n");
-        m_sHRFBuffer.append("regionID=" + m_htTeamdetails.get("RegionID") + "\n");
-        m_sHRFBuffer.append("hasSupporter=" + m_htTeamdetails.get("HasSupporter") + "\n");
+        m_sHRFBuffer.append("appversion=").append(ho.HO.VERSION).append('\n');
+        m_sHRFBuffer.append("date=").append(m_htTeamdetails.get("FetchedDate")).append('\n');
+        m_sHRFBuffer.append("season=").append(m_htWorld.get("Season")).append('\n');
+        m_sHRFBuffer.append("matchround=").append(m_htWorld.get("MatchRound")).append('\n');
+        m_sHRFBuffer.append("teamID=").append(m_htTeamdetails.get("TeamID")).append('\n');
+        m_sHRFBuffer.append("teamName=").append(m_htTeamdetails.get("TeamName")).append('\n');
+        m_sHRFBuffer.append("owner=").append(m_htTeamdetails.get("Loginname")).append('\n');
+        m_sHRFBuffer.append("ownerEmail=").append(m_htTeamdetails.get("Email")).append('\n');
+        m_sHRFBuffer.append("ownerICQ=").append(m_htTeamdetails.get("ICQ")).append('\n');
+        m_sHRFBuffer.append("ownerHomepage=").append(m_htTeamdetails.get("HomePage")).append('\n');
+        m_sHRFBuffer.append("countryID=").append(m_htWorld.get("CountryID")).append('\n');
+        m_sHRFBuffer.append("leagueID=").append(m_htTeamdetails.get("LeagueID")).append('\n');
+        m_sHRFBuffer.append("regionID=").append(m_htTeamdetails.get("RegionID")).append('\n');
+        m_sHRFBuffer.append("hasSupporter=").append(m_htTeamdetails.get("HasSupporter")).append('\n');
     }
 
     /**
@@ -239,15 +238,15 @@ public class ConvertXml2Hrf {
      */
     protected final void createClub() throws Exception {
         m_sHRFBuffer.append("[club]\n");
-        m_sHRFBuffer.append("hjTranare=" + m_htClub.get("AssistantTrainers") + "\n");
-        m_sHRFBuffer.append("psykolog=" + m_htClub.get("Psychologists") + "\n");
-        m_sHRFBuffer.append("presstalesman=" + m_htClub.get("PressSpokesmen") + "\n");
-        m_sHRFBuffer.append("massor=" + m_htClub.get("Physiotherapists") + "\n");
-        m_sHRFBuffer.append("lakare=" + m_htClub.get("Doctors") + "\n");
-        m_sHRFBuffer.append("juniorverksamhet=" + m_htClub.get("YouthLevel") + "\n");
-        m_sHRFBuffer.append("undefeated=" + m_htTeamdetails.get("NumberOfUndefeated") + "\n");
-        m_sHRFBuffer.append("victories=" + m_htTeamdetails.get("NumberOfVictories") + "\n");
-        m_sHRFBuffer.append("fanclub=" + m_htEconomy.get("FanClubSize") + "\n");
+        m_sHRFBuffer.append("hjTranare=").append(m_htClub.get("AssistantTrainers")).append('\n');
+        m_sHRFBuffer.append("psykolog=").append(m_htClub.get("Psychologists")).append('\n');
+        m_sHRFBuffer.append("presstalesman=").append(m_htClub.get("PressSpokesmen")).append('\n');
+        m_sHRFBuffer.append("massor=").append(m_htClub.get("Physiotherapists")).append('\n');
+        m_sHRFBuffer.append("lakare=").append(m_htClub.get("Doctors")).append('\n');
+        m_sHRFBuffer.append("juniorverksamhet=").append(m_htClub.get("YouthLevel")).append('\n');
+        m_sHRFBuffer.append("undefeated=").append(m_htTeamdetails.get("NumberOfUndefeated")).append('\n');
+        m_sHRFBuffer.append("victories=").append(m_htTeamdetails.get("NumberOfVictories")).append('\n');
+        m_sHRFBuffer.append("fanclub=").append(m_htEconomy.get("FanClubSize")).append('\n');
     }
 
     /**
@@ -255,105 +254,105 @@ public class ConvertXml2Hrf {
      */
     protected final void createEconemy() throws Exception {
         //wahrscheinlich in Training.asp fehlt noch
-        m_sHRFBuffer.append("[economy]" + "\n");
+        m_sHRFBuffer.append("[economy]").append('\n');
 
         if (m_htEconomy.get("SponsorsPopularity") != null) {
-            m_sHRFBuffer.append("supporters=" + m_htEconomy.get("SupportersPopularity") + "\n");
-            m_sHRFBuffer.append("sponsors=" + m_htEconomy.get("SponsorsPopularity") + "\n");
+            m_sHRFBuffer.append("supporters=").append(m_htEconomy.get("SupportersPopularity")).append('\n');
+            m_sHRFBuffer.append("sponsors=").append(m_htEconomy.get("SponsorsPopularity")).append('\n');
 
             //es wird grad gespielt flag setzen
         } else {
             m_sHRFBuffer.append("playingMatch=true");
         }
 
-        m_sHRFBuffer.append("cash=" + m_htEconomy.get("Cash") + "\n");
-        m_sHRFBuffer.append("IncomeSponsorer=" + m_htEconomy.get("IncomeSponsors") + "\n");
-        m_sHRFBuffer.append("incomePublik=" + m_htEconomy.get("IncomeSpectators") + "\n");
-        m_sHRFBuffer.append("incomeFinansiella=" + m_htEconomy.get("IncomeFinancial") + "\n");
-        m_sHRFBuffer.append("incomeTillfalliga=" + m_htEconomy.get("IncomeTemporary") + "\n");
-        m_sHRFBuffer.append("incomeSumma=" + m_htEconomy.get("IncomeSum") + "\n");
-        m_sHRFBuffer.append("costsSpelare=" + m_htEconomy.get("CostsPlayers") + "\n");
-        m_sHRFBuffer.append("costsPersonal=" + m_htEconomy.get("CostsStaff") + "\n");
-        m_sHRFBuffer.append("costsArena=" + m_htEconomy.get("CostsArena") + "\n");
-        m_sHRFBuffer.append("costsJuniorverksamhet=" + m_htEconomy.get("CostsYouth") + "\n");
-        m_sHRFBuffer.append("costsRantor=" + m_htEconomy.get("CostsFinancial") + "\n");
-        m_sHRFBuffer.append("costsTillfalliga=" + m_htEconomy.get("CostsTemporary") + "\n");
-        m_sHRFBuffer.append("costsSumma=" + m_htEconomy.get("CostsSum") + "\n");
-        m_sHRFBuffer.append("total=" + m_htEconomy.get("ExpectedWeeksTotal") + "\n");
-        m_sHRFBuffer.append("lastIncomeSponsorer=" + m_htEconomy.get("LastIncomeSponsors") + "\n");
-        m_sHRFBuffer.append("lastIncomePublik=" + m_htEconomy.get("LastIncomeSpectators") + "\n");
-        m_sHRFBuffer.append("lastIncomeFinansiella=" + m_htEconomy.get("LastIncomeFinancial") + "\n");
-        m_sHRFBuffer.append("lastIncomeTillfalliga=" + m_htEconomy.get("LastIncomeTemporary") + "\n");
-        m_sHRFBuffer.append("lastIncomeSumma=" + m_htEconomy.get("LastIncomeSum") + "\n");
-        m_sHRFBuffer.append("lastCostsSpelare=" + m_htEconomy.get("LastCostsPlayers") + "\n");
-        m_sHRFBuffer.append("lastCostsPersonal=" + m_htEconomy.get("LastCostsStaff") + "\n");
-        m_sHRFBuffer.append("lastCostsArena=" + m_htEconomy.get("LastCostsArena") + "\n");
-        m_sHRFBuffer.append("lastCostsJuniorverksamhet=" + m_htEconomy.get("LastCostsYouth") + "\n");
-        m_sHRFBuffer.append("lastCostsRantor=" + m_htEconomy.get("LastCostsFinancial") + "\n");
-        m_sHRFBuffer.append("lastCostsTillfalliga=" + m_htEconomy.get("LastCostsTemporary") + "\n");
-        m_sHRFBuffer.append("lastCostsSumma=" + m_htEconomy.get("LastCostsSum") + "\n");
-        m_sHRFBuffer.append("lastTotal=" + m_htEconomy.get("LastWeeksTotal") + "\n");
+        m_sHRFBuffer.append("cash=").append(m_htEconomy.get("Cash")).append('\n');
+        m_sHRFBuffer.append("IncomeSponsorer=").append(m_htEconomy.get("IncomeSponsors")).append('\n');
+        m_sHRFBuffer.append("incomePublik=").append(m_htEconomy.get("IncomeSpectators")).append('\n');
+        m_sHRFBuffer.append("incomeFinansiella=").append(m_htEconomy.get("IncomeFinancial")).append('\n');
+        m_sHRFBuffer.append("incomeTillfalliga=").append(m_htEconomy.get("IncomeTemporary")).append('\n');
+        m_sHRFBuffer.append("incomeSumma=").append(m_htEconomy.get("IncomeSum")).append('\n');
+        m_sHRFBuffer.append("costsSpelare=").append(m_htEconomy.get("CostsPlayers")).append('\n');
+        m_sHRFBuffer.append("costsPersonal=").append(m_htEconomy.get("CostsStaff")).append('\n');
+        m_sHRFBuffer.append("costsArena=").append(m_htEconomy.get("CostsArena")).append('\n');
+        m_sHRFBuffer.append("costsJuniorverksamhet=").append(m_htEconomy.get("CostsYouth")).append('\n');
+        m_sHRFBuffer.append("costsRantor=").append(m_htEconomy.get("CostsFinancial")).append('\n');
+        m_sHRFBuffer.append("costsTillfalliga=").append(m_htEconomy.get("CostsTemporary")).append('\n');
+        m_sHRFBuffer.append("costsSumma=").append(m_htEconomy.get("CostsSum")).append('\n');
+        m_sHRFBuffer.append("total=").append(m_htEconomy.get("ExpectedWeeksTotal")).append('\n');
+        m_sHRFBuffer.append("lastIncomeSponsorer=").append(m_htEconomy.get("LastIncomeSponsors")).append('\n');
+        m_sHRFBuffer.append("lastIncomePublik=").append(m_htEconomy.get("LastIncomeSpectators")).append('\n');
+        m_sHRFBuffer.append("lastIncomeFinansiella=").append(m_htEconomy.get("LastIncomeFinancial")).append('\n');
+        m_sHRFBuffer.append("lastIncomeTillfalliga=").append(m_htEconomy.get("LastIncomeTemporary")).append('\n');
+        m_sHRFBuffer.append("lastIncomeSumma=").append(m_htEconomy.get("LastIncomeSum")).append('\n');
+        m_sHRFBuffer.append("lastCostsSpelare=").append(m_htEconomy.get("LastCostsPlayers")).append('\n');
+        m_sHRFBuffer.append("lastCostsPersonal=").append(m_htEconomy.get("LastCostsStaff")).append('\n');
+        m_sHRFBuffer.append("lastCostsArena=").append(m_htEconomy.get("LastCostsArena")).append('\n');
+        m_sHRFBuffer.append("lastCostsJuniorverksamhet=").append(m_htEconomy.get("LastCostsYouth")).append('\n');
+        m_sHRFBuffer.append("lastCostsRantor=").append(m_htEconomy.get("LastCostsFinancial")).append('\n');
+        m_sHRFBuffer.append("lastCostsTillfalliga=").append(m_htEconomy.get("LastCostsTemporary")).append('\n');
+        m_sHRFBuffer.append("lastCostsSumma=").append(m_htEconomy.get("LastCostsSum")).append('\n');
+        m_sHRFBuffer.append("lastTotal=").append(m_htEconomy.get("LastWeeksTotal")).append('\n');
     }
 
     /**
      * Create last lineup section.
      */
     protected final void createLastLineUp() {
-        m_sHRFBuffer.append("[lastlineup]" + "\n");
-        m_sHRFBuffer.append("trainer=" + m_htTeamdetails.get("TrainerID") + "\n");
+        m_sHRFBuffer.append("[lastlineup]").append('\n');
+        m_sHRFBuffer.append("trainer=").append(m_htTeamdetails.get("TrainerID")).append('\n');
 
            
         try {
-			m_sHRFBuffer.append("installning=" + m_iLastAttitude + "\n");
-			m_sHRFBuffer.append("tactictype=" + m_iLastTactic + "\n");
-			m_sHRFBuffer.append("keeper=" + m_clTeam.getPlayerByPosition(ISpielerPosition.keeper).getSpielerId() + "\n");
-			m_sHRFBuffer.append("rightBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideBack1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideBack2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideBack3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getSpielerId() + "\n");
-			m_sHRFBuffer.append("leftBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getSpielerId() + "\n");
-			m_sHRFBuffer.append("rightWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideMid1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideMid2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getSpielerId() + "\n");
-			m_sHRFBuffer.append("insideMid3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getSpielerId() + "\n");
-			m_sHRFBuffer.append("leftWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getSpielerId() + "\n");
-			m_sHRFBuffer.append("forward1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getSpielerId() + "\n");
-			m_sHRFBuffer.append("forward2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getSpielerId() + "\n");
-			m_sHRFBuffer.append("forward3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getSpielerId() + "\n");
-			m_sHRFBuffer.append("substBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.substDefender).getSpielerId() + "\n");
-			m_sHRFBuffer.append("substInsideMid=" + m_clTeam.getPlayerByPosition(ISpielerPosition.substInnerMidfield).getSpielerId() + "\n");
-			m_sHRFBuffer.append("substWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.substWinger).getSpielerId() + "\n");
-			m_sHRFBuffer.append("substKeeper=" + m_clTeam.getPlayerByPosition(ISpielerPosition.substKeeper).getSpielerId() + "\n");
-			m_sHRFBuffer.append("substForward=" + m_clTeam.getPlayerByPosition(ISpielerPosition.substForward).getSpielerId() + "\n");
-			m_sHRFBuffer.append("captain=" + m_clTeam.getPlayerByPosition(ISpielerPosition.captain).getSpielerId() + "\n");
-			m_sHRFBuffer.append("kicker1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.setPieces).getSpielerId() + "\n");
+			m_sHRFBuffer.append("installning=").append(m_iLastAttitude + "\n");
+			m_sHRFBuffer.append("tactictype=").append(m_iLastTactic + "\n");
+			m_sHRFBuffer.append("keeper=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.keeper).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("rightBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideBack1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideBack2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideBack3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("leftBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("rightWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideMid1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideMid2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("insideMid3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("leftWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("forward1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("forward2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("forward3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("substBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substDefender).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("substInsideMid=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substInnerMidfield).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("substWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substWinger).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("substKeeper=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substKeeper).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("substForward=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substForward).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("captain=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.captain).getSpielerId()).append('\n');
+			m_sHRFBuffer.append("kicker1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.setPieces).getSpielerId()).append('\n');
 
-			m_sHRFBuffer.append("behrightBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideBack1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideBack2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideBack3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getTaktik() + "\n");
-			m_sHRFBuffer.append("behleftBack=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getTaktik() + "\n");
-			m_sHRFBuffer.append("behrightWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideMid1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideMid2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getTaktik() + "\n");
-			m_sHRFBuffer.append("behinsideMid3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getTaktik() + "\n");
-			m_sHRFBuffer.append("behleftWinger=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getTaktik() + "\n");
-			m_sHRFBuffer.append("behforward1=" + m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getTaktik() + "\n");
-			m_sHRFBuffer.append("behforward2=" + m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik() + "\n");
-			m_sHRFBuffer.append("behforward3=" + m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik() + "\n");
+			m_sHRFBuffer.append("behrightBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideBack1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideBack2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideBack3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behleftBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behrightWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideMid1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideMid2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behinsideMid3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behleftWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behforward1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behforward2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik()).append('\n');
+			m_sHRFBuffer.append("behforward3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik()).append('\n');
 			
 			int i = 0;
 			for (Substitution sub:  m_clTeam.getSubstitutions()) {
 				if (sub != null) {
-					m_sHRFBuffer.append("subst" + i + "playerOrderID=" + sub.getPlayerOrderId() + "\n");
-					m_sHRFBuffer.append("subst" + i + "playerIn=" + sub.getObjectPlayerID() + "\n");
-					m_sHRFBuffer.append("subst" + i + "playerOut=" + sub.getSubjectPlayerID() + "\n");
-					m_sHRFBuffer.append("subst" + i + "orderType=" + sub.getOrderType().getId() + "\n");
-					m_sHRFBuffer.append("subst" + i + "matchMinuteCriteria=" + sub.getMatchMinuteCriteria() + "\n");
-					m_sHRFBuffer.append("subst" + i + "pos=" + sub.getPos() + "\n");
-					m_sHRFBuffer.append("subst" + i + "behaviour=" + sub.getBehaviour() + "\n");
-					m_sHRFBuffer.append("subst" + i + "card=" + sub.getRedCardCriteria().getId() + "\n");
-					m_sHRFBuffer.append("subst" + i + "standing=" + sub.getStanding().getId() + "\n");
+					m_sHRFBuffer.append("subst").append(i).append("playerOrderID=").append(sub.getPlayerOrderId()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("playerIn=").append(sub.getObjectPlayerID()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("playerOut=").append(sub.getSubjectPlayerID()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("orderType=").append(sub.getOrderType().getId()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("matchMinuteCriteria=").append(sub.getMatchMinuteCriteria()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("pos=").append(sub.getPos()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("behaviour=").append(sub.getBehaviour()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("card=").append(sub.getRedCardCriteria().getId()).append('\n');
+					m_sHRFBuffer.append("subst").append(i).append("standing=").append(sub.getStanding().getId()).append('\n');
 					i++;
 				}
 			}
@@ -369,12 +368,12 @@ public class ConvertXml2Hrf {
      */
     protected final void createLeague() throws Exception {
         m_sHRFBuffer.append("[league]\n");
-        m_sHRFBuffer.append("serie=" + m_htLiga.get("LeagueLevelUnitName") + "\n");
-        m_sHRFBuffer.append("spelade=" + m_htLiga.get("Matches") + "\n");
-        m_sHRFBuffer.append("gjorda=" + m_htLiga.get("GoalsFor") + "\n");
-        m_sHRFBuffer.append("inslappta=" + m_htLiga.get("GoalsAgainst") + "\n");
-        m_sHRFBuffer.append("poang=" + m_htLiga.get("Points") + "\n");
-        m_sHRFBuffer.append("placering=" + m_htLiga.get("Position") + "\n");
+        m_sHRFBuffer.append("serie=").append(m_htLiga.get("LeagueLevelUnitName")).append('\n');
+        m_sHRFBuffer.append("spelade=").append(m_htLiga.get("Matches")).append('\n');
+        m_sHRFBuffer.append("gjorda=").append(m_htLiga.get("GoalsFor")).append('\n');
+        m_sHRFBuffer.append("inslappta=").append(m_htLiga.get("GoalsAgainst")).append('\n');
+        m_sHRFBuffer.append("poang=").append(m_htLiga.get("Points")).append('\n');
+        m_sHRFBuffer.append("placering=").append(m_htLiga.get("Position")).append('\n');
     }
 
     private String getPlayerForNextLineup(String position, Map<?, ?> next) {
@@ -411,66 +410,67 @@ public class ConvertXml2Hrf {
     */
     public final String createLineUp(String trainerId, Map<?, ?> nextLineup) throws Exception {
     	StringBuilder buffer = new StringBuilder();
-    	buffer.append("[lineup]" + "\n");
+    	buffer.append("[lineup]").append('\n');
 
         try {
-        	buffer.append("trainer=" + trainerId + "\n");
-        	buffer.append("installning=" + nextLineup.get("Attitude") + "\n");
-        	buffer.append("tactictype="+ (nextLineup.get("TacticType").toString().trim().equals("") ? "0" : nextLineup.get("TacticType").toString().trim()) + "\n");
+        	buffer.append("trainer=").append(trainerId).append('\n');
+        	buffer.append("installning=").append(nextLineup.get("Attitude")).append('\n');
+        	buffer.append("tactictype=").append((nextLineup.get("TacticType").toString().trim().equals("") ? "0" : nextLineup.get("TacticType").toString().trim())).append('\n');
            
-			buffer.append("keeper=" + getPlayerForNextLineup("KeeperID", nextLineup) + "\n");
-            buffer.append("rightBack=" + getPlayerForNextLineup("RightBackID", nextLineup) + "\n");
-            buffer.append("insideBack1=" + getPlayerForNextLineup("RightCentralDefenderID", nextLineup) + "\n");
-            buffer.append("insideBack2=" + getPlayerForNextLineup("LeftCentralDefenderID", nextLineup) + "\n");
-            buffer.append("insideBack3=" + getPlayerForNextLineup("MiddleCentralDefenderID", nextLineup) + "\n");
-            buffer.append("leftBack=" + getPlayerForNextLineup("LeftBackID", nextLineup) + "\n");
-            buffer.append("rightWinger=" + getPlayerForNextLineup("RightWingerID", nextLineup) + "\n");
-            buffer.append("insideMid1=" + getPlayerForNextLineup("RightInnerMidfieldID", nextLineup) + "\n");
-            buffer.append("insideMid2=" + getPlayerForNextLineup("LeftInnerMidfieldID", nextLineup) + "\n");
-            buffer.append("insideMid3=" + getPlayerForNextLineup("CentralInnerMidfieldID", nextLineup) + "\n");
-            buffer.append("leftWinger=" + getPlayerForNextLineup("LeftWingerID", nextLineup) + "\n");
-            buffer.append("forward1=" + getPlayerForNextLineup("RightForwardID", nextLineup) + "\n");
-            buffer.append("forward2=" + getPlayerForNextLineup("LeftForwardID", nextLineup) + "\n");
-            buffer.append("forward3=" + getPlayerForNextLineup("CentralForwardID", nextLineup) + "\n");
-            buffer.append("substBack=" + getPlayerForNextLineup("SubstBackID", nextLineup) + "\n");
-            buffer.append("substInsideMid=" + getPlayerForNextLineup("SubstInsideMidID", nextLineup) + "\n");
-            buffer.append("substWinger=" + getPlayerForNextLineup("SubstWingerID", nextLineup) + "\n");
-            buffer.append("substKeeper=" + getPlayerForNextLineup("SubstKeeperID", nextLineup) + "\n");
-            buffer.append("substForward=" + getPlayerForNextLineup("SubstForwardID", nextLineup) + "\n");
-            buffer.append("captain=" + getPlayerForNextLineup("CaptainID", nextLineup) + "\n");
-            buffer.append("kicker1=" + getPlayerForNextLineup("KickerID", nextLineup) + "\n");
+			buffer.append("keeper=").append(getPlayerForNextLineup("KeeperID", nextLineup)).append('\n');
+            buffer.append("rightBack=").append(getPlayerForNextLineup("RightBackID", nextLineup)).append('\n');
+            buffer.append("insideBack1=").append(getPlayerForNextLineup("RightCentralDefenderID", nextLineup)).append('\n');
+            buffer.append("insideBack2=").append(getPlayerForNextLineup("LeftCentralDefenderID", nextLineup)).append('\n');
+            buffer.append("insideBack3=").append(getPlayerForNextLineup("MiddleCentralDefenderID", nextLineup)).append('\n');
+            buffer.append("leftBack=").append(getPlayerForNextLineup("LeftBackID", nextLineup)).append('\n');
+            buffer.append("rightWinger=").append(getPlayerForNextLineup("RightWingerID", nextLineup)).append('\n');
+            buffer.append("insideMid1=").append(getPlayerForNextLineup("RightInnerMidfieldID", nextLineup)).append('\n');
+            buffer.append("insideMid2=").append(getPlayerForNextLineup("LeftInnerMidfieldID", nextLineup)).append('\n');
+            buffer.append("insideMid3=").append(getPlayerForNextLineup("CentralInnerMidfieldID", nextLineup)).append('\n');
+            buffer.append("leftWinger=").append(getPlayerForNextLineup("LeftWingerID", nextLineup)).append('\n');
+            buffer.append("forward1=").append(getPlayerForNextLineup("RightForwardID", nextLineup)).append('\n');
+            buffer.append("forward2=").append(getPlayerForNextLineup("LeftForwardID", nextLineup)).append('\n');
+            buffer.append("forward3=").append(getPlayerForNextLineup("CentralForwardID", nextLineup)).append('\n');
+            buffer.append("substBack=").append(getPlayerForNextLineup("SubstBackID", nextLineup)).append('\n');
+            buffer.append("substInsideMid=").append(getPlayerForNextLineup("SubstInsideMidID", nextLineup)).append('\n');
+            buffer.append("substWinger=").append(getPlayerForNextLineup("SubstWingerID", nextLineup)).append('\n');
+            buffer.append("substKeeper=").append(getPlayerForNextLineup("SubstKeeperID", nextLineup)).append('\n');
+            buffer.append("substForward=").append(getPlayerForNextLineup("SubstForwardID", nextLineup)).append('\n');
+            buffer.append("captain=").append(getPlayerForNextLineup("CaptainID", nextLineup)).append('\n');
+            buffer.append("kicker1=").append(getPlayerForNextLineup("KickerID", nextLineup)).append('\n');
             
-			buffer.append("behrightBack=" + getPlayerOrderForNextLineup("RightBackOrder", nextLineup) + "\n");
-			buffer.append("behinsideBack1=" + getPlayerOrderForNextLineup("RightCentralDefenderOrder", nextLineup) + "\n");
-			buffer.append("behinsideBack2=" + getPlayerOrderForNextLineup("LeftCentralDefenderOrder", nextLineup) + "\n");
-			buffer.append("behinsideBack3=" + getPlayerOrderForNextLineup("MiddleCentralDefenderOrder", nextLineup) + "\n");
-			buffer.append("behleftBack=" + getPlayerOrderForNextLineup("LeftBackOrder", nextLineup) + "\n");
-			buffer.append("behrightWinger=" + getPlayerOrderForNextLineup("RightWingerOrder", nextLineup) + "\n");
-			buffer.append("behinsideMid1=" + getPlayerOrderForNextLineup("RightInnerMidfieldOrder", nextLineup) + "\n");
-			buffer.append("behinsideMid2=" + getPlayerOrderForNextLineup("LeftInnerMidfieldOrder", nextLineup) + "\n");
-			buffer.append("behinsideMid3=" + getPlayerOrderForNextLineup("CentralInnerMidfieldOrder", nextLineup) + "\n");
-			buffer.append("behleftWinger=" + getPlayerOrderForNextLineup("LeftWingerOrder", nextLineup) + "\n");
-			buffer.append("behforward1=" + getPlayerOrderForNextLineup("RightForwardOrder", nextLineup) + "\n");
-			buffer.append("behforward2=" + getPlayerOrderForNextLineup("LeftForwardOrder", nextLineup) + "\n");
-			buffer.append("behforward3=" + getPlayerOrderForNextLineup("CentralForwardOrder", nextLineup) + "\n");
+			buffer.append("behrightBack=").append(getPlayerOrderForNextLineup("RightBackOrder", nextLineup)).append('\n');
+			buffer.append("behinsideBack1=").append(getPlayerOrderForNextLineup("RightCentralDefenderOrder", nextLineup)).append('\n');
+			buffer.append("behinsideBack2=").append(getPlayerOrderForNextLineup("LeftCentralDefenderOrder", nextLineup)).append('\n');
+			buffer.append("behinsideBack3=").append(getPlayerOrderForNextLineup("MiddleCentralDefenderOrder", nextLineup)).append('\n');
+			buffer.append("behleftBack=").append(getPlayerOrderForNextLineup("LeftBackOrder", nextLineup)).append('\n');
+			buffer.append("behrightWinger=").append(getPlayerOrderForNextLineup("RightWingerOrder", nextLineup)).append('\n');
+			buffer.append("behinsideMid1=").append(getPlayerOrderForNextLineup("RightInnerMidfieldOrder", nextLineup)).append('\n');
+			buffer.append("behinsideMid2=").append(getPlayerOrderForNextLineup("LeftInnerMidfieldOrder", nextLineup)).append('\n');
+			buffer.append("behinsideMid3=").append(getPlayerOrderForNextLineup("CentralInnerMidfieldOrder", nextLineup)).append('\n');
+			buffer.append("behleftWinger=").append(getPlayerOrderForNextLineup("LeftWingerOrder", nextLineup)).append('\n');
+			buffer.append("behforward1=").append(getPlayerOrderForNextLineup("RightForwardOrder", nextLineup)).append('\n');
+			buffer.append("behforward2=").append(getPlayerOrderForNextLineup("LeftForwardOrder", nextLineup)).append('\n');
+			buffer.append("behforward3=").append(getPlayerOrderForNextLineup("CentralForwardOrder", nextLineup)).append('\n');
 			
 			for (int i = 0; i < 5; i++) {
-				if (nextLineup.get("subst" + i + "playerOrderID") != null) {
-					buffer.append("subst" + i + "playerOrderID=" + nextLineup.get("subst" + i + "playerOrderID") + "\n");
-					buffer.append("subst" + i + "playerIn=" + nextLineup.get("subst" + i + "playerIn") + "\n");
-					buffer.append("subst" + i + "playerOut=" + nextLineup.get("subst" + i + "playerOut") + "\n");
-					buffer.append("subst" + i + "orderType=" + nextLineup.get("subst" + i + "orderType") + "\n");
-					buffer.append("subst" + i + "matchMinuteCriteria=" + nextLineup.get("subst" + i + "matchMinuteCriteria") + "\n");
-					buffer.append("subst" + i + "pos=" + nextLineup.get("subst" + i + "pos") + "\n");
-					buffer.append("subst" + i + "behaviour=" + nextLineup.get("subst" + i + "behaviour") + "\n");
-					buffer.append("subst" + i + "card=" + nextLineup.get("subst" + i + "card") + "\n");
-					buffer.append("subst" + i + "standing=" + nextLineup.get("subst" + i + "standing") + "\n");
+				String substNext = "subst" + i;
+				if (nextLineup.get(substNext + "playerOrderID") != null) {
+					buffer.append(substNext).append("playerOrderID=").append(nextLineup.get(substNext + "playerOrderID")).append('\n');
+					buffer.append(substNext).append("playerIn=").append(nextLineup.get(substNext + "playerIn")).append('\n');
+					buffer.append(substNext).append("playerOut=").append(nextLineup.get(substNext + "playerOut")).append('\n');
+					buffer.append(substNext).append("orderType=").append(nextLineup.get(substNext + "orderType")).append('\n');
+					buffer.append(substNext).append("matchMinuteCriteria=").append(nextLineup.get(substNext + "matchMinuteCriteria")).append('\n');
+					buffer.append(substNext).append("pos=").append(nextLineup.get(substNext + "pos")).append('\n');
+					buffer.append(substNext).append("behaviour=").append(nextLineup.get(substNext + "behaviour")).append('\n');
+					buffer.append(substNext).append("card=").append(nextLineup.get(substNext + "card")).append('\n');
+					buffer.append(substNext).append("standing=").append(nextLineup.get(substNext + "standing")).append('\n');
 				}
 			}
 			
 			for (int i = 0; i < 11; i++) {
 				String key = "PenaltyTaker" + i;
-				buffer.append("penalty" + i + "=" + getPlayerForNextLineup(key, nextLineup) + "\n");
+				buffer.append("penalty").append(i).append("=").append(getPlayerForNextLineup(key, nextLineup)).append('\n');
 			}
 			
         } catch (Exception e) {
@@ -488,96 +488,86 @@ public class ConvertXml2Hrf {
         for (int i = 0; (m_vSpieler != null) && (i < m_vSpieler.size()); i++) {
             ht = (Hashtable<?, ?>) m_vSpieler.elementAt(i);
 
-            m_sHRFBuffer.append("[player" + ht.get("PlayerID").toString() + "]" + "\n");
+            m_sHRFBuffer.append("[player").append(ht.get("PlayerID").toString()).append(']').append('\n');
            
             if (ht.get("NickName").toString().length()>0) {
-            	m_sHRFBuffer.append("name=" + 
-            		ht.get("FirstName").toString() + " '" +
-            		ht.get("NickName").toString() + "' " +
-            		ht.get("LastName").toString() + "\n");
+            	m_sHRFBuffer.append("name=");
+            	m_sHRFBuffer.append(ht.get("FirstName").toString()).append(" '");
+            	m_sHRFBuffer.append(ht.get("NickName").toString()).append("' ");
+       			m_sHRFBuffer.append(ht.get("LastName").toString()).append('\n');
             } else {
-            	m_sHRFBuffer.append("name=" + 
-                		ht.get("FirstName").toString() + " " +
-                		ht.get("LastName").toString() + "\n");
+            	m_sHRFBuffer.append("name=");
+            	m_sHRFBuffer.append(ht.get("FirstName").toString()).append(' ');
+       			m_sHRFBuffer.append(ht.get("LastName").toString()).append('\n');
             }
-            m_sHRFBuffer.append("firstname=" + ht.get("FirstName").toString() + "\n");
-            m_sHRFBuffer.append("nickname=" + ht.get("NickName").toString() + "\n");
-            m_sHRFBuffer.append("lastname=" + ht.get("LastName").toString() + "\n");
-            m_sHRFBuffer.append("ald=" + ht.get("Age").toString() + "\n");
-            m_sHRFBuffer.append("agedays=" + ht.get("AgeDays").toString() + "\n");
-            m_sHRFBuffer.append("ska=" + ht.get("InjuryLevel").toString() + "\n");
-            m_sHRFBuffer.append("for=" + ht.get("PlayerForm").toString() + "\n");
-            m_sHRFBuffer.append("uth=" + ht.get("StaminaSkill").toString() + "\n");
-            m_sHRFBuffer.append("spe=" + ht.get("PlaymakerSkill").toString() + "\n");
-            m_sHRFBuffer.append("mal=" + ht.get("ScorerSkill").toString() + "\n");
-            m_sHRFBuffer.append("fra=" + ht.get("PassingSkill").toString() + "\n");
-            m_sHRFBuffer.append("ytt=" + ht.get("WingerSkill").toString() + "\n");
-            m_sHRFBuffer.append("fas=" + ht.get("SetPiecesSkill").toString() + "\n");
-            m_sHRFBuffer.append("bac=" + ht.get("DefenderSkill").toString() + "\n");
-            m_sHRFBuffer.append("mlv=" + ht.get("KeeperSkill").toString() + "\n");
-            m_sHRFBuffer.append("rut=" + ht.get("Experience").toString() + "\n");
-            m_sHRFBuffer.append("loy=" + ht.get("Loyalty").toString() + "\n");
-            m_sHRFBuffer.append("homegr=" + ht.get("MotherClubBonus").toString() + "\n");
-            m_sHRFBuffer.append("led=" + ht.get("Leadership").toString() + "\n");
-            m_sHRFBuffer.append("sal=" + ht.get("Salary").toString() + "\n");
-            m_sHRFBuffer.append("mkt=" + ht.get("MarketValue").toString() + "\n");
-            m_sHRFBuffer.append("gev=" + ht.get("CareerGoals").toString() + "\n");
-            m_sHRFBuffer.append("gtl=" + ht.get("LeagueGoals").toString() + "\n");
-            m_sHRFBuffer.append("gtc=" + ht.get("CupGoals").toString() + "\n");
-            m_sHRFBuffer.append("gtt=" + ht.get("FriendliesGoals").toString() + "\n");
-            m_sHRFBuffer.append("hat=" + ht.get("CareerHattricks").toString() + "\n");
-            m_sHRFBuffer.append("CountryID=" + ht.get("CountryID").toString() + "\n");
-            m_sHRFBuffer.append("warnings=" + ht.get("Cards").toString() + "\n");
-            m_sHRFBuffer.append("speciality=" + ht.get("Specialty").toString() + "\n");
-            m_sHRFBuffer.append("specialityLabel="
-                                + PlayerSpeciality.toString(Integer.parseInt(ht.get("Specialty")
-                                                                                       .toString()))
-                                + "\n");
-            m_sHRFBuffer.append("gentleness=" + ht.get("Agreeability").toString() + "\n");
-            m_sHRFBuffer.append("gentlenessLabel="
-                                + PlayerAgreeability.toString(Integer.parseInt(ht.get("Agreeability")
-                                                                                       .toString()))
-                                + "\n");
-            m_sHRFBuffer.append("honesty=" + ht.get("Honesty").toString() + "\n");
-            m_sHRFBuffer.append("honestyLabel="
-                                + PlayerHonesty.toString(Integer.parseInt(ht.get("Honesty")
-                                                                                      .toString()))
-                                + "\n");
-            m_sHRFBuffer.append("Aggressiveness=" + ht.get("Aggressiveness").toString() + "\n");
-            m_sHRFBuffer.append("AggressivenessLabel="
-                                + PlayerAggressiveness.toString(Integer.parseInt(ht.get("Aggressiveness")
-                                                                                          .toString()))
-                                + "\n");
+            m_sHRFBuffer.append("firstname=").append(ht.get("FirstName").toString()).append('\n');
+            m_sHRFBuffer.append("nickname=").append(ht.get("NickName").toString()).append('\n');
+            m_sHRFBuffer.append("lastname=").append(ht.get("LastName").toString()).append('\n');
+            m_sHRFBuffer.append("ald=").append(ht.get("Age").toString()).append('\n');
+            m_sHRFBuffer.append("agedays=").append(ht.get("AgeDays").toString()).append('\n');
+            m_sHRFBuffer.append("ska=").append(ht.get("InjuryLevel").toString()).append('\n');
+            m_sHRFBuffer.append("for=").append(ht.get("PlayerForm").toString()).append('\n');
+            m_sHRFBuffer.append("uth=").append(ht.get("StaminaSkill").toString()).append('\n');
+            m_sHRFBuffer.append("spe=").append(ht.get("PlaymakerSkill").toString()).append('\n');
+            m_sHRFBuffer.append("mal=").append(ht.get("ScorerSkill").toString()).append('\n');
+            m_sHRFBuffer.append("fra=").append(ht.get("PassingSkill").toString()).append('\n');
+            m_sHRFBuffer.append("ytt=").append(ht.get("WingerSkill").toString()).append('\n');
+            m_sHRFBuffer.append("fas=").append(ht.get("SetPiecesSkill").toString()).append('\n');
+            m_sHRFBuffer.append("bac=").append(ht.get("DefenderSkill").toString()).append('\n');
+            m_sHRFBuffer.append("mlv=").append(ht.get("KeeperSkill").toString()).append('\n');
+            m_sHRFBuffer.append("rut=").append(ht.get("Experience").toString()).append('\n');
+            m_sHRFBuffer.append("loy=").append(ht.get("Loyalty").toString()).append('\n');
+            m_sHRFBuffer.append("homegr=").append(ht.get("MotherClubBonus").toString()).append('\n');
+            m_sHRFBuffer.append("led=").append(ht.get("Leadership").toString()).append('\n');
+            m_sHRFBuffer.append("sal=").append(ht.get("Salary").toString()).append('\n');
+            m_sHRFBuffer.append("mkt=").append(ht.get("MarketValue").toString()).append('\n');
+            m_sHRFBuffer.append("gev=").append(ht.get("CareerGoals").toString()).append('\n');
+            m_sHRFBuffer.append("gtl=").append(ht.get("LeagueGoals").toString()).append('\n');
+            m_sHRFBuffer.append("gtc=").append(ht.get("CupGoals").toString()).append('\n');
+            m_sHRFBuffer.append("gtt=").append(ht.get("FriendliesGoals").toString()).append('\n');
+            m_sHRFBuffer.append("hat=").append(ht.get("CareerHattricks").toString()).append('\n');
+            m_sHRFBuffer.append("CountryID=").append(ht.get("CountryID").toString()).append('\n');
+            m_sHRFBuffer.append("warnings=").append(ht.get("Cards").toString()).append('\n');
+            m_sHRFBuffer.append("speciality=").append(ht.get("Specialty").toString()).append('\n');
+            m_sHRFBuffer.append("specialityLabel=").append(PlayerSpeciality.toString(
+            		Integer.parseInt(ht.get("Specialty").toString()))).append('\n');
+            m_sHRFBuffer.append("gentleness=").append(ht.get("Agreeability").toString()).append('\n');
+            m_sHRFBuffer.append("gentlenessLabel=").append(PlayerAgreeability.toString(
+            		Integer.parseInt(ht.get("Agreeability").toString()))).append('\n');
+            m_sHRFBuffer.append("honesty=").append(ht.get("Honesty").toString() + "\n");
+            m_sHRFBuffer.append("honestyLabel=").append(PlayerHonesty.toString(
+            		Integer.parseInt(ht.get("Honesty").toString()))).append('\n');
+            m_sHRFBuffer.append("Aggressiveness=").append(ht.get("Aggressiveness").toString()).append('\n');
+            m_sHRFBuffer.append("AggressivenessLabel=").append(PlayerAggressiveness.toString(
+            		Integer.parseInt(ht.get("Aggressiveness").toString()))).append('\n');
 
             if (ht.get("TrainerSkill") != null) {
-                m_sHRFBuffer.append("TrainerType=" + ht.get("TrainerType").toString() + "\n");
-                m_sHRFBuffer.append("TrainerSkill=" + ht.get("TrainerSkill").toString() + "\n");
+                m_sHRFBuffer.append("TrainerType=").append(ht.get("TrainerType").toString()).append('\n');
+                m_sHRFBuffer.append("TrainerSkill=").append(ht.get("TrainerSkill").toString()).append('\n');
             } else {
-                m_sHRFBuffer.append("TrainerType=" + "\n");
-                m_sHRFBuffer.append("TrainerSkill=" + "\n");
+                m_sHRFBuffer.append("TrainerType=").append('\n');
+                m_sHRFBuffer.append("TrainerSkill=").append('\n');
             }
 
             if ((m_clTeam != null)
                 && (m_clTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString())) != null)
                 && (m_clTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString()))
                             .getRating() >= 0)) {
-                m_sHRFBuffer.append("rating="
-                                    + (int) (m_clTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID")
-                                                                                       .toString()))
-                                                     .getRating() * 2) + "\n");
+                m_sHRFBuffer.append("rating=").append((int) (m_clTeam.getPlayerByID(
+                		Integer.parseInt(ht.get("PlayerID").toString())).getRating() * 2)).append('\n');
             } else {
-                m_sHRFBuffer.append("rating=0" + "\n");
+                m_sHRFBuffer.append("rating=0").append('\n');
             }
 
             //Bonus
             if ((ht.get("PlayerNumber") != null) || (!ht.get("PlayerNumber").equals(""))) {
-                m_sHRFBuffer.append("PlayerNumber=" + ht.get("PlayerNumber") + "\n");
+                m_sHRFBuffer.append("PlayerNumber=").append(ht.get("PlayerNumber")).append('\n');
             }
 
-            m_sHRFBuffer.append("TransferListed=" + ht.get("TransferListed") + "\n");
-            m_sHRFBuffer.append("NationalTeamID=" + ht.get("NationalTeamID") + "\n");
-            m_sHRFBuffer.append("Caps=" + ht.get("Caps") + "\n");
-            m_sHRFBuffer.append("CapsU20=" + ht.get("CapsU20") + "\n");
+            m_sHRFBuffer.append("TransferListed=").append(ht.get("TransferListed")).append('\n');
+            m_sHRFBuffer.append("NationalTeamID=").append(ht.get("NationalTeamID")).append('\n');
+            m_sHRFBuffer.append("Caps=").append(ht.get("Caps")).append('\n');
+            m_sHRFBuffer.append("CapsU20=").append(ht.get("CapsU20")).append('\n');
         }
     }
 
@@ -586,37 +576,37 @@ public class ConvertXml2Hrf {
      */
     protected final void createTeam() throws Exception {
         m_sHRFBuffer.append("[team]" + "\n");
-        m_sHRFBuffer.append("trLevel=" + m_htTraining.get("TrainingLevel") + "\n");
-        m_sHRFBuffer.append("staminaTrainingPart=" + m_htTraining.get("StaminaTrainingPart") + "\n");
-        m_sHRFBuffer.append("trTypeValue=" + m_htTraining.get("TrainingType") + "\n");
-		m_sHRFBuffer.append("trType=" + TrainingType.toString(Integer.parseInt(m_htTraining.get("TrainingType").toString())) + "\n");
+        m_sHRFBuffer.append("trLevel=").append(m_htTraining.get("TrainingLevel")).append('\n');
+        m_sHRFBuffer.append("staminaTrainingPart=").append(m_htTraining.get("StaminaTrainingPart")).append('\n');
+        m_sHRFBuffer.append("trTypeValue=").append(m_htTraining.get("TrainingType")).append('\n');
+		m_sHRFBuffer.append("trType=").append(TrainingType.toString(Integer.parseInt(m_htTraining.get("TrainingType").toString()))).append('\n');
 
 		if ((m_htTraining.get("Morale") != null) && (m_htTraining.get("SelfConfidence") != null)) {
-			m_sHRFBuffer.append("stamningValue=" + m_htTraining.get("Morale") + "\n");
-			m_sHRFBuffer.append("stamning=" + TeamSpirit.toString(Integer.parseInt(m_htTraining.get("Morale").toString())) + "\n");
-			m_sHRFBuffer.append("sjalvfortroendeValue=" + m_htTraining.get("SelfConfidence") + "\n");
-			m_sHRFBuffer.append("sjalvfortroende=" + TeamConfidence.toString(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))+ "\n");
+			m_sHRFBuffer.append("stamningValue=").append(m_htTraining.get("Morale")).append('\n');
+			m_sHRFBuffer.append("stamning=").append(TeamSpirit.toString(Integer.parseInt(m_htTraining.get("Morale").toString()))).append('\n');
+			m_sHRFBuffer.append("sjalvfortroendeValue=").append(m_htTraining.get("SelfConfidence")).append('\n');
+			m_sHRFBuffer.append("sjalvfortroende=").append(TeamConfidence.toString(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))).append('\n');
         } else {
             m_sHRFBuffer.append("playingMatch=true");
         }
 
-        m_sHRFBuffer.append("exper433=" + m_htTraining.get("Experience433") + "\n");
-        m_sHRFBuffer.append("exper451=" + m_htTraining.get("Experience451") + "\n");
-        m_sHRFBuffer.append("exper352=" + m_htTraining.get("Experience352") + "\n");
-        m_sHRFBuffer.append("exper532=" + m_htTraining.get("Experience532") + "\n");
-        m_sHRFBuffer.append("exper343=" + m_htTraining.get("Experience343") + "\n");
-        m_sHRFBuffer.append("exper541=" + m_htTraining.get("Experience541") + "\n");
+        m_sHRFBuffer.append("exper433=").append(m_htTraining.get("Experience433")).append('\n');
+        m_sHRFBuffer.append("exper451=").append(m_htTraining.get("Experience451")).append('\n');
+        m_sHRFBuffer.append("exper352=").append(m_htTraining.get("Experience352")).append('\n');
+        m_sHRFBuffer.append("exper532=").append(m_htTraining.get("Experience532")).append('\n');
+        m_sHRFBuffer.append("exper343=").append(m_htTraining.get("Experience343")).append('\n');
+        m_sHRFBuffer.append("exper541=").append(m_htTraining.get("Experience541")).append('\n');
         if (m_htTraining.get("Experience442") != null) {
-        	m_sHRFBuffer.append("exper442=" + m_htTraining.get("Experience442") + "\n");
+        	m_sHRFBuffer.append("exper442=").append(m_htTraining.get("Experience442")).append('\n');
         }
         if (m_htTraining.get("Experience523") != null) {
-        	m_sHRFBuffer.append("exper523=" + m_htTraining.get("Experience523") + "\n");
+        	m_sHRFBuffer.append("exper523=").append(m_htTraining.get("Experience523")).append('\n');
         }
         if (m_htTraining.get("Experience550") != null) {
-        	m_sHRFBuffer.append("exper550=" + m_htTraining.get("Experience550") + "\n");
+        	m_sHRFBuffer.append("exper550=").append(m_htTraining.get("Experience550")).append('\n');
         }
         if (m_htTraining.get("Experience253") != null) {
-        	m_sHRFBuffer.append("exper253=" + m_htTraining.get("Experience253") + "\n");
+        	m_sHRFBuffer.append("exper253=").append(m_htTraining.get("Experience253")).append('\n');
         }
     }
 
@@ -625,26 +615,18 @@ public class ConvertXml2Hrf {
      */
     protected final void createWorld() throws Exception {
         m_sHRFBuffer.append("[xtra]\n");
+        m_sHRFBuffer.append("TrainingDate=").append( m_htWorld.get("TrainingDate")).append('\n');
+        m_sHRFBuffer.append("EconomyDate=").append(m_htWorld.get("EconomyDate")).append('\n');
+        m_sHRFBuffer.append("SeriesMatchDate=").append(m_htWorld.get("SeriesMatchDate")).append('\n');
+        m_sHRFBuffer.append("CurrencyName=").append(m_htWorld.get("CurrencyName")).append('\n');
+        m_sHRFBuffer.append("CurrencyRate=").append(m_htWorld.get("CurrencyRate").toString().replace(',', '.')).append('\n');
+        m_sHRFBuffer.append("LogoURL=").append(m_htTeamdetails.get("LogoURL")).append('\n');
+        m_sHRFBuffer.append("HasPromoted=").append(m_htClub.get("HasPromoted")).append('\n');
 
-        //schon in basics
-        //m_sHRFBuffer.append ( "LeagueID=" + m_htWorld.get ( "LeagueID" ) + "\n" );
-        //m_sHRFBuffer.append ( "season=" + m_htWorld.get ( "Season" ) + "\n" );
-        //m_sHRFBuffer.append ( "matchround=" + m_htWorld.get ( "MatchRound" ) + "\n" );
-        //m_sHRFBuffer.append ( "CountryID=" + m_htWorld.get ( "CountryID" ) + "\n" );
-        //m_sHRFBuffer.append ( "ownerICQ=" + m_htWorld.get ( "ICQ" ) + "\n" );
-        m_sHRFBuffer.append("TrainingDate=" + m_htWorld.get("TrainingDate") + "\n");
-        m_sHRFBuffer.append("EconomyDate=" + m_htWorld.get("EconomyDate") + "\n");
-        m_sHRFBuffer.append("SeriesMatchDate=" + m_htWorld.get("SeriesMatchDate") + "\n");
-        m_sHRFBuffer.append("CurrencyName=" + m_htWorld.get("CurrencyName") + "\n");
-        m_sHRFBuffer.append("CurrencyRate="
-                            + m_htWorld.get("CurrencyRate").toString().replace(',', '.') + "\n");
-        m_sHRFBuffer.append("LogoURL=" + m_htTeamdetails.get("LogoURL") + "\n");
-        m_sHRFBuffer.append("HasPromoted=" + m_htClub.get("HasPromoted") + "\n");
-
-        m_sHRFBuffer.append("TrainerID=" + m_htTraining.get("TrainerID") + "\n");
-        m_sHRFBuffer.append("TrainerName=" + m_htTraining.get("TrainerName") + "\n");
-        m_sHRFBuffer.append("ArrivalDate=" + m_htTraining.get("ArrivalDate") + "\n");
-        m_sHRFBuffer.append("LeagueLevelUnitID=" + m_htTeamdetails.get("LeagueLevelUnitID") + "\n");
+        m_sHRFBuffer.append("TrainerID=").append(m_htTraining.get("TrainerID")).append('\n');
+        m_sHRFBuffer.append("TrainerName=").append(m_htTraining.get("TrainerName")).append('\n');
+        m_sHRFBuffer.append("ArrivalDate=").append(m_htTraining.get("ArrivalDate")).append('\n');
+        m_sHRFBuffer.append("LeagueLevelUnitID=").append(m_htTeamdetails.get("LeagueLevelUnitID")).append('\n');
     }
 
     /**
@@ -671,7 +653,6 @@ public class ConvertXml2Hrf {
             out = new BufferedWriter(outWrit);
 
             //write ansi
-            //out = new BufferedWriter( new FileWriter( f ) );
             if (text != null) {
                 out.write(text);
             }
