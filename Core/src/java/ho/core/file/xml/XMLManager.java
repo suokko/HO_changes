@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -252,8 +253,8 @@ public class XMLManager  {
 	/**
 	 * Parse the teamDetails from the given xml string.
 	 */
-	public static Hashtable<String,String> parseTeamDetails(String teamDetails) {
-		return new xmlTeamDetailsParser().parseTeamdetails(teamDetails);
+	public static Map<String,String> parseTeamDetails(String teamDetails) {
+		return xmlTeamDetailsParser.parseTeamdetails(teamDetails);
 	}
 
 	/**
