@@ -9,12 +9,10 @@ package ho.core.file.xml;
 
 import ho.core.util.HOLogger;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-
 
 /**
  * DOCUMENT ME!
@@ -22,15 +20,12 @@ import org.w3c.dom.Element;
  * @author thomas.werth
  */
 public class xmlTeamDetailsParser {
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new instance of xmlTeamDetailsParser
-     */
-    public xmlTeamDetailsParser() {
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+    private xmlTeamDetailsParser() {
     }
-
-    //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * TODO Missing Method Documentation
@@ -39,31 +34,29 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final String fetchRegionID(String xmlFile) {
+    public static String fetchRegionID(String xmlFile) {
         try {
-            final Document doc = XMLManager.parseString(xmlFile);
-            Element ele = null;
-            Element root = null;
+            Document doc = XMLManager.parseString(xmlFile);
 
             if (doc == null) {
                 return "-1";
             }
 
             //Tabelle erstellen
-            root = doc.getDocumentElement();
+            Element root = doc.getDocumentElement();
 
             //Root wechseln
             root = (Element) root.getElementsByTagName("Team").item(0);
             root = (Element) root.getElementsByTagName("Region").item(0);
-            ele = (Element) root.getElementsByTagName("RegionID").item(0);
+            Element ele = (Element) root.getElementsByTagName("RegionID").item(0);
             return XMLManager.getFirstChildNodeValue(ele);
         } catch (Exception ex) {
-            HOLogger.instance().log(getClass(),ex);
+            HOLogger.instance().log(xmlTeamDetailsParser.class,ex);
         }
 
         return "-1";
     }
-
+    
     /**
      * TODO Missing Method Documentation
      *
@@ -71,43 +64,13 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public final Hashtable<String, String> parseTeamdetails(String dateiname) {
-        Document doc = null;
-
-        doc = XMLManager.parseFile(dateiname);
-
-        return parseDetails(doc);
+    public static Map<String, String> parseTeamdetails(String dateiname) {
+        return parseDetails(XMLManager.parseFile(dateiname));
     }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Hashtable<?, ?> parseTeamdetails(java.io.File datei) {
-        Document doc = null;
-
-        doc = XMLManager.parseFile(datei);
-
-        return parseDetails(doc);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //parse public
-    ////////////////////////////////////////////////////////////////////////////////    
-    public final Hashtable<?, ?> parseTeamdetailsFromString(String inputStream) {
-        Document doc = null;
-
-        doc = XMLManager.parseString(inputStream);
-
-        return parseDetails(doc);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////       
+   
+    public static Map<String, String> parseTeamdetailsFromString(String inputStream) {
+        return parseDetails(XMLManager.parseString(inputStream));
+    }      
 
     /**
      * erstellt das MAtchlineup Objekt
@@ -116,10 +79,10 @@ public class xmlTeamDetailsParser {
      *
      * @return TODO Missing Return Method Documentation
      */
-    protected final Hashtable<String, String> parseDetails(Document doc) {
+    private static Map<String, String> parseDetails(Document doc) {
         Element ele = null;
         Element root = null;
-        final ho.core.file.xml.MyHashtable hash = new ho.core.file.xml.MyHashtable();
+        Map<String, String> hash = new ho.core.file.xml.MyHashtable();
 
         if (doc == null) {
             return hash;
@@ -178,7 +141,7 @@ public class xmlTeamDetailsParser {
                 ele = (Element) root.getElementsByTagName("LeagueLevelUnitID").item(0);
                 hash.put("LeagueLevelUnitID", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception ex) {
-                HOLogger.instance().log(getClass(),ex);
+                HOLogger.instance().log(xmlTeamDetailsParser.class,ex);
             }
 
             try {
@@ -189,7 +152,7 @@ public class xmlTeamDetailsParser {
                 ele = (Element) root.getElementsByTagName("NumberOfUndefeated").item(0);
                 hash.put("NumberOfUndefeated", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception exp) {
-                HOLogger.instance().log(getClass(),exp);
+                HOLogger.instance().log(xmlTeamDetailsParser.class, exp);
             }
 
             //Root wechseln  //TrainerID adden
@@ -210,8 +173,8 @@ public class xmlTeamDetailsParser {
             ele = (Element) root.getElementsByTagName("RegionID").item(0);
             hash.put("RegionID", (XMLManager.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(xmlTeamDetailsParser.class,"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
+            HOLogger.instance().log(xmlTeamDetailsParser.class,e);
         }
 
         return hash;
