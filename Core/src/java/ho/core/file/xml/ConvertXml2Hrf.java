@@ -30,9 +30,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 
 
@@ -43,169 +42,157 @@ import java.util.Vector;
  */
 public class ConvertXml2Hrf {
 
-    private Hashtable<?, ?> m_htArena;
-    private Hashtable<?, ?> m_htClub;
-    private Hashtable<?, ?> m_htEconomy;
-    private Hashtable<?, ?> m_htLiga;
-    private Map<?, ?> m_htNextLineup;
-    private Hashtable<?, ?> m_htTeamdetails;
-    private Hashtable<?, ?> m_htTraining;
-    private Hashtable<?, ?> m_htWorld;
-    private MatchLineup m_clLineUp;
-    private MatchLineupTeam m_clTeam;
-    private StringBuffer m_sHRFBuffer;
-
-    //enthält eine Liste an Hashtable die je einen Spieler beschreiben
-    private Vector<?> m_vSpieler;
-
-    //MatchOrder
-    private MatchKurzInfo[] m_aMatches;
-    private int m_iLastAttitude;
-    private int m_iLastTactic;
-
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+	private ConvertXml2Hrf() {
+	}
+	
     /**
      * Create the HRF data and return it in one string. 
      */
-    public final String createHrf(LoginWaitDialog waitDialog) throws Exception {
+    public static String createHrf(LoginWaitDialog waitDialog) throws Exception {
         //init
-        m_sHRFBuffer = new StringBuffer();
+    	StringBuilder buffer = new StringBuilder();
 
         try {
             //Hashtable's füllen
         	final MyConnector mc = MyConnector.instance();
             waitDialog.setValue(5);
-            m_htTeamdetails = new xmlTeamDetailsParser().parseTeamdetailsFromString(mc.getTeamdetails(-1));
+            Map<?, ?> teamdetailsDataMap = new xmlTeamDetailsParser().parseTeamdetailsFromString(mc.getTeamdetails(-1));
             waitDialog.setValue(10);
-            m_htClub = new XMLClubParser().parseClubFromString(mc.getVerein());
+            Map<?, ?> clubDataMap = new XMLClubParser().parseClubFromString(mc.getVerein());
             waitDialog.setValue(15);
-            m_htLiga = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),m_htTeamdetails.get("TeamID").toString());
+            Map<?, ?> ligaDataMap = new xmlLeagueDetailsParser().parseLeagueDetailsFromString(mc.getLeagueDetails(),teamdetailsDataMap.get("TeamID").toString());
             waitDialog.setValue(20);
-            m_htWorld = new XMLWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(m_htTeamdetails.get("LeagueID").toString())),m_htTeamdetails.get("LeagueID").toString());
+            Map<?, ?>  worldDataMap = new XMLWorldDetailsParser().parseWorldDetailsFromString(mc.getWorldDetails(Integer.parseInt(teamdetailsDataMap.get("LeagueID").toString())),teamdetailsDataMap.get("LeagueID").toString());
             waitDialog.setValue(25);
-            m_clLineUp = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1, MatchType.LEAGUE).toString());
+            MatchLineup matchLineup = new XMLMatchLineupParser().parseMatchLineupFromString(mc.getMatchLineup(-1,-1, MatchType.LEAGUE).toString());
             waitDialog.setValue(30);
-            m_vSpieler = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
+            List<MyHashtable> playersData = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
             waitDialog.setValue(35);
-            m_htEconomy = new xmlEconomyParser().parseEconomyFromString(mc.getEconomy());
+            Map<?, ?> economyDataMap = new xmlEconomyParser().parseEconomyFromString(mc.getEconomy());
             waitDialog.setValue(40);
-            m_htTraining = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
+            Map<?, ?> trainingDataMap = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
             waitDialog.setValue(45);
-            m_htArena = new XMLArenaParser().parseArenaFromString(mc.getArena());
+            Map<?, ?> arenaDataMap = new XMLArenaParser().parseArenaFromString(mc.getArena());
 
             //MatchOrder
             waitDialog.setValue(50);
-            m_aMatches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(m_htTeamdetails.get("TeamID").toString()), false, true));
+            MatchKurzInfo[] matches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(teamdetailsDataMap.get("TeamID").toString()), false, true));
             waitDialog.setValue(52);
 
             // Automatisch alle MatchLineups runterladen
-			for (int i = 0; (m_aMatches != null) && (i < m_aMatches.length); i++) {
-				if (m_aMatches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
+            Map<?, ?> nextLineupDataMap = null;
+			for (int i = 0; (matches != null) && (i < matches.length); i++) {
+				if (matches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
 					// Match is always from the normal system, and league will do the trick as the type.
-					m_htNextLineup = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(m_aMatches[i].getMatchID(), MatchType.LEAGUE));
+					nextLineupDataMap = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(matches[i].getMatchID(), MatchType.LEAGUE));
 					break;
 				}
 			}
 
             waitDialog.setValue(55);
 
+            MatchLineupTeam matchLineupTeam = null;
+            int lastAttitude = 0;
+            int lastTactic = 0;
             // Team ermitteln, für Ratings der Player wichtig
-            if (m_clLineUp != null) {
-                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(mc.getMatchdetails(m_clLineUp.getMatchID(), m_clLineUp.getMatchTyp()), null);
+            if (matchLineup != null) {
+                final Matchdetails md = new xmlMatchdetailsParser().parseMachtdetailsFromString(
+                		mc.getMatchdetails(matchLineup.getMatchID(), matchLineup.getMatchTyp()), null);
 
-                if (m_clLineUp.getHeimId() == Integer.parseInt(m_htTeamdetails.get("TeamID").toString())) {
-                    m_clTeam = (ho.core.model.match.MatchLineupTeam) m_clLineUp.getHeim();
-
+                if (matchLineup.getHeimId() == Integer.parseInt(teamdetailsDataMap.get("TeamID").toString())) {
+                	matchLineupTeam = (MatchLineupTeam) matchLineup.getHeim();
                     if (md != null) {
-                        m_iLastAttitude = md.getHomeEinstellung();
-                        m_iLastTactic = md.getHomeTacticType();
+                    	lastAttitude = md.getHomeEinstellung();
+                    	lastTactic = md.getHomeTacticType();
                     }
                 } else {
-                    m_clTeam = (ho.core.model.match.MatchLineupTeam) m_clLineUp.getGast();
-
+                	matchLineupTeam = (MatchLineupTeam) matchLineup.getGast();
                     if (md != null) {
-                        m_iLastAttitude = md.getGuestEinstellung();
-                        m_iLastTactic = md.getGuestTacticType();
+                    	lastAttitude = md.getGuestEinstellung();
+                    	lastTactic = md.getGuestTacticType();
                     }
                 }
-                m_clTeam.getTeamID();
             }
 
             //Abschnitte erstellen   
             waitDialog.setValue(60);
 
             //basics
-            createBasics();
+            createBasics(teamdetailsDataMap, worldDataMap, buffer);
             waitDialog.setValue(65);
 
             //Liga
-            createLeague();
+            createLeague(ligaDataMap, buffer);
             waitDialog.setValue(70);
 
             //Club
-            createClub();
+            createClub(clubDataMap, economyDataMap, teamdetailsDataMap, buffer);
             waitDialog.setValue(75);
 
             //team
-            createTeam();
+            createTeam(trainingDataMap, buffer);
             waitDialog.setValue(80);
 
             //lineup
-            m_sHRFBuffer.append(createLineUp(String.valueOf(m_htTeamdetails.get("TrainerID")), m_htNextLineup));
+            buffer.append(createLineUp(String.valueOf(teamdetailsDataMap.get("TrainerID")), nextLineupDataMap));
             waitDialog.setValue(85);
 
             //economy  
-            createEconemy();
+            createEconemy(economyDataMap, buffer);
             waitDialog.setValue(90);
 
             //Arena
-            createArena();
+            createArena(arenaDataMap, buffer);
             waitDialog.setValue(93);
 
             //players
-            createPlayers();
+            createPlayers(matchLineupTeam, playersData, buffer);
             waitDialog.setValue(96);
 
             //xtra Data
-            createWorld();
+            createWorld(clubDataMap, teamdetailsDataMap, trainingDataMap, worldDataMap, buffer);
             waitDialog.setValue(99);
 
             //lineup from the last match
-            createLastLineUp();
+            createLastLineUp(teamdetailsDataMap, matchLineupTeam, lastAttitude, lastTactic, buffer);
             waitDialog.setValue(100);
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"convertxml2hrf: Exception: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(ConvertXml2Hrf.class,"convertxml2hrf: Exception: " + e);
+            HOLogger.instance().log(ConvertXml2Hrf.class,e);
             throw new Exception(e);
         }
 
         //dialog zum Saven anzeigen
         //speichern
         //writeHRF( dateiname );
-        return m_sHRFBuffer.toString();
+        return buffer.toString();
     }
 
     /**
      * Create the arena data.
      */
-    private void createArena() throws Exception {
-        m_sHRFBuffer.append("[arena]").append('\n');
-        m_sHRFBuffer.append("arenaname=").append(m_htArena.get("ArenaName")).append('\n');
-        m_sHRFBuffer.append("arenaid=").append(m_htArena.get("ArenaID")).append('\n');
-        m_sHRFBuffer.append("antalStaplats=").append(m_htArena.get("Terraces")).append('\n');
-        m_sHRFBuffer.append("antalSitt=").append(m_htArena.get("Basic")).append('\n');
-        m_sHRFBuffer.append("antalTak=").append(m_htArena.get("Roof")).append('\n');
-        m_sHRFBuffer.append("antalVIP=").append(m_htArena.get("VIP")).append('\n');
-        m_sHRFBuffer.append("seatTotal=").append(m_htArena.get("Total")).append('\n');
-        m_sHRFBuffer.append("expandingStaplats=").append(m_htArena.get("ExTerraces")).append('\n');
-        m_sHRFBuffer.append("expandingSitt=").append(m_htArena.get("ExBasic")).append('\n');
-        m_sHRFBuffer.append("expandingTak=").append(m_htArena.get("ExRoof")).append('\n');
-        m_sHRFBuffer.append("expandingVIP=").append(m_htArena.get("ExVIP")).append('\n');
-        m_sHRFBuffer.append("expandingSseatTotal=").append(m_htArena.get("ExTotal")).append('\n');
-        m_sHRFBuffer.append("isExpanding=").append(m_htArena.get("isExpanding")).append('\n');
+    private static void createArena(Map<?,?> arenaDataMap, StringBuilder buffer) throws Exception {
+        buffer.append("[arena]").append('\n');
+        buffer.append("arenaname=").append(arenaDataMap.get("ArenaName")).append('\n');
+        buffer.append("arenaid=").append(arenaDataMap.get("ArenaID")).append('\n');
+        buffer.append("antalStaplats=").append(arenaDataMap.get("Terraces")).append('\n');
+        buffer.append("antalSitt=").append(arenaDataMap.get("Basic")).append('\n');
+        buffer.append("antalTak=").append(arenaDataMap.get("Roof")).append('\n');
+        buffer.append("antalVIP=").append(arenaDataMap.get("VIP")).append('\n');
+        buffer.append("seatTotal=").append(arenaDataMap.get("Total")).append('\n');
+        buffer.append("expandingStaplats=").append(arenaDataMap.get("ExTerraces")).append('\n');
+        buffer.append("expandingSitt=").append(arenaDataMap.get("ExBasic")).append('\n');
+        buffer.append("expandingTak=").append(arenaDataMap.get("ExRoof")).append('\n');
+        buffer.append("expandingVIP=").append(arenaDataMap.get("ExVIP")).append('\n');
+        buffer.append("expandingSseatTotal=").append(arenaDataMap.get("ExTotal")).append('\n');
+        buffer.append("isExpanding=").append(arenaDataMap.get("isExpanding")).append('\n');
 
         //Achtung bei keiner Erweiterung = 0!
-        m_sHRFBuffer.append("ExpansionDate=").append(m_htArena.get("ExpansionDate")).append('\n');
+        buffer.append("ExpansionDate=").append(arenaDataMap.get("ExpansionDate")).append('\n');
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -215,166 +202,164 @@ public class ConvertXml2Hrf {
     /**
      * Create the basic data.
      */
-    private void createBasics() throws Exception {
-        m_sHRFBuffer.append("[basics]\n");
-        m_sHRFBuffer.append("application=HO\n");
-        m_sHRFBuffer.append("appversion=").append(ho.HO.VERSION).append('\n');
-        m_sHRFBuffer.append("date=").append(m_htTeamdetails.get("FetchedDate")).append('\n');
-        m_sHRFBuffer.append("season=").append(m_htWorld.get("Season")).append('\n');
-        m_sHRFBuffer.append("matchround=").append(m_htWorld.get("MatchRound")).append('\n');
-        m_sHRFBuffer.append("teamID=").append(m_htTeamdetails.get("TeamID")).append('\n');
-        m_sHRFBuffer.append("teamName=").append(m_htTeamdetails.get("TeamName")).append('\n');
-        m_sHRFBuffer.append("owner=").append(m_htTeamdetails.get("Loginname")).append('\n');
-        m_sHRFBuffer.append("ownerEmail=").append(m_htTeamdetails.get("Email")).append('\n');
-        m_sHRFBuffer.append("ownerICQ=").append(m_htTeamdetails.get("ICQ")).append('\n');
-        m_sHRFBuffer.append("ownerHomepage=").append(m_htTeamdetails.get("HomePage")).append('\n');
-        m_sHRFBuffer.append("countryID=").append(m_htWorld.get("CountryID")).append('\n');
-        m_sHRFBuffer.append("leagueID=").append(m_htTeamdetails.get("LeagueID")).append('\n');
-        m_sHRFBuffer.append("regionID=").append(m_htTeamdetails.get("RegionID")).append('\n');
-        m_sHRFBuffer.append("hasSupporter=").append(m_htTeamdetails.get("HasSupporter")).append('\n');
+    private static void createBasics(Map<?, ?> teamdetailsDataMap, Map<?, ?>  worldDataMap, StringBuilder buffer) {
+        buffer.append("[basics]\n");
+        buffer.append("application=HO\n");
+        buffer.append("appversion=").append(ho.HO.VERSION).append('\n');
+        buffer.append("date=").append(teamdetailsDataMap.get("FetchedDate")).append('\n');
+        buffer.append("season=").append(worldDataMap.get("Season")).append('\n');
+        buffer.append("matchround=").append(worldDataMap.get("MatchRound")).append('\n');
+        buffer.append("teamID=").append(teamdetailsDataMap.get("TeamID")).append('\n');
+        buffer.append("teamName=").append(teamdetailsDataMap.get("TeamName")).append('\n');
+        buffer.append("owner=").append(teamdetailsDataMap.get("Loginname")).append('\n');
+        buffer.append("ownerEmail=").append(teamdetailsDataMap.get("Email")).append('\n');
+        buffer.append("ownerICQ=").append(teamdetailsDataMap.get("ICQ")).append('\n');
+        buffer.append("ownerHomepage=").append(teamdetailsDataMap.get("HomePage")).append('\n');
+        buffer.append("countryID=").append(worldDataMap.get("CountryID")).append('\n');
+        buffer.append("leagueID=").append(teamdetailsDataMap.get("LeagueID")).append('\n');
+        buffer.append("regionID=").append(teamdetailsDataMap.get("RegionID")).append('\n');
+        buffer.append("hasSupporter=").append(teamdetailsDataMap.get("HasSupporter")).append('\n');
     }
 
     /**
      * Create the club data.
      */
-    private void createClub() throws Exception {
-        m_sHRFBuffer.append("[club]\n");
-        m_sHRFBuffer.append("hjTranare=").append(m_htClub.get("AssistantTrainers")).append('\n');
-        m_sHRFBuffer.append("psykolog=").append(m_htClub.get("Psychologists")).append('\n');
-        m_sHRFBuffer.append("presstalesman=").append(m_htClub.get("PressSpokesmen")).append('\n');
-        m_sHRFBuffer.append("massor=").append(m_htClub.get("Physiotherapists")).append('\n');
-        m_sHRFBuffer.append("lakare=").append(m_htClub.get("Doctors")).append('\n');
-        m_sHRFBuffer.append("juniorverksamhet=").append(m_htClub.get("YouthLevel")).append('\n');
-        m_sHRFBuffer.append("undefeated=").append(m_htTeamdetails.get("NumberOfUndefeated")).append('\n');
-        m_sHRFBuffer.append("victories=").append(m_htTeamdetails.get("NumberOfVictories")).append('\n');
-        m_sHRFBuffer.append("fanclub=").append(m_htEconomy.get("FanClubSize")).append('\n');
+    private static void createClub(Map<?, ?> clubDataMap, Map<?, ?> economyDataMap, Map<?, ?> teamdetailsDataMap,
+    		StringBuilder buffer) {
+        buffer.append("[club]\n");
+        buffer.append("hjTranare=").append(clubDataMap.get("AssistantTrainers")).append('\n');
+        buffer.append("psykolog=").append(clubDataMap.get("Psychologists")).append('\n');
+        buffer.append("presstalesman=").append(clubDataMap.get("PressSpokesmen")).append('\n');
+        buffer.append("massor=").append(clubDataMap.get("Physiotherapists")).append('\n');
+        buffer.append("lakare=").append(clubDataMap.get("Doctors")).append('\n');
+        buffer.append("juniorverksamhet=").append(clubDataMap.get("YouthLevel")).append('\n');
+        buffer.append("undefeated=").append(teamdetailsDataMap.get("NumberOfUndefeated")).append('\n');
+        buffer.append("victories=").append(teamdetailsDataMap.get("NumberOfVictories")).append('\n');
+        buffer.append("fanclub=").append(economyDataMap.get("FanClubSize")).append('\n');
     }
 
     /**
      * Create the economy data.
      */
-    private void createEconemy() throws Exception {
+    private static void createEconemy(Map<?, ?> economyDataMap, StringBuilder buffer) {
         //wahrscheinlich in Training.asp fehlt noch
-        m_sHRFBuffer.append("[economy]").append('\n');
+        buffer.append("[economy]").append('\n');
 
-        if (m_htEconomy.get("SponsorsPopularity") != null) {
-            m_sHRFBuffer.append("supporters=").append(m_htEconomy.get("SupportersPopularity")).append('\n');
-            m_sHRFBuffer.append("sponsors=").append(m_htEconomy.get("SponsorsPopularity")).append('\n');
-
+        if (economyDataMap.get("SponsorsPopularity") != null) {
+            buffer.append("supporters=").append(economyDataMap.get("SupportersPopularity")).append('\n');
+            buffer.append("sponsors=").append(economyDataMap.get("SponsorsPopularity")).append('\n');
             //es wird grad gespielt flag setzen
         } else {
-            m_sHRFBuffer.append("playingMatch=true");
+            buffer.append("playingMatch=true");
         }
 
-        m_sHRFBuffer.append("cash=").append(m_htEconomy.get("Cash")).append('\n');
-        m_sHRFBuffer.append("IncomeSponsorer=").append(m_htEconomy.get("IncomeSponsors")).append('\n');
-        m_sHRFBuffer.append("incomePublik=").append(m_htEconomy.get("IncomeSpectators")).append('\n');
-        m_sHRFBuffer.append("incomeFinansiella=").append(m_htEconomy.get("IncomeFinancial")).append('\n');
-        m_sHRFBuffer.append("incomeTillfalliga=").append(m_htEconomy.get("IncomeTemporary")).append('\n');
-        m_sHRFBuffer.append("incomeSumma=").append(m_htEconomy.get("IncomeSum")).append('\n');
-        m_sHRFBuffer.append("costsSpelare=").append(m_htEconomy.get("CostsPlayers")).append('\n');
-        m_sHRFBuffer.append("costsPersonal=").append(m_htEconomy.get("CostsStaff")).append('\n');
-        m_sHRFBuffer.append("costsArena=").append(m_htEconomy.get("CostsArena")).append('\n');
-        m_sHRFBuffer.append("costsJuniorverksamhet=").append(m_htEconomy.get("CostsYouth")).append('\n');
-        m_sHRFBuffer.append("costsRantor=").append(m_htEconomy.get("CostsFinancial")).append('\n');
-        m_sHRFBuffer.append("costsTillfalliga=").append(m_htEconomy.get("CostsTemporary")).append('\n');
-        m_sHRFBuffer.append("costsSumma=").append(m_htEconomy.get("CostsSum")).append('\n');
-        m_sHRFBuffer.append("total=").append(m_htEconomy.get("ExpectedWeeksTotal")).append('\n');
-        m_sHRFBuffer.append("lastIncomeSponsorer=").append(m_htEconomy.get("LastIncomeSponsors")).append('\n');
-        m_sHRFBuffer.append("lastIncomePublik=").append(m_htEconomy.get("LastIncomeSpectators")).append('\n');
-        m_sHRFBuffer.append("lastIncomeFinansiella=").append(m_htEconomy.get("LastIncomeFinancial")).append('\n');
-        m_sHRFBuffer.append("lastIncomeTillfalliga=").append(m_htEconomy.get("LastIncomeTemporary")).append('\n');
-        m_sHRFBuffer.append("lastIncomeSumma=").append(m_htEconomy.get("LastIncomeSum")).append('\n');
-        m_sHRFBuffer.append("lastCostsSpelare=").append(m_htEconomy.get("LastCostsPlayers")).append('\n');
-        m_sHRFBuffer.append("lastCostsPersonal=").append(m_htEconomy.get("LastCostsStaff")).append('\n');
-        m_sHRFBuffer.append("lastCostsArena=").append(m_htEconomy.get("LastCostsArena")).append('\n');
-        m_sHRFBuffer.append("lastCostsJuniorverksamhet=").append(m_htEconomy.get("LastCostsYouth")).append('\n');
-        m_sHRFBuffer.append("lastCostsRantor=").append(m_htEconomy.get("LastCostsFinancial")).append('\n');
-        m_sHRFBuffer.append("lastCostsTillfalliga=").append(m_htEconomy.get("LastCostsTemporary")).append('\n');
-        m_sHRFBuffer.append("lastCostsSumma=").append(m_htEconomy.get("LastCostsSum")).append('\n');
-        m_sHRFBuffer.append("lastTotal=").append(m_htEconomy.get("LastWeeksTotal")).append('\n');
+        buffer.append("cash=").append(economyDataMap.get("Cash")).append('\n');
+        buffer.append("IncomeSponsorer=").append(economyDataMap.get("IncomeSponsors")).append('\n');
+        buffer.append("incomePublik=").append(economyDataMap.get("IncomeSpectators")).append('\n');
+        buffer.append("incomeFinansiella=").append(economyDataMap.get("IncomeFinancial")).append('\n');
+        buffer.append("incomeTillfalliga=").append(economyDataMap.get("IncomeTemporary")).append('\n');
+        buffer.append("incomeSumma=").append(economyDataMap.get("IncomeSum")).append('\n');
+        buffer.append("costsSpelare=").append(economyDataMap.get("CostsPlayers")).append('\n');
+        buffer.append("costsPersonal=").append(economyDataMap.get("CostsStaff")).append('\n');
+        buffer.append("costsArena=").append(economyDataMap.get("CostsArena")).append('\n');
+        buffer.append("costsJuniorverksamhet=").append(economyDataMap.get("CostsYouth")).append('\n');
+        buffer.append("costsRantor=").append(economyDataMap.get("CostsFinancial")).append('\n');
+        buffer.append("costsTillfalliga=").append(economyDataMap.get("CostsTemporary")).append('\n');
+        buffer.append("costsSumma=").append(economyDataMap.get("CostsSum")).append('\n');
+        buffer.append("total=").append(economyDataMap.get("ExpectedWeeksTotal")).append('\n');
+        buffer.append("lastIncomeSponsorer=").append(economyDataMap.get("LastIncomeSponsors")).append('\n');
+        buffer.append("lastIncomePublik=").append(economyDataMap.get("LastIncomeSpectators")).append('\n');
+        buffer.append("lastIncomeFinansiella=").append(economyDataMap.get("LastIncomeFinancial")).append('\n');
+        buffer.append("lastIncomeTillfalliga=").append(economyDataMap.get("LastIncomeTemporary")).append('\n');
+        buffer.append("lastIncomeSumma=").append(economyDataMap.get("LastIncomeSum")).append('\n');
+        buffer.append("lastCostsSpelare=").append(economyDataMap.get("LastCostsPlayers")).append('\n');
+        buffer.append("lastCostsPersonal=").append(economyDataMap.get("LastCostsStaff")).append('\n');
+        buffer.append("lastCostsArena=").append(economyDataMap.get("LastCostsArena")).append('\n');
+        buffer.append("lastCostsJuniorverksamhet=").append(economyDataMap.get("LastCostsYouth")).append('\n');
+        buffer.append("lastCostsRantor=").append(economyDataMap.get("LastCostsFinancial")).append('\n');
+        buffer.append("lastCostsTillfalliga=").append(economyDataMap.get("LastCostsTemporary")).append('\n');
+        buffer.append("lastCostsSumma=").append(economyDataMap.get("LastCostsSum")).append('\n');
+        buffer.append("lastTotal=").append(economyDataMap.get("LastWeeksTotal")).append('\n');
     }
 
     /**
      * Create last lineup section.
      */
-    private void createLastLineUp() {
-        m_sHRFBuffer.append("[lastlineup]").append('\n');
-        m_sHRFBuffer.append("trainer=").append(m_htTeamdetails.get("TrainerID")).append('\n');
+    private static void createLastLineUp(Map<?, ?> teamdetailsDataMap, MatchLineupTeam matchLineupTeam, int lastAttitude,
+    		int lastTactic, StringBuilder buffer) {
+        buffer.append("[lastlineup]").append('\n');
+        buffer.append("trainer=").append(teamdetailsDataMap.get("TrainerID")).append('\n');
 
-           
         try {
-			m_sHRFBuffer.append("installning=").append(m_iLastAttitude + "\n");
-			m_sHRFBuffer.append("tactictype=").append(m_iLastTactic + "\n");
-			m_sHRFBuffer.append("keeper=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.keeper).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("rightBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideBack1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideBack2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideBack3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("leftBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("rightWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideMid1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideMid2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("insideMid3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("leftWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("forward1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("forward2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("forward3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("substBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substDefender).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("substInsideMid=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substInnerMidfield).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("substWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substWinger).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("substKeeper=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substKeeper).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("substForward=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.substForward).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("captain=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.captain).getSpielerId()).append('\n');
-			m_sHRFBuffer.append("kicker1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.setPieces).getSpielerId()).append('\n');
+			buffer.append("installning=").append(lastAttitude).append('\n');
+			buffer.append("tactictype=").append(lastTactic).append('\n');
+			buffer.append("keeper=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.keeper).getSpielerId()).append('\n');
+			buffer.append("rightBack=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightBack).getSpielerId()).append('\n');
+			buffer.append("insideBack1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getSpielerId()).append('\n');
+			buffer.append("insideBack2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getSpielerId()).append('\n');
+			buffer.append("insideBack3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getSpielerId()).append('\n');
+			buffer.append("leftBack=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftBack).getSpielerId()).append('\n');
+			buffer.append("rightWinger=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getSpielerId()).append('\n');
+			buffer.append("insideMid1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getSpielerId()).append('\n');
+			buffer.append("insideMid2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getSpielerId()).append('\n');
+			buffer.append("insideMid3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getSpielerId()).append('\n');
+			buffer.append("leftWinger=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getSpielerId()).append('\n');
+			buffer.append("forward1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightForward).getSpielerId()).append('\n');
+			buffer.append("forward2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftForward).getSpielerId()).append('\n');
+			buffer.append("forward3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.centralForward).getSpielerId()).append('\n');
+			buffer.append("substBack=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.substDefender).getSpielerId()).append('\n');
+			buffer.append("substInsideMid=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.substInnerMidfield).getSpielerId()).append('\n');
+			buffer.append("substWinger=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.substWinger).getSpielerId()).append('\n');
+			buffer.append("substKeeper=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.substKeeper).getSpielerId()).append('\n');
+			buffer.append("substForward=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.substForward).getSpielerId()).append('\n');
+			buffer.append("captain=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.captain).getSpielerId()).append('\n');
+			buffer.append("kicker1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.setPieces).getSpielerId()).append('\n');
 
-			m_sHRFBuffer.append("behrightBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightBack).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideBack1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideBack2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideBack3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behleftBack=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftBack).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behrightWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideMid1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideMid2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behinsideMid3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behleftWinger=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behforward1=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.rightForward).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behforward2=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik()).append('\n');
-			m_sHRFBuffer.append("behforward3=").append(m_clTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik()).append('\n');
+			buffer.append("behrightBack=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightBack).getTaktik()).append('\n');
+			buffer.append("behinsideBack1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightCentralDefender).getTaktik()).append('\n');
+			buffer.append("behinsideBack2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftCentralDefender).getTaktik()).append('\n');
+			buffer.append("behinsideBack3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.middleCentralDefender).getTaktik()).append('\n');
+			buffer.append("behleftBack=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftBack).getTaktik()).append('\n');
+			buffer.append("behrightWinger=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightWinger).getTaktik()).append('\n');
+			buffer.append("behinsideMid1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightInnerMidfield).getTaktik()).append('\n');
+			buffer.append("behinsideMid2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftInnerMidfield).getTaktik()).append('\n');
+			buffer.append("behinsideMid3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.centralInnerMidfield).getTaktik()).append('\n');
+			buffer.append("behleftWinger=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftWinger).getTaktik()).append('\n');
+			buffer.append("behforward1=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.rightForward).getTaktik()).append('\n');
+			buffer.append("behforward2=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.leftForward).getTaktik()).append('\n');
+			buffer.append("behforward3=").append(matchLineupTeam.getPlayerByPosition(ISpielerPosition.centralForward).getTaktik()).append('\n');
 			
 			int i = 0;
-			for (Substitution sub:  m_clTeam.getSubstitutions()) {
+			for (Substitution sub:  matchLineupTeam.getSubstitutions()) {
 				if (sub != null) {
-					m_sHRFBuffer.append("subst").append(i).append("playerOrderID=").append(sub.getPlayerOrderId()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("playerIn=").append(sub.getObjectPlayerID()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("playerOut=").append(sub.getSubjectPlayerID()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("orderType=").append(sub.getOrderType().getId()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("matchMinuteCriteria=").append(sub.getMatchMinuteCriteria()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("pos=").append(sub.getPos()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("behaviour=").append(sub.getBehaviour()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("card=").append(sub.getRedCardCriteria().getId()).append('\n');
-					m_sHRFBuffer.append("subst").append(i).append("standing=").append(sub.getStanding().getId()).append('\n');
+					buffer.append("subst").append(i).append("playerOrderID=").append(sub.getPlayerOrderId()).append('\n');
+					buffer.append("subst").append(i).append("playerIn=").append(sub.getObjectPlayerID()).append('\n');
+					buffer.append("subst").append(i).append("playerOut=").append(sub.getSubjectPlayerID()).append('\n');
+					buffer.append("subst").append(i).append("orderType=").append(sub.getOrderType().getId()).append('\n');
+					buffer.append("subst").append(i).append("matchMinuteCriteria=").append(sub.getMatchMinuteCriteria()).append('\n');
+					buffer.append("subst").append(i).append("pos=").append(sub.getPos()).append('\n');
+					buffer.append("subst").append(i).append("behaviour=").append(sub.getBehaviour()).append('\n');
+					buffer.append("subst").append(i).append("card=").append(sub.getRedCardCriteria().getId()).append('\n');
+					buffer.append("subst").append(i).append("standing=").append(sub.getStanding().getId()).append('\n');
 					i++;
 				}
 			}
-			
-			
         } catch (Exception e) {
-        	HOLogger.instance().debug(getClass(), "Error(last lineup): " + e);
+        	HOLogger.instance().debug(ConvertXml2Hrf.class, "Error(last lineup): " + e);
         }
     }
 
     /**
      * Create the league data.
      */
-    private void createLeague() throws Exception {
-        m_sHRFBuffer.append("[league]\n");
-        m_sHRFBuffer.append("serie=").append(m_htLiga.get("LeagueLevelUnitName")).append('\n');
-        m_sHRFBuffer.append("spelade=").append(m_htLiga.get("Matches")).append('\n');
-        m_sHRFBuffer.append("gjorda=").append(m_htLiga.get("GoalsFor")).append('\n');
-        m_sHRFBuffer.append("inslappta=").append(m_htLiga.get("GoalsAgainst")).append('\n');
-        m_sHRFBuffer.append("poang=").append(m_htLiga.get("Points")).append('\n');
-        m_sHRFBuffer.append("placering=").append(m_htLiga.get("Position")).append('\n');
+    private static void createLeague(Map<?, ?> ligaDataMap, StringBuilder buffer) {
+        buffer.append("[league]\n");
+        buffer.append("serie=").append(ligaDataMap.get("LeagueLevelUnitName")).append('\n');
+        buffer.append("spelade=").append(ligaDataMap.get("Matches")).append('\n');
+        buffer.append("gjorda=").append(ligaDataMap.get("GoalsFor")).append('\n');
+        buffer.append("inslappta=").append(ligaDataMap.get("GoalsAgainst")).append('\n');
+        buffer.append("poang=").append(ligaDataMap.get("Points")).append('\n');
+        buffer.append("placering=").append(ligaDataMap.get("Position")).append('\n');
     }
 
     private static String getPlayerForNextLineup(String position, Map<?, ?> next) {
@@ -409,7 +394,7 @@ public class ConvertXml2Hrf {
     * @return
     * @throws Exception
     */
-    public static String createLineUp(String trainerId, Map<?, ?> nextLineup) throws Exception {
+    public static String createLineUp(String trainerId, Map<?, ?> nextLineup) {
     	StringBuilder buffer = new StringBuilder();
     	buffer.append("[lineup]").append('\n');
 
@@ -483,159 +468,159 @@ public class ConvertXml2Hrf {
     /**
      * Create the player data.
      */
-    private void createPlayers() throws Exception {
-        Hashtable<?, ?> ht = null;
+    private static void createPlayers(MatchLineupTeam matchLineupTeam, List<MyHashtable> playersData, StringBuilder buffer) {
+        Map<?, ?> ht = null;
 
-        for (int i = 0; (m_vSpieler != null) && (i < m_vSpieler.size()); i++) {
-            ht = (Hashtable<?, ?>) m_vSpieler.elementAt(i);
+        for (int i = 0; (playersData != null) && (i < playersData.size()); i++) {
+            ht = (Map<?, ?>) playersData.get(i);
 
-            m_sHRFBuffer.append("[player").append(ht.get("PlayerID").toString()).append(']').append('\n');
+            buffer.append("[player").append(ht.get("PlayerID").toString()).append(']').append('\n');
            
             if (ht.get("NickName").toString().length()>0) {
-            	m_sHRFBuffer.append("name=");
-            	m_sHRFBuffer.append(ht.get("FirstName").toString()).append(" '");
-            	m_sHRFBuffer.append(ht.get("NickName").toString()).append("' ");
-       			m_sHRFBuffer.append(ht.get("LastName").toString()).append('\n');
+            	buffer.append("name=");
+            	buffer.append(ht.get("FirstName").toString()).append(" '");
+            	buffer.append(ht.get("NickName").toString()).append("' ");
+       			buffer.append(ht.get("LastName").toString()).append('\n');
             } else {
-            	m_sHRFBuffer.append("name=");
-            	m_sHRFBuffer.append(ht.get("FirstName").toString()).append(' ');
-       			m_sHRFBuffer.append(ht.get("LastName").toString()).append('\n');
+            	buffer.append("name=");
+            	buffer.append(ht.get("FirstName").toString()).append(' ');
+       			buffer.append(ht.get("LastName").toString()).append('\n');
             }
-            m_sHRFBuffer.append("firstname=").append(ht.get("FirstName").toString()).append('\n');
-            m_sHRFBuffer.append("nickname=").append(ht.get("NickName").toString()).append('\n');
-            m_sHRFBuffer.append("lastname=").append(ht.get("LastName").toString()).append('\n');
-            m_sHRFBuffer.append("ald=").append(ht.get("Age").toString()).append('\n');
-            m_sHRFBuffer.append("agedays=").append(ht.get("AgeDays").toString()).append('\n');
-            m_sHRFBuffer.append("ska=").append(ht.get("InjuryLevel").toString()).append('\n');
-            m_sHRFBuffer.append("for=").append(ht.get("PlayerForm").toString()).append('\n');
-            m_sHRFBuffer.append("uth=").append(ht.get("StaminaSkill").toString()).append('\n');
-            m_sHRFBuffer.append("spe=").append(ht.get("PlaymakerSkill").toString()).append('\n');
-            m_sHRFBuffer.append("mal=").append(ht.get("ScorerSkill").toString()).append('\n');
-            m_sHRFBuffer.append("fra=").append(ht.get("PassingSkill").toString()).append('\n');
-            m_sHRFBuffer.append("ytt=").append(ht.get("WingerSkill").toString()).append('\n');
-            m_sHRFBuffer.append("fas=").append(ht.get("SetPiecesSkill").toString()).append('\n');
-            m_sHRFBuffer.append("bac=").append(ht.get("DefenderSkill").toString()).append('\n');
-            m_sHRFBuffer.append("mlv=").append(ht.get("KeeperSkill").toString()).append('\n');
-            m_sHRFBuffer.append("rut=").append(ht.get("Experience").toString()).append('\n');
-            m_sHRFBuffer.append("loy=").append(ht.get("Loyalty").toString()).append('\n');
-            m_sHRFBuffer.append("homegr=").append(ht.get("MotherClubBonus").toString()).append('\n');
-            m_sHRFBuffer.append("led=").append(ht.get("Leadership").toString()).append('\n');
-            m_sHRFBuffer.append("sal=").append(ht.get("Salary").toString()).append('\n');
-            m_sHRFBuffer.append("mkt=").append(ht.get("MarketValue").toString()).append('\n');
-            m_sHRFBuffer.append("gev=").append(ht.get("CareerGoals").toString()).append('\n');
-            m_sHRFBuffer.append("gtl=").append(ht.get("LeagueGoals").toString()).append('\n');
-            m_sHRFBuffer.append("gtc=").append(ht.get("CupGoals").toString()).append('\n');
-            m_sHRFBuffer.append("gtt=").append(ht.get("FriendliesGoals").toString()).append('\n');
-            m_sHRFBuffer.append("hat=").append(ht.get("CareerHattricks").toString()).append('\n');
-            m_sHRFBuffer.append("CountryID=").append(ht.get("CountryID").toString()).append('\n');
-            m_sHRFBuffer.append("warnings=").append(ht.get("Cards").toString()).append('\n');
-            m_sHRFBuffer.append("speciality=").append(ht.get("Specialty").toString()).append('\n');
-            m_sHRFBuffer.append("specialityLabel=").append(PlayerSpeciality.toString(
+            buffer.append("firstname=").append(ht.get("FirstName").toString()).append('\n');
+            buffer.append("nickname=").append(ht.get("NickName").toString()).append('\n');
+            buffer.append("lastname=").append(ht.get("LastName").toString()).append('\n');
+            buffer.append("ald=").append(ht.get("Age").toString()).append('\n');
+            buffer.append("agedays=").append(ht.get("AgeDays").toString()).append('\n');
+            buffer.append("ska=").append(ht.get("InjuryLevel").toString()).append('\n');
+            buffer.append("for=").append(ht.get("PlayerForm").toString()).append('\n');
+            buffer.append("uth=").append(ht.get("StaminaSkill").toString()).append('\n');
+            buffer.append("spe=").append(ht.get("PlaymakerSkill").toString()).append('\n');
+            buffer.append("mal=").append(ht.get("ScorerSkill").toString()).append('\n');
+            buffer.append("fra=").append(ht.get("PassingSkill").toString()).append('\n');
+            buffer.append("ytt=").append(ht.get("WingerSkill").toString()).append('\n');
+            buffer.append("fas=").append(ht.get("SetPiecesSkill").toString()).append('\n');
+            buffer.append("bac=").append(ht.get("DefenderSkill").toString()).append('\n');
+            buffer.append("mlv=").append(ht.get("KeeperSkill").toString()).append('\n');
+            buffer.append("rut=").append(ht.get("Experience").toString()).append('\n');
+            buffer.append("loy=").append(ht.get("Loyalty").toString()).append('\n');
+            buffer.append("homegr=").append(ht.get("MotherClubBonus").toString()).append('\n');
+            buffer.append("led=").append(ht.get("Leadership").toString()).append('\n');
+            buffer.append("sal=").append(ht.get("Salary").toString()).append('\n');
+            buffer.append("mkt=").append(ht.get("MarketValue").toString()).append('\n');
+            buffer.append("gev=").append(ht.get("CareerGoals").toString()).append('\n');
+            buffer.append("gtl=").append(ht.get("LeagueGoals").toString()).append('\n');
+            buffer.append("gtc=").append(ht.get("CupGoals").toString()).append('\n');
+            buffer.append("gtt=").append(ht.get("FriendliesGoals").toString()).append('\n');
+            buffer.append("hat=").append(ht.get("CareerHattricks").toString()).append('\n');
+            buffer.append("CountryID=").append(ht.get("CountryID").toString()).append('\n');
+            buffer.append("warnings=").append(ht.get("Cards").toString()).append('\n');
+            buffer.append("speciality=").append(ht.get("Specialty").toString()).append('\n');
+            buffer.append("specialityLabel=").append(PlayerSpeciality.toString(
             		Integer.parseInt(ht.get("Specialty").toString()))).append('\n');
-            m_sHRFBuffer.append("gentleness=").append(ht.get("Agreeability").toString()).append('\n');
-            m_sHRFBuffer.append("gentlenessLabel=").append(PlayerAgreeability.toString(
+            buffer.append("gentleness=").append(ht.get("Agreeability").toString()).append('\n');
+            buffer.append("gentlenessLabel=").append(PlayerAgreeability.toString(
             		Integer.parseInt(ht.get("Agreeability").toString()))).append('\n');
-            m_sHRFBuffer.append("honesty=").append(ht.get("Honesty").toString() + "\n");
-            m_sHRFBuffer.append("honestyLabel=").append(PlayerHonesty.toString(
+            buffer.append("honesty=").append(ht.get("Honesty").toString() + "\n");
+            buffer.append("honestyLabel=").append(PlayerHonesty.toString(
             		Integer.parseInt(ht.get("Honesty").toString()))).append('\n');
-            m_sHRFBuffer.append("Aggressiveness=").append(ht.get("Aggressiveness").toString()).append('\n');
-            m_sHRFBuffer.append("AggressivenessLabel=").append(PlayerAggressiveness.toString(
+            buffer.append("Aggressiveness=").append(ht.get("Aggressiveness").toString()).append('\n');
+            buffer.append("AggressivenessLabel=").append(PlayerAggressiveness.toString(
             		Integer.parseInt(ht.get("Aggressiveness").toString()))).append('\n');
 
             if (ht.get("TrainerSkill") != null) {
-                m_sHRFBuffer.append("TrainerType=").append(ht.get("TrainerType").toString()).append('\n');
-                m_sHRFBuffer.append("TrainerSkill=").append(ht.get("TrainerSkill").toString()).append('\n');
+                buffer.append("TrainerType=").append(ht.get("TrainerType").toString()).append('\n');
+                buffer.append("TrainerSkill=").append(ht.get("TrainerSkill").toString()).append('\n');
             } else {
-                m_sHRFBuffer.append("TrainerType=").append('\n');
-                m_sHRFBuffer.append("TrainerSkill=").append('\n');
+                buffer.append("TrainerType=").append('\n');
+                buffer.append("TrainerSkill=").append('\n');
             }
 
-            if ((m_clTeam != null)
-                && (m_clTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString())) != null)
-                && (m_clTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString()))
+            if ((matchLineupTeam != null)
+                && (matchLineupTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString())) != null)
+                && (matchLineupTeam.getPlayerByID(Integer.parseInt(ht.get("PlayerID").toString()))
                             .getRating() >= 0)) {
-                m_sHRFBuffer.append("rating=").append((int) (m_clTeam.getPlayerByID(
+                buffer.append("rating=").append((int) (matchLineupTeam.getPlayerByID(
                 		Integer.parseInt(ht.get("PlayerID").toString())).getRating() * 2)).append('\n');
             } else {
-                m_sHRFBuffer.append("rating=0").append('\n');
+                buffer.append("rating=0").append('\n');
             }
 
             //Bonus
             if ((ht.get("PlayerNumber") != null) || (!ht.get("PlayerNumber").equals(""))) {
-                m_sHRFBuffer.append("PlayerNumber=").append(ht.get("PlayerNumber")).append('\n');
+                buffer.append("PlayerNumber=").append(ht.get("PlayerNumber")).append('\n');
             }
 
-            m_sHRFBuffer.append("TransferListed=").append(ht.get("TransferListed")).append('\n');
-            m_sHRFBuffer.append("NationalTeamID=").append(ht.get("NationalTeamID")).append('\n');
-            m_sHRFBuffer.append("Caps=").append(ht.get("Caps")).append('\n');
-            m_sHRFBuffer.append("CapsU20=").append(ht.get("CapsU20")).append('\n');
+            buffer.append("TransferListed=").append(ht.get("TransferListed")).append('\n');
+            buffer.append("NationalTeamID=").append(ht.get("NationalTeamID")).append('\n');
+            buffer.append("Caps=").append(ht.get("Caps")).append('\n');
+            buffer.append("CapsU20=").append(ht.get("CapsU20")).append('\n');
         }
     }
 
     /**
      * Create team related data (training, confidence, formation experience, etc.).
      */
-    private void createTeam() throws Exception {
-        m_sHRFBuffer.append("[team]" + "\n");
-        m_sHRFBuffer.append("trLevel=").append(m_htTraining.get("TrainingLevel")).append('\n');
-        m_sHRFBuffer.append("staminaTrainingPart=").append(m_htTraining.get("StaminaTrainingPart")).append('\n');
-        m_sHRFBuffer.append("trTypeValue=").append(m_htTraining.get("TrainingType")).append('\n');
-		m_sHRFBuffer.append("trType=").append(TrainingType.toString(Integer.parseInt(m_htTraining.get("TrainingType").toString()))).append('\n');
+    private static void createTeam(Map<?, ?> trainingDataMap, StringBuilder buffer) {
+        buffer.append("[team]" + "\n");
+        buffer.append("trLevel=").append(trainingDataMap.get("TrainingLevel")).append('\n');
+        buffer.append("staminaTrainingPart=").append(trainingDataMap.get("StaminaTrainingPart")).append('\n');
+        buffer.append("trTypeValue=").append(trainingDataMap.get("TrainingType")).append('\n');
+		buffer.append("trType=").append(TrainingType.toString(Integer.parseInt(trainingDataMap.get("TrainingType").toString()))).append('\n');
 
-		if ((m_htTraining.get("Morale") != null) && (m_htTraining.get("SelfConfidence") != null)) {
-			m_sHRFBuffer.append("stamningValue=").append(m_htTraining.get("Morale")).append('\n');
-			m_sHRFBuffer.append("stamning=").append(TeamSpirit.toString(Integer.parseInt(m_htTraining.get("Morale").toString()))).append('\n');
-			m_sHRFBuffer.append("sjalvfortroendeValue=").append(m_htTraining.get("SelfConfidence")).append('\n');
-			m_sHRFBuffer.append("sjalvfortroende=").append(TeamConfidence.toString(Integer.parseInt(m_htTraining.get("SelfConfidence").toString()))).append('\n');
+		if ((trainingDataMap.get("Morale") != null) && (trainingDataMap.get("SelfConfidence") != null)) {
+			buffer.append("stamningValue=").append(trainingDataMap.get("Morale")).append('\n');
+			buffer.append("stamning=").append(TeamSpirit.toString(Integer.parseInt(trainingDataMap.get("Morale").toString()))).append('\n');
+			buffer.append("sjalvfortroendeValue=").append(trainingDataMap.get("SelfConfidence")).append('\n');
+			buffer.append("sjalvfortroende=").append(TeamConfidence.toString(Integer.parseInt(trainingDataMap.get("SelfConfidence").toString()))).append('\n');
         } else {
-            m_sHRFBuffer.append("playingMatch=true");
+            buffer.append("playingMatch=true");
         }
 
-        m_sHRFBuffer.append("exper433=").append(m_htTraining.get("Experience433")).append('\n');
-        m_sHRFBuffer.append("exper451=").append(m_htTraining.get("Experience451")).append('\n');
-        m_sHRFBuffer.append("exper352=").append(m_htTraining.get("Experience352")).append('\n');
-        m_sHRFBuffer.append("exper532=").append(m_htTraining.get("Experience532")).append('\n');
-        m_sHRFBuffer.append("exper343=").append(m_htTraining.get("Experience343")).append('\n');
-        m_sHRFBuffer.append("exper541=").append(m_htTraining.get("Experience541")).append('\n');
-        if (m_htTraining.get("Experience442") != null) {
-        	m_sHRFBuffer.append("exper442=").append(m_htTraining.get("Experience442")).append('\n');
+        buffer.append("exper433=").append(trainingDataMap.get("Experience433")).append('\n');
+        buffer.append("exper451=").append(trainingDataMap.get("Experience451")).append('\n');
+        buffer.append("exper352=").append(trainingDataMap.get("Experience352")).append('\n');
+        buffer.append("exper532=").append(trainingDataMap.get("Experience532")).append('\n');
+        buffer.append("exper343=").append(trainingDataMap.get("Experience343")).append('\n');
+        buffer.append("exper541=").append(trainingDataMap.get("Experience541")).append('\n');
+        if (trainingDataMap.get("Experience442") != null) {
+        	buffer.append("exper442=").append(trainingDataMap.get("Experience442")).append('\n');
         }
-        if (m_htTraining.get("Experience523") != null) {
-        	m_sHRFBuffer.append("exper523=").append(m_htTraining.get("Experience523")).append('\n');
+        if (trainingDataMap.get("Experience523") != null) {
+        	buffer.append("exper523=").append(trainingDataMap.get("Experience523")).append('\n');
         }
-        if (m_htTraining.get("Experience550") != null) {
-        	m_sHRFBuffer.append("exper550=").append(m_htTraining.get("Experience550")).append('\n');
+        if (trainingDataMap.get("Experience550") != null) {
+        	buffer.append("exper550=").append(trainingDataMap.get("Experience550")).append('\n');
         }
-        if (m_htTraining.get("Experience253") != null) {
-        	m_sHRFBuffer.append("exper253=").append(m_htTraining.get("Experience253")).append('\n');
+        if (trainingDataMap.get("Experience253") != null) {
+        	buffer.append("exper253=").append(trainingDataMap.get("Experience253")).append('\n');
         }
     }
 
     /**
      * Create the world data.
      */
-    private void createWorld() throws Exception {
-        m_sHRFBuffer.append("[xtra]\n");
-        m_sHRFBuffer.append("TrainingDate=").append( m_htWorld.get("TrainingDate")).append('\n');
-        m_sHRFBuffer.append("EconomyDate=").append(m_htWorld.get("EconomyDate")).append('\n');
-        m_sHRFBuffer.append("SeriesMatchDate=").append(m_htWorld.get("SeriesMatchDate")).append('\n');
-        m_sHRFBuffer.append("CurrencyName=").append(m_htWorld.get("CurrencyName")).append('\n');
-        m_sHRFBuffer.append("CurrencyRate=").append(m_htWorld.get("CurrencyRate").toString().replace(',', '.')).append('\n');
-        m_sHRFBuffer.append("LogoURL=").append(m_htTeamdetails.get("LogoURL")).append('\n');
-        m_sHRFBuffer.append("HasPromoted=").append(m_htClub.get("HasPromoted")).append('\n');
+    private static void createWorld(Map<?,?> clubDataMap, Map<?, ?> teamdetailsDataMap, Map<?, ?> trainingDataMap,
+    		Map<?, ?>  worldDataMap, StringBuilder buffer) {
+        buffer.append("[xtra]\n");
+        buffer.append("TrainingDate=").append(worldDataMap.get("TrainingDate")).append('\n');
+        buffer.append("EconomyDate=").append(worldDataMap.get("EconomyDate")).append('\n');
+        buffer.append("SeriesMatchDate=").append(worldDataMap.get("SeriesMatchDate")).append('\n');
+        buffer.append("CurrencyName=").append(worldDataMap.get("CurrencyName")).append('\n');
+        buffer.append("CurrencyRate=").append(worldDataMap.get("CurrencyRate").toString().replace(',', '.')).append('\n');
+        buffer.append("LogoURL=").append(teamdetailsDataMap.get("LogoURL")).append('\n');
+        buffer.append("HasPromoted=").append(clubDataMap.get("HasPromoted")).append('\n');
 
-        m_sHRFBuffer.append("TrainerID=").append(m_htTraining.get("TrainerID")).append('\n');
-        m_sHRFBuffer.append("TrainerName=").append(m_htTraining.get("TrainerName")).append('\n');
-        m_sHRFBuffer.append("ArrivalDate=").append(m_htTraining.get("ArrivalDate")).append('\n');
-        m_sHRFBuffer.append("LeagueLevelUnitID=").append(m_htTeamdetails.get("LeagueLevelUnitID")).append('\n');
+        buffer.append("TrainerID=").append(trainingDataMap.get("TrainerID")).append('\n');
+        buffer.append("TrainerName=").append(trainingDataMap.get("TrainerName")).append('\n');
+        buffer.append("ArrivalDate=").append(trainingDataMap.get("ArrivalDate")).append('\n');
+        buffer.append("LeagueLevelUnitID=").append(teamdetailsDataMap.get("LeagueLevelUnitID")).append('\n');
     }
 
     /**
      * Save the HRF file.
      */
-    private void writeHRF(String dateiname) {
+    private void writeHRF(String dateiname, StringBuilder buffer) {
         BufferedWriter out = null;
-        String text = m_sHRFBuffer.toString();
 
         try {
         	File f = new File(dateiname);
@@ -651,9 +636,7 @@ public class ConvertXml2Hrf {
             out = new BufferedWriter(outWrit);
 
             //write ansi
-            if (text != null) {
-                out.write(text);
-            }
+            out.write(buffer.toString());
         } catch (Exception except) {
             HOLogger.instance().log(getClass(),except);
         } finally {

@@ -98,7 +98,7 @@ public class OnlineWorker {
 		waitDialog = new LoginWaitDialog(homf, false);
 		waitDialog.setVisible(true);
 		try {
-			hrf = new ConvertXml2Hrf().createHrf(waitDialog);
+			hrf = ConvertXml2Hrf.createHrf(waitDialog);
 			bOK = true;
 		} catch (Exception e) {
 			// Info
@@ -925,10 +925,9 @@ public class OnlineWorker {
 			String xml = MyConnector.instance().getMatchOrder(matchId, matchType);
 			if (!StringUtilities.isEmpty(xml)) {
 				Map<String, String> map = XMLMatchOrderParser.parseMatchOrderFromString(xml);
-				ConvertXml2Hrf hrfConverter = new ConvertXml2Hrf();
 				String trainerID = String.valueOf(HOVerwaltung.instance().getModel().getTrainer()
 						.getSpielerID());
-				String lineupData = hrfConverter.createLineUp(trainerID, map);
+				String lineupData = ConvertXml2Hrf.createLineUp(trainerID, map);
 				return new Lineup(getProperties(lineupData));
 			}
 		} catch (Exception e) {
