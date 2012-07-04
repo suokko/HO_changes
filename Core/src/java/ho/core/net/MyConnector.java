@@ -683,7 +683,7 @@ public class MyConnector {
 			return "-1";
 		}
 
-		return new xmlTeamDetailsParser().fetchRegionID(xmlFile);
+		return xmlTeamDetailsParser.fetchRegionID(xmlFile);
 	}
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
