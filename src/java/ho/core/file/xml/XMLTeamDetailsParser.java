@@ -19,12 +19,12 @@ import org.w3c.dom.Element;
  *
  * @author thomas.werth
  */
-public class xmlTeamDetailsParser {
+public class XMLTeamDetailsParser {
 
 	/**
 	 * Utility class - private constructor enforces noninstantiability.
 	 */
-    private xmlTeamDetailsParser() {
+    private XMLTeamDetailsParser() {
     }
 
     /**
@@ -51,7 +51,7 @@ public class xmlTeamDetailsParser {
             Element ele = (Element) root.getElementsByTagName("RegionID").item(0);
             return XMLManager.getFirstChildNodeValue(ele);
         } catch (Exception ex) {
-            HOLogger.instance().log(xmlTeamDetailsParser.class,ex);
+            HOLogger.instance().log(XMLTeamDetailsParser.class,ex);
         }
 
         return "-1";
@@ -141,7 +141,7 @@ public class xmlTeamDetailsParser {
                 ele = (Element) root.getElementsByTagName("LeagueLevelUnitID").item(0);
                 hash.put("LeagueLevelUnitID", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception ex) {
-                HOLogger.instance().log(xmlTeamDetailsParser.class,ex);
+                HOLogger.instance().log(XMLTeamDetailsParser.class,ex);
             }
 
             try {
@@ -152,7 +152,7 @@ public class xmlTeamDetailsParser {
                 ele = (Element) root.getElementsByTagName("NumberOfUndefeated").item(0);
                 hash.put("NumberOfUndefeated", (XMLManager.getFirstChildNodeValue(ele)));
             } catch (Exception exp) {
-                HOLogger.instance().log(xmlTeamDetailsParser.class, exp);
+                HOLogger.instance().log(XMLTeamDetailsParser.class, exp);
             }
 
             //Root wechseln  //TrainerID adden
@@ -173,8 +173,8 @@ public class xmlTeamDetailsParser {
             ele = (Element) root.getElementsByTagName("RegionID").item(0);
             hash.put("RegionID", (XMLManager.getFirstChildNodeValue(ele)));
         } catch (Exception e) {
-            HOLogger.instance().log(xmlTeamDetailsParser.class,"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
-            HOLogger.instance().log(xmlTeamDetailsParser.class,e);
+            HOLogger.instance().log(XMLTeamDetailsParser.class,"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
+            HOLogger.instance().log(XMLTeamDetailsParser.class,e);
         }
 
         return hash;

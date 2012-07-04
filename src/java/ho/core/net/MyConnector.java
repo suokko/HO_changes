@@ -11,7 +11,7 @@ import ho.core.file.xml.Extension;
 import ho.core.file.xml.XMLCHPPPreParser;
 import ho.core.file.xml.XMLExtensionParser;
 import ho.core.file.xml.XMLNewsParser;
-import ho.core.file.xml.xmlTeamDetailsParser;
+import ho.core.file.xml.XMLTeamDetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
@@ -683,7 +683,7 @@ public class MyConnector {
 			return "-1";
 		}
 
-		return xmlTeamDetailsParser.fetchRegionID(xmlFile);
+		return XMLTeamDetailsParser.fetchRegionID(xmlFile);
 	}
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
