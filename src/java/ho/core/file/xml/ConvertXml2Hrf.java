@@ -188,7 +188,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the arena data.
      */
-    protected final void createArena() throws Exception {
+    private void createArena() throws Exception {
         m_sHRFBuffer.append("[arena]").append('\n');
         m_sHRFBuffer.append("arenaname=").append(m_htArena.get("ArenaName")).append('\n');
         m_sHRFBuffer.append("arenaid=").append(m_htArena.get("ArenaID")).append('\n');
@@ -215,7 +215,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the basic data.
      */
-    protected final void createBasics() throws Exception {
+    private void createBasics() throws Exception {
         m_sHRFBuffer.append("[basics]\n");
         m_sHRFBuffer.append("application=HO\n");
         m_sHRFBuffer.append("appversion=").append(ho.HO.VERSION).append('\n');
@@ -237,7 +237,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the club data.
      */
-    protected final void createClub() throws Exception {
+    private void createClub() throws Exception {
         m_sHRFBuffer.append("[club]\n");
         m_sHRFBuffer.append("hjTranare=").append(m_htClub.get("AssistantTrainers")).append('\n');
         m_sHRFBuffer.append("psykolog=").append(m_htClub.get("Psychologists")).append('\n');
@@ -253,7 +253,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the economy data.
      */
-    protected final void createEconemy() throws Exception {
+    private void createEconemy() throws Exception {
         //wahrscheinlich in Training.asp fehlt noch
         m_sHRFBuffer.append("[economy]").append('\n');
 
@@ -298,7 +298,7 @@ public class ConvertXml2Hrf {
     /**
      * Create last lineup section.
      */
-    protected final void createLastLineUp() {
+    private void createLastLineUp() {
         m_sHRFBuffer.append("[lastlineup]").append('\n');
         m_sHRFBuffer.append("trainer=").append(m_htTeamdetails.get("TrainerID")).append('\n');
 
@@ -367,7 +367,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the league data.
      */
-    protected final void createLeague() throws Exception {
+    private void createLeague() throws Exception {
         m_sHRFBuffer.append("[league]\n");
         m_sHRFBuffer.append("serie=").append(m_htLiga.get("LeagueLevelUnitName")).append('\n');
         m_sHRFBuffer.append("spelade=").append(m_htLiga.get("Matches")).append('\n');
@@ -377,7 +377,7 @@ public class ConvertXml2Hrf {
         m_sHRFBuffer.append("placering=").append(m_htLiga.get("Position")).append('\n');
     }
 
-    private String getPlayerForNextLineup(String position, Map<?, ?> next) {
+    private static String getPlayerForNextLineup(String position, Map<?, ?> next) {
     	if (next != null) {
     		final Object ret = next.get(position);
     		if (ret != null) {
@@ -387,7 +387,7 @@ public class ConvertXml2Hrf {
     	return "0";
     }
     
-    private String getPlayerOrderForNextLineup(String position, Map<?, ?> map) {
+    private static String getPlayerOrderForNextLineup(String position, Map<?, ?> map) {
     	if (map != null) {
     		String ret = (String)map.get(position);
     		
@@ -409,7 +409,7 @@ public class ConvertXml2Hrf {
     * @return
     * @throws Exception
     */
-    public final String createLineUp(String trainerId, Map<?, ?> nextLineup) throws Exception {
+    public static String createLineUp(String trainerId, Map<?, ?> nextLineup) throws Exception {
     	StringBuilder buffer = new StringBuilder();
     	buffer.append("[lineup]").append('\n');
 
@@ -475,7 +475,7 @@ public class ConvertXml2Hrf {
 			}
 			
         } catch (Exception e) {
-        	HOLogger.instance().debug(getClass(), "Error(lineup): " + e);
+        	HOLogger.instance().debug(ConvertXml2Hrf.class, "Error(lineup): " + e);
         }
         return buffer.toString();
     }
@@ -483,7 +483,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the player data.
      */
-    protected final void createPlayers() throws Exception {
+    private void createPlayers() throws Exception {
         Hashtable<?, ?> ht = null;
 
         for (int i = 0; (m_vSpieler != null) && (i < m_vSpieler.size()); i++) {
@@ -575,7 +575,7 @@ public class ConvertXml2Hrf {
     /**
      * Create team related data (training, confidence, formation experience, etc.).
      */
-    protected final void createTeam() throws Exception {
+    private void createTeam() throws Exception {
         m_sHRFBuffer.append("[team]" + "\n");
         m_sHRFBuffer.append("trLevel=").append(m_htTraining.get("TrainingLevel")).append('\n');
         m_sHRFBuffer.append("staminaTrainingPart=").append(m_htTraining.get("StaminaTrainingPart")).append('\n');
@@ -614,7 +614,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the world data.
      */
-    protected final void createWorld() throws Exception {
+    private void createWorld() throws Exception {
         m_sHRFBuffer.append("[xtra]\n");
         m_sHRFBuffer.append("TrainingDate=").append( m_htWorld.get("TrainingDate")).append('\n');
         m_sHRFBuffer.append("EconomyDate=").append(m_htWorld.get("EconomyDate")).append('\n');
@@ -633,7 +633,7 @@ public class ConvertXml2Hrf {
     /**
      * Save the HRF file.
      */
-    protected final void writeHRF(String dateiname) {
+    private void writeHRF(String dateiname) {
         BufferedWriter out = null;
         String text = m_sHRFBuffer.toString();
 
