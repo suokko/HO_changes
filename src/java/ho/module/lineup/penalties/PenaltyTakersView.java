@@ -12,42 +12,42 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-public class PenaltyShootersView extends JPanel {
+public class PenaltyTakersView extends JPanel {
 
 	private static final long serialVersionUID = -5089904466636200088L;
-	private JTable shootersTable;
+	private JTable penaltyTakersTable;
 
-	public PenaltyShootersView() {
+	public PenaltyTakersView() {
 		initComponents();
 	}
 
 	private void initComponents() {
 		setLayout(new GridBagLayout());
 
-		this.shootersTable = new JTable();
-		this.shootersTable.setModel(new PenaltyShootersTableModel());
+		this.penaltyTakersTable = new JTable();
+		this.penaltyTakersTable.setModel(new PenaltyTakersTableModel());
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
-		add(new JScrollPane(this.shootersTable), gbc);
+		add(new JScrollPane(this.penaltyTakersTable), gbc);
 	}
 
-	private class PenaltyShootersTableModel extends AbstractTableModel {
+	private class PenaltyTakersTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 3044881352777003621L;
 		private String[] columnNames;
 		private List<Object> data = new ArrayList<Object>();
 
-		public PenaltyShootersTableModel() {
+		public PenaltyTakersTableModel() {
 			this.columnNames = new String[5];
 			this.columnNames[0] = HOVerwaltung.instance().getLanguageString("Name");
 			this.columnNames[1] = HOVerwaltung.instance().getLanguageString("Erfahrung");
 			this.columnNames[2] = HOVerwaltung.instance().getLanguageString("Standards");
 			this.columnNames[3] = HOVerwaltung.instance().getLanguageString("Torschuss");
 			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
-					"lineup.penaltyshooters.colheadline.ability");
+					"lineup.penaltytakers.colheadline.ability");
 		}
 
 		@Override
