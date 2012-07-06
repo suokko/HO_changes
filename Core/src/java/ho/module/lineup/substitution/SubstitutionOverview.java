@@ -25,6 +25,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -96,7 +98,8 @@ public class SubstitutionOverview extends JPanel {
 			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup, row.getSubstitution()));
 		}
 		detailsView.refresh();
-
+		((SubstitutionsTableModel) this.substitutionTable.getModel()).sort();
+		
 		// allow a max. of 5 subs/orders
 		boolean enableCreateActions = this.lineup.getSubstitutionList().size() < 5;
 		this.behaviorAction.setEnabled(enableCreateActions);
@@ -246,16 +249,7 @@ public class SubstitutionOverview extends JPanel {
 			Substitution sub = dlg.getSubstitution();
 			this.lineup.getSubstitutionList().add(sub);
 			refresh();
-
-			SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
-					.getModel();
-
-			for (int i = 0; i < model.getRowCount(); i++) {
-				if (model.getRow(i).getSubstitution() == sub) {
-					this.substitutionTable.getSelectionModel().setSelectionInterval(i, i);
-				}
-			}
-
+			selectSubstitution(sub);
 		}
 	}
 
@@ -268,6 +262,16 @@ public class SubstitutionOverview extends JPanel {
 			dlg = new SubstitutionEditDialog((Dialog) windowAncestor, orderType);
 		}
 		return dlg;
+	}
+
+	private Substitution getSelectedSubstitution() {
+		int tableIndex = this.substitutionTable.getSelectedRow();
+		if (tableIndex != -1) {
+			int modelIndex = this.substitutionTable.convertRowIndexToModel(tableIndex);
+			return ((SubstitutionsTableModel) this.substitutionTable.getModel()).getRow(modelIndex)
+					.getSubstitution();
+		}
+		return null;
 	}
 
 	private void selectSubstitution(Substitution sub) {
@@ -311,6 +315,7 @@ public class SubstitutionOverview extends JPanel {
 		private static final long serialVersionUID = 6969656858380680460L;
 		private List<TableRow> rows = new ArrayList<TableRow>();
 		private String[] columnNames;
+		private Comparator<TableRow> rowComparator;
 
 		public SubstitutionsTableModel() {
 			this.columnNames = new String[5];
@@ -323,6 +328,24 @@ public class SubstitutionOverview extends JPanel {
 					"subs.orders.colheadline.standing");
 			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.cards");
+		}
+
+		public void sort() {
+			if (this.rowComparator == null) {
+				this.rowComparator = new Comparator<SubstitutionOverview.TableRow>() {
+
+					@Override
+					public int compare(TableRow o1, TableRow o2) {
+						Substitution s1 = o1.getSubstitution();
+						Substitution s2 = o2.getSubstitution();
+						
+						// TODO implementation for equal matchMinuteCriterias (e.g. both are 0)
+						return s1.getMatchMinuteCriteria() - s2.getMatchMinuteCriteria();
+					}
+				};
+			}
+			Collections.sort(this.rows, this.rowComparator);
+			fireTableDataChanged();
 		}
 
 		public void setData(List<Substitution> data) {
