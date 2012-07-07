@@ -44,8 +44,11 @@ public class LineupMasterView extends JPanel {
 		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
 		this.penaltyTakersView = new PenaltyTakersView();
-		tabbedPane.addTab(hov.getLanguageString("lineup.penaltytakers.tab.title"), this.penaltyTakersView);
-		
+		this.penaltyTakersView.setPlayers(hov.getModel().getAllSpieler());
+		this.penaltyTakersView.setLineup(hov.getModel().getAufstellung());
+		this.penaltyTakersView.auto();
+		tabbedPane.addTab(hov.getLanguageString("lineup.penaltytakers.tab.title"),
+				this.penaltyTakersView);
 		tabbedPane.addTab(hov.getLanguageString("lineup.upload.tab.title"),
 				new UploadDownloadPanel());
 

@@ -107,5 +107,6 @@ public interface HOIconName {
 	public static final String CONTROL_DOUBLE_090 = "control-double-090";
 	public static final String CONTROL_DOUBLE_270 = "control-double-270";
 	public static final String ORDER_SET = "order_set";
-
+	public static final String PLAYS_AT_BEGINNING  = "plays_at_beginning";
+	public static final String IS_RESERVE  = "is_reserve";
 }
