@@ -233,15 +233,17 @@ public class MatchKurzInfo implements Comparable<Object> {
 			if (!StringUtilities.isEmpty(this.m_sMatchDate)) {
 				try {
 					// Hattrick
-					SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					this.matchDateTimestamp = new Timestamp(simpleFormat.parse(m_sMatchDate)
-							.getTime());
+					SimpleDateFormat simpleFormat = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss");
+					this.matchDateTimestamp = new Timestamp(simpleFormat.parse(
+							m_sMatchDate).getTime());
 				} catch (Exception e) {
 					try {
 						// Hattrick
-						SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
-						this.matchDateTimestamp = new Timestamp(simpleFormat.parse(m_sMatchDate)
-								.getTime());
+						SimpleDateFormat simpleFormat = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						this.matchDateTimestamp = new Timestamp(simpleFormat
+								.parse(m_sMatchDate).getTime());
 					} catch (Exception ex) {
 						HOLogger.instance().log(getClass(), ex);
 					}
@@ -321,9 +323,11 @@ public class MatchKurzInfo implements Comparable<Object> {
 		if (obj instanceof MatchKurzInfo) {
 			final MatchKurzInfo info = (MatchKurzInfo) obj;
 
-			if (info.getMatchDateAsTimestamp().before(this.getMatchDateAsTimestamp())) {
+			if (info.getMatchDateAsTimestamp().before(
+					this.getMatchDateAsTimestamp())) {
 				return -1;
-			} else if (info.getMatchDateAsTimestamp().after(this.getMatchDateAsTimestamp())) {
+			} else if (info.getMatchDateAsTimestamp().after(
+					this.getMatchDateAsTimestamp())) {
 				return 1;
 			} else {
 				return 0;
@@ -331,5 +335,31 @@ public class MatchKurzInfo implements Comparable<Object> {
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Merges the data from the given <code>MatchKurzInfo</code> into this
+	 * <code>MatchKurzInfo</code>. This method should be used e.g. when a model
+	 * has to be updated with data from a different <code>MatchKurzInfo</code>
+	 * instance but and object identity has to be preserved.
+	 * 
+	 * @param other
+	 *            the <code>MatchKurzInfo</code> to get the data from.
+	 */
+	public void merge(MatchKurzInfo match) {
+		if (match.getMatchID() != getMatchID()) {
+			throw new IllegalArgumentException(
+					"Could not merge matches with different IDs");
+		}
+		setGastID(match.getGastID());
+		setGastName(match.getGastName());
+		setGastTore(match.getGastTore());
+		setHeimID(match.getHeimID());
+		setHeimName(match.getHeimName());
+		setHeimTore(match.getHeimTore());
+		setMatchDate(match.getMatchDate());
+		setMatchStatus(match.getMatchStatus());
+		setOrdersGiven(match.isOrdersGiven());
+		setMatchTyp(match.getMatchTyp());
 	}
 }
