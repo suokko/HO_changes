@@ -79,16 +79,16 @@ public class ConvertXml2Hrf {
 
             //MatchOrder
             waitDialog.setValue(50);
-            MatchKurzInfo[] matches = new XMLMatchesParser().parseMatchesFromString(mc.getMatches(Integer.parseInt(teamdetailsDataMap.get("TeamID").toString()), false, true));
+            List<MatchKurzInfo> matches = XMLMatchesParser.parseMatchesFromString(mc.getMatches(Integer.parseInt(teamdetailsDataMap.get("TeamID").toString()), false, true));
             waitDialog.setValue(52);
 
             // Automatisch alle MatchLineups runterladen
             Map<?, ?> nextLineupDataMap = null;
-			for (int i = 0; (matches != null) && (i < matches.length); i++) {
-				if (matches[i].getMatchStatus() == MatchKurzInfo.UPCOMING) {
+			for (MatchKurzInfo match : matches) {
+				if (match.getMatchStatus() == MatchKurzInfo.UPCOMING) {
 					waitDialog.setValue(54);
 					// Match is always from the normal system, and league will do the trick as the type.
-					nextLineupDataMap = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(matches[i].getMatchID(), MatchType.LEAGUE));
+					nextLineupDataMap = XMLMatchOrderParser.parseMatchOrderFromString(mc.getMatchOrder(match.getMatchID(), MatchType.LEAGUE));
 					break;
 				}
 			}

@@ -6,174 +6,146 @@
  */
 package ho.core.file.xml;
 
-
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchType;
 import ho.core.util.HOLogger;
-import ho.core.util.Helper;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
 /**
  * DOCUMENT ME!
- *
+ * 
  * @author thomas.werth
  */
 public class XMLMatchesParser {
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /////////////////////////////////////////////////////////////////////////////////    
-    //KONSTRUKTOR
-    ////////////////////////////////////////////////////////////////////////////////     
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+	private XMLMatchesParser() {
+	}
 
-    /**
-     * Creates a new instance of XMLMAtchesParser
-     */
-    public XMLMatchesParser() {
-    }
+	/**
+	 * TODO Missing Method Documentation
+	 * 
+	 * @param input
+	 *            TODO Missing Method Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	public static List<MatchKurzInfo> parseMatchesFromString(String input) {
+		return createMatches(XMLManager.parseString(input));
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	/**
+	 * Wertet den StatusString aus und liefert einen INT
+	 * 
+	 * @param status
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	private static int getStatus(String status) {
+		if (status.equalsIgnoreCase("FINISHED")) {
+			return MatchKurzInfo.FINISHED;
+		} else if (status.equalsIgnoreCase("ONGOING")) {
+			return MatchKurzInfo.ONGOING;
+		} else if (status.equalsIgnoreCase("UPCOMING")) {
+			return MatchKurzInfo.UPCOMING;
+		}
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //test
-    //////////////////////////////////////////////////////////////////////////////     
+		return -1;
+	}
 
-    /////////////////////////////////////////////////////////////////////////////////    
-    //parse public
-    ////////////////////////////////////////////////////////////////////////////////    
-    public final MatchKurzInfo[] parseMatches(String dateiname) {
-        return createMatches(XMLManager.parseFile(dateiname));
-    }
+	/**
+	 * erstellt das MAtchlineup Objekt
+	 * 
+	 * @param doc
+	 *            TODO Missing Constructuor Parameter Documentation
+	 * 
+	 * @return TODO Missing Return Method Documentation
+	 */
+	private static List<MatchKurzInfo> createMatches(Document doc) {
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final MatchKurzInfo[] parseMatches(java.io.File datei) {
-        return createMatches(XMLManager.parseFile(datei));
-    }
+		MatchKurzInfo spiel = null;
+		List<MatchKurzInfo> liste = new ArrayList<MatchKurzInfo>();
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param input TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final MatchKurzInfo[] parseMatchesFromString(String input) {
-        return createMatches(XMLManager.parseString(input));
-    }
+		if (doc != null) {
+			Element root = doc.getDocumentElement();
+			try {
+				NodeList list = root.getElementsByTagName("Match");
 
-    /**
-     * Wertet den StatusString aus und liefert einen INT
-     *
-     * @param status TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final int getStatus(String status) {
-        if (status.equalsIgnoreCase("FINISHED")) {
-            return MatchKurzInfo.FINISHED;
-        } else if (status.equalsIgnoreCase("ONGOING")) {
-            return MatchKurzInfo.ONGOING;
-        } else if (status.equalsIgnoreCase("UPCOMING")) {
-            return MatchKurzInfo.UPCOMING;
-        }
+				Element ele = null;
+				Element tmp = null;
+				for (int i = 0; (list != null) && (i < list.getLength()); i++) {
+					spiel = new MatchKurzInfo();
+					ele = (Element) list.item(i);
 
-        return -1;
-    }
+					// Daten füllen
+					tmp = (Element) ele.getElementsByTagName("MatchDate").item(
+							0);
+					spiel.setMatchDate(tmp.getFirstChild().getNodeValue());
+					tmp = (Element) ele.getElementsByTagName("MatchID").item(0);
+					spiel.setMatchID(Integer.parseInt(tmp.getFirstChild()
+							.getNodeValue()));
+					tmp = (Element) ele.getElementsByTagName("MatchType").item(
+							0);
+					spiel.setMatchTyp(MatchType.getById(Integer.parseInt(tmp
+							.getFirstChild().getNodeValue())));
+					tmp = (Element) ele.getElementsByTagName("HomeTeam")
+							.item(0);
+					spiel.setHeimID(Integer.parseInt(((Element) tmp
+							.getElementsByTagName("HomeTeamID").item(0))
+							.getFirstChild().getNodeValue()));
+					spiel.setHeimName(((Element) tmp.getElementsByTagName(
+							"HomeTeamName").item(0)).getFirstChild()
+							.getNodeValue());
+					tmp = (Element) ele.getElementsByTagName("AwayTeam")
+							.item(0);
+					spiel.setGastID(Integer.parseInt(((Element) tmp
+							.getElementsByTagName("AwayTeamID").item(0))
+							.getFirstChild().getNodeValue()));
+					spiel.setGastName(((Element) tmp.getElementsByTagName(
+							"AwayTeamName").item(0)).getFirstChild()
+							.getNodeValue());
+					tmp = (Element) ele.getElementsByTagName("Status").item(0);
+					spiel.setMatchStatus(getStatus(tmp.getFirstChild()
+							.getNodeValue()));
 
-    /////////////////////////////////////////////////////////////////////////////////    
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////    
+					if (spiel.getMatchStatus() == MatchKurzInfo.FINISHED) {
+						tmp = (Element) ele.getElementsByTagName("HomeGoals")
+								.item(0);
+						spiel.setHeimTore(Integer.parseInt(tmp.getFirstChild()
+								.getNodeValue()));
+						tmp = (Element) ele.getElementsByTagName("AwayGoals")
+								.item(0);
+						spiel.setGastTore(Integer.parseInt(tmp.getFirstChild()
+								.getNodeValue()));
+					} else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
+						try {
+							tmp = (Element) ele.getElementsByTagName(
+									"OrdersGiven").item(0);
+							spiel.setOrdersGiven(tmp.getFirstChild()
+									.getNodeValue().equalsIgnoreCase("TRUE"));
+						} catch (Exception e) {
+							// We will end up here if the match is not the
+							// user's
+							spiel.setOrdersGiven(false);
+						}
+					}
 
-    /**
-     * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final MatchKurzInfo[] createMatches(Document doc) {
-        Element ele = null;
-        Element root = null;
-        Element tmp = null;
-        MatchKurzInfo[] matches = new MatchKurzInfo[0];
-        MatchKurzInfo spiel = null;
-        final Vector<MatchKurzInfo> liste = new Vector<MatchKurzInfo>();
-        NodeList list = null;
-
-        if (doc == null) {
-            return matches;
-        }
-
-        //Tabelle erstellen
-        root = doc.getDocumentElement();
-
-        try {
-            list = root.getElementsByTagName("Match");
-
-            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                spiel = new MatchKurzInfo();
-                ele = (Element) list.item(i);
-
-                //Daten füllen
-                tmp = (Element) ele.getElementsByTagName("MatchDate").item(0);
-                spiel.setMatchDate(tmp.getFirstChild().getNodeValue());
-                tmp = (Element) ele.getElementsByTagName("MatchID").item(0);
-                spiel.setMatchID(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                tmp = (Element) ele.getElementsByTagName("MatchType").item(0);
-                spiel.setMatchTyp(MatchType.getById(Integer.parseInt(tmp.getFirstChild().getNodeValue())));
-                tmp = (Element) ele.getElementsByTagName("HomeTeam").item(0);
-                spiel.setHeimID(Integer.parseInt(((Element) tmp.getElementsByTagName("HomeTeamID")
-                                                  .item(0)).getFirstChild().getNodeValue()));
-                spiel.setHeimName(((Element) tmp.getElementsByTagName("HomeTeamName").item(0)).getFirstChild()
-                                   .getNodeValue());
-                tmp = (Element) ele.getElementsByTagName("AwayTeam").item(0);
-                spiel.setGastID(Integer.parseInt(((Element) tmp.getElementsByTagName("AwayTeamID")
-                                                  .item(0)).getFirstChild().getNodeValue()));
-                spiel.setGastName(((Element) tmp.getElementsByTagName("AwayTeamName").item(0)).getFirstChild()
-                                   .getNodeValue());
-                tmp = (Element) ele.getElementsByTagName("Status").item(0);
-                spiel.setMatchStatus(getStatus(tmp.getFirstChild().getNodeValue()));
-
-                if (spiel.getMatchStatus() == MatchKurzInfo.FINISHED) {
-                    tmp = (Element) ele.getElementsByTagName("HomeGoals").item(0);
-                    spiel.setHeimTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                    tmp = (Element) ele.getElementsByTagName("AwayGoals").item(0);
-                    spiel.setGastTore(Integer.parseInt(tmp.getFirstChild().getNodeValue()));
-                } else if (spiel.getMatchStatus() == MatchKurzInfo.UPCOMING) {
-                	try {
-	                	tmp = (Element) ele.getElementsByTagName("OrdersGiven").item(0);
-	                	spiel.setOrdersGiven(tmp.getFirstChild().getNodeValue().equalsIgnoreCase("TRUE"));
-                	} catch (Exception e) {
-                		// We will end up here if the match is not the user's
-                		spiel.setOrdersGiven(false);
-                	}
-                }
-
-                //In Vector adden
-                liste.add(spiel);
-            }
-
-            //liste in Array kopieren
-            matches = new MatchKurzInfo[liste.size()];
-            Helper.copyVector2Array(liste, matches);
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchesParser.createMatches Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
-            liste.removeAllElements();
-        }
-
-        return matches;
-    }
+					liste.add(spiel);
+				}
+			} catch (Exception e) {
+				HOLogger.instance().log(XMLMatchesParser.class, e);
+				liste.clear();
+			}
+		}
+		return liste;
+	}
 }
