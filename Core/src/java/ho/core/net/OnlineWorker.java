@@ -566,8 +566,6 @@ public class OnlineWorker {
 	 * @return the most recent and upcoming matches up to the given date.
 	 */
 	public static List<MatchKurzInfo> getMatches(int teamId, Date date) {
-		List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
-
 		String matchesString = null;
 		try {
 			matchesString = MyConnector.instance().getMatches(teamId, true,
@@ -582,11 +580,10 @@ public class OnlineWorker {
 		}
 
 		if (!StringUtilities.isEmpty(matchesString)) {
-			XMLMatchesParser parser = new XMLMatchesParser();
-			matches = Arrays.asList(parser
-					.parseMatchesFromString(matchesString));
+			return XMLMatchesParser.parseMatchesFromString(matchesString);
 		}
-		return matches;
+		
+		return new ArrayList<MatchKurzInfo>();
 	}
 
 	/**
@@ -641,15 +638,13 @@ public class OnlineWorker {
 			return null;
 		}
 		if (bOK) {
-			final XMLMatchesParser parser = new XMLMatchesParser();
-			matches = Arrays.asList(parser
-					.parseMatchesFromString(matchesString));
+			matches.addAll(XMLMatchesParser.parseMatchesFromString(matchesString));
 
 			// Store in DB if store is true
 			if (store) {
 				waitDialog.setValue(80);
 				DBManager.instance().storeMatchKurzInfos(
-						matches.toArray(new MatchKurzInfo[0]));
+						matches.toArray(new MatchKurzInfo[matches.size()]));
 
 				waitDialog.setValue(100);
 
