@@ -65,18 +65,13 @@ public class SubstitutionOverview extends JPanel {
 		initComponents();
 		addListeners();
 		refresh();
-
-		if (this.substitutionTable.getRowCount() > 0) {
-			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
-		}
+		GUIUtils.selectFirstRow(this.substitutionTable);
 	}
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
 		refresh();
-		if (this.substitutionTable.getRowCount() > 0) {
-			this.substitutionTable.getSelectionModel().setSelectionInterval(0, 0);
-		}
+		GUIUtils.selectFirstRow(this.substitutionTable);
 	}
 
 	private void createActions() {
