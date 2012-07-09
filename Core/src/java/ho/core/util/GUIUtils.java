@@ -9,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
 public class GUIUtils {
@@ -79,7 +80,8 @@ public class GUIUtils {
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
 			}
-		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+				JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	/**
@@ -93,7 +95,22 @@ public class GUIUtils {
 	 *            to execute when ESC was pressed.
 	 */
 	public static void decorateWithActionOnESC(JDialog dialog, Action action) {
-		dialog.getRootPane().registerKeyboardAction(action, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+		dialog.getRootPane().registerKeyboardAction(action,
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
 				JComponent.WHEN_IN_FOCUSED_WINDOW);
+	}
+
+	/**
+	 * Selects the first row in a table. This method is tolerant, it does
+	 * nothing if the given table is <code>null</code> or does not contain any
+	 * row.
+	 * 
+	 * @param table
+	 *            the table to select the first row from.
+	 */
+	public static void selectFirstRow(JTable table) {
+		if (table != null && table.getRowCount() > 0) {
+			table.getSelectionModel().setSelectionInterval(0, 0);
+		}
 	}
 }
