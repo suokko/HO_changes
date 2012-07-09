@@ -3,7 +3,7 @@ package ho.module.lineup.substitution;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.GUIUtilities;
+import ho.core.util.GUIUtils;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.Substitution;
@@ -234,7 +234,7 @@ public class SubstitutionOverview extends JPanel {
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(this.positionSwapAction);
 
-		GUIUtilities.equalizeComponentSizes(editButton, removeButton, substitutionButton,
+		GUIUtils.equalizeComponentSizes(editButton, removeButton, substitutionButton,
 				behaviorButton, positionSwapButton);
 
 		return buttonPanel;

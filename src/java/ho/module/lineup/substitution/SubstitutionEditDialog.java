@@ -1,7 +1,7 @@
 package ho.module.lineup.substitution;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.util.GUIUtilities;
+import ho.core.util.GUIUtils;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.Substitution;
 
@@ -120,7 +120,7 @@ public class SubstitutionEditDialog extends JDialog {
 		};
 		cancelAction.putValue(Action.NAME, HOVerwaltung.instance().getLanguageString("subs.Cancel"));
 		cancelButton.setAction(cancelAction);
-		GUIUtilities.decorateWithActionOnESC(this, cancelAction);
+		GUIUtils.decorateWithActionOnESC(this, cancelAction);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -129,6 +129,6 @@ public class SubstitutionEditDialog extends JDialog {
 			}
 		});
 
-		GUIUtilities.equalizeComponentSizes(okButton, cancelButton);
+		GUIUtils.equalizeComponentSizes(okButton, cancelButton);
 	}
 }
