@@ -54,16 +54,19 @@ public class PenaltyTakersView extends JPanel {
 		for (Spieler player : players) {
 			takers.add(new PenaltyTaker(player));
 		}
-		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel()).setPenaltyTakers(takers);
+		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel())
+				.setPenaltyTakers(takers);
 	}
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
-		((AbstractTableModel) this.penaltyTakersTable.getModel()).fireTableDataChanged();
+		((AbstractTableModel) this.penaltyTakersTable.getModel())
+				.fireTableDataChanged();
 	}
 
 	public void auto() {
-		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel()).bestFit();
+		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel())
+				.bestFit();
 	}
 
 	private void initComponents() {
@@ -73,9 +76,11 @@ public class PenaltyTakersView extends JPanel {
 		this.penaltyTakersTable.setModel(new PenaltyTakersTableModel());
 		this.penaltyTakersTable.setAutoCreateRowSorter(true);
 
-		TableColumn abilityColumn = this.penaltyTakersTable.getColumnModel().getColumn(5);
+		TableColumn abilityColumn = this.penaltyTakersTable.getColumnModel()
+				.getColumn(5);
 		abilityColumn.setCellRenderer(new AbilityRenderer());
-		TableColumn inLineupColumn = this.penaltyTakersTable.getColumnModel().getColumn(0);
+		TableColumn inLineupColumn = this.penaltyTakersTable.getColumnModel()
+				.getColumn(0);
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
 
@@ -98,7 +103,7 @@ public class PenaltyTakersView extends JPanel {
 		filterPanel.add(this.showAnfangsElfCheckBox, gbc);
 		this.showReserveCheckBox = new JCheckBox("Show reserve");
 		this.showReserveCheckBox.setSelected(true);
-		
+
 		gbc.gridy = 1;
 		gbc.insets = new Insets(2, 10, 2, 10);
 		filterPanel.add(this.showReserveCheckBox, gbc);
@@ -125,8 +130,8 @@ public class PenaltyTakersView extends JPanel {
 		gbc.gridy = 1;
 		add(filterPanel, gbc);
 
-		((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable.getRowSorter())
-				.setRowFilter(new MyRowFilter());
+		((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
+				.getRowSorter()).setRowFilter(new MyRowFilter());
 	}
 
 	private void addListeners() {
@@ -142,7 +147,8 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				((AbstractTableModel) penaltyTakersTable.getModel()).fireTableDataChanged();
+				((AbstractTableModel) penaltyTakersTable.getModel())
+						.fireTableDataChanged();
 			}
 		};
 		this.showAnfangsElfCheckBox.addItemListener(filterCheckBoxListener);
@@ -171,10 +177,14 @@ public class PenaltyTakersView extends JPanel {
 		public PenaltyTakersTableModel() {
 			this.columnNames = new String[6];
 			this.columnNames[0] = "";
-			this.columnNames[1] = HOVerwaltung.instance().getLanguageString("Name");
-			this.columnNames[2] = HOVerwaltung.instance().getLanguageString("Erfahrung");
-			this.columnNames[3] = HOVerwaltung.instance().getLanguageString("Standards");
-			this.columnNames[4] = HOVerwaltung.instance().getLanguageString("Torschuss");
+			this.columnNames[1] = HOVerwaltung.instance().getLanguageString(
+					"Name");
+			this.columnNames[2] = HOVerwaltung.instance().getLanguageString(
+					"Erfahrung");
+			this.columnNames[3] = HOVerwaltung.instance().getLanguageString(
+					"Standards");
+			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
+					"Torschuss");
 			this.columnNames[5] = HOVerwaltung.instance().getLanguageString(
 					"lineup.penaltytakers.colheadline.ability");
 		}
@@ -184,8 +194,10 @@ public class PenaltyTakersView extends JPanel {
 
 				@Override
 				public int compare(PenaltyTaker o1, PenaltyTaker o2) {
-					int inLineupVal1 = getInLineupVal(o1.getPlayer()).intValue();
-					int inLineupVal2 = getInLineupVal(o2.getPlayer()).intValue();
+					int inLineupVal1 = getInLineupVal(o1.getPlayer())
+							.intValue();
+					int inLineupVal2 = getInLineupVal(o2.getPlayer())
+							.intValue();
 					if (inLineupVal1 == inLineupVal2) {
 						if (o1.getAbility() > o2.getAbility()) {
 							return -1;
@@ -264,13 +276,15 @@ public class PenaltyTakersView extends JPanel {
 		}
 	}
 
-	private class MyRowFilter extends RowFilter<PenaltyTakersTableModel, Integer> {
+	private class MyRowFilter extends
+			RowFilter<PenaltyTakersTableModel, Integer> {
 
 		@Override
 		public boolean include(
 				RowFilter.Entry<? extends PenaltyTakersTableModel, ? extends Integer> entry) {
 			PenaltyTakersTableModel personModel = entry.getModel();
-			PenaltyTaker taker = personModel.getPenaltyTaker(entry.getIdentifier());
+			PenaltyTaker taker = personModel.getPenaltyTaker(entry
+					.getIdentifier());
 			if (showAnfangsElfCheckBox.isSelected()
 					&& getInLineupVal(taker.getPlayer()).intValue() == 1) {
 				return true;
@@ -293,18 +307,24 @@ public class PenaltyTakersView extends JPanel {
 		private static final long serialVersionUID = 2815809080926324953L;
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
 
-			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
-					hasFocus, row, column);
+			JLabel component = (JLabel) super.getTableCellRendererComponent(
+					table, "", isSelected, hasFocus, row, column);
 			int val = ((Integer) value).intValue();
 			switch (val) {
 			case 1:
-				component.setIcon(ThemeManager.getIcon(HOIconName.PLAYS_AT_BEGINNING));
+				component.setIcon(ThemeManager
+						.getIcon(HOIconName.PLAYS_AT_BEGINNING));
 				break;
 			case 2:
 				component.setIcon(ThemeManager.getIcon(HOIconName.IS_RESERVE));
+				break;
+			case 3:
+				component.setIcon(ThemeManager
+						.getIcon(HOIconName.NOT_IN_LINEUP));
 				break;
 			default:
 				component.setIcon(null);
@@ -327,12 +347,13 @@ public class PenaltyTakersView extends JPanel {
 		}
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
 			Float ability = (Float) value;
 			String str = this.format.format(ability);
-			return super.getTableCellRendererComponent(table, str, isSelected, hasFocus, row,
-					column);
+			return super.getTableCellRendererComponent(table, str, isSelected,
+					hasFocus, row, column);
 		}
 	}
 }
