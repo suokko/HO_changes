@@ -8,7 +8,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchType;
 import ho.core.net.OnlineWorker;
-import ho.core.util.GUIUtilities;
+import ho.core.util.GUIUtils;
 import ho.core.util.HOLogger;
 import ho.core.util.XMLUtils;
 
@@ -85,7 +85,7 @@ public class UploadDownloadPanel extends JPanel {
 		gbc.weightx = 1.0;
 		buttonPanel.add(this.downloadButton, gbc);
 
-		GUIUtilities.equalizeComponentSizes(this.refreshButton,
+		GUIUtils.equalizeComponentSizes(this.refreshButton,
 				this.uploadButton, this.downloadButton);
 
 		MatchesTableModel model = new MatchesTableModel(getMatchesFromDB());

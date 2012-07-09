@@ -11,9 +11,9 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
-public class GUIUtilities {
+public class GUIUtils {
 
-	private GUIUtilities() {
+	private GUIUtils() {
 	}
 
 	/**
@@ -75,6 +75,7 @@ public class GUIUtilities {
 
 			private static final long serialVersionUID = 4054546658098440109L;
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
 			}
