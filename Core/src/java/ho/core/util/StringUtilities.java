@@ -50,24 +50,38 @@ public class StringUtilities {
 		return (str == null || str.length() == 0);
 	}
 
-	public static  String getResultString(int homeGoals, int awayGoals) {
+	/**
+	 * Returns a specified default if the given string is <code>null</code>.
+	 * 
+	 * @param string
+	 *            a string
+	 * @param defaultStr
+	 *            the default to return
+	 * @return the defaultStr if the given string is <code>null</code>, the
+	 *         string itself otherwise.
+	 */
+	public static String defaultIfNull(String string, String defaultStr) {
+		return (string == null) ? defaultStr : string;
+	}
+
+	public static String getResultString(int homeGoals, int awayGoals) {
 		final StringBuffer buffer = new StringBuffer();
-		if(homeGoals < 0 || awayGoals < 0)
+		if (homeGoals < 0 || awayGoals < 0)
 			return " - : - ";
 
-        if (homeGoals < 10) {
-            buffer.append(" ");
-        }
+		if (homeGoals < 10) {
+			buffer.append(" ");
+		}
 
-        buffer.append(homeGoals);
-        buffer.append(" : ");
+		buffer.append(homeGoals);
+		buffer.append(" : ");
 
-        if (awayGoals < 10) {
-            buffer.append(" ");
-        }
+		if (awayGoals < 10) {
+			buffer.append(" ");
+		}
 
-        buffer.append(awayGoals);
+		buffer.append(awayGoals);
 
-        return buffer.toString();
-    }
+		return buffer.toString();
+	}
 }
