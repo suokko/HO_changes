@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -84,8 +85,8 @@ public class XMLUtils {
 	 *         no node with the specified tag name or no attribute with the
 	 *         specified attribute name could be found.
 	 */
-	public static String getAttributeValueFromNode(Document document, String nodeName,
-			String attributeName) {
+	public static String getAttributeValueFromNode(Document document,
+			String nodeName, String attributeName) {
 		Node node = getNode(document, nodeName);
 		if (node != null) {
 			Node attribute = getAttributeValue(node, attributeName);
@@ -107,7 +108,8 @@ public class XMLUtils {
 	 *         <code>null</code> if there is no attribute with that name.
 	 */
 	public static Node getAttributeValue(Node node, String attributeName) {
-		return (node.hasAttributes()) ? node.getAttributes().getNamedItem(attributeName) : null;
+		return (node.hasAttributes()) ? node.getAttributes().getNamedItem(
+				attributeName) : null;
 
 	}
 
@@ -129,6 +131,73 @@ public class XMLUtils {
 			return nl.item(0);
 		}
 		return null;
+	}
+
+	/**
+	 * Gets the first child element with the specified tag name from the given
+	 * parent element. If there are multiple elements with the specified tag
+	 * name, the first element found will be returned.
+	 * 
+	 * @param parent
+	 *            the parent element
+	 * @param tagname
+	 *            the tag name of the element to find.
+	 * @return the first element found with the specified tag name or
+	 *         <code>null</code> if no element with that name could be found.
+	 */
+	public static Element getElement(Element parent, String tagname) {
+		NodeList nl = parent.getElementsByTagName(tagname);
+		if (!isEmpty(nl)) {
+			return (Element) nl.item(0);
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the value from the first descendant of a given ancestor, where the
+	 * descendant has the specified name.
+	 * 
+	 * @param ancestor
+	 *            the ancestor element
+	 * @param tagname
+	 *            the tag name of the descendant to find.
+	 * @return the value of the descendant or <code>null</code> if no descendant
+	 *         with that name could be found or the descendant found has no
+	 *         value.
+	 */
+	public static String getValueFromDescendant(Element ancestor, String tagname) {
+		if (ancestor != null) {
+			NodeList nl = ancestor.getElementsByTagName(tagname);
+			if (!isEmpty(nl)) {
+				Element e = (Element) nl.item(0);
+				Node c = e.getFirstChild();
+				if (c != null) {
+					return c.getNodeValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the value from the first descendant of a given ancestor, where the
+	 * descendant has the specified name.
+	 * 
+	 * @param ancestor
+	 *            the ancestor element
+	 * @param tagname
+	 *            the tag name of the descendant to find.
+	 * @param defaultString
+	 *            a default string to return if the value found is
+	 *            <code>null</code>.
+	 * @return the value of the descendant or <code>null</code> if no descendant
+	 *         with that name could be found or the descendant found has no
+	 *         value.
+	 */
+	public static String getValueFromDescendant(Element ancestor,
+			String tagname, String defaultString) {
+		String val = getValueFromDescendant(ancestor, tagname);
+		return (val != null) ? val : defaultString;
 	}
 
 	/**
