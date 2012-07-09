@@ -20,7 +20,7 @@ import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.IOUtilities;
+import ho.core.util.IOUtils;
 import ho.tool.updater.VersionInfo;
 
 import java.io.BufferedReader;
@@ -1053,7 +1053,7 @@ public class MyConnector {
 		builder.append(content);
 
 		try {
-			IOUtilities.writeToFile(builder.toString(), outFile, "UTF-8");
+			IOUtils.writeToFile(builder.toString(), outFile, "UTF-8");
 		} catch (Exception e) {
 			HOLogger.instance().error(MyConnector.class, e);
 		}

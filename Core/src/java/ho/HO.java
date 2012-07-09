@@ -12,7 +12,7 @@ import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
-import ho.core.util.IOUtilities;
+import ho.core.util.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -245,7 +245,7 @@ public class HO {
 			} catch (Exception e) {
 				HOLogger.instance().warning(HO.class, "getRevisionNumber failed: " + e);
 			} finally {
-				IOUtilities.closeQuietly(is);
+				IOUtils.closeQuietly(is);
 			}
 		}
 		if (revision == 0) { // to avoid multiple errors
