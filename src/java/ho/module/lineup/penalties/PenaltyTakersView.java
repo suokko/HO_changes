@@ -54,8 +54,7 @@ public class PenaltyTakersView extends JPanel {
 		for (Spieler player : players) {
 			takers.add(new PenaltyTaker(player));
 		}
-		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel())
-				.setPenaltyTakers(takers);
+		getTableModel().setPenaltyTakers(takers);
 	}
 
 	public void setLineup(Lineup lineup) {
@@ -65,8 +64,13 @@ public class PenaltyTakersView extends JPanel {
 	}
 
 	public void auto() {
-		((PenaltyTakersTableModel) this.penaltyTakersTable.getModel())
-				.bestFit();
+		this.penaltyTakersTable.setRowSorter(null);
+		this.penaltyTakersTable.setAutoCreateRowSorter(false);
+		getTableModel().bestFit();
+		this.penaltyTakersTable.setAutoCreateRowSorter(true);
+		setRowFilter();
+		// without repaint the sort indicator will not disappear
+		this.penaltyTakersTable.getTableHeader().repaint();
 	}
 
 	private void initComponents() {
@@ -129,9 +133,42 @@ public class PenaltyTakersView extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		add(filterPanel, gbc);
+		setRowFilter();
+	}
 
-		((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
-				.getRowSorter()).setRowFilter(new MyRowFilter());
+	@SuppressWarnings("unchecked")
+	private void setRowFilter() {
+		TableRowSorter<PenaltyTakersTableModel> rowSorter = ((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
+				.getRowSorter());
+
+		rowSorter
+				.setRowFilter(new RowFilter<PenaltyTakersTableModel, Integer>() {
+
+					@Override
+					public boolean include(
+							RowFilter.Entry<? extends PenaltyTakersTableModel, ? extends Integer> entry) {
+						PenaltyTakersTableModel personModel = entry.getModel();
+						PenaltyTaker taker = personModel.getPenaltyTaker(entry
+								.getIdentifier());
+						if (showAnfangsElfCheckBox.isSelected()
+								&& getInLineupVal(taker.getPlayer()).intValue() == 1) {
+							return true;
+						}
+						if (showReserveCheckBox.isSelected()
+								&& getInLineupVal(taker.getPlayer()).intValue() == 2) {
+							return true;
+						}
+						if (showOthersCheckBox.isSelected()
+								&& getInLineupVal(taker.getPlayer()).intValue() == 3) {
+							return true;
+						}
+						return false;
+					}
+				});
+	}
+
+	private PenaltyTakersTableModel getTableModel() {
+		return (PenaltyTakersTableModel) this.penaltyTakersTable.getModel();
 	}
 
 	private void addListeners() {
@@ -147,8 +184,7 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				((AbstractTableModel) penaltyTakersTable.getModel())
-						.fireTableDataChanged();
+				getTableModel().fireTableDataChanged();
 			}
 		};
 		this.showAnfangsElfCheckBox.addItemListener(filterCheckBoxListener);
@@ -245,8 +281,9 @@ public class PenaltyTakersView extends JPanel {
 				return taker.getPlayer().getTorschuss();
 			case 5:
 				return taker.getAbility();
+			default:
+				return "";
 			}
-			return "";
 		}
 
 		@Override
@@ -267,8 +304,9 @@ public class PenaltyTakersView extends JPanel {
 				return Integer.class;
 			case 5:
 				return Float.class;
+			default:
+				return Object.class;
 			}
-			return Object.class;
 		}
 
 		public PenaltyTaker getPenaltyTaker(int rowIndex) {
