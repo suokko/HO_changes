@@ -4,12 +4,12 @@ package ho.core.util;
  * Utility class for various String related operations.
  * 
  */
-public class StringUtilities {
+public class StringUtils {
 
 	/**
 	 * Utility class - private constructor enforces noninstantiability.
 	 */
-	private StringUtilities() {
+	private StringUtils() {
 	}
 
 	/**

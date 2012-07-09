@@ -15,7 +15,7 @@ import ho.core.model.series.Paarung;
 import ho.core.net.OnlineWorker;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -215,7 +215,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
     	homeTeam.setText(paarung.getHeimName());
     	visitorTeam.setText(paarung.getGastName());
         if ((paarung.getToreHeim() > -1) && (paarung.getToreGast() > -1)) {
-            result.setText(StringUtilities.getResultString(paarung.getToreHeim() , paarung.getToreGast()));
+            result.setText(StringUtils.getResultString(paarung.getToreHeim() , paarung.getToreGast()));
 
             //HomeVictory
             if (paarung.getToreHeim() > paarung.getToreGast()) {
@@ -233,7 +233,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
                 visitorTeam.setIcon(ThemeManager.getTransparentIcon(HOIconName.STAR_GRAY, Color.WHITE));
             }
         } else {
-            result.setText(StringUtilities.getResultString(-1, -1));
+            result.setText(StringUtils.getResultString(-1, -1));
             homeTeam.setIcon(ImageUtilities.NOIMAGEICON);
             visitorTeam.setIcon(ImageUtilities.NOIMAGEICON);
         }

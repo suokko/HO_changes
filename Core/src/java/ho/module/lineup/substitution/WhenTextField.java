@@ -1,6 +1,6 @@
 package ho.module.lineup.substitution;
 
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -110,7 +110,7 @@ public class WhenTextField extends JFormattedTextField {
 
 		@Override
 		public Object stringToValue(String text) throws ParseException {
-			return (StringUtilities.isEmpty(text)) ? Integer.valueOf(0) : Integer.parseInt(text);
+			return (StringUtils.isEmpty(text)) ? Integer.valueOf(0) : Integer.parseInt(text);
 		}
 
 		@Override
@@ -133,7 +133,7 @@ public class WhenTextField extends JFormattedTextField {
 				builder.append(doc.getText(0, doc.getLength()));
 				builder.replace(offset, offset + length, text);
 				String content = builder.toString();
-				if (StringUtilities.isNumeric(content)) {
+				if (StringUtils.isNumeric(content)) {
 					int i = Integer.parseInt(content);
 					if (i >= 0 && i <= 119) {
 						super.replace(fb, offset, length, text, attrs);

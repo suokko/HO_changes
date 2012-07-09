@@ -7,7 +7,7 @@
 package ho.core.model.match;
 
 import ho.core.util.HOLogger;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -230,7 +230,7 @@ public class MatchKurzInfo implements Comparable<Object> {
 	 */
 	public final java.sql.Timestamp getMatchDateAsTimestamp() {
 		if (this.matchDateTimestamp == null) {
-			if (!StringUtilities.isEmpty(this.m_sMatchDate)) {
+			if (!StringUtils.isEmpty(this.m_sMatchDate)) {
 				try {
 					// Hattrick
 					SimpleDateFormat simpleFormat = new SimpleDateFormat(
