@@ -1,6 +1,6 @@
 package ho.module.lineup.substitution;
 
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -32,7 +32,7 @@ public class MessageBox extends JPanel {
 	}
 
 	public void setMessage(String message) {
-		if (StringUtilities.isEmpty(message)) {
+		if (StringUtils.isEmpty(message)) {
 			this.commentsTextArea.setText("");
 		} else {
 			this.commentsTextArea.setText(message);

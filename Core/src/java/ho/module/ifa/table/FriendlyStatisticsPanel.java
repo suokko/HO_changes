@@ -4,7 +4,7 @@ import ho.core.db.DBManager;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 import ho.module.ifa.IfaMatch;
 
 import java.awt.BorderLayout;
@@ -96,7 +96,7 @@ public class FriendlyStatisticsPanel extends JPanel {
 			objects[counter][2] =	Integer.valueOf(home?stat.getHomeWon():stat.getHomeLost());
 			objects[counter][3] = 	Integer.valueOf(stat.getDraw());
 			objects[counter][4] = 	Integer.valueOf(home?stat.getHomeLost():stat.getHomeWon());
-			objects[counter][5] =  	StringUtilities.getResultString(stat.getHomeGoals(),stat.getAwayGoals());
+			objects[counter][5] =  	StringUtils.getResultString(stat.getHomeGoals(),stat.getAwayGoals());
 			int active = stat.getLeague().getActiveUsers();
 			int tmpCoolness = 0;
 			if (active > 0)

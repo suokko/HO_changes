@@ -11,7 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.series.LigaTabellenEintrag;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -374,7 +374,7 @@ class SeriesTablePanel extends ImagePanel {
                         ((ColorLabelEntry) tableValues[j][4]).setText(eintrag.getG_Siege() + "");
                         ((ColorLabelEntry) tableValues[j][5]).setText(eintrag.getG_Un() + "");
                         ((ColorLabelEntry) tableValues[j][6]).setText(eintrag.getG_Nied() + "");
-                        ((ColorLabelEntry) tableValues[j][7]).setText(StringUtilities.getResultString(eintrag
+                        ((ColorLabelEntry) tableValues[j][7]).setText(StringUtils.getResultString(eintrag
                                                                                         .getToreFuer(),
                                                                                         eintrag
                                                                                         .getToreGegen()));
@@ -386,7 +386,7 @@ class SeriesTablePanel extends ImagePanel {
                         ((ColorLabelEntry) tableValues[j][11]).setText(eintrag.getH_Siege() + "");
                         ((ColorLabelEntry) tableValues[j][12]).setText(eintrag.getH_Un() + "");
                         ((ColorLabelEntry) tableValues[j][13]).setText(eintrag.getH_Nied() + "");
-                        ((ColorLabelEntry) tableValues[j][14]).setText(StringUtilities.getResultString(eintrag
+                        ((ColorLabelEntry) tableValues[j][14]).setText(StringUtils.getResultString(eintrag
                                                                                          .getH_ToreFuer(),
                                                                                          eintrag
                                                                                          .getH_ToreGegen()));
@@ -398,7 +398,7 @@ class SeriesTablePanel extends ImagePanel {
                         ((ColorLabelEntry) tableValues[j][18]).setText(eintrag.getA_Siege() + "");
                         ((ColorLabelEntry) tableValues[j][19]).setText(eintrag.getA_Un() + "");
                         ((ColorLabelEntry) tableValues[j][20]).setText(eintrag.getA_Nied() + "");
-                        ((ColorLabelEntry) tableValues[j][21]).setText(StringUtilities.getResultString(eintrag
+                        ((ColorLabelEntry) tableValues[j][21]).setText(StringUtils.getResultString(eintrag
                                                                                          .getA_ToreFuer(),
                                                                                          eintrag
                                                                                          .getA_ToreGegen()));

@@ -6,7 +6,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 import ho.module.lineup.CopyListener;
 
 import java.awt.Dimension;
@@ -65,7 +65,7 @@ public class OAuthDialog extends JDialog implements ActionListener, FocusListene
 		this.m_service = service;
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-		if (!StringUtilities.isEmpty(scope)) {
+		if (!StringUtils.isEmpty(scope)) {
 			scopes = "&scope=" + scope;
 		}
 		

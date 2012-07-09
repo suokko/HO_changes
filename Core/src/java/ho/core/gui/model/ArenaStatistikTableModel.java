@@ -11,7 +11,7 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.misc.Finanzen;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 
 import java.awt.Color;
 import java.text.DateFormat;
@@ -260,7 +260,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    m_clData[i][2] = new ColorLabelEntry(match.getGastName(), ColorLabelEntry.FG_STANDARD,
 			    		background, SwingConstants.LEFT);
 			    //Ergebnis
-			    m_clData[i][3] = new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(), match.getGastTore()),
+			    m_clData[i][3] = new ColorLabelEntry(StringUtils.getResultString(match.getHeimTore(), match.getGastTore()),
 			    		ColorLabelEntry.FG_STANDARD, background, SwingConstants.CENTER);
 
 			    //Sterne für Sieger!
