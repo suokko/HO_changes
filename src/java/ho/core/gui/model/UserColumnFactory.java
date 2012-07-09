@@ -23,7 +23,7 @@ import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 import ho.core.util.HTCalendarFactory;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 import ho.module.playerOverview.SpielerStatusLabelEntry;
 
 import java.awt.Color;
@@ -427,7 +427,7 @@ final public class UserColumnFactory {
 			@Override
 			public IHOTableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());
-				return new ColorLabelEntry(StringUtilities.getResultString(match.getHeimTore(),
+				return new ColorLabelEntry(StringUtils.getResultString(match.getHeimTore(),
                         match.getGastTore()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);
@@ -436,7 +436,7 @@ final public class UserColumnFactory {
 			@Override
 			public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				final Color background = MatchesColumnModel.getColor4Matchtyp(spielerCBItem.getMatchTyp());
-				return new ColorLabelEntry(StringUtilities.getResultString(spielerCBItem.getMatchdetails().getHomeGoals(),
+				return new ColorLabelEntry(StringUtils.getResultString(spielerCBItem.getMatchdetails().getHomeGoals(),
 						spielerCBItem.getMatchdetails().getGuestGoals()),
                         	ColorLabelEntry.FG_STANDARD, background,
                         	SwingConstants.CENTER);

@@ -35,7 +35,7 @@ import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.StringUtilities;
+import ho.core.util.StringUtils;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.Substitution;
@@ -579,7 +579,7 @@ public class OnlineWorker {
 			HOLogger.instance().log(OnlineWorker.class, e);
 		}
 
-		if (!StringUtilities.isEmpty(matchesString)) {
+		if (!StringUtils.isEmpty(matchesString)) {
 			return XMLMatchesParser.parseMatchesFromString(matchesString);
 		}
 		
@@ -1076,7 +1076,7 @@ public class OnlineWorker {
 		try {
 			String xml = MyConnector.instance().getMatchOrder(matchId,
 					matchType);
-			if (!StringUtilities.isEmpty(xml)) {
+			if (!StringUtils.isEmpty(xml)) {
 				Map<String, String> map = XMLMatchOrderParser
 						.parseMatchOrderFromString(xml);
 				String trainerID = String.valueOf(HOVerwaltung.instance()
@@ -1115,7 +1115,7 @@ public class OnlineWorker {
 		while (hrfReader.ready()) {
 			String lineString = hrfReader.readLine();
 			// Ignore empty lines
-			if (!StringUtilities.isEmpty(lineString)) {
+			if (!StringUtils.isEmpty(lineString)) {
 				int indexEqualsSign = lineString.indexOf('=');
 				if (indexEqualsSign > 0) {
 					properties.setProperty(
