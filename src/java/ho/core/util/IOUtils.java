@@ -16,12 +16,12 @@ import java.io.Writer;
  * Utility class for various IO/file related utility methods.
  * 
  */
-public class IOUtilities {
+public class IOUtils {
 
 	/**
 	 * Utility class - private constructor enforces noninstantiability.
 	 */
-	private IOUtilities() {
+	private IOUtils() {
 	}
 
 	/**

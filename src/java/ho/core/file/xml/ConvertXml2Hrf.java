@@ -23,7 +23,7 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
-import ho.core.util.IOUtilities;
+import ho.core.util.IOUtils;
 import ho.module.lineup.substitution.model.Substitution;
 
 import java.io.BufferedWriter;
@@ -640,7 +640,7 @@ public class ConvertXml2Hrf {
         } catch (Exception except) {
             HOLogger.instance().log(getClass(),except);
         } finally {
-        	IOUtilities.closeQuietly(out);
+        	IOUtils.closeQuietly(out);
         }
     }
 }
