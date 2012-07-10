@@ -16,26 +16,31 @@ public class LanguageStringLookup {
 			return HOVerwaltung.instance().getLanguageString("subs.TypeSwap");
 		case SUBSTITUTION:
 			return HOVerwaltung.instance().getLanguageString("subs.TypeSub");
+		default:
+			return null;
 		}
-		return null;
 	}
 
 	public static String getBehaviour(byte id) {
 		switch (id) {
 		case (-1):
-			return HOVerwaltung.instance().getLanguageString("subs.BehNoChange");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.BehNoChange");
 		case ISpielerPosition.NORMAL:
 			return HOVerwaltung.instance().getLanguageString("subs.BehNormal");
 		case ISpielerPosition.OFFENSIVE:
-			return HOVerwaltung.instance().getLanguageString("subs.BehOffensive");
+			return HOVerwaltung.instance().getLanguageString(
+					"subs.BehOffensive");
 		case ISpielerPosition.DEFENSIVE:
-			return HOVerwaltung.instance().getLanguageString("subs.BehDefensive");
+			return HOVerwaltung.instance().getLanguageString(
+					"subs.BehDefensive");
 		case ISpielerPosition.TOWARDS_MIDDLE:
 			return HOVerwaltung.instance().getLanguageString("subs.BehToMid");
 		case ISpielerPosition.TOWARDS_WING:
 			return HOVerwaltung.instance().getLanguageString("subs.BehToWi");
+		default:
+			return "UNKNOWN_BEHAVIOUR";
 		}
-		return "UNKNOWN_BEHAVIOUR";
 	}
 
 	public static String getPosition(byte id) {
@@ -94,19 +99,26 @@ public class LanguageStringLookup {
 		case DOWN:
 			return HOVerwaltung.instance().getLanguageString("subs.GoalDown");
 		case IN_THE_LEAD_BY_MORE_THAN_ONE:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT1");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalLeadMT1");
 		case DOWN_BY_MORE_THAN_ONE:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT1");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalDownMT1");
 		case NOT_DOWN:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalNotDown");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalNotDown");
 		case NOT_IN_THE_LEAD:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalNotLead");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalNotLead");
 		case IN_THE_LEAD_BY_MORE_THAN_TWO:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalLeadMT2");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalLeadMT2");
 		case DOWN_BY_MORE_THAN_TWO:
-			return HOVerwaltung.instance().getLanguageString("subs.GoalDownMT2");
+			return HOVerwaltung.instance()
+					.getLanguageString("subs.GoalDownMT2");
+		default:
+			return "";
 		}
-		return "";
 	}
 
 	public static String getRedCard(RedCardCriteria redCardCriteria) {
@@ -137,7 +149,8 @@ public class LanguageStringLookup {
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppWB");
 		case OPPONENT_WINGER:
 			return HOVerwaltung.instance().getLanguageString("subs.RedOppWi");
+		default:
+			return "";
 		}
-		return "";
 	}
 }
