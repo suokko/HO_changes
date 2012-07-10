@@ -63,6 +63,7 @@ public class LineupMasterView extends JPanel {
 			public void update() {
 				System.out.println("####- update");
 				substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
+				penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
 			}
 		});
 	}
