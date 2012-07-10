@@ -4,6 +4,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
+import ho.core.util.GUIUtils;
 import ho.module.lineup.Lineup;
 
 import java.awt.Component;
@@ -27,8 +28,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -40,6 +44,8 @@ public class PenaltyTakersView extends JPanel {
 	private JTable penaltyTakersTable;
 	private Lineup lineup;
 	private JButton autoButton;
+	private JButton moveUpButton;
+	private JButton moveDownButton;
 	private JCheckBox showAnfangsElfCheckBox;
 	private JCheckBox showReserveCheckBox;
 	private JCheckBox showOthersCheckBox;
@@ -55,28 +61,38 @@ public class PenaltyTakersView extends JPanel {
 			takers.add(new PenaltyTaker(player));
 		}
 		getTableModel().setPenaltyTakers(takers);
+		getTableModel().fireTableDataChanged();
 	}
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
-		((AbstractTableModel) this.penaltyTakersTable.getModel())
-				.fireTableDataChanged();
+		getTableModel().fireTableDataChanged();
 	}
 
 	public void auto() {
-		this.penaltyTakersTable.setRowSorter(null);
-		this.penaltyTakersTable.setAutoCreateRowSorter(false);
+		disableSortingAndFiltering();
 		getTableModel().bestFit();
+		enableSortingAndFiltering();
+	}
+
+	private void enableSortingAndFiltering() {
 		this.penaltyTakersTable.setAutoCreateRowSorter(true);
 		setRowFilter();
 		// without repaint the sort indicator will not disappear
 		this.penaltyTakersTable.getTableHeader().repaint();
 	}
 
+	private void disableSortingAndFiltering() {
+		this.penaltyTakersTable.setRowSorter(null);
+		this.penaltyTakersTable.setAutoCreateRowSorter(false);
+	}
+
 	private void initComponents() {
 		setLayout(new GridBagLayout());
 
 		this.penaltyTakersTable = new JTable();
+		this.penaltyTakersTable
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.penaltyTakersTable.setModel(new PenaltyTakersTableModel());
 		this.penaltyTakersTable.setAutoCreateRowSorter(true);
 
@@ -91,11 +107,30 @@ public class PenaltyTakersView extends JPanel {
 		JPanel rightPanel = new JPanel(new GridBagLayout());
 		this.autoButton = new JButton("let me do it for you");
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc = new GridBagConstraints();
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 8, 4, 10);
-		gbc.weighty = 1.0;
 		rightPanel.add(this.autoButton, gbc);
+
+		this.moveUpButton = new JButton("move up");
+		this.moveUpButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_UP));
+		this.moveUpButton.setEnabled(false);
+		gbc = new GridBagConstraints();
+		gbc.gridy = 1;
+		gbc.insets = new Insets(4, 8, 4, 10);
+		rightPanel.add(this.moveUpButton, gbc);
+
+		this.moveDownButton = new JButton("move down");
+		this.moveDownButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_DOWN));
+		this.moveDownButton.setEnabled(false);
+		gbc = new GridBagConstraints();
+		gbc.gridy = 2;
+		gbc.insets = new Insets(4, 8, 4, 10);
+		gbc.weighty = 1.0;
+		rightPanel.add(this.moveDownButton, gbc);
+
+		GUIUtils.equalizeComponentSizes(this.autoButton, this.moveUpButton,
+				this.moveDownButton);
 
 		JPanel filterPanel = new JPanel(new GridBagLayout());
 		filterPanel.setBorder(BorderFactory.createTitledBorder("Filter"));
@@ -172,11 +207,48 @@ public class PenaltyTakersView extends JPanel {
 	}
 
 	private void addListeners() {
+		this.penaltyTakersTable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+
+					@Override
+					public void valueChanged(ListSelectionEvent evt) {
+						if (!evt.getValueIsAdjusting()) {
+							int selectedRow = penaltyTakersTable
+									.getSelectedRow();
+							if (selectedRow == -1) {
+								moveUpButton.setEnabled(false);
+								moveDownButton.setEnabled(false);
+							} else {
+								moveUpButton.setEnabled((selectedRow > 0));
+								moveDownButton
+										.setEnabled(selectedRow < penaltyTakersTable
+												.getRowCount() - 1);
+							}
+						}
+					}
+				});
+
 		this.autoButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				auto();
+			}
+		});
+
+		this.moveUpButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				moveTaker(Move.UP);
+			}
+		});
+
+		this.moveDownButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				moveTaker(Move.DOWN);
 			}
 		});
 
@@ -190,6 +262,83 @@ public class PenaltyTakersView extends JPanel {
 		this.showAnfangsElfCheckBox.addItemListener(filterCheckBoxListener);
 		this.showReserveCheckBox.addItemListener(filterCheckBoxListener);
 		this.showOthersCheckBox.addItemListener(filterCheckBoxListener);
+	}
+
+	private PenaltyTaker getSelectedTaker() {
+		int viewRowIndex = this.penaltyTakersTable.getSelectedRow();
+		if (viewRowIndex != -1) {
+			int modelRowIndex = this.penaltyTakersTable
+					.convertRowIndexToModel(viewRowIndex);
+			return getTableModel().getPenaltyTaker(modelRowIndex);
+		}
+		return null;
+	}
+
+	private void moveTaker(Move move) {
+		int viewRowIndex = this.penaltyTakersTable.getSelectedRow();
+		if ((move == Move.UP && viewRowIndex > 0)
+				|| (move == Move.DOWN && viewRowIndex < this.penaltyTakersTable
+						.getRowCount() - 1)) {
+			PenaltyTakersTableModel model = getTableModel();
+			// get the taker before the current one
+			int otherViewRowIndex;
+			if (move == Move.UP) {
+				otherViewRowIndex = --viewRowIndex;
+			} else {
+				otherViewRowIndex = ++viewRowIndex;
+			}
+			PenaltyTaker otherTaker = model
+					.getPenaltyTaker(this.penaltyTakersTable
+							.convertRowIndexToModel(otherViewRowIndex));
+
+			PenaltyTaker taker = getSelectedTaker();
+
+			// disable row filtering
+			((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
+					.getRowSorter()).setRowFilter(null);
+
+			// recreate the model data based on the current (unfiltered) view
+			// and move the take to his new position
+			List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(
+					model.getRowCount());
+			for (int i = 0; i < this.penaltyTakersTable.getRowCount(); i++) {
+				list.add(model.getPenaltyTaker(this.penaltyTakersTable
+						.convertRowIndexToModel(i)));
+			}
+			list.remove(taker);
+			if (move == Move.UP) {
+				list.add(list.indexOf(otherTaker), taker);
+			} else {
+				list.add(list.indexOf(otherTaker) + 1, taker);
+			}			
+			
+
+			// clear current sort settings in the tabel
+			this.penaltyTakersTable.setRowSorter(null);
+			// enable sorting and filtering
+			this.penaltyTakersTable.setAutoCreateRowSorter(true);
+			setRowFilter();
+
+			model.setPenaltyTakers(list);
+			selectPenaltyTaker(taker);
+		}
+	}
+
+	private void selectPenaltyTaker(PenaltyTaker taker) {
+		PenaltyTakersTableModel model = getTableModel();
+		int modelIndex = -1;
+		for (int i = 0; i < model.getRowCount(); i++) {
+			if (model.getPenaltyTaker(i) == taker) {
+				modelIndex = i;
+				break;
+			}
+		}
+		if (modelIndex != -1) {
+			int viewIndex = this.penaltyTakersTable
+					.convertRowIndexToView(modelIndex);
+			this.penaltyTakersTable.getSelectionModel().setSelectionInterval(
+					viewIndex, viewIndex);
+		}
 	}
 
 	private Integer getInLineupVal(Spieler player) {
@@ -314,31 +463,33 @@ public class PenaltyTakersView extends JPanel {
 		}
 	}
 
-	private class MyRowFilter extends
-			RowFilter<PenaltyTakersTableModel, Integer> {
-
-		@Override
-		public boolean include(
-				RowFilter.Entry<? extends PenaltyTakersTableModel, ? extends Integer> entry) {
-			PenaltyTakersTableModel personModel = entry.getModel();
-			PenaltyTaker taker = personModel.getPenaltyTaker(entry
-					.getIdentifier());
-			if (showAnfangsElfCheckBox.isSelected()
-					&& getInLineupVal(taker.getPlayer()).intValue() == 1) {
-				return true;
-			}
-			if (showReserveCheckBox.isSelected()
-					&& getInLineupVal(taker.getPlayer()).intValue() == 2) {
-				return true;
-			}
-			if (showOthersCheckBox.isSelected()
-					&& getInLineupVal(taker.getPlayer()).intValue() == 3) {
-				return true;
-			}
-			return false;
-		}
-
-	}
+	// private class MyRowFilter extends
+	// RowFilter<PenaltyTakersTableModel, Integer> {
+	//
+	// @Override
+	// public boolean include(
+	// RowFilter.Entry<? extends PenaltyTakersTableModel, ? extends Integer>
+	// entry) {
+	// PenaltyTakersTableModel personModel = entry.getModel();
+	// PenaltyTaker taker = personModel.getPenaltyTaker(entry
+	// .getIdentifier());
+	// System.out.println("####- " + entry.getIdentifier() + " - " +
+	// taker.getPlayer().getName());
+	// if (showAnfangsElfCheckBox.isSelected()
+	// && getInLineupVal(taker.getPlayer()).intValue() == 1) {
+	// return true;
+	// }
+	// if (showReserveCheckBox.isSelected()
+	// && getInLineupVal(taker.getPlayer()).intValue() == 2) {
+	// return true;
+	// }
+	// if (showOthersCheckBox.isSelected()
+	// && getInLineupVal(taker.getPlayer()).intValue() == 3) {
+	// return true;
+	// }
+	// return false;
+	// }
+	// }
 
 	private class InLineupRenderer extends DefaultTableCellRenderer {
 
@@ -393,5 +544,9 @@ public class PenaltyTakersView extends JPanel {
 			return super.getTableCellRendererComponent(table, str, isSelected,
 					hasFocus, row, column);
 		}
+	}
+
+	private enum Move {
+		UP, DOWN;
 	}
 }

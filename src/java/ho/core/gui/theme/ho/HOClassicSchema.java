@@ -178,6 +178,8 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(PLAYS_AT_BEGINNING, "gui/bilder/Fugue/status.png");
 		put(IS_RESERVE, "gui/bilder/Fugue/status-away.png");
 		put(NOT_IN_LINEUP, "gui/bilder/Fugue/status-offline.png");
+		put(MOVE_UP, "gui/bilder/Fugue/arrow-090-medium.png");
+		put(MOVE_DOWN, "gui/bilder/Fugue/arrow-270-medium.png");
 	}
 
 	private void initBooleans() {
