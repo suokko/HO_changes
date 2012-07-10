@@ -96,7 +96,7 @@ public class OnlineWorker {
 		InfoPanel info = homf.getInfoPanel();
 		HOModel homodel = null;
 		// Show wait dialog
-		waitDialog = new LoginWaitDialog(homf, false);
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		try {
 			hrf = ConvertXml2Hrf.createHrf(waitDialog);
@@ -316,7 +316,7 @@ public class OnlineWorker {
 		String strDateLast = HT_FORMAT.format(tempEnd.getTime());
 
 		// Show wait Dialog
-		waitDialog = new LoginWaitDialog(HOMainFrame.instance());
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 
 		while (tempBeginn.before(endDate)) {
@@ -403,12 +403,11 @@ public class OnlineWorker {
 		Matchdetails details = null;
 
 		// Wait Dialog zeigen
-		waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
 		details = fetchDetails(matchId, matchType, lineup, waitDialog);
 
-		waitDialog.setValue(100);
 		waitDialog.setVisible(false);
 		if (details != null) {
 			return details;
@@ -437,7 +436,7 @@ public class OnlineWorker {
 	 */
 	public static boolean downloadMatchData(int matchid, MatchType matchType,
 			boolean refresh) {
-
+		waitDialog = getWaitDialog();
 		// Only download if not present in the database, or if refresh is true
 		if (refresh || !DBManager.instance().isMatchVorhanden(matchid)
 				|| !DBManager.instance().isMatchLineupVorhanden(matchid)) {
@@ -606,7 +605,7 @@ public class OnlineWorker {
 		String matchesString = "";
 		List<MatchKurzInfo> matches = new ArrayList<MatchKurzInfo>();
 		boolean bOK = false;
-		waitDialog = new LoginWaitDialog(HOMainFrame.instance());
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
 
@@ -694,7 +693,7 @@ public class OnlineWorker {
 		MatchLineup lineUp2 = null;
 
 		// Wait Dialog zeigen
-		waitDialog = new LoginWaitDialog(HOMainFrame.instance());
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
 
@@ -749,7 +748,7 @@ public class OnlineWorker {
 		boolean bOK = false;
 		String leagueFixtures = "";
 		HOVerwaltung hov = HOVerwaltung.instance();
-		waitDialog = new LoginWaitDialog(HOMainFrame.instance(), false);
+		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		try {
 			waitDialog.setValue(10);
@@ -787,6 +786,14 @@ public class OnlineWorker {
 		waitDialog.setVisible(false);
 		return bOK;
 	}
+	
+	protected static LoginWaitDialog getWaitDialog() {
+		if (waitDialog != null) { 
+			return waitDialog;
+		}
+		return new LoginWaitDialog(HOMainFrame.instance(), false);
+	}
+	
 
 	/**
 	 * Uploads the given order to Hattrick
@@ -985,7 +992,6 @@ public class OnlineWorker {
 					+ " : Error fetching Matchlineup :", HOVerwaltung
 					.instance().getLanguageString("Fehler"),
 					JOptionPane.ERROR_MESSAGE);
-			waitDialog.setVisible(false);
 			return null;
 		}
 		if (bOK) {
