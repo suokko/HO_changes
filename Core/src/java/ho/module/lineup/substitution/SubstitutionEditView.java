@@ -52,32 +52,39 @@ public class SubstitutionEditView extends JPanel {
 		Map<Integer, PlayerPositionItem> lineupPositions = SubstitutionDataProvider
 				.getLineupPositions();
 
-		this.playerComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values().toArray()));
+		this.playerComboBox.setModel(new DefaultComboBoxModel(lineupPositions
+				.values().toArray()));
 		this.playerComboBox.setSelectedItem(null);
 
 		if (isSubstitution()) {
 			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
-					.getFieldPositions(ISpielerPosition.substKeeper, ISpielerPosition.substForward);
-			this.playerInComboBox.setModel(new DefaultComboBoxModel(substitutionPlayers.toArray()));
+					.getFieldPositions(ISpielerPosition.substKeeper,
+							ISpielerPosition.substForward);
+			this.playerInComboBox.setModel(new DefaultComboBoxModel(
+					substitutionPlayers.toArray()));
 			this.playerInComboBox.setSelectedItem(null);
 		} else if (isPositionSwap()) {
 			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
-					.getFieldPositions(ISpielerPosition.substKeeper, ISpielerPosition.substForward);
-			this.playerInComboBox.setModel(new DefaultComboBoxModel(lineupPositions.values()
-					.toArray()));
+					.getFieldPositions(ISpielerPosition.substKeeper,
+							ISpielerPosition.substForward);
+			this.playerInComboBox.setModel(new DefaultComboBoxModel(
+					lineupPositions.values().toArray()));
 			this.playerInComboBox.setSelectedItem(null);
 		}
 
 		if (!isPositionSwap()) {
-			List<PlayerPositionItem> positions = SubstitutionDataProvider.getFieldPositions(
-					ISpielerPosition.keeper, ISpielerPosition.leftForward);
-			this.positionComboBox.setModel(new DefaultComboBoxModel(positions.toArray()));
+			List<PlayerPositionItem> positions = SubstitutionDataProvider
+					.getFieldPositions(ISpielerPosition.keeper,
+							ISpielerPosition.leftForward);
+			this.positionComboBox.setModel(new DefaultComboBoxModel(positions
+					.toArray()));
 			this.positionComboBox.setSelectedItem(null);
 			this.positionChooser.init(lineupPositions);
 		}
 
-		this.behaviourComboBox.setModel(new DefaultComboBoxModel(SubstitutionDataProvider
-				.getBehaviourItems(!isNewBehaviour()).toArray()));
+		this.behaviourComboBox.setModel(new DefaultComboBoxModel(
+				SubstitutionDataProvider.getBehaviourItems(!isNewBehaviour())
+						.toArray()));
 		if (isNewBehaviour()) {
 			this.behaviourComboBox.setSelectedItem(null);
 		}
@@ -97,8 +104,8 @@ public class SubstitutionEditView extends JPanel {
 		if (sub.getSubjectPlayerID() != -1) {
 			ComboBoxModel model = this.playerComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
-						.getSubjectPlayerID()) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler()
+						.getSpielerID() == sub.getSubjectPlayerID()) {
 					playerComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -108,8 +115,8 @@ public class SubstitutionEditView extends JPanel {
 		if (!isNewBehaviour() && sub.getObjectPlayerID() != -1) {
 			ComboBoxModel model = this.playerInComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler().getSpielerID() == sub
-						.getObjectPlayerID()) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getSpieler()
+						.getSpielerID() == sub.getObjectPlayerID()) {
 					playerInComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -119,8 +126,8 @@ public class SubstitutionEditView extends JPanel {
 		if (!isPositionSwap()) {
 			ComboBoxModel model = this.positionComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				if (((PlayerPositionItem) model.getElementAt(i)).getPosition().byteValue() == sub
-						.getPos()) {
+				if (((PlayerPositionItem) model.getElementAt(i)).getPosition()
+						.byteValue() == sub.getPos()) {
 					positionComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -128,10 +135,13 @@ public class SubstitutionEditView extends JPanel {
 		}
 
 		Helper.markierenComboBox(this.behaviourComboBox, sub.getBehaviour());
-		Helper.markierenComboBox(this.redCardsComboBox, sub.getRedCardCriteria().getId());
-		Helper.markierenComboBox(this.standingComboBox, sub.getStanding().getId());
+		Helper.markierenComboBox(this.redCardsComboBox, sub
+				.getRedCardCriteria().getId());
+		Helper.markierenComboBox(this.standingComboBox, sub.getStanding()
+				.getId());
 
-		this.whenTextField.setValue(Integer.valueOf(sub.getMatchMinuteCriteria()));
+		this.whenTextField.setValue(Integer.valueOf(sub
+				.getMatchMinuteCriteria()));
 	}
 
 	/**
@@ -144,11 +154,15 @@ public class SubstitutionEditView extends JPanel {
 	public Substitution getSubstitution() {
 		Substitution sub = new Substitution();
 		sub.setBehaviour((byte) getSelectedId(this.behaviourComboBox));
-		sub.setRedCardCriteria(RedCardCriteria.getById((byte) getSelectedId(this.redCardsComboBox)));
-		sub.setStanding(GoalDiffCriteria.getById((byte) getSelectedId(this.standingComboBox)));
-		sub.setMatchMinuteCriteria(((Integer) this.whenTextField.getValue()).byteValue());
+		sub.setRedCardCriteria(RedCardCriteria
+				.getById((byte) getSelectedId(this.redCardsComboBox)));
+		sub.setStanding(GoalDiffCriteria
+				.getById((byte) getSelectedId(this.standingComboBox)));
+		sub.setMatchMinuteCriteria(((Integer) this.whenTextField.getValue())
+				.byteValue());
 		sub.setOrderType(this.orderType);
-		PlayerPositionItem item = (PlayerPositionItem) this.playerComboBox.getSelectedItem();
+		PlayerPositionItem item = (PlayerPositionItem) this.playerComboBox
+				.getSelectedItem();
 		if (item != null) {
 			sub.setObjectPlayerID(item.getSpieler().getSpielerID());
 		}
@@ -194,24 +208,26 @@ public class SubstitutionEditView extends JPanel {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				whenTextField.setValue(Integer.valueOf(whenSlider.getModel().getValue()));
+				whenTextField.setValue(Integer.valueOf(whenSlider.getModel()
+						.getValue()));
 			}
 		});
 
 		// PropertyChangeListener that will update the slider when value in the
 		// "when" textfield changed
-		this.whenTextField.addPropertyChangeListener("value", new PropertyChangeListener() {
+		this.whenTextField.addPropertyChangeListener("value",
+				new PropertyChangeListener() {
 
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				Integer value = (Integer) whenTextField.getValue();
-				if (value != null) {
-					whenSlider.setValue(value.intValue());
-				} else {
-					whenSlider.setValue(0);
-				}
-			}
-		});
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						Integer value = (Integer) whenTextField.getValue();
+						if (value != null) {
+							whenSlider.setValue(value.intValue());
+						} else {
+							whenSlider.setValue(0);
+						}
+					}
+				});
 
 		if (!isPositionSwap()) {
 			// ItemListener that will update the PositionChooser if selection in
@@ -223,7 +239,8 @@ public class SubstitutionEditView extends JPanel {
 					PlayerPositionItem item = (PlayerPositionItem) positionComboBox
 							.getSelectedItem();
 					if (item != null) {
-						positionChooser.select(Integer.valueOf(item.getPosition()));
+						positionChooser.select(Integer.valueOf(item
+								.getPosition()));
 					} else {
 						positionChooser.select(null);
 					}
@@ -232,28 +249,34 @@ public class SubstitutionEditView extends JPanel {
 
 			// PositionSelectionListener that will update position combobox
 			// selection if selection in the PositionChooser changes
-			this.positionChooser.addPositionSelectionListener(new PositionSelectionListener() {
+			this.positionChooser
+					.addPositionSelectionListener(new PositionSelectionListener() {
 
-				@Override
-				public void selectionChanged(PositionSelectionEvent event) {
-					if (event.getChange() == Change.SELECTED) {
-						for (int i = 0; i < positionComboBox.getModel().getSize(); i++) {
-							PlayerPositionItem item = (PlayerPositionItem) positionComboBox
-									.getModel().getElementAt(i);
-							if (event.getPosition().equals(item.getPosition())) {
-								if (item != positionComboBox.getSelectedItem()) {
-									positionComboBox.setSelectedItem(item);
+						@Override
+						public void selectionChanged(
+								PositionSelectionEvent event) {
+							if (event.getChange() == Change.SELECTED) {
+								for (int i = 0; i < positionComboBox.getModel()
+										.getSize(); i++) {
+									PlayerPositionItem item = (PlayerPositionItem) positionComboBox
+											.getModel().getElementAt(i);
+									if (event.getPosition().equals(
+											item.getPosition())) {
+										if (item != positionComboBox
+												.getSelectedItem()) {
+											positionComboBox
+													.setSelectedItem(item);
+										}
+										break;
+									}
 								}
-								break;
+							} else {
+								if (positionComboBox.getSelectedItem() != null) {
+									positionComboBox.setSelectedItem(null);
+								}
 							}
 						}
-					} else {
-						if (positionComboBox.getSelectedItem() != null) {
-							positionComboBox.setSelectedItem(null);
-						}
-					}
-				}
-			});
+					});
 		}
 	}
 
@@ -262,13 +285,17 @@ public class SubstitutionEditView extends JPanel {
 
 		JLabel playerLabel = new JLabel();
 		if (isSubstitution()) {
-			playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Out"));
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString(
+					"subs.Out"));
 		} else if (isPositionSwap()) {
-			playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Reposition"));
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString(
+					"subs.Reposition"));
 		} else {
-			playerLabel.setText(HOVerwaltung.instance().getLanguageString("subs.Player"));
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString(
+					"subs.Player"));
 		}
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
@@ -276,7 +303,8 @@ public class SubstitutionEditView extends JPanel {
 		add(playerLabel, gbc);
 
 		this.playerComboBox = new JComboBox();
-		Dimension comboBoxSize = new Dimension(200, this.playerComboBox.getPreferredSize().height);
+		Dimension comboBoxSize = new Dimension(200,
+				this.playerComboBox.getPreferredSize().height);
 		this.playerComboBox.setMinimumSize(comboBoxSize);
 		this.playerComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
@@ -286,10 +314,11 @@ public class SubstitutionEditView extends JPanel {
 		if (isSubstitution() || isPositionSwap()) {
 			JLabel playerInLabel = new JLabel();
 			if (isSubstitution()) {
-				playerInLabel.setText(HOVerwaltung.instance().getLanguageString("subs.In"));
+				playerInLabel.setText(HOVerwaltung.instance()
+						.getLanguageString("subs.In"));
 			} else {
-				playerInLabel.setText(HOVerwaltung.instance().getLanguageString(
-						"subs.RepositionWith"));
+				playerInLabel.setText(HOVerwaltung.instance()
+						.getLanguageString("subs.RepositionWith"));
 			}
 			gbc.gridx = 0;
 			gbc.gridy++;
@@ -305,8 +334,8 @@ public class SubstitutionEditView extends JPanel {
 			add(this.playerInComboBox, gbc);
 		}
 
-		JLabel behaviourLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"subs.Behavior"));
+		JLabel behaviourLabel = new JLabel(HOVerwaltung.instance()
+				.getLanguageString("subs.Behavior"));
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.anchor = GridBagConstraints.WEST;
@@ -320,23 +349,29 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.behaviourComboBox, gbc);
 
-		JLabel whenLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.When"));
+		JLabel whenLabel = new JLabel(HOVerwaltung.instance()
+				.getLanguageString("subs.When"));
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(whenLabel, gbc);
 
-		this.whenTextField = new WhenTextField(HOVerwaltung.instance().getLanguageString(
-				"subs.MinuteAnytime"), HOVerwaltung.instance().getLanguageString(
-				"subs.MinuteAfterX"));
-		Dimension textFieldSize = new Dimension(200, this.whenTextField.getPreferredSize().height);
+		this.whenTextField = new WhenTextField(HOVerwaltung.instance()
+				.getLanguageString("subs.MinuteAnytime"), HOVerwaltung
+				.instance().getLanguageString("subs.MinuteAfterX"));
+		Dimension textFieldSize = new Dimension(200,
+				this.whenTextField.getPreferredSize().height);
 		this.whenTextField.setMinimumSize(textFieldSize);
 		this.whenTextField.setPreferredSize(textFieldSize);
+		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.whenTextField, gbc);
 
 		this.whenSlider = new JSlider(0, 119, 0);
+		this.whenSlider.setMinimumSize(new Dimension(this.whenTextField
+				.getMinimumSize().width,
+				this.whenSlider.getPreferredSize().height));
 		gbc.gridx = 1;
 		gbc.gridy++;
 		gbc.insets = new Insets(0, 2, 8, 10);
@@ -348,17 +383,18 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(8, 4, 8, 4);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
-		add(new Divider(HOVerwaltung.instance().getLanguageString("subs.AdvancedConditions")), gbc);
+		add(new Divider(HOVerwaltung.instance().getLanguageString(
+				"subs.AdvancedConditions")), gbc);
+
+		gbc.gridwidth = 1;
+		gbc.weightx = 0.0;
 
 		if (!isPositionSwap()) {
-			JLabel positionLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
-					"subs.Position"));
+			JLabel positionLabel = new JLabel(HOVerwaltung.instance()
+					.getLanguageString("subs.Position"));
 			gbc.gridx = 0;
 			gbc.gridy++;
-			gbc.gridwidth = 1;
 			gbc.insets = new Insets(4, 10, 4, 2);
-			gbc.fill = GridBagConstraints.NONE;
-			gbc.weightx = 0.0;
 			add(positionLabel, gbc);
 
 			this.positionComboBox = new JComboBox();
@@ -371,19 +407,20 @@ public class SubstitutionEditView extends JPanel {
 			this.positionChooser = new PositionChooser();
 			gbc.gridy++;
 			gbc.insets = new Insets(2, 10, 8, 10);
+			gbc.fill = GridBagConstraints.NONE;
 			add(this.positionChooser, gbc);
 		}
 
-		JLabel redCardsLabel = new JLabel(HOVerwaltung.instance().getLanguageString("subs.RedCard"));
+		JLabel redCardsLabel = new JLabel(HOVerwaltung.instance()
+				.getLanguageString("subs.RedCard"));
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy++;
-		gbc.gridwidth = 1;
 		gbc.insets = new Insets(4, 10, 4, 2);
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0.0;
 		add(redCardsLabel, gbc);
 
-		this.redCardsComboBox = new JComboBox(SubstitutionDataProvider.getRedCardItems());
+		this.redCardsComboBox = new JComboBox(
+				SubstitutionDataProvider.getRedCardItems());
 		this.redCardsComboBox.setMinimumSize(comboBoxSize);
 		this.redCardsComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
@@ -397,12 +434,18 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 10, 4, 2);
 		add(standingLabel, gbc);
 
-		this.standingComboBox = new JComboBox(SubstitutionDataProvider.getStandingItems());
+		this.standingComboBox = new JComboBox(
+				SubstitutionDataProvider.getStandingItems());
 		this.standingComboBox.setMinimumSize(comboBoxSize);
 		this.standingComboBox.setPreferredSize(comboBoxSize);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.standingComboBox, gbc);
+
+		// dummy to consume all extra space
+		gbc.gridy++;
+		gbc.weighty = 1.0;
+		add(new JPanel(), gbc);
 	}
 
 	private boolean isSubstitution() {
