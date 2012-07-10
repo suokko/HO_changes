@@ -1,5 +1,6 @@
 package ho.module.lineup.penalties;
 
+import ho.core.gui.comp.table.RowNumberTable;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -158,7 +159,13 @@ public class PenaltyTakersView extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
-		add(new JScrollPane(this.penaltyTakersTable), gbc);
+
+		JScrollPane scrollPane = new JScrollPane(this.penaltyTakersTable);
+		JTable rowTable = new RowNumberTable(this.penaltyTakersTable);
+		scrollPane.setRowHeaderView(rowTable);
+		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+				rowTable.getTableHeader());
+		add(scrollPane, gbc);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.fill = GridBagConstraints.BOTH;
@@ -310,8 +317,7 @@ public class PenaltyTakersView extends JPanel {
 				list.add(list.indexOf(otherTaker), taker);
 			} else {
 				list.add(list.indexOf(otherTaker) + 1, taker);
-			}			
-			
+			}
 
 			// clear current sort settings in the tabel
 			this.penaltyTakersTable.setRowSorter(null);
