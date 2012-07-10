@@ -234,6 +234,7 @@ public class PositionChooser extends JPanel {
 			} else {
 				setBackground(COLOR_POS_DEFAULT);
 			}
+			
 		}
 	}
 
