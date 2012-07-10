@@ -110,4 +110,7 @@ public interface HOIconName {
 	public static final String PLAYS_AT_BEGINNING  = "plays_at_beginning";
 	public static final String IS_RESERVE = "is_reserve";
 	public static final String NOT_IN_LINEUP = "not_in_lineup";
+	public static final String MOVE_UP = "move_up";
+	public static final String MOVE_DOWN = "move_down";
+	
 }
