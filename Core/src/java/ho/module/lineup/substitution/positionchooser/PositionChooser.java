@@ -1,8 +1,9 @@
-package ho.module.lineup.substitution;
+package ho.module.lineup.substitution.positionchooser;
 
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
-import ho.module.lineup.substitution.PositionSelectionEvent.Change;
+import ho.module.lineup.substitution.PlayerPositionItem;
+import ho.module.lineup.substitution.positionchooser.PositionSelectionEvent.Change;
 
 import java.awt.Color;
 import java.awt.Cursor;
