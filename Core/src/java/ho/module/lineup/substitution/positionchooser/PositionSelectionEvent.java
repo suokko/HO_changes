@@ -1,4 +1,4 @@
-package ho.module.lineup.substitution;
+package ho.module.lineup.substitution.positionchooser;
 
 public class PositionSelectionEvent {
 

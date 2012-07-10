@@ -4,11 +4,14 @@ import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.Helper;
-import ho.module.lineup.substitution.PositionSelectionEvent.Change;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
 import ho.module.lineup.substitution.model.Substitution;
+import ho.module.lineup.substitution.positionchooser.PositionChooser;
+import ho.module.lineup.substitution.positionchooser.PositionSelectionEvent;
+import ho.module.lineup.substitution.positionchooser.PositionSelectionListener;
+import ho.module.lineup.substitution.positionchooser.PositionSelectionEvent.Change;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
