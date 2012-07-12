@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,6 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -42,15 +45,19 @@ import javax.swing.table.TableRowSorter;
 public class PenaltyTakersView extends JPanel {
 
 	private static final long serialVersionUID = -5089904466636200088L;
-	private JTable penaltyTakersTable;
-	private JTable table2;
+	private JTable playersTable;
+	private JTable takersTable;
 	private Lineup lineup;
 	private JButton autoButton;
+	private JButton clearButton;
 	private JButton moveUpButton;
 	private JButton moveDownButton;
+	private JButton addToTakersButton;
+	private JButton removeFromTakersButton;
 	private JCheckBox showAnfangsElfCheckBox;
 	private JCheckBox showReserveCheckBox;
 	private JCheckBox showOthersCheckBox;
+	private List<PenaltyTaker> players;
 
 	public PenaltyTakersView() {
 		initComponents();
@@ -58,91 +65,187 @@ public class PenaltyTakersView extends JPanel {
 	}
 
 	public void setPlayers(List<Spieler> players) {
-		List<PenaltyTaker> takers = new ArrayList<PenaltyTaker>();
+		this.players = new ArrayList<PenaltyTaker>();
 		for (Spieler player : players) {
-			takers.add(new PenaltyTaker(player));
+			this.players.add(new PenaltyTaker(player));
 		}
-		getTableModel().setPenaltyTakers(takers);
-		getTableModel().fireTableDataChanged();
+		getPlayersTableModel().setPenaltyTakers(this.players);
+		getPlayersTableModel().fireTableDataChanged();
 	}
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
-		getTableModel().fireTableDataChanged();
-	}
-
-	public void auto() {
-		disableSortingAndFiltering();
-		getTableModel().bestFit();
-		enableSortingAndFiltering();
+		getPlayersTableModel().fireTableDataChanged();
 	}
 
 	private void enableSortingAndFiltering() {
-		this.penaltyTakersTable.setAutoCreateRowSorter(true);
+		this.playersTable.setAutoCreateRowSorter(true);
 		setRowFilter();
 		// without repaint the sort indicator will not disappear
-		this.penaltyTakersTable.getTableHeader().repaint();
+		this.playersTable.getTableHeader().repaint();
 	}
 
 	private void disableSortingAndFiltering() {
-		this.penaltyTakersTable.setRowSorter(null);
-		this.penaltyTakersTable.setAutoCreateRowSorter(false);
+		this.playersTable.setRowSorter(null);
+		this.playersTable.setAutoCreateRowSorter(false);
+	}
+
+	private void reset() {
+		getPlayersTableModel().setPenaltyTakers(this.players);
+		getTakersTableModel().setPenaltyTakers(
+				Collections.<PenaltyTaker> emptyList());
 	}
 
 	private void initComponents() {
 		setLayout(new GridBagLayout());
 
-		this.penaltyTakersTable = new JTable();
-		this.penaltyTakersTable
-				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.penaltyTakersTable.setModel(new PenaltyTakersTableModel());
-		this.penaltyTakersTable.setAutoCreateRowSorter(true);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		add(createTablesPanel(), gbc);
 
-		TableColumn abilityColumn = this.penaltyTakersTable.getColumnModel()
+		gbc = new GridBagConstraints();
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.gridheight = 2;
+		gbc.insets = new Insets(20, 4, 4, 4);
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		add(createButtonsPanel(), gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		add(createFilterPanel(), gbc);
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		setRowFilter();
+	}
+
+	/**
+	 * The panel containing the two tables and the button to move players
+	 * between the tables.
+	 * 
+	 * @return the panel
+	 */
+	private JPanel createTablesPanel() {
+		JPanel tablesPanel = new JPanel(new GridBagLayout());
+
+		JLabel playersTableLabel = new JLabel("Players");
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(8, 8, 4, 8);
+		tablesPanel.add(playersTableLabel, gbc);
+
+		this.playersTable = new JTable();
+		this.playersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.playersTable.setModel(new PenaltyTakersTableModel());
+		this.playersTable.setAutoCreateRowSorter(true);
+		// as default, sort by if in lineup, than by ability
+		List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(5, SortOrder.DESCENDING));
+		this.playersTable.getRowSorter().setSortKeys(sortKeys);
+
+		TableColumn abilityColumn = this.playersTable.getColumnModel()
 				.getColumn(5);
 		abilityColumn.setCellRenderer(new AbilityRenderer());
-		TableColumn inLineupColumn = this.penaltyTakersTable.getColumnModel()
+		TableColumn inLineupColumn = this.playersTable.getColumnModel()
 				.getColumn(0);
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
 
-		JScrollPane scrollPane = new JScrollPane(this.penaltyTakersTable);
-		JTable rowTable = new RowNumberTable(this.penaltyTakersTable);
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 0.4;
+		gbc.weighty = 1.0;
+		tablesPanel.add(new JScrollPane(this.playersTable), gbc);
+
+		JPanel moveButtonsPanel = new JPanel(new GridBagLayout());
+		this.addToTakersButton = new JButton("add");
+		this.addToTakersButton.setIcon(ThemeManager
+				.getIcon(HOIconName.MOVE_RIGHT));
+		this.addToTakersButton.setEnabled(false);
+		gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.insets = new Insets(15, 8, 4, 8);
+		moveButtonsPanel.add(this.addToTakersButton, gbc);
+
+		this.removeFromTakersButton = new JButton("remove");
+		this.removeFromTakersButton.setIcon(ThemeManager
+				.getIcon(HOIconName.MOVE_LEFT));
+		this.removeFromTakersButton.setEnabled(false);
+		gbc.insets = new Insets(4, 8, 15, 8);
+		gbc.gridy = 1;
+		gbc.weighty = 1.0;
+		moveButtonsPanel.add(this.removeFromTakersButton, gbc);
+
+		GUIUtils.equalizeComponentSizes(this.addToTakersButton,
+				this.removeFromTakersButton);
+
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridheight = 2;
+		tablesPanel.add(moveButtonsPanel, gbc);
+
+		JLabel takersTableLabel = new JLabel("Penalty takers");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(8, 8, 4, 8);
+		tablesPanel.add(takersTableLabel, gbc);
+
+		this.takersTable = new JTable();
+		this.takersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.takersTable.setModel(new PenaltyTakersTableModel());
+
+		abilityColumn = this.takersTable.getColumnModel().getColumn(5);
+		abilityColumn.setCellRenderer(new AbilityRenderer());
+		inLineupColumn = this.takersTable.getColumnModel().getColumn(0);
+		inLineupColumn.setCellRenderer(new InLineupRenderer());
+		inLineupColumn.setMaxWidth(20);
+
+		JScrollPane scrollPane = new JScrollPane(this.takersTable);
+		RowNumberTable rowTable = new RowNumberTable(this.takersTable);
 		scrollPane.setRowHeaderView(rowTable);
 		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
 				rowTable.getTableHeader());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;		
-		add(scrollPane, gbc);
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.fill = GridBagConstraints.NONE;
-		add(createButtonsPanel(), gbc);
-		gbc.gridx = 0;
+		gbc.gridx = 2;
 		gbc.gridy = 1;
-		add(createFilterPanel(), gbc);
-		setRowFilter();
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 0.4;
+		gbc.weighty = 1.0;
+		tablesPanel.add(scrollPane, gbc);
+
+		return tablesPanel;
 	}
-	
+
 	private JPanel createFilterPanel() {
 		JPanel filterPanel = new JPanel(new GridBagLayout());
 		filterPanel.setBorder(BorderFactory.createTitledBorder("Filter"));
+
 		this.showAnfangsElfCheckBox = new JCheckBox("Show Anfangself");
 		this.showAnfangsElfCheckBox.setSelected(true);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 10, 2, 10);
 		filterPanel.add(this.showAnfangsElfCheckBox, gbc);
+
 		this.showReserveCheckBox = new JCheckBox("Show reserve");
 		this.showReserveCheckBox.setSelected(true);
-
 		gbc.gridy = 1;
 		gbc.insets = new Insets(2, 10, 2, 10);
 		filterPanel.add(this.showReserveCheckBox, gbc);
+
 		this.showOthersCheckBox = new JCheckBox("Show other");
 		this.showOthersCheckBox.setSelected(true);
 		gbc.gridy = 2;
@@ -150,6 +253,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		filterPanel.add(this.showOthersCheckBox, gbc);
+
 		return filterPanel;
 	}
 
@@ -162,32 +266,35 @@ public class PenaltyTakersView extends JPanel {
 		gbc.insets = new Insets(10, 8, 4, 10);
 		buttonsPanel.add(this.autoButton, gbc);
 
+		this.clearButton = new JButton("reset");
+		gbc.gridy = 1;
+		gbc.insets = new Insets(4, 8, 4, 10);
+		buttonsPanel.add(this.clearButton, gbc);
+
 		this.moveUpButton = new JButton("move up");
 		this.moveUpButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_UP));
 		this.moveUpButton.setEnabled(false);
-		gbc = new GridBagConstraints();
-		gbc.gridy = 1;
-		gbc.insets = new Insets(4, 8, 4, 10);
+		gbc.gridy = 2;
+		gbc.insets = new Insets(16, 8, 4, 10);
 		buttonsPanel.add(this.moveUpButton, gbc);
 
 		this.moveDownButton = new JButton("move down");
 		this.moveDownButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_DOWN));
 		this.moveDownButton.setEnabled(false);
-		gbc = new GridBagConstraints();
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		gbc.insets = new Insets(4, 8, 4, 10);
 		gbc.weighty = 1.0;
 		buttonsPanel.add(this.moveDownButton, gbc);
 
-		GUIUtils.equalizeComponentSizes(this.autoButton, this.moveUpButton,
-				this.moveDownButton);
+		GUIUtils.equalizeComponentSizes(this.autoButton, this.clearButton,
+				this.moveUpButton, this.moveDownButton);
 
 		return buttonsPanel;
 	}
 
 	@SuppressWarnings("unchecked")
 	private void setRowFilter() {
-		TableRowSorter<PenaltyTakersTableModel> rowSorter = ((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
+		TableRowSorter<PenaltyTakersTableModel> rowSorter = ((TableRowSorter<PenaltyTakersTableModel>) this.playersTable
 				.getRowSorter());
 
 		rowSorter
@@ -216,26 +323,50 @@ public class PenaltyTakersView extends JPanel {
 				});
 	}
 
-	private PenaltyTakersTableModel getTableModel() {
-		return (PenaltyTakersTableModel) this.penaltyTakersTable.getModel();
+	private PenaltyTakersTableModel getPlayersTableModel() {
+		return (PenaltyTakersTableModel) this.playersTable.getModel();
+	}
+
+	private PenaltyTakersTableModel getTakersTableModel() {
+		return (PenaltyTakersTableModel) this.takersTable.getModel();
 	}
 
 	private void addListeners() {
-		this.penaltyTakersTable.getSelectionModel().addListSelectionListener(
+		this.playersTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 
 					@Override
 					public void valueChanged(ListSelectionEvent evt) {
 						if (!evt.getValueIsAdjusting()) {
-							int selectedRow = penaltyTakersTable
-									.getSelectedRow();
+							int selectedRow = playersTable.getSelectedRow();
+							if (selectedRow == -1) {
+								addToTakersButton.setEnabled(false);
+							} else {
+								takersTable.clearSelection();
+								addToTakersButton.setEnabled(takersTable
+										.getRowCount() < 11);
+							}
+						}
+					}
+				});
+
+		this.takersTable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							int selectedRow = takersTable.getSelectedRow();
 							if (selectedRow == -1) {
 								moveUpButton.setEnabled(false);
 								moveDownButton.setEnabled(false);
+								removeFromTakersButton.setEnabled(false);
 							} else {
+								playersTable.clearSelection();
+								removeFromTakersButton.setEnabled(true);
 								moveUpButton.setEnabled((selectedRow > 0));
 								moveDownButton
-										.setEnabled(selectedRow < penaltyTakersTable
+										.setEnabled(selectedRow < takersTable
 												.getRowCount() - 1);
 							}
 						}
@@ -246,7 +377,15 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				auto();
+				bestFit();
+			}
+		});
+
+		this.clearButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reset();
 			}
 		});
 
@@ -266,11 +405,33 @@ public class PenaltyTakersView extends JPanel {
 			}
 		});
 
+		this.addToTakersButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PenaltyTaker player = getSelectedPlayer();
+				getPlayersTableModel().remove(player);
+				getTakersTableModel().add(player);
+				selectTaker(player);
+			}
+		});
+
+		this.removeFromTakersButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PenaltyTaker taker = getSelectedTaker();
+				getTakersTableModel().remove(taker);
+				getPlayersTableModel().add(taker);
+				selectPlayer(taker);
+			}
+		});
+
 		ItemListener filterCheckBoxListener = new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				getTableModel().fireTableDataChanged();
+				getPlayersTableModel().fireTableDataChanged();
 			}
 		};
 		this.showAnfangsElfCheckBox.addItemListener(filterCheckBoxListener);
@@ -278,67 +439,54 @@ public class PenaltyTakersView extends JPanel {
 		this.showOthersCheckBox.addItemListener(filterCheckBoxListener);
 	}
 
-	private PenaltyTaker getSelectedTaker() {
-		int viewRowIndex = this.penaltyTakersTable.getSelectedRow();
+	private PenaltyTaker getSelectedPlayer() {
+		int viewRowIndex = this.playersTable.getSelectedRow();
 		if (viewRowIndex != -1) {
-			int modelRowIndex = this.penaltyTakersTable
+			int modelRowIndex = this.playersTable
 					.convertRowIndexToModel(viewRowIndex);
-			return getTableModel().getPenaltyTaker(modelRowIndex);
+			return getPlayersTableModel().getPenaltyTaker(modelRowIndex);
+		}
+		return null;
+	}
+
+	private PenaltyTaker getSelectedTaker() {
+		int viewRowIndex = this.takersTable.getSelectedRow();
+		if (viewRowIndex != -1) {
+			int modelRowIndex = this.takersTable
+					.convertRowIndexToModel(viewRowIndex);
+			return getTakersTableModel().getPenaltyTaker(modelRowIndex);
 		}
 		return null;
 	}
 
 	private void moveTaker(Move move) {
-		int viewRowIndex = this.penaltyTakersTable.getSelectedRow();
+		int viewRowIndex = this.takersTable.getSelectedRow();
 		if ((move == Move.UP && viewRowIndex > 0)
-				|| (move == Move.DOWN && viewRowIndex < this.penaltyTakersTable
+				|| (move == Move.DOWN && viewRowIndex < this.takersTable
 						.getRowCount() - 1)) {
-			PenaltyTakersTableModel model = getTableModel();
-			// get the taker before the current one
-			int otherViewRowIndex;
-			if (move == Move.UP) {
-				otherViewRowIndex = --viewRowIndex;
-			} else {
-				otherViewRowIndex = ++viewRowIndex;
-			}
-			PenaltyTaker otherTaker = model
-					.getPenaltyTaker(this.penaltyTakersTable
-							.convertRowIndexToModel(otherViewRowIndex));
 
 			PenaltyTaker taker = getSelectedTaker();
-
-			// disable row filtering
-			((TableRowSorter<PenaltyTakersTableModel>) this.penaltyTakersTable
-					.getRowSorter()).setRowFilter(null);
-
-			// recreate the model data based on the current (unfiltered) view
-			// and move the take to his new position
+			PenaltyTakersTableModel model = getTakersTableModel();
 			List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(
 					model.getRowCount());
-			for (int i = 0; i < this.penaltyTakersTable.getRowCount(); i++) {
-				list.add(model.getPenaltyTaker(this.penaltyTakersTable
+			for (int i = 0; i < this.takersTable.getRowCount(); i++) {
+				list.add(model.getPenaltyTaker(this.takersTable
 						.convertRowIndexToModel(i)));
 			}
 			list.remove(taker);
 			if (move == Move.UP) {
-				list.add(list.indexOf(otherTaker), taker);
+				list.add(viewRowIndex - 1, taker);
 			} else {
-				list.add(list.indexOf(otherTaker) + 1, taker);
+				list.add(viewRowIndex + 1, taker);
 			}
 
-			// clear current sort settings in the tabel
-			this.penaltyTakersTable.setRowSorter(null);
-			// enable sorting and filtering
-			this.penaltyTakersTable.setAutoCreateRowSorter(true);
-			setRowFilter();
-
 			model.setPenaltyTakers(list);
-			selectPenaltyTaker(taker);
+			selectTaker(taker);
 		}
 	}
 
-	private void selectPenaltyTaker(PenaltyTaker taker) {
-		PenaltyTakersTableModel model = getTableModel();
+	private void selectTaker(PenaltyTaker taker) {
+		PenaltyTakersTableModel model = getTakersTableModel();
 		int modelIndex = -1;
 		for (int i = 0; i < model.getRowCount(); i++) {
 			if (model.getPenaltyTaker(i) == taker) {
@@ -347,9 +495,24 @@ public class PenaltyTakersView extends JPanel {
 			}
 		}
 		if (modelIndex != -1) {
-			int viewIndex = this.penaltyTakersTable
-					.convertRowIndexToView(modelIndex);
-			this.penaltyTakersTable.getSelectionModel().setSelectionInterval(
+			int viewIndex = this.takersTable.convertRowIndexToView(modelIndex);
+			this.takersTable.getSelectionModel().setSelectionInterval(
+					viewIndex, viewIndex);
+		}
+	}
+
+	private void selectPlayer(PenaltyTaker taker) {
+		PenaltyTakersTableModel model = getPlayersTableModel();
+		int modelIndex = -1;
+		for (int i = 0; i < model.getRowCount(); i++) {
+			if (model.getPenaltyTaker(i) == taker) {
+				modelIndex = i;
+				break;
+			}
+		}
+		if (modelIndex != -1) {
+			int viewIndex = this.playersTable.convertRowIndexToView(modelIndex);
+			this.playersTable.getSelectionModel().setSelectionInterval(
 					viewIndex, viewIndex);
 		}
 	}
@@ -364,6 +527,38 @@ public class PenaltyTakersView extends JPanel {
 			}
 		}
 		return Integer.valueOf(3);
+	}
+
+	private void bestFit() {
+		List<PenaltyTaker> list = new ArrayList<PenaltyTaker>();
+		for (PenaltyTaker player : this.players) {
+			if (getInLineupVal(player.getPlayer()) != 3) {
+				list.add(player);
+			}
+		}
+		Comparator<PenaltyTaker> comparator = new Comparator<PenaltyTaker>() {
+
+			@Override
+			public int compare(PenaltyTaker o1, PenaltyTaker o2) {
+				if (o1.getAbility() > o2.getAbility()) {
+					return -1;
+				} else if (o1.getAbility() < o2.getAbility()) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+
+		Collections.sort(list, comparator);
+		List<PenaltyTaker> takers;
+		if (list.size() > 11) {
+			takers = new ArrayList<PenaltyTaker>(list.subList(0, 11));
+		} else {
+			takers = list;
+		}
+
+		getTakersTableModel().setPenaltyTakers(takers);
+		getPlayersTableModel().removeAll(takers);
 	}
 
 	private class PenaltyTakersTableModel extends AbstractTableModel {
@@ -387,33 +582,25 @@ public class PenaltyTakersView extends JPanel {
 					"lineup.penaltytakers.colheadline.ability");
 		}
 
-		public void bestFit() {
-			Comparator<PenaltyTaker> comparator = new Comparator<PenaltyTaker>() {
+		public void add(PenaltyTaker taker) {
+			this.data.add(taker);
+			fireTableDataChanged();
+		}
 
-				@Override
-				public int compare(PenaltyTaker o1, PenaltyTaker o2) {
-					int inLineupVal1 = getInLineupVal(o1.getPlayer())
-							.intValue();
-					int inLineupVal2 = getInLineupVal(o2.getPlayer())
-							.intValue();
-					if (inLineupVal1 == inLineupVal2) {
-						if (o1.getAbility() > o2.getAbility()) {
-							return -1;
-						} else if (o1.getAbility() < o2.getAbility()) {
-							return 1;
-						}
-					} else {
-						return inLineupVal1 - inLineupVal2;
-					}
-					return 0;
-				}
-			};
-			Collections.sort(this.data, comparator);
+		public void remove(PenaltyTaker taker) {
+			this.data.remove(taker);
+			fireTableDataChanged();
+		}
+
+		public void removeAll(Collection<PenaltyTaker> takers) {
+			for (PenaltyTaker taker : takers) {
+				this.data.remove(taker);
+			}
 			fireTableDataChanged();
 		}
 
 		public void setPenaltyTakers(List<PenaltyTaker> takers) {
-			this.data = takers;
+			this.data = new ArrayList<PenaltyTaker>(takers);
 			fireTableDataChanged();
 		}
 

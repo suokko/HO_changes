@@ -26,7 +26,7 @@ public final class TransfersModule extends DefaultModule {
 	}
 
 	@Override
-	public JPanel createTabPanel() {
+	public JPanel createTabPanel() {		
 		return new TransfersPanel();
 	}
 
