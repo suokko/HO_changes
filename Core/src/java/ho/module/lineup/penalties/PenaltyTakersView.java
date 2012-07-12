@@ -5,6 +5,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.GUIUtils;
 import ho.module.lineup.Lineup;
 
@@ -30,7 +31,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -76,6 +76,13 @@ public class PenaltyTakersView extends JPanel {
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
 		getPlayersTableModel().fireTableDataChanged();
+//		List<SpielerPosition> list = this.lineup.getPenaltyTakers();
+//		for (SpielerPosition pos : list) {
+//			if (pos.getSpielerId() != 0) {
+//				System.out.println(HOVerwaltung.instance().getModel()
+//						.getSpieler(pos.getSpielerId()).getName());
+//			}
+//		}
 	}
 
 	private void enableSortingAndFiltering() {
@@ -140,7 +147,6 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(playersTableLabel, gbc);
 
 		this.playersTable = new JTable();
-		this.playersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.playersTable.setModel(new PenaltyTakersTableModel());
 		this.playersTable.setAutoCreateRowSorter(true);
 		// as default, sort by if in lineup, than by ability
@@ -203,7 +209,6 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(takersTableLabel, gbc);
 
 		this.takersTable = new JTable();
-		this.takersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.takersTable.setModel(new PenaltyTakersTableModel());
 
 		abilityColumn = this.takersTable.getColumnModel().getColumn(5);
@@ -356,17 +361,18 @@ public class PenaltyTakersView extends JPanel {
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
-							int selectedRow = takersTable.getSelectedRow();
-							if (selectedRow == -1) {
-								moveUpButton.setEnabled(false);
-								moveDownButton.setEnabled(false);
-								removeFromTakersButton.setEnabled(false);
-							} else {
+							int[] selectedRows = takersTable.getSelectedRows();
+							if (selectedRows.length > 0) {
 								playersTable.clearSelection();
 								removeFromTakersButton.setEnabled(true);
-								moveUpButton.setEnabled((selectedRow > 0));
+							}
+							if (selectedRows.length != 1) {
+								moveUpButton.setEnabled(false);
+								moveDownButton.setEnabled(false);
+							} else {
+								moveUpButton.setEnabled((selectedRows[0] > 0));
 								moveDownButton
-										.setEnabled(selectedRow < takersTable
+										.setEnabled(selectedRows[0] < takersTable
 												.getRowCount() - 1);
 							}
 						}
@@ -409,10 +415,12 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PenaltyTaker player = getSelectedPlayer();
-				getPlayersTableModel().remove(player);
-				getTakersTableModel().add(player);
-				selectTaker(player);
+				List<PenaltyTaker> players = getSelectedPlayers();
+				for (PenaltyTaker player : players) {
+					getPlayersTableModel().remove(player);
+					getTakersTableModel().add(player);
+				}
+				selectTakers(players);
 			}
 		});
 
@@ -420,10 +428,12 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PenaltyTaker taker = getSelectedTaker();
-				getTakersTableModel().remove(taker);
-				getPlayersTableModel().add(taker);
-				selectPlayer(taker);
+				List<PenaltyTaker> takers = getSelectedTakers();
+				for (PenaltyTaker taker : takers) {
+					getTakersTableModel().remove(taker);
+					getPlayersTableModel().add(taker);
+				}
+				selectPlayers(takers);
 			}
 		});
 
@@ -439,24 +449,28 @@ public class PenaltyTakersView extends JPanel {
 		this.showOthersCheckBox.addItemListener(filterCheckBoxListener);
 	}
 
-	private PenaltyTaker getSelectedPlayer() {
-		int viewRowIndex = this.playersTable.getSelectedRow();
-		if (viewRowIndex != -1) {
-			int modelRowIndex = this.playersTable
-					.convertRowIndexToModel(viewRowIndex);
-			return getPlayersTableModel().getPenaltyTaker(modelRowIndex);
-		}
-		return null;
+	private List<PenaltyTaker> getSelectedPlayers() {
+		return getSelected(this.playersTable);
 	}
 
-	private PenaltyTaker getSelectedTaker() {
-		int viewRowIndex = this.takersTable.getSelectedRow();
-		if (viewRowIndex != -1) {
-			int modelRowIndex = this.takersTable
-					.convertRowIndexToModel(viewRowIndex);
-			return getTakersTableModel().getPenaltyTaker(modelRowIndex);
+	private List<PenaltyTaker> getSelectedTakers() {
+		return getSelected(this.takersTable);
+	}
+
+	private List<PenaltyTaker> getSelected(JTable table) {
+		int[] viewRowIndexes = table.getSelectedRows();
+		List<PenaltyTaker> selectedPlayers = new ArrayList<PenaltyTaker>(
+				viewRowIndexes.length);
+		if (viewRowIndexes.length > 0) {
+			PenaltyTakersTableModel model = (PenaltyTakersTableModel) table
+					.getModel();
+			for (int i = 0; i < viewRowIndexes.length; i++) {
+				int modelRowIndex = table
+						.convertRowIndexToModel(viewRowIndexes[i]);
+				selectedPlayers.add(model.getPenaltyTaker(modelRowIndex));
+			}
 		}
-		return null;
+		return selectedPlayers;
 	}
 
 	private void moveTaker(Move move) {
@@ -465,7 +479,7 @@ public class PenaltyTakersView extends JPanel {
 				|| (move == Move.DOWN && viewRowIndex < this.takersTable
 						.getRowCount() - 1)) {
 
-			PenaltyTaker taker = getSelectedTaker();
+			PenaltyTaker taker = getSelectedTakers().get(0);
 			PenaltyTakersTableModel model = getTakersTableModel();
 			List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(
 					model.getRowCount());
@@ -481,40 +495,28 @@ public class PenaltyTakersView extends JPanel {
 			}
 
 			model.setPenaltyTakers(list);
-			selectTaker(taker);
+			List<PenaltyTaker> takers = new ArrayList<PenaltyTaker>();
+			takers.add(taker);
+			selectTakers(takers);
 		}
 	}
 
-	private void selectTaker(PenaltyTaker taker) {
-		PenaltyTakersTableModel model = getTakersTableModel();
-		int modelIndex = -1;
-		for (int i = 0; i < model.getRowCount(); i++) {
-			if (model.getPenaltyTaker(i) == taker) {
-				modelIndex = i;
-				break;
-			}
-		}
-		if (modelIndex != -1) {
-			int viewIndex = this.takersTable.convertRowIndexToView(modelIndex);
-			this.takersTable.getSelectionModel().setSelectionInterval(
-					viewIndex, viewIndex);
+	private void select(List<PenaltyTaker> takers, JTable table) {
+		PenaltyTakersTableModel model = (PenaltyTakersTableModel) table
+				.getModel();
+		for (PenaltyTaker taker : takers) {
+			int viewIndex = table.convertRowIndexToView(model
+					.getModelIndex(taker));
+			table.addRowSelectionInterval(viewIndex, viewIndex);
 		}
 	}
 
-	private void selectPlayer(PenaltyTaker taker) {
-		PenaltyTakersTableModel model = getPlayersTableModel();
-		int modelIndex = -1;
-		for (int i = 0; i < model.getRowCount(); i++) {
-			if (model.getPenaltyTaker(i) == taker) {
-				modelIndex = i;
-				break;
-			}
-		}
-		if (modelIndex != -1) {
-			int viewIndex = this.playersTable.convertRowIndexToView(modelIndex);
-			this.playersTable.getSelectionModel().setSelectionInterval(
-					viewIndex, viewIndex);
-		}
+	private void selectTakers(List<PenaltyTaker> takers) {
+		select(takers, this.takersTable);
+	}
+
+	private void selectPlayers(List<PenaltyTaker> players) {
+		select(players, this.playersTable);
 	}
 
 	private Integer getInLineupVal(Spieler player) {
@@ -660,6 +662,10 @@ public class PenaltyTakersView extends JPanel {
 
 		public PenaltyTaker getPenaltyTaker(int rowIndex) {
 			return this.data.get(rowIndex);
+		}
+
+		public int getModelIndex(PenaltyTaker player) {
+			return this.data.indexOf(player);
 		}
 	}
 
