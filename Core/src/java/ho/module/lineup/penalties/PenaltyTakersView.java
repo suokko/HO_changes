@@ -64,6 +64,15 @@ public class PenaltyTakersView extends JPanel {
 		addListeners();
 	}
 
+	public List<PenaltyTaker> getPenaltyTakers() {
+		PenaltyTakersTableModel model = getTakersTableModel();
+		List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(model.getRowCount());
+		for (int i=0; i<model.getRowCount(); i++) {
+			list.add(model.getPenaltyTaker(i));
+		}
+		return list;
+	}
+	
 	public void setPlayers(List<Spieler> players) {
 		this.players = new ArrayList<PenaltyTaker>();
 		for (Spieler player : players) {
@@ -75,14 +84,26 @@ public class PenaltyTakersView extends JPanel {
 
 	public void setLineup(Lineup lineup) {
 		this.lineup = lineup;
-		getPlayersTableModel().fireTableDataChanged();
-//		List<SpielerPosition> list = this.lineup.getPenaltyTakers();
-//		for (SpielerPosition pos : list) {
-//			if (pos.getSpielerId() != 0) {
-//				System.out.println(HOVerwaltung.instance().getModel()
-//						.getSpieler(pos.getSpielerId()).getName());
-//			}
-//		}
+		reset();
+
+		List<SpielerPosition> list = this.lineup.getPenaltyTakers();
+		List<PenaltyTaker> takers = new ArrayList<PenaltyTaker>();
+		for (SpielerPosition pos : list) {
+			if (pos.getSpielerId() != 0) {
+				takers.add(getPenaltyTaker(pos.getSpielerId()));
+			}
+		}
+		getPlayersTableModel().removeAll(takers);
+		getTakersTableModel().addAll(takers);
+	}
+
+	private PenaltyTaker getPenaltyTaker(int playerId) {
+		for (PenaltyTaker taker : this.players) {
+			if (taker.getPlayer().getSpielerID() == playerId) {
+				return taker;
+			}
+		}
+		return null;
 	}
 
 	private void enableSortingAndFiltering() {
@@ -599,6 +620,10 @@ public class PenaltyTakersView extends JPanel {
 				this.data.remove(taker);
 			}
 			fireTableDataChanged();
+		}
+
+		public void addAll(Collection<PenaltyTaker> takers) {
+			this.data.addAll(takers);
 		}
 
 		public void setPenaltyTakers(List<PenaltyTaker> takers) {
