@@ -22,13 +22,13 @@ import org.w3c.dom.Element;
  *
  * @author thetom
  */
-public class xmlEconomyParser {
+public class XMLEconomyParser {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of xmlEconomyParser
      */
-    public xmlEconomyParser() {
+    public XMLEconomyParser() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
