@@ -10,6 +10,7 @@ import ho.core.util.GUIUtils;
 import ho.module.lineup.Lineup;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -159,7 +160,8 @@ public class PenaltyTakersView extends JPanel {
 	private JPanel createTablesPanel() {
 		JPanel tablesPanel = new JPanel(new GridBagLayout());
 
-		JLabel playersTableLabel = new JLabel("Players");
+		JLabel playersTableLabel = new JLabel("Available players");
+		playersTableLabel.setFont(playersTableLabel.getFont().deriveFont(Font.BOLD));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -222,6 +224,7 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(moveButtonsPanel, gbc);
 
 		JLabel takersTableLabel = new JLabel("Penalty takers");
+		takersTableLabel.setFont(takersTableLabel.getFont().deriveFont(Font.BOLD));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 2;
 		gbc.gridy = 0;
