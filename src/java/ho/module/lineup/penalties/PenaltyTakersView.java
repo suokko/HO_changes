@@ -43,6 +43,7 @@ public class PenaltyTakersView extends JPanel {
 
 	private static final long serialVersionUID = -5089904466636200088L;
 	private JTable penaltyTakersTable;
+	private JTable table2;
 	private Lineup lineup;
 	private JButton autoButton;
 	private JButton moveUpButton;
@@ -105,6 +106,29 @@ public class PenaltyTakersView extends JPanel {
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
 
+		JScrollPane scrollPane = new JScrollPane(this.penaltyTakersTable);
+		JTable rowTable = new RowNumberTable(this.penaltyTakersTable);
+		scrollPane.setRowHeaderView(rowTable);
+		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+				rowTable.getTableHeader());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;		
+		add(scrollPane, gbc);
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.fill = GridBagConstraints.NONE;
+		add(createButtonsPanel(), gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		add(createFilterPanel(), gbc);
+		setRowFilter();
+	}
+	
+	private JPanel createFilterPanel() {
 		JPanel filterPanel = new JPanel(new GridBagLayout());
 		filterPanel.setBorder(BorderFactory.createTitledBorder("Filter"));
 		this.showAnfangsElfCheckBox = new JCheckBox("Show Anfangself");
@@ -126,28 +150,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		filterPanel.add(this.showOthersCheckBox, gbc);
-
-		gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-
-		JScrollPane scrollPane = new JScrollPane(this.penaltyTakersTable);
-		JTable rowTable = new RowNumberTable(this.penaltyTakersTable);
-		scrollPane.setRowHeaderView(rowTable);
-		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
-				rowTable.getTableHeader());
-		add(scrollPane, gbc);
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.fill = GridBagConstraints.NONE;
-		add(createButtonsPanel(), gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		add(filterPanel, gbc);
-		setRowFilter();
+		return filterPanel;
 	}
 
 	private JPanel createButtonsPanel() {
@@ -472,34 +475,6 @@ public class PenaltyTakersView extends JPanel {
 			return this.data.get(rowIndex);
 		}
 	}
-
-	// private class MyRowFilter extends
-	// RowFilter<PenaltyTakersTableModel, Integer> {
-	//
-	// @Override
-	// public boolean include(
-	// RowFilter.Entry<? extends PenaltyTakersTableModel, ? extends Integer>
-	// entry) {
-	// PenaltyTakersTableModel personModel = entry.getModel();
-	// PenaltyTaker taker = personModel.getPenaltyTaker(entry
-	// .getIdentifier());
-	// System.out.println("####- " + entry.getIdentifier() + " - " +
-	// taker.getPlayer().getName());
-	// if (showAnfangsElfCheckBox.isSelected()
-	// && getInLineupVal(taker.getPlayer()).intValue() == 1) {
-	// return true;
-	// }
-	// if (showReserveCheckBox.isSelected()
-	// && getInLineupVal(taker.getPlayer()).intValue() == 2) {
-	// return true;
-	// }
-	// if (showOthersCheckBox.isSelected()
-	// && getInLineupVal(taker.getPlayer()).intValue() == 3) {
-	// return true;
-	// }
-	// return false;
-	// }
-	// }
 
 	private class InLineupRenderer extends DefaultTableCellRenderer {
 
