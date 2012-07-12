@@ -932,8 +932,7 @@ public class OnlineWorker {
 			String arenaString = MyConnector.instance().getArena(
 					details.getArenaID());
 			waitDialog.setValue(50);
-			String regionIdAsString = (String) new XMLArenaParser()
-					.parseArenaFromString(arenaString).get("RegionID");
+			String regionIdAsString = XMLArenaParser.parseArenaFromString(arenaString).get("RegionID");
 			int regionId = Integer.parseInt(regionIdAsString);
 			details.setRegionId(regionId);
 		} catch (Exception e) {
