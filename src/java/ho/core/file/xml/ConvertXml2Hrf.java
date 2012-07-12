@@ -71,7 +71,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(30);
             List<MyHashtable> playersData = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
             waitDialog.setValue(35);
-            Map<?, ?> economyDataMap = new XMLEconomyParser().parseEconomyFromString(mc.getEconomy());
+            Map<String, String> economyDataMap = XMLEconomyParser.parseEconomyFromString(mc.getEconomy());
             waitDialog.setValue(40);
             Map<?, ?> trainingDataMap = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
             waitDialog.setValue(45);
@@ -224,7 +224,7 @@ public class ConvertXml2Hrf {
     /**
      * Create the club data.
      */
-    private static void createClub(Map<?, ?> clubDataMap, Map<?, ?> economyDataMap, Map<?, ?> teamdetailsDataMap,
+    private static void createClub(Map<?, ?> clubDataMap, Map<String, String> economyDataMap, Map<?, ?> teamdetailsDataMap,
     		StringBuilder buffer) {
         buffer.append("[club]\n");
         buffer.append("hjTranare=").append(clubDataMap.get("AssistantTrainers")).append('\n');
