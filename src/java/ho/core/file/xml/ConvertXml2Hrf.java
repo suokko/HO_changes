@@ -75,7 +75,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(40);
             Map<?, ?> trainingDataMap = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
             waitDialog.setValue(45);
-            Map<?, ?> arenaDataMap = new XMLArenaParser().parseArenaFromString(mc.getArena());
+            Map<String, String> arenaDataMap = XMLArenaParser.parseArenaFromString(mc.getArena());
 
             //MatchOrder
             waitDialog.setValue(50);
