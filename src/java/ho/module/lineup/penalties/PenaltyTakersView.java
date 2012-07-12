@@ -105,39 +105,11 @@ public class PenaltyTakersView extends JPanel {
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
 
-		JPanel rightPanel = new JPanel(new GridBagLayout());
-		this.autoButton = new JButton("let me do it for you");
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridy = 0;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(10, 8, 4, 10);
-		rightPanel.add(this.autoButton, gbc);
-
-		this.moveUpButton = new JButton("move up");
-		this.moveUpButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_UP));
-		this.moveUpButton.setEnabled(false);
-		gbc = new GridBagConstraints();
-		gbc.gridy = 1;
-		gbc.insets = new Insets(4, 8, 4, 10);
-		rightPanel.add(this.moveUpButton, gbc);
-
-		this.moveDownButton = new JButton("move down");
-		this.moveDownButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_DOWN));
-		this.moveDownButton.setEnabled(false);
-		gbc = new GridBagConstraints();
-		gbc.gridy = 2;
-		gbc.insets = new Insets(4, 8, 4, 10);
-		gbc.weighty = 1.0;
-		rightPanel.add(this.moveDownButton, gbc);
-
-		GUIUtils.equalizeComponentSizes(this.autoButton, this.moveUpButton,
-				this.moveDownButton);
-
 		JPanel filterPanel = new JPanel(new GridBagLayout());
 		filterPanel.setBorder(BorderFactory.createTitledBorder("Filter"));
 		this.showAnfangsElfCheckBox = new JCheckBox("Show Anfangself");
 		this.showAnfangsElfCheckBox.setSelected(true);
-		gbc = new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 10, 2, 10);
 		filterPanel.add(this.showAnfangsElfCheckBox, gbc);
@@ -171,11 +143,43 @@ public class PenaltyTakersView extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.NONE;
-		add(rightPanel, gbc);
+		add(createButtonsPanel(), gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		add(filterPanel, gbc);
 		setRowFilter();
+	}
+
+	private JPanel createButtonsPanel() {
+		JPanel buttonsPanel = new JPanel(new GridBagLayout());
+		this.autoButton = new JButton("let me do it for you");
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(10, 8, 4, 10);
+		buttonsPanel.add(this.autoButton, gbc);
+
+		this.moveUpButton = new JButton("move up");
+		this.moveUpButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_UP));
+		this.moveUpButton.setEnabled(false);
+		gbc = new GridBagConstraints();
+		gbc.gridy = 1;
+		gbc.insets = new Insets(4, 8, 4, 10);
+		buttonsPanel.add(this.moveUpButton, gbc);
+
+		this.moveDownButton = new JButton("move down");
+		this.moveDownButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_DOWN));
+		this.moveDownButton.setEnabled(false);
+		gbc = new GridBagConstraints();
+		gbc.gridy = 2;
+		gbc.insets = new Insets(4, 8, 4, 10);
+		gbc.weighty = 1.0;
+		buttonsPanel.add(this.moveDownButton, gbc);
+
+		GUIUtils.equalizeComponentSizes(this.autoButton, this.moveUpButton,
+				this.moveDownButton);
+
+		return buttonsPanel;
 	}
 
 	@SuppressWarnings("unchecked")
