@@ -2,13 +2,18 @@ package ho.module.lineup;
 
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.player.SpielerPosition;
+import ho.module.lineup.penalties.PenaltyTaker;
 import ho.module.lineup.penalties.PenaltyTakersView;
 import ho.module.lineup.substitution.SubstitutionOverview;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Top-Level Container for the Lineups (contains a tab for the lineup, a tab for
@@ -20,9 +25,11 @@ import javax.swing.JTabbedPane;
 public class LineupMasterView extends JPanel {
 
 	private static final long serialVersionUID = 6557097920433876610L;
+	private JTabbedPane tabbedPane;
 	private LineupPanel lineupPanel;
 	private SubstitutionOverview substitutionOverview;
 	private PenaltyTakersView penaltyTakersView;
+	private int oldTabIndex = -1;
 
 	public LineupMasterView() {
 		initComponents();
@@ -34,25 +41,25 @@ public class LineupMasterView extends JPanel {
 	}
 
 	private void initComponents() {
-		JTabbedPane tabbedPane = new JTabbedPane();
+		this.tabbedPane = new JTabbedPane();
 		HOVerwaltung hov = HOVerwaltung.instance();
 
 		this.lineupPanel = new LineupPanel();
-		tabbedPane.addTab(hov.getLanguageString("Aufstellung"), this.lineupPanel);
+		this.tabbedPane.addTab(hov.getLanguageString("Aufstellung"), this.lineupPanel);
 
 		this.substitutionOverview = new SubstitutionOverview(hov.getModel().getAufstellung());
-		tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
+		this.tabbedPane.addTab(hov.getLanguageString("subs.Title"), this.substitutionOverview);
 
 		this.penaltyTakersView = new PenaltyTakersView();
 		this.penaltyTakersView.setPlayers(hov.getModel().getAllSpieler());
 		this.penaltyTakersView.setLineup(hov.getModel().getAufstellung());
-		tabbedPane.addTab(hov.getLanguageString("lineup.penaltytakers.tab.title"),
+		this.tabbedPane.addTab(hov.getLanguageString("lineup.penaltytakers.tab.title"),
 				this.penaltyTakersView);
-		tabbedPane.addTab(hov.getLanguageString("lineup.upload.tab.title"),
+		this.tabbedPane.addTab(hov.getLanguageString("lineup.upload.tab.title"),
 				new UploadDownloadPanel());
 
 		setLayout(new BorderLayout());
-		add(tabbedPane, BorderLayout.CENTER);
+		add(this.tabbedPane, BorderLayout.CENTER);
 	}
 
 	private void addListeners() {
@@ -60,11 +67,35 @@ public class LineupMasterView extends JPanel {
 
 			@Override
 			public void update() {
-				System.out.println("####- update");
 				substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
 				penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
 			}
 		});
+		
+		this.tabbedPane.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// if penalty takers tab is left, update the lineup
+				if (oldTabIndex == tabbedPane.indexOfComponent(penaltyTakersView) )	{
+					updatePenaltyTakersInLineup();
+				}
+				oldTabIndex = tabbedPane.getSelectedIndex();
+			}
+		});
 	}
-
+	
+	private void updatePenaltyTakersInLineup() {
+		System.out.println("####- updateLineup PenaltyTakers");
+		List<PenaltyTaker> list = this.penaltyTakersView.getPenaltyTakers();
+		List<SpielerPosition> takers = HOVerwaltung.instance().getModel().getAufstellung().getPenaltyTakers();
+		for (int i = 0; i < takers.size(); i++) {
+			if (i < list.size()) {
+				takers.get(i).setSpielerId(
+						list.get(i).getPlayer().getSpielerID());
+			} else {
+				takers.get(i).setSpielerId(0);
+			}
+		}
+	}
 }
