@@ -71,7 +71,7 @@ public class ConvertXml2Hrf {
             waitDialog.setValue(30);
             List<MyHashtable> playersData = new xmlPlayersParser().parsePlayersFromString(mc.getPlayers());
             waitDialog.setValue(35);
-            Map<?, ?> economyDataMap = new xmlEconomyParser().parseEconomyFromString(mc.getEconomy());
+            Map<?, ?> economyDataMap = new XMLEconomyParser().parseEconomyFromString(mc.getEconomy());
             waitDialog.setValue(40);
             Map<?, ?> trainingDataMap = new XMLTrainingParser().parseTrainingFromString(mc.getTraining());
             waitDialog.setValue(45);
