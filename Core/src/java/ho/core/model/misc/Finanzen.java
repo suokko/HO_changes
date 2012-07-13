@@ -265,44 +265,44 @@ public class Finanzen  {
     	}
         switch (level) {
             case LV_fans_vergoettern_Dich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.sendinglovepoemstoyou");
 
             case LV_fans_im_siebten_Himmel:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_dancing_in_the_streets");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.dancinginthestreets");
 
             case LV_fans_euphorisch:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_high_on_life");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.highonlife");
 
             case LV_fans_uebergluecklich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_delirious");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.delirious");
 
             case LV_fans_gluecklich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_satisfied");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.satisfied");
 
             case LV_fans_zufrieden:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_content");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.content");
 
             case LV_fans_ruhig:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_calm");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.calm");
 
             case LV_fans_disappointed:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_disappointed");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.fans.value.disappointed");
                 
             case LV_fans_irritiert:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_irritated");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.irritated");
                 
             case LV_fans_angry:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_angry");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.fans.value.angry");
 
             case LV_fans_wuetend:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_furious");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.furious");
 
             case LV_fans_blutduerstig:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_murderous");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.murderous");
 
             default: {
                 if (level > LV_fans_vergoettern_Dich) {
-                    return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
+                    return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.sendinglovepoemstoyou");
                 }
 
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
@@ -319,38 +319,38 @@ public class Finanzen  {
     public static String getNameForLevelSponsors(int level) {
         switch (level) {
             case LV_spons_vergoettern_Dich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.sendinglovepoemstoyou");
 
             case LV_spons_im_siebten_Himmel:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_dancing_in_the_streets");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.dancinginthestreets");
 
             case LV_spons_euphorisch:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_high_on_life");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.highonlife");
 
             case LV_spons_uebergluecklich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_delirious");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.delirious");
 
             case LV_spons_gluecklich:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_satisfied");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.satisfied");
 
             case LV_spons_zufrieden:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_content");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.content");
 
             case LV_spons_ruhig:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_calm");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.calm");
 
             case LV_spons_irritiert:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_irritated");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.irritated");
                 
             case LV_spons_wuetend:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_furious");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.furious");
 
             case LV_spons_blutduerstig:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_murderous");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.murderous");
 
             default: {
                 if (level > LV_spons_vergoettern_Dich) {
-                    return ho.core.model.HOVerwaltung.instance().getLanguageString("ss_sending_love_poems_to_you");
+                    return ho.core.model.HOVerwaltung.instance().getLanguageString("club.sponsors_fans.value.sendinglovepoemstoyou");
                 }
 
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");

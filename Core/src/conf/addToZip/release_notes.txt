@@ -32,13 +32,14 @@ Changelist HO! 1.432
 Language updates:
 -----------------
 - Added Japanese as new HO language (thx nomad331).
+- Updated English translations (thx edswifa).
 - Updated French translations (thx davidatorus).
 - Updated German translations (thx Werder0405).
 
 ThemeManager:
 ------------
 - New keys:
-	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff, exclamation-red, exclamation, control-double-090, control-double-270, order_set
+	. Icons: imagePanel.background, grassPanel.background, remove, transfer.in, transfer.out, MatchTypeTourneyGrp, MatchTypeTourneyPlayOff, exclamation-red, exclamation, control-double-090, control-double-270, order_set, plays_at_beginning, is_reserve, not_in_lineup, move_up, move_down, move_left, move_right
 	. Colors: matchtype.tourneyGroup.bg, matchtype.tourneyFinals.bg, teamanalyzer.teamlist.league, teamanalyzer.teamlist.cup, teamanalyzer.teamlist.nexttournament, teamanalyzer.teamlist.tournament
 - Fatcow-Theme: Added and updated some icons and colors.
 

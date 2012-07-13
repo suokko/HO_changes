@@ -7,12 +7,28 @@ import ho.core.util.Helper;
 
 public final class PlayerAbility {
 	private static final String[] languageKeys = {
-		"nonexisting","katastrophal","erbaermlich","armselig","schwach",
-		"durchschnittlich","passabel","gut","sehr_gut","hervorragend",
-		"grossartig","brilliant","fantastisch","Weltklasse","uebernatuerlich",
-		"gigantisch","ausserirdisch","mythisch","maerchenhaft","galaktisch",
-		"goettlich"};
-	
+		"player.skill.value.non-existent",
+		"player.skill.value.disastrous",
+		"player.skill.value.wretched",
+		"player.skill.value.poor",
+		"player.skill.value.weak",
+		"player.skill.value.inadequate",
+		"player.skill.value.passable",
+		"player.skill.value.solid",
+		"player.skill.value.excellent",
+		"player.skill.value.formidable",
+		"player.skill.value.outstanding",
+		"player.skill.value.brilliant",
+		"player.skill.value.magnificent",
+		"player.skill.value.worldclass",
+		"player.skill.value.supernatural",
+		"player.skill.value.titanic",
+		"player.skill.value.extra-terrestrial",
+		"player.skill.value.mythical",
+		"player.skill.value.magical",
+		"player.skill.value.utopian",
+		"player.skill.value.divine"};
+
 	public static final int NON_EXISTENT 	= 0;
 	public static final int DISASTROUS 		= 1;
 	public static final int WRETCHED 		= 2;
@@ -59,7 +75,7 @@ public final class PlayerAbility {
 			new CBItem(getNameForSkill(DIVINE), DIVINE) };
 
 	private PlayerAbility(){};
-	
+
 	public static String toString(int ability){
 		if( ability >= NON_EXISTENT && ability <= DIVINE)
 			return HOVerwaltung.instance().getLanguageString(languageKeys[ability]);
@@ -70,24 +86,24 @@ public final class PlayerAbility {
 	public static String getNameForSkill(float bewertungwertfloat, boolean zahlen, boolean isMatch) {
 	    String bewertung = null;
 	    int bewertungwert = (int) bewertungwertfloat;
-	
+
 	    //Für match
 	    int sublevel = 0;
-	
+
 	    //Umrechnung für ein Spiel
 	    if (isMatch) {
 	        sublevel = (bewertungwert) % 4;
-	
-	        //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1; 
+
+	        //(int)Math.floor ( ( (float)bewertungwert)/4f ) +1;
 	        bewertungwert = ((bewertungwert - 1) / 4) + 1;
 	    }
-	
+
 	    bewertung = toString(bewertungwert);
-	
+
 	    if (isMatch) {
 	        bewertung += PlayerAbility.getName4Sublevel(sublevel);
 	    }
-	
+
 	    if (zahlen) {
 	        if (isMatch) {
 	            bewertung += (" ("
@@ -100,7 +116,7 @@ public final class PlayerAbility {
 	             		.format(Helper.round(bewertungwertfloat, UserParameter.instance().anzahlNachkommastellen)) + ")");
 	        }
 	    }
-	
+
 	    return bewertung;
 	}
 
@@ -152,7 +168,7 @@ public final class PlayerAbility {
 	        return "";
 	    }
 	}
-	
-	
-	
+
+
+
 }

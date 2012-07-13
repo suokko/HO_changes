@@ -16,20 +16,20 @@ public class TeamConfidence {
 	public static final int EXAGGERATED 			= 8;
 	public static final int COMPLETELY_EXAGGERATED 	= 9;
 
-	public static CBItem[] ITEMS = { 
-		new CBItem(HOVerwaltung.instance().getLanguageString("nonexisting"), NON_EXISTENT),
-		new CBItem(HOVerwaltung.instance().getLanguageString("disastrous"), DISASTROUS),
-		new CBItem(HOVerwaltung.instance().getLanguageString("wretched"), WRETCHED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("poor"), POOR),
-		new CBItem(HOVerwaltung.instance().getLanguageString("decent"), DECENT),
-		new CBItem(HOVerwaltung.instance().getLanguageString("strong"), STRONG),
-		new CBItem(HOVerwaltung.instance().getLanguageString("wonderful"), WONDERFUL),
-		new CBItem(HOVerwaltung.instance().getLanguageString("slightly_exaggerated"), SLIGHTLY_EXAGGERATED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("completely_exaggerated"), EXAGGERATED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("extremely_exaggerated"), COMPLETELY_EXAGGERATED) 
+	public static CBItem[] ITEMS = {
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.non-existent"), NON_EXISTENT),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.disastrous"), DISASTROUS),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.wretched"), WRETCHED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.poor"), POOR),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.decent"), DECENT),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.strong"), STRONG),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.wonderful"), WONDERFUL),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.slightlyexaggerated"), SLIGHTLY_EXAGGERATED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.exaggerated"), EXAGGERATED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("team.teamconfidence.value.completelyexaggerated"), COMPLETELY_EXAGGERATED)
 	};
 
-	
+
 	public static String toString(int teamConfidence){
 		if(teamConfidence >= NON_EXISTENT && teamConfidence <= COMPLETELY_EXAGGERATED)
 			return ITEMS[teamConfidence].getText();
