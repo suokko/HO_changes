@@ -13,20 +13,20 @@ final class DummyTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = -1521045917540294324L;
 
 	protected DummyTableModel(Object daten[][], Object headers[]) {
-        super(daten, headers);
-    }
+		super(daten, headers);
+	}
 
-    @Override
-	public Class getColumnClass(int col) {
-        Vector vector = (Vector)dataVector.elementAt(0);
-        if(vector != null)
-            return vector.elementAt(col).getClass();
-        else
-            return null;
-    }
+	@Override
+	public Class<?> getColumnClass(int col) {
+		Vector vector = (Vector) dataVector.elementAt(0);
+		if (vector != null) {
+			return vector.elementAt(col).getClass();
+		}
+		return null;
+	}
 
-    @Override
+	@Override
 	public boolean isCellEditable(int row, int col) {
-        return false;
-    }
+		return false;
+	}
 }
