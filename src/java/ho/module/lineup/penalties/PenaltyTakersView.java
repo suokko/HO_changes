@@ -67,13 +67,14 @@ public class PenaltyTakersView extends JPanel {
 
 	public List<PenaltyTaker> getPenaltyTakers() {
 		PenaltyTakersTableModel model = getTakersTableModel();
-		List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(model.getRowCount());
-		for (int i=0; i<model.getRowCount(); i++) {
+		List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(
+				model.getRowCount());
+		for (int i = 0; i < model.getRowCount(); i++) {
 			list.add(model.getPenaltyTaker(i));
 		}
 		return list;
 	}
-	
+
 	public void setPlayers(List<Spieler> players) {
 		this.players = new ArrayList<PenaltyTaker>();
 		for (Spieler player : players) {
@@ -147,8 +148,10 @@ public class PenaltyTakersView extends JPanel {
 	private JPanel createTablesPanel() {
 		JPanel tablesPanel = new JPanel(new GridBagLayout());
 
-		JLabel playersTableLabel = new JLabel("Available players");
-		playersTableLabel.setFont(playersTableLabel.getFont().deriveFont(Font.BOLD));
+		JLabel playersTableLabel = new JLabel(
+				getLangStr("lineup.penaltytakers.playerstable.title"));
+		playersTableLabel.setFont(playersTableLabel.getFont().deriveFont(
+				Font.BOLD));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -183,7 +186,8 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(new JScrollPane(this.playersTable), gbc);
 
 		JPanel moveButtonsPanel = new JPanel(new GridBagLayout());
-		this.addToTakersButton = new JButton("add");
+		this.addToTakersButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.add"));
 		this.addToTakersButton.setIcon(ThemeManager
 				.getIcon(HOIconName.MOVE_RIGHT));
 		this.addToTakersButton.setEnabled(false);
@@ -192,7 +196,8 @@ public class PenaltyTakersView extends JPanel {
 		gbc.insets = new Insets(15, 8, 4, 8);
 		moveButtonsPanel.add(this.addToTakersButton, gbc);
 
-		this.removeFromTakersButton = new JButton("remove");
+		this.removeFromTakersButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.remove"));
 		this.removeFromTakersButton.setIcon(ThemeManager
 				.getIcon(HOIconName.MOVE_LEFT));
 		this.removeFromTakersButton.setEnabled(false);
@@ -210,8 +215,10 @@ public class PenaltyTakersView extends JPanel {
 		gbc.gridheight = 2;
 		tablesPanel.add(moveButtonsPanel, gbc);
 
-		JLabel takersTableLabel = new JLabel("Penalty takers");
-		takersTableLabel.setFont(takersTableLabel.getFont().deriveFont(Font.BOLD));
+		JLabel takersTableLabel = new JLabel(
+				getLangStr("lineup.penaltytakers.takerstable.title"));
+		takersTableLabel.setFont(takersTableLabel.getFont().deriveFont(
+				Font.BOLD));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -247,22 +254,27 @@ public class PenaltyTakersView extends JPanel {
 
 	private JPanel createFilterPanel() {
 		JPanel filterPanel = new JPanel(new GridBagLayout());
-		filterPanel.setBorder(BorderFactory.createTitledBorder("Filter"));
+		filterPanel
+				.setBorder(BorderFactory
+						.createTitledBorder(getLangStr("lineup.penaltytakers.filter.title")));
 
-		this.showAnfangsElfCheckBox = new JCheckBox("Show Anfangself");
+		this.showAnfangsElfCheckBox = new JCheckBox(
+				getLangStr("lineup.penaltytakers.filter.starting"));
 		this.showAnfangsElfCheckBox.setSelected(true);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 10, 2, 10);
 		filterPanel.add(this.showAnfangsElfCheckBox, gbc);
 
-		this.showReserveCheckBox = new JCheckBox("Show reserve");
+		this.showReserveCheckBox = new JCheckBox(
+				getLangStr("lineup.penaltytakers.filter.reserves"));
 		this.showReserveCheckBox.setSelected(true);
 		gbc.gridy = 1;
 		gbc.insets = new Insets(2, 10, 2, 10);
 		filterPanel.add(this.showReserveCheckBox, gbc);
 
-		this.showOthersCheckBox = new JCheckBox("Show other");
+		this.showOthersCheckBox = new JCheckBox(
+				getLangStr("lineup.penaltytakers.filter.other"));
 		this.showOthersCheckBox.setSelected(true);
 		gbc.gridy = 2;
 		gbc.insets = new Insets(2, 10, 10, 10);
@@ -275,26 +287,30 @@ public class PenaltyTakersView extends JPanel {
 
 	private JPanel createButtonsPanel() {
 		JPanel buttonsPanel = new JPanel(new GridBagLayout());
-		this.autoButton = new JButton("let me do it for you");
+		this.autoButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.auto"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 8, 4, 10);
 		buttonsPanel.add(this.autoButton, gbc);
 
-		this.clearButton = new JButton("reset");
+		this.clearButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.reset"));
 		gbc.gridy = 1;
 		gbc.insets = new Insets(4, 8, 4, 10);
 		buttonsPanel.add(this.clearButton, gbc);
 
-		this.moveUpButton = new JButton("move up");
+		this.moveUpButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.moveUp"));
 		this.moveUpButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_UP));
 		this.moveUpButton.setEnabled(false);
 		gbc.gridy = 2;
 		gbc.insets = new Insets(16, 8, 4, 10);
 		buttonsPanel.add(this.moveUpButton, gbc);
 
-		this.moveDownButton = new JButton("move down");
+		this.moveDownButton = new JButton(
+				getLangStr("lineup.penaltytakers.button.moveDown"));
 		this.moveDownButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_DOWN));
 		this.moveDownButton.setEnabled(false);
 		gbc.gridy = 3;
@@ -566,6 +582,10 @@ public class PenaltyTakersView extends JPanel {
 		getPlayersTableModel().removeAll(takers);
 	}
 
+	private String getLangStr(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
+	}
+
 	private class PenaltyTakersTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 3044881352777003621L;
@@ -575,16 +595,11 @@ public class PenaltyTakersView extends JPanel {
 		public PenaltyTakersTableModel() {
 			this.columnNames = new String[6];
 			this.columnNames[0] = "";
-			this.columnNames[1] = HOVerwaltung.instance().getLanguageString(
-					"Name");
-			this.columnNames[2] = HOVerwaltung.instance().getLanguageString(
-					"Erfahrung");
-			this.columnNames[3] = HOVerwaltung.instance().getLanguageString(
-					"Standards");
-			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
-					"Torschuss");
-			this.columnNames[5] = HOVerwaltung.instance().getLanguageString(
-					"lineup.penaltytakers.colheadline.ability");
+			this.columnNames[1] = getLangStr("Name");
+			this.columnNames[2] = getLangStr("Erfahrung");
+			this.columnNames[3] = getLangStr("Standards");
+			this.columnNames[4] = getLangStr("Torschuss");
+			this.columnNames[5] = getLangStr("lineup.penaltytakers.colheadline.ability");
 		}
 
 		public void add(PenaltyTaker taker) {
