@@ -68,18 +68,13 @@ public class OnlineWorker {
 
 	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat(
 			"yyyy-MM-dd");
-	/** wait Dialog */
-	protected static LoginWaitDialog waitDialog;
+	private static LoginWaitDialog waitDialog;
 
 	/**
 	 * Utility class - private constructor enforces noninstantiability.
 	 */
 	private OnlineWorker() {
 	}
-
-	// //////////////////////////////////////////////////////////////////////////////
-	// HRF
-	// //////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Get and optionally save HRF
@@ -89,12 +84,11 @@ public class OnlineWorker {
 	public static boolean getHrf() {
 		String hrf = "";
 		boolean bOK = false;
-		int value;
 		HOMainFrame homf = HOMainFrame.instance();
 		HOVerwaltung hov = HOVerwaltung.instance();
 		UserParameter up = ho.core.model.UserParameter.instance();
 		InfoPanel info = homf.getInfoPanel();
-		HOModel homodel = null;
+
 		// Show wait dialog
 		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
@@ -128,7 +122,7 @@ public class OnlineWorker {
 			}
 			if (bOK) {
 				// Create HOModelo from the hrf data
-				homodel = new HRFStringParser().parse(hrf);
+				HOModel homodel = new HRFStringParser().parse(hrf);
 				if (homodel == null) {
 					// Info
 					info.setLangInfoText(hov.getLanguageString("Importfehler"),
@@ -199,64 +193,30 @@ public class OnlineWorker {
 					info.setLangInfoText(HOVerwaltung.instance()
 							.getLanguageString("HRFErfolg"));
 					info.setLangInfoText(hov.getLanguageString("HRFSave"));
-					final GregorianCalendar calendar = (GregorianCalendar) Calendar
-							.getInstance();
-					String month = ((calendar.get(Calendar.MONTH)) + 1) + "";
-					if (month.length() < 2)
-						month = "0" + month;
-					String day = calendar.get(Calendar.DAY_OF_MONTH) + "";
-					if (day.length() < 2)
-						day = "0" + day;
-					final String name = calendar.get(Calendar.YEAR) + "-"
-							+ month + "-" + day + ".hrf";
-					final File pfad = new File(up.hrfImport_HRFPath);
-					File file = new File(up.hrfImport_HRFPath
-							+ java.io.File.separator + name);
+
+					File path = new File(up.hrfImport_HRFPath);
+					File file = new File(path, getHRFFileName());
 					// Show dialog if path not set or the file already exists
-					if (up.showHRFSaveDialog || !pfad.exists()
-							|| !pfad.isDirectory() || file.exists()) {
-						final JFileChooser fileChooser = new JFileChooser();
-						fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-						fileChooser.setDialogTitle(hov
-								.getLanguageString("FileExport"));
-						final ExampleFileFilter filter = new ExampleFileFilter();
-						filter.addExtension("hrf");
-						filter.setDescription("Hattrick HRF");
-						fileChooser.setFileFilter(filter);
-						try {
-							if (pfad.exists() && pfad.isDirectory())
-								fileChooser.setCurrentDirectory(new File(
-										up.hrfImport_HRFPath));
-						} catch (Exception e) {
-						}
-						fileChooser.setSelectedFile(file);
-						final int returnVal = fileChooser.showSaveDialog(homf);
-						if (returnVal == JFileChooser.APPROVE_OPTION)
-							file = fileChooser.getSelectedFile();
-						else
-							file = null;
+					if (up.showHRFSaveDialog || !path.exists()
+							|| !path.isDirectory() || file.exists()) {
+						file = askForHRFPath(path, file);
 					}
 
 					if ((file != null) && (file.getPath() != null)) {
-
-						// File doesn't end with .hrf?
-						if (!file.getPath().endsWith(".hrf"))
-							file = new java.io.File(file.getAbsolutePath()
-									+ ".hrf");
-						// File exists?
-						if (file.exists())
-							value = JOptionPane.showConfirmDialog(homf,
-									hov.getLanguageString("overwrite"), "",
-									JOptionPane.YES_NO_OPTION);
-						else
-							value = JOptionPane.OK_OPTION;
-
 						// Save Path
 						up.hrfImport_HRFPath = file.getParentFile()
 								.getAbsolutePath();
+
+						// File exists?
+						int value = JOptionPane.OK_OPTION;
+						if (file.exists()) {
+							value = JOptionPane.showConfirmDialog(homf,
+									hov.getLanguageString("overwrite"), "",
+									JOptionPane.YES_NO_OPTION);
+						}
+
 						// Save
 						if (value == JOptionPane.OK_OPTION) {
-
 							File datei = null;
 							try {
 								datei = saveFile(file.getPath(), hrf);
@@ -268,12 +228,12 @@ public class OnlineWorker {
 										hov.getLanguageString("Fehler"),
 										JOptionPane.ERROR_MESSAGE);
 							}
-						}
-						// Canceled
-						else
+						} else {
+							// Canceled
 							info.setLangInfoText(HOVerwaltung.instance()
 									.getLanguageString("HRFAbbruch"),
 									InfoPanel.FEHLERFARBE);
+						}
 					}
 				}
 			}
@@ -415,10 +375,6 @@ public class OnlineWorker {
 			return null;
 		}
 	}
-
-	// //////////////////////////////////////////////////////////////////////////////
-	// MATCHES
-	// //////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Downloads a match with the given criteria and stores it in the database.
@@ -581,7 +537,7 @@ public class OnlineWorker {
 		if (!StringUtils.isEmpty(matchesString)) {
 			return XMLMatchesParser.parseMatchesFromString(matchesString);
 		}
-		
+
 		return new ArrayList<MatchKurzInfo>();
 	}
 
@@ -637,7 +593,8 @@ public class OnlineWorker {
 			return null;
 		}
 		if (bOK) {
-			matches.addAll(XMLMatchesParser.parseMatchesFromString(matchesString));
+			matches.addAll(XMLMatchesParser
+					.parseMatchesFromString(matchesString));
 
 			// Store in DB if store is true
 			if (store) {
@@ -669,10 +626,6 @@ public class OnlineWorker {
 		waitDialog.setVisible(false);
 		return matches;
 	}
-
-	// //////////////////////////////////////////////////////////////////////////////
-	// MATCHLINEUP
-	// //////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * saugt das Matchlineup
@@ -730,10 +683,6 @@ public class OnlineWorker {
 		return lineUp1;
 	}
 
-	// //////////////////////////////////////////////////////////////////////////////
-	// Fixtures
-	// //////////////////////////////////////////////////////////////////////////////
-
 	/**
 	 * Get the Fixtures list
 	 * 
@@ -786,14 +735,13 @@ public class OnlineWorker {
 		waitDialog.setVisible(false);
 		return bOK;
 	}
-	
+
 	protected static LoginWaitDialog getWaitDialog() {
-		if (waitDialog != null) { 
+		if (waitDialog != null) {
 			return waitDialog;
 		}
 		return new LoginWaitDialog(HOMainFrame.instance(), false);
 	}
-	
 
 	/**
 	 * Uploads the given order to Hattrick
@@ -932,7 +880,8 @@ public class OnlineWorker {
 			String arenaString = MyConnector.instance().getArena(
 					details.getArenaID());
 			waitDialog.setValue(50);
-			String regionIdAsString = XMLArenaParser.parseArenaFromString(arenaString).get("RegionID");
+			String regionIdAsString = XMLArenaParser.parseArenaFromString(
+					arenaString).get("RegionID");
 			int regionId = Integer.parseInt(regionIdAsString);
 			details.setRegionId(regionId);
 		} catch (Exception e) {
@@ -999,10 +948,6 @@ public class OnlineWorker {
 		}
 		return lineUp;
 	}
-
-	// //////////////////////////////////////////////////////////////////////////////
-	// Helper
-	// //////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Save the passed in data to the passed in file
@@ -1131,5 +1076,52 @@ public class OnlineWorker {
 			}
 		}
 		return properties;
+	}
+
+	private static String getHRFFileName() {
+		GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+		StringBuilder builder = new StringBuilder();
+		builder.append(calendar.get(Calendar.YEAR));
+		builder.append('-');
+		int month = calendar.get(Calendar.MONTH) + 1;
+		if (month < 10) {
+			builder.append('0');
+		}
+		builder.append(month);
+		builder.append('-');
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		if (day < 10) {
+			builder.append('0');
+		}
+		builder.append(day);
+		builder.append(".hrf");
+		String name = calendar.get(Calendar.YEAR) + "-" + month + "-" + day
+				+ ".hrf";
+		return builder.toString();
+	}
+
+	private static File askForHRFPath(File path, File file) {
+		final JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString(
+				"FileExport"));
+		ExampleFileFilter filter = new ExampleFileFilter();
+		filter.addExtension("hrf");
+		filter.setDescription("Hattrick HRF");
+		fileChooser.setFileFilter(filter);
+		if (path.exists() && path.isDirectory()) {
+			fileChooser.setCurrentDirectory(path);
+		}
+		fileChooser.setSelectedFile(file);
+		int returnVal = fileChooser.showSaveDialog(HOMainFrame.instance());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File f = fileChooser.getSelectedFile();
+			// File doesn't end with .hrf?
+			if (!f.getPath().endsWith(".hrf")) {
+				f = new java.io.File(file.getAbsolutePath() + ".hrf");
+			}
+			return f;
+		}
+		return null;
 	}
 }
