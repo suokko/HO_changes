@@ -21,10 +21,12 @@ import ho.core.module.ModuleManager;
 import ho.core.module.config.ModuleConfig;
 import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
+import ho.core.net.login.ProxySettings;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
+import ho.core.util.StringUtils;
 import ho.module.lineup.AufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
@@ -577,14 +579,17 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	/**
 	 * Proxyeinstellungen
 	 */
-	public void initProxy() {
+	private void initProxy() {
 		if (UserParameter.instance().ProxyAktiv) {
-			MyConnector.instance().setProxyHost(UserParameter.instance().ProxyHost);
-			MyConnector.instance().setUseProxy(UserParameter.instance().ProxyAktiv);
-			MyConnector.instance().setProxyPort(UserParameter.instance().ProxyPort);
-			MyConnector.instance().setProxyAuthentifactionNeeded(UserParameter.instance().ProxyAuthAktiv);
-			MyConnector.instance().setProxyUserName(UserParameter.instance().ProxyAuthName);
-			MyConnector.instance().setProxyUserPWD(UserParameter.instance().ProxyAuthPassword);
+			ProxySettings settings = new ProxySettings();
+			settings.setProxyHost(UserParameter.instance().ProxyHost);
+			settings.setUseProxy(UserParameter.instance().ProxyAktiv);
+			if (!StringUtils.isEmpty(UserParameter.instance().ProxyPort)) {
+				settings.setProxyPort(Integer.parseInt(UserParameter.instance().ProxyPort));
+			}
+			settings.setAuthenticationNeeded(UserParameter.instance().ProxyAuthAktiv);
+			settings.setUsername(UserParameter.instance().ProxyAuthName);
+			settings.setPassword(UserParameter.instance().ProxyAuthPassword);
 			MyConnector.instance().enableProxy();
 		}
 	}

@@ -8,6 +8,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.util.GUIUtils;
+import ho.core.util.StringUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -168,7 +169,7 @@ public class ProxyDialog extends JDialog {
 		panel.add(label, gbc);
 
 		gbc.gridx = 1;
-		gbc.gridy = 5;		
+		gbc.gridy = 5;
 		gbc.insets = new Insets(4, 2, 4, 8);
 		panel.add(proxyPasswordField, gbc);
 
@@ -275,16 +276,18 @@ public class ProxyDialog extends JDialog {
 	 * Login versuchen
 	 */
 	private void saveSettings() {
-		MyConnector.instance().setProxyHost(proxyHostTextField.getText());
-		MyConnector.instance().setUseProxy(useProxyCheckBox.isSelected());
-		MyConnector.instance().setProxyPort(proxyPortTextField.getText());
-		MyConnector.instance().setProxyAuthentifactionNeeded(
-				useProxyAuthCheckBox.isSelected());
-		MyConnector.instance().setProxyUserName(
-				proxyAuthNameTextField.getText());
-		MyConnector.instance().setProxyUserPWD(
-				new String(proxyPasswordField.getPassword()));
+		ProxySettings settings = new ProxySettings();
+		settings.setUseProxy(useProxyCheckBox.isSelected());
+		settings.setProxyHost(proxyHostTextField.getText());
+		if (!StringUtils.isEmpty(proxyPortTextField.getText())) {
+			settings.setProxyPort(Integer.parseInt(proxyPortTextField.getText()));
+		}
+		settings.setAuthenticationNeeded(useProxyAuthCheckBox.isSelected());
+		settings.setUsername(proxyAuthNameTextField.getText());
+		settings.setPassword(new String(proxyPasswordField.getPassword()));
+		
 		MyConnector.instance().enableProxy();
+		
 		UserParameter.instance().ProxyAktiv = useProxyCheckBox.isSelected();
 		UserParameter.instance().ProxyHost = proxyHostTextField.getText();
 		UserParameter.instance().ProxyPort = proxyPortTextField.getText();
