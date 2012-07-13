@@ -79,9 +79,8 @@ public class OnlineWorker {
 	/**
 	 * Get and optionally save HRF
 	 * 
-	 * @return True if all OK, false if something went wrong
 	 */
-	public static boolean getHrf() {
+	public static void getHrf() {
 		String hrf = "";
 		boolean bOK = false;
 		HOMainFrame homf = HOMainFrame.instance();
@@ -239,7 +238,6 @@ public class OnlineWorker {
 			}
 		}
 		waitDialog.setVisible(false);
-		return bOK;
 	}
 
 	/**
