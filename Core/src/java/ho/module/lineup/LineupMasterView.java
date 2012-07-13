@@ -86,7 +86,6 @@ public class LineupMasterView extends JPanel {
 	}
 	
 	private void updatePenaltyTakersInLineup() {
-		System.out.println("####- updateLineup PenaltyTakers");
 		List<PenaltyTaker> list = this.penaltyTakersView.getPenaltyTakers();
 		List<SpielerPosition> takers = HOVerwaltung.instance().getModel().getAufstellung().getPenaltyTakers();
 		for (int i = 0; i < takers.size(); i++) {
