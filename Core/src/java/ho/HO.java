@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
-import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -116,30 +115,6 @@ public class HO {
 			}
 		} catch (Exception ex) {
 			HOLogger.instance().log(HO.class, ex);
-		}
-
-		// Spoofing test
-		try {
-			final BufferedReader buffy = new BufferedReader(new java.io.FileReader("ident.txt"));
-			final Vector<String> ids = new Vector<String>();
-			String tmp = "";
-
-			while (buffy.ready()) {
-				tmp = buffy.readLine();
-
-				if (!tmp.startsWith("#") && !tmp.trim().equals("")) {
-					ids.add(tmp);
-				}
-			}
-
-			buffy.close();
-
-			if (ids.size() > 0) {
-				// Math.floor(Math.random()*10)
-				MyConnector.m_sIDENTIFIER = ids.get((int) Math.floor(Math.random() * ids.size()))
-						.toString();
-			}
-		} catch (Exception e) {
 		}
 
 		// Check if this HO version is (soft) expired
