@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  * Main HO starter class.
@@ -104,8 +105,9 @@ public class HO {
 		try {
 			if (!User.getCurrentUser().isSingleUser()) {
 				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
-				int choice = JOptionPane.showConfirmDialog(null, comboBox, "Login",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(null, comboBox,
+						"Login", JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
 
 				if (choice == JOptionPane.OK_OPTION) {
 					User.INDEX = comboBox.getSelectedIndex();
@@ -124,7 +126,8 @@ public class HO {
 			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
 				JOptionPane.showMessageDialog(null,
 						"Your HO version is very old!\nPlease download a new version at "
-								+ MyConnector.getHOSite(), "Update strongly recommended",
+								+ MyConnector.getHOSite(),
+						"Update strongly recommended",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}
@@ -144,12 +147,14 @@ public class HO {
 
 		// init Theme
 		try {
-			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
+			ThemeManager.instance().setCurrentTheme(
+					UserParameter.instance().theme);
 		} catch (Exception e) {
 			HOLogger.instance().log(HO.class,
 					"Can´t load Theme:" + UserParameter.instance().theme);
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Can´t load Theme: "
-					+ UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage(),
+					"Can´t load Theme: " + UserParameter.instance().theme,
+					JOptionPane.WARNING_MESSAGE);
 		}
 		// Init!
 		interuptionsWindow.setInfoText(3, "Initialize Data-Administration");
@@ -158,9 +163,11 @@ public class HO {
 		if (DBManager.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new ho.core.option.InitOptionsDialog();
-			JOptionPane.showMessageDialog(null,
-					"To load your team data into HO! select File > Download from the main menu.",
-					"Team Data", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"To load your team data into HO! select File > Download from the main menu.",
+							"Team Data", JOptionPane.INFORMATION_MESSAGE);
 			interuptionsWindow.setVisible(true);
 		}
 
@@ -168,7 +175,8 @@ public class HO {
 		interuptionsWindow.setInfoText(4, "Check Languagefiles");
 		HOVerwaltung.checkLanguageFile(UserParameter.instance().sprachDatei);
 
-		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
+		HOVerwaltung.instance().setResource(
+				UserParameter.instance().sprachDatei);
 		interuptionsWindow.setInfoText(5, "Load latest Data");
 		HOVerwaltung.instance().loadLatestHoModel();
 		interuptionsWindow.setInfoText(6, "Load  XtraDaten");
@@ -177,8 +185,8 @@ public class HO {
 		UserColumnController.instance().load();
 
 		// Die Währung auf die aus dem HRF setzen
-		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten()
-				.getCurrencyRate();
+		float faktorgeld = (float) HOVerwaltung.instance().getModel()
+				.getXtraDaten().getCurrencyRate();
 
 		if (faktorgeld > -1) {
 			UserParameter.instance().faktorGeld = faktorgeld;
@@ -189,16 +197,23 @@ public class HO {
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
-		TrainingManager.instance().calculateTraining(DBManager.instance().getTrainingsVector());
+		TrainingManager.instance().calculateTraining(
+				DBManager.instance().getTrainingsVector());
 
-		// Anzeigen
 		interuptionsWindow.setInfoText(8, "Prepare to show");
-		HOMainFrame.instance().setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
 
-		// Startbild weg
-		interuptionsWindow.setVisible(false);
+			@Override
+			public void run() {
+				HOMainFrame.instance().setVisible(true);
 
-		HOLogger.instance().log(HO.class, "Zeit:" + (System.currentTimeMillis() - start));
+				// Startbild weg
+				interuptionsWindow.setVisible(false);
+
+				HOLogger.instance().log(HO.class,
+						"Zeit:" + (System.currentTimeMillis() - start));
+			}
+		});
 	}
 
 	public static int getRevisionNumber() {
@@ -215,10 +230,12 @@ public class HO {
 						revision = Integer.parseInt(line.trim());
 					}
 				} else {
-					HOLogger.instance().debug(HO.class, "revision.num not found");
+					HOLogger.instance().debug(HO.class,
+							"revision.num not found");
 				}
 			} catch (Exception e) {
-				HOLogger.instance().warning(HO.class, "getRevisionNumber failed: " + e);
+				HOLogger.instance().warning(HO.class,
+						"getRevisionNumber failed: " + e);
 			} finally {
 				IOUtils.closeQuietly(br);
 				IOUtils.closeQuietly(is);
