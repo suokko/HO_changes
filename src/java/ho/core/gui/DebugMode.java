@@ -18,10 +18,24 @@ public class DebugMode {
 	public static JMenu getDeveloperMenu() {
 		JMenu menu = new JMenu("Debug");
 		menu.add(getSQLDialogMenuItem());
+		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
 		return menu;
 	}
 
+	private static JMenuItem getLookAndFeelDialogMenuItem() {
+		JMenuItem newItem = new JMenuItem("Look and Feel");
+		newItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LookAndFeelDialog().setVisible(true);
+			}
+		});
+		return newItem;
+	}
+
+	
 	private static JMenuItem getSQLDialogMenuItem() {
 		JMenuItem newItem = new JMenuItem("SQL Editor");
 		newItem.addActionListener(new ActionListener() {
