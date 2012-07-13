@@ -23,10 +23,10 @@ public class PlayerPositionItem {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (this.position != null) {
-			builder.append(LanguageStringLookup.getPosition(this.position.byteValue()));
-			builder.append(" - ");
+			builder.append(LanguageStringLookup.getPosition(this.position.byteValue()));			
 		}
 		if (this.player != null) {
+			builder.append(" - ");
 			builder.append(this.player.getName());
 		}
 

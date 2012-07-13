@@ -45,19 +45,18 @@ public class SubstitutionDataProvider {
 		return positionMap;
 	}
 
-	public static List<PlayerPositionItem> getFieldPositions(int start, int end) {
+	public static List<PlayerPositionItem> getFieldPositions(int start, int end, boolean includeEmptyPositions) {
 		List<PlayerPositionItem> playerItems = new ArrayList<PlayerPositionItem>();
 
 		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 		for (int i = start; i <= end; i++) {
 			Spieler player = lineup.getPlayerByPositionID(i);
-			if (player != null) {
+			if (player != null || includeEmptyPositions) {
 				playerItems.add(new PlayerPositionItem(Integer.valueOf(i), player));
 			}
 		}
-
 		return playerItems;
-	}
+	}	
 
 	/**
 	 * Returns an {@link CBItem} array with all standings which can be chosen
