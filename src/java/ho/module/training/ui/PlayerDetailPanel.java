@@ -14,8 +14,10 @@ import ho.core.training.TrainingPerWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,176 +25,171 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
 /**
- * Panel where are shown future trainings predictions
- *
+ * Panel where the future training predictions are shown.
+ * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class PlayerDetailPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
+public class PlayerDetailPanel extends ImagePanel {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -6606934473344186243L;
-	private JLabel playerLabel = new JLabel("", SwingConstants.CENTER); //$NON-NLS-1$
-    private ColorBar[] levelBar = new ColorBar[8];
-    private JLabel[] skillLabel = new JLabel[8];
+	private JLabel playerLabel = new JLabel("", SwingConstants.CENTER);
+	private ColorBar[] levelBar = new ColorBar[8];
+	private JLabel[] skillLabel = new JLabel[8];
 
-    //~ Constructors -------------------------------------------------------------------------------
+	/**
+	 * Creates the panel and its components
+	 */
+	public PlayerDetailPanel() {
+		initComponents();
+	}
 
-    /**
-     * Creates the panel and its components
-     */
-    public PlayerDetailPanel() {
-        super();
-        jbInit();
-    }
+	/**
+	 * Method that populate this panel for the selected player
+	 * 
+	 * @param spieler
+	 *            player
+	 */
+	public void reload(Spieler spieler) {
+		if (spieler == null) {
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString(
+					"PlayerSelect"));
+			for (int i = 0; i < 8; i++) {
+				skillLabel[i].setText("");
+				levelBar[i].setLevel(0f);
+			}
+			return;
+		}
 
-    //~ Methods ------------------------------------------------------------------------------------
+		// sets player number
+		playerLabel.setText(spieler.getName());
 
-    /**
-     * Method that populate this panel for the selected player
-     *
-     * @param spieler player
-     */
-    public void reload(Spieler spieler) {
-        if (spieler == null) {
-            playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect")); //$NON-NLS-1$
+		// gets the list of user defined future trainings
+		List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel
+				.getTrainPanel().getFutureTrainings();
 
-            for (int i = 0; i < 8; i++) {
-                skillLabel[i].setText(""); //$NON-NLS-1$
-                levelBar[i].setLevel(0f);
-            }
+		StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
+		// instantiate a future train manager to calculate the previsions */
+		FutureTrainingManager ftm = new FutureTrainingManager(spieler,
+				trainings, sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
 
-            return;
-        }
+		// Add future skillups
+		for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter
+				.hasNext();) {
+			ISkillup element = iter.next();
+			ho.module.training.TrainingPanel.getSkillupPanel().addRow(element);
+		}
 
-        // sets player number
-        playerLabel.setText(spieler.getName());
+		for (int i = 0; i < 8; i++) {
+			int skillIndex = Skills.getSkillAtPosition(i);
+			skillLabel[i].setText(PlayerAbility.getNameForSkill(
+					Skills.getSkillValue(spieler, skillIndex), true));
 
-        // gets the list of user defined future trainings
-        List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+			FuturePlayer fp = ftm
+					.previewPlayer(UserParameter.instance().futureWeeks);
+			double finalValue = getSkillValue(fp, skillIndex);
+			levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
+		}
 
-        StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
-        // instantiate a future train manager to calculate the previsions */ 
-        FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings, 
-        		sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
+		updateUI();
+	}
 
-        // Add future skillups
-        for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
-            ISkillup element = iter.next();
+	/**
+	 * Get maximum value of the skill.
+	 * 
+	 * @param index
+	 * 
+	 * @return float Max value
+	 */
+	private float getSkillMaxValue(int index) {
+		if (index == 7) {
+			return 9f;
+		} else {
+			return 20f;
+		}
+	}
 
-            ho.module.training.TrainingPanel.getSkillupPanel().addRow(element);
-        }
+	private double getSkillValue(FuturePlayer spieler, int skillIndex) {
+		switch (skillIndex) {
+		case PlayerSkill.KEEPER:
+			return spieler.getGoalkeeping();
 
-        for (int i = 0; i < 8; i++) {
-            int skillIndex = Skills.getSkillAtPosition(i);
-            skillLabel[i].setText(PlayerAbility.getNameForSkill(Skills.getSkillValue(spieler,skillIndex), true));
+		case PlayerSkill.SCORING:
+			return spieler.getAttack();
 
-            FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
-            double finalValue = getSkillValue(fp, skillIndex);
-            levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
-        }
+		case PlayerSkill.DEFENDING:
+			return spieler.getDefense();
 
-        updateUI();
-    }
+		case PlayerSkill.PASSING:
+			return spieler.getPassing();
 
-    /**
-     * Get maximum value of the skill.
-     *
-     * @param index
-     *
-     * @return float Max value
-     */
-    private float getSkillMaxValue(int index) {
-        if (index == 7) {
-            return 9f;
-        } else {
-            return 20f;
-        }
-    }
+		case PlayerSkill.PLAYMAKING:
+			return spieler.getPlaymaking();
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     * @param skillIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private double getSkillValue(FuturePlayer spieler, int skillIndex) {
-        switch (skillIndex) {
-            case PlayerSkill.KEEPER:
-                return spieler.getGoalkeeping();
+		case PlayerSkill.SET_PIECES:
+			return spieler.getSetpieces();
 
-            case PlayerSkill.SCORING:
-                return spieler.getAttack();
+		case PlayerSkill.STAMINA:
+			return spieler.getStamina();
 
-            case PlayerSkill.DEFENDING:
-                return spieler.getDefense();
+		case PlayerSkill.WINGER:
+			return spieler.getCross();
+		default:
+			return 0;
+		}
+	}
 
-            case PlayerSkill.PASSING:
-                return spieler.getPassing();
+	/**
+	 * Initialize the object layout
+	 */
+	private void initComponents() {
+		setOpaque(false);
+		setLayout(new GridBagLayout());
 
-            case PlayerSkill.PLAYMAKING:
-                return spieler.getPlaymaking();
+		GridBagConstraints maingbc = new GridBagConstraints();
+		maingbc.anchor = GridBagConstraints.NORTH;
+		maingbc.insets = new Insets(10, 10, 5, 10);
+		add(playerLabel, maingbc);
 
-            case PlayerSkill.SET_PIECES:
-                return spieler.getSetpieces();
+		JPanel bottom = new JPanel(new GridBagLayout());
+		bottom.setOpaque(false);
 
-            case PlayerSkill.STAMINA:
-                return spieler.getStamina();
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(4, 4, 4, 4);
+		for (int i = 0; i < 8; i++) {
+			gbc.gridy = i;
+			gbc.weightx = 0.0;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
 
-            case PlayerSkill.WINGER:
-                return spieler.getCross();
-        }
+			int skillIndex = Skills.getSkillAtPosition(i);
+			gbc.gridx = 0;
+			bottom.add(new JLabel(PlayerSkill.toString(skillIndex)), gbc);
 
-        return 0;
-    }
+			skillLabel[i] = new JLabel("");
+			skillLabel[i].setOpaque(false);
+			gbc.gridx = 1;
+			bottom.add(skillLabel[i], gbc);
 
-    /**
-     * Initialize the object layout
-     */
-    private void jbInit() {
-        JPanel mainPanel = new ImagePanel();
+			levelBar[i] = new ColorBar(0f, 200, 20);
+			levelBar[i].setOpaque(false);
+			levelBar[i].setMinimumSize(new Dimension(200, 20));
+			gbc.fill = GridBagConstraints.BOTH;
+			gbc.gridx = 2;
+			gbc.weightx = 1.0;
+			bottom.add(levelBar[i], gbc);
+		}
+		JPanel dummyPanelToConsumeAllExtraSpace = new JPanel();
+		dummyPanelToConsumeAllExtraSpace.setOpaque(false);
+		gbc.gridy++;
+		gbc.weighty = 1.0;
+		bottom.add(dummyPanelToConsumeAllExtraSpace, gbc);
 
-        mainPanel.setOpaque(false);
-        mainPanel.setLayout(new BorderLayout());
-        setOpaque(false);
-        setLayout(new BorderLayout());
-
-        JPanel namePanel = new ImagePanel();
-        namePanel.setLayout(new BorderLayout());
-        playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect")); //$NON-NLS-1$
-        namePanel.add(playerLabel, BorderLayout.CENTER);
-        mainPanel.add(namePanel, BorderLayout.NORTH);
-
-        JPanel bottom = new JPanel(new GridLayout(8, 2));
-
-        bottom.setOpaque(false);
-
-        //        bottom.add(new JLabel(model.getLanguageString("Training"), JLabel.CENTER)); //$NON-NLS-1$+
-        //        bottom.add(new JLabel(model.getLanguageString("Aktuell"), JLabel.CENTER), //$NON-NLS-1$
-        //                   BorderLayout.WEST); //$NON-NLS-1$+
-        //        bottom.add(new JLabel(PluginProperty.getString("Skill"), JLabel.CENTER)); //$NON-NLS-1$
-        for (int i = 0; i < 8; i++) {
-            int skillIndex = Skills.getSkillAtPosition(i);
-            JPanel left = new JPanel(new GridLayout(1, 2));
-            left.setOpaque(false);
-            left.add(new JLabel(PlayerSkill.toString(skillIndex)));
-
-            skillLabel[i] = new JLabel(""); //$NON-NLS-1$
-            skillLabel[i].setOpaque(false);
-            left.add(skillLabel[i]);
-            bottom.add(left);
-            levelBar[i] = new ColorBar(0f, 200, 20);
-            levelBar[i].setOpaque(false);
-            bottom.add(levelBar[i]);
-        }
-
-        mainPanel.add(bottom, BorderLayout.CENTER);
-        add(mainPanel, BorderLayout.CENTER);
-    }
+		maingbc.gridy = 1;
+		maingbc.insets = new Insets(5, 5, 10, 5);
+		maingbc.fill = GridBagConstraints.BOTH;
+		maingbc.weightx = 1.0;
+		maingbc.weighty = 1.0;
+		add(bottom, maingbc);
+	}
 }
