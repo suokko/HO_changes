@@ -189,7 +189,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		m_jslSchriftgroesse.addChangeListener(this);
 		add(m_jslSchriftgroesse);
 
-		m_jcbSkin = new ComboBoxPanel("Skin", new String[] { "Nimbus", "Classic", "JGoodies Green", // 
+		m_jcbSkin = new ComboBoxPanel("Skin", new String[] { "Nimbus", "Classic", "JGoodies Green", //
 				"JGoodies Silver", "JGoodies Sky", "JGoodies Blue", "JGoodies Royale", "System" }, 120);
 		m_jcbSkin.setSelectedItem(ho.core.model.UserParameter.temp().skin);
 		m_jcbSkin.addItemListener(this);
@@ -231,7 +231,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		add(m_jcbNachkomma);
 
 		m_jchZahlenBewertung = new JCheckBox(HOVerwaltung.instance().getLanguageString("SkillZahlen") + " : "
-				+ HOVerwaltung.instance().getLanguageString("passabel") + " (6)");
+				+ HOVerwaltung.instance().getLanguageString("player.skill.value.passable") + " (6)");
 		m_jchZahlenBewertung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_SkillZahlen"));
 		m_jchZahlenBewertung.setOpaque(false);
 		m_jchZahlenBewertung.setSelected(ho.core.model.UserParameter.temp().zahlenFuerSkill);
