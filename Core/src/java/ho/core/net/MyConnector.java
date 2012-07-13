@@ -15,6 +15,7 @@ import ho.core.file.xml.XMLTeamDetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
+import ho.core.model.UserParameter;
 import ho.core.model.match.MatchType;
 import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
@@ -57,10 +58,8 @@ import sun.misc.BASE64Encoder;
  * @author thomas.werth
  */
 public class MyConnector {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
-	static final private int chppID = 3330;
-	static final private String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
+	private static final int chppID = 3330;
+	private static final String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
 	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V"
 			+ HO.VERSION;
 	private static MyConnector m_clInstance;
@@ -71,12 +70,8 @@ public class MyConnector {
 	private final static String VERSION_PLAYERS = "2.1";
 	private final static String VERSION_PLAYERDETAILS = "2.0";
 	private final static String VERSION_WORLDDETAILS = "1.4";
-
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
 	private String m_ProxyUserName = "";
 	private String m_ProxyUserPWD = "";
 	private String m_sProxyHost = "";
@@ -84,17 +79,10 @@ public class MyConnector {
 	private boolean m_bAuthenticated;
 	private boolean m_bProxyAuthentifactionNeeded;
 	private boolean m_bUseProxy;
-	private int m_iUserID = -1;
-
 	private OAuthService m_OAService;
 	private Token m_OAAccessToken;
-
 	private static boolean DEBUGSAVE = false;
 
-	// private final static String SAVEDIR = "C:/temp/ho/";
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 	/**
 	 * Creates a new instance of MyConnector.
 	 */
@@ -103,13 +91,8 @@ public class MyConnector {
 				.apiKey(Helper.decryptString(CONSUMER_KEY))
 				.apiSecret(Helper.decryptString(CONSUMER_SECRET))
 				.signatureType(SignatureType.Header).build();
-		m_OAAccessToken = new Token(
-				Helper.decryptString(ho.core.model.UserParameter.instance().AccessToken),
-				Helper.decryptString(ho.core.model.UserParameter.instance().TokenSecret));
+		m_OAAccessToken = createOAAccessToken();
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/**
 	 * Get the MyConnector instance.
@@ -152,6 +135,10 @@ public class MyConnector {
 		return getHOSite() + "final";
 	}
 
+	public static String getInitialHTConnectionUrl() {
+		return htUrl;
+	}
+
 	/**
 	 * Fetch our arena
 	 * 
@@ -174,8 +161,9 @@ public class MyConnector {
 	 */
 	public String getArena(int arenaId) throws IOException {
 		String url = htUrl + "?file=arenadetails";
-		if (arenaId > 0)
+		if (arenaId > 0) {
 			url += "&arenaID=" + arenaId;
+		}
 		return getCHPPWebFile(url);
 	}
 
@@ -183,8 +171,7 @@ public class MyConnector {
 	 * holt die Finanzen
 	 */
 	public String getEconomy() throws IOException {
-		final String url = htUrl + "?file=economy";
-
+		String url = htUrl + "?file=economy";
 		return getCHPPWebFile(url);
 	}
 
@@ -222,8 +209,7 @@ public class MyConnector {
 	 * lädt die Tabelle
 	 */
 	public String getLeagueDetails() throws IOException {
-		final String url = htUrl + "?file=leaguedetails";
-
+		String url = htUrl + "?file=leaguedetails";
 		return getCHPPWebFile(url);
 	}
 
@@ -233,10 +219,12 @@ public class MyConnector {
 	public String getLeagueFixtures(int season, int leagueID)
 			throws IOException {
 		String url = htUrl + "?file=leaguefixtures";
-		if (season > 0)
+		if (season > 0) {
 			url += "&season=" + season;
-		if (leagueID > 0)
+		}
+		if (leagueID > 0) {
 			url += "&leagueLevelUnitID=" + leagueID;
+		}
 		return getCHPPWebFile(url);
 	}
 
@@ -390,10 +378,12 @@ public class MyConnector {
 			throws IOException {
 		String url = htUrl + "?file=matches&version=2.6";
 
-		if (teamId > 0)
+		if (teamId > 0) {
 			url += "&teamID=" + teamId;
-		if (forceRefresh)
+		}
+		if (forceRefresh) {
 			url += "&actionType=refreshCache";
+		}
 
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(System.currentTimeMillis());
@@ -413,8 +403,7 @@ public class MyConnector {
 	 * Get Players
 	 */
 	public String getPlayers() throws IOException {
-		final String url = htUrl + "?file=players&version=" + VERSION_PLAYERS;
-
+		String url = htUrl + "?file=players&version=" + VERSION_PLAYERS;
 		return getCHPPWebFile(url);
 	}
 
@@ -444,7 +433,7 @@ public class MyConnector {
 	 * @param m_sProxyHost
 	 *            New value of property m_sProxyHost.
 	 */
-	public void setProxyHost(java.lang.String m_sProxyHost) {
+	public void setProxyHost(String m_sProxyHost) {
 		this.m_sProxyHost = m_sProxyHost;
 	}
 
@@ -453,7 +442,7 @@ public class MyConnector {
 	 * 
 	 * @return Value of property m_sProxyHost.
 	 */
-	public java.lang.String getProxyHost() {
+	public String getProxyHost() {
 		return m_sProxyHost;
 	}
 
@@ -463,7 +452,7 @@ public class MyConnector {
 	 * @param m_sProxyPort
 	 *            New value of property m_sProxyPort.
 	 */
-	public void setProxyPort(java.lang.String m_sProxyPort) {
+	public void setProxyPort(String m_sProxyPort) {
 		this.m_sProxyPort = m_sProxyPort;
 	}
 
@@ -472,7 +461,7 @@ public class MyConnector {
 	 * 
 	 * @return Value of property m_sProxyPort.
 	 */
-	public java.lang.String getProxyPort() {
+	public String getProxyPort() {
 		return m_sProxyPort;
 	}
 
@@ -510,7 +499,7 @@ public class MyConnector {
 	 * 
 	 * @return Value of property m_ProxyUserPWD.
 	 */
-	public java.lang.String getProxyUserPWD() {
+	public String getProxyUserPWD() {
 		return m_ProxyUserPWD;
 	}
 
@@ -657,13 +646,8 @@ public class MyConnector {
 			HOLogger.instance().log(getClass(),
 					"Unable to connect to the update server (HO): " + e);
 		} finally {
-			try {
-				if (br != null)
-					br.close();
-				if (is != null)
-					is.close();
-			} catch (IOException e) {
-			}
+			IOUtils.closeQuietly(br);
+			IOUtils.closeQuietly(is);
 		}
 		return null;
 	}
@@ -744,28 +728,11 @@ public class MyConnector {
 
 	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen)
 			throws IOException {
-		return getFileFromWeb(url, displaysettingsScreen, false);
-	}
-
-	/**
-	 * Get a file from a web server as input stream.
-	 */
-	public InputStream getFileFromWeb(String url,
-			boolean displaysettingsScreen, boolean showErrorMessage)
-			throws IOException {
 		if (displaysettingsScreen) {
 			// Show Screen
 			new ProxyDialog(HOMainFrame.instance());
 		}
-		return getNonCHPPWebFile(url, showErrorMessage);
-	}
-
-	/**
-	 * Get the content of a normal (non-HT) web page in one string.
-	 */
-	public String getUsalWebPage(String url, boolean displaysettingsScreen,
-			boolean shortTimeOut) throws IOException {
-		return getUsalWebPage(url, displaysettingsScreen);
+		return getNonCHPPWebFile(url, false);
 	}
 
 	public String getUsalWebPage(String url, boolean displaysettingsScreen)
@@ -790,12 +757,11 @@ public class MyConnector {
 		try {
 			while (tryAgain == true) {
 				OAuthRequest request = new OAuthRequest(Verb.GET, surl);
-
 				infoHO(request);
 				if (m_OAAccessToken == null
-						|| m_OAAccessToken.getToken().length() == 0)
+						|| m_OAAccessToken.getToken().length() == 0) {
 					iResponse = 401;
-				else {
+				} else {
 					m_OAService.signRequest(m_OAAccessToken, request);
 					response = request.send();
 					iResponse = response.getCode();
@@ -809,25 +775,25 @@ public class MyConnector {
 						saveCHPP(surl, returnString);
 					}
 					String sError = XMLCHPPPreParser.getError(returnString);
-					if (sError.length() > 0)
+					if (sError.length() > 0) {
 						throw new RuntimeException(sError);
+					}
 					tryAgain = false;
 					break;
 				case 401:
-					if (authDialog == null)
+					if (authDialog == null) {
 						authDialog = new OAuthDialog(HOMainFrame.instance(),
 								m_OAService, "");
+					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason
-					if (authDialog.getUserCancel() == true)
+					if (authDialog.getUserCancel() == true) {
 						return null;
+					}
 					m_OAAccessToken = authDialog.getAccessToken();
-					if (m_OAAccessToken == null)
-						m_OAAccessToken = new Token(
-								Helper.decryptString(ho.core.model.UserParameter
-										.instance().AccessToken),
-								Helper.decryptString(ho.core.model.UserParameter
-										.instance().TokenSecret));
+					if (m_OAAccessToken == null) {
+						m_OAAccessToken = createOAAccessToken();
+					}
 					break;
 				case 407:
 					throw new RuntimeException(
@@ -986,23 +952,21 @@ public class MyConnector {
 	}
 
 	private String readStream(InputStream stream) throws IOException {
-		String sReturn = "";
+		StringBuilder builder = new StringBuilder();
 		if (stream != null) {
-			final BufferedReader bufferedreader = new BufferedReader(
+			BufferedReader bufferedreader = new BufferedReader(
 					new InputStreamReader(stream, "UTF-8"));
-			final StringBuffer s2 = new StringBuffer();
 			String line = bufferedreader.readLine();
 			if (line != null) {
-				s2.append(line);
+				builder.append(line);
 				while ((line = bufferedreader.readLine()) != null) {
-					s2.append('\n');
-					s2.append(line);
+					builder.append('\n');
+					builder.append(line);
 				}
 			}
 			bufferedreader.close();
-			sReturn = s2.toString();
 		}
-		return sReturn;
+		return builder.toString();
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////
@@ -1048,7 +1012,7 @@ public class MyConnector {
 		df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
 		StringBuilder builder = new StringBuilder();
 		builder.append("Downloaded at ").append(df.format(downloadDate))
-				.append("\n");
+				.append('\n');
 		builder.append("From ").append(url).append("\n\n");
 		builder.append(content);
 
@@ -1059,11 +1023,9 @@ public class MyConnector {
 		}
 	}
 
-	final public static String getInitialHTConnectionUrl() {
-		return htUrl;
-	}
-
-	final public int getUserID() {
-		return m_iUserID;
+	private Token createOAAccessToken() {
+		return new Token(
+				Helper.decryptString(UserParameter.instance().AccessToken),
+				Helper.decryptString(UserParameter.instance().TokenSecret));
 	}
 }
