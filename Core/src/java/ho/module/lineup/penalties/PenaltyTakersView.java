@@ -80,7 +80,6 @@ public class PenaltyTakersView extends JPanel {
 			this.players.add(new PenaltyTaker(player));
 		}
 		getPlayersTableModel().setPenaltyTakers(this.players);
-		getPlayersTableModel().fireTableDataChanged();
 	}
 
 	public void setLineup(Lineup lineup) {
@@ -105,18 +104,6 @@ public class PenaltyTakersView extends JPanel {
 			}
 		}
 		return null;
-	}
-
-	private void enableSortingAndFiltering() {
-		this.playersTable.setAutoCreateRowSorter(true);
-		setRowFilter();
-		// without repaint the sort indicator will not disappear
-		this.playersTable.getTableHeader().repaint();
-	}
-
-	private void disableSortingAndFiltering() {
-		this.playersTable.setRowSorter(null);
-		this.playersTable.setAutoCreateRowSorter(false);
 	}
 
 	private void reset() {
@@ -439,7 +426,7 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<PenaltyTaker> players = getSelectedPlayers();
+				List<PenaltyTaker> players = getSelected(playersTable);
 				for (PenaltyTaker player : players) {
 					getPlayersTableModel().remove(player);
 					getTakersTableModel().add(player);
@@ -452,7 +439,7 @@ public class PenaltyTakersView extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<PenaltyTaker> takers = getSelectedTakers();
+				List<PenaltyTaker> takers = getSelected(takersTable);
 				for (PenaltyTaker taker : takers) {
 					getTakersTableModel().remove(taker);
 					getPlayersTableModel().add(taker);
@@ -471,14 +458,6 @@ public class PenaltyTakersView extends JPanel {
 		this.showAnfangsElfCheckBox.addItemListener(filterCheckBoxListener);
 		this.showReserveCheckBox.addItemListener(filterCheckBoxListener);
 		this.showOthersCheckBox.addItemListener(filterCheckBoxListener);
-	}
-
-	private List<PenaltyTaker> getSelectedPlayers() {
-		return getSelected(this.playersTable);
-	}
-
-	private List<PenaltyTaker> getSelectedTakers() {
-		return getSelected(this.takersTable);
 	}
 
 	private List<PenaltyTaker> getSelected(JTable table) {
@@ -503,7 +482,7 @@ public class PenaltyTakersView extends JPanel {
 				|| (move == Move.DOWN && viewRowIndex < this.takersTable
 						.getRowCount() - 1)) {
 
-			PenaltyTaker taker = getSelectedTakers().get(0);
+			PenaltyTaker taker = getSelected(this.takersTable).get(0);
 			PenaltyTakersTableModel model = getTakersTableModel();
 			List<PenaltyTaker> list = new ArrayList<PenaltyTaker>(
 					model.getRowCount());
