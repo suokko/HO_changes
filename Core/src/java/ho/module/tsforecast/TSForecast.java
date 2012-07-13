@@ -295,25 +295,25 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	// switch(resultset.getInt("ICHARAKTER")) {
 	// case 5:
 	// strLabel
-	// +=HOVerwaltung.instance().getLanguageString("beloved_team_member") +
+	// +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.belovedteammember") +
 	// ". ";
 	// break;
 	// case 4:
-	// strLabel += HOVerwaltung.instance().getLanguageString("popular") + ". ";
+	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.popularguypopular") + ". ";
 	// break;
 	// case 3:
-	// strLabel += HOVerwaltung.instance().getLanguageString("sympathetic") +
+	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.sympatheticguy") +
 	// ". ";
 	// break;
 	// case 2:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("pleasant") + ". ";
+	// strLabel +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.pleasantguy") + ". ";
 	// break;
 	// case 1:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("controversial") +
+	// strLabel +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.controversialperson") +
 	// ". ";
 	// break;
 	// case 0:
-	// strLabel += HOVerwaltung.instance().getLanguageString("nasty") + ". ";
+	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.nastyfellow") + ". ";
 	// break;
 	// default:
 	// strLabel += "free of character. ";
@@ -515,7 +515,7 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	private void initCurves() {
 
 		ModuleConfig config = ModuleConfig.instance();
-		
+
 		if (config.getBoolean(TS_HISTORY)) {
 			m_jpGraphics.addCurve(m_History, true);
 			m_jpGraphics.addCurve(m_Trainer);
@@ -527,7 +527,7 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 
 		if (config.getBoolean(TS_LOEPIHISTORY)) {
 			m_jpGraphics.addCurve(m_LoepiHist);
-		} 
+		}
 
 		if (config.getBoolean(TS_CONFIDENCE)) {
 			m_jpGraphics.addCurve(m_Confidence);
