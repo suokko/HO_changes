@@ -83,9 +83,12 @@ public class HattrickManager {
 	   		
 	   		// Only store tournament matches
 	   		for (MatchKurzInfo match : matches) {
+	   			if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+		    		continue;
+		    	}
 	   			if (filter.isAcceptedMatch(new Match(match)) 
-	   					&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID())
-	   					&& match.getMatchTyp().isTournament()) {
+	   					&& match.getMatchTyp().isTournament()
+	   					&& !DBManager.instance().isMatchLineupVorhanden(match.getMatchID())) {
 	   				
 	   				OnlineWorker.downloadMatchData(match.getMatchID(), match.getMatchTyp(), false);
 	   			}
