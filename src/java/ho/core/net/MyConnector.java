@@ -19,6 +19,7 @@ import ho.core.model.UserParameter;
 import ho.core.model.match.MatchType;
 import ho.core.net.login.OAuthDialog;
 import ho.core.net.login.ProxyDialog;
+import ho.core.net.login.ProxySettings;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.IOUtils;
@@ -72,13 +73,8 @@ public class MyConnector {
 	private final static String VERSION_WORLDDETAILS = "1.4";
 	private final static String CONSUMER_KEY = ">Ij-pDTDpCq+TDrKA^nnE9";
 	private final static String CONSUMER_SECRET = "2/Td)Cprd/?q`nAbkAL//F+eGD@KnnCc>)dQgtP,p+p";
-	private String m_ProxyUserName = "";
-	private String m_ProxyUserPWD = "";
-	private String m_sProxyHost = "";
-	private String m_sProxyPort = "";
+	private ProxySettings proxySettings;
 	private boolean m_bAuthenticated;
-	private boolean m_bProxyAuthentifactionNeeded;
-	private boolean m_bUseProxy;
 	private OAuthService m_OAService;
 	private Token m_OAAccessToken;
 	private static boolean DEBUGSAVE = false;
@@ -408,102 +404,6 @@ public class MyConnector {
 	}
 
 	/**
-	 * Setter for property m_bProxyAuthentifactionNeeded.
-	 * 
-	 * @param m_bProxyAuthentifactionNeeded
-	 *            New value of property m_bProxyAuthentifactionNeeded.
-	 */
-	public void setProxyAuthentifactionNeeded(
-			boolean m_bProxyAuthentifactionNeeded) {
-		this.m_bProxyAuthentifactionNeeded = m_bProxyAuthentifactionNeeded;
-	}
-
-	/**
-	 * Getter for property m_bProxyAuthentifactionNeeded.
-	 * 
-	 * @return Value of property m_bProxyAuthentifactionNeeded.
-	 */
-	public boolean isProxyAuthentifactionNeeded() {
-		return m_bProxyAuthentifactionNeeded;
-	}
-
-	/**
-	 * Setter for property m_sProxyHost.
-	 * 
-	 * @param m_sProxyHost
-	 *            New value of property m_sProxyHost.
-	 */
-	public void setProxyHost(String m_sProxyHost) {
-		this.m_sProxyHost = m_sProxyHost;
-	}
-
-	/**
-	 * Getter for property m_sProxyHost.
-	 * 
-	 * @return Value of property m_sProxyHost.
-	 */
-	public String getProxyHost() {
-		return m_sProxyHost;
-	}
-
-	/**
-	 * Setter for property m_sProxyPort.
-	 * 
-	 * @param m_sProxyPort
-	 *            New value of property m_sProxyPort.
-	 */
-	public void setProxyPort(String m_sProxyPort) {
-		this.m_sProxyPort = m_sProxyPort;
-	}
-
-	/**
-	 * Getter for property m_sProxyPort.
-	 * 
-	 * @return Value of property m_sProxyPort.
-	 */
-	public String getProxyPort() {
-		return m_sProxyPort;
-	}
-
-	/**
-	 * Setter for property m_ProxyUserName.
-	 * 
-	 * @param m_ProxyUserName
-	 *            New value of property m_ProxyUserName.
-	 */
-	public void setProxyUserName(java.lang.String m_ProxyUserName) {
-		this.m_ProxyUserName = m_ProxyUserName;
-	}
-
-	/**
-	 * Getter for property m_ProxyUserName.
-	 * 
-	 * @return Value of property m_ProxyUserName.
-	 */
-	public String getProxyUserName() {
-		return m_ProxyUserName;
-	}
-
-	/**
-	 * Setter for property m_ProxyUserPWD.
-	 * 
-	 * @param m_ProxyUserPWD
-	 *            New value of property m_ProxyUserPWD.
-	 */
-	public void setProxyUserPWD(String m_ProxyUserPWD) {
-		this.m_ProxyUserPWD = m_ProxyUserPWD;
-	}
-
-	/**
-	 * Getter for property m_ProxyUserPWD.
-	 * 
-	 * @return Value of property m_ProxyUserPWD.
-	 */
-	public String getProxyUserPWD() {
-		return m_ProxyUserPWD;
-	}
-
-	/**
 	 * holt die Teamdetails
 	 */
 	public String getTeamdetails(int teamId) throws IOException {
@@ -531,32 +431,6 @@ public class MyConnector {
 		final String url = htUrl + "?file=transfersPlayer&playerID=" + playerId;
 
 		return getCHPPWebFile(url);
-	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// get-HTML-Files
-	// //////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Setter for property m_UseProxy.
-	 * 
-	 * @param m_UseProxy
-	 *            New value of property m_UseProxy.
-	 */
-	public void setUseProxy(boolean m_UseProxy) {
-		this.m_bUseProxy = m_UseProxy;
-	}
-
-	// ///////////////////////////////////////////////////////////////////////////////
-	// Accessor
-	// //////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Getter for property m_UseProxy.
-	 * 
-	 * @return Value of property m_UseProxy.
-	 */
-	public boolean isUseProxy() {
-		return m_bUseProxy;
 	}
 
 	/**
@@ -696,11 +570,15 @@ public class MyConnector {
 	// Proxy
 	// //////////////////////////////////////////////////////////////////////////////
 	public void enableProxy() {
-		if (m_bUseProxy) {
-			System.getProperties().put("https.proxyHost", m_sProxyHost);
-			System.getProperties().put("https.proxyPort", m_sProxyPort);
-			System.getProperties().put("http.proxyHost", m_sProxyHost);
-			System.getProperties().put("http.proxyPort", m_sProxyPort);
+		if (this.proxySettings != null && this.proxySettings.isUseProxy()) {
+			System.getProperties().put("https.proxyHost",
+					proxySettings.getProxyHost());
+			System.getProperties().put("https.proxyPort",
+					proxySettings.getProxyPort());
+			System.getProperties().put("http.proxyHost",
+					proxySettings.getProxyHost());
+			System.getProperties().put("http.proxyPort",
+					proxySettings.getProxyPort());
 		} else {
 			System.getProperties().remove("https.proxyHost");
 			System.getProperties().remove("https.proxyPort");
@@ -983,8 +861,10 @@ public class MyConnector {
 		request.addHeader("user-agent", m_sIDENTIFIER);
 
 		// ProxyAuth hier einbinden da diese Funk immer aufgerufen wird
-		if (m_bProxyAuthentifactionNeeded) {
-			final String pw = m_ProxyUserName + ":" + m_ProxyUserPWD;
+		if (this.proxySettings != null
+				&& this.proxySettings.isAuthenticationNeeded()) {
+			final String pw = this.proxySettings.getUsername() + ":"
+					+ this.proxySettings.getPassword();
 			final String epw = (new BASE64Encoder()).encode(pw.getBytes());
 			request.addHeader("Proxy-Authorization", "Basic " + epw);
 		}
