@@ -62,14 +62,11 @@ public class SubstitutionEditView extends JPanel {
 		if (isSubstitution()) {
 			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
 					.getFieldPositions(ISpielerPosition.substKeeper,
-							ISpielerPosition.substForward);
+							ISpielerPosition.substForward, false);
 			this.playerInComboBox.setModel(new DefaultComboBoxModel(
 					substitutionPlayers.toArray()));
 			this.playerInComboBox.setSelectedItem(null);
 		} else if (isPositionSwap()) {
-			List<PlayerPositionItem> substitutionPlayers = SubstitutionDataProvider
-					.getFieldPositions(ISpielerPosition.substKeeper,
-							ISpielerPosition.substForward);
 			this.playerInComboBox.setModel(new DefaultComboBoxModel(
 					lineupPositions.values().toArray()));
 			this.playerInComboBox.setSelectedItem(null);
@@ -78,7 +75,7 @@ public class SubstitutionEditView extends JPanel {
 		if (!isPositionSwap()) {
 			List<PlayerPositionItem> positions = SubstitutionDataProvider
 					.getFieldPositions(ISpielerPosition.keeper,
-							ISpielerPosition.leftForward);
+							ISpielerPosition.leftForward, true);
 			this.positionComboBox.setModel(new DefaultComboBoxModel(positions
 					.toArray()));
 			this.positionComboBox.setSelectedItem(null);
