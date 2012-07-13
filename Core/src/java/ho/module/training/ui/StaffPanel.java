@@ -71,11 +71,6 @@ public class StaffPanel extends JPanel {
         setTrainer(HOVerwaltung.instance().getModel().getTrainer().getTrainer() - 1);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     private void setCoTrainer(int value) {
         if (value > 10) {
             value = 10;
@@ -88,11 +83,6 @@ public class StaffPanel extends JPanel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     private void setTrainer(int value) {
         if (value > 10) {
             value = 10;
@@ -167,14 +157,14 @@ public class StaffPanel extends JPanel {
         gbc.insets = new Insets(6, 6, 4, 2);
         main.add(new JLabel(hoV.getLanguageString("Trainerlevel")), gbc);
         gbc.gridx = 1;
-        gbc.insets = new Insets(6, 2, 4, 6);
+        gbc.insets = new Insets(6, 2, 2, 6);
         main.add(trainerLevelCombo, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.insets = new Insets(4, 6, 6, 2);
+        gbc.insets = new Insets(2, 6, 6, 2);
         main.add(new JLabel(hoV.getLanguageString("CoTrainer")), gbc);
         gbc.gridx = 1;
-        gbc.insets = new Insets(4, 2, 6, 6);
+        gbc.insets = new Insets(2, 2, 6, 6);
         main.add(coTrainerCombo, gbc);
         gbc.gridy = 2;
         gbc.weightx = 1.0;
