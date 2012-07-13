@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -149,7 +150,7 @@ public class RowNumberTable extends JTable implements ChangeListener,
 			}
 
 			setText((value == null) ? "" : value.toString());
-//			setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+			setBorder(UIManager.getBorder("TableHeader.cellBorder"));
 
 			return this;
 		}
