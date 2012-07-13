@@ -94,7 +94,8 @@ public class xmlMatchdetailsParser {
                 readGeneral(doc, md);
                 // Match lineup needs to be available, if not -> ignore match highlights/report
                 if (matchLineup == null) {
-                	HOLogger.instance().warning(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available!");
+                	// reduced log level as this happens each and every match download.
+                	HOLogger.instance().debug(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available!");
                 } else {
                     readHighlights(doc, md, matchLineup);
                     parseMatchReport(md);
