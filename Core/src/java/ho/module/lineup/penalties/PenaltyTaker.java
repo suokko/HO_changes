@@ -2,7 +2,7 @@ package ho.module.lineup.penalties;
 
 import ho.core.model.player.Spieler;
 
-public class PenaltyTaker implements Comparable<PenaltyTaker> {
+public class PenaltyTaker {
 
 	private Spieler player;
 	private float ability;
@@ -21,11 +21,5 @@ public class PenaltyTaker implements Comparable<PenaltyTaker> {
 
 	public float getAbility() {
 		return this.ability;
-	}
-
-	@Override
-	public int compareTo(PenaltyTaker o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }
