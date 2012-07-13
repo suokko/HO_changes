@@ -115,7 +115,7 @@ public class HO {
 				}
 			}
 		} catch (Exception ex) {
-			HOLogger.instance().log(HOMainFrame.class, ex);
+			HOLogger.instance().log(HO.class, ex);
 		}
 
 		// Spoofing test
@@ -171,7 +171,7 @@ public class HO {
 		try {
 			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
 		} catch (Exception e) {
-			HOLogger.instance().log(HOMainFrame.class,
+			HOLogger.instance().log(HO.class,
 					"Can´t load Theme:" + UserParameter.instance().theme);
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Can´t load Theme: "
 					+ UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
@@ -223,7 +223,7 @@ public class HO {
 		// Startbild weg
 		interuptionsWindow.setVisible(false);
 
-		HOLogger.instance().log(HOMainFrame.class, "Zeit:" + (System.currentTimeMillis() - start));
+		HOLogger.instance().log(HO.class, "Zeit:" + (System.currentTimeMillis() - start));
 	}
 
 	public static int getRevisionNumber() {
@@ -231,7 +231,7 @@ public class HO {
 			InputStream is = null;
 			BufferedReader br = null;
 			try {
-				is = HOMainFrame.class.getResourceAsStream("/revision.num");
+				is = HO.class.getResourceAsStream("/revision.num");
 				if (is != null) {
 					br = new BufferedReader(new InputStreamReader(is));
 					String line = null;
@@ -245,6 +245,7 @@ public class HO {
 			} catch (Exception e) {
 				HOLogger.instance().warning(HO.class, "getRevisionNumber failed: " + e);
 			} finally {
+				IOUtils.closeQuietly(br);
 				IOUtils.closeQuietly(is);
 			}
 		}
