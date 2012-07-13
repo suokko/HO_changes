@@ -2,12 +2,18 @@
 package ho.core.net.login;
 
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.NumericDocument;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
+import ho.core.util.GUIUtils;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -32,14 +38,14 @@ import javax.swing.border.TitledBorder;
 public class ProxyDialog extends JDialog {
 	private static final long serialVersionUID = -2112562621278224332L;
 	private HOMainFrame m_clMainFrame;
-	private JButton m_jbAbbrechen = new JButton();
-	private JButton m_jbOK = new JButton();
-	private JCheckBox m_jchProxyAktiv = new JCheckBox();
-	private JCheckBox m_jchProxyAuthAktiv = new JCheckBox();
-	private JPasswordField m_jpfProxyAuthPasswort = new JPasswordField();
-	private JTextField m_jtfProxyAuthName = new JTextField();
-	private JTextField m_jtfProxyHost = new JTextField();
-	private JTextField m_jtfProxyPort = new JTextField();
+	private JButton cancelButton = new JButton();
+	private JButton okButton = new JButton();
+	private JCheckBox useProxyCheckBox = new JCheckBox();
+	private JCheckBox useProxyAuthCheckBox = new JCheckBox();
+	private JPasswordField proxyPasswordField = new JPasswordField();
+	private JTextField proxyAuthNameTextField = new JTextField();
+	private JTextField proxyHostTextField = new JTextField();
+	private JTextField proxyPortTextField = new JTextField();
 
 	public ProxyDialog(HOMainFrame mainFrame) {
 		super(mainFrame, "Proxy", true);
@@ -48,23 +54,24 @@ public class ProxyDialog extends JDialog {
 
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		initComponents();
+		addListeners();
 
-		m_jtfProxyPort.setText(UserParameter.instance().ProxyPort);
-		m_jtfProxyHost.setText(UserParameter.instance().ProxyHost);
-		m_jchProxyAktiv.setSelected(UserParameter.instance().ProxyAktiv);
-		m_jtfProxyHost.setEnabled(m_jchProxyAktiv.isSelected());
-		m_jtfProxyPort.setEnabled(m_jchProxyAktiv.isSelected());
-		m_jtfProxyAuthName.setText(UserParameter.instance().ProxyAuthName);
-		m_jpfProxyAuthPasswort
-				.setText(UserParameter.instance().ProxyAuthPassword);
-		m_jchProxyAuthAktiv
+		proxyPortTextField.setText(UserParameter.instance().ProxyPort);
+		proxyHostTextField.setText(UserParameter.instance().ProxyHost);
+		useProxyCheckBox.setSelected(UserParameter.instance().ProxyAktiv);
+		proxyHostTextField.setEnabled(useProxyCheckBox.isSelected());
+		proxyPortTextField.setEnabled(useProxyCheckBox.isSelected());
+		proxyAuthNameTextField.setText(UserParameter.instance().ProxyAuthName);
+		proxyPasswordField.setText(UserParameter.instance().ProxyAuthPassword);
+		useProxyAuthCheckBox
 				.setSelected(UserParameter.instance().ProxyAuthAktiv);
-		m_jchProxyAuthAktiv.setEnabled(UserParameter.instance().ProxyAktiv);
-		m_jtfProxyAuthName.setEnabled(m_jchProxyAuthAktiv.isSelected()
-				&& m_jchProxyAuthAktiv.isEnabled());
-		m_jpfProxyAuthPasswort.setEnabled(m_jchProxyAuthAktiv.isSelected()
-				&& m_jchProxyAuthAktiv.isEnabled());
+		useProxyAuthCheckBox.setEnabled(UserParameter.instance().ProxyAktiv);
+		proxyAuthNameTextField.setEnabled(useProxyAuthCheckBox.isSelected()
+				&& useProxyAuthCheckBox.isEnabled());
+		proxyPasswordField.setEnabled(useProxyAuthCheckBox.isSelected()
+				&& useProxyAuthCheckBox.isEnabled());
 
+		pack();
 		setVisible(true);
 	}
 
@@ -72,104 +79,124 @@ public class ProxyDialog extends JDialog {
 	 * Komponenten des Panels initial setzen
 	 */
 	private void initComponents() {
+		HOVerwaltung hov = HOVerwaltung.instance();
+
 		setContentPane(new ImagePanel());
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout());
+
+		Dimension textFieldSize = new Dimension(155, (int) proxyHostTextField
+				.getPreferredSize().getHeight());
+		proxyHostTextField.setMinimumSize(textFieldSize);
+		proxyHostTextField.setPreferredSize(textFieldSize);
+		GUIUtils.equalizeComponentSizes(proxyAuthNameTextField,
+				proxyHostTextField, proxyPasswordField, proxyPortTextField);
 
 		// Proxy Daten
-		JPanel panel = new ImagePanel();
-		panel.setLayout(null);
+		JPanel panel = new ImagePanel(new GridBagLayout());
 
-		m_jchProxyAktiv.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("tt_Login_Proxy"));
-		m_jchProxyAktiv.setLocation(5, 15);
-		m_jchProxyAktiv.setText(HOVerwaltung.instance().getLanguageString(
-				"ProxyAktiv"));
-		m_jchProxyAktiv.setSize(250, 25);
-		m_jchProxyAktiv.setOpaque(false);
-		panel.add(m_jchProxyAktiv);
+		useProxyCheckBox
+				.setToolTipText(hov.getLanguageString("tt_Login_Proxy"));
+		useProxyCheckBox.setText(hov.getLanguageString("ProxyAktiv"));
+		useProxyCheckBox.setOpaque(false);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridwidth = 2;
+		gbc.insets = new Insets(8, 8, 4, 8);
+		panel.add(useProxyCheckBox, gbc);
 
-		JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ProxyHost"));
-		label.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_ProxyHost"));
-		label.setLocation(10, 40);
-		label.setSize(185, 25);
-		panel.add(label);
+		JLabel label = new JLabel(hov.getLanguageString("ProxyHost"));
+		label.setToolTipText(hov.getLanguageString("tt_Login_ProxyHost"));
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(4, 8, 4, 2);
+		panel.add(label, gbc);
 
-		m_jtfProxyHost.setLocation(205, 40);
-		m_jtfProxyHost.setSize(145, 25);
-		panel.add(m_jtfProxyHost);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.insets = new Insets(4, 2, 4, 8);
+		panel.add(proxyHostTextField, gbc);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ProxyPort"));
-		label.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_ProxyPort"));
-		label.setLocation(10, 75);
-		label.setSize(180, 25);
-		panel.add(label);
+		label = new JLabel(hov.getLanguageString("ProxyPort"));
+		label.setToolTipText(hov.getLanguageString("tt_Login_ProxyPort"));
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.insets = new Insets(4, 8, 4, 2);
+		panel.add(label, gbc);
 
-		m_jtfProxyPort.setLocation(205, 75);
-		m_jtfProxyPort.setSize(145, 25);
-		panel.add(m_jtfProxyPort);
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.insets = new Insets(4, 2, 4, 8);
+		proxyPortTextField.setDocument(new NumericDocument(5, false));
+		panel.add(proxyPortTextField, gbc);
 
 		// Auth
-		m_jchProxyAuthAktiv.setToolTipText(HOVerwaltung.instance()
+		useProxyAuthCheckBox.setToolTipText(hov
 				.getLanguageString("tt_Login_ProxyAuth"));
-		m_jchProxyAuthAktiv.setLocation(5, 120);
-		m_jchProxyAuthAktiv.setText(HOVerwaltung.instance().getLanguageString(
-				"ProxyAuthAktiv"));
-		m_jchProxyAuthAktiv.setSize(250, 25);
-		m_jchProxyAuthAktiv.setOpaque(false);
-		panel.add(m_jchProxyAuthAktiv);
+		useProxyAuthCheckBox.setText(hov.getLanguageString("ProxyAuthAktiv"));
+		useProxyAuthCheckBox.setOpaque(false);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		gbc.insets = new Insets(8, 8, 4, 8);
+		panel.add(useProxyAuthCheckBox, gbc);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ProxyAuthName"));
-		label.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_ProxyAuthName"));
+		label = new JLabel(hov.getLanguageString("ProxyAuthName"));
+		label.setToolTipText(hov.getLanguageString("tt_Login_ProxyAuthName"));
 		label.setLocation(10, 155);
 		label.setSize(185, 25);
-		panel.add(label);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(4, 8, 4, 2);
+		panel.add(label, gbc);
 
-		m_jtfProxyAuthName.setLocation(205, 155);
-		m_jtfProxyAuthName.setSize(145, 25);
-		panel.add(m_jtfProxyAuthName);
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		gbc.insets = new Insets(4, 2, 4, 8);
+		panel.add(proxyAuthNameTextField, gbc);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ProxyAuthPassword"));
-		label.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_ProxyAuthPassword"));
-		label.setLocation(10, 190);
-		label.setSize(180, 25);
-		panel.add(label);
+		label = new JLabel(hov.getLanguageString("ProxyAuthPassword"));
+		label.setToolTipText(hov
+				.getLanguageString("tt_Login_ProxyAuthPassword"));
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.weighty = 1.0;
+		gbc.insets = new Insets(4, 8, 4, 2);
+		panel.add(label, gbc);
 
-		m_jpfProxyAuthPasswort.setLocation(205, 190);
-		m_jpfProxyAuthPasswort.setSize(145, 25);
-		panel.add(m_jpfProxyAuthPasswort);
+		gbc.gridx = 1;
+		gbc.gridy = 5;		
+		gbc.insets = new Insets(4, 2, 4, 8);
+		panel.add(proxyPasswordField, gbc);
 
-		panel.setSize(355, 225);
-		panel.setLocation(5, 5);
-		panel.setBorder(new TitledBorder(HOVerwaltung.instance()
-				.getLanguageString("Proxydaten")));
-
-		getContentPane().add(panel);
+		panel.setBorder(new TitledBorder(hov.getLanguageString("Proxydaten")));
+		getContentPane().add(panel, BorderLayout.CENTER);
 
 		// Buttons
-		m_jbOK.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_Anmelden"));
-		m_jbOK.setText(HOVerwaltung.instance().getLanguageString("Anmelden"));
-		m_jbOK.setLocation(5, 245);
-		m_jbOK.setSize(170, 35);
-		getContentPane().add(m_jbOK);
+		JPanel buttonPanel = new ImagePanel(new GridBagLayout());
+		okButton.setToolTipText(hov.getLanguageString("tt_Login_Anmelden"));
+		okButton.setText(hov.getLanguageString("Anmelden"));
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.anchor = GridBagConstraints.NORTHEAST;
+		gbc.weightx = 1.0;
+		gbc.insets = new Insets(6, 6, 6, 4);
+		buttonPanel.add(okButton, gbc);
 
-		m_jbAbbrechen.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"tt_Login_Abbrechen"));
-		m_jbAbbrechen.setText(HOVerwaltung.instance().getLanguageString(
-				"Abbrechen"));
-		m_jbAbbrechen.setLocation(190, 245);
-		m_jbAbbrechen.setSize(170, 35);
-		getContentPane().add(m_jbAbbrechen);
+		cancelButton
+				.setToolTipText(hov.getLanguageString("tt_Login_Abbrechen"));
+		cancelButton.setText(hov.getLanguageString("Abbrechen"));
+		gbc.gridx = 1;
+		gbc.weightx = 0.0;
+		gbc.insets = new Insets(6, 4, 6, 6);
+		buttonPanel.add(cancelButton, gbc);
 
-		setSize(new Dimension(370, 310));
+		GUIUtils.equalizeComponentSizes(okButton, cancelButton);
+
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
 		Dimension size = m_clMainFrame.getToolkit().getScreenSize();
 		if (size.width > this.getSize().width) {
@@ -177,8 +204,6 @@ public class ProxyDialog extends JDialog {
 			this.setLocation((size.width / 2) - (this.getSize().width / 2),
 					(size.height / 2) - (this.getSize().height / 2));
 		}
-
-		setResizable(false);
 
 		new LoginWaitDialog(this);
 	}
@@ -189,13 +214,13 @@ public class ProxyDialog extends JDialog {
 			public final void keyReleased(KeyEvent keyEvent) {
 				// Return = ok
 				if ((keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
-						&& m_jbOK.isEnabled()) {
-					m_jbOK.doClick();
+						&& okButton.isEnabled()) {
+					okButton.doClick();
 				}
 			}
 		};
-		m_jtfProxyHost.addKeyListener(kl);
-		m_jtfProxyPort.addKeyListener(kl);
+		proxyHostTextField.addKeyListener(kl);
+		proxyPortTextField.addKeyListener(kl);
 
 		FocusListener fl = new FocusAdapter() {
 			@Override
@@ -206,31 +231,33 @@ public class ProxyDialog extends JDialog {
 				}
 			}
 		};
-		m_jtfProxyHost.addFocusListener(fl);
-		m_jtfProxyPort.addFocusListener(fl);
-		m_jtfProxyAuthName.addFocusListener(fl);
-		m_jpfProxyAuthPasswort.addFocusListener(fl);
+		proxyHostTextField.addFocusListener(fl);
+		proxyPortTextField.addFocusListener(fl);
+		proxyAuthNameTextField.addFocusListener(fl);
+		proxyPasswordField.addFocusListener(fl);
 
 		ActionListener al = new ActionListener() {
 
 			@Override
 			public final void actionPerformed(ActionEvent actionEvent) {
-				if (actionEvent.getSource().equals(m_jbOK)) {
+				if (actionEvent.getSource().equals(okButton)) {
 					saveSettings();
 					setVisible(false);
-				} else if (actionEvent.getSource().equals(m_jchProxyAktiv)) {
-					m_jtfProxyHost.setEnabled(m_jchProxyAktiv.isSelected());
-					m_jtfProxyPort.setEnabled(m_jchProxyAktiv.isSelected());
-					m_jchProxyAuthAktiv
-							.setEnabled(m_jchProxyAktiv.isSelected());
-					m_jtfProxyAuthName.setEnabled(m_jchProxyAuthAktiv
-							.isEnabled() && m_jchProxyAuthAktiv.isSelected());
-					m_jpfProxyAuthPasswort.setEnabled(m_jchProxyAuthAktiv
-							.isEnabled() && m_jchProxyAuthAktiv.isSelected());
-				} else if (actionEvent.getSource().equals(m_jchProxyAuthAktiv)) {
-					m_jtfProxyAuthName.setEnabled(m_jchProxyAuthAktiv
+				} else if (actionEvent.getSource().equals(useProxyCheckBox)) {
+					proxyHostTextField
+							.setEnabled(useProxyCheckBox.isSelected());
+					proxyPortTextField
+							.setEnabled(useProxyCheckBox.isSelected());
+					useProxyAuthCheckBox.setEnabled(useProxyCheckBox
 							.isSelected());
-					m_jpfProxyAuthPasswort.setEnabled(m_jchProxyAuthAktiv
+					proxyAuthNameTextField.setEnabled(useProxyAuthCheckBox
+							.isEnabled() && useProxyAuthCheckBox.isSelected());
+					proxyPasswordField.setEnabled(useProxyAuthCheckBox
+							.isEnabled() && useProxyAuthCheckBox.isSelected());
+				} else if (actionEvent.getSource().equals(useProxyAuthCheckBox)) {
+					proxyAuthNameTextField.setEnabled(useProxyAuthCheckBox
+							.isSelected());
+					proxyPasswordField.setEnabled(useProxyAuthCheckBox
 							.isSelected());
 				} else {
 					// Beenden
@@ -238,32 +265,34 @@ public class ProxyDialog extends JDialog {
 				}
 			}
 		};
-		m_jchProxyAktiv.addActionListener(al);
-		m_jbOK.addActionListener(al);
-		m_jchProxyAuthAktiv.addActionListener(al);
-		m_jbAbbrechen.addActionListener(al);
+		useProxyCheckBox.addActionListener(al);
+		okButton.addActionListener(al);
+		useProxyAuthCheckBox.addActionListener(al);
+		cancelButton.addActionListener(al);
 	}
 
 	/**
 	 * Login versuchen
 	 */
 	private void saveSettings() {
-		MyConnector.instance().setProxyHost(m_jtfProxyHost.getText());
-		MyConnector.instance().setUseProxy(m_jchProxyAktiv.isSelected());
-		MyConnector.instance().setProxyPort(m_jtfProxyPort.getText());
+		MyConnector.instance().setProxyHost(proxyHostTextField.getText());
+		MyConnector.instance().setUseProxy(useProxyCheckBox.isSelected());
+		MyConnector.instance().setProxyPort(proxyPortTextField.getText());
 		MyConnector.instance().setProxyAuthentifactionNeeded(
-				m_jchProxyAuthAktiv.isSelected());
-		MyConnector.instance().setProxyUserName(m_jtfProxyAuthName.getText());
+				useProxyAuthCheckBox.isSelected());
+		MyConnector.instance().setProxyUserName(
+				proxyAuthNameTextField.getText());
 		MyConnector.instance().setProxyUserPWD(
-				new String(m_jpfProxyAuthPasswort.getPassword()));
+				new String(proxyPasswordField.getPassword()));
 		MyConnector.instance().enableProxy();
-		UserParameter.instance().ProxyAktiv = m_jchProxyAktiv.isSelected();
-		UserParameter.instance().ProxyHost = m_jtfProxyHost.getText();
-		UserParameter.instance().ProxyPort = m_jtfProxyPort.getText();
-		UserParameter.instance().ProxyAuthAktiv = m_jchProxyAuthAktiv
+		UserParameter.instance().ProxyAktiv = useProxyCheckBox.isSelected();
+		UserParameter.instance().ProxyHost = proxyHostTextField.getText();
+		UserParameter.instance().ProxyPort = proxyPortTextField.getText();
+		UserParameter.instance().ProxyAuthAktiv = useProxyAuthCheckBox
 				.isSelected();
-		UserParameter.instance().ProxyAuthName = m_jtfProxyAuthName.getText();
+		UserParameter.instance().ProxyAuthName = proxyAuthNameTextField
+				.getText();
 		UserParameter.instance().ProxyAuthPassword = new String(
-				m_jpfProxyAuthPasswort.getPassword());
+				proxyPasswordField.getPassword());
 	}
 }
