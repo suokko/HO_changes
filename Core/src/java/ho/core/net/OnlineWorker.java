@@ -119,6 +119,7 @@ public class OnlineWorker {
 						hov.getLanguageString("NO_HRF_ERROR"), 1);
 				bOK = false;
 			}
+
 			if (bOK) {
 				// Create HOModelo from the hrf data
 				HOModel homodel = new HRFStringParser().parse(hrf);
@@ -139,10 +140,7 @@ public class OnlineWorker {
 					homodel.setAllOldSpieler(DBManager.instance()
 							.getAllSpieler());
 					// Only update when the model is newer than existing
-					if ((homodel != null)
-							&& ((hov.getModel() == null) || (homodel
-									.getBasics().getDatum().after(hov
-									.getModel().getBasics().getDatum())))) {
+					if (isNewModel(homodel)) {
 						Date lastTrainingDate = Calendar.getInstance()
 								.getTime();
 						Date lastEconomyDate = lastTrainingDate;
@@ -191,49 +189,8 @@ public class OnlineWorker {
 					// Info
 					info.setLangInfoText(HOVerwaltung.instance()
 							.getLanguageString("HRFErfolg"));
-					info.setLangInfoText(hov.getLanguageString("HRFSave"));
 
-					File path = new File(up.hrfImport_HRFPath);
-					File file = new File(path, getHRFFileName());
-					// Show dialog if path not set or the file already exists
-					if (up.showHRFSaveDialog || !path.exists()
-							|| !path.isDirectory() || file.exists()) {
-						file = askForHRFPath(path, file);
-					}
-
-					if ((file != null) && (file.getPath() != null)) {
-						// Save Path
-						up.hrfImport_HRFPath = file.getParentFile()
-								.getAbsolutePath();
-
-						// File exists?
-						int value = JOptionPane.OK_OPTION;
-						if (file.exists()) {
-							value = JOptionPane.showConfirmDialog(homf,
-									hov.getLanguageString("overwrite"), "",
-									JOptionPane.YES_NO_OPTION);
-						}
-
-						// Save
-						if (value == JOptionPane.OK_OPTION) {
-							File datei = null;
-							try {
-								datei = saveFile(file.getPath(), hrf);
-								bOK = true;
-							} catch (Exception e) {
-								Helper.showMessage(homf,
-										"Failed to save downloaded file.\nError: "
-												+ e.getMessage(),
-										hov.getLanguageString("Fehler"),
-										JOptionPane.ERROR_MESSAGE);
-							}
-						} else {
-							// Canceled
-							info.setLangInfoText(HOVerwaltung.instance()
-									.getLanguageString("HRFAbbruch"),
-									InfoPanel.FEHLERFARBE);
-						}
-					}
+					saveHRFToFile(hrf);
 				}
 			}
 		}
@@ -1074,6 +1031,66 @@ public class OnlineWorker {
 			}
 		}
 		return properties;
+	}
+
+	private static boolean isNewModel(HOModel homodel) {
+		return (homodel != null && ((HOVerwaltung.instance().getModel() == null) || (homodel
+				.getBasics().getDatum().after(HOVerwaltung.instance()
+				.getModel().getBasics().getDatum()))));
+	}
+
+	private static void saveHRFToFile(String hrfData) {
+		HOMainFrame
+				.instance()
+				.getInfoPanel()
+				.setLangInfoText(
+						HOVerwaltung.instance().getLanguageString("HRFSave"));
+
+		File path = new File(UserParameter.instance().hrfImport_HRFPath);
+		File file = new File(path, getHRFFileName());
+		// Show dialog if path not set or the file already exists
+		if (UserParameter.instance().showHRFSaveDialog || !path.exists()
+				|| !path.isDirectory() || file.exists()) {
+			file = askForHRFPath(path, file);
+		}
+
+		if ((file != null) && (file.getPath() != null)) {
+			// Save Path
+			UserParameter.instance().hrfImport_HRFPath = file.getParentFile()
+					.getAbsolutePath();
+
+			// File exists?
+			int value = JOptionPane.OK_OPTION;
+			if (file.exists()) {
+				value = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+						HOVerwaltung.instance().getLanguageString("overwrite"),
+						"", JOptionPane.YES_NO_OPTION);
+			}
+
+			// Save
+			if (value == JOptionPane.OK_OPTION) {
+				File datei = null;
+				try {
+					datei = saveFile(file.getPath(), hrfData);
+				} catch (Exception e) {
+					Helper.showMessage(
+							HOMainFrame.instance(),
+							"Failed to save downloaded file.\nError: "
+									+ e.getMessage(), HOVerwaltung.instance()
+									.getLanguageString("Fehler"),
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				// Canceled
+				HOMainFrame
+						.instance()
+						.getInfoPanel()
+						.setLangInfoText(
+								HOVerwaltung.instance().getLanguageString(
+										"HRFAbbruch"), InfoPanel.FEHLERFARBE);
+			}
+		}
+
 	}
 
 	private static String getHRFFileName() {
