@@ -3,6 +3,7 @@ package ho.module.lineup;
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.SpielerPosition;
+import ho.module.lineup.exchange.UploadDownloadPanel;
 import ho.module.lineup.penalties.PenaltyTaker;
 import ho.module.lineup.penalties.PenaltyTakersView;
 import ho.module.lineup.substitution.SubstitutionOverview;

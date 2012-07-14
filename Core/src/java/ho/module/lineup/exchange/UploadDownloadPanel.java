@@ -1,4 +1,4 @@
-package ho.module.lineup;
+package ho.module.lineup.exchange;
 
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
@@ -11,6 +11,7 @@ import ho.core.net.OnlineWorker;
 import ho.core.util.GUIUtils;
 import ho.core.util.HOLogger;
 import ho.core.util.XMLUtils;
+import ho.module.lineup.Lineup;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
