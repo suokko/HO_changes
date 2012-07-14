@@ -86,8 +86,8 @@ public class OnlineWorker {
 	 */
 	public static void getHrf() {
 		// Show wait dialog
-		waitDialog = getWaitDialog();
-		waitDialog.setVisible(true);
+		LoginWaitDialog waitDlg = new LoginWaitDialog(HOMainFrame.instance(), false);
+		waitDlg.setVisible(true);
 		try {
 			HOMainFrame homf = HOMainFrame.instance();
 			HOVerwaltung hov = HOVerwaltung.instance();
@@ -95,9 +95,9 @@ public class OnlineWorker {
 
 			String hrf = null;
 			try {
-				hrf = ConvertXml2Hrf.createHrf(waitDialog);
+				hrf = ConvertXml2Hrf.createHrf(waitDlg);
 			} catch (IOException e) {
-				waitDialog.setVisible(false);
+				waitDlg.setVisible(false);
 				// Info
 				String msg = getLangString("Downloadfehler")
 						+ " : Error converting xml 2 HRF. Corrupt/Missing Data : ";
@@ -108,12 +108,12 @@ public class OnlineWorker {
 
 			if (hrf != null) {
 				if (hrf.indexOf("playingMatch=true") > -1) {
-					waitDialog.setVisible(false);
+					waitDlg.setVisible(false);
 					JOptionPane.showMessageDialog(homf,
 							getLangString("NO_HRF_Spiel"),
 							getLangString("NO_HRF_ERROR"), 1);
 				} else if (hrf.indexOf("NOT AVAILABLE") > -1) {
-					waitDialog.setVisible(false);
+					waitDlg.setVisible(false);
 					JOptionPane.showMessageDialog(homf,
 							getLangString("NO_HRF_ERROR"),
 							getLangString("NO_HRF_ERROR"), 1);
@@ -189,7 +189,7 @@ public class OnlineWorker {
 						setInfoMsg(getLangString("HRFErfolg"));
 
 						try {
-							waitDialog.setVisible(false);
+							waitDlg.setVisible(false);
 							saveHRFToFile(hrf);
 						} catch (IOException e) {
 							Helper.showMessage(HOMainFrame.instance(),
@@ -202,7 +202,7 @@ public class OnlineWorker {
 				}
 			}
 		} finally {
-			waitDialog.setVisible(false);
+			waitDlg.setVisible(false);
 		}
 	}
 
