@@ -222,20 +222,17 @@ public class OnlineWorker {
 	 */
 	public static List<MatchKurzInfo> getMatchArchive(int teamId,
 			Date firstDate, boolean store) {
-		String matchesString = "";
+
 		List<MatchKurzInfo> allMatches = new ArrayList<MatchKurzInfo>();
 		GregorianCalendar tempBeginn = new GregorianCalendar();
 		tempBeginn.setTime(firstDate);
-		GregorianCalendar endDate = new GregorianCalendar();
-		endDate.setTimeInMillis(System.currentTimeMillis());
-		MatchKurzInfo[] matches = null;
-
 		GregorianCalendar tempEnd = new GregorianCalendar();
 		tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
 		tempEnd.add(Calendar.MONTH, 3);
 
+		Date endDate = new Date();
 		if (!tempEnd.before(endDate)) {
-			tempEnd.setTimeInMillis(endDate.getTimeInMillis());
+			tempEnd.setTimeInMillis(endDate.getTime());
 		}
 
 		String strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
@@ -245,6 +242,7 @@ public class OnlineWorker {
 		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 
+		String matchesString = "";
 		while (tempBeginn.before(endDate)) {
 			try {
 				waitDialog.setValue(10);
@@ -262,9 +260,10 @@ public class OnlineWorker {
 				return null;
 			}
 
-			final xmlMatchArchivParser parser = new xmlMatchArchivParser();
+			xmlMatchArchivParser parser = new xmlMatchArchivParser();
 			waitDialog.setValue(40);
-			matches = parser.parseMatchesFromString(matchesString);
+			MatchKurzInfo[] matches = parser
+					.parseMatchesFromString(matchesString);
 
 			// Add the new matches to the list of all matches
 			allMatches.addAll(Arrays.asList(matches));
@@ -274,7 +273,7 @@ public class OnlineWorker {
 			tempEnd.add(Calendar.MONTH, 3);
 
 			if (!tempEnd.before(endDate)) {
-				tempEnd.setTimeInMillis(endDate.getTimeInMillis());
+				tempEnd.setTimeInMillis(endDate.getTime());
 			}
 
 			strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
@@ -317,21 +316,17 @@ public class OnlineWorker {
 	 */
 	private static Matchdetails getMatchDetails(int matchId,
 			MatchType matchType, MatchLineup lineup) {
-		boolean success = true;
-		Matchdetails details = null;
 
-		// Wait Dialog zeigen
 		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		waitDialog.setValue(10);
-		details = fetchDetails(matchId, matchType, lineup, waitDialog);
-
-		waitDialog.setVisible(false);
-		if (details != null) {
-			return details;
-		} else {
-			return null;
+		Matchdetails details = null;
+		try {
+			details = fetchDetails(matchId, matchType, lineup, waitDialog);
+		} finally {
+			waitDialog.setVisible(false);
 		}
+		return details;
 	}
 
 	/**
