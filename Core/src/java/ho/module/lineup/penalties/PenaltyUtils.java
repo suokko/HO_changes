@@ -11,11 +11,12 @@ public class PenaltyUtils {
 	private PenaltyUtils() {
 	}
 
-	public static float getAbility(Spieler player) {
-		float ability = 0;
+	public static double getAbility(Spieler player) {
+		double ability = 0;
 		if (player != null) {
-			ability = (player.getErfahrung() * 1.5f)
-					+ (((player.getStandards() * 7.0f) / 10.0f) + ((player.getTorschuss() * 3.0f) / 10.0f));
+			ability = (player.getErfahrung() * 1.5)
+					+ (((player.getStandards() * 7.0) / 10.0) + ((player
+							.getTorschuss() * 3.0) / 10.0));
 
 			if (player.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
 				ability *= 1.1;
@@ -24,4 +25,17 @@ public class PenaltyUtils {
 		return ability;
 	}
 
+	public static double getAbility(PenaltyTaker taker) {
+		double ability = 0;
+		if (taker != null) {
+			ability = (taker.getExperience() * 1.5)
+					+ (((taker.getSetPieces() * 7.0) / 10.0) + ((taker
+							.getScoring() * 3.0) / 10.0));
+
+			if (taker.getPlayer().getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
+				ability *= 1.1;
+			}
+		}
+		return ability;
+	}
 }
