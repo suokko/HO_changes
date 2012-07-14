@@ -85,125 +85,125 @@ public class OnlineWorker {
 	 * 
 	 */
 	public static void getHrf() {
-		String hrf = "";
-		boolean bOK = false;
-		HOMainFrame homf = HOMainFrame.instance();
-		HOVerwaltung hov = HOVerwaltung.instance();
-		UserParameter up = ho.core.model.UserParameter.instance();
-
 		// Show wait dialog
 		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
 		try {
-			hrf = ConvertXml2Hrf.createHrf(waitDialog);
-			bOK = true;
-		} catch (Exception e) {
-			// Info
-			setInfoMsg(getLangString("Downloadfehler")
-					+ " : Error converting xml 2 HRF. Corrupt/Missing Data : ",
-					InfoPanel.FEHLERFARBE);
-			Helper.showMessage(
-					homf,
-					getLangString("Downloadfehler")
-							+ " : Error converting xml 2 HRF. Corrupt/Missing Data : \n"
-							+ e.toString() + "\n", getLangString("Fehler"),
-					JOptionPane.ERROR_MESSAGE);
-			bOK = false;
-		}
-		if (bOK) {
-			if (hrf.indexOf("playingMatch=true") > -1) {
-				JOptionPane.showMessageDialog(homf,
-						getLangString("NO_HRF_Spiel"),
-						getLangString("NO_HRF_ERROR"), 1);
-				bOK = false;
-			} else if (hrf.indexOf("NOT AVAILABLE") > -1) {
-				JOptionPane.showMessageDialog(homf,
-						getLangString("NO_HRF_ERROR"),
-						getLangString("NO_HRF_ERROR"), 1);
-				bOK = false;
+			HOMainFrame homf = HOMainFrame.instance();
+			HOVerwaltung hov = HOVerwaltung.instance();
+			UserParameter up = ho.core.model.UserParameter.instance();
+
+			String hrf = null;
+			try {
+				hrf = ConvertXml2Hrf.createHrf(waitDialog);
+			} catch (IOException e) {
+				waitDialog.setVisible(false);
+				// Info
+				String msg = getLangString("Downloadfehler")
+						+ " : Error converting xml 2 HRF. Corrupt/Missing Data : ";
+				setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+				Helper.showMessage(homf, msg + "\n" + e.toString() + "\n",
+						getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
 			}
 
-			if (bOK) {
-				// Create HOModelo from the hrf data
-				HOModel homodel = new HRFStringParser().parse(hrf);
-				if (homodel == null) {
-					// Info
-					setInfoMsg(getLangString("Importfehler"),
-							InfoPanel.FEHLERFARBE);
-					// Error
-					Helper.showMessage(homf, getLangString("Importfehler"),
-							getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			if (hrf != null) {
+				if (hrf.indexOf("playingMatch=true") > -1) {
+					waitDialog.setVisible(false);
+					JOptionPane.showMessageDialog(homf,
+							getLangString("NO_HRF_Spiel"),
+							getLangString("NO_HRF_ERROR"), 1);
+				} else if (hrf.indexOf("NOT AVAILABLE") > -1) {
+					waitDialog.setVisible(false);
+					JOptionPane.showMessageDialog(homf,
+							getLangString("NO_HRF_ERROR"),
+							getLangString("NO_HRF_ERROR"), 1);
 				} else {
-					homodel.saveHRF();
-					homodel.setSpielplan(hov.getModel().getSpielplan());
-
-					// Add old players to the model
-					homodel.setAllOldSpieler(DBManager.instance()
-							.getAllSpieler());
-					// Only update when the model is newer than existing
-					if (isNewModel(homodel)) {
-						Date lastTrainingDate = Calendar.getInstance()
-								.getTime();
-						Date lastEconomyDate = lastTrainingDate;
-						if (hov.getModel().getXtraDaten().getTrainingDate() != null) {
-							lastTrainingDate = new Date(hov.getModel()
-									.getXtraDaten().getTrainingDate().getTime());
-							lastEconomyDate = new Date(hov.getModel()
-									.getXtraDaten().getEconomyDate().getTime());
-						}
-						// Reimport Skillup
-						DBManager.instance().checkSkillup(homodel);
-						// Show
-						hov.setModel(homodel);
-						// Recalculate Training
-						// Training->Subskill calculation
-						TrainingManager.instance().calculateTraining(
-								DBManager.instance().getTrainingsVector());
-						homodel.calcSubskills();
-						AufstellungsVergleichHistoryPanel.setHRFAufstellung(
-								homodel.getAufstellung(),
-								homodel.getLastAufstellung());
-						AufstellungsVergleichHistoryPanel
-								.setAngezeigteAufstellung(new AufstellungCBItem(
-										getLangString("AktuelleAufstellung"),
-										homodel.getAufstellung()));
-						homf.getAufstellungsPanel()
-								.getAufstellungsPositionsPanel()
-								.exportOldLineup("Actual");
-						FileExtensionManager.extractLineup("Actual");
-
-						// If training update happened, regenerate HOE Files
-						if (homodel.getXtraDaten().getTrainingDate()
-								.after(lastTrainingDate)) {
-							HOLogger.instance().log(OnlineWorker.class,
-									"Regenerate HOE Training Files");
-							FileExtensionManager.trainingUpdate();
-						}
-						// If economy update happened, regenerate HOE Files
-						if (homodel.getXtraDaten().getEconomyDate()
-								.after(lastEconomyDate)) {
-							HOLogger.instance().log(OnlineWorker.class,
-									"Regenerate HOE Economy Files");
-							FileExtensionManager.economyUpate();
-						}
-					}
-					// Info
-					setInfoMsg(getLangString("HRFErfolg"));
-
-					try {
-						saveHRFToFile(hrf);
-					} catch (IOException e) {
-						Helper.showMessage(
-								HOMainFrame.instance(),
-								"Failed to save downloaded file.\nError: "
-										+ e.getMessage(),
+					// Create HOModelo from the hrf data
+					HOModel homodel = new HRFStringParser().parse(hrf);
+					if (homodel == null) {
+						// Info
+						setInfoMsg(getLangString("Importfehler"),
+								InfoPanel.FEHLERFARBE);
+						// Error
+						Helper.showMessage(homf, getLangString("Importfehler"),
 								getLangString("Fehler"),
 								JOptionPane.ERROR_MESSAGE);
+					} else {
+						homodel.saveHRF();
+						homodel.setSpielplan(hov.getModel().getSpielplan());
+
+						// Add old players to the model
+						homodel.setAllOldSpieler(DBManager.instance()
+								.getAllSpieler());
+						// Only update when the model is newer than existing
+						if (isNewModel(homodel)) {
+							Date lastTrainingDate = Calendar.getInstance()
+									.getTime();
+							Date lastEconomyDate = lastTrainingDate;
+							if (hov.getModel().getXtraDaten().getTrainingDate() != null) {
+								lastTrainingDate = new Date(hov.getModel()
+										.getXtraDaten().getTrainingDate()
+										.getTime());
+								lastEconomyDate = new Date(hov.getModel()
+										.getXtraDaten().getEconomyDate()
+										.getTime());
+							}
+							// Reimport Skillup
+							DBManager.instance().checkSkillup(homodel);
+							// Show
+							hov.setModel(homodel);
+							// Recalculate Training
+							// Training->Subskill calculation
+							TrainingManager.instance().calculateTraining(
+									DBManager.instance().getTrainingsVector());
+							homodel.calcSubskills();
+							AufstellungsVergleichHistoryPanel
+									.setHRFAufstellung(
+											homodel.getAufstellung(),
+											homodel.getLastAufstellung());
+							AufstellungsVergleichHistoryPanel
+									.setAngezeigteAufstellung(new AufstellungCBItem(
+											getLangString("AktuelleAufstellung"),
+											homodel.getAufstellung()));
+							homf.getAufstellungsPanel()
+									.getAufstellungsPositionsPanel()
+									.exportOldLineup("Actual");
+							FileExtensionManager.extractLineup("Actual");
+
+							// If training update happened, regenerate HOE Files
+							if (homodel.getXtraDaten().getTrainingDate()
+									.after(lastTrainingDate)) {
+								HOLogger.instance().log(OnlineWorker.class,
+										"Regenerate HOE Training Files");
+								FileExtensionManager.trainingUpdate();
+							}
+							// If economy update happened, regenerate HOE Files
+							if (homodel.getXtraDaten().getEconomyDate()
+									.after(lastEconomyDate)) {
+								HOLogger.instance().log(OnlineWorker.class,
+										"Regenerate HOE Economy Files");
+								FileExtensionManager.economyUpate();
+							}
+						}
+						// Info
+						setInfoMsg(getLangString("HRFErfolg"));
+
+						try {
+							waitDialog.setVisible(false);
+							saveHRFToFile(hrf);
+						} catch (IOException e) {
+							Helper.showMessage(HOMainFrame.instance(),
+									"Failed to save downloaded file.\nError: "
+											+ e.getMessage(),
+									getLangString("Fehler"),
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			}
+		} finally {
+			waitDialog.setVisible(false);
 		}
-		waitDialog.setVisible(false);
 	}
 
 	/**
