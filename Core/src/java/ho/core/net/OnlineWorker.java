@@ -86,7 +86,8 @@ public class OnlineWorker {
 	 */
 	public static void getHrf() {
 		// Show wait dialog
-		LoginWaitDialog waitDlg = new LoginWaitDialog(HOMainFrame.instance(), false);
+		LoginWaitDialog waitDlg = new LoginWaitDialog(HOMainFrame.instance(),
+				false);
 		waitDlg.setVisible(true);
 		try {
 			HOMainFrame homf = HOMainFrame.instance();
@@ -220,15 +221,16 @@ public class OnlineWorker {
 	 * @return The list of MatchKurzInfo. This can be null on error, or empty.
 	 */
 	public static List<MatchKurzInfo> getMatchArchive(int teamId,
-			GregorianCalendar firstDate, boolean store) {
+			Date firstDate, boolean store) {
 		String matchesString = "";
-		final List<MatchKurzInfo> allMatches = new ArrayList<MatchKurzInfo>();
-		final GregorianCalendar tempBeginn = firstDate;
-		final GregorianCalendar endDate = new GregorianCalendar();
+		List<MatchKurzInfo> allMatches = new ArrayList<MatchKurzInfo>();
+		GregorianCalendar tempBeginn = new GregorianCalendar();
+		tempBeginn.setTime(firstDate);
+		GregorianCalendar endDate = new GregorianCalendar();
 		endDate.setTimeInMillis(System.currentTimeMillis());
 		MatchKurzInfo[] matches = null;
 
-		final GregorianCalendar tempEnd = new GregorianCalendar();
+		GregorianCalendar tempEnd = new GregorianCalendar();
 		tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
 		tempEnd.add(Calendar.MONTH, 3);
 
@@ -251,19 +253,11 @@ public class OnlineWorker {
 				waitDialog.setValue(20);
 			} catch (Exception e) {
 				// Info
-				HOMainFrame
-						.instance()
-						.getInfoPanel()
-						.setLangInfoText(
-								HOVerwaltung.instance().getLanguageString(
-										"Downloadfehler")
-										+ " : Error fetching MatchArchiv : ",
-								InfoPanel.FEHLERFARBE);
-				Helper.showMessage(HOMainFrame.instance(), HOVerwaltung
-						.instance().getLanguageString("Downloadfehler")
-						+ " : Error fetching MatchArchiv : ", HOVerwaltung
-						.instance().getLanguageString("Fehler"),
-						JOptionPane.ERROR_MESSAGE);
+				String msg = getLangString("Downloadfehler")
+						+ " : Error fetching MatchArchiv : ";
+				setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+				Helper.showMessage(HOMainFrame.instance(), msg,
+						getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
 				waitDialog.setVisible(false);
 				return null;
 			}
