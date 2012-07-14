@@ -3,7 +3,6 @@ package ho.module.teamAnalyzer.ht;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.net.MyConnector;
 import ho.core.net.OnlineWorker;
@@ -29,7 +28,6 @@ import org.w3c.dom.Node;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class HattrickManager {
-    //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * Method that download from Hattrick the available matches for the team
@@ -42,9 +40,6 @@ public class HattrickManager {
      * @param filter the match filter object.
      */
     public static void downloadMatches(final int teamId, Filter filter) {
-   		final GregorianCalendar start = new GregorianCalendar();
-   		List<MatchKurzInfo> matches;
-   		
    		int limit = Math.min(filter.getNumber(), 50);
    		
    		// If on manual, disable all filters, and download 30 matches.
@@ -52,8 +47,9 @@ public class HattrickManager {
    			limit = 30;
    		}
    		
+   		GregorianCalendar start = new GregorianCalendar();
 	    start.add(Calendar.MONTH, -8);
-	    matches = OnlineWorker.getMatchArchive(teamId, start, false);
+	    List<MatchKurzInfo> matches = OnlineWorker.getMatchArchive(teamId, start.getTime(), false);
 	    Collections.reverse(matches); // Newest first
 	    for (MatchKurzInfo match : matches) {
 	    	if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
@@ -73,8 +69,7 @@ public class HattrickManager {
 	    	}
    		}
 	    
-	    // Look for tournament matches if they are included in filter.
-	    
+	    // Look for tournament matches if they are included in filter.	    
 	    if (!filter.isAutomatic() || filter.isTournament()) {
 		    // Current matches includes tournament matches
 	    	matches = OnlineWorker.getMatches(teamId, true, false, false);
