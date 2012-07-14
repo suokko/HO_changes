@@ -241,92 +241,69 @@ public class OnlineWorker {
 		// Show wait Dialog
 		waitDialog = getWaitDialog();
 		waitDialog.setVisible(true);
+		try {
+			String matchesString = "";
+			while (tempBeginn.before(endDate)) {
+				try {
+					waitDialog.setValue(10);
+					matchesString = MyConnector.instance().getMatchArchiv(
+							teamId, strDateFirst, strDateLast);
+					waitDialog.setValue(20);
+				} catch (Exception e) {
+					// Info
+					String msg = getLangString("Downloadfehler")
+							+ " : Error fetching MatchArchiv : ";
+					setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+					Helper.showMessage(HOMainFrame.instance(), msg,
+							getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
+					waitDialog.setVisible(false);
+					return null;
+				}
 
-		String matchesString = "";
-		while (tempBeginn.before(endDate)) {
-			try {
-				waitDialog.setValue(10);
-				matchesString = MyConnector.instance().getMatchArchiv(teamId,
-						strDateFirst, strDateLast);
-				waitDialog.setValue(20);
-			} catch (Exception e) {
-				// Info
-				String msg = getLangString("Downloadfehler")
-						+ " : Error fetching MatchArchiv : ";
-				setInfoMsg(msg, InfoPanel.FEHLERFARBE);
-				Helper.showMessage(HOMainFrame.instance(), msg,
-						getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
-				waitDialog.setVisible(false);
-				return null;
+				xmlMatchArchivParser parser = new xmlMatchArchivParser();
+				waitDialog.setValue(40);
+				MatchKurzInfo[] matches = parser
+						.parseMatchesFromString(matchesString);
+
+				// Add the new matches to the list of all matches
+				allMatches.addAll(Arrays.asList(matches));
+
+				// Zeitfenster neu setzen
+				tempBeginn.add(Calendar.MONTH, 3);
+				tempEnd.add(Calendar.MONTH, 3);
+
+				if (!tempEnd.before(endDate)) {
+					tempEnd.setTimeInMillis(endDate.getTime());
+				}
+
+				strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
+				strDateLast = HT_FORMAT.format(tempEnd.getTime());
 			}
 
-			xmlMatchArchivParser parser = new xmlMatchArchivParser();
-			waitDialog.setValue(40);
-			MatchKurzInfo[] matches = parser
-					.parseMatchesFromString(matchesString);
+			// Store in the db if store is true
+			if (store && (allMatches.size() > 0)) {
 
-			// Add the new matches to the list of all matches
-			allMatches.addAll(Arrays.asList(matches));
+				waitDialog.setValue(80);
+				DBManager.instance().storeMatchKurzInfos(
+						allMatches.toArray(new MatchKurzInfo[0]));
 
-			// Zeitfenster neu setzen
-			tempBeginn.add(Calendar.MONTH, 3);
-			tempEnd.add(Calendar.MONTH, 3);
-
-			if (!tempEnd.before(endDate)) {
-				tempEnd.setTimeInMillis(endDate.getTime());
-			}
-
-			strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
-			strDateLast = HT_FORMAT.format(tempEnd.getTime());
-		}
-
-		// Store in the db if store is true
-		if (store && (allMatches.size() > 0)) {
-
-			waitDialog.setValue(80);
-			DBManager.instance().storeMatchKurzInfos(
-					allMatches.toArray(new MatchKurzInfo[0]));
-
-			// Store full info for all matches
-			for (MatchKurzInfo match : allMatches) {
-				// Only if not in the db
-				if ((DBManager.instance().isMatchVorhanden(match.getMatchID()))
-						&& (!DBManager.instance().isMatchLineupVorhanden(
-								match.getMatchID()))
-						&& (match.getMatchStatus() == MatchKurzInfo.FINISHED)) {
-					downloadMatchData(match.getMatchID(), match.getMatchTyp(),
-							false);
+				// Store full info for all matches
+				for (MatchKurzInfo match : allMatches) {
+					// Only if not in the db
+					if ((DBManager.instance().isMatchVorhanden(match
+							.getMatchID()))
+							&& (!DBManager.instance().isMatchLineupVorhanden(
+									match.getMatchID()))
+							&& (match.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+						downloadMatchData(match.getMatchID(),
+								match.getMatchTyp(), false);
+					}
 				}
 			}
-		}
-		waitDialog.setVisible(false);
-		return allMatches;
-	}
-
-	/**
-	 * Download the match details
-	 * 
-	 * @param matchId
-	 * @param matchType
-	 * @param lineup
-	 *            Needed for highlights parse. If null, there will be no
-	 *            highlights or report.
-	 * 
-	 * @return The details object
-	 */
-	private static Matchdetails getMatchDetails(int matchId,
-			MatchType matchType, MatchLineup lineup) {
-
-		waitDialog = getWaitDialog();
-		waitDialog.setVisible(true);
-		waitDialog.setValue(10);
-		Matchdetails details = null;
-		try {
-			details = fetchDetails(matchId, matchType, lineup, waitDialog);
 		} finally {
 			waitDialog.setVisible(false);
 		}
-		return details;
+		return allMatches;
 	}
 
 	/**
@@ -366,7 +343,8 @@ public class OnlineWorker {
 				// If ids not found, download matchdetails to obtain them.
 				// Highlights will be missing.
 				if ((heimId == 0) || (gastId == 0)) {
-					details = getMatchDetails(matchid, matchType, null);
+					waitDialog.setValue(10);
+					details = fetchDetails(matchid, matchType, null, waitDialog);
 					heimId = details.getHeimId();
 					gastId = details.getGastId();
 				}
@@ -394,7 +372,8 @@ public class OnlineWorker {
 				}
 
 				// Get details with highlights.
-				details = getMatchDetails(matchid, matchType, lineup);
+				waitDialog.setValue(10);
+				details = fetchDetails(matchid, matchType, lineup, waitDialog);
 
 				if (details == null) {
 					HOLogger.instance().error(
