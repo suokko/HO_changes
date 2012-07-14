@@ -40,11 +40,15 @@ import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.Substitution;
 
+import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -190,7 +194,16 @@ public class OnlineWorker {
 					info.setLangInfoText(HOVerwaltung.instance()
 							.getLanguageString("HRFErfolg"));
 
-					saveHRFToFile(hrf);
+					try {
+						saveHRFToFile(hrf);
+					} catch (IOException e) {
+						Helper.showMessage(
+								HOMainFrame.instance(),
+								"Failed to save downloaded file.\nError: "
+										+ e.getMessage(),
+								getLangString("Fehler"),
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		}
@@ -905,35 +918,6 @@ public class OnlineWorker {
 	}
 
 	/**
-	 * Save the passed in data to the passed in file
-	 * 
-	 * @param fileName
-	 *            Name of the file to save the data to
-	 * @param content
-	 *            The content to write to the file
-	 * 
-	 * @return The saved file
-	 * @throws IOException
-	 */
-	protected static File saveFile(String fileName, String content)
-			throws IOException {
-		java.io.OutputStreamWriter outWrit = null;
-		java.io.File outFile = null;
-		java.io.BufferedWriter out = null;
-		outFile = new java.io.File(fileName);
-		if (outFile.exists())
-			outFile.delete();
-		outFile.createNewFile();
-		outWrit = new java.io.OutputStreamWriter(new java.io.FileOutputStream(
-				outFile), "UTF-8");
-		out = new java.io.BufferedWriter(outWrit);
-		out.write(content);
-		out.newLine();
-		out.close();
-		return outFile;
-	}
-
-	/**
 	 * Get all lineups for MatchKurzInfos, if they're not there already
 	 */
 	public static void getAllLineups() {
@@ -1039,19 +1023,23 @@ public class OnlineWorker {
 				.getModel().getBasics().getDatum()))));
 	}
 
-	private static void saveHRFToFile(String hrfData) {
-		HOMainFrame
-				.instance()
-				.getInfoPanel()
-				.setLangInfoText(
-						HOVerwaltung.instance().getLanguageString("HRFSave"));
+	/**
+	 * Shows a file chooser asking for the location for the HRF file and saves
+	 * it to the location chosen by the user.
+	 * 
+	 * @param hrfData
+	 *            the HRF data as string
+	 * @throws IOException
+	 */
+	private static void saveHRFToFile(String hrfData) throws IOException {
+		setInfoMsg(getLangString("HRFSave"));
 
 		File path = new File(UserParameter.instance().hrfImport_HRFPath);
 		File file = new File(path, getHRFFileName());
 		// Show dialog if path not set or the file already exists
 		if (UserParameter.instance().showHRFSaveDialog || !path.exists()
 				|| !path.isDirectory() || file.exists()) {
-			file = askForHRFPath(path, file);
+			file = askForHRFPath(file);
 		}
 
 		if ((file != null) && (file.getPath() != null)) {
@@ -1063,36 +1051,26 @@ public class OnlineWorker {
 			int value = JOptionPane.OK_OPTION;
 			if (file.exists()) {
 				value = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-						HOVerwaltung.instance().getLanguageString("overwrite"),
-						"", JOptionPane.YES_NO_OPTION);
+						getLangString("overwrite"), "",
+						JOptionPane.YES_NO_OPTION);
 			}
 
 			// Save
 			if (value == JOptionPane.OK_OPTION) {
-				File datei = null;
-				try {
-					datei = saveFile(file.getPath(), hrfData);
-				} catch (Exception e) {
-					Helper.showMessage(
-							HOMainFrame.instance(),
-							"Failed to save downloaded file.\nError: "
-									+ e.getMessage(), HOVerwaltung.instance()
-									.getLanguageString("Fehler"),
-							JOptionPane.ERROR_MESSAGE);
-				}
+				saveFile(file.getPath(), hrfData);
 			} else {
 				// Canceled
-				HOMainFrame
-						.instance()
-						.getInfoPanel()
-						.setLangInfoText(
-								HOVerwaltung.instance().getLanguageString(
-										"HRFAbbruch"), InfoPanel.FEHLERFARBE);
+				setInfoMsg(getLangString("HRFAbbruch"), InfoPanel.FEHLERFARBE);
 			}
 		}
 
 	}
 
+	/**
+	 * Gets a HRF file name, based on the current date.
+	 * 
+	 * @return the HRF file name.
+	 */
 	private static String getHRFFileName() {
 		GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
 		StringBuilder builder = new StringBuilder();
@@ -1115,15 +1093,24 @@ public class OnlineWorker {
 		return builder.toString();
 	}
 
-	private static File askForHRFPath(File path, File file) {
+	/**
+	 * Shows a file chooser dialog to ask the user for the location to save the
+	 * HRF file.
+	 * 
+	 * @param file
+	 *            the recommendation for the file name/location.
+	 * @return the file location choosen by the user or null if the canceled the
+	 *         dialog.
+	 */
+	private static File askForHRFPath(File file) {
 		final JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-		fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString(
-				"FileExport"));
+		fileChooser.setDialogTitle(getLangString("FileExport"));
 		ExampleFileFilter filter = new ExampleFileFilter();
 		filter.addExtension("hrf");
 		filter.setDescription("Hattrick HRF");
 		fileChooser.setFileFilter(filter);
+		File path = file.getParentFile();
 		if (path.exists() && path.isDirectory()) {
 			fileChooser.setCurrentDirectory(path);
 		}
@@ -1138,5 +1125,67 @@ public class OnlineWorker {
 			return f;
 		}
 		return null;
+	}
+
+	/**
+	 * Convenience method for
+	 * HOMainFrame.instance().getInfoPanel().setLangInfoText(msg);
+	 * 
+	 * @param msg
+	 *            the message to show
+	 */
+	private static void setInfoMsg(String msg) {
+		HOMainFrame.instance().getInfoPanel().setLangInfoText(msg);
+	}
+
+	/**
+	 * Convenience method for
+	 * HOMainFrame.instance().getInfoPanel().setLangInfoText(msg, color);
+	 * 
+	 * @param msg
+	 *            the message to show
+	 * @param color
+	 *            the color
+	 */
+	private static void setInfoMsg(String msg, Color color) {
+		HOMainFrame.instance().getInfoPanel().setLangInfoText(msg, color);
+	}
+
+	/**
+	 * Convenience method for HOVerwaltung.instance().getLanguageString(key)
+	 * 
+	 * @param key
+	 *            the key for the language string
+	 * @return the string for the current language
+	 */
+	private static String getLangString(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
+	}
+
+	/**
+	 * Save the passed in data to the passed in file
+	 * 
+	 * @param fileName
+	 *            Name of the file to save the data to
+	 * @param content
+	 *            The content to write to the file
+	 * 
+	 * @return The saved file
+	 * @throws IOException
+	 */
+	private static File saveFile(String fileName, String content)
+			throws IOException {
+		File outFile = new File(fileName);
+		if (outFile.exists()) {
+			outFile.delete();
+		}
+		outFile.createNewFile();
+		OutputStreamWriter outWrit = new OutputStreamWriter(
+				new FileOutputStream(outFile), "UTF-8");
+		BufferedWriter out = new BufferedWriter(outWrit);
+		out.write(content);
+		out.newLine();
+		out.close();
+		return outFile;
 	}
 }
