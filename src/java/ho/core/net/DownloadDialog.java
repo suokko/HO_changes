@@ -232,9 +232,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 			}
 		}
 		if (bOK && m_jchMatchArchive.isSelected()) {
-			final java.util.GregorianCalendar tempdate = new java.util.GregorianCalendar();
-			tempdate.setTimeInMillis(m_clSpinnerModel.getDate().getTime());
-			bOK = (OnlineWorker.getMatchArchive(model.getBasics().getTeamId(), tempdate, true) != null);
+			bOK = (OnlineWorker.getMatchArchive(model.getBasics().getTeamId(), m_clSpinnerModel.getDate(), true) != null);
 			if (bOK) {
 				// Get all lineups for matches, if they don't exist already
 				OnlineWorker.getAllLineups();
