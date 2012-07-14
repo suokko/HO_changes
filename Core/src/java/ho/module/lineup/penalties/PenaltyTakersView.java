@@ -168,13 +168,18 @@ public class PenaltyTakersView extends JPanel {
 		sortKeys.add(new RowSorter.SortKey(5, SortOrder.DESCENDING));
 		this.playersTable.getRowSorter().setSortKeys(sortKeys);
 
-		TableColumn abilityColumn = this.playersTable.getColumnModel()
-				.getColumn(5);
-		abilityColumn.setCellRenderer(new AbilityRenderer());
 		TableColumn inLineupColumn = this.playersTable.getColumnModel()
 				.getColumn(0);
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
+		this.playersTable.getColumnModel().getColumn(2)
+				.setCellRenderer(new DoubleRenderer());
+		this.playersTable.getColumnModel().getColumn(3)
+				.setCellRenderer(new DoubleRenderer());
+		this.playersTable.getColumnModel().getColumn(4)
+				.setCellRenderer(new DoubleRenderer());
+		this.playersTable.getColumnModel().getColumn(5)
+				.setCellRenderer(new DoubleRenderer());
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -229,11 +234,17 @@ public class PenaltyTakersView extends JPanel {
 		this.takersTable = new JTable();
 		this.takersTable.setModel(new PenaltyTakersTableModel());
 
-		abilityColumn = this.takersTable.getColumnModel().getColumn(5);
-		abilityColumn.setCellRenderer(new AbilityRenderer());
 		inLineupColumn = this.takersTable.getColumnModel().getColumn(0);
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
+		this.takersTable.getColumnModel().getColumn(2)
+				.setCellRenderer(new DoubleRenderer());
+		this.takersTable.getColumnModel().getColumn(3)
+				.setCellRenderer(new DoubleRenderer());
+		this.takersTable.getColumnModel().getColumn(4)
+				.setCellRenderer(new DoubleRenderer());
+		this.takersTable.getColumnModel().getColumn(5)
+				.setCellRenderer(new DoubleRenderer());
 
 		JScrollPane scrollPane = new JScrollPane(this.takersTable);
 		RowNumberTable rowTable = new RowNumberTable(this.takersTable);
@@ -647,11 +658,11 @@ public class PenaltyTakersView extends JPanel {
 			case 1:
 				return taker.getPlayer().getName();
 			case 2:
-				return taker.getPlayer().getErfahrung();
+				return taker.getExperience();
 			case 3:
-				return taker.getPlayer().getStandards();
+				return taker.getSetPieces();
 			case 4:
-				return taker.getPlayer().getTorschuss();
+				return taker.getScoring();
 			case 5:
 				return taker.getAbility();
 			default:
@@ -674,9 +685,8 @@ public class PenaltyTakersView extends JPanel {
 			case 2:
 			case 3:
 			case 4:
-				return Integer.class;
 			case 5:
-				return Float.class;
+				return Double.class;
 			default:
 				return Object.class;
 			}
@@ -723,12 +733,12 @@ public class PenaltyTakersView extends JPanel {
 
 	}
 
-	private class AbilityRenderer extends DefaultTableCellRenderer {
+	private class DoubleRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = -9094435304652745951L;
 		private NumberFormat format;
 
-		public AbilityRenderer() {
+		public DoubleRenderer() {
 			this.format = NumberFormat.getNumberInstance();
 			this.format.setMinimumFractionDigits(2);
 			this.format.setMaximumFractionDigits(2);
@@ -739,8 +749,8 @@ public class PenaltyTakersView extends JPanel {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			Float ability = (Float) value;
-			String str = this.format.format(ability);
+			Double val = (Double) value;
+			String str = this.format.format(val);
 			return super.getTableCellRendererComponent(table, str, isSelected,
 					hasFocus, row, column);
 		}
