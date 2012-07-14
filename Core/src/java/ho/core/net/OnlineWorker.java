@@ -90,7 +90,6 @@ public class OnlineWorker {
 		HOMainFrame homf = HOMainFrame.instance();
 		HOVerwaltung hov = HOVerwaltung.instance();
 		UserParameter up = ho.core.model.UserParameter.instance();
-		InfoPanel info = homf.getInfoPanel();
 
 		// Show wait dialog
 		waitDialog = getWaitDialog();
@@ -100,27 +99,27 @@ public class OnlineWorker {
 			bOK = true;
 		} catch (Exception e) {
 			// Info
-			info.setLangInfoText(hov.getLanguageString("Downloadfehler")
+			setInfoMsg(getLangString("Downloadfehler")
 					+ " : Error converting xml 2 HRF. Corrupt/Missing Data : ",
 					InfoPanel.FEHLERFARBE);
 			Helper.showMessage(
 					homf,
-					hov.getLanguageString("Downloadfehler")
+					getLangString("Downloadfehler")
 							+ " : Error converting xml 2 HRF. Corrupt/Missing Data : \n"
-							+ e.toString() + "\n",
-					hov.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+							+ e.toString() + "\n", getLangString("Fehler"),
+					JOptionPane.ERROR_MESSAGE);
 			bOK = false;
 		}
 		if (bOK) {
 			if (hrf.indexOf("playingMatch=true") > -1) {
 				JOptionPane.showMessageDialog(homf,
-						hov.getLanguageString("NO_HRF_Spiel"),
-						hov.getLanguageString("NO_HRF_ERROR"), 1);
+						getLangString("NO_HRF_Spiel"),
+						getLangString("NO_HRF_ERROR"), 1);
 				bOK = false;
 			} else if (hrf.indexOf("NOT AVAILABLE") > -1) {
 				JOptionPane.showMessageDialog(homf,
-						hov.getLanguageString("NO_HRF_ERROR"),
-						hov.getLanguageString("NO_HRF_ERROR"), 1);
+						getLangString("NO_HRF_ERROR"),
+						getLangString("NO_HRF_ERROR"), 1);
 				bOK = false;
 			}
 
@@ -129,13 +128,11 @@ public class OnlineWorker {
 				HOModel homodel = new HRFStringParser().parse(hrf);
 				if (homodel == null) {
 					// Info
-					info.setLangInfoText(hov.getLanguageString("Importfehler"),
+					setInfoMsg(getLangString("Importfehler"),
 							InfoPanel.FEHLERFARBE);
 					// Error
-					Helper.showMessage(homf,
-							hov.getLanguageString("Importfehler"),
-							hov.getLanguageString("Fehler"),
-							JOptionPane.ERROR_MESSAGE);
+					Helper.showMessage(homf, getLangString("Importfehler"),
+							getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
 				} else {
 					homodel.saveHRF();
 					homodel.setSpielplan(hov.getModel().getSpielplan());
@@ -168,7 +165,7 @@ public class OnlineWorker {
 								homodel.getLastAufstellung());
 						AufstellungsVergleichHistoryPanel
 								.setAngezeigteAufstellung(new AufstellungCBItem(
-										hov.getLanguageString("AktuelleAufstellung"),
+										getLangString("AktuelleAufstellung"),
 										homodel.getAufstellung()));
 						homf.getAufstellungsPanel()
 								.getAufstellungsPositionsPanel()
@@ -191,8 +188,7 @@ public class OnlineWorker {
 						}
 					}
 					// Info
-					info.setLangInfoText(HOVerwaltung.instance()
-							.getLanguageString("HRFErfolg"));
+					setInfoMsg(getLangString("HRFErfolg"));
 
 					try {
 						saveHRFToFile(hrf);
