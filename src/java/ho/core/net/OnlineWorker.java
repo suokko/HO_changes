@@ -31,6 +31,7 @@ import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
@@ -712,11 +713,10 @@ public class OnlineWorker {
 		orders.append(',').append("{\"id\":\"").append(lineup.getKicker());
 		orders.append("\",\"behaviour\":\"0\"}");
 
-		// Some better source wanted...
-		List<Integer> shooters = lineup.getBestElferKicker();
-
-		for (Integer id : shooters) {
-			orders.append(',').append("{\"id\":\"").append(id);
+		// penalty takers
+		List<SpielerPosition> shooters = lineup.getPenaltyTakers();
+		for (SpielerPosition pos : shooters) {
+			orders.append(',').append("{\"id\":\"").append(pos.getSpielerId());
 			orders.append("\" , \"behaviour\":\"0\"}");
 		}
 
