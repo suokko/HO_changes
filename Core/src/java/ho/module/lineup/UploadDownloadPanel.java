@@ -85,8 +85,8 @@ public class UploadDownloadPanel extends JPanel {
 		gbc.weightx = 1.0;
 		buttonPanel.add(this.downloadButton, gbc);
 
-		GUIUtils.equalizeComponentSizes(this.refreshButton,
-				this.uploadButton, this.downloadButton);
+		GUIUtils.equalizeComponentSizes(this.refreshButton, this.uploadButton,
+				this.downloadButton);
 
 		MatchesTableModel model = new MatchesTableModel(getMatchesFromDB());
 		this.matchesTable = new JTable();
@@ -193,6 +193,7 @@ public class UploadDownloadPanel extends JPanel {
 				match.merge(refreshed);
 				((MatchesTableModel) this.matchesTable.getModel())
 						.fireTableDataChanged();
+				selectMatch(match);
 			}
 		}
 
@@ -211,6 +212,7 @@ public class UploadDownloadPanel extends JPanel {
 			match.merge(refreshed);
 			((MatchesTableModel) this.matchesTable.getModel())
 					.fireTableDataChanged();
+			selectMatch(match);
 		}
 		if (lineup != null) {
 			int messageType = JOptionPane.PLAIN_MESSAGE;
@@ -242,6 +244,15 @@ public class UploadDownloadPanel extends JPanel {
 					.getMatch(modelIndex);
 		}
 		return null;
+	}
+
+	private void selectMatch(MatchKurzInfo match) {
+		MatchesTableModel model = (MatchesTableModel) this.matchesTable
+				.getModel();
+		int modelIndex = model.getRowIndex(match);
+		int viewIndex = this.matchesTable.convertRowIndexToView(modelIndex);
+		this.matchesTable.getSelectionModel().setSelectionInterval(viewIndex,
+				viewIndex);
 	}
 
 	private void addListeners() {
@@ -304,6 +315,10 @@ public class UploadDownloadPanel extends JPanel {
 			return this.data.get(modelRowIndex);
 		}
 
+		public int getRowIndex(MatchKurzInfo match) {
+			return this.data.indexOf(match);
+		}
+
 		public void setData(List<MatchKurzInfo> list) {
 			this.data = new ArrayList<MatchKurzInfo>(list);
 			fireTableDataChanged();
@@ -340,8 +355,9 @@ public class UploadDownloadPanel extends JPanel {
 				return match.getMatchID();
 			case 5:
 				return match.isOrdersGiven();
+			default:
+				return null;
 			}
-			return null;
 		}
 
 		private void initColumnNames() {
