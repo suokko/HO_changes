@@ -147,10 +147,14 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void upload() {
+		Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
+		if (!LineupCheck.doUpload(lineup)) {
+			return;
+		}
+
 		MatchKurzInfo match = getSelectedMatch();
 		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(),
-				match.getMatchTyp(), HOVerwaltung.instance().getModel()
-						.getAufstellung());
+				match.getMatchTyp(), lineup);
 
 		int messageType = JOptionPane.PLAIN_MESSAGE;
 		boolean success = false;
