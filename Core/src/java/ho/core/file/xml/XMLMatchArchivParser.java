@@ -25,13 +25,13 @@ import org.w3c.dom.NodeList;
  *
  * @author TheTom
  */
-public class xmlMatchArchivParser {
+public class XMLMatchArchivParser {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of xmlMatchArchivParser
      */
-    public xmlMatchArchivParser() {
+    public XMLMatchArchivParser() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
