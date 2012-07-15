@@ -116,7 +116,7 @@ public class ConvertXml2Hrf {
 		int lastTactic = 0;
 		// Team ermitteln, für Ratings der Player wichtig
 		if (matchLineup != null) {
-			final Matchdetails md = new xmlMatchdetailsParser()
+			final Matchdetails md = new XMLMatchdetailsParser()
 					.parseMachtdetailsFromString(
 							mc.getMatchdetails(matchLineup.getMatchID(),
 									matchLineup.getMatchTyp()), null);

@@ -163,7 +163,7 @@ public class HelperWrapper {
     public boolean isUserMatch(String matchID, MatchType matchType) {
     	try {
           final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
-          final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.xmlMatchdetailsParser()
+          final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.XMLMatchdetailsParser()
                                                                            .parseMachtdetailsFromString(input, null);
           final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
