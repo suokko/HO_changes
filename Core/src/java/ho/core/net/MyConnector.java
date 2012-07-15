@@ -528,10 +528,8 @@ public class MyConnector {
 
 	public Extension getEpvVersion() {
 		try {
-			final String s = getWebPage(MyConnector.getResourceSite()
-					+ "/downloads/epv.xml", false);
-
-			return (new XMLExtensionParser()).parseExtension(s);
+			String s = getWebPage(MyConnector.getResourceSite() + "/downloads/epv.xml", false);
+			return XMLExtensionParser.parseExtension(s);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),
 					"Unable to connect to the update server (EPV): " + e);
@@ -541,10 +539,8 @@ public class MyConnector {
 
 	public Extension getRatingsVersion() {
 		try {
-			final String s = getWebPage(MyConnector.getResourceSite()
-					+ "/downloads/ratings.xml", false);
-
-			return (new XMLExtensionParser()).parseExtension(s);
+			String s = getWebPage(MyConnector.getResourceSite() + "/downloads/ratings.xml", false);
+			return XMLExtensionParser.parseExtension(s);
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(),
 					"Unable to connect to the update server (Ratings): " + e);
