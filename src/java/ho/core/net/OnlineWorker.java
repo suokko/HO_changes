@@ -16,7 +16,7 @@ import ho.core.file.xml.XMLMatchLineupParser;
 import ho.core.file.xml.XMLMatchOrderParser;
 import ho.core.file.xml.XMLMatchesParser;
 import ho.core.file.xml.XMLSpielplanParser;
-import ho.core.file.xml.xmlMatchArchivParser;
+import ho.core.file.xml.XMLMatchArchivParser;
 import ho.core.file.xml.xmlMatchdetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.InfoPanel;
@@ -261,7 +261,7 @@ public class OnlineWorker {
 					return null;
 				}
 
-				xmlMatchArchivParser parser = new xmlMatchArchivParser();
+				XMLMatchArchivParser parser = new XMLMatchArchivParser();
 				waitDialog.setValue(40);
 				MatchKurzInfo[] matches = parser
 						.parseMatchesFromString(matchesString);
