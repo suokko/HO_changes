@@ -324,21 +324,15 @@ public class OnlineWorker {
 					gastId = details.getGastId();
 				}
 
-				final MatchLineup lineup = getMatchlineup(matchid, matchType, heimId, gastId);
+				MatchLineup lineup = getMatchlineup(matchid, matchType, heimId, gastId);
 
 				if (lineup == null) {
+					String msg = getLangString("Downloadfehler")
+							+ " : Error fetching Matchlineup :";
 					// Info
-					HOMainFrame
-							.instance()
-							.getInfoPanel()
-							.setLangInfoText(
-									HOVerwaltung.instance().getLanguageString("Downloadfehler")
-											+ " : Error fetching Matchlineup :",
-									InfoPanel.FEHLERFARBE);
-					Helper.showMessage(HOMainFrame.instance(), HOVerwaltung.instance()
-							.getLanguageString("Downloadfehler")
-							+ " : Error fetching Matchlineup :", HOVerwaltung.instance()
-							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+					setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+					Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"),
+							JOptionPane.ERROR_MESSAGE);
 
 					return false;
 				}
@@ -424,9 +418,8 @@ public class OnlineWorker {
 		try {
 			matchesString = MyConnector.instance().getMatches(teamId, true, date);
 		} catch (IOException e) {
-			HOVerwaltung hov = HOVerwaltung.instance();
-			Helper.showMessage(HOMainFrame.instance(), hov.getLanguageString("Downloadfehler")
-					+ " : Error fetching matches : " + e, hov.getLanguageString("Fehler"),
+			Helper.showMessage(HOMainFrame.instance(), getLangString("Downloadfehler")
+					+ " : Error fetching matches : " + e, getLangString("Fehler"),
 					JOptionPane.ERROR_MESSAGE);
 			HOLogger.instance().log(OnlineWorker.class, e);
 		}
@@ -470,17 +463,12 @@ public class OnlineWorker {
 			else
 				waitDialog.setVisible(false);
 		} catch (Exception e) {
+			String msg = getLangString("Downloadfehler") + " : Error fetching matches: "
+					+ e.getMessage();
 			// Info
-			HOMainFrame
-					.instance()
-					.getInfoPanel()
-					.setLangInfoText(
-							HOVerwaltung.instance().getLanguageString("Downloadfehler")
-									+ " : Error fetching matches: " + e, InfoPanel.FEHLERFARBE);
-			Helper.showMessage(HOMainFrame.instance(),
-					HOVerwaltung.instance().getLanguageString("Downloadfehler")
-							+ " : Error fetching matches : " + e, HOVerwaltung.instance()
-							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+			Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"),
+					JOptionPane.ERROR_MESSAGE);
 			HOLogger.instance().log(OnlineWorker.class, e);
 			waitDialog.setVisible(false);
 			return null;
@@ -594,16 +582,11 @@ public class OnlineWorker {
 			waitDialog.setValue(50);
 		} catch (Exception e) {
 			HOLogger.instance().log(OnlineWorker.class, e);
-			HOMainFrame
-					.instance()
-					.getInfoPanel()
-					.setLangInfoText(
-							hov.getLanguageString("Downloadfehler")
-									+ " : Error fetching leagueFixture: " + e.getMessage(),
-							InfoPanel.FEHLERFARBE);
-			Helper.showMessage(HOMainFrame.instance(), hov.getLanguageString("Downloadfehler")
-					+ " : Error fetching leagueFixture: " + e.getMessage(),
-					hov.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			String msg = getLangString("Downloadfehler") + " : Error fetching leagueFixture: "
+					+ e.getMessage();
+			setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+			Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"),
+					JOptionPane.ERROR_MESSAGE);
 			waitDialog.setVisible(false);
 			return false;
 		}
@@ -742,7 +725,8 @@ public class OnlineWorker {
 			String msg = getLangString("Downloadfehler") + ": Error fetching Matchdetails XML.: ";
 			// Info
 			setInfoMsg(msg, InfoPanel.FEHLERFARBE);
-			Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"),
+					JOptionPane.ERROR_MESSAGE);
 			waitDialog.setVisible(false);
 			return null;
 		}
