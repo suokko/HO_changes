@@ -4,12 +4,12 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.player.Spieler;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 
 public class ExportMatchData {
 	
-	private Hashtable<Integer,Spieler> players;
+	private Map<Integer,Spieler> players;
 	private Matchdetails details;
 	private MatchKurzInfo info;
 
@@ -21,7 +21,7 @@ public class ExportMatchData {
 		return info;
 	}
 
-	public Hashtable<Integer,Spieler> getPlayers() {
+	public Map<Integer,Spieler> getPlayers() {
 		return players;
 	}
 
@@ -33,8 +33,8 @@ public class ExportMatchData {
 		this.info = info;
 	}
 
-	public void setPlayers(Hashtable<Integer,Spieler> hashtable) {
-		players = hashtable;
+	public void setPlayers(Map<Integer,Spieler> map) {
+		players = map;
 	}
 
 }
