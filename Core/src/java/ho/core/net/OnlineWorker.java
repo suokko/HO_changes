@@ -12,11 +12,11 @@ import ho.core.file.extension.FileExtensionManager;
 import ho.core.file.hrf.HRFStringParser;
 import ho.core.file.xml.ConvertXml2Hrf;
 import ho.core.file.xml.XMLArenaParser;
+import ho.core.file.xml.XMLMatchArchivParser;
 import ho.core.file.xml.XMLMatchLineupParser;
 import ho.core.file.xml.XMLMatchOrderParser;
 import ho.core.file.xml.XMLMatchesParser;
 import ho.core.file.xml.XMLSpielplanParser;
-import ho.core.file.xml.XMLMatchArchivParser;
 import ho.core.file.xml.xmlMatchdetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.InfoPanel;
@@ -52,7 +52,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -261,13 +260,12 @@ public class OnlineWorker {
 					return null;
 				}
 
-				XMLMatchArchivParser parser = new XMLMatchArchivParser();
 				waitDialog.setValue(40);
-				MatchKurzInfo[] matches = parser
+				List<MatchKurzInfo> matches = XMLMatchArchivParser
 						.parseMatchesFromString(matchesString);
 
 				// Add the new matches to the list of all matches
-				allMatches.addAll(Arrays.asList(matches));
+				allMatches.addAll(matches);
 
 				// Zeitfenster neu setzen
 				tempBeginn.add(Calendar.MONTH, 3);
