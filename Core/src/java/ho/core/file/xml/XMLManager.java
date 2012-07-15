@@ -275,6 +275,6 @@ public class XMLManager  {
 	 * Parse the match lineup from the given xml string.
 	 */
 	public static MatchLineup parseMatchLineup(String lineup) {
-		return new XMLMatchLineupParser().parseMatchLineupFromString(lineup);
+		return XMLMatchLineupParser.parseMatchLineupFromString(lineup);
 	}
 }
