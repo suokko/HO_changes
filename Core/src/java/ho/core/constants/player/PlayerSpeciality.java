@@ -21,12 +21,12 @@ public final class PlayerSpeciality {
     
     public static final CBItem[] ITEMS = {
     	new CBItem("", NO_SPECIALITY),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Technical"), TECHNICAL),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Quick"),QUICK),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Powerful"), POWERFUL),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Unpredictable"), UNPREDICTABLE),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Head"), HEAD),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("sp_Regainer"), REGAINER)
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.technical"), TECHNICAL),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.quick"),QUICK),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.powerful"), POWERFUL),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.unpredictable"), UNPREDICTABLE),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.head"), HEAD),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.regainer"), REGAINER)
     };
     
 	private PlayerSpeciality(){};

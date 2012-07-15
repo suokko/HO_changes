@@ -18,17 +18,17 @@ public final class TeamSpirit {
 	public static final int PARADISE_ON_EARTH 	= 10;
 
 	public static CBItem[] ITEMS = {
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.likethecoldwar"),	LIKE_THE_COLD_WAR),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.murderous"),	MURDEROUS),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.furious"),	FURIOUS),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.irritated"),	IRRITATED),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.composed"), COMPOSED),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.calm"), CALM),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.content"), CONTENT),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.satisfied"),	SATISFIED),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.delirious"),	DELIRIOUS),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.walkingonclouds"),	WALKING_ON_CLOUDS),
-			new CBItem(HOVerwaltung.instance().getLanguageString("team.teamspirit.value.paradiseonearth"),	PARADISE_ON_EARTH) };
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.likethecoldwar"),	LIKE_THE_COLD_WAR),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.murderous"),	MURDEROUS),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.furious"),	FURIOUS),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.irritated"),	IRRITATED),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.composed"), COMPOSED),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.calm"), CALM),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.content"), CONTENT),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.satisfied"),	SATISFIED),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.delirious"),	DELIRIOUS),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.walkingonclouds"),	WALKING_ON_CLOUDS),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit.value.paradiseonearth"),	PARADISE_ON_EARTH) };
 
 	private TeamSpirit() {
 	};

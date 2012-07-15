@@ -295,25 +295,25 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	// switch(resultset.getInt("ICHARAKTER")) {
 	// case 5:
 	// strLabel
-	// +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.belovedteammember") +
+	// +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.belovedteammember") +
 	// ". ";
 	// break;
 	// case 4:
-	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.popularguypopular") + ". ";
+	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.popularguypopular") + ". ";
 	// break;
 	// case 3:
-	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.sympatheticguy") +
+	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.sympatheticguy") +
 	// ". ";
 	// break;
 	// case 2:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.pleasantguy") + ". ";
+	// strLabel +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.pleasantguy") + ". ";
 	// break;
 	// case 1:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("player.agreeability.value.controversialperson") +
+	// strLabel +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.controversialperson") +
 	// ". ";
 	// break;
 	// case 0:
-	// strLabel += HOVerwaltung.instance().getLanguageString("player.agreeability.value.nastyfellow") + ". ";
+	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.value.nastyfellow") + ". ";
 	// break;
 	// default:
 	// strLabel += "free of character. ";

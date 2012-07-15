@@ -4,12 +4,12 @@ import ho.core.model.HOVerwaltung;
 
 public final class PlayerAgreeability {
 	private static final String[] languageKeys = {
-		"player.agreeability.value.nastyfellow",
-		"player.agreeability.value.controversialperson",
-		"player.agreeability.value.pleasantguy",
-		"player.agreeability.value.sympatheticguy",
-		"player.agreeability.value.popularguy",
-		"player.agreeability.value.belovedteammember"};
+		"ls.player.agreeability.value.nastyfellow",
+		"ls.player.agreeability.value.controversialperson",
+		"ls.player.agreeability.value.pleasantguy",
+		"ls.player.agreeability.value.sympatheticguy",
+		"ls.player.agreeability.value.popularguy",
+		"ls.player.agreeability.value.belovedteammember"};
 	public static final int NASTY_FELLOW 			= 0;
 	public static final int CONTROVERSIAL_PERSON 	= 1;
 	public static final int PLEASANT_GUY 			= 2;
