@@ -65,7 +65,7 @@ public class ConvertXml2Hrf {
 		Map<?, ?> clubDataMap = new XMLClubParser().parseClubFromString(mc
 				.getVerein());
 		waitDialog.setValue(15);
-		Map<?, ?> ligaDataMap = new xmlLeagueDetailsParser()
+		Map<?, ?> ligaDataMap = new XMLLeagueDetailsParser()
 				.parseLeagueDetailsFromString(mc.getLeagueDetails(),
 						teamdetailsDataMap.get("TeamID").toString());
 		waitDialog.setValue(20);

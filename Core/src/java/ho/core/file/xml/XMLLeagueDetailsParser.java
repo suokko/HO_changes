@@ -22,13 +22,13 @@ import org.w3c.dom.NodeList;
  *
  * @author thomas.werth
  */
-public class xmlLeagueDetailsParser {
+public class XMLLeagueDetailsParser {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new instance of xmlLeagueDetailsParser
      */
-    public xmlLeagueDetailsParser() {
+    public XMLLeagueDetailsParser() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
