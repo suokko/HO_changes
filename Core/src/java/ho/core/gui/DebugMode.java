@@ -2,6 +2,7 @@ package ho.core.gui;
 
 import ho.core.db.frontend.SQLDialog;
 import ho.core.net.MyConnector;
+import ho.core.net.login.LoginWaitDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,15 +13,29 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-
 public class DebugMode {
-	
+
 	public static JMenu getDeveloperMenu() {
 		JMenu menu = new JMenu("Debug");
 		menu.add(getSQLDialogMenuItem());
 		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
+		menu.add(getWaitDialogMenuItem());
 		return menu;
+	}
+
+	private static JMenuItem getWaitDialogMenuItem() {
+		JMenuItem newItem = new JMenuItem("Wait dialog");
+		newItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginWaitDialog dlg = new LoginWaitDialog(HOMainFrame
+						.instance());
+				dlg.setVisible(true);
+			}
+		});
+		return newItem;
 	}
 
 	private static JMenuItem getLookAndFeelDialogMenuItem() {
@@ -35,7 +50,6 @@ public class DebugMode {
 		return newItem;
 	}
 
-	
 	private static JMenuItem getSQLDialogMenuItem() {
 		JMenuItem newItem = new JMenuItem("SQL Editor");
 		newItem.addActionListener(new ActionListener() {
