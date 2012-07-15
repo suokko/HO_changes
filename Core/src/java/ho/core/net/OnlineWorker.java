@@ -17,7 +17,7 @@ import ho.core.file.xml.XMLMatchLineupParser;
 import ho.core.file.xml.XMLMatchOrderParser;
 import ho.core.file.xml.XMLMatchesParser;
 import ho.core.file.xml.XMLSpielplanParser;
-import ho.core.file.xml.xmlMatchdetailsParser;
+import ho.core.file.xml.XMLMatchdetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.InfoPanel;
 import ho.core.gui.model.AufstellungCBItem;
@@ -737,7 +737,7 @@ public class OnlineWorker {
 				return null;
 			}
 			waitDialog.setValue(20);
-			xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
+			XMLMatchdetailsParser parser = new XMLMatchdetailsParser();
 			details = parser.parseMachtdetailsFromString(matchDetails, lineup);
 			waitDialog.setValue(40);
 			if (details == null) {

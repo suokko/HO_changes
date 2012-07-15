@@ -27,7 +27,7 @@ import org.w3c.dom.NodeList;
  *
  * @author thomas.werth
  */
-public class xmlMatchdetailsParser {
+public class XMLMatchdetailsParser {
     //~ Constructors -------------------------------------------------------------------------------
 
     /////////////////////////////////////////////////////////////////////////////////    
@@ -37,7 +37,7 @@ public class xmlMatchdetailsParser {
     /**
      * Creates a new instance of xmlMatchdetailsParser
      */
-    public xmlMatchdetailsParser() {
+    public XMLMatchdetailsParser() {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
