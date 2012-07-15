@@ -73,8 +73,7 @@ public class ConvertXml2Hrf {
 								.get("LeagueID").toString())),
 						teamdetailsDataMap.get("LeagueID").toString());
 		waitDialog.setValue(25);
-		MatchLineup matchLineup = new XMLMatchLineupParser()
-				.parseMatchLineupFromString(mc.getMatchLineup(-1, -1,
+		MatchLineup matchLineup = XMLMatchLineupParser.parseMatchLineupFromString(mc.getMatchLineup(-1, -1,
 						MatchType.LEAGUE).toString());
 		waitDialog.setValue(30);
 		List<MyHashtable> playersData = new xmlPlayersParser()
