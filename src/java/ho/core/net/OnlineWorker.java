@@ -609,8 +609,7 @@ public class OnlineWorker {
 		}
 		if (bOK) {
 			HOModel hom = hov.getModel();
-			final XMLSpielplanParser parser = new XMLSpielplanParser();
-			hom.setSpielplan(parser.parseSpielplanFromString(leagueFixtures));
+			hom.setSpielplan(XMLSpielplanParser.parseSpielplanFromString(leagueFixtures));
 			waitDialog.setValue(70);
 			// Save to DB
 			hom.saveSpielplan2DB();
@@ -700,7 +699,7 @@ public class OnlineWorker {
 		return result;
 	}
 
-	private static String createPositionString(int roleId, ho.module.lineup.Lineup lineup) {
+	private static String createPositionString(int roleId, Lineup lineup) {
 
 		int id = 0;
 		int behaviour = 0;
@@ -714,16 +713,6 @@ public class OnlineWorker {
 		return "{\"id\":\"" + id + "\",\"behaviour\":\"" + behaviour + "\"}";
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param matchID
-	 *            TODO Missing Method Parameter Documentation
-	 * @param waitDialog
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	private static Matchdetails fetchDetails(int matchID, MatchType matchType, MatchLineup lineup,
 			LoginWaitDialog waitDialog) {
 		String matchDetails = "";
