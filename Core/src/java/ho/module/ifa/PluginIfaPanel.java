@@ -2,6 +2,7 @@ package ho.module.ifa;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
+import ho.core.file.xml.XMLWorldDetailsParser;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
@@ -76,7 +77,7 @@ public class PluginIfaPanel extends JPanel {
 					String worldDetails;
 					try {
 						worldDetails = MyConnector.instance().getWorldDetails(0);
-						List<WorldDetailLeague> leagues =XMLManager.parseWorldDetails(worldDetails);
+						List<WorldDetailLeague> leagues = XMLWorldDetailsParser.parseDetails(XMLManager.parseString(worldDetails));
 						DBManager.instance().saveWorldDetailLeagues(leagues);
 						WorldDetailsManager.instance().refresh();
 					} catch (IOException e1) {
