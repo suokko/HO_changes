@@ -737,7 +737,7 @@ public class OnlineWorker {
 				return null;
 			}
 			waitDialog.setValue(20);
-			final xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
+			xmlMatchdetailsParser parser = new xmlMatchdetailsParser();
 			details = parser.parseMachtdetailsFromString(matchDetails, lineup);
 			waitDialog.setValue(40);
 			if (details == null) {
@@ -749,20 +749,12 @@ public class OnlineWorker {
 			waitDialog.setValue(50);
 			String regionIdAsString = XMLArenaParser.parseArenaFromString(arenaString).get(
 					"RegionID");
-			int regionId = Integer.parseInt(regionIdAsString);
-			details.setRegionId(regionId);
+			details.setRegionId(Integer.parseInt(regionIdAsString));
 		} catch (Exception e) {
+			String msg = getLangString("Downloadfehler") + ": Error fetching Matchdetails XML.: ";
 			// Info
-			HOMainFrame
-					.instance()
-					.getInfoPanel()
-					.setLangInfoText(
-							HOVerwaltung.instance().getLanguageString("Downloadfehler")
-									+ ": Error fetching Matchdetails XML.: ", InfoPanel.FEHLERFARBE);
-			Helper.showMessage(HOMainFrame.instance(),
-					HOVerwaltung.instance().getLanguageString("Downloadfehler")
-							+ ": Error fetching Matchdetails XML.: ", HOVerwaltung.instance()
-							.getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
+			setInfoMsg(msg, InfoPanel.FEHLERFARBE);
+			Helper.showMessage(HOMainFrame.instance(), msg, getLangString("Fehler"), JOptionPane.ERROR_MESSAGE);
 			waitDialog.setVisible(false);
 			return null;
 		}
