@@ -786,8 +786,7 @@ public class OnlineWorker {
 			return null;
 		}
 		if (bOK) {
-			final XMLMatchLineupParser parser = new XMLMatchLineupParser();
-			lineUp = parser.parseMatchLineupFromString(matchLineup);
+			lineUp = XMLMatchLineupParser.parseMatchLineupFromString(matchLineup);
 		}
 		return lineUp;
 	}
