@@ -42,8 +42,8 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -70,7 +70,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 /**
  * The Main HO window
  */
-public final class HOMainFrame extends JFrame implements Refreshable, WindowListener, ActionListener {
+public final class HOMainFrame extends JFrame implements Refreshable,  ActionListener {
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
@@ -153,12 +153,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		this.setIconImage(ThemeManager.getIcon(HOIconName.LOGO16).getImage());
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(this);
-
-		// Catch Apple-Q for MacOS
-		if (isMac()) {
-			addMacOSListener();
-		}
+		addListeners();
 
 		initProxy();
 		initComponents();
@@ -365,13 +360,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		HOMainFrame.setHOStatus(HOMainFrame.READY);
 	}
 
-	/**
-	 * Für Plugins zur Info
-	 */
-	public void addMainFrameListener(WindowListener listener) {
-		addWindowListener(listener);
-	}
-
 	public void addTopLevelMenu(JMenu menu) {
 		m_jmMenuBar.add(menu);
 	}
@@ -380,40 +368,35 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 * Beendet HO
 	 */
 	public void beenden() {
-		HOLogger.instance().debug(getClass(), "Shutting down HO!");
-
-		// aktuelle UserParameter speichern
-		saveUserParameter();
-
-		HOLogger.instance().debug(getClass(), "UserParameters saved");
-
-		// Scoutliste speichern
-		getTransferScoutPanel().getScoutPanel().saveScoutListe();
-
-		HOLogger.instance().debug(getClass(), "ScoutList saved");
-
-		// Faktoren saven
-		FormulaFactors.instance().save();
-
-		HOLogger.instance().debug(getClass(), "FormulaFactors saved");
-
-		// Save module configs
-		ModuleConfig.instance().save();
-
-		HOLogger.instance().debug(getClass(), "Module configurations saved");
-
-		// Disconnect
-		DBManager.instance().disconnect();
-
-		HOLogger.instance().debug(getClass(), "Disconnected");
-
-		HOLogger.instance().debug(getClass(), "Shutdown complete!");
-		// Dispose führt zu einem windowClosed, sobald alle windowClosing
-		// (Plugins) durch sind
-		isAppTerminated = true; // enable System.exit in windowClosed()
+		
+		CursorToolkit.startWaitCursor(getRootPane());
 		try {
-			dispose();
-		} catch (Exception e) {
+			HOLogger.instance().debug(getClass(), "Shutting down HO!");
+			// aktuelle UserParameter speichern
+			saveUserParameter();
+			HOLogger.instance().debug(getClass(), "UserParameters saved");
+			// Scoutliste speichern
+			getTransferScoutPanel().getScoutPanel().saveScoutListe();
+			HOLogger.instance().debug(getClass(), "ScoutList saved");
+			// Faktoren saven
+			FormulaFactors.instance().save();
+			HOLogger.instance().debug(getClass(), "FormulaFactors saved");
+			// Save module configs
+			ModuleConfig.instance().save();
+			HOLogger.instance().debug(getClass(), "Module configurations saved");
+			// Disconnect
+			DBManager.instance().disconnect();
+			HOLogger.instance().debug(getClass(), "Disconnected");
+			HOLogger.instance().debug(getClass(), "Shutdown complete!");
+			// Dispose führt zu einem windowClosed, sobald alle windowClosing
+			// (Plugins) durch sind
+			isAppTerminated = true; // enable System.exit in windowClosed()
+			try {
+				dispose();
+			} catch (Exception e) {
+			}
+		} finally {
+			CursorToolkit.stopWaitCursor(getRootPane());
 		}
 	}
 
@@ -643,13 +626,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 		// nix?
 	}
 
-	/**
-	 * Für Plugins zur Info
-	 */
-	public void removeMainFrameListener(WindowListener listener) {
-		removeWindowListener(listener);
-	}
-
 	// --------------------------------------------------------------
 	public void showMatch(int matchid) {
 		m_jtpTabbedPane.showTab(IModule.MATCHES);
@@ -667,53 +643,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 	 */
 	public void showTab(int tabnumber) {
 		m_jtpTabbedPane.showTab(tabnumber);
-	}
-
-	// ----------------Unused Listener----------------------------
-	@Override
-	public void windowActivated(WindowEvent windowEvent) {
-	}
-
-	/**
-	 * Finally shutting down the application when the main window is closed.
-	 * This is initiated through the call to dispose(). System.exit is called
-	 * only in the case when @see beenden() is called in advance. This event is
-	 * called when switching into full screen mode, too.
-	 *
-	 * @param windowEvent
-	 *            is ignored
-	 */
-	@Override
-	public void windowClosed(WindowEvent windowEvent) {
-		if (isAppTerminated) {
-			System.exit(0);
-		}
-	}
-
-	// ----------------Listener--------------------------------------
-
-	/**
-	 * Close HO window.
-	 */
-	@Override
-	public void windowClosing(WindowEvent windowEvent) {
-		beenden();
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent windowEvent) {
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent windowEvent) {
-	}
-
-	@Override
-	public void windowIconified(WindowEvent windowEvent) {
-	}
-
-	@Override
-	public void windowOpened(WindowEvent windowEvent) {
 	}
 
 	/**
@@ -856,5 +785,39 @@ public final class HOMainFrame extends JFrame implements Refreshable, WindowList
 
 	public static void setHOStatus(int i) {
 		status = i;
+	}
+	
+	private void addListeners() {
+		addWindowListener(new WindowAdapter() {
+			/**
+			 * Finally shutting down the application when the main window is closed.
+			 * This is initiated through the call to dispose(). System.exit is called
+			 * only in the case when @see beenden() is called in advance. This event is
+			 * called when switching into full screen mode, too.
+			 *
+			 * @param windowEvent
+			 *            is ignored
+			 */
+			@Override
+			public void windowClosed(WindowEvent windowEvent) {
+				if (isAppTerminated) {
+					System.exit(0);
+				}
+			}
+
+			/**
+			 * Close HO window.
+			 */
+			@Override
+			public void windowClosing(WindowEvent windowEvent) {
+				beenden();
+			}
+
+		});
+
+		// Catch Apple-Q for MacOS
+		if (isMac()) {
+			addMacOSListener();
+		}
 	}
 }
