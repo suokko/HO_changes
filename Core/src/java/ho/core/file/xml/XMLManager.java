@@ -1,15 +1,11 @@
 // %955353293:de.hattrickorganizer.tools.xml%
 package ho.core.file.xml;
 
-import ho.core.model.WorldDetailLeague;
 import ho.core.util.HOLogger;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -193,38 +189,6 @@ public class XMLManager  {
         }
     }
 
-    /**
-     * Parse the league table.
-     */
-    protected void parseTabelle(Document doc) {
-        Element ele = null;
-        Element tmpEle = null;
-        String titel = "";
-
-        //gucken was es so gibt :
-        ele = doc.getDocumentElement();
-
-        HOLogger.instance().log(getClass(),"Root Name: " + ele.getTagName());
-
-        HOLogger.instance().log(getClass(),"Root Attr: " + ele.getAttributes().getLength());
-        HOLogger.instance().log(getClass(),"Root Sub Team Nodes: " + ele.getElementsByTagName("Team").getLength());
-        HOLogger.instance().log(getClass(),"Root Gesamt Nodes: " + ele.getChildNodes().getLength());
-
-        tmpEle = (Element) ele.getElementsByTagName("LeagueName").item(0);
-
-        HOLogger.instance().log(getClass(),"tmp Name: " + tmpEle.getTagName());
-        HOLogger.instance().log(getClass(),"tmp Namespace: " + tmpEle.getNamespaceURI());
-        HOLogger.instance().log(getClass(),"tmp first Child Value: " + tmpEle.getFirstChild().getNodeValue());
-        HOLogger.instance().log(getClass(),"tmp first Child Value: " + tmpEle.getFirstChild().getNodeName());
-        HOLogger.instance().log(getClass(),"tmp Anz Childs: " + tmpEle.getChildNodes().getLength());
-        titel = " " + ele.getElementsByTagName("LeagueName").getLength();
-        titel += (" " + ele.getElementsByTagName("LeagueName").item(0).getNodeType());
-        titel += (" "
-        + ele.getElementsByTagName("LeagueLevelUnitName").item(0).getAttributes().getLength());
-
-        HOLogger.instance().log(getClass(),"Titel: " + titel);
-    }
-
 	/**
 	 * speichert das übergebene Dokument in der angegebenen Datei Datei wird überschrieben falls
 	 * vorhanden
@@ -249,26 +213,4 @@ public class XMLManager  {
 		}
 		return xml;
 	}
-
-	/**
-	 * Parse the teamDetails from the given xml string.
-	 */
-	public static Map<String,String> parseTeamDetails(String teamDetails) {
-		return XMLTeamDetailsParser.parseTeamdetails(teamDetails);
-	}
-
-	/**
-	 * Parse the worldDetails from the given xml string.
-	 */
-	public static  List<WorldDetailLeague> parseWorldDetails(String worldDetails) {
-		return XMLWorldDetailsParser.parseDetails(parseString(worldDetails));
-	}
-	
-	/**
-	 * Parse the worldDetails from the given xml string.
-	 */
-	public static Map<String,String> parseWorldDetails(String worldDetails, String leagueID) {
-		return XMLWorldDetailsParser.parseWorldDetailsFromString(worldDetails, leagueID);
-	}
-
 }

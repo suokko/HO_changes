@@ -9,6 +9,7 @@ import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.file.xml.XMLManager;
+import ho.core.file.xml.XMLWorldDetailsParser;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
 import ho.core.util.HelperWrapper;
@@ -18,9 +19,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -51,7 +52,7 @@ class NthrfConvertXml2Hrf {
 
 			// world details
 			xml = dh.getHattrickXMLFile("/chppxml.axd?file=worlddetails");
-			Hashtable<String, String> world = (Hashtable<String, String>)XMLManager.parseWorldDetails(xml, String.valueOf(details.getLeagueId()));
+			Map<String, String> world = XMLWorldDetailsParser.parseWorldDetailsFromString(xml, String.valueOf(details.getLeagueId()));
 			debug("Got world details");
 
 			// nt players + player details
@@ -452,7 +453,7 @@ class NthrfConvertXml2Hrf {
 	/**
 	 * Creates the world details for the current user / country.
 	 */
-	final void createWorld(Hashtable<String, String> world, NtTeamDetailsParser details, NtPlayer trainer) throws Exception {
+	final void createWorld(Map<String, String> world, NtTeamDetailsParser details, NtPlayer trainer) throws Exception {
 		m_sHRFBuffer.append("[xtra]\n");
 
 		m_sHRFBuffer.append("TrainingDate=" + world.get("TrainingDate") + "\n");
