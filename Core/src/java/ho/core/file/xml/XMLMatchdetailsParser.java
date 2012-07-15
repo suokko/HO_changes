@@ -23,68 +23,21 @@ import org.w3c.dom.NodeList;
 
 
 /**
- * DOCUMENT ME!
  *
  * @author thomas.werth
  */
 public class XMLMatchdetailsParser {
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //KONSTRUKTOR
-    ////////////////////////////////////////////////////////////////////////////////    
-
-    /**
-     * Creates a new instance of xmlMatchdetailsParser
-     */
-    public XMLMatchdetailsParser() {
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+    private XMLMatchdetailsParser() {
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param input TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Matchdetails parseMachtdetailsFromString(String input, MatchLineup matchLineup) {
+    public static Matchdetails parseMachtdetailsFromString(String input, MatchLineup matchLineup) {
         return createMatchdetails(XMLManager.parseString(input), matchLineup);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////    
-    //parse public
-    ////////////////////////////////////////////////////////////////////////////////    
-    public final Matchdetails parseMatchdetails(String dateiname, MatchLineup matchLineup) {
-        Matchdetails md = null;
-        Document doc = null;
-
-        doc = XMLManager.parseFile(dateiname);
-        md = createMatchdetails(doc, matchLineup);
-
-        return md;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Matchdetails parseMatchdetails(java.io.File datei, MatchLineup matchLineup) {
-        Document doc = null;
-
-        doc = XMLManager.parseFile(datei);
-
-        return createMatchdetails(doc, matchLineup);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////    
-    protected final Matchdetails createMatchdetails(Document doc, MatchLineup matchLineup) {
+    private static Matchdetails createMatchdetails(Document doc, MatchLineup matchLineup) {
         Matchdetails md = null;
 
         if (doc != null) {
@@ -95,7 +48,8 @@ public class XMLMatchdetailsParser {
                 // Match lineup needs to be available, if not -> ignore match highlights/report
                 if (matchLineup == null) {
                 	// reduced log level as this happens each and every match download.
-                	HOLogger.instance().debug(getClass(), "XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available!");
+                	HOLogger.instance().debug(XMLMatchdetailsParser.class, 
+                			"XMLMatchdetailsParser["+md.getMatchID()+"]: Cannot parse matchreport from matchdetails, lineup MUST be available!");
                 } else {
                     readHighlights(doc, md, matchLineup);
                     parseMatchReport(md);
@@ -104,7 +58,7 @@ public class XMLMatchdetailsParser {
                 readGuestTeam(doc, md);
                 readHomeTeam(doc, md);
 			} catch (Exception e) {
-	            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.createMatchDetails Exception gefangen: " + e);
+	            HOLogger.instance().log(XMLMatchdetailsParser.class, e);
 	            return null;
 			}
         }
@@ -119,7 +73,7 @@ public class XMLMatchdetailsParser {
      * @param md	match details
      *
      */
-    private final void readHighlights(Document doc, Matchdetails md, MatchLineup lineup) {
+    private static void readHighlights(Document doc, Matchdetails md, MatchLineup lineup) {
         final Vector<MatchHighlight> myHighlights = new Vector<MatchHighlight>();
         final Vector<Integer> broken = new Vector<Integer>();
         Element ele = null;
@@ -477,7 +431,7 @@ public class XMLMatchdetailsParser {
             }
             md.setHighlights(myHighlights);
         } catch (Exception e) {
-        	HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readHighlights Exception gefangen: " + e);
+        	HOLogger.instance().log(XMLMatchdetailsParser.class, e);
         	md = null;
         }
     }
@@ -487,7 +441,7 @@ public class XMLMatchdetailsParser {
      *
      * @param lineup (of MatchLineupPlayer)		team lineup
      */
-    private final Vector<Vector<String>> parseLineup (Vector<MatchLineupPlayer> lineup) {
+    private static Vector<Vector<String>> parseLineup (Vector<MatchLineupPlayer> lineup) {
     	Vector<Vector<String>> players = new Vector<Vector<String>>();
         MatchLineupPlayer player = null;
 
@@ -506,7 +460,7 @@ public class XMLMatchdetailsParser {
      *
      * @param md	match details
      */
-    public final void parseMatchReport(Matchdetails md) {
+    private static void parseMatchReport(Matchdetails md) {
         Vector<MatchHighlight> highlights = md.getHighlights();
 
         final StringBuffer report = new StringBuffer();
@@ -519,13 +473,7 @@ public class XMLMatchdetailsParser {
         md.setMatchreport(report.toString());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readArena(Document doc, Matchdetails md) {
+    private static void readArena(Document doc, Matchdetails md) {
         Element ele = null;
         Element root = null;
 
@@ -563,64 +511,12 @@ public class XMLMatchdetailsParser {
             	md.setSoldVIP(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             }
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readGeneral Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLMatchdetailsParser.class, e);
             md = null;
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readCards(Document doc, Matchdetails md) {
-        Element ele = null;
-        Element root = null;
-        MatchHighlight high = null;
-        NodeList list = null;
-
-        try {
-            //Daten füllen                        
-            root = doc.getDocumentElement();
-            root = (Element) root.getElementsByTagName("Match").item(0);
-            root = (Element) root.getElementsByTagName("Bookings").item(0);
-            list = root.getElementsByTagName("Booking");
-
-            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                high = new MatchHighlight();
-
-                root = (Element) list.item(i);
-
-                //Data
-                ele = (Element) root.getElementsByTagName("BookingPlayerID").item(0);
-                high.setSpielerID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("BookingPlayerName").item(0);
-                high.setSpielerName(ele.getFirstChild().getNodeValue());
-                ele = (Element) root.getElementsByTagName("BookingTeamID").item(0);
-                high.setTeamID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("BookingType").item(0);
-                high.setHighlightTyp(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("BookingMinute").item(0);
-                high.setMinute(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-
-                md.getHighlights().add(high);
-            }
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readCards Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
-            md = null;
-        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readGeneral(Document doc, Matchdetails md) {
+    private static void readGeneral(Document doc, Matchdetails md) {
         Element ele = null;
         Element root = null;
 
@@ -638,68 +534,12 @@ public class XMLMatchdetailsParser {
             ele = (Element) root.getElementsByTagName("MatchDate").item(0);
             md.setSpielDatumFromString(ele.getFirstChild().getNodeValue());
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readGeneral Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLMatchdetailsParser.class,e);
             md = null;
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readGoals(Document doc, Matchdetails md) {
-        Element ele = null;
-        Element root = null;
-        MatchHighlight high = null;
-        NodeList list = null;
-
-        try {
-            //Daten füllen                        
-            root = doc.getDocumentElement();
-            root = (Element) root.getElementsByTagName("Match").item(0);
-            root = (Element) root.getElementsByTagName("Scorers").item(0);
-            list = root.getElementsByTagName("Goal");
-
-            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                high = new MatchHighlight();
-
-                high.setHighlightTyp(MatchHighlight.HIGHLIGHT_ERFOLGREICH);
-
-                root = (Element) list.item(i);
-
-                //Data
-                ele = (Element) root.getElementsByTagName("ScorerPlayerID").item(0);
-                high.setSpielerID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("ScorerPlayerName").item(0);
-                high.setSpielerName(ele.getFirstChild().getNodeValue());
-                ele = (Element) root.getElementsByTagName("ScorerTeamID").item(0);
-                high.setTeamID(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("ScorerHomeGoals").item(0);
-                high.setHeimTore(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("ScorerAwayGoals").item(0);
-                high.setGastTore(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-                ele = (Element) root.getElementsByTagName("ScorerMinute").item(0);
-                high.setMinute(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-
-                md.getHighlights().add(high);
-            }
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readGoals Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
-            md = null;
-        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readGuestTeam(Document doc, Matchdetails md) {
+    private static void readGuestTeam(Document doc, Matchdetails md) {
         Element ele = null;
         Element root = null;
 
@@ -760,19 +600,12 @@ public class XMLMatchdetailsParser {
                 md.setGuestEinstellung(Matchdetails.EINSTELLUNG_UNBEKANNT);
             }
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readGuestTeam Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLMatchdetailsParser.class, e);
             md = null;
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param doc TODO Missing Method Parameter Documentation
-     * @param md TODO Missing Method Parameter Documentation
-     */
-    protected final void readHomeTeam(Document doc, Matchdetails md) {
+    private static void readHomeTeam(Document doc, Matchdetails md) {
         Element ele = null;
         Element root = null;
 
@@ -833,8 +666,7 @@ public class XMLMatchdetailsParser {
                 md.setHomeEinstellung(Matchdetails.EINSTELLUNG_UNBEKANNT);
             }
         } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLMatchdetailsParser.readHomeTeam Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
+            HOLogger.instance().log(XMLMatchdetailsParser.class, e);
             md = null;
         }
     }
