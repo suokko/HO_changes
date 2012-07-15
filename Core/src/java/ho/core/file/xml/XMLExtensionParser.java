@@ -6,74 +6,43 @@
  */
 package ho.core.file.xml;
 
-
 import ho.core.util.HOLogger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-
 /**
- * DOCUMENT ME!
- *
+ * 
  * @author thetom
  */
 public class XMLExtensionParser {
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new instance of XMLArenaParser
-     */
-    public XMLExtensionParser() {
-    }
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+	private XMLExtensionParser() {
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	public static Extension parseExtension(String dateiname) {
+		return parseDetails(XMLManager.parseString(dateiname));
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param dateiname TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Extension parseExtension(String dateiname) {
-        return parseDetails(XMLManager.parseString(dateiname));
-    }
+	private static Extension parseDetails(Document doc) {
+		Extension ext = new Extension();
+		if (doc != null) {
+			try {
+				Element root = doc.getDocumentElement();
+				ext.setRelease(Float.parseFloat(getTagValue(root, "release")));
+				ext.setMinimumHOVersion(Float.parseFloat(getTagValue(root, "hoNeeded")));
+			} catch (Exception e) {
+				HOLogger.instance().log(XMLExtensionParser.class, e);
+			}
+		}
+		return ext;
+	}
 
-
-    /////////////////////////////////////////////////////////////////////////////////
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected final Extension parseDetails(Document doc) {
-		Extension ext = new Extension();	
-        if (doc == null) {
-            return ext;
-        }
-
-        //Tabelle erstellen
-		Element root = doc.getDocumentElement();
-
-        try {
-            //Fetchdate
-			ext.setRelease(Float.parseFloat(getTagValue(root, "release")));
-			ext.setMinimumHOVersion(Float.parseFloat(getTagValue(root, "hoNeeded")));
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLExonom<Parser.parseDetails Exception gefangen: " + e);            
-        }
-        return ext;
-    }
-
-	private String getTagValue(Element root, String tag) {
-		final Element ele = (Element) root.getElementsByTagName(tag).item(0);
+	private static String getTagValue(Element root, String tag) {
+		Element ele = (Element) root.getElementsByTagName(tag).item(0);
 		return (XMLManager.getFirstChildNodeValue(ele));
 	}
 }
