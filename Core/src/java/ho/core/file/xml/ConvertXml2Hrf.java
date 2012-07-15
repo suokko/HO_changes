@@ -67,8 +67,7 @@ public class ConvertXml2Hrf {
 		Map<String, String> ligaDataMap = XMLLeagueDetailsParser.parseLeagueDetailsFromString(mc.getLeagueDetails(),
 						teamdetailsDataMap.get("TeamID").toString());
 		waitDialog.setValue(20);
-		Map<?, ?> worldDataMap = new XMLWorldDetailsParser()
-				.parseWorldDetailsFromString(
+		Map<String, String> worldDataMap = XMLWorldDetailsParser.parseWorldDetailsFromString(
 						mc.getWorldDetails(Integer.parseInt(teamdetailsDataMap
 								.get("LeagueID").toString())),
 						teamdetailsDataMap.get("LeagueID").toString());
@@ -234,7 +233,7 @@ public class ConvertXml2Hrf {
 	/**
 	 * Create the basic data.
 	 */
-	private static void createBasics(Map<?, ?> teamdetailsDataMap,
+	private static void createBasics(Map<String, String> teamdetailsDataMap,
 			Map<?, ?> worldDataMap, StringBuilder buffer) {
 		buffer.append("[basics]\n");
 		buffer.append("application=HO\n");

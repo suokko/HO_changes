@@ -6,131 +6,130 @@
  */
 package ho.core.file.xml;
 
-
 import ho.core.model.WorldDetailLeague;
 import ho.core.util.HOLogger;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+public class XMLWorldDetailsParser {
 
+	/**
+	 * Utility class - private constructor enforces noninstantiability.
+	 */
+	private XMLWorldDetailsParser() {
+	}
 
-class XMLWorldDetailsParser {
- 
-    XMLWorldDetailsParser() {
-    }
+	public static Map<String, String> parseWorldDetailsFromString(String inputStream,
+			String leagueID) {
+		return parseDetails(XMLManager.parseString(inputStream), leagueID);
+	}
 
-    final Hashtable<String,String> parseWorldDetailsFromString(String inputStream, String leagueID) {
-        return parseDetails(XMLManager.parseString(inputStream), leagueID);
-    }
+	public static List<WorldDetailLeague> parseDetails(Document doc) {
+		Element ele = null;
+		Element root = null;
+		List<WorldDetailLeague> detailsList = new ArrayList<WorldDetailLeague>();
+		NodeList list = null;
+		if (doc == null) {
+			return detailsList;
+		}
 
-    final Hashtable<String,String> parseDetails(Document doc, String leagueID) {
-        Element ele = null;
-        Element root = null;
-        final MyHashtable hash = new MyHashtable();
-        NodeList list = null;
-        String tempLeagueID = null;
+		// Tabelle erstellen
+		root = doc.getDocumentElement();
 
-        if (doc == null) {
-            return hash;
-        }
+		try {
+			root = (Element) root.getElementsByTagName("LeagueList").item(0);
+			list = root.getElementsByTagName("League");
 
-        //Tabelle erstellen
-        root = doc.getDocumentElement();
+			for (int i = 0; (list != null) && (i < list.getLength()); i++) {
+				root = (Element) list.item(i);
+				WorldDetailLeague tmp = new WorldDetailLeague();
+				ele = (Element) root.getElementsByTagName("LeagueID").item(0);
+				tmp.setLeagueId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
+				ele = (Element) root.getElementsByTagName("EnglishName").item(0);
+				tmp.setCountryName(XMLManager.getFirstChildNodeValue(ele));
+				ele = (Element) root.getElementsByTagName("ActiveUsers").item(0);
+				tmp.setActiveUsers(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
 
-        try {
-            //Daten füllen            
-            root = (Element) root.getElementsByTagName("LeagueList").item(0);
+				root = (Element) root.getElementsByTagName("Country").item(0);
+				ele = (Element) root.getElementsByTagName("CountryID").item(0);
+				tmp.setCountryId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
+				detailsList.add(tmp);
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(XMLWorldDetailsParser.class, e);
+		}
 
-            //Einträge adden
-            list = root.getElementsByTagName("League");
+		return detailsList;
+	}
+	
+	private static Map<String, String> parseDetails(Document doc, String leagueID) {
+		Element ele = null;
+		Element root = null;
+		Map<String, String> map = new MyHashtable();
+		NodeList list = null;
+		String tempLeagueID = null;
 
-            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                tempLeagueID = XMLManager.getFirstChildNodeValue((Element) ((Element) list
-                                                                                       .item(i)).getElementsByTagName("LeagueID")
-                                                                                       .item(0));
+		if (doc == null) {
+			return map;
+		}
 
-                //Liga suchen
-                if (tempLeagueID.equals(leagueID)) {
-                    root = (Element) list.item(i);
+		// Tabelle erstellen
+		root = doc.getDocumentElement();
 
-                    //Land
-                    ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-                    hash.put("LeagueID", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("Season").item(0);
-                    hash.put("Season", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("MatchRound").item(0);
-                    hash.put("MatchRound", (XMLManager.getFirstChildNodeValue(ele)));
+		try {
+			// Daten füllen
+			root = (Element) root.getElementsByTagName("LeagueList").item(0);
 
-                    //Dati
-                    ele = (Element) root.getElementsByTagName("TrainingDate").item(0);
-                    hash.put("TrainingDate", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("EconomyDate").item(0);
-                    hash.put("EconomyDate", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("SeriesMatchDate").item(0);
-                    hash.put("SeriesMatchDate", (XMLManager.getFirstChildNodeValue(ele)));
+			// Einträge adden
+			list = root.getElementsByTagName("League");
 
-                    //Country
-                    root = (Element) root.getElementsByTagName("Country").item(0);
-                    ele = (Element) root.getElementsByTagName("CountryID").item(0);
-                    hash.put("CountryID", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("CurrencyName").item(0);
-                    hash.put("CurrencyName", (XMLManager.getFirstChildNodeValue(ele)));
-                    ele = (Element) root.getElementsByTagName("CurrencyRate").item(0);
-                    hash.put("CurrencyRate", (XMLManager.getFirstChildNodeValue(ele)));
+			for (int i = 0; (list != null) && (i < list.getLength()); i++) {
+				tempLeagueID = XMLManager.getFirstChildNodeValue((Element) ((Element) list.item(i))
+						.getElementsByTagName("LeagueID").item(0));
 
-                    //fertig
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
-        }
+				// Liga suchen
+				if (tempLeagueID.equals(leagueID)) {
+					root = (Element) list.item(i);
 
-        return hash;
-    }
-    
-    final WorldDetailLeague[] parseDetails(Document doc) {
-    	Element ele = null;
-        Element root = null;
-        final ArrayList<WorldDetailLeague> arrayList = new ArrayList<WorldDetailLeague>();
-        NodeList list = null;
-        if (doc == null) {
-            return new WorldDetailLeague[0];
-        }
+					// Land
+					ele = (Element) root.getElementsByTagName("LeagueID").item(0);
+					map.put("LeagueID", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("Season").item(0);
+					map.put("Season", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("MatchRound").item(0);
+					map.put("MatchRound", (XMLManager.getFirstChildNodeValue(ele)));
 
-        //Tabelle erstellen
-        root = doc.getDocumentElement();
-        
-        try {
-            root = (Element) root.getElementsByTagName("LeagueList").item(0);
-            list = root.getElementsByTagName("League");
+					// Dati
+					ele = (Element) root.getElementsByTagName("TrainingDate").item(0);
+					map.put("TrainingDate", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("EconomyDate").item(0);
+					map.put("EconomyDate", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("SeriesMatchDate").item(0);
+					map.put("SeriesMatchDate", (XMLManager.getFirstChildNodeValue(ele)));
 
-            for (int i = 0; (list != null) && (i < list.getLength()); i++) {
-                 root = (Element) list.item(i);
-                 WorldDetailLeague tmp = new WorldDetailLeague();
-                 ele = (Element) root.getElementsByTagName("LeagueID").item(0);
-                 tmp.setLeagueId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
-                 ele = (Element) root.getElementsByTagName("EnglishName").item(0);
-                 tmp.setCountryName(XMLManager.getFirstChildNodeValue(ele));
-                 ele = (Element) root.getElementsByTagName("ActiveUsers").item(0);
-                 tmp.setActiveUsers(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
-                 
-                 root = (Element) root.getElementsByTagName("Country").item(0);
-                  ele = (Element) root.getElementsByTagName("CountryID").item(0);
-                  tmp.setCountryId(Integer.parseInt(XMLManager.getFirstChildNodeValue(ele)));
-                  arrayList.add(tmp);
-                }
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"XMLTeamDetailsParser.parseDetails Exception gefangen: " + e);
-            HOLogger.instance().log(getClass(),e);
-        }
+					// Country
+					root = (Element) root.getElementsByTagName("Country").item(0);
+					ele = (Element) root.getElementsByTagName("CountryID").item(0);
+					map.put("CountryID", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("CurrencyName").item(0);
+					map.put("CurrencyName", (XMLManager.getFirstChildNodeValue(ele)));
+					ele = (Element) root.getElementsByTagName("CurrencyRate").item(0);
+					map.put("CurrencyRate", (XMLManager.getFirstChildNodeValue(ele)));
 
-        return arrayList.toArray(new WorldDetailLeague[arrayList.size()]);
-    }
+					// fertig
+					break;
+				}
+			}
+		} catch (Exception e) {
+			HOLogger.instance().log(XMLWorldDetailsParser.class, e);
+		}
+
+		return map;
+	}
 }
