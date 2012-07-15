@@ -4,12 +4,12 @@ import ho.core.model.HOVerwaltung;
 
 public final class PlayerHonesty {
 	private static final String[] languageKeys = {
-		"player.honesty.value.infamous",
-		"player.honesty.value.dishonest",
-		"player.honesty.value.honest",
-		"player.honesty.value.upright",
-		"player.honesty.value.righteous",
-		"player.honesty.value.saintly"};
+		"ls.player.honesty.value.infamous",
+		"ls.player.honesty.value.dishonest",
+		"ls.player.honesty.value.honest",
+		"ls.player.honesty.value.upright",
+		"ls.player.honesty.value.righteous",
+		"ls.player.honesty.value.saintly"};
 
 	public static final int INFAMOUS 	= 0;
 	public static final int DISHONEST 	= 1;
