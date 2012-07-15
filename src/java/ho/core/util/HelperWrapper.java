@@ -6,9 +6,12 @@
  */
 package ho.core.util;
 
+import ho.core.file.xml.XMLMatchdetailsParser;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
+import ho.core.model.match.Matchdetails;
 import ho.core.model.player.ISpielerPosition;
+import ho.core.net.MyConnector;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -162,11 +165,9 @@ public class HelperWrapper {
     @Deprecated
     public boolean isUserMatch(String matchID, MatchType matchType) {
     	try {
-          final String input = ho.core.net.MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
-          final ho.core.model.match.Matchdetails mdetails = new ho.core.file.xml.XMLMatchdetailsParser()
-                                                                           .parseMachtdetailsFromString(input, null);
-          final int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-
+          String input = MyConnector.instance().getMatchdetails(Integer.parseInt(matchID), matchType);
+          Matchdetails mdetails = XMLMatchdetailsParser.parseMachtdetailsFromString(input, null);
+          int teamID = HOVerwaltung.instance().getModel().getBasics().getTeamId();
           return ((mdetails.getHeimId() == teamID) || (mdetails.getGastId() == teamID));
       } catch (Exception e) {
       	HOLogger.instance().warning(Helper.class, "Err: " + e);

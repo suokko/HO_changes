@@ -737,8 +737,7 @@ public class OnlineWorker {
 				return null;
 			}
 			waitDialog.setValue(20);
-			XMLMatchdetailsParser parser = new XMLMatchdetailsParser();
-			details = parser.parseMachtdetailsFromString(matchDetails, lineup);
+			details = XMLMatchdetailsParser.parseMachtdetailsFromString(matchDetails, lineup);
 			waitDialog.setValue(40);
 			if (details == null) {
 				HOLogger.instance().warning(OnlineWorker.class,
