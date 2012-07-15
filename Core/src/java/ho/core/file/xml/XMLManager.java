@@ -2,13 +2,13 @@
 package ho.core.file.xml;
 
 import ho.core.model.WorldDetailLeague;
-import ho.core.model.match.MatchLineup;
 import ho.core.util.HOLogger;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -260,21 +260,15 @@ public class XMLManager  {
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public static  WorldDetailLeague[] parseWorldDetails(String worldDetails) {
-		return new XMLWorldDetailsParser().parseDetails(parseString(worldDetails));
+	public static  List<WorldDetailLeague> parseWorldDetails(String worldDetails) {
+		return XMLWorldDetailsParser.parseDetails(parseString(worldDetails));
 	}
 	
 	/**
 	 * Parse the worldDetails from the given xml string.
 	 */
-	public static  Hashtable<String,String> parseWorldDetails(String worldDetails, String leagueID) {
-		return new XMLWorldDetailsParser().parseWorldDetailsFromString(worldDetails, leagueID);
+	public static Map<String,String> parseWorldDetails(String worldDetails, String leagueID) {
+		return XMLWorldDetailsParser.parseWorldDetailsFromString(worldDetails, leagueID);
 	}
 
-	/**
-	 * Parse the match lineup from the given xml string.
-	 */
-	public static MatchLineup parseMatchLineup(String lineup) {
-		return XMLMatchLineupParser.parseMatchLineupFromString(lineup);
-	}
 }

@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -75,7 +76,7 @@ public class PluginIfaPanel extends JPanel {
 					String worldDetails;
 					try {
 						worldDetails = MyConnector.instance().getWorldDetails(0);
-						WorldDetailLeague[] leagues =XMLManager.parseWorldDetails(worldDetails);
+						List<WorldDetailLeague> leagues =XMLManager.parseWorldDetails(worldDetails);
 						DBManager.instance().saveWorldDetailLeagues(leagues);
 						WorldDetailsManager.instance().refresh();
 					} catch (IOException e1) {

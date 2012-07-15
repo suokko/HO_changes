@@ -1688,11 +1688,11 @@ public class DBManager {
 				.getAllWorldDetailLeagues();
 	}
 
-	public void saveWorldDetailLeagues(WorldDetailLeague[] leagues) {
+	public void saveWorldDetailLeagues(List<WorldDetailLeague> leagues) {
 		WorldDetailsTable table = (WorldDetailsTable) getTable(WorldDetailsTable.TABLENAME);
 		table.truncateTable();
-		for (int i = 0; i < leagues.length; i++) {
-			table.insertWorldDetailsLeague(leagues[i]);
+		for (WorldDetailLeague league: leagues) {
+			table.insertWorldDetailsLeague(league);
 		}
 	}
 
