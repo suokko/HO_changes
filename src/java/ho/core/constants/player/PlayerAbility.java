@@ -7,27 +7,27 @@ import ho.core.util.Helper;
 
 public final class PlayerAbility {
 	private static final String[] languageKeys = {
-		"player.skill.value.non-existent",
-		"player.skill.value.disastrous",
-		"player.skill.value.wretched",
-		"player.skill.value.poor",
-		"player.skill.value.weak",
-		"player.skill.value.inadequate",
-		"player.skill.value.passable",
-		"player.skill.value.solid",
-		"player.skill.value.excellent",
-		"player.skill.value.formidable",
-		"player.skill.value.outstanding",
-		"player.skill.value.brilliant",
-		"player.skill.value.magnificent",
-		"player.skill.value.worldclass",
-		"player.skill.value.supernatural",
-		"player.skill.value.titanic",
-		"player.skill.value.extra-terrestrial",
-		"player.skill.value.mythical",
-		"player.skill.value.magical",
-		"player.skill.value.utopian",
-		"player.skill.value.divine"};
+		"ls.player.skill.value.non-existent",
+		"ls.player.skill.value.disastrous",
+		"ls.player.skill.value.wretched",
+		"ls.player.skill.value.poor",
+		"ls.player.skill.value.weak",
+		"ls.player.skill.value.inadequate",
+		"ls.player.skill.value.passable",
+		"ls.player.skill.value.solid",
+		"ls.player.skill.value.excellent",
+		"ls.player.skill.value.formidable",
+		"ls.player.skill.value.outstanding",
+		"ls.player.skill.value.brilliant",
+		"ls.player.skill.value.magnificent",
+		"ls.player.skill.value.worldclass",
+		"ls.player.skill.value.supernatural",
+		"ls.player.skill.value.titanic",
+		"ls.player.skill.value.extra-terrestrial",
+		"ls.player.skill.value.mythical",
+		"ls.player.skill.value.magical",
+		"ls.player.skill.value.utopian",
+		"ls.player.skill.value.divine"};
 
 	public static final int NON_EXISTENT 	= 0;
 	public static final int DISASTROUS 		= 1;

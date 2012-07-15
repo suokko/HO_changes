@@ -231,7 +231,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		add(m_jcbNachkomma);
 
 		m_jchZahlenBewertung = new JCheckBox(HOVerwaltung.instance().getLanguageString("SkillZahlen") + " : "
-				+ HOVerwaltung.instance().getLanguageString("player.skill.value.passable") + " (6)");
+				+ HOVerwaltung.instance().getLanguageString("ls.player.skill.value.passable") + " (6)");
 		m_jchZahlenBewertung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_SkillZahlen"));
 		m_jchZahlenBewertung.setOpaque(false);
 		m_jchZahlenBewertung.setSelected(ho.core.model.UserParameter.temp().zahlenFuerSkill);
