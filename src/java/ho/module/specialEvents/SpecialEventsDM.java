@@ -336,7 +336,7 @@ class SpecialEventsDM
         return false;
     }
 
-  
+
     private static int getEventType (MatchHighlight highlight) {
     	if (isWeatherSE(highlight)) {
     		return WEATHERSE;
@@ -526,7 +526,7 @@ class SpecialEventsDM
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
     		case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-    			return HOVerwaltung.instance().getLanguageString("TT_Counter");
+    			return HOVerwaltung.instance().getLanguageString("ls.match.event.counter-attack");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
     		case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
@@ -553,7 +553,7 @@ class SpecialEventsDM
     			return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect");
 
     		case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-    			return HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
+    			return HOVerwaltung.instance().getLanguageString("ls.match.event.longshot");
     		}
 
 

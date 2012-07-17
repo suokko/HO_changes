@@ -36,9 +36,9 @@ import javax.swing.SwingConstants;
  * Zeigt die Stärken eines Matches an
  */
 class StaerkenvergleichPanel extends ImagePanel {
-	
+
 	private static final long serialVersionUID = -4203763992583137178L;
-	
+
     private JLabel m_clGastEinstellung = new JLabel();
     private JLabel m_clGastSelbstvertrauen = new JLabel();
     private JLabel m_clGastSterne = new JLabel();
@@ -309,13 +309,13 @@ class StaerkenvergleichPanel extends ImagePanel {
         add(panel,label,layout,constraints,0,6);
         add(panel,m_clHeimTeamHatstats,layout,constraints,1,6);
         add(panel,m_clGastTeamHatstats,layout,constraints,4,6);
-                
+
      // Loddar Stats
         label = new JLabel(HOVerwaltung.instance().getLanguageString("LoddarStats"));
         add(panel,label,layout,constraints,0,7);
         add(panel,m_clHeimTeamLoddar,layout,constraints,1,7);
         add(panel,m_clGastTeamLoddar,layout,constraints,4,7);
-        
+
         //Einstellung
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Einstellung"));
         add(panel,label,layout,constraints,0,8);
@@ -327,7 +327,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         add(panel,label,layout,constraints,0,9);
         add(panel,m_clHeimTaktik,layout,constraints,1,9);
         add(panel,m_clGastTaktik,layout,constraints,4,9);
- 
+
         //Taktikskill
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
         add(panel,label,layout,constraints,0,10);
@@ -364,7 +364,7 @@ class StaerkenvergleichPanel extends ImagePanel {
             constraints.weightx = 1.0;
             constraints.gridwidth = 2;
     	}
-    		
+
     	constraints.gridx = x;
         constraints.gridy = y;
     	constraints.anchor = GridBagConstraints.WEST;
@@ -404,7 +404,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         m_clGastSelbstvertrauen.setText("");
     }
 
- 
+
     final void refresh(MatchKurzInfo info,Matchdetails details) {
         m_clZuschauer.setText(details.getZuschauer() + "");
         if(info.getMatchStatus() == MatchKurzInfo.FINISHED)
@@ -414,8 +414,8 @@ class StaerkenvergleichPanel extends ImagePanel {
         m_clMatchtyp.setIcon(ThemeManager.getIcon(HOIconName.MATCHTYPES[info.getMatchTyp().getIconArrayIndex()]));
         String name4matchtyp = info.getMatchTyp().getName();
 
-        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED) 
-        		&& (info.getMatchTyp() != MatchType.TOURNAMENTGROUP) 
+        if ((details.getZuschauer() <= 0) && (info.getMatchStatus() == MatchKurzInfo.FINISHED)
+        		&& (info.getMatchTyp() != MatchType.TOURNAMENTGROUP)
         		&& (info.getMatchTyp() != MatchType.TOURNAMENTPLAYOFF)) {
             name4matchtyp += (" ( "
             + HOVerwaltung.instance().getLanguageString("Reload_Match")
@@ -506,25 +506,25 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             m_clHeimTeamHatstats.setText(details.getHomeHatStats() + "");
             m_clGastTeamHatstats.setText(details.getAwayHatStats() + "");
-            
+
             m_clHeimTeamLoddar.setText(Helper.round(details.getHomeLoddarStats(), 2) + "");
             m_clGastTeamLoddar.setText(Helper.round(details.getAwayLoddarStats(), 2) + "");
-            
+
             //Einstellung
             String heimEinstellung = "";
             String gastEinstellung = "";
 
             switch (details.getHomeEinstellung()) {
                 case IMatchDetails.EINSTELLUNG_NORMAL:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("Normal");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_PIC:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("PIC");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_MOTS:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("MOTS");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
                     break;
 
                 default:
@@ -533,15 +533,15 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             switch (details.getGuestEinstellung()) {
                 case IMatchDetails.EINSTELLUNG_NORMAL:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("Normal");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_PIC:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("PIC");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_MOTS:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("MOTS");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
                     break;
 
                 default:
@@ -570,7 +570,7 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             //Stimmung und Selbstvertrauen
             final int hrfid = DBManager.instance().getHRFID4Date(info.getMatchDateAsTimestamp());
-            
+
             final String[] stimmungSelbstvertrauen = DBManager.instance().getStimmmungSelbstvertrauen(hrfid);
 
             if (info.getHeimID() == teamid) {

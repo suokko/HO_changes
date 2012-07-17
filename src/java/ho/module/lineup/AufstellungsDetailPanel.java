@@ -82,17 +82,17 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
 	private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
-	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("PIC"), IMatchDetails.EINSTELLUNG_PIC),
-			new CBItem(HOVerwaltung.instance().getLanguageString("Normal"), IMatchDetails.EINSTELLUNG_NORMAL),
-			new CBItem(HOVerwaltung.instance().getLanguageString("MOTS"), IMatchDetails.EINSTELLUNG_MOTS) };
+	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool"), IMatchDetails.EINSTELLUNG_PIC),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal"), IMatchDetails.EINSTELLUNG_NORMAL),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason"), IMatchDetails.EINSTELLUNG_MOTS) };
 	private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
-	
+
 	private JComboBox m_jcbSelbstvertrauen = new JComboBox(TeamConfidence.ITEMS);
-	
+
 	private CBItem[] TRAINERTYPE = { new CBItem(HOVerwaltung.instance().getLanguageString("coach.defensive"), 0),
 			new CBItem(HOVerwaltung.instance().getLanguageString("coach.normal"), 2),
 			new CBItem(HOVerwaltung.instance().getLanguageString("coach.offensive"), 1), };
-	
+
 	private JComboBox m_jcbTrainerType = new JComboBox(TRAINERTYPE);
 
 	private CBItem[] PREDICTIONTYPE = getPredictionItems();
@@ -485,7 +485,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             case IMatchDetails.TAKTIK_NORMAL:
             // Play creatively has no tactic level
             case IMatchDetails.TAKTIK_CREATIVE:
-                return HOVerwaltung.instance().getLanguageString("Normal");
+                return (" ");
 
             case IMatchDetails.TAKTIK_PRESSING:
             case IMatchDetails.TAKTIK_KONTER:
