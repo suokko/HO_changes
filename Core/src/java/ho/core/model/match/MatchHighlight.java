@@ -43,10 +43,10 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
     private int m_iSpielerID;
 
     private int m_iTeamID;
-    
+
     private int matchId;
 
- 
+
     /**
      * Creates a new instance of MatchHighlight
      */
@@ -55,9 +55,9 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    
-    
-    
+
+
+
     /**
      * Setter for property m_sEventText.
      *
@@ -299,8 +299,8 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
     public final int getTeamID() {
         return m_iTeamID;
     }
-    
-    
+
+
     /**
      * Check, if the highlight is a weather SE highlight.
      */
@@ -313,7 +313,7 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
     					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_QUICK_RAINY ||
     					m_iHighlightSubTyp == HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY));
     }
-    
+
     public static String getTooltiptext(int typ, int subtyp) {
         if (typ == HIGHLIGHT_KARTEN) {
             if ((subtyp == HIGHLIGHT_SUB_GELB_HARTER_EINSATZ)
@@ -336,7 +336,7 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
             return HOVerwaltung.instance().getLanguageString("Verletzt");
         	}
         }
-        
+
         switch (subtyp) {
                 case HIGHLIGHT_SUB_FREISTOSS:
                 case HIGHLIGHT_SUB_FREISTOSS_2:
@@ -393,7 +393,7 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
                 	return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect");
 
                 case HIGHLIGHT_SUB_LONGHSHOT_1:
-                	return HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
+                	return HOVerwaltung.instance().getLanguageString("ls.match.event.longshot");
 
                 case HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
                 case HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:

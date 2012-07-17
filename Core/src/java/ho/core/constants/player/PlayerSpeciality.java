@@ -21,12 +21,12 @@ public final class PlayerSpeciality {
     
     public static final CBItem[] ITEMS = {
     	new CBItem("", NO_SPECIALITY),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.technical"), TECHNICAL),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.quick"),QUICK),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.powerful"), POWERFUL),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.unpredictable"), UNPREDICTABLE),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.head"), HEAD),
-    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.value.regainer"), REGAINER)
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.technical"), TECHNICAL),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.quick"),QUICK),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.powerful"), POWERFUL),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.unpredictable"), UNPREDICTABLE),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.head"), HEAD),
+    	new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.speciality.regainer"), REGAINER)
     };
     
 	private PlayerSpeciality(){};

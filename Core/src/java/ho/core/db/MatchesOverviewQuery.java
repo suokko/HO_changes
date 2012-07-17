@@ -119,7 +119,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows[4] = new MatchesHighlightsStat("highlight_rechts", "3,13,23,33,53,63,73,83");
 		rows[5] = new MatchesHighlightsStat("highlight_freekick", "85,86");
 		rows[5].appendDescription("indirect");
-		rows[6] = new MatchesHighlightsStat("Tactic.LongShots", "87");
+		rows[6] = new MatchesHighlightsStat("ls.match.event.longshot", "87");
 		rows[7] = new MatchesHighlightsStat("highlight_counter", "40,41,42,43");
 		rows[8] = new MatchesHighlightsStat("highlight_special","5,6,7,8,9,15,16,17,18,19,25,35,36,37,38,39");
 		rows[9] = new MatchesHighlightsStat("highlight_yellowcard","5", "10,11");
