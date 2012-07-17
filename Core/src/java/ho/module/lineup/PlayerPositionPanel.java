@@ -577,62 +577,62 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             case ISpielerPosition.rightBack:
             case ISpielerPosition.leftBack: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.TOWARDS_MIDDLE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardsmiddle"),ISpielerPosition.TOWARDS_MIDDLE);
                 break;
             }
 
             case ISpielerPosition.rightCentralDefender:
             case ISpielerPosition.leftCentralDefender: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardswing"),ISpielerPosition.TOWARDS_WING);
                 break;
             }
 
             case ISpielerPosition.middleCentralDefender: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
             	break;
             }
 
             case ISpielerPosition.rightInnerMidfield:
             case ISpielerPosition.leftInnerMidfield: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardswing"),ISpielerPosition.TOWARDS_WING);
             	break;
             }
 
             case ISpielerPosition.centralInnerMidfield: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
             	break;
             }
 
             case ISpielerPosition.leftWinger:
             case ISpielerPosition.rightWinger: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.TOWARDS_MIDDLE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive"),ISpielerPosition.OFFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardsmiddle"),ISpielerPosition.TOWARDS_MIDDLE);
                 break;
             }
 
             case ISpielerPosition.rightForward:
             case ISpielerPosition.leftForward: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardswing"),ISpielerPosition.TOWARDS_WING);
                 break;
             }
 
             case ISpielerPosition.centralForward: {
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive"),ISpielerPosition.DEFENSIVE);
             	break;
             }
 
