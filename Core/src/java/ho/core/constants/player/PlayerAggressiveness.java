@@ -4,12 +4,12 @@ import ho.core.model.HOVerwaltung;
 
 public class PlayerAggressiveness {
 	private static final String[] languageKeys = {
-		"ls.player.aggressiveness.value.tranquil",
-		"ls.player.aggressiveness.value.calm",
-		"ls.player.aggressiveness.value.balanced",
-		"ls.player.aggressiveness.value.temperamental",
-		"ls.player.aggressiveness.value.fiery",
-		"ls.player.aggressiveness.value.unstable"};
+		"ls.player.aggressiveness.tranquil",
+		"ls.player.aggressiveness.calm",
+		"ls.player.aggressiveness.balanced",
+		"ls.player.aggressiveness.temperamental",
+		"ls.player.aggressiveness.fiery",
+		"ls.player.aggressiveness.unstable"};
 
 	public static final int TRANQUIL 		= 0;
 	public static final int CALM 			= 1;

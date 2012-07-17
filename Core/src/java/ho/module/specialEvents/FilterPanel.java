@@ -44,7 +44,7 @@ class FilterPanel extends JPanel implements ActionListener {
 			SpecialEventsPanel.newTableModel();
 		}
 	}
-	
+
 	FilterPanel() {
 		initialize();
 	}
@@ -91,7 +91,7 @@ class FilterPanel extends JPanel implements ActionListener {
 			weatherSE = new JCheckBox(HOVerwaltung.instance().getLanguageString("WEATHERSE"));
 			weatherSE.setSelected(true);
 			weatherSE.addActionListener(this);
-			counter = new JCheckBox(HOVerwaltung.instance().getLanguageString("TT_Counter"));
+			counter = new JCheckBox(HOVerwaltung.instance().getLanguageString("ls.match.event.counter-attack"));
 			counter.setSelected(true);
 			counter.addActionListener(this);
 			freekick = new JCheckBox(HOVerwaltung.instance().getLanguageString("highlight_freekick"));
@@ -103,7 +103,7 @@ class FilterPanel extends JPanel implements ActionListener {
 			ifk = new JCheckBox(HOVerwaltung.instance().getLanguageString("highlight_freekick") + " " + HOVerwaltung.instance().getLanguageString("indirect"));
 			ifk.setSelected(true);
 			ifk.addActionListener(this);
-			longshot = new JCheckBox(HOVerwaltung.instance().getLanguageString("Tactic.LongShots"));
+			longshot = new JCheckBox(HOVerwaltung.instance().getLanguageString("ls.match.event.longshot"));
 			longshot.setSelected(true);
 			longshot.addActionListener(this);
 

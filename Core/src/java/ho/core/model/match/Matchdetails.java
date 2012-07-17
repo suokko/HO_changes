@@ -63,13 +63,13 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     private int m_iWetterId = -1;
 
     private int m_iZuschauer;
-    
+
     /** Spectators in category Terraces, is 0 if not our home match **/
     private int soldTerraces = -1;
-    
+
     /** Spectators in category Basic, is 0 if not our home match **/
     private int soldBasic = -1;
-    
+
     /** Spectators in category Roof, is 0 if not our home match **/
     private int soldRoof = -1;
 
@@ -100,13 +100,13 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     public static String getNameForEinstellung(int einstellung) {
         switch (einstellung) {
             case EINSTELLUNG_PIC:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("PIC");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
 
             case EINSTELLUNG_NORMAL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("Normal");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
 
             case EINSTELLUNG_MOTS:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("MOTS");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
 
             default:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
@@ -128,26 +128,26 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
         switch (taktikTyp) {
             case TAKTIK_NORMAL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("Normal");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.normal");
 
             case TAKTIK_PRESSING:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("TT_Pressing");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.pressing");
 
             case TAKTIK_KONTER:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("TT_Counter");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.counter-attacks");
 
             case TAKTIK_MIDDLE:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("TT_MIDDLE");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.attackinthemiddle");
 
             case TAKTIK_WINGS:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("TT_WINGS");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.attackonwings");
 
             case TAKTIK_CREATIVE:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("tt_creative");
-            
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.playcreatively");
+
             case TAKTIK_LONGSHOTS:
-            	return ho.core.model.HOVerwaltung.instance().getLanguageString("Tactic.LongShots");
-                
+            	return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.tactic.longshots");
+
             default:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");
         }
@@ -170,7 +170,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 		}
     	return -1;
 	}
-	
+
     /**
      * Setter for property m_iArenaID.
      *
@@ -1107,18 +1107,18 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 		this.soldVIP = soldVIP;
 	}
 
-	public final int getHomeHatStats() 
+	public final int getHomeHatStats()
     {
-    	return (getHomeMidfield() * 3) + getHomeLeftAtt() + 
-    			getHomeRightAtt() + getHomeMidAtt() + 
-    			getHomeMidDef() + getHomeLeftDef() + 
+    	return (getHomeMidfield() * 3) + getHomeLeftAtt() +
+    			getHomeRightAtt() + getHomeMidAtt() +
+    			getHomeMidDef() + getHomeLeftDef() +
     			getHomeRightDef();
     }
-	public final int getAwayHatStats() 
+	public final int getAwayHatStats()
     {
-    	return (getGuestMidfield() * 3) + getGuestLeftAtt() + 
-		getGuestRightAtt() + getGuestMidAtt() + 
-		getGuestMidDef() + getGuestLeftDef() + 
+    	return (getGuestMidfield() * 3) + getGuestLeftAtt() +
+		getGuestRightAtt() + getGuestMidAtt() +
+		getGuestMidDef() + getGuestLeftDef() +
 		getGuestRightDef();
     }
 	public final double getHomeLoddarStats()
@@ -1167,7 +1167,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
         // Calculate and return the LoddarStats rating
         return 80 * midfieldFactor * (defenseStrength + attackStrength);
 	}
-	
+
 	public final double getAwayLoddarStats()
 	{
         final double MIDFIELD_SHIFT = 0.0;
@@ -1214,7 +1214,7 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
         // Calculate and return the LoddarStats rating
         return 80 * midfieldFactor * (defenseStrength + attackStrength);
 	}
-	
+
 	 private double hq(double value)
 	 {
 	        return (2 * value) / (value + 80);

@@ -98,12 +98,12 @@ public class PlayerConverter {
         // Get all specialities for active language
         // This should be the same language as in Hattrick
         specialities = new ArrayList<String>();
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.technical").toLowerCase(java.util.Locale.ENGLISH));
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.quick").toLowerCase(java.util.Locale.ENGLISH));
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.powerful").toLowerCase(java.util.Locale.ENGLISH));
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.unpredictable").toLowerCase(java.util.Locale.ENGLISH));
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.head").toLowerCase(java.util.Locale.ENGLISH));
-        specialities.add(homodel.getLanguageString("ls.player.speciality.value.regainer").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.technical").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.quick").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.powerful").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.unpredictable").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.head").toLowerCase(java.util.Locale.ENGLISH));
+        specialities.add(homodel.getLanguageString("ls.player.speciality.regainer").toLowerCase(java.util.Locale.ENGLISH));
 
         specialitiesvalues = new ArrayList<Integer>();
 

@@ -50,16 +50,16 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /** TODO Missing Parameter Documentation */
  //   protected static final int SET_PIECE = 201;
-    
+
 	protected static int PLAYER_POSITION_PANEL_WIDTH = Helper.calcCellWidth(160);
 	protected static int PLAYER_POSITION_PANEL_HEIGHT_FULL = Helper.calcCellWidth(80);
 	// Used for positions with no tactics box
 	protected static int PLAYER_POSITION_PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(50);
-	
-	
+
+
 	protected static int MINI_PLAYER_POSITION_PANEL_WIDTH = Helper.calcCellWidth(120);
 	protected static int MINI_PLAYER_POSITION_PANEL_HEIGHT = Helper.calcCellWidth(32);
-	
+
 	private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null, true);
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -89,10 +89,10 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
 	private int playerId = -1;
 	private int tacticOrder = -1;
-	
+
 	private final GridBagLayout layout = new GridBagLayout();
 	private JLayeredPane jlp = new JLayeredPane();
-	
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -130,7 +130,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    //--------------------------------------------------------    
+    //--------------------------------------------------------
 
     /**
      * Gibt die PositionsID zurück
@@ -209,7 +209,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         constraints.weightx = 1.0;
         constraints.weighty = 0;
         constraints.insets = new Insets(1, 2, 1, 2);
-     
+
         //Minimiert
         if (m_bMinimize) {
             // This is the realm of the miniposframe, no jlp...
@@ -255,7 +255,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             if (!aenderbar) {
                 m_jcbPlayer.setEnabled(false);
             }
-            
+
             m_jcbPlayer.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));// Color.white
 
             //Nur anzeigen, wenn mehr als eine Taktik möglich ist
@@ -266,7 +266,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 if (!aenderbar) {
                     m_jcbTactic.setEnabled(false);
                 }
-                
+
                 m_jcbTactic.setBackground(m_jcbPlayer.getBackground());
                 jlp.add(m_jcbTactic, constraints, 1);
                 setPreferredSize(new Dimension(PLAYER_POSITION_PANEL_WIDTH,PLAYER_POSITION_PANEL_HEIGHT_FULL));
@@ -349,15 +349,15 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                                                                                          .getKicker());
 			if (aktuellerSpieler!=null) {
 				playerId = aktuellerSpieler.getSpielerID();
-			}	
-			tacticOrder=-1;                                                                                         
-			
+			}
+			tacticOrder=-1;
+
 			// Filter keeper from the spieler vector (can't be sp taker)
-			// Make sure the incoming spieler list is not modified, it 
+			// Make sure the incoming spieler list is not modified, it
 			// seems to visit the captain position later.
-			
+
 			Spieler keeper = HOVerwaltung.instance().getModel().getAufstellung().
-					getPlayerByPositionID(ISpielerPosition.keeper); 
+					getPlayerByPositionID(ISpielerPosition.keeper);
 			if (keeper != null) {
 				Vector<Spieler> tmpSpieler = new Vector<Spieler>(spieler.size() -1);
 				for (int i = 0; i < spieler.size(); i++) {
@@ -374,8 +374,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                                                                                          .getKapitaen());
 			if (aktuellerSpieler!=null) {
 				playerId = aktuellerSpieler.getSpielerID();
-			}	
-			tacticOrder=-1;                                                                                         
+			}
+			tacticOrder=-1;
         } else {
             //Aktuell aufgestellten Spieler holen
             final SpielerPosition position = HOVerwaltung.instance().getModel().getAufstellung()
@@ -384,7 +384,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             if (position != null) {
                 aktuellerSpieler = HOVerwaltung.instance().getModel().getSpieler(position
                                                                                  .getSpielerId());
-                                                                                 
+
 				if (aktuellerSpieler!=null) {
 					m_jcbPlayer.setEnabled(true); // To be sure
 					playerId = aktuellerSpieler.getSpielerID();
@@ -399,7 +399,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 					}
 				}
 				tacticOrder = position.getTaktik();
-                setTaktik(position.getTaktik(), aktuellerSpieler);				
+                setTaktik(position.getTaktik(), aktuellerSpieler);
             }
         }
 
@@ -481,7 +481,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         //Listener wieder hinzu
         m_jcbPlayer.addItemListener(this);
 
-        //Minimized 
+        //Minimized
         if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
             m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
             m_jlPlayer.setIcon(ImageUtilities.getImage4Position(HOVerwaltung.instance().getModel().getAufstellung().getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
@@ -519,7 +519,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      */
     private void initLabel() {
     	final Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
-    	
+
         if (m_iPositionID == ISpielerPosition.setPieces) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
         } else if (m_iPositionID == ISpielerPosition.captain) {
@@ -531,7 +531,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 //Reserve
             	final String nameForPosition = (m_bMinimize)?SpielerPosition.getNameForPosition(position
                         .getPosition()):SpielerPosition.getNameForPosition(position.getPosition());
-            		
+
                 if ((m_jcbTactic.getItemCount() == 1) && (position.getId() != ISpielerPosition.keeper)) {
                 	//special naming for reserve defender
                 	if (!m_bMinimize && position.getId() == ISpielerPosition.substDefender) {
@@ -546,8 +546,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 }
             }
         }
-        
-        //Minimized 
+
+        //Minimized
         if ((m_clSelectedPlayer != null) && (m_clSelectedPlayer.getSpieler() != null)) {
             m_jlPlayer.setText(m_clSelectedPlayer.getSpieler().getName());
             m_jlPlayer.setIcon(ImageUtilities.getImage4Position(lineup.getPositionBySpielerId(m_clSelectedPlayer.getSpieler().getSpielerID()),
@@ -569,14 +569,14 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
         switch (m_iPositionID) {
             case ISpielerPosition.keeper: {
-                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
+                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),
                                                ISpielerPosition.NORMAL));
                 break;
             }
 
             case ISpielerPosition.rightBack:
             case ISpielerPosition.leftBack: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.TOWARDS_MIDDLE);
@@ -585,21 +585,21 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
             case ISpielerPosition.rightCentralDefender:
             case ISpielerPosition.leftCentralDefender: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
                 break;
             }
-            
+
             case ISpielerPosition.middleCentralDefender: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	break;
             }
 
             case ISpielerPosition.rightInnerMidfield:
             case ISpielerPosition.leftInnerMidfield: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
@@ -607,15 +607,15 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             }
 
             case ISpielerPosition.centralInnerMidfield: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	break;
             }
-            
+
             case ISpielerPosition.leftWinger:
             case ISpielerPosition.rightWinger: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Offensiv"),ISpielerPosition.OFFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("zurMitte"),ISpielerPosition.TOWARDS_MIDDLE);
@@ -624,36 +624,36 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
             case ISpielerPosition.rightForward:
             case ISpielerPosition.leftForward: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("nachAussen"),ISpielerPosition.TOWARDS_WING);
                 break;
             }
 
             case ISpielerPosition.centralForward: {
-            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Normal"),ISpielerPosition.NORMAL);
+            	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),ISpielerPosition.NORMAL);
             	addTactic(aktuellerSpieler,HOVerwaltung.instance().getLanguageString("Defensiv"),ISpielerPosition.DEFENSIVE);
             	break;
             }
 
-            
+
             case ISpielerPosition.substDefender:
             case ISpielerPosition.substForward:
             case ISpielerPosition.substInnerMidfield:
             case ISpielerPosition.substKeeper:
             case ISpielerPosition.substWinger: {
-                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
+                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),
                                                ISpielerPosition.NORMAL));
                 break;
             }
 
             default:
-                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("Normal"),
+                m_jcbTactic.addItem(new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal"),
                                                ISpielerPosition.NORMAL));
         }
     }
 
-    
+
     private void addTactic(Spieler currentPlayer, String text, byte playerPosition){
     	if (currentPlayer != null) {
             text += " ("
@@ -678,7 +678,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         if (spieler != null) {
         	// Create a string with just initial as first name
         	String spielerName = spieler.getName().substring(0, 1) + "." + spieler.getName().substring(spieler.getName().indexOf(" ")+1);
-        	
+
         	if (m_iPositionID == ISpielerPosition.setPieces) {
                 item.setValues(spielerName,
                                spieler.getStandards()
@@ -688,7 +688,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
             } else if (m_iPositionID == ISpielerPosition.captain) {
                 item.setValues(spielerName,
                                Helper.round(
-                            		   HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(spieler.getSpielerID()), 
+                            		   HOVerwaltung.instance().getModel().getAufstellung().getAverageExperience(spieler.getSpielerID()),
                             		   ho.core.model.UserParameter.instance().anzahlNachkommastellen),
                                spieler);
                 return item;
@@ -696,19 +696,19 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
                 final SpielerPosition position = HOVerwaltung.instance().getModel().getAufstellung()
                                                                                         .getPositionById(m_iPositionID);
 
-                if (position != null) { 
+                if (position != null) {
                     item.setValues(spielerName,
-                                   spieler.calcPosValue(position.getPosition(), true), spieler);					
+                                   spieler.calcPosValue(position.getPosition(), true), spieler);
                     return item;
-                } 
-                
+                }
+
                 return m_clNullSpieler;
-                
+
             }
         }
         //Kein Spieler
         return m_clNullSpieler;
-        
+
     }
 	public int getPlayerId() {
 		return playerId;
@@ -720,21 +720,21 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
 	/**
 	 * Exposes the player combo box to reset the swap button if needed.
-	 * 
+	 *
 	 * @return the player {@link JComboBox}.
 	 */
 	protected JComboBox getPlayerComboBox() {
 		return m_jcbPlayer;
 	}
-	
+
 	public LayoutManager getSwapLayout() {
 		return layout;
 	}
-	
+
 	public void addSwapItem (Component c) {
 		jlp.add(c,1);
 	}
-	
+
 	public void addAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
@@ -748,7 +748,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         jlp.add(overlay, constraints, 2);
         repaint();
  	}
-	
+
 	public void removeAssistantOverlay(LineupAssistantSelectorOverlay overlay) {
 		jlp.remove(overlay);
 		repaint();
