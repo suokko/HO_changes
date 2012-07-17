@@ -39,6 +39,7 @@ import ho.core.util.Helper;
 import ho.core.util.StringUtils;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
+import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.Substitution;
 
 import java.awt.Color;
@@ -658,7 +659,13 @@ public class OnlineWorker {
 		Iterator<Substitution> iter = lineup.getSubstitutionList().iterator();
 		while (iter.hasNext()) {
 			Substitution sub = iter.next();
-			orders.append("{\"playerin\":\"").append(sub.getObjectPlayerID()).append("\",");
+			// to get conform with CHPP API (playerout==playerin if its a 
+			// behaviour change)
+			if (sub.getOrderType() == MatchOrderType.NEW_BEHAVIOUR) {
+				orders.append("{\"playerin\":\"").append(sub.getSubjectPlayerID()).append("\",");
+			} else {
+				orders.append("{\"playerin\":\"").append(sub.getObjectPlayerID()).append("\",");
+			}
 			orders.append("\"playerout\":\"").append(sub.getSubjectPlayerID()).append("\",");
 			orders.append("\"orderType\":\"").append(sub.getOrderType().getId()).append("\",");
 			orders.append("\"min\":\"").append(sub.getMatchMinuteCriteria()).append("\",");
@@ -671,7 +678,7 @@ public class OnlineWorker {
 			}
 		}
 		orders.append("]}");
-
+		
 		try {
 			result = MyConnector.instance().setMatchOrder(matchId, matchType, orders.toString());
 		} catch (IOException e) {
