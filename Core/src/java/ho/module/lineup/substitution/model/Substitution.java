@@ -70,6 +70,11 @@ public class Substitution {
 
 	public void setSubjectPlayerID(int subjectPlayerID) {
 		this.subjectPlayerID = subjectPlayerID;
+		// to get conform with CHPP API (playerout==playerin if its a 
+		// behaviour change)
+		if (this.orderType == MatchOrderType.NEW_BEHAVIOUR) {
+			this.objectPlayerID = subjectPlayerID;
+		}
 	}
 
 	public MatchOrderType getOrderType() {
