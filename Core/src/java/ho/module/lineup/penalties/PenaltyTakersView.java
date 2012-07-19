@@ -1,5 +1,6 @@
 package ho.module.lineup.penalties;
 
+import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.table.RowNumberTable;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -28,6 +29,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -172,12 +174,13 @@ public class PenaltyTakersView extends JPanel {
 				.getColumn(0);
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
+		SkillRenderer skillRenderer = new SkillRenderer();
 		this.playersTable.getColumnModel().getColumn(2)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.playersTable.getColumnModel().getColumn(3)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.playersTable.getColumnModel().getColumn(4)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.playersTable.getColumnModel().getColumn(5)
 				.setCellRenderer(new DoubleRenderer());
 
@@ -238,11 +241,11 @@ public class PenaltyTakersView extends JPanel {
 		inLineupColumn.setCellRenderer(new InLineupRenderer());
 		inLineupColumn.setMaxWidth(20);
 		this.takersTable.getColumnModel().getColumn(2)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.takersTable.getColumnModel().getColumn(3)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.takersTable.getColumnModel().getColumn(4)
-				.setCellRenderer(new DoubleRenderer());
+				.setCellRenderer(skillRenderer);
 		this.takersTable.getColumnModel().getColumn(5)
 				.setCellRenderer(new DoubleRenderer());
 
@@ -259,7 +262,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.weightx = 0.4;
 		gbc.weighty = 1.0;
 		tablesPanel.add(scrollPane, gbc);
-
+		
 		return tablesPanel;
 	}
 
@@ -756,6 +759,20 @@ public class PenaltyTakersView extends JPanel {
 		}
 	}
 
+	private class SkillRenderer extends DoubleRenderer {
+
+		private static final long serialVersionUID = 3943598594307257068L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			Double val = (Double)value;
+			((JComponent)c).setToolTipText(PlayerAbility.getNameForSkill(val.floatValue()));
+			return c;
+		}
+	}
+	
 	private enum Move {
 		UP, DOWN;
 	}
