@@ -437,8 +437,12 @@ public class SubstitutionOverview extends JPanel {
 			case ORDERTYPE_ICON_COL_IDX:
 				return sub.getBehaviour();
 			case OBJECTPLAYER_COL_IDX:
-				Spieler in = hoModel.getSpieler(sub.getObjectPlayerID());
+				Spieler in = null;
+				if (sub.getOrderType() != MatchOrderType.NEW_BEHAVIOUR) {
+					in = hoModel.getSpieler(sub.getObjectPlayerID());
+				}
 				return (in != null) ? in.getName() : "";
+
 			case WHEN_COL_IDX:
 				if (sub.getMatchMinuteCriteria() > 0) {
 					return HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
