@@ -190,7 +190,7 @@ public class Lineup {
 					sub.setOrderType(matchOrderType);
 					sub.setMatchMinuteCriteria(Byte.parseByte(properties.getProperty("subst" + i
 							+ "matchminutecriteria")));
-					sub.setPos(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
+					sub.setRoleId(Byte.parseByte(properties.getProperty("subst" + i + "pos")));
 					sub.setBehaviour(Byte.parseByte(properties.getProperty("subst" + i
 							+ "behaviour")));
 					sub.setRedCardCriteria(RedCardCriteria.getById(Byte.parseByte(properties
@@ -1301,7 +1301,7 @@ public class Lineup {
 							String.valueOf(sub.getOrderType().getId()));
 					properties.setProperty("subst" + i + "matchminutecriteria",
 							String.valueOf(sub.getMatchMinuteCriteria()));
-					properties.setProperty("subst" + i + "pos", String.valueOf(sub.getPos()));
+					properties.setProperty("subst" + i + "pos", String.valueOf(sub.getRoleId()));
 					properties.setProperty("subst" + i + "behaviour",
 							String.valueOf(sub.getBehaviour()));
 					properties.setProperty("subst" + i + "card",

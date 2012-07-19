@@ -72,7 +72,7 @@ public class XMLMatchOrderParserNew {
 			}
 		}
 		sub.setOrderType(matchOrderType);
-		sub.setPos(Byte.parseByte(getChildValue(orderNode, "NewPositionId")));
+		sub.setRoleId(Byte.parseByte(getChildValue(orderNode, "NewPositionId")));
 		sub.setBehaviour(Byte.parseByte(getChildValue(orderNode, "NewPositionBehaviour")));
 		return sub;
 	}

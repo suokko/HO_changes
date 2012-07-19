@@ -132,7 +132,7 @@ public class MatchSubstitutionTable extends AbstractTable {
 				sql += matchId + "," + teamId + "," + hrfId + "," + sub.getPlayerOrderId() + ","
 						+ sub.getObjectPlayerID() + "," + sub.getSubjectPlayerID() + ","
 						+ sub.getOrderType().getId() + "," + sub.getMatchMinuteCriteria() + ","
-						+ sub.getPos() + "," + sub.getBehaviour() + "," + sub.getRedCardCriteria().getId() + ","
+						+ sub.getRoleId() + "," + sub.getBehaviour() + "," + sub.getRedCardCriteria().getId() + ","
 						+ sub.getStanding().getId() + "," + "'" + lineupName + "')";
 
 				adapter.executeUpdate(sql);
