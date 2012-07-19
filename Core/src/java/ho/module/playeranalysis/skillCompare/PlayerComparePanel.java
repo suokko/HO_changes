@@ -41,7 +41,7 @@ import javax.swing.JTable;
  * @author KickMuck
  */
 public class PlayerComparePanel extends ImagePanel implements  MouseListener, ActionListener,ItemListener,IRefreshable, FocusListener {
-	
+
 	private static final long serialVersionUID = -1629490436656226196L;
 	//Members for Tables
 	private PlayerTable m_jTableTop = null;	//Table for all players
@@ -50,25 +50,25 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	// Members for Buttons
 	private JButton m_btCompare;	//Button -> Compare
 	private JButton m_btReset;		//Button -> Reset
-	
+
 	private JPanel m_topTablePanel;
 	private JPanel m_topButtonPanel;
 	private JPanel p_PlayerDetail = null;
-	
+
 	private JScrollPane m_scrollPaneTableTop;
 	private JScrollPane m_scrollPaneButtons;
 	private JScrollPane m_scrollPaneTableBottom;
 	private JScrollPane m_scrollPanePlayer;
 	private JScrollPane m_scrollPanePlayerGesamt;
-	
+
 	private JSplitPane m_splitPane;
 	private JSplitPane m_splitPaneTop;
 	private JSplitPane m_splitPaneBottom;
-	
+
 	private PlayerTableModel m_playerTableModelTop;
 	private PlayerTableModel m_playerTableModelBottom;
 	private PlayerTableModel m_playerTableModelDetail;
-	
+
 	private JLabel m_L_GroupBy;
 	private JLabel m_L_Header;
 	private JLabel m_L_Experience;
@@ -83,7 +83,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	private JLabel m_L_SetPieces;
 	private JLabel m_L_Loyalty;
 	private JLabel m_L_HomeGrown;
-		
+
 	private static JComboBox m_CB_type;
 	private JComboBox m_CB_Experience;
 	private JComboBox m_CB_Form;
@@ -97,7 +97,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	private JComboBox m_CB_SetPieces;
 	private JComboBox m_CB_Loyalty;
 	private JComboBox m_CB_Homegrown;
-	
+
 	private JComboBox m_CB_Nr_Experience;
 	private JComboBox m_CB_Nr_Form;
 	private JComboBox m_CB_Nr_Stamina;
@@ -109,54 +109,54 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	private JComboBox m_CB_Nr_Scoring;
 	private JComboBox m_CB_Nr_SetPieces;
 	private JComboBox m_CB_Nr_Loyalty;
-	
+
 	private Vector<Player> m_V_setPlayers;
 	private Vector<Spieler> m_V_allPlayers;
 	private Player[] m_ar_allPlayers;
 	private Player[] m_ar_setPlayers;
-	
-	
+
+
 	private CBItem[] m_rating = PlayerAbility.ITEMS;
-	
+
 	private static int m_selectedRow;
 	private int m_i_ptmTopCount;
 	private int m_numberOfPlayers;
-	
+
 	private static int []newRating;
 	private static int []changedRating;
-	
+
 	private boolean m_b_refresh = true;
-		
+
 	private Color lightblue = new Color (235,235,255);
-	
+
 	public PlayerComparePanel(){
 		initialize();
 	}
-	
+
 	/**
 	 * Is called by HO! to start the plugin
 	 */
-	private void initialize() {             
+	private void initialize() {
         // get all players ans save them in an array
         getAllPlayers();
-		
+
         setLayout (new BorderLayout());
 		addFocusListener(this);
 		// Register tab for refresh
 		RefreshManager.instance().registerRefreshable(this);
-		
+
 		//Default values for skill selection
 		newRating = new int[]{0,6,0,0,0,0,0,0,0,0,10,0};
-		
+
 		// Default values for skill changes
 		changedRating = new int[]{0,0,0,0,0,0,0,0,0,0,0,0};
-		
+
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		// Set the labels
 		m_L_Experience = new JLabel(hoV.getLanguageString("Erfahrung"));
 		m_L_Form = new JLabel(hoV.getLanguageString("Form"));
 		m_L_Stamina = new JLabel(hoV.getLanguageString("Kondition"));
-		m_L_Keeping = new JLabel(hoV.getLanguageString("Torwart"));
+		m_L_Keeping = new JLabel(hoV.getLanguageString("skill.keeper"));
 		m_L_Defending = new JLabel(hoV.getLanguageString("Verteidigung"));
 		m_L_Playmaking = new JLabel(hoV.getLanguageString("Spielaufbau"));
 		m_L_Passing = new JLabel(hoV.getLanguageString("Passpiel"));
@@ -165,10 +165,10 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_L_SetPieces = new JLabel(hoV.getLanguageString("Standards"));
 		m_L_Loyalty = new JLabel(hoV.getLanguageString("Loyalty"));
 		m_L_HomeGrown = new JLabel(hoV.getLanguageString("Motherclub"));
-		
+
 		// Create table model for top table
 		m_playerTableModelTop = new PlayerTableModel( m_ar_allPlayers, 1);
-		TableSorter sorter = new TableSorter(m_playerTableModelTop); 
+		TableSorter sorter = new TableSorter(m_playerTableModelTop);
 		m_jTableTop = new PlayerTable(sorter, m_playerTableModelTop);
 		sorter.setTableHeader(m_jTableTop.getTableHeader());
 		// Calculate number of rows in top table
@@ -178,7 +178,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_topTablePanel.add(m_scrollPaneTableTop);
 		m_topButtonPanel = new JPanel();
 		m_topButtonPanel.getInsets(new Insets(5,5,5,5));
-		
+
 		GridBagLayout gbl = new GridBagLayout();
 	    GridBagConstraints gbc = new GridBagConstraints();
 		m_topButtonPanel.setLayout(gbl);
@@ -186,22 +186,22 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_btCompare = new JButton(hoV.getLanguageString("Vergleichen"));
 		m_btCompare.addActionListener(this);
 		m_btCompare.setToolTipText(hoV.getLanguageString("ttCompare"));
-		
+
 		m_btReset = new JButton("Reset");
 		m_btReset.setToolTipText(hoV.getLanguageString("Reset"));
 		m_btReset.addActionListener(this);
-		
+
 		m_L_GroupBy = new JLabel(hoV.getLanguageString("vergleichen_alle"));
 		m_L_Header = new JLabel(hoV.getLanguageString("setze_alle"));
-		
+
 		//Create controls
 		m_CB_type = new JComboBox();
 		m_CB_type.addItem(hoV.getLanguageString("gewaehlte"));
-		m_CB_type.addItem(hoV.getLanguageString("Torwart"));
-		m_CB_type.addItem(hoV.getLanguageString("Verteidigung"));
-		m_CB_type.addItem(hoV.getLanguageString("Mittelfeld"));
-		m_CB_type.addItem(hoV.getLanguageString("Fluegelspiel"));
-		m_CB_type.addItem(hoV.getLanguageString("Sturm"));
+		m_CB_type.addItem(hoV.getLanguageString("ls.player.position.keeper"));
+		m_CB_type.addItem(hoV.getLanguageString("defender"));
+		m_CB_type.addItem(hoV.getLanguageString("ls.player.position.innermidfielder"));
+		m_CB_type.addItem(hoV.getLanguageString("ls.player.position.winger"));
+		m_CB_type.addItem(hoV.getLanguageString("ls.player.position.forward"));
 		m_CB_type.addItem(hoV.getLanguageString("GruppeA"));
 		m_CB_type.addItem(hoV.getLanguageString("GruppeB"));
 		m_CB_type.addItem(hoV.getLanguageString("GruppeC"));
@@ -210,7 +210,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_CB_type.addItem(hoV.getLanguageString("GruppeF"));
 		m_CB_type.addItem(hoV.getLanguageString("alle"));
 		m_CB_type.addItemListener(this);
-		
+
 		// Experience
 		m_CB_Experience = createComboBox();
 		m_CB_Nr_Experience = new JComboBox();
@@ -237,7 +237,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_CB_Nr_Stamina.addItemListener(this);
 		// Goal Keeping
 		m_CB_Keeping = createComboBox();
-		
+
 		m_CB_Nr_Keeping = new JComboBox();
 		fillComboBox(m_CB_Nr_Keeping);
 		m_CB_Nr_Keeping.setSelectedIndex(0);
@@ -291,7 +291,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_CB_Homegrown.addItem("Yes");
 		m_CB_Homegrown.setSelectedIndex(0);
 		m_CB_Homegrown.addItemListener(this);
-		
+
 		// Add components to the layout
 		gbc.insets = new Insets(5,3,10,3);
 		gbc.gridwidth = 1;
@@ -389,7 +389,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		gbc.insets = new Insets(0,3,0,3);
 		gbl.setConstraints(m_btReset, gbc);
 		// *******************************
-		
+
 		//Add Buttons to the Panel
 		m_topButtonPanel.add(m_L_GroupBy);
 		m_topButtonPanel.add(m_CB_type);
@@ -432,15 +432,15 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 
 		m_topButtonPanel.add(m_btCompare);
 		m_topButtonPanel.add(m_btReset);
-		
+
 		// Panel for the buttons
 		m_scrollPaneButtons = new JScrollPane(m_topButtonPanel);
 		m_scrollPaneTableBottom = new JScrollPane();
 		m_scrollPanePlayer = new JScrollPane();
 		m_scrollPanePlayerGesamt = new JScrollPane();
-		
+
 		p_PlayerDetail = new JPanel(new BorderLayout());
-		
+
 		setDummyPlayerDetails();
 		m_splitPaneTop =new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,m_scrollPaneTableTop,m_scrollPaneButtons);
 		m_splitPaneBottom = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,m_scrollPaneTableBottom,m_scrollPanePlayerGesamt);
@@ -449,10 +449,10 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		int tmpBreite = UserParameter.instance().hoMainFrame_width;
 		int devLocation = tmpBreite - 300;
 		int devLocationBottom = tmpBreite -300;
-		
+
 		m_splitPaneTop.setDividerLocation(devLocation);
 		m_splitPaneBottom.setDividerLocation(devLocationBottom);
-	   
+
 		add( m_splitPane,BorderLayout.CENTER);
 	}
 
@@ -461,19 +461,19 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		box.setSelectedIndex(0);
 		box.addItemListener(this);
 		return box;
-		
+
 	}
-	
+
 	private void fillComboBox(JComboBox jcb, int len){
-		for(int i = 0; i < len; i++) 
+		for(int i = 0; i < len; i++)
 				jcb.addItem(m_rating[i]);
 	}
-	
+
 	private void fillComboBox(JComboBox jcb){
-		for(int i = 0; i < 7; i++)	
+		for(int i = 0; i < 7; i++)
 			jcb.addItem(" +" + i);
 	}
-	
+
     public void refresh()
     {
     	// only refresh if no button was pressed so that m_b_refresh doesn't get set
@@ -496,7 +496,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     		m_b_refresh = true;
     	}
     }
-    
+
     public void itemStateChanged(ItemEvent ie)
 	{
     	if(ie.getSource().equals(m_CB_type))
@@ -521,7 +521,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 						|| cbType == 11 && group.startsWith("F")
 						)
 	    		{
-	    			m_playerTableModelTop.setValueAt(Boolean.TRUE,i,0);	
+	    			m_playerTableModelTop.setValueAt(Boolean.TRUE,i,0);
 	    		}
 	    		else
 	    		{
@@ -686,7 +686,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     		}
     	}
     }
-    
+
     public void focusGained(FocusEvent fe)
     {
     	int spielerID;
@@ -718,9 +718,9 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     		actionPerformed(new ActionEvent(m_btCompare,0,""));
     	}
     }
-    
+
     public void focusLost(FocusEvent fe) {}
-    
+
     public void actionPerformed(ActionEvent e)
     {
     	resetPlayer();
@@ -740,7 +740,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			m_CB_SetPieces.getSelectedIndex(),
         			m_CB_Loyalty.getSelectedIndex(),
         			m_CB_Homegrown.getSelectedIndex());
-        	
+
         	setChangeRatingBy(m_CB_Nr_Experience.getSelectedIndex(),
         			m_CB_Nr_Form.getSelectedIndex(),
         			m_CB_Nr_Stamina.getSelectedIndex(),
@@ -754,24 +754,24 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			m_CB_Loyalty.getSelectedIndex(),
         			0
 					);
-        	
+
         	int selectedType = m_CB_type.getSelectedIndex();
         	m_V_setPlayers = new Vector<Player>();
         	switch(selectedType){
         		case 0:
-        			for(int i = 0; i < m_i_ptmTopCount; i++) 
+        			for(int i = 0; i < m_i_ptmTopCount; i++)
                 		if(((Boolean)m_playerTableModelTop.getValueAt(i,0)).booleanValue() == true)
                 			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
         			break;
         		case 1:
         			for(int i = 0; i < m_i_ptmTopCount; i++){
         				byte tmpPos = 0;
-        				
+
         				try {
         					tmpPos = ((Float)m_playerTableModelTop.getValueAt(i,4)).byteValue();
         				}catch(Exception ex){}
                 		if(tmpPos == 0 && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE){
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if(tmpPos == 0 && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE){
                 			m_CB_type.setSelectedIndex(0);
@@ -781,13 +781,13 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         		case 2:
         			for(int i = 0; i < m_i_ptmTopCount; i++){
         				byte tmpPos = 0;
-        				
+
         				try {
         					tmpPos = ((Float)m_playerTableModelTop.getValueAt(i,4)).byteValue();
         				} catch(Exception ex){}
-                		
+
         				if((tmpPos > 0 && tmpPos < 8)  && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE){
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}else if((tmpPos > 0 && tmpPos < 8) && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE){
                 			m_CB_type.setSelectedIndex(0);
                 		}
@@ -797,14 +797,14 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			for(int i = 0; i < m_i_ptmTopCount; i++)
                 	{
         				byte tmpPos = 0;
-        				
+
         				try
         				{
         					tmpPos = ((Float)m_playerTableModelTop.getValueAt(i,4)).byteValue();
         				}
         				catch(Exception ex){}
                 		if((tmpPos > 7 && tmpPos < 12)  && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE){
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if((tmpPos > 7 && tmpPos < 12) && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE) {
                 			m_CB_type.setSelectedIndex(0);
@@ -815,7 +815,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 
         			for(int i = 0; i < m_i_ptmTopCount; i++) {
         				byte tmpPos = 0;
-        				
+
         				try
         				{
         					tmpPos = ((Float)m_playerTableModelTop.getValueAt(i,4)).byteValue();
@@ -823,7 +823,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         				catch(Exception ex){}
                 		if((tmpPos > 11 && tmpPos < 16)  && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE)
                 		{
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if((tmpPos > 11 && tmpPos < 16) && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE)
                 		{
@@ -837,7 +837,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			for(int i = 0; i < m_i_ptmTopCount; i++)
                 	{
         				byte tmpPos = 0;
-        				
+
         				try
         				{
         					tmpPos = ((Float)m_playerTableModelTop.getValueAt(i,4)).byteValue();
@@ -859,11 +859,11 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			for(int i = 0; i < m_i_ptmTopCount; i++)
                 	{
         				String gruppe = "";
-        				
+
         				gruppe = m_playerTableModelTop.getValueAt(i,5).toString();
                 		if(gruppe.equals("A-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE)
                 		{
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if(gruppe.equals("A-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE)
                 		{
@@ -877,11 +877,11 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			for(int i = 0; i < m_i_ptmTopCount; i++)
                 	{
         				String gruppe = "";
-        				
+
         				gruppe = m_playerTableModelTop.getValueAt(i,5).toString();
                 		if(gruppe.equals("B-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE)
                 		{
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if(gruppe.equals("B-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE)
                 		{
@@ -895,11 +895,11 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         			for(int i = 0; i < m_i_ptmTopCount; i++)
                 	{
         				String gruppe = "";
-        				
+
         				gruppe = m_playerTableModelTop.getValueAt(i,5).toString();
                 		if(gruppe.equals("C-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE)
                 		{
-                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());                		
+                			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
                 		}
                 		else if(gruppe.equals("C-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.FALSE)
                 		{
@@ -912,7 +912,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 
         			for(int i = 0; i < m_i_ptmTopCount; i++){
         				String gruppe = "";
-        				
+
         				gruppe = m_playerTableModelTop.getValueAt(i,5).toString();
                 		if(gruppe.equals("D-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE){
                 			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
@@ -927,7 +927,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         		case 10:
         			for(int i = 0; i < m_i_ptmTopCount; i++){
         				String gruppe = "";
-        				
+
         				gruppe = m_playerTableModelTop.getValueAt(i,5).toString();
                 		if(gruppe.equals("E-Team.png") && m_playerTableModelTop.getValueAt(i,0) == Boolean.TRUE){
                 			fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
@@ -936,35 +936,35 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
                 		}
                 	}
         			break;
-        		
+
         		case 11:
         			for(int i = 0; i < m_i_ptmTopCount; i++){
         				fetchPlayer(((Integer)m_playerTableModelTop.getValueAt(i,m_playerTableModelTop.getColumnCount()-1)).intValue());
         			}
 			}
-        	
+
         	// Create array from a tablemodel vector
         	m_ar_setPlayers = new Player[m_V_setPlayers.size()];
         	for(int counter = 0; counter < m_ar_setPlayers.length; counter++)
         	{
         		m_ar_setPlayers[counter] = m_V_setPlayers.elementAt(counter);
         	}
-        	
+
         	m_playerTableModelBottom = new PlayerTableModel(m_ar_setPlayers,2);
     		TableSorter sorter2 = new TableSorter(m_playerTableModelBottom); //ADDED THIS
         	m_jTableBottom = new PlayerTable(sorter2,m_playerTableModelBottom);
         	m_jTableBottom.setRowSelectionAllowed(true);
         	m_jTableBottom.addMouseListener(this);
-        	
+
         	sorter2.setTableHeader(m_jTableBottom.getTableHeader()); //ADDED THIS
-        	
+
         	m_scrollPaneTableBottom.setViewportView(m_jTableBottom);
     		m_scrollPaneTableBottom.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     		m_scrollPaneTableBottom.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    		
+
         }
-        
-        
+
+
         if(e.getSource().equals(m_btReset))
         {
         	setNewRating(0,0,0,0,0,0,0,0,0,0,0,0);
@@ -981,7 +981,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         	m_CB_Loyalty.setSelectedIndex(10);
         	m_CB_Homegrown.setSelectedIndex(0);
         	m_CB_type.setSelectedIndex(0);
-        	
+
         	setChangeRatingBy(0,0,0,0,0,0,0,0,0,0,0,0);
         	m_CB_Nr_Experience.setSelectedIndex(0);
         	m_CB_Nr_Form.setSelectedIndex(0);
@@ -995,7 +995,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         	m_CB_Nr_SetPieces.setSelectedIndex(0);
         	m_CB_Nr_Loyalty.setSelectedIndex(0);
         	m_scrollPaneTableBottom.setViewportView(null);
-        	
+
         	for(int i = 0; i < m_i_ptmTopCount; i++)
         	{
         		if(((Boolean)m_playerTableModelTop.getValueAt(i,0)).booleanValue() == true)
@@ -1007,9 +1007,9 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
         	setDummyPlayerDetails();
         	RefreshManager.instance().doReInit();
         }
-    } 
+    }
     /**
-     * 
+     *
      * getAllPlayers():
      * - Fetches all players via the MiniModel
      *
@@ -1024,7 +1024,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 			m_ar_allPlayers[counter] = new Player(m_V_allPlayers.elementAt(counter));
 		}
     }
-    
+
     /**
      * fetchPlayer(int id)
      * - searches for a player with id in the player array
@@ -1040,7 +1040,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     		}
     	}
     }
-    
+
     private void resetPlayer()
     {
     	for(int i = 0; i < m_ar_allPlayers.length; i++)
@@ -1048,7 +1048,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     		m_ar_allPlayers[i].resetPlayers();
     	}
     }
-    
+
     private void setDummyPlayerDetails()
     {
     	Player dummy = new Player();
@@ -1056,24 +1056,24 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     	l_SpielerName.setPreferredSize(new Dimension(100,30));
     	l_SpielerName.setText(HOVerwaltung.instance().getLanguageString("Name"));
     	l_SpielerName.setOpaque(true);
-    	
+
     	JLabel platzhalter = new JLabel();
     	platzhalter.setText("  ");
-    	
+
     	JPanel p_SpielerName = new JPanel(new BorderLayout());
     	p_SpielerName.setPreferredSize(new Dimension(150,30));
     	p_SpielerName.add(l_SpielerName);
     	p_SpielerName.add(platzhalter,BorderLayout.WEST);
-   
+
     	p_PlayerDetail.removeAll();
     	p_PlayerDetail.setPreferredSize(new Dimension(150,40));
- 
+
     	m_playerTableModelDetail = null;
-    	
+
     	m_scrollPanePlayer.setViewportView(null);
     	m_scrollPanePlayer.validate();
     	m_playerTableModelDetail = new PlayerTableModel(dummy);
-		
+
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
 		m_jTableDetail = new PlayerTable(sorter3);
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
@@ -1084,9 +1084,9 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_scrollPanePlayerGesamt.setViewportView(p_PlayerDetail);
 		m_scrollPanePlayerGesamt.validate();
     }
-    
-   
-    
+
+
+
     /**
      * setNewStaerke()
      * - setzt die neuen Werte f�r die eingestellten Skills
@@ -1106,7 +1106,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     	newRating[10] = loy;
     	newRating[11] = hg;
     }
-    
+
     private void setChangeRatingBy(int er, int fo, int ko, int tw, int ve, int sa,int ps, int fl, int ts, int st, int loy, int hg) {
     	changedRating[0] = er;
     	changedRating[1] = fo;
@@ -1126,27 +1126,27 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     {
     	return newRating;
     }
-    
+
     public static int[] getChangeRatingBy()
     {
     	return changedRating;
     }
-    
+
     public static int getSelectedTypeIndex()
     {
     	return m_CB_type.getSelectedIndex();
     }
-    
+
     public static void setSelectedTypeIndex(int index)
     {
     	m_CB_type.setSelectedIndex(index);
     }
-    
+
     public void setSelectedRow()
     {
     	m_selectedRow = m_jTableBottom.getSelectedRow();
     }
-    
+
     private int getSelectedRow()
     {
     	return m_selectedRow;
@@ -1182,7 +1182,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		p_SpielerName.add(l_SpielerName);
 		p_PlayerDetail.add(p_SpielerName,BorderLayout.NORTH);
 		m_playerTableModelDetail = new PlayerTableModel(tmpPlayer);
-		
+
 		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); //ADDED THIS
 		m_jTableDetail = new PlayerTable(sorter3);
 		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
@@ -1192,18 +1192,18 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 	}
     public void mouseEntered(MouseEvent e)
 	{
-		
+
 	}
     public void mouseExited(MouseEvent e)
 	{
-		
+
 	}
     public void mousePressed(MouseEvent e)
 	{
-		
+
 	}
     public void mouseReleased(MouseEvent e)
 	{
-		
+
 	}
 }

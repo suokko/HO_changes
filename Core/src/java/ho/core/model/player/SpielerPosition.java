@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * DOCUMENT ME!
- * 
+ *
  * @author thomas.werth
  */
 public class SpielerPosition implements java.io.Serializable, Comparable<ISpielerPosition>,
@@ -89,7 +89,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Creates a new instance of SpielerPosition
-	 * 
+	 *
 	 * @param id
 	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param spielerId
@@ -113,7 +113,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Creates a new instance of SpielerPosition
-	 * 
+	 *
 	 * @param sp
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
@@ -132,7 +132,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Konstruktor lädt die SpielerPosition aus einem InputStream
-	 * 
+	 *
 	 * @param dis
 	 *            Der InputStream aus dem gelesen wird
 	 */
@@ -161,10 +161,10 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * Gibt eine mögliche HT-Positionsid für eine HO-Positionsid zurück. Nur zum
 	 * Laden des Positionsimage zu gebrauchen!!!
-	 * 
+	 *
 	 * @param posId
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static int getHTPosidForHOPosition4Image(byte posId) {
@@ -214,10 +214,10 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt das Kürzel für den Namen zurück
-	 * 
+	 *
 	 * @param posId
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getKurzNameForPosition(byte posId) {
@@ -294,10 +294,10 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt zu einer Positionsid den Namen zurück
-	 * 
+	 *
 	 * @param id
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getNameForID(int id) {
@@ -373,71 +373,71 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt zu einer Positionsid den Namen zurück
-	 * 
+	 *
 	 * @param posId
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getNameForPosition(byte posId) {
 
 		switch (posId) {
 		case KEEPER:
-			return HOVerwaltung.instance().getLanguageString("Torwart");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.keeper");
 
 		case CENTRAL_DEFENDER:
-			return HOVerwaltung.instance().getLanguageString("Innenverteidiger");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefender");
 
 		case CENTRAL_DEFENDER_TOWING:
-			return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefendertowardswing");
 
 		case CENTRAL_DEFENDER_OFF:
-			return HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefenderoffensive");
 
 		case BACK:
-			return HOVerwaltung.instance().getLanguageString("Aussenverteidiger");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingback");
 
 		case BACK_TOMID:
-			return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingbacktowardsmiddle");
 
 		case BACK_OFF:
-			return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackoffensive");
 
 		case BACK_DEF:
-			return HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackdefensive");
 
 		case MIDFIELDER:
-			return HOVerwaltung.instance().getLanguageString("Mittelfeld");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielder");
 
 		case MIDFIELDER_OFF:
-			return HOVerwaltung.instance().getLanguageString("Mittelfeld_Off");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderoffensive");
 
 		case MIDFIELDER_DEF:
-			return HOVerwaltung.instance().getLanguageString("Mittelfeld_Def");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderdefensive");
 
 		case MIDFIELDER_TOWING:
-			return HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfieldertowardswing");
 
 		case WINGER:
-			return HOVerwaltung.instance().getLanguageString("Fluegel");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.winger");
 
 		case WINGER_TOMID:
-			return HOVerwaltung.instance().getLanguageString("Fluegelspiel_In");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingertowardsmiddle");
 
 		case WINGER_OFF:
-			return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingeroffensive");
 
 		case WINGER_DEF:
-			return HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.wingerdefensive");
 
 		case FORWARD:
-			return HOVerwaltung.instance().getLanguageString("Sturm");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.forward");
 
 		case FORWARD_DEF:
-			return HOVerwaltung.instance().getLanguageString("Sturm_Def");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.forwarddefensive");
 
 		case FORWARD_TOWING:
-			return HOVerwaltung.instance().getLanguageString("Sturm_Aus");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position.forwardtowardswing");
 
 		case SUBSTITUTED1:
 		case SUBSTITUTED2:
@@ -456,7 +456,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * TODO Missing Method Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public byte getPosition() {
@@ -465,12 +465,12 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Getter for property m_bPosition.
-	 * 
+	 *
 	 * @param id
 	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param taktik
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return Value of property m_bPosition.
 	 */
 	public static byte getPosition(int id, byte taktik) {
@@ -563,7 +563,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Setter for property m_iId.
-	 * 
+	 *
 	 * @param m_iId
 	 *            New value of property m_iId.
 	 */
@@ -573,7 +573,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Setter for property m_bPosition.
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 
@@ -584,7 +584,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Getter for property m_iId.
-	 * 
+	 *
 	 * @return Value of property m_iId.
 	 */
 	public final int getId() {
@@ -594,9 +594,9 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * liefert eine ID nach der Sortiert werden kann ( z.B.
 	 * Spierlübersichtstabelle
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public final int getSortId() {
@@ -616,12 +616,12 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * liefert eine ID nach der Sortiert werden kann ( z.B.
 	 * Spierlübersichtstabelle
-	 * 
+	 *
 	 * @param position
 	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param reserve
 	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
+	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public static int getSortId(byte position, boolean reserve) {
@@ -637,7 +637,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * Setter for property m_iSpielerId. This will fail if the current lineup of
 	 * the HO model would end up with 12 players or more.
-	 * 
+	 *
 	 * @param m_iSpielerId
 	 *            New value of property m_iSpielerId.
 	 */
@@ -648,7 +648,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * Setter for property m_iSpielerId. This setter will fail if the provided
 	 * lineup would end up with 12 players or more.
-	 * 
+	 *
 	 * @param spielerId
 	 *            New value of property m_iSpielerId.
 	 * @param lineup
@@ -674,7 +674,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Getter for property m_iSpielerId.
-	 * 
+	 *
 	 * @return Value of property m_iSpielerId.
 	 */
 	public final int getSpielerId() {
@@ -683,7 +683,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Setter for property m_bTaktik.
-	 * 
+	 *
 	 * @param m_bTaktik
 	 *            New value of property m_bTaktik.
 	 */
@@ -693,7 +693,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Getter for property m_bTaktik.
-	 * 
+	 *
 	 * @return Value of property m_bTaktik.
 	 */
 	public final byte getTaktik() {
@@ -742,9 +742,9 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/*
 	 * saved den Serverspieler
-	 * 
+	 *
 	 * @param baos Der Outputstream in den gesaved werden soll
-	 * 
+	 *
 	 * @return Byte Array der Daten die in den Output geschireben wurden
 	 */
 	public final void save(DataOutputStream das) {
@@ -764,7 +764,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 			/*
 			 * //Strom konvertieren in Byte data = baos.toByteArray();
 			 * //Hilfsstrom schließen das.close ();
-			 * 
+			 *
 			 * return data;
 			 */
 		} catch (IOException ioe) {

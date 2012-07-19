@@ -228,7 +228,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 clOwner.removeScoutEintrag(clScoutEntry);
             } else if (actionEvent.getSource().equals(jbMiniScout)) {
                 new MiniScoutDialog(this);
-            } 
+            }
         }
         checkFields();
     }
@@ -370,7 +370,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
 		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
         jpBestPosition.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition())
-        		+ " (" + 
+        		+ " (" +
         		Helper.getNumberFormat(false, ho.core.model.UserParameter.instance().anzahlNachkommastellen)
         		.format(tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true))
         		 + ")");
@@ -506,7 +506,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 jchHomegrown.removeItemListener(this);
                 jchHomegrown.setSelected(player.isHomwGrown());
                 jchHomegrown.addItemListener(this);
-                
+
                 // Listener stays here for recalculation of rating
                 Helper.markierenComboBox(jcbPlaymaking,player.getPlayMaking());
 
@@ -659,12 +659,12 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel.add(label);
         jcbLoyalty.addItemListener(this);
         panel.add(jcbLoyalty);
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
         panel.add(label);
         jchHomegrown.addItemListener(this);
         panel.add(jchHomegrown);
-        
+
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.NORTH;
@@ -712,79 +712,79 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel.add(label);
         panel.add(jpBestPosition.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Torwart"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.keeper"));
         panel.add(label);
         panel.add(jpRatingKeeper.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefender"));
         panel.add(label);
         panel.add(jpRatingDefender.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefendertowardswing"));
         panel.add(label);
         panel.add(jpRatingDefenderTowardsWing.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefenderoffensive"));
         panel.add(label);
         panel.add(jpRatingDefenderOffensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingback"));
         panel.add(label);
         panel.add(jpRatingWingback.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingbacktowardsmiddle"));
         panel.add(label);
         panel.add(jpRatingWingbackTowardsMiddle.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackoffensive"));
         panel.add(label);
         panel.add(jpRatingWingbackOffensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackdefensive"));
         panel.add(label);
         panel.add(jpRatingWingbackDefensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielder"));
         panel.add(label);
         panel.add(jpRatingMidfielder.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfieldertowardswing"));
         panel.add(label);
         panel.add(jpRatingMidfielderTowardsWing.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderoffensive"));
         panel.add(label);
         panel.add(jpRatingMidfielderOffensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderdefensive"));
         panel.add(label);
         panel.add(jpRatingMidfielderDefensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.winger"));
         panel.add(label);
         panel.add(jpRatingWinger.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingertowardsmiddle"));
         panel.add(label);
         panel.add(jpRatingWingerTowardsMiddle.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingeroffensive"));
         panel.add(label);
         panel.add(jpRatingWingerOffensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.wingerdefensive"));
         panel.add(label);
         panel.add(jpRatingWingerDefensive.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.forward"));
         panel.add(label);
         panel.add(jpRatingForward.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Aus"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.forwardtowardswing"));
         panel.add(label);
         panel.add(jpRatingForwardTowardsWing.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Sturm_Def"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.position.forwarddefensive"));
         panel.add(label);
         panel.add(jpRatingForwardDefensive.getComponent(false));
 
