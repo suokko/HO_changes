@@ -118,4 +118,5 @@ public interface HOIconName {
 	public static final String ARROW_CURVE = "arrow_curve";
 	public static final String ARROW_CIRCLE = "arrow_circle_double";
 	public static final String LIGHTNING = "lightning";
+	public static final String SUBSTITUTION = "substitution";
 }
