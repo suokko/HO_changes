@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -47,6 +48,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class SubstitutionOverview extends JPanel {
 
@@ -167,19 +169,17 @@ public class SubstitutionOverview extends JPanel {
 		this.substitutionTable = new JTable();
 		this.substitutionTable.setModel(new SubstitutionsTableModel());
 		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.substitutionTable.getColumnModel().getColumn(0).setCellRenderer(new WarningRenderer());
-		this.substitutionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-		this.substitutionTable.getColumnModel().getColumn(0).setMaxWidth(25);
+		TableColumn warningCol = this.substitutionTable.getColumnModel().getColumn(
+				SubstitutionsTableModel.WARNING_COL_IDX);
+		warningCol.setCellRenderer(new WarningRenderer());
+		warningCol.setPreferredWidth(25);
+		warningCol.setMaxWidth(25);
 
-		this.substitutionTable.getColumnModel().getColumn(2)
-				.setCellRenderer(new OrderTypeRenderer());
-		this.substitutionTable.getColumnModel().getColumn(2).setPreferredWidth(25);
-		this.substitutionTable.getColumnModel().getColumn(2).setMaxWidth(25);
-
-		this.substitutionTable.getColumnModel().getColumn(4)
-				.setCellRenderer(new OrderTypeRenderer());
-		this.substitutionTable.getColumnModel().getColumn(4).setPreferredWidth(25);
-		this.substitutionTable.getColumnModel().getColumn(4).setMaxWidth(25);
+		TableColumn orderTypeIconCol = this.substitutionTable.getColumnModel().getColumn(
+				SubstitutionsTableModel.ORDERTYPE_ICON_COL_IDX);
+		orderTypeIconCol.setCellRenderer(new OrderTypeRenderer());
+		orderTypeIconCol.setPreferredWidth(25);
+		orderTypeIconCol.setMaxWidth(25);
 
 		JPanel lowerPanel = new JPanel(new GridBagLayout());
 		this.detailsView = new DetailsView();
@@ -348,25 +348,35 @@ public class SubstitutionOverview extends JPanel {
 	 */
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
+		public static final int WARNING_COL_IDX = 0;
+		public static final int ORDERTYPE_COL_IDX = 1;
+		public static final int SUBJECTPLAYER_COL_IDX = 2;
+		public static final int ORDERTYPE_ICON_COL_IDX = 3;
+		public static final int OBJECTPLAYER_COL_IDX = 4;
+		public static final int WHEN_COL_IDX = 5;
+		public static final int STANDING_COL_IDX = 6;
+		public static final int CARDS_COL_IDX = 7;
+		// number of columns
+		public static final int COLUMN_COUNT = 8;
+
 		private static final long serialVersionUID = 6969656858380680460L;
 		private List<TableRow> rows = new ArrayList<TableRow>();
 		private String[] columnNames;
 		private Comparator<TableRow> rowComparator;
 
 		public SubstitutionsTableModel() {
-			this.columnNames = new String[9];
-			this.columnNames[0] = "";
-			this.columnNames[1] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames = new String[COLUMN_COUNT];
+			this.columnNames[WARNING_COL_IDX] = "";
+			this.columnNames[ORDERTYPE_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.order");
-			this.columnNames[2] = "";
-			this.columnNames[3] = "Player 1";
-			this.columnNames[4] = "";
-			this.columnNames[5] = "Player 2";
-			this.columnNames[6] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[SUBJECTPLAYER_COL_IDX] = "Player 1";
+			this.columnNames[ORDERTYPE_ICON_COL_IDX] = "";
+			this.columnNames[OBJECTPLAYER_COL_IDX] = "Player 2";
+			this.columnNames[WHEN_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.when");
-			this.columnNames[7] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[STANDING_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.standing");
-			this.columnNames[8] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[CARDS_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.cards");
 		}
 
@@ -417,27 +427,25 @@ public class SubstitutionOverview extends JPanel {
 			HOModel hoModel = HOVerwaltung.instance().getModel();
 
 			switch (columnIndex) {
-			case 1:
+			case ORDERTYPE_COL_IDX:
 				return LanguageStringLookup.getOrderType(sub.getOrderType());
-			case 2:
-				return sub.getBehaviour();
-			case 3:
+			case SUBJECTPLAYER_COL_IDX:
 				Spieler out = hoModel.getSpieler(sub.getSubjectPlayerID());
 				return (out != null) ? out.getName() : "";
-			case 4:
+			case ORDERTYPE_ICON_COL_IDX:
 				return sub.getBehaviour();
-			case 5:
+			case OBJECTPLAYER_COL_IDX:
 				Spieler in = hoModel.getSpieler(sub.getObjectPlayerID());
 				return (in != null) ? in.getName() : "";
-			case 6:
+			case WHEN_COL_IDX:
 				if (sub.getMatchMinuteCriteria() > 0) {
 					return HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
 							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
 				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
-			case 7:
+			case STANDING_COL_IDX:
 				return LanguageStringLookup.getStanding(sub.getStanding());
-			case 8:
+			case CARDS_COL_IDX:
 				return LanguageStringLookup.getRedCard(sub.getRedCardCriteria());
 			}
 
@@ -569,34 +577,26 @@ public class SubstitutionOverview extends JPanel {
 		public Component getTableCellRendererComponent(JTable table, Object value,
 				boolean isSelected, boolean hasFocus, int row, int column) {
 
-			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "",
-					isSelected, hasFocus, row, column);
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
+					hasFocus, row, column);
 			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table.getModel();
 			Substitution sub = tblModel.getRow(row).getSubstitution();
+			ImageIcon icon;
 			switch (sub.getOrderType()) {
 			case SUBSTITUTION:
-				if (column == 2) {
-					component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CURVE_180));
-				} else if (column == 4) {
-					component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CURVE));
-				} else {
-					component.setIcon(null);
-				}
+				icon = ThemeManager.getIcon(HOIconName.SUBSTITUTION);
 				break;
 			case NEW_BEHAVIOUR:
-				if (column == 2) {
-					component.setIcon(ThemeManager.getIcon(HOIconName.LIGHTNING));
-				} else {
-					component.setIcon(null);
-				}
+				icon = ThemeManager.getIcon(HOIconName.LIGHTNING);
 				break;
 			case POSITION_SWAP:
-				component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CIRCLE));
+				icon = ThemeManager.getIcon(HOIconName.ARROW_CIRCLE);
 				break;
 			default:
-				component.setIcon(null);
+				icon = null;
 				break;
 			}
+			component.setIcon(icon);
 			return component;
 		}
 	}
