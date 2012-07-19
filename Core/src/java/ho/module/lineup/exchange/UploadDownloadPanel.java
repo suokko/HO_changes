@@ -14,6 +14,7 @@ import ho.core.util.XMLUtils;
 import ho.module.lineup.Lineup;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -50,26 +51,28 @@ public class UploadDownloadPanel extends JPanel {
 	private JButton uploadButton;
 	private JButton downloadButton;
 	private JButton refreshButton;
+	private boolean supporter;
 
 	public UploadDownloadPanel() {
+		this.supporter = HOVerwaltung.instance().getModel().getBasics().isHasSupporter();
 		initComponents();
 		addListeners();
 	}
 
 	private void initComponents() {
-		this.refreshButton = new JButton(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.refresh"));
-		this.refreshButton.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.refresh.tooltip"));
-		this.downloadButton = new JButton(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.download"));
-		this.downloadButton.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.download.tooltip"));
+		this.refreshButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.refresh"));
+		this.refreshButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.refresh.tooltip"));
+		this.downloadButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.download"));
+		this.downloadButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.download.tooltip"));
 		this.downloadButton.setEnabled(false);
-		this.uploadButton = new JButton(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.upload"));
-		this.uploadButton.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("lineup.upload.btn.upload.tooltip"));
+		this.uploadButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.upload"));
+		this.uploadButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"lineup.upload.btn.upload.tooltip"));
 		this.uploadButton.setEnabled(false);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -86,8 +89,7 @@ public class UploadDownloadPanel extends JPanel {
 		gbc.weightx = 1.0;
 		buttonPanel.add(this.downloadButton, gbc);
 
-		GUIUtils.equalizeComponentSizes(this.refreshButton, this.uploadButton,
-				this.downloadButton);
+		GUIUtils.equalizeComponentSizes(this.refreshButton, this.uploadButton, this.downloadButton);
 
 		MatchesTableModel model = new MatchesTableModel(getMatchesFromDB());
 		this.matchesTable = new JTable();
@@ -101,33 +103,45 @@ public class UploadDownloadPanel extends JPanel {
 		this.matchesTable.getRowSorter().setSortKeys(sortKeys);
 
 		// TODO use column identifiers instead of index
-		TableColumn dateColumn = this.matchesTable.getColumnModel()
-				.getColumn(0);
+		TableColumn dateColumn = this.matchesTable.getColumnModel().getColumn(0);
 		dateColumn.setCellRenderer(new DateRenderer());
 
 		// TODO use column identifiers instead of index
-		TableColumn matchTypeColumn = this.matchesTable.getColumnModel()
-				.getColumn(1);
+		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);
 		matchTypeColumn.setCellRenderer(new MatchTypeCellRenderer());
 		matchTypeColumn.setMaxWidth(25);
 
 		// TODO use column identifiers instead of index
-		TableColumn ordersSetColumn = this.matchesTable.getColumnModel()
-				.getColumn(5);
+		TableColumn ordersSetColumn = this.matchesTable.getColumnModel().getColumn(5);
 		ordersSetColumn.setCellRenderer(new OrdersSetCellRenderer());
 		ordersSetColumn.setMaxWidth(25);
 
 		setLayout(new GridBagLayout());
+		if (!this.supporter) {
+			gbc = new GridBagConstraints();
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.insets = new Insets(10, 10, 10, 10);
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString(
+					"lineup.upload.noSupporter"));
+			label.setFont(label.getFont().deriveFont(label.getFont().getStyle() ^ Font.BOLD));
+			add(label, gbc);
+		}
+		
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		add(new JScrollPane(this.matchesTable), gbc);
 
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.gridx = 1;
+		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.NORTH;
 		add(buttonPanel, gbc);
 	}
@@ -153,111 +167,92 @@ public class UploadDownloadPanel extends JPanel {
 		}
 
 		MatchKurzInfo match = getSelectedMatch();
-		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(),
-				match.getMatchTyp(), lineup);
+		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(),
+				lineup);
 
 		int messageType = JOptionPane.PLAIN_MESSAGE;
 		boolean success = false;
 		String message = null;
 		try {
 			Document doc = XMLUtils.createDocument(result);
-			String successStr = XMLUtils.getAttributeValueFromNode(doc,
-					"MatchData", "OrdersSet");
+			String successStr = XMLUtils.getAttributeValueFromNode(doc, "MatchData", "OrdersSet");
 			if (successStr != null) {
 				success = Boolean.parseBoolean(successStr);
 				if (success) {
 					messageType = JOptionPane.PLAIN_MESSAGE;
-					message = HOVerwaltung.instance().getLanguageString(
-							"lineup.upload.success");
+					message = HOVerwaltung.instance().getLanguageString("lineup.upload.success");
 				} else {
 					messageType = JOptionPane.ERROR_MESSAGE;
-					message = HOVerwaltung.instance().getLanguageString(
-							"lineup.upload.fail")
+					message = HOVerwaltung.instance().getLanguageString("lineup.upload.fail")
 							+ XMLUtils.getTagData(doc, "Reason");
 				}
 			} else {
 				messageType = JOptionPane.ERROR_MESSAGE;
 				message = HOVerwaltung.instance().getLanguageString(
 						"lineup.upload.result.parseerror");
-				HOLogger.instance().log(UploadDownloadPanel.class,
-						message + "\n" + result);
+				HOLogger.instance().log(UploadDownloadPanel.class, message + "\n" + result);
 			}
 		} catch (SAXException e) {
 			messageType = JOptionPane.ERROR_MESSAGE;
-			message = HOVerwaltung.instance().getLanguageString(
-					"lineup.upload.result.parseerror");
-			HOLogger.instance().log(UploadDownloadPanel.class,
-					message + "\n" + result);
+			message = HOVerwaltung.instance().getLanguageString("lineup.upload.result.parseerror");
+			HOLogger.instance().log(UploadDownloadPanel.class, message + "\n" + result);
 			HOLogger.instance().log(UploadDownloadPanel.class, e);
 		}
 
 		if (success) {
-			MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung
-					.instance().getModel().getBasics().getTeamId(), match);
+			MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
+					.getBasics().getTeamId(), match);
 			if (refreshed != null) {
 				match.merge(refreshed);
-				((MatchesTableModel) this.matchesTable.getModel())
-						.fireTableDataChanged();
+				((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
 				selectMatch(match);
 			}
 		}
 
-		JOptionPane.showMessageDialog(HOMainFrame.instance(), message,
-				HOVerwaltung.instance()
-						.getLanguageString("lineup.upload.title"), messageType);
+		JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
+				.getLanguageString("lineup.upload.title"), messageType);
 	}
 
 	private void download() {
 		MatchKurzInfo match = getSelectedMatch();
-		Lineup lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(),
-				match.getMatchTyp());
-		MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung
-				.instance().getModel().getBasics().getTeamId(), match);
+		Lineup lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
+		MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
+				.getBasics().getTeamId(), match);
 		if (refreshed != null) {
 			match.merge(refreshed);
-			((MatchesTableModel) this.matchesTable.getModel())
-					.fireTableDataChanged();
+			((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
 			selectMatch(match);
 		}
 		if (lineup != null) {
 			int messageType = JOptionPane.PLAIN_MESSAGE;
-			String message = HOVerwaltung.instance().getLanguageString(
-					"lineup.download.success");
-			JOptionPane.showMessageDialog(
-					HOMainFrame.instance(),
-					message,
-					HOVerwaltung.instance().getLanguageString(
-							"lineup.download.title"), messageType);
+			String message = HOVerwaltung.instance().getLanguageString("lineup.download.success");
+			JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
+					.getLanguageString("lineup.download.title"), messageType);
 			HOVerwaltung.instance().getModel().setAufstellung(lineup);
 			HOMainFrame.instance().getAufstellungsPanel().update();
 		}
 	}
 
 	private void refreshMatchListFromHT() {
-		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics()
-				.getTeamId(), true, true, true);
-		((MatchesTableModel) this.matchesTable.getModel())
-				.setData(getMatchesFromDB());
+		OnlineWorker.getMatches(HOVerwaltung.instance().getModel().getBasics().getTeamId(), true,
+				true, true);
+		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
 	}
 
 	private MatchKurzInfo getSelectedMatch() {
 		int tableIndex = this.matchesTable.getSelectedRow();
 		if (tableIndex != -1) {
-			int modelIndex = this.matchesTable
-					.convertRowIndexToModel(tableIndex);
-			return ((MatchesTableModel) this.matchesTable.getModel())
-					.getMatch(modelIndex);
+			int modelIndex = this.matchesTable.convertRowIndexToModel(tableIndex);
+			return ((MatchesTableModel) this.matchesTable.getModel()).getMatch(modelIndex);
 		}
 		return null;
 	}
 
 	private void selectMatch(MatchKurzInfo match) {
-		MatchesTableModel model = (MatchesTableModel) this.matchesTable
-				.getModel();
+		MatchesTableModel model = (MatchesTableModel) this.matchesTable.getModel();
 		int modelIndex = model.getRowIndex(match);
 		int viewIndex = this.matchesTable.convertRowIndexToView(modelIndex);
-		this.matchesTable.getSelectionModel().setSelectionInterval(viewIndex,
-				viewIndex);
+		this.matchesTable.getSelectionModel().setSelectionInterval(viewIndex, viewIndex);
 	}
 
 	private void addListeners() {
@@ -285,19 +280,17 @@ public class UploadDownloadPanel extends JPanel {
 			}
 		});
 
-		this.matchesTable.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
+		this.matchesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						if (!e.getValueIsAdjusting()) {
-							boolean enableButtons = matchesTable
-									.getSelectedRow() != -1;
-							uploadButton.setEnabled(enableButtons);
-							downloadButton.setEnabled(enableButtons);
-						}
-					}
-				});
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					boolean enableButtons = matchesTable.getSelectedRow() != -1;
+					uploadButton.setEnabled(supporter && enableButtons);
+					downloadButton.setEnabled(enableButtons);
+				}
+			}
+		});
 	}
 
 	private class MatchesTableModel extends AbstractTableModel {
@@ -385,15 +378,13 @@ public class UploadDownloadPanel extends JPanel {
 		private static final long serialVersionUID = -6068887874289410058L;
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			JLabel component = (JLabel) super.getTableCellRendererComponent(
-					table, value, isSelected, hasFocus, row, column);
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, value,
+					isSelected, hasFocus, row, column);
 			component.setText(null);
 			MatchType type = (MatchType) value;
-			Icon icon = ThemeManager.getIcon(HOIconName.MATCHTYPES[type
-					.getIconArrayIndex()]);
+			Icon icon = ThemeManager.getIcon(HOIconName.MATCHTYPES[type.getIconArrayIndex()]);
 			component.setIcon(icon);
 			return component;
 		}
@@ -404,11 +395,10 @@ public class UploadDownloadPanel extends JPanel {
 		private static final long serialVersionUID = -6068887874289410058L;
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			JLabel component = (JLabel) super.getTableCellRendererComponent(
-					table, "", isSelected, hasFocus, row, column);
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
+					hasFocus, row, column);
 			if ((Boolean) value) {
 				component.setIcon(ThemeManager.getIcon(HOIconName.ORDER_SET));
 			} else {
@@ -421,17 +411,16 @@ public class UploadDownloadPanel extends JPanel {
 	private class DateRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = -5869341433817862361L;
-		private DateFormat format = DateFormat.getDateTimeInstance(
-				DateFormat.MEDIUM, DateFormat.SHORT);
+		private DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+				DateFormat.SHORT);
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
 
 			String dateString = this.format.format((Timestamp) value);
-			return super.getTableCellRendererComponent(table, dateString,
-					isSelected, hasFocus, row, column);
+			return super.getTableCellRendererComponent(table, dateString, isSelected, hasFocus,
+					row, column);
 		}
 	}
 }
