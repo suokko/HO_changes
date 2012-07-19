@@ -114,4 +114,8 @@ public interface HOIconName {
 	public static final String MOVE_DOWN = "move_down";
 	public static final String MOVE_LEFT = "move_left";
 	public static final String MOVE_RIGHT = "move_right";	
+	public static final String ARROW_CURVE_180 = "arrow_curve_180";
+	public static final String ARROW_CURVE = "arrow_curve";
+	public static final String ARROW_CIRCLE = "arrow_circle_double";
+	public static final String LIGHTNING = "lightning";
 }

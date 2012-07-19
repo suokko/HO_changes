@@ -2,7 +2,9 @@ package ho.module.lineup.substitution;
 
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.player.Spieler;
 import ho.core.util.GUIUtils;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.MatchOrderType;
@@ -85,14 +87,12 @@ public class SubstitutionOverview extends JPanel {
 	}
 
 	private void refresh() {
-		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable
-				.getModel();
+		SubstitutionsTableModel model = (SubstitutionsTableModel) this.substitutionTable.getModel();
 		model.setData(this.lineup.getSubstitutionList());
 
 		for (int i = 0; i < model.getRowCount(); i++) {
 			TableRow row = model.getRow(i);
-			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup,
-					row.getSubstitution()));
+			row.setProblem(PlausibilityCheck.checkForProblem(this.lineup, row.getSubstitution()));
 		}
 		detailsView.refresh();
 		((SubstitutionsTableModel) this.substitutionTable.getModel()).sort();
@@ -119,15 +119,13 @@ public class SubstitutionOverview extends JPanel {
 		this.substitutionTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1
-						&& e.getClickCount() == 2) {
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 					editSelectedSubstitution();
 				}
 			}
 		});
 
-		this.substitutionTable.getInputMap(
-				JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+		this.substitutionTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "edit");
 		this.substitutionTable.getActionMap().put("edit", this.editAction);
 	}
@@ -137,8 +135,8 @@ public class SubstitutionOverview extends JPanel {
 		boolean enable = false;
 		TableRow tableRow = null;
 		if (selectedRowIndex != -1) {
-			tableRow = ((SubstitutionsTableModel) this.substitutionTable
-					.getModel()).getRow(selectedRowIndex);
+			tableRow = ((SubstitutionsTableModel) this.substitutionTable.getModel())
+					.getRow(selectedRowIndex);
 			enable = true;
 		}
 		this.editAction.setEnabled(enable);
@@ -151,8 +149,8 @@ public class SubstitutionOverview extends JPanel {
 
 		Icon icon = null;
 		if (tableRow != null && tableRow.getProblem() != null) {
-			this.messageBox.setMessage(PlausibilityCheck.getComment(
-					tableRow.getProblem(), tableRow.getSubstitution()));
+			this.messageBox.setMessage(PlausibilityCheck.getComment(tableRow.getProblem(),
+					tableRow.getSubstitution()));
 			if (tableRow.isUncertain()) {
 				icon = ThemeManager.getIcon(HOIconName.EXCLAMATION);
 			} else if (tableRow.isError()) {
@@ -168,13 +166,20 @@ public class SubstitutionOverview extends JPanel {
 		setLayout(new BorderLayout());
 		this.substitutionTable = new JTable();
 		this.substitutionTable.setModel(new SubstitutionsTableModel());
-		this.substitutionTable
-				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.substitutionTable.getColumnModel().getColumn(0)
-				.setCellRenderer(new WarningRenderer());
-		this.substitutionTable.getColumnModel().getColumn(0)
-				.setPreferredWidth(25);
+		this.substitutionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.substitutionTable.getColumnModel().getColumn(0).setCellRenderer(new WarningRenderer());
+		this.substitutionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
 		this.substitutionTable.getColumnModel().getColumn(0).setMaxWidth(25);
+
+		this.substitutionTable.getColumnModel().getColumn(2)
+				.setCellRenderer(new OrderTypeRenderer());
+		this.substitutionTable.getColumnModel().getColumn(2).setPreferredWidth(25);
+		this.substitutionTable.getColumnModel().getColumn(2).setMaxWidth(25);
+
+		this.substitutionTable.getColumnModel().getColumn(4)
+				.setCellRenderer(new OrderTypeRenderer());
+		this.substitutionTable.getColumnModel().getColumn(4).setPreferredWidth(25);
+		this.substitutionTable.getColumnModel().getColumn(4).setMaxWidth(25);
 
 		JPanel lowerPanel = new JPanel(new GridBagLayout());
 		this.detailsView = new DetailsView();
@@ -236,8 +241,8 @@ public class SubstitutionOverview extends JPanel {
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(this.positionSwapAction);
 
-		GUIUtils.equalizeComponentSizes(editButton, removeButton,
-				substitutionButton, behaviorButton, positionSwapButton);
+		GUIUtils.equalizeComponentSizes(editButton, removeButton, substitutionButton,
+				behaviorButton, positionSwapButton);
 
 		return buttonPanel;
 	}
@@ -257,11 +262,9 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
-	private SubstitutionEditDialog getSubstitutionEditDialog(
-			MatchOrderType orderType) {
+	private SubstitutionEditDialog getSubstitutionEditDialog(MatchOrderType orderType) {
 		SubstitutionEditDialog dlg = null;
-		Window windowAncestor = SwingUtilities
-				.getWindowAncestor(SubstitutionOverview.this);
+		Window windowAncestor = SwingUtilities.getWindowAncestor(SubstitutionOverview.this);
 		if (windowAncestor instanceof Frame) {
 			dlg = new SubstitutionEditDialog((Frame) windowAncestor, orderType);
 		} else {
@@ -273,10 +276,9 @@ public class SubstitutionOverview extends JPanel {
 	private Substitution getSelectedSubstitution() {
 		int tableIndex = this.substitutionTable.getSelectedRow();
 		if (tableIndex != -1) {
-			int modelIndex = this.substitutionTable
-					.convertRowIndexToModel(tableIndex);
-			return ((SubstitutionsTableModel) this.substitutionTable.getModel())
-					.getRow(modelIndex).getSubstitution();
+			int modelIndex = this.substitutionTable.convertRowIndexToModel(tableIndex);
+			return ((SubstitutionsTableModel) this.substitutionTable.getModel()).getRow(modelIndex)
+					.getSubstitution();
 		}
 		return null;
 	}
@@ -286,8 +288,7 @@ public class SubstitutionOverview extends JPanel {
 				.getModel();
 		for (int i = 0; i < tblModel.getRowCount(); i++) {
 			if (tblModel.getRow(i).getSubstitution() == sub) {
-				this.substitutionTable.getSelectionModel()
-						.setSelectionInterval(i, i);
+				this.substitutionTable.getSelectionModel().setSelectionInterval(i, i);
 			}
 		}
 	}
@@ -295,20 +296,18 @@ public class SubstitutionOverview extends JPanel {
 	private void editSelectedSubstitution() {
 		int selectedRowIndex = substitutionTable.getSelectedRow();
 		if (selectedRowIndex != -1) {
-			final Substitution sub = ((SubstitutionsTableModel) substitutionTable
-					.getModel()).getRow(selectedRowIndex).getSubstitution();
+			final Substitution sub = ((SubstitutionsTableModel) substitutionTable.getModel())
+					.getRow(selectedRowIndex).getSubstitution();
 
-			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub
-					.getOrderType());
+			SubstitutionEditDialog dlg = getSubstitutionEditDialog(sub.getOrderType());
 			dlg.setLocationRelativeTo(SubstitutionOverview.this);
 			dlg.init(sub);
 			dlg.setVisible(true);
 
 			if (!dlg.isCanceled()) {
 				sub.merge(dlg.getSubstitution());
-				((SubstitutionsTableModel) substitutionTable.getModel())
-						.fireTableRowsUpdated(selectedRowIndex,
-								selectedRowIndex);
+				((SubstitutionsTableModel) substitutionTable.getModel()).fireTableRowsUpdated(
+						selectedRowIndex, selectedRowIndex);
 				refresh();
 				selectSubstitution(sub);
 			}
@@ -316,8 +315,7 @@ public class SubstitutionOverview extends JPanel {
 	}
 
 	private void updateOrderIDs() {
-		List<Substitution> list = new ArrayList<Substitution>(
-				this.lineup.getSubstitutionList());
+		List<Substitution> list = new ArrayList<Substitution>(this.lineup.getSubstitutionList());
 		Comparator<Substitution> byOrderIDComparator = new Comparator<Substitution>() {
 
 			@Override
@@ -356,15 +354,19 @@ public class SubstitutionOverview extends JPanel {
 		private Comparator<TableRow> rowComparator;
 
 		public SubstitutionsTableModel() {
-			this.columnNames = new String[5];
+			this.columnNames = new String[9];
 			this.columnNames[0] = "";
 			this.columnNames[1] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.order");
-			this.columnNames[2] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[2] = "";
+			this.columnNames[3] = "Player 1";
+			this.columnNames[4] = "";
+			this.columnNames[5] = "Player 2";
+			this.columnNames[6] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.when");
-			this.columnNames[3] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[7] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.standing");
-			this.columnNames[4] = HOVerwaltung.instance().getLanguageString(
+			this.columnNames[8] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.cards");
 		}
 
@@ -377,8 +379,7 @@ public class SubstitutionOverview extends JPanel {
 						Substitution s1 = o1.getSubstitution();
 						Substitution s2 = o2.getSubstitution();
 
-						int ret = s1.getMatchMinuteCriteria()
-								- s2.getMatchMinuteCriteria();
+						int ret = s1.getMatchMinuteCriteria() - s2.getMatchMinuteCriteria();
 						if (ret == 0) {
 							ret = s1.getPlayerOrderId() - s2.getPlayerOrderId();
 						}
@@ -413,22 +414,31 @@ public class SubstitutionOverview extends JPanel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			Substitution sub = this.rows.get(rowIndex).getSubstitution();
+			HOModel hoModel = HOVerwaltung.instance().getModel();
+
 			switch (columnIndex) {
 			case 1:
 				return LanguageStringLookup.getOrderType(sub.getOrderType());
 			case 2:
+				return sub.getBehaviour();
+			case 3:
+				Spieler out = hoModel.getSpieler(sub.getSubjectPlayerID());
+				return (out != null) ? out.getName() : "";
+			case 4:
+				return sub.getBehaviour();
+			case 5:
+				Spieler in = hoModel.getSpieler(sub.getObjectPlayerID());
+				return (in != null) ? in.getName() : "";
+			case 6:
 				if (sub.getMatchMinuteCriteria() > 0) {
-					return HOVerwaltung.instance().getLanguageString(
-							"subs.MinuteAfterX",
+					return HOVerwaltung.instance().getLanguageString("subs.MinuteAfterX",
 							Integer.valueOf(sub.getMatchMinuteCriteria()));
 				}
-				return HOVerwaltung.instance().getLanguageString(
-						"subs.MinuteAnytime");
-			case 3:
+				return HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
+			case 7:
 				return LanguageStringLookup.getStanding(sub.getStanding());
-			case 4:
-				return LanguageStringLookup
-						.getRedCard(sub.getRedCardCriteria());
+			case 8:
+				return LanguageStringLookup.getRedCard(sub.getRedCardCriteria());
 			}
 
 			return "";
@@ -529,8 +539,7 @@ public class SubstitutionOverview extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SubstitutionsTableModel model = (SubstitutionsTableModel) substitutionTable
-					.getModel();
+			SubstitutionsTableModel model = (SubstitutionsTableModel) substitutionTable.getModel();
 			TableRow row = model.getRow(substitutionTable.getSelectedRow());
 			lineup.getSubstitutionList().remove(row.getSubstitution());
 			updateOrderIDs();
@@ -552,25 +561,62 @@ public class SubstitutionOverview extends JPanel {
 		}
 	}
 
+	private class OrderTypeRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 5422073852994253027L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "",
+					isSelected, hasFocus, row, column);
+			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table.getModel();
+			Substitution sub = tblModel.getRow(row).getSubstitution();
+			switch (sub.getOrderType()) {
+			case SUBSTITUTION:
+				if (column == 2) {
+					component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CURVE_180));
+				} else if (column == 4) {
+					component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CURVE));
+				} else {
+					component.setIcon(null);
+				}
+				break;
+			case NEW_BEHAVIOUR:
+				if (column == 2) {
+					component.setIcon(ThemeManager.getIcon(HOIconName.LIGHTNING));
+				} else {
+					component.setIcon(null);
+				}
+				break;
+			case POSITION_SWAP:
+				component.setIcon(ThemeManager.getIcon(HOIconName.ARROW_CIRCLE));
+				break;
+			default:
+				component.setIcon(null);
+				break;
+			}
+			return component;
+		}
+	}
+
 	private class WarningRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = 7013869782046646283L;
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
 
-			JLabel component = (JLabel) super.getTableCellRendererComponent(
-					table, value, isSelected, hasFocus, row, column);
-			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table
-					.getModel();
+			JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
+					hasFocus, row, column);
+			SubstitutionsTableModel tblModel = (SubstitutionsTableModel) table.getModel();
 			TableRow tblRow = tblModel.getRow(row);
 			if (tblRow.isUncertain()) {
 				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION));
 			} else if (tblRow.isError()) {
-				component.setIcon(ThemeManager
-						.getIcon(HOIconName.EXCLAMATION_RED));
+				component.setIcon(ThemeManager.getIcon(HOIconName.EXCLAMATION_RED));
 			} else {
 				component.setIcon(null);
 			}
