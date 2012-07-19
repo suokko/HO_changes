@@ -86,7 +86,7 @@ public class SpieleStatistikPanel extends ImagePanel
 			.instance().getLanguageString("linkeAngriffsseite"),leftForwardColor,
 			UserParameter.instance().statistikSpieleLinkerAngriff);
 	private ImageCheckbox m_jchMittelfeld = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Mittelfeld"), midfieldColor,
+			.instance().getLanguageString("MatchMittelfeld"), midfieldColor,
 			UserParameter.instance().statistikSpieleMittelfeld);
 	private ImageCheckbox m_jchRechteAbwehr = new ImageCheckbox(HOVerwaltung
 			.instance().getLanguageString("rechteAbwehrseite"), rightWingbackColor,
@@ -142,7 +142,7 @@ public class SpieleStatistikPanel extends ImagePanel
 					"NurEigeneTournamentsspiele"),
 					SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE
 						+ SpielePanel.NUR_GESPIELTEN_SPIELE)};
-			
+
 	private boolean m_bInitialisiert;
 
     // ~ Constructors
@@ -203,7 +203,7 @@ public class SpieleStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Gesamtstaerke", m_jchGesamt.isSelected());
             UserParameter.instance().statistikSpieleGesamt = m_jchGesamt.isSelected();
         } else if (actionEvent.getSource().equals(m_jchMittelfeld.getCheckbox())) {
-            m_clStatistikPanel.setShow("Mittelfeld", m_jchMittelfeld.isSelected());
+            m_clStatistikPanel.setShow("MatchMittelfeld", m_jchMittelfeld.isSelected());
             UserParameter.instance().statistikSpieleMittelfeld = m_jchMittelfeld.isSelected();
         } else if (actionEvent.getSource().equals(m_jchRechteAbwehr.getCheckbox())) {
             m_clStatistikPanel.setShow("RechteAbwehr", m_jchRechteAbwehr.isSelected());
@@ -377,7 +377,7 @@ public class SpieleStatistikPanel extends ImagePanel
         m_jchHatStats.addActionListener(this);
         layout2.setConstraints(m_jchHatStats, constraints2);
         panel2.add(m_jchHatStats);
-        
+
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 9;
@@ -385,7 +385,7 @@ public class SpieleStatistikPanel extends ImagePanel
         m_jchLoddarStats.addActionListener(this);
         layout2.setConstraints(m_jchLoddarStats, constraints2);
         panel2.add(m_jchLoddarStats);
-        
+
         constraints2.gridwidth = 2;
         constraints2.gridx = 0;
         constraints2.gridy = 10;
@@ -524,7 +524,7 @@ public class SpieleStatistikPanel extends ImagePanel
 			final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 
 			final double[][] statistikWerte = new double[14][anzahl];
-			
+
 			// Infos zusammenstellen
 			for (int i = 0; i < anzahl; i++) {
 				final Matchdetails details = DBManager.instance()
@@ -684,7 +684,7 @@ public class SpieleStatistikPanel extends ImagePanel
                 models[0] = new StatistikModel(statistikWerte[0], "Bewertung",
                                                m_jchBewertung.isSelected(), ratingColor, format,
                                                faktor);
-                models[1] = new StatistikModel(statistikWerte[1], "Mittelfeld",
+                models[1] = new StatistikModel(statistikWerte[1], "MatchMittelfeld",
                                                m_jchMittelfeld.isSelected(), midfieldColor, format);
                 models[2] = new StatistikModel(statistikWerte[2], "RechteAbwehr",
                                                m_jchRechteAbwehr.isSelected(), rightWingbackColor, format);
@@ -735,5 +735,5 @@ public class SpieleStatistikPanel extends ImagePanel
         //StatistikModel[] model   = { new StatistikModel( werte, "Fuehrung", true, FUEHRUNG ) };
         //m_clStatistikPanel.setModel ( model );
     }
- 
+
 }

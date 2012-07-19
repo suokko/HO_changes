@@ -32,10 +32,10 @@ public class OutputTableModel extends AbstractTableModel {
     private static final String DEFAULT_VALUE = "";
 
     //private ITrainingsManager p_ITM_trainingsManager = null;
-    private Vector<String> p_V_columnNames = null; 
+    private Vector<String> p_V_columnNames = null;
 
     //data enthält die berechneten Werte aller Spieler, wieviel Training sie schon hattenn
-    private Vector<Spieler> p_V_data = null; 
+    private Vector<Spieler> p_V_data = null;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -52,17 +52,17 @@ public class OutputTableModel extends AbstractTableModel {
 
         //Spaltennamen festlegen
         p_V_columnNames.add(hoV.getLanguageString("Spieler"));
-        p_V_columnNames.add(hoV.getLanguageString("Alter")); 
-        p_V_columnNames.add(hoV.getLanguageString("BestePosition")); 
-        p_V_columnNames.add(hoV.getLanguageString("Torwart")); 
-        p_V_columnNames.add(hoV.getLanguageString("Verteidigung")); 
-        p_V_columnNames.add(hoV.getLanguageString("Spielaufbau")); 
-        p_V_columnNames.add(hoV.getLanguageString("Passpiel")); 
-        p_V_columnNames.add(hoV.getLanguageString("Fluegelspiel")); 
-        p_V_columnNames.add(hoV.getLanguageString("Torschuss")); 
-        p_V_columnNames.add(hoV.getLanguageString("Standards")); 
-        p_V_columnNames.add(hoV.getLanguageString("Kondition")); 
-        p_V_columnNames.add(hoV.getLanguageString("ID")); 
+        p_V_columnNames.add(hoV.getLanguageString("Alter"));
+        p_V_columnNames.add(hoV.getLanguageString("BestePosition"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.keeper"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.defending"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.playmaking"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.passing"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.winger"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.scoring"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.set_pieces"));
+        p_V_columnNames.add(hoV.getLanguageString("skill.stamina"));
+        p_V_columnNames.add(hoV.getLanguageString("ID"));
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -180,10 +180,10 @@ public class OutputTableModel extends AbstractTableModel {
 
     /**
      * Get the training length for a player in a specific skill
-     * 
+     *
      * @param player player to be considered
      * @param skillIndex skill trained
-     * 
+     *
      * @return predicted training length
      */
     private double getTrainingLength (Spieler player, int skillIndex) {

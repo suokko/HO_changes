@@ -50,7 +50,7 @@ class SpielerStatistikPanel extends ImagePanel
     implements ActionListener, FocusListener, Refreshable, ItemListener
 {
 	private static final long serialVersionUID = -5003282359250534295L;
-	
+
     //~ Static fields/initializers -----------------------------------------------------------------
 
 
@@ -164,7 +164,7 @@ class SpielerStatistikPanel extends ImagePanel
         return (max);
     }
 
-    //--------Listener-------------------------------    
+    //--------Listener-------------------------------
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
@@ -184,7 +184,7 @@ class SpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Fuehrung", m_jchFuehrung.isSelected());
             ho.core.model.UserParameter.instance().statistikFuehrung = m_jchFuehrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchErfahrung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Erfahrung", m_jchErfahrung.isSelected());
+            m_clStatistikPanel.setShow("skill.experience", m_jchErfahrung.isSelected());
             ho.core.model.UserParameter.instance().statistikErfahrung = m_jchErfahrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
             m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
@@ -193,28 +193,28 @@ class SpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Form", m_jchForm.isSelected());
             ho.core.model.UserParameter.instance().statistikForm = m_jchForm.isSelected();
         } else if (actionEvent.getSource().equals(m_jchKondition.getCheckbox())) {
-            m_clStatistikPanel.setShow("Kondition", m_jchKondition.isSelected());
+            m_clStatistikPanel.setShow("skill.stamina", m_jchKondition.isSelected());
             ho.core.model.UserParameter.instance().statistikKondition = m_jchKondition.isSelected();
         } else if (actionEvent.getSource().equals(m_jchTorwart.getCheckbox())) {
-            m_clStatistikPanel.setShow("Torwart", m_jchTorwart.isSelected());
+            m_clStatistikPanel.setShow("skill.keeper", m_jchTorwart.isSelected());
             ho.core.model.UserParameter.instance().statistikTorwart = m_jchTorwart.isSelected();
         } else if (actionEvent.getSource().equals(m_jchVerteidigung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Verteidigung", m_jchVerteidigung.isSelected());
+            m_clStatistikPanel.setShow("skill.defending", m_jchVerteidigung.isSelected());
             ho.core.model.UserParameter.instance().statistikVerteidigung = m_jchVerteidigung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSpielaufbau.getCheckbox())) {
-            m_clStatistikPanel.setShow("Spielaufbau", m_jchSpielaufbau.isSelected());
+            m_clStatistikPanel.setShow("skill.playmaking", m_jchSpielaufbau.isSelected());
             ho.core.model.UserParameter.instance().statistikSpielaufbau = m_jchSpielaufbau.isSelected();
         } else if (actionEvent.getSource().equals(m_jchPasspiel.getCheckbox())) {
-            m_clStatistikPanel.setShow("Passpiel", m_jchPasspiel.isSelected());
+            m_clStatistikPanel.setShow("skill.passing", m_jchPasspiel.isSelected());
             ho.core.model.UserParameter.instance().statistikPasspiel = m_jchPasspiel.isSelected();
         } else if (actionEvent.getSource().equals(m_jchFluegel.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fluegelspiel", m_jchFluegel.isSelected());
+            m_clStatistikPanel.setShow("skill.winger", m_jchFluegel.isSelected());
             ho.core.model.UserParameter.instance().statistikFluegel = m_jchFluegel.isSelected();
         } else if (actionEvent.getSource().equals(m_jchTorschuss.getCheckbox())) {
-            m_clStatistikPanel.setShow("Torschuss", m_jchTorschuss.isSelected());
+            m_clStatistikPanel.setShow("skill.scoring", m_jchTorschuss.isSelected());
             ho.core.model.UserParameter.instance().statistikTorschuss = m_jchTorschuss.isSelected();
         } else if (actionEvent.getSource().equals(m_jchStandards.getCheckbox())) {
-            m_clStatistikPanel.setShow("Standards", m_jchStandards.isSelected());
+            m_clStatistikPanel.setShow("skill.set_pieces", m_jchStandards.isSelected());
             ho.core.model.UserParameter.instance().statistikStandards = m_jchStandards.isSelected();
         } else if (actionEvent.getSource().equals(m_jchBewertung.getCheckbox())) {
             m_clStatistikPanel.setShow("Bewertung", m_jchBewertung.isSelected());
@@ -248,7 +248,7 @@ class SpielerStatistikPanel extends ImagePanel
         }
     }
 
-    //-------Refresh---------------------------------    
+    //-------Refresh---------------------------------
     public final void reInit() {
         initSpielerCB();
 
@@ -392,7 +392,7 @@ class SpielerStatistikPanel extends ImagePanel
         m_jchGehalt.addActionListener(this);
         layout2.setConstraints(m_jchGehalt, constraints2);
         panel2.add(m_jchGehalt);
-        
+
         constraints2.gridwidth = 1;
         constraints2.gridx = 1;
         constraints2.gridy = 5;
@@ -582,27 +582,27 @@ class SpielerStatistikPanel extends ImagePanel
                                                    m_jchGehalt.isSelected(), wageColor, format2, faktor);
                     models[2] = new StatistikModel(statistikWerte[2], "Fuehrung",
                                                    m_jchFuehrung.isSelected(), leadershipColor, format);
-                    models[3] = new StatistikModel(statistikWerte[3], "Erfahrung",
+                    models[3] = new StatistikModel(statistikWerte[3], "skill.experience",
                                                    m_jchErfahrung.isSelected(), experienceColor, format);
                     models[4] = new StatistikModel(statistikWerte[4], "Form",
                                                    m_jchForm.isSelected(), formColor, format);
-                    models[5] = new StatistikModel(statistikWerte[5], "Kondition",
+                    models[5] = new StatistikModel(statistikWerte[5], "skill.stamina",
                                                    m_jchKondition.isSelected(), staminaColor, format);
-                    models[6] = new StatistikModel(statistikWerte[6], "Torwart",
+                    models[6] = new StatistikModel(statistikWerte[6], "skill.keeper",
                                                    m_jchTorwart.isSelected(), keeperColor, format);
-                    models[7] = new StatistikModel(statistikWerte[7], "Verteidigung",
+                    models[7] = new StatistikModel(statistikWerte[7], "skill.defending",
                                                    m_jchVerteidigung.isSelected(), defendingColor,
                                                    format);
-                    models[8] = new StatistikModel(statistikWerte[8], "Spielaufbau",
+                    models[8] = new StatistikModel(statistikWerte[8], "skill.playmaking",
                                                    m_jchSpielaufbau.isSelected(), playmakingColor,
                                                    format);
-                    models[9] = new StatistikModel(statistikWerte[9], "Passpiel",
+                    models[9] = new StatistikModel(statistikWerte[9], "skill.passing",
                                                    m_jchPasspiel.isSelected(), passingColor, format);
-                    models[10] = new StatistikModel(statistikWerte[10], "Fluegelspiel",
+                    models[10] = new StatistikModel(statistikWerte[10], "skill.winger",
                                                     m_jchFluegel.isSelected(), wingerColor, format);
-                    models[11] = new StatistikModel(statistikWerte[11], "Torschuss",
+                    models[11] = new StatistikModel(statistikWerte[11], "skill.scoring",
                                                     m_jchTorschuss.isSelected(), scoringColor, format);
-                    models[12] = new StatistikModel(statistikWerte[12], "Standards",
+                    models[12] = new StatistikModel(statistikWerte[12], "skill.set_pieces",
                                                     m_jchStandards.isSelected(), setPiecesColor, format);
                     models[13] = new StatistikModel(statistikWerte[13], "Bewertung",
                                                     m_jchBewertung.isSelected(), ratingColor, format);
