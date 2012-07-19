@@ -33,7 +33,7 @@
 		<key>VMOptions</key>
 		<string>-Xmx512m</string>
 		<key>MainClass</key>
-		<string>de.hattrickorganizer.HO</string>
+		<string>ho.HO</string>
 		<key>WorkingDirectory</key>
 		<string>$APP_PACKAGE/Contents/Resources/Java</string>
 		<key>Properties</key>
