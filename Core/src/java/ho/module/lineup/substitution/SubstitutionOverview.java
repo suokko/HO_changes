@@ -369,9 +369,11 @@ public class SubstitutionOverview extends JPanel {
 			this.columnNames[WARNING_COL_IDX] = "";
 			this.columnNames[ORDERTYPE_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.order");
-			this.columnNames[SUBJECTPLAYER_COL_IDX] = "Player 1";
+			this.columnNames[SUBJECTPLAYER_COL_IDX] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.player1");
 			this.columnNames[ORDERTYPE_ICON_COL_IDX] = "";
-			this.columnNames[OBJECTPLAYER_COL_IDX] = "Player 2";
+			this.columnNames[OBJECTPLAYER_COL_IDX] = HOVerwaltung.instance().getLanguageString(
+					"subs.orders.colheadline.player2");
 			this.columnNames[WHEN_COL_IDX] = HOVerwaltung.instance().getLanguageString(
 					"subs.orders.colheadline.when");
 			this.columnNames[STANDING_COL_IDX] = HOVerwaltung.instance().getLanguageString(
