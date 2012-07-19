@@ -5,7 +5,9 @@ public enum Error implements Problem {
 	SUBSTITUTION_PLAYER_MISSING("subs.plausibility.substitution.playermissing"),
 	POSITIONSWAP_PLAYER_MISSING("subs.plausibility.positionswap.playermissing"),
 	PLAYERIN_NOT_IN_LINEUP("subs.plausibility.playerIn.notInLineup"),
-	PLAYEROUT_NOT_IN_LINEUP("subs.plausibility.playerOut.notInLineup");
+	PLAYEROUT_NOT_IN_LINEUP("subs.plausibility.playerOut.notInLineup"),
+	PLAYEROUT_NOT_REAL("subs.plausibility.player.notReal"),
+	PLAYERIN_NOT_REAL("subs.plausibility.player.notReal");
 
 	private String languageKey;
 
