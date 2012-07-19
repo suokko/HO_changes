@@ -669,7 +669,9 @@ public class OnlineWorker {
 			orders.append("\"playerout\":\"").append(sub.getSubjectPlayerID()).append("\",");
 			orders.append("\"orderType\":\"").append(sub.getOrderType().getId()).append("\",");
 			orders.append("\"min\":\"").append(sub.getMatchMinuteCriteria()).append("\",");
-			orders.append("\"pos\":\"").append(sub.getPos()).append("\",");
+		
+			// The uploaded position is not a RoleId
+			orders.append("\"pos\":\"").append(sub.getRoleId() - 100).append("\",");
 			orders.append("\"beh\":\"").append(sub.getBehaviour()).append("\",");
 			orders.append("\"card\":\"").append(sub.getRedCardCriteria().getId()).append("\",");
 			orders.append("\"standing\":\"").append(sub.getStanding().getId()).append("\"}");

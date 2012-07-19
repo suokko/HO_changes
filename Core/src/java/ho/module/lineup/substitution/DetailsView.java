@@ -69,7 +69,7 @@ public class DetailsView extends JPanel {
 					: HOColorName.TABLEENTRY_BG;
 			this.whenEntry.setBackground(ThemeManager.getColor(color));
 
-			color = (this.substitution.getPos() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
+			color = (this.substitution.getRoleId() != -1) ? HOColorName.SUBST_CHANGED_VALUE_BG
 					: HOColorName.TABLEENTRY_BG;
 			this.newPositionEntry.setBackground(ThemeManager.getColor(color));
 
@@ -145,8 +145,8 @@ public class DetailsView extends JPanel {
 				when = HOVerwaltung.instance().getLanguageString("subs.MinuteAnytime");
 			}
 
-			if (this.substitution.getPos() != -1) {
-				newPosition = LanguageStringLookup.getPosition(this.substitution.getPos());
+			if (this.substitution.getRoleId() != -1) {
+				newPosition = LanguageStringLookup.getPosition(this.substitution.getRoleId());
 			}
 
 			newBehaviour = LanguageStringLookup.getBehaviour(this.substitution.getBehaviour());

@@ -147,10 +147,10 @@ public class MatchStatistics {
 
 				if (tmpSub.getObjectPlayerID() == spielerId) {
 					// Repositioning
-					return tmpSub.getPos();
+					return tmpSub.getRoleId();
 				}
 
-				if ((tmpSub.getObjectPlayerID() == 0) && (tmpSub.getPos() == 0)) {
+				if ((tmpSub.getObjectPlayerID() == 0) && (tmpSub.getRoleId() == 0)) {
 					// Sent off or no sub after injury
 					return -1;
 				}
@@ -163,7 +163,7 @@ public class MatchStatistics {
 				if (tmpSub.getOrderType().getId() == 3) {
 					// Player swap
 					// The sub object got his new position
-					return tmpSub.getPos();
+					return tmpSub.getRoleId();
 				}
 
 				HOLogger.instance().debug(
@@ -178,7 +178,7 @@ public class MatchStatistics {
 
 				if (tmpSub.getOrderType().getId() == 1) {
 					// A sub entering. His position is in the sub object.
-					return tmpSub.getPos();
+					return tmpSub.getRoleId();
 				}
 
 				if (tmpSub.getOrderType().getId() == 3) {

@@ -13,20 +13,20 @@ public class Substitution {
 	private int subjectPlayerID = -1;
 	private MatchOrderType orderType = MatchOrderType.SUBSTITUTION;
 	private byte matchMinuteCriteria = -1;
-	private byte pos = -1;
+	private byte roleId = -1;
 	private byte behaviour = -1;
 	private RedCardCriteria card = RedCardCriteria.IGNORE;
 	private GoalDiffCriteria standing = GoalDiffCriteria.ANY_STANDING;
 
 	public Substitution(int playerOrderID, int playerIn, int subjectPlayerID,
-			MatchOrderType orderType, byte matchMinuteCriteria, byte pos, byte behaviour,
+			MatchOrderType orderType, byte matchMinuteCriteria, byte roleId, byte behaviour,
 			RedCardCriteria card, GoalDiffCriteria standing) {
 		this.playerOrderID = playerOrderID;
 		this.objectPlayerID = playerIn;
 		this.subjectPlayerID = subjectPlayerID;
 		this.orderType = orderType;
 		this.matchMinuteCriteria = matchMinuteCriteria;
-		this.pos = pos;
+		this.roleId = roleId;
 		this.behaviour = behaviour;
 		this.card = card;
 		this.standing = standing;
@@ -93,12 +93,12 @@ public class Substitution {
 		this.matchMinuteCriteria = matchMinuteCriteria;
 	}
 
-	public byte getPos() {
-		return pos;
+	public byte getRoleId() {
+		return roleId;
 	}
 
-	public void setPos(byte pos) {
-		this.pos = pos;
+	public void setRoleId(byte roleId) {
+		this.roleId = roleId;
 	}
 
 	public byte getBehaviour() {
@@ -142,7 +142,7 @@ public class Substitution {
 		setObjectPlayerID(other.getObjectPlayerID());
 		setPlayerOrderId(other.getPlayerOrderId());
 		setSubjectPlayerID(other.getSubjectPlayerID());
-		setPos(other.getPos());
+		setRoleId(other.getRoleId());
 		setStanding(other.getStanding());
 	}
 
