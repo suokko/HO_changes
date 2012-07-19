@@ -127,7 +127,7 @@ public class SubstitutionEditView extends JPanel {
 			ComboBoxModel model = this.positionComboBox.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
 				if (((PlayerPositionItem) model.getElementAt(i)).getPosition()
-						.byteValue() == sub.getPos()) {
+						.byteValue() == sub.getRoleId()) {
 					positionComboBox.setSelectedItem(model.getElementAt(i));
 					break;
 				}
@@ -172,9 +172,9 @@ public class SubstitutionEditView extends JPanel {
 			item = (PlayerPositionItem) this.positionComboBox.getSelectedItem();
 			if (item != null) {
 				if (item.getSpieler() != null) {
-					sub.setPos(item.getPosition().byteValue());
+					sub.setRoleId(item.getPosition().byteValue());
 				}
-				sub.setPos(item.getPosition().byteValue());
+				sub.setRoleId(item.getPosition().byteValue());
 			}
 		}
 

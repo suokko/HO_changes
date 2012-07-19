@@ -537,7 +537,7 @@ public class ConvertXml2Hrf {
 							.append("matchMinuteCriteria=")
 							.append(sub.getMatchMinuteCriteria()).append('\n');
 					buffer.append("subst").append(i).append("pos=")
-							.append(sub.getPos()).append('\n');
+							.append(sub.getRoleId()).append('\n');
 					buffer.append("subst").append(i).append("behaviour=")
 							.append(sub.getBehaviour()).append('\n');
 					buffer.append("subst").append(i).append("card=")
