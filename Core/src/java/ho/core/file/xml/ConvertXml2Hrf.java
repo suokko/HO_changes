@@ -81,7 +81,7 @@ public class ConvertXml2Hrf {
 		Map<String, String> economyDataMap = XMLEconomyParser
 				.parseEconomyFromString(mc.getEconomy());
 		waitDialog.setValue(40);
-		Map<?, ?> trainingDataMap = new XMLTrainingParser()
+		Map<String, String> trainingDataMap = XMLTrainingParser
 				.parseTrainingFromString(mc.getTraining());
 		waitDialog.setValue(45);
 		Map<String, String> arenaDataMap = XMLArenaParser
@@ -96,7 +96,7 @@ public class ConvertXml2Hrf {
 		waitDialog.setValue(52);
 
 		// Automatisch alle MatchLineups runterladen
-		Map<?, ?> nextLineupDataMap = null;
+		Map<String, String> nextLineupDataMap = null;
 		for (MatchKurzInfo match : matches) {
 			if (match.getMatchStatus() == MatchKurzInfo.UPCOMING) {
 				waitDialog.setValue(54);
@@ -193,7 +193,7 @@ public class ConvertXml2Hrf {
 	/**
 	 * Create the arena data.
 	 */
-	private static void createArena(Map<?, ?> arenaDataMap, StringBuilder buffer) {
+	private static void createArena(Map<String, String> arenaDataMap, StringBuilder buffer) {
 		buffer.append("[arena]").append('\n');
 		buffer.append("arenaname=").append(arenaDataMap.get("ArenaName"))
 				.append('\n');
@@ -234,7 +234,7 @@ public class ConvertXml2Hrf {
 	 * Create the basic data.
 	 */
 	private static void createBasics(Map<String, String> teamdetailsDataMap,
-			Map<?, ?> worldDataMap, StringBuilder buffer) {
+			Map<String, String> worldDataMap, StringBuilder buffer) {
 		buffer.append("[basics]\n");
 		buffer.append("application=HO\n");
 		buffer.append("appversion=").append(ho.HO.VERSION).append('\n');
@@ -270,7 +270,7 @@ public class ConvertXml2Hrf {
 	 * Create the club data.
 	 */
 	private static void createClub(Map<String, String> clubDataMap,
-			Map<String, String> economyDataMap, Map<?, ?> teamdetailsDataMap,
+			Map<String, String> economyDataMap, Map<String, String> teamdetailsDataMap,
 			StringBuilder buffer) {
 		buffer.append("[club]\n");
 		buffer.append("hjTranare=")
@@ -298,7 +298,7 @@ public class ConvertXml2Hrf {
 	/**
 	 * Create the economy data.
 	 */
-	private static void createEconemy(Map<?, ?> economyDataMap,
+	private static void createEconemy(Map<String, String> economyDataMap,
 			StringBuilder buffer) {
 		// wahrscheinlich in Training.asp fehlt noch
 		buffer.append("[economy]").append('\n');
@@ -374,7 +374,7 @@ public class ConvertXml2Hrf {
 	/**
 	 * Create last lineup section.
 	 */
-	private static void createLastLineUp(Map<?, ?> teamdetailsDataMap,
+	private static void createLastLineUp(Map<String, String> teamdetailsDataMap,
 			MatchLineupTeam matchLineupTeam, int lastAttitude, int lastTactic,
 			StringBuilder buffer) {
 		buffer.append("[lastlineup]").append('\n');
@@ -609,7 +609,7 @@ public class ConvertXml2Hrf {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String createLineUp(String trainerId, Map<?, ?> nextLineup) {
+	public static String createLineUp(String trainerId, Map<String, String> nextLineup) {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("[lineup]").append('\n');
 
@@ -925,7 +925,7 @@ public class ConvertXml2Hrf {
 	 * Create team related data (training, confidence, formation experience,
 	 * etc.).
 	 */
-	private static void createTeam(Map<?, ?> trainingDataMap,
+	private static void createTeam(Map<String, String> trainingDataMap,
 			StringBuilder buffer) {
 		buffer.append("[team]" + "\n");
 		buffer.append("trLevel=").append(trainingDataMap.get("TrainingLevel"))
@@ -991,8 +991,8 @@ public class ConvertXml2Hrf {
 	 * Create the world data.
 	 */
 	private static void createWorld(Map<String, String> clubDataMap,
-			Map<?, ?> teamdetailsDataMap, Map<?, ?> trainingDataMap,
-			Map<?, ?> worldDataMap, StringBuilder buffer) {
+			Map<String, String> teamdetailsDataMap, Map<String, String> trainingDataMap,
+			Map<String, String> worldDataMap, StringBuilder buffer) {
 		buffer.append("[xtra]\n");
 		buffer.append("TrainingDate=").append(worldDataMap.get("TrainingDate"))
 				.append('\n');
