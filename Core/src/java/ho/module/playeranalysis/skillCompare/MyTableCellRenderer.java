@@ -44,7 +44,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 	private String[] name = new String[2];
 	private int natWert;
 	private DecimalFormat df = new DecimalFormat("#,###,##0.00");
-	
+
 	//***** Konstruktor *****
 	public MyTableCellRenderer()
 	{
@@ -54,7 +54,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		hellblau = ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG);
 		dunkelblau = ThemeManager.getColor(HOColorName.PLAYER_POS_BG);
 	}
-	
+
 	public Component getTableCellRendererComponent(JTable table,
 			Object value,
 			boolean isSelected,
@@ -64,7 +64,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 	{
 		label = new JLabel();
 
-		if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Name"))) {	
+		if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Name"))) {
 			int i = 0;
 			int spezWert = 0;
 			StringTokenizer tk = new StringTokenizer(table.getValueAt(row,column).toString(),";");
@@ -76,7 +76,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				spezWert = Integer.parseInt(name[1]);
 			}
 			catch(Exception e){}
-			
+
 			Icon ic = ThemeManager.getIcon(HOIconName.SPECIAL[spezWert]);
 			label.setLayout(new BorderLayout());
 			label.setText(name[0]);
@@ -93,7 +93,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		}
 		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Gruppe")))	{
 
-			
+
 			String group = ((String)table.getValueAt(row,column)).toString();
 			if(group != null && group.length() > 3)
 				label.setIcon(ThemeManager.getIcon(group));
@@ -111,7 +111,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				skillwert = Double.parseDouble(skillwertS);
 
 			} catch(Exception e){}
-			
+
 			int skillWertNew = new Double(skillwert).intValue();
 			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
 			int changeWert = skillWertNew - skillWertOld;
@@ -149,11 +149,11 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				skillwert = Double.parseDouble(skillwertS);
 			}
 			catch(Exception e){}
-			
+
 			int skillWertNew = new Double(skillwert).intValue();
 			int skillWertOld = new Double((skillwert - skillWertNew) * 100 + 0.1).intValue();
 			int changeWert = skillWertNew - skillWertOld;
-			
+
 			Icon ii =  ImageUtilities.getImageIcon4Veraenderung(changeWert,true);
 			label = new JLabel(""+skillWertNew,ii,SwingConstants.CENTER);
 			label.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -168,28 +168,28 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			{
 				label.setBackground(gelb);
 			}
-			
+
 		}
-		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("IVA"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("IVO"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("AVI"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("AVD"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("AVO"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MITA"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MITD"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MITO"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FLGI"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FLGO"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FLGD"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("STUD"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("TOR"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("IV"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("AV"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MIT"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FLG"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("STU"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("STUA"))
-				
+		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forward"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing"))
+
 				)
 		{
 			int i = 0;
@@ -197,7 +197,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			String []skill = new String[2];
 			float changeValue = 0;
 			String chValue = "";
-			
+
 			StringTokenizer tk = new StringTokenizer(table.getValueAt(row,column).toString(),";");
 			while (tk.hasMoreTokens()) {
 		         skill[i]=tk.nextToken();
@@ -209,9 +209,9 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				changeValue = Helper.round(Float.parseFloat(skill[1]),UserParameter.instance().anzahlNachkommastellen);
 			}
 			catch(Exception exc){}
-			
+
 			wertAlt = new JLabel();
-			
+
 			if(changeValue > 0)
 			{
 				chValue += "+" + changeValue;
@@ -226,21 +226,21 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				wertAlt.setForeground(dklrot);
 				wertAlt.setText("" + changeValue);
 			}
-			
+
 			wertNeu = new JLabel("" + neuerWert);
 			wertNeu.setHorizontalAlignment(SwingConstants.RIGHT);
 			wertAlt.setHorizontalAlignment(SwingConstants.CENTER);
-			
+
 			label.setLayout(new GridLayout());
 			label.add(wertNeu);
 			label.add(wertAlt);
-			
-			if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("TOR"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("IV"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("AV"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MIT"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FLG"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("STU"))
+
+			if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forward"))
 				)
 			{
 				label.setBackground(dunkelblau);
@@ -253,14 +253,14 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				wertNeu.setBackground(hellblau);
 				wertAlt.setBackground(hellblau);
 			}
-			
+
 			label.validate();
 		}
 		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Gehalt")))	{
 			XtraData extraData = HOVerwaltung.instance().getModel().getXtraDaten();
 			String curr = "" + df.format(Double.parseDouble(value.toString())) + " " + extraData.getCurrencyName();
 			label.setText(curr);
-			
+
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setBackground(table.getBackground());
 		}
@@ -279,11 +279,11 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		label.setFont(table.getFont());
 		label.setForeground(table.getForeground());
 
-		
+
 		if(isSelected){
 			label.setBackground(table.getSelectionBackground());
 			label.setForeground(table.getSelectionForeground());
-		} 
+		}
 		if(table.getValueAt(row,0) == Boolean.TRUE)
 		{
 			label.setBackground(rot);

@@ -224,61 +224,61 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 		switch (posId) {
 		case KEEPER:
-			return HOVerwaltung.instance().getLanguageString("TORW");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper");
 
 		case CENTRAL_DEFENDER:
-			return HOVerwaltung.instance().getLanguageString("IV");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender");
 
 		case CENTRAL_DEFENDER_TOWING:
-			return HOVerwaltung.instance().getLanguageString("IVA");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing");
 
 		case CENTRAL_DEFENDER_OFF:
-			return HOVerwaltung.instance().getLanguageString("IVO");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive");
 
 		case BACK:
-			return HOVerwaltung.instance().getLanguageString("AV");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback");
 
 		case BACK_TOMID:
-			return HOVerwaltung.instance().getLanguageString("AVI");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle");
 
 		case BACK_OFF:
-			return HOVerwaltung.instance().getLanguageString("AVO");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive");
 
 		case BACK_DEF:
-			return HOVerwaltung.instance().getLanguageString("AVD");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive");
 
 		case MIDFIELDER:
-			return HOVerwaltung.instance().getLanguageString("MIT");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder");
 
 		case MIDFIELDER_OFF:
-			return HOVerwaltung.instance().getLanguageString("MITO");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive");
 
 		case MIDFIELDER_DEF:
-			return HOVerwaltung.instance().getLanguageString("MITD");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive");
 
 		case MIDFIELDER_TOWING:
-			return HOVerwaltung.instance().getLanguageString("MITA");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
 
 		case WINGER:
-			return HOVerwaltung.instance().getLanguageString("FLG");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger");
 
 		case WINGER_TOMID:
-			return HOVerwaltung.instance().getLanguageString("FLGI");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle");
 
 		case WINGER_OFF:
-			return HOVerwaltung.instance().getLanguageString("FLGO");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive");
 
 		case WINGER_DEF:
-			return HOVerwaltung.instance().getLanguageString("FLGD");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive");
 
 		case FORWARD:
-			return HOVerwaltung.instance().getLanguageString("STU");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.forward");
 
 		case FORWARD_TOWING:
-			return HOVerwaltung.instance().getLanguageString("STUA");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing");
 
 		case FORWARD_DEF:
-			return HOVerwaltung.instance().getLanguageString("STUD");
+			return HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive");
 
 		case SUBSTITUTED1:
 		case SUBSTITUTED2:
