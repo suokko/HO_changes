@@ -157,44 +157,44 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("TS"),
 	    //Standards
 	    HOVerwaltung.instance().getLanguageString("ST"),
-	    //Gesamt Torwart
-	    HOVerwaltung.instance().getLanguageString("TORW"),
+	    //Torwart
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper"),
 	    //Innenverteidiger
-	    HOVerwaltung.instance().getLanguageString("IV"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender"),
 	    //Innenverteidiger Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("IVA"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing"),
 	    //Innenverteidiger Offensiv
-	    HOVerwaltung.instance().getLanguageString("IVO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive"),
 	    //Aussenverteidiger
-	    HOVerwaltung.instance().getLanguageString("AV"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback"),
 	    //Aussenverteidiger Zur Mitte
-	    HOVerwaltung.instance().getLanguageString("AVI"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle"),
 	    //Aussenverteidiger Offensiv
-	    HOVerwaltung.instance().getLanguageString("AVO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive"),
 	    //Aussenverteidiger Defensiv
-	    HOVerwaltung.instance().getLanguageString("AVD"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive"),
 	    //Mittelfeld
-	    HOVerwaltung.instance().getLanguageString("MIT"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder"),
 	    //Mittelfeld Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("MITA"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing"),
 	    //Mittelfeld Offensiv
-	    HOVerwaltung.instance().getLanguageString("MITO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive"),
 	    //Mittelfeld Defensiv
-	    HOVerwaltung.instance().getLanguageString("MITD"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive"),
 	    //Flügel
-	    HOVerwaltung.instance().getLanguageString("FLG"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger"),
 	    //Flügel Nach Innen
-	    HOVerwaltung.instance().getLanguageString("FLGI"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle"),
 	    //Flügel Offensiv
-	    HOVerwaltung.instance().getLanguageString("FLGO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive"),
 	    //Flügel Defensiv
-	    HOVerwaltung.instance().getLanguageString("FLGD"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive"),
 	    //Sturm
-	    HOVerwaltung.instance().getLanguageString("STU"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.forward"),
 	    //Sturm Defensiv
-	    HOVerwaltung.instance().getLanguageString("STUD"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive"),
 	  //Sturm Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("STUA"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing"),
 	    //Notes
 	    HOVerwaltung.instance().getLanguageString("Notizen"),
 
