@@ -58,7 +58,7 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Loyalty
 	    HOVerwaltung.instance().getLanguageString("Loyalty"),
 	    //Torwart
-	    PlayerSkill.toString(PlayerSkill.KEEPER),
+	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
 	    //Verteidigung
 	    HOVerwaltung.instance().getLanguageString("skill.defending"),
 	    //Spielaufbau
@@ -71,44 +71,44 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("skill.scoring"),
 	    //Standards
 	    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
-	    //Gesamt Torwart
-	    HOVerwaltung.instance().getLanguageString("Torwart"),
+	    //Torwart
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.keeper"),
 	    //Innenverteidiger
-	    HOVerwaltung.instance().getLanguageString("Innenverteidiger"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefender"),
 	    //Innenverteidiger Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Aus"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefendertowardswing"),
 	    //Innenverteidiger Offensiv
-	    HOVerwaltung.instance().getLanguageString("Innenverteidiger_Off"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.centraldefenderoffensive"),
 	    //Aussenverteidiger
-	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingback"),
 	    //Aussenverteidiger Nach Innen
-	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_In"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingbacktowardsmiddle"),
 	    //Aussenverteidiger Offensiv
-	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Off"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackoffensive"),
 	    //Aussenverteidiger Defensiv
-	    HOVerwaltung.instance().getLanguageString("Aussenverteidiger_Def"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingbackdefensive"),
 	    //Mittelfeld
-	    HOVerwaltung.instance().getLanguageString("Mittelfeld"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielder"),
 	    //Mittelfeld Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Aus"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfieldertowardswing"),
 	    //Mittelfeld Offensiv
-	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Off"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderoffensive"),
 	    //Mittelfeld Defensiv
-	    HOVerwaltung.instance().getLanguageString("Mittelfeld_Def"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielderdefensive"),
 	    //Flügel
-	    HOVerwaltung.instance().getLanguageString("Fluegel"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.winger"),
 	    //Flügel Nach Innen
-	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_In"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingertowardsmiddle"),
 	    //Flügel Offensiv
-	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Off"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingeroffensive"),
 	    //Flügel Defensiv
-	    HOVerwaltung.instance().getLanguageString("Fluegelspiel_Def"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.wingerdefensive"),
 	    //Sturm
-	    HOVerwaltung.instance().getLanguageString("Sturm"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.forward"),
 	    //Sturm Defensiv
-	    HOVerwaltung.instance().getLanguageString("Sturm_Def"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.forwarddefensive"),
 		//Sturm Nach Aussen
-	    HOVerwaltung.instance().getLanguageString("Sturm_Aus"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.position.forwardtowardswing"),
 	    //Notes
 	    HOVerwaltung.instance().getLanguageString("Notizen"),
 

@@ -37,16 +37,16 @@ import javax.swing.SwingConstants;
  * Zeigt den Spieler an der Position an und dessen Sterne
  */
 final class SpielerSternePanel extends ImagePanel implements ActionListener {
-	
+
 	private static final long serialVersionUID = 744463551751056443L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 
 	private int PANEL_WIDTH = Helper.calcCellWidth(120);
 	private int PANEL_HEIGHT = Helper.calcCellWidth(59);
 	private int PANEL_HEIGHT_REDUCED = Helper.calcCellWidth(44);
-	
+
 	/** TODO Missing Parameter Documentation */
     protected int m_iPositionsID = -1;
     public final JButton m_jbSpieler = new JButton();
@@ -56,7 +56,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     private MatchLineupPlayer m_clMatchPlayer;
     private RatingTableEntry m_jpSterne = new RatingTableEntry();
     private Box m_jpDummy = new Box(BoxLayout.X_AXIS);
-    
+
     private JPanel m_jpParent;
     private boolean m_bOnScreen = false;
     GridBagConstraints m_gbcConstraints = new GridBagConstraints();
@@ -66,18 +66,18 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         this(positionsID, false, parent, x, y);
     }
 
- 
+
     protected SpielerSternePanel(int positionsID, boolean print, JPanel parent, int x, int y) {
         super(print);
 
         m_iPositionsID = positionsID;
         m_jpParent = parent;
-        
+
         initComponents();
         initLabel(positionsID, (byte)0); // Tactic does not matter anymore...
-        
-        
-        // This one size fits all will be bad whenever it is decided to 
+
+
+        // This one size fits all will be bad whenever it is decided to
         // remove subs/captain/setpiece-taker panels when empty
         m_jpDummy.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
@@ -103,12 +103,12 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     protected final void clear() {
 
     	// We want empty frames in the on field positions hidden when empty
-    	if ((m_bOnScreen == true) && 
-    			( (m_iPositionsID >= ISpielerPosition.startLineup ) && 
+    	if ((m_bOnScreen == true) &&
+    			( (m_iPositionsID >= ISpielerPosition.startLineup ) &&
     					(m_iPositionsID < ISpielerPosition.startReserves))) {
     		removePanel();
     	}
-        
+
     	// lets leave the position text, right? - Blaghaid
     	// m_jlPosition.setText("");
         m_jbSpieler.setText("");
@@ -139,7 +139,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_jlPosition.setPreferredSize(new Dimension(100, 10));
         layout.setConstraints(m_jlPosition, constraints);
         add(m_jlPosition);
-        
+
         final JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.setBackground(ColorLabelEntry.BG_STANDARD);
@@ -165,8 +165,8 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         constraints.gridwidth = 1;
         layout.setConstraints(panel, constraints);
         add(panel);
-        
-        
+
+
 
         switch (m_iPositionsID) {
             case ISpielerPosition.keeper:
@@ -207,14 +207,14 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         m_clMatchPlayer = player;
 
         if (player != null) {
-        	
+
         	// Make sure this is on screen, we got a player to display
         	if (m_bOnScreen == false) {
         		addPanel();
         	}
             m_jbSpieler.setText(player.getSpielerName().substring(0, 1) + "." + player.getSpielerName()
             							.substring(player.getSpielerName().indexOf(" ")+1));
-            
+
 
             //SpielerPosition pos = new SpielerPosition( player.getId (), player.getSpielerId (), player.getTaktik () );
             int trickotnummer = 0;
@@ -243,38 +243,38 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
         }
         repaint();
     }
-    
+
     private void removePanel() {
     	m_jpParent.remove(this);
     	m_jpParent.add(m_jpDummy, m_gbcConstraints);
     	m_bOnScreen = false;
-    	
-    	//m_jpParent.revalidate();
-    	m_jpParent.repaint();
-    }
-    
-    private void addPanel() {
-    	m_jpParent.remove(m_jpDummy);
-    	m_jpParent.add(this, m_gbcConstraints);
-    	m_bOnScreen = true;
-    	
+
     	//m_jpParent.revalidate();
     	m_jpParent.repaint();
     }
 
- 
+    private void addPanel() {
+    	m_jpParent.remove(m_jpDummy);
+    	m_jpParent.add(this, m_gbcConstraints);
+    	m_bOnScreen = true;
+
+    	//m_jpParent.revalidate();
+    	m_jpParent.repaint();
+    }
+
+
     protected final void initLabel(int posid, byte taktik) {
-        
+
     	switch (posid) {
-    		
+
     		case ISpielerPosition.setPieces : {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
     			break;
-    		} 
+    		}
     		case ISpielerPosition.captain : {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
     			break;
-    		} 
+    		}
     		case ISpielerPosition.substDefender: {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
     					+ " "
@@ -284,35 +284,35 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     		case ISpielerPosition.substForward: {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
     					+ " "
-    					+ HOVerwaltung.instance().getLanguageString("Sturm"));
+    					+ HOVerwaltung.instance().getLanguageString("ls.player.position.forward"));
     			break;
-    		} 
+    		}
     		case ISpielerPosition.substWinger: {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
     					+ " "
-    					+ HOVerwaltung.instance().getLanguageString("Fluegelspiel"));
+    					+ HOVerwaltung.instance().getLanguageString("ls.player.position.winger"));
     			break;
     		}
     		case ISpielerPosition.substInnerMidfield: {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
     					+ " "
-    					+ HOVerwaltung.instance().getLanguageString("Mittelfeld"));
+    					+ HOVerwaltung.instance().getLanguageString("ls.player.position.innermidfielder"));
     			break;
-    		} 
+    		}
     		case ISpielerPosition.substKeeper: {
     			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Reserve")
     					+ " "
-    					+ HOVerwaltung.instance().getLanguageString("Torwart"));
+    					+ HOVerwaltung.instance().getLanguageString("ls.player.position.keeper"));
     			break;
     		}
-    		default: 
+    		default:
     		{
     			// Special check here for the replaced players, we got a range of at least 3...
     			if ((posid >= ISpielerPosition.ausgewechselt) && (posid <= ISpielerPosition.ausgewechseltEnd)) {
     				m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Ausgewechselt"));
     			break;
     			} else {
-    			
+
     				m_jlPosition.setText(ho.core.model.player.SpielerPosition
     						.getNameForPosition(ho.core.model.player.SpielerPosition.getPosition(posid, taktik)));
     			}
