@@ -18,16 +18,16 @@ class PlayerTable extends JTable{
 
 	private static final long serialVersionUID = 1453037819569111763L;
 	private int anzCols1;
-	
+
 	PlayerTable(TableSorter tm)
 	{
-		super(tm); 
+		super(tm);
 		anzCols1 = tm.getColumnCount();
 	    TableColumn col;
 	    setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-			
+
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 5342806852198198162L;
 
@@ -41,7 +41,7 @@ class PlayerTable extends JTable{
 					setBackground(table.getSelectionBackground());
 					setForeground(table.getSelectionForeground());
 				} else {
-					
+
 					setBackground(column==1?table.getBackground():ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG));
 					setForeground(table.getForeground());
 				}
@@ -63,11 +63,11 @@ class PlayerTable extends JTable{
 	    }
 	    this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
-	
-	
+
+
 	PlayerTable(TableSorter tm, PlayerTableModel ptm){
-		
-		super(tm); 
+
+		super(tm);
 		anzCols1 = tm.getColumnCount();
 	    TableColumn col;
 	    setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
@@ -83,25 +83,25 @@ class PlayerTable extends JTable{
 	    	{
 	    		col.setCellRenderer(new MyTableCellRenderer());
 	    	}
-	    	if(columnName.equals(HOVerwaltung.instance().getLanguageString("TOR"))
-	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("IV"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("IVA"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("IVO"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("AV"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("AVI"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("AVO"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("AVD"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("MIT"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("MITD"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("MITA"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("MITO"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("FLG"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("FLGI"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("FLGO"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("FLGD"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("STU"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("STUD"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("STUA"))
+	    	if(columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper"))
+	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forward"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("Gruppe"))
 	    	)
 	    	{
@@ -143,7 +143,7 @@ class PlayerTable extends JTable{
 	    	}
 	    	col.setPreferredWidth(width);
 	    }
-	    
+
 	    this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 }

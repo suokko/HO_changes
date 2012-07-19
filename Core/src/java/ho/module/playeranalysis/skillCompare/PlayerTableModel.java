@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 class PlayerTableModel extends DefaultTableModel{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5133382441969026697L;
 	private int m_anzZeilen;
@@ -30,76 +30,76 @@ class PlayerTableModel extends DefaultTableModel{
 
 		columnNames = new String[3];
 		m_anzZeilen = 19;
-		
+
 		columnNames[0] = HOVerwaltung.instance().getLanguageString("original");
 		columnNames[1] = HOVerwaltung.instance().getLanguageString("Position");
 		columnNames[2] = HOVerwaltung.instance().getLanguageString("geaendert");
-		
+
 		data = new Object[19][3];
-		
+
 		data[0][0] = Float.valueOf(m_spieler.getOldPosVal_GK());
-		data[0][1] = HOVerwaltung.instance().getLanguageString("TORW");
+		data[0][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper");
 		data[0][2] = Float.valueOf(m_spieler.getPosVal_GK());
 		data[1][0] = Float.valueOf(m_spieler.getOldPosVal_CD());
-		data[1][1] = HOVerwaltung.instance().getLanguageString("IV");
+		data[1][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender");
 		data[1][2] = Float.valueOf(m_spieler.getPosVal_CD());
 		data[2][0] = Float.valueOf(m_spieler.getOldPosVal_CD_TW());
-		data[2][1] = HOVerwaltung.instance().getLanguageString("IVA");
+		data[2][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing");
 		data[2][2] = Float.valueOf(m_spieler.getPosVal_CD_TW());
 		data[3][0] = Float.valueOf(m_spieler.getOldPosVal_CD_O());
-		data[3][1] = HOVerwaltung.instance().getLanguageString("IVO");
+		data[3][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive");
 		data[3][2] = Float.valueOf(m_spieler.getPosVal_CD_O());
 		data[4][0] = Float.valueOf(m_spieler.getOldPosVal_WB());
-		data[4][1] = HOVerwaltung.instance().getLanguageString("AV");
+		data[4][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback");
 		data[4][2] = Float.valueOf(m_spieler.getPosVAL_WB());
 		data[5][0] = Float.valueOf(m_spieler.getOldPosVal_WB_TM());
-		data[5][1] = HOVerwaltung.instance().getLanguageString("AVI");
+		data[5][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle");
 		data[5][2] = Float.valueOf(m_spieler.getPosVal_WB_TM());
 		data[6][0] = Float.valueOf(m_spieler.getOldPosVal_WB_O());
-		data[6][1] = HOVerwaltung.instance().getLanguageString("AVO");
+		data[6][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive");
 		data[6][2] = Float.valueOf(m_spieler.getPosVal_WB_O());
 		data[7][0] = Float.valueOf(m_spieler.getOldPosVAL_WB_D());
-		data[7][1] = HOVerwaltung.instance().getLanguageString("AVD");
+		data[7][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive");
 		data[7][2] = Float.valueOf(m_spieler.getPosVal_WB_D());
 		data[8][0] = Float.valueOf(m_spieler.getOldPosVal_IM());
-		data[8][1] = HOVerwaltung.instance().getLanguageString("MIT");
+		data[8][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder");
 		data[8][2] = Float.valueOf(m_spieler.getPosVal_IM());
 		data[9][0] = Float.valueOf(m_spieler.getOldPosVal_IM_TW());
-		data[9][1] = HOVerwaltung.instance().getLanguageString("MITA");
+		data[9][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
 		data[9][2] = Float.valueOf(m_spieler.getPosVal_IM_TW());
 		data[10][0] = Float.valueOf(m_spieler.getOldPosVal_IM_O());
-		data[10][1] = HOVerwaltung.instance().getLanguageString("MITO");
+		data[10][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive");
 		data[10][2] = Float.valueOf(m_spieler.getPosVal_IM_O());
 		data[11][0] = Float.valueOf(m_spieler.getOldPosVal_IM_D());
-		data[11][1] = HOVerwaltung.instance().getLanguageString("MITD");
+		data[11][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive");
 		data[11][2] = Float.valueOf(m_spieler.getPosVal_IM_D());
 		data[12][0] = Float.valueOf(m_spieler.getOldPosVal_W());
-		data[12][1] = HOVerwaltung.instance().getLanguageString("FLG");
+		data[12][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger");
 		data[12][2] = Float.valueOf(m_spieler.getPosVal_W());
 		data[13][0] = Float.valueOf(m_spieler.getOldPosVal_W_TM());
-		data[13][1] = HOVerwaltung.instance().getLanguageString("FLGI");
+		data[13][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle");
 		data[13][2] = Float.valueOf(m_spieler.getPosVal_W_TM());
 		data[14][0] = Float.valueOf(m_spieler.getOldPosVal_W_O());
-		data[14][1] = HOVerwaltung.instance().getLanguageString("FLGO");
+		data[14][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive");
 		data[14][2] = Float.valueOf(m_spieler.getPosVal_W_O());
 		data[15][0] = Float.valueOf(m_spieler.getOldPosVal_W_D());
-		data[15][1] = HOVerwaltung.instance().getLanguageString("FLGD");
+		data[15][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive");
 		data[15][2] = Float.valueOf(m_spieler.getPosVal_W_D());
 		data[16][0] = Float.valueOf(m_spieler.getOldPosVal_F());
-		data[16][1] = HOVerwaltung.instance().getLanguageString("STU");
+		data[16][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
 		data[16][2] = Float.valueOf(m_spieler.getPosVal_F());
 		data[17][0] = Float.valueOf(m_spieler.getOldPosVal_F_D());
-		data[17][1] = HOVerwaltung.instance().getLanguageString("STUD");
+		data[17][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive");
 		data[17][2] = Float.valueOf(m_spieler.getPosVal_F_D());
 		data[18][0] = Float.valueOf(m_spieler.getOldPosVal_F_TW());
-		data[18][1] = HOVerwaltung.instance().getLanguageString("STUA");
+		data[18][1] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing");
 		data[18][2] = Float.valueOf(m_spieler.getPosVal_F_TW());
 	}
-	
+
 	PlayerTableModel( Player[] spieler, int call)
 	{
 		columnNames = new String[41];
-		
+
 
 		columnNames[0] = "";
 		columnNames[1] = HOVerwaltung.instance().getLanguageString("Name");
@@ -120,33 +120,33 @@ class PlayerTableModel extends DefaultTableModel{
 		columnNames[16] = HOVerwaltung.instance().getLanguageString("FL");
 		columnNames[17] = HOVerwaltung.instance().getLanguageString("TS");
 		columnNames[18] = HOVerwaltung.instance().getLanguageString("ST");
-		columnNames[19] = HOVerwaltung.instance().getLanguageString("TOR");
-		columnNames[20] = HOVerwaltung.instance().getLanguageString("IV");
-		columnNames[21] = HOVerwaltung.instance().getLanguageString("IVA");
-		columnNames[22] = HOVerwaltung.instance().getLanguageString("IVO");
-		columnNames[23] = HOVerwaltung.instance().getLanguageString("AV");
-		columnNames[24] = HOVerwaltung.instance().getLanguageString("AVI");
-		columnNames[25] = HOVerwaltung.instance().getLanguageString("AVO");
-		columnNames[26] = HOVerwaltung.instance().getLanguageString("AVD");
-		columnNames[27] = HOVerwaltung.instance().getLanguageString("MIT");
-		columnNames[28] = HOVerwaltung.instance().getLanguageString("MITA");
-		columnNames[29] = HOVerwaltung.instance().getLanguageString("MITO");
-		columnNames[30] = HOVerwaltung.instance().getLanguageString("MITD");
-		columnNames[31] = HOVerwaltung.instance().getLanguageString("FLG");
-		columnNames[32] = HOVerwaltung.instance().getLanguageString("FLGI");
-		columnNames[33] = HOVerwaltung.instance().getLanguageString("FLGO");
-		columnNames[34] = HOVerwaltung.instance().getLanguageString("FLGD");
-		columnNames[35] = HOVerwaltung.instance().getLanguageString("STU");
-		columnNames[36] = HOVerwaltung.instance().getLanguageString("STUD");
-		columnNames[37] = HOVerwaltung.instance().getLanguageString("STUA");
+		columnNames[19] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper");
+		columnNames[20] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefender");
+		columnNames[21] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefendertowardswing");
+		columnNames[22] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.centraldefenderoffensive");
+		columnNames[23] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingback");
+		columnNames[24] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbacktowardsmiddle");
+		columnNames[25] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackoffensive");
+		columnNames[26] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingbackdefensive");
+		columnNames[27] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielder");
+		columnNames[28] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
+		columnNames[29] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderoffensive");
+		columnNames[30] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfielderdefensive");
+		columnNames[31] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.winger");
+		columnNames[32] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingertowardsmiddle");
+		columnNames[33] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingeroffensive");
+		columnNames[34] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.wingerdefensive");
+		columnNames[35] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
+		columnNames[36] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive");
+		columnNames[37] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing");
 		columnNames[38] = HOVerwaltung.instance().getLanguageString("Gehalt");
 		columnNames[39] = "TSI";
 		columnNames[40] = HOVerwaltung.instance().getLanguageString("ID");
-		
+
 		m_anzZeilen = spieler.length;
-			
+
 		int counter = 0;
-		
+
 		data = new Object[spieler.length][columnNames.length];
 		for(int i = 0; i < spieler.length; i++) {
 			tmpPlayer = spieler[i];
@@ -157,7 +157,7 @@ class PlayerTableModel extends DefaultTableModel{
 				data[counter][0] = "";
 				data[counter][4] = Float.valueOf(tmpPlayer.getBestPosition() + (tmpPlayer.getBestPositionRating()) / 100);
 			}
-			
+
 			data[counter][1] = tmpPlayer.getName()+";"+tmpPlayer.getSpeciality();
 			data[counter][2] = Integer.valueOf(tmpPlayer.getNationality());
 			data[counter][3] = Integer.valueOf(tmpPlayer.getAge());
@@ -193,7 +193,7 @@ class PlayerTableModel extends DefaultTableModel{
 			data[counter][34] = tmpPlayer.getPositionCompareAsString(ISpielerPosition.WINGER_DEF);
 			data[counter][35] = tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD);
 			data[counter][36] = tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_DEF);
-			data[counter][37] = tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_TOWING);			
+			data[counter][37] = tmpPlayer.getPositionCompareAsString(ISpielerPosition.FORWARD_TOWING);
 			data[counter][38] = Integer.valueOf((tmpPlayer.getWages())/10);
 			data[counter][39] = Integer.valueOf(tmpPlayer.getTSI());
 			data[counter][40] = Integer.valueOf(tmpPlayer.getId());
@@ -207,13 +207,13 @@ class PlayerTableModel extends DefaultTableModel{
 			return true;
 		return false;
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex)	{
 		Object o = getValueAt(0, columnIndex);
 		return o == null?Object.class:o.getClass();
 	}
-	
+
 	@Override
 	public int getColumnCount(){
 		return columnNames.length;
@@ -223,17 +223,17 @@ class PlayerTableModel extends DefaultTableModel{
 	public int getRowCount(){
 		return m_anzZeilen;
 	}
-	
+
 	@Override
 	public String getColumnName(int col) {
 		return columnNames[col];
 	}
-	
+
 	@Override
 	public Object getValueAt(int row, int col) {
         return data[row][col];
     }
-	
+
 	@Override
 	public void setValueAt(Object value, int row, int col) {
 		data[row][col] = value;

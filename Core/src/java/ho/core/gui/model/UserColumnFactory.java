@@ -278,25 +278,25 @@ final public class UserColumnFactory {
 	 */
 	public static PlayerPositionColumn[] createPlayerPositionArray(){
 		final PlayerPositionColumn[] playerPositionArray = new PlayerPositionColumn[19];
-		playerPositionArray[0] = new PlayerPositionColumn( 190, "TORW",		"ls.player.position.keeper",					ISpielerPosition.KEEPER );
-		playerPositionArray[1] = new PlayerPositionColumn( 200, "IV",		"ls.player.position.centraldefender",			ISpielerPosition.CENTRAL_DEFENDER );
-		playerPositionArray[2] = new PlayerPositionColumn( 210, "IVA",		"ls.player.position.centraldefendertowardswing",ISpielerPosition.CENTRAL_DEFENDER_TOWING );
-		playerPositionArray[3] = new PlayerPositionColumn( 220, "IVO",		"ls.player.position.centraldefenderoffensive",	ISpielerPosition.CENTRAL_DEFENDER_OFF );
-		playerPositionArray[4] = new PlayerPositionColumn( 230, "AV",		"ls.player.position.wingback",					ISpielerPosition.BACK );
-		playerPositionArray[5] = new PlayerPositionColumn( 240, "AVI",		"ls.player.position.wingbacktowardsmiddle",		ISpielerPosition.BACK_TOMID );
-		playerPositionArray[6] = new PlayerPositionColumn( 250, "AVO",		"ls.player.position.wingbackoffensive",			ISpielerPosition.BACK_OFF );
-		playerPositionArray[7] = new PlayerPositionColumn( 260, "AVD",		"ls.player.position.wingbackdefensive",			ISpielerPosition.BACK_DEF );
-		playerPositionArray[8] = new PlayerPositionColumn( 270, "MIT",		"ls.player.position.innermidfielder",			ISpielerPosition.MIDFIELDER );
-		playerPositionArray[9] = new PlayerPositionColumn( 280, "MITA",		"ls.player.position.innermidfieldertowardswing",ISpielerPosition.MIDFIELDER_TOWING );
-		playerPositionArray[10] = new PlayerPositionColumn( 290, "MITO",	"ls.player.position.innermidfielderoffensive",	ISpielerPosition.MIDFIELDER_OFF );
-		playerPositionArray[11] = new PlayerPositionColumn( 300, "MITD",	"ls.player.position.innermidfielderdefensive",	ISpielerPosition.MIDFIELDER_DEF );
-		playerPositionArray[12] = new PlayerPositionColumn( 310, "FLG",		"ls.player.position.winger",					ISpielerPosition.WINGER );
-		playerPositionArray[13] = new PlayerPositionColumn( 320, "FLGI",	"ls.player.position.wingertowardsmiddle",		ISpielerPosition.WINGER_TOMID );
-		playerPositionArray[14] = new PlayerPositionColumn( 330, "FLGO",	"ls.player.position.wingeroffensive",			ISpielerPosition.WINGER_OFF );
-		playerPositionArray[15] = new PlayerPositionColumn( 340, "FLGD",	"ls.player.position.wingerdefensive",			ISpielerPosition.WINGER_DEF );
-		playerPositionArray[16] = new PlayerPositionColumn( 350, "STU",		"ls.player.position.forward",					ISpielerPosition.FORWARD );
-		playerPositionArray[17] = new PlayerPositionColumn( 360, "STUA",	"ls.player.position.forwardtowardswing",		ISpielerPosition.FORWARD_TOWING );
-		playerPositionArray[18] = new PlayerPositionColumn( 370, "STUD",	"ls.player.position.forwarddefensive",			ISpielerPosition.FORWARD_DEF );
+		playerPositionArray[0] = new PlayerPositionColumn( 190, "ls.player.position_short.keeper",						"ls.player.position.keeper",					ISpielerPosition.KEEPER );
+		playerPositionArray[1] = new PlayerPositionColumn( 200, "ls.player.position_short.centraldefender",				"ls.player.position.centraldefender",			ISpielerPosition.CENTRAL_DEFENDER );
+		playerPositionArray[2] = new PlayerPositionColumn( 210, "ls.player.position_short.centraldefendertowardswing",	"ls.player.position.centraldefendertowardswing",ISpielerPosition.CENTRAL_DEFENDER_TOWING );
+		playerPositionArray[3] = new PlayerPositionColumn( 220, "ls.player.position_short.centraldefenderoffensive",	"ls.player.position.centraldefenderoffensive",	ISpielerPosition.CENTRAL_DEFENDER_OFF );
+		playerPositionArray[4] = new PlayerPositionColumn( 230, "ls.player.position_short.wingback",					"ls.player.position.wingback",					ISpielerPosition.BACK );
+		playerPositionArray[5] = new PlayerPositionColumn( 240, "ls.player.position_short.wingbacktowardsmiddle",		"ls.player.position.wingbacktowardsmiddle",		ISpielerPosition.BACK_TOMID );
+		playerPositionArray[6] = new PlayerPositionColumn( 250, "ls.player.position_short.wingbackoffensive",			"ls.player.position.wingbackoffensive",			ISpielerPosition.BACK_OFF );
+		playerPositionArray[7] = new PlayerPositionColumn( 260, "ls.player.position_short.wingbackdefensive",			"ls.player.position.wingbackdefensive",			ISpielerPosition.BACK_DEF );
+		playerPositionArray[8] = new PlayerPositionColumn( 270, "ls.player.position_short.innermidfielder",				"ls.player.position.innermidfielder",			ISpielerPosition.MIDFIELDER );
+		playerPositionArray[9] = new PlayerPositionColumn( 280, "ls.player.position_short.innermidfieldertowardswing",	"ls.player.position.innermidfieldertowardswing",ISpielerPosition.MIDFIELDER_TOWING );
+		playerPositionArray[10] = new PlayerPositionColumn( 290, "ls.player.position_short.innermidfielderoffensive",	"ls.player.position.innermidfielderoffensive",	ISpielerPosition.MIDFIELDER_OFF );
+		playerPositionArray[11] = new PlayerPositionColumn( 300, "ls.player.position_short.innermidfielderdefensive",	"ls.player.position.innermidfielderdefensive",	ISpielerPosition.MIDFIELDER_DEF );
+		playerPositionArray[12] = new PlayerPositionColumn( 310, "ls.player.position_short.winger",						"ls.player.position.winger",					ISpielerPosition.WINGER );
+		playerPositionArray[13] = new PlayerPositionColumn( 320, "ls.player.position_short.wingertowardsmiddle",		"ls.player.position.wingertowardsmiddle",		ISpielerPosition.WINGER_TOMID );
+		playerPositionArray[14] = new PlayerPositionColumn( 330, "ls.player.position_short.wingeroffensive",			"ls.player.position.wingeroffensive",			ISpielerPosition.WINGER_OFF );
+		playerPositionArray[15] = new PlayerPositionColumn( 340, "ls.player.position_short.wingerdefensive",			"ls.player.position.wingerdefensive",			ISpielerPosition.WINGER_DEF );
+		playerPositionArray[16] = new PlayerPositionColumn( 350, "ls.player.position_short.forward",					"ls.player.position.forward",					ISpielerPosition.FORWARD );
+		playerPositionArray[17] = new PlayerPositionColumn( 360, "ls.player.position_short.forwardtowardswing",			"ls.player.position.forwardtowardswing",		ISpielerPosition.FORWARD_TOWING );
+		playerPositionArray[18] = new PlayerPositionColumn( 370, "ls.player.position_short.forwarddefensive",			"ls.player.position.forwarddefensive",			ISpielerPosition.FORWARD_DEF );
 		return playerPositionArray;
 	}
 
