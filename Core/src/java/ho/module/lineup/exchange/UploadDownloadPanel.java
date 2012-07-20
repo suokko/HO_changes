@@ -184,7 +184,7 @@ public class UploadDownloadPanel extends JPanel {
 				} else {
 					messageType = JOptionPane.ERROR_MESSAGE;
 					message = HOVerwaltung.instance().getLanguageString("lineup.upload.fail")
-							+ XMLUtils.getTagData(doc, "Reason");
+							+ "\n" + XMLUtils.getTagData(doc, "Reason");
 				}
 			} else {
 				messageType = JOptionPane.ERROR_MESSAGE;
