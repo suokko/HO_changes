@@ -4,6 +4,7 @@ package ho.core.training;
 import ho.core.model.HOVerwaltung;
 import ho.core.util.HelperWrapper;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -25,6 +26,7 @@ public class TrainingPerWeek  {
     private int _Week = -1;
     private int _Year = -1;
     private int _PreviousHRFID;
+    private Timestamp nextTrainingDate = null;
     
     //~ Constructors -------------------------------------------------------------------------------
     public TrainingPerWeek() {
@@ -242,4 +244,13 @@ public class TrainingPerWeek  {
 
         return trainingDate;
 	}
+	
+	public Timestamp getNextTrainingDate() {
+		return nextTrainingDate;
+	}
+	
+	public void setNextTrainingDate(Timestamp t) {
+		nextTrainingDate = t;
+	}
+	
 }
