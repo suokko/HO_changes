@@ -681,7 +681,7 @@ public class OnlineWorker {
 			}
 		}
 		orders.append("]}");
-	System.out.println(orders.toString());	
+
 		try {
 			result = MyConnector.instance().setMatchOrder(matchId, matchType, orders.toString());
 		} catch (IOException e) {
