@@ -12,9 +12,12 @@ import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 
@@ -264,6 +267,167 @@ public class TrainingWeekManager {
         return m_vTrainings;
     }
 
+    /** Returns a list of TraingPerWeek, one for each week since the first hrf.
+     * 
+     * @param overrides An input list of TrainingPerWeek that will override the info for the same
+     * 		week based on hrf content.
+     * @return The list of TrainingPerWeek.
+     */
+    public static List<TrainingPerWeek> generateTrainingVector(List<TrainingPerWeek> overrides) {
+    	List<TrainingPerWeek> output = fetchTrainingsVectorFromHrf();
+    	
+    	output = washTrainingList(output);
+    	
+    	
+    	return output;
+    }
+    
+    
+    /** This one filters the list so that there is one per week. If multiple hrfs a week, the last one is used.
+     * 	If there is a week with no hrf, a new will be inserted with content identical to the old one, and with a
+     *  next training date one week after the previous one.
+     * 
+     * @param input list to be filtered
+     * @return the filtered list
+     */
+    private static List<TrainingPerWeek> washTrainingList(List<TrainingPerWeek> input) {
+    	
+    	ArrayList<TrainingPerWeek> output = new ArrayList<TrainingPerWeek>();
+    	TrainingPerWeek old = null;
+    	Calendar previousTraining = Calendar.getInstance(Locale.UK);
+    	previousTraining.setFirstDayOfWeek(Calendar.SUNDAY);
+    	
+    	Calendar actualTraining = Calendar.getInstance(Locale.UK);
+    	actualTraining.setFirstDayOfWeek(Calendar.SUNDAY);
+    	
+    	for (TrainingPerWeek tpw: input) {
+    		
+    		if (old == null) {
+    			// first item
+    			old = tpw;
+    			output.add(tpw);
+    			previousTraining.setTimeInMillis(tpw.getNextTrainingDate().getTime());
+    			continue;
+    		}
+    		
+    		actualTraining.setTimeInMillis(tpw.getNextTrainingDate().getTime());
+    		
+    		if (!actualTraining.after(previousTraining)) {
+    			// The same week, update to the contents of the newer item.
+    			// old should point at the last item entered.
+    			old.setStaminaPart(tpw.getStaminaPart());
+    			old.setTrainingIntensity(tpw.getTrainingIntensity());
+    			old.setTrainingType(tpw.getTrainingType());
+    			continue;
+    		}
+    	
+    		
+    		
+   			while (actualTraining.after(previousTraining)) {
+   				
+   				// Advance the previous date one week.
+   				previousTraining.add(Calendar.WEEK_OF_YEAR, 1);
+   				
+   				if (actualTraining.after(previousTraining)) {
+   					// We have a skipped week. Create a new item
+   					
+   			       int trainWeek = previousTraining.get(Calendar.WEEK_OF_YEAR);
+	               int trainYear= previousTraining.get(Calendar.YEAR);
+
+	               TrainingPerWeek newTpw = new TrainingPerWeek(trainWeek, trainYear
+	            		   						, old.getTrainingType()
+	            		   						, old.getTrainingIntensity()
+	            		   						, old.getStaminaPart());
+   					newTpw.setNextTrainingDate(new Timestamp(previousTraining.getTimeInMillis()));
+   					newTpw.setHrfId(-1);
+   					
+   					old = newTpw;
+   					output.add(newTpw);
+   					// And the previous date is already set, same with week and stuff.
+   					
+   				} else {
+   					// We found our current item, add this.
+   					old = tpw;
+   					output.add(tpw);
+   				}
+   			}     				
+    	}
+    	
+    	return output;
+    }
+    
+    private static List<TrainingPerWeek> fetchTrainingsVectorFromHrf() {
+    	try {
+    		List<TrainingPerWeek> output = new ArrayList<TrainingPerWeek>();
+    		String sql = " SELECT TRAININGSART, TRAININGSINTENSITAET, STAMINATRAININGPART, " +
+    					"HRF_ID, DATUM, TRAININGDATE FROM HRF,TEAM,XTRADATA WHERE " + 
+    					"HRF.HRF_ID=TEAM.HRF_ID and HRF.HRF_ID=XTRADATA.HRF_ID ORDER BY DATUM";
+    	
+	    	 final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
+	    	 final ResultSet rs = ijdbca.executeQuery(sql);
+	         rs.beforeFirst();
+	
+	         int lastTrainWeek = -1;
+	
+	         boolean isFirstTrain = true;
+	         int trainIntensity = 0;
+	         int trainStaminaTrainPart = 0;
+	         int hrfId = 0;
+	         int trainType = 0;
+	         Timestamp tStamp = null;
+	         Calendar calendar = null;
+	         int trainWeek = 0;
+	         int trainYear = 0;
+	         Timestamp nextTraining = null;
+	         while (rs.next()) {
+	        	 trainType = rs.getInt("TRAININGSART");
+	             if (trainType != -1) {
+	                 trainIntensity = rs.getInt("TRAININGSINTENSITAET");
+	                 trainStaminaTrainPart = rs.getInt("STAMINATRAININGPART");
+	                 hrfId = rs.getInt("HRF_ID");
+	                 tStamp = rs.getTimestamp("DATUM");
+	                 nextTraining = rs.getTimestamp("TRAININGDATE");
+	                
+	                 calendar = Calendar.getInstance(Locale.UK);
+	         		 calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+	         		 calendar.setTimeInMillis(nextTraining.getTime());
+	                 
+	                 trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+	                 trainYear = calendar.get(Calendar.YEAR);
+	                 
+	                 TrainingPerWeek tpw = new TrainingPerWeek(trainWeek, trainYear, 
+	                		 					trainType, trainIntensity, trainStaminaTrainPart);
+	                 tpw.setNextTrainingDate(nextTraining);
+	                 tpw.setHrfId(hrfId);
+	                 output.add(tpw);
+	             }
+	         }
+         
+	         return output;
+    	} catch (Exception e) {
+	        HOLogger.instance().log(null,e);
+	
+	        final StackTraceElement[] aste = e.getStackTrace();
+	        String msg = "";
+	
+	        for (int j = 0; j < aste.length; j++) {
+	            msg = msg + "\n" + aste[j];
+	        }
+	
+	        Helper.showMessage(null, e.getMessage(), "DatenreiheA",
+	                                                   javax.swing.JOptionPane.INFORMATION_MESSAGE);
+	        Helper.showMessage(null, msg, "DatenreiheB",
+	                                                   javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    	}
+         
+    	return null;
+    }
+    
+    
+    
+    
+    
+    
     /**
      * TODO Missing Method Documentation
      *

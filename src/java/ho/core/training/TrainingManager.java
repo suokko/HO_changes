@@ -37,7 +37,7 @@ public class TrainingManager {
 
     //~ Instance fields ----------------------------------------------------------------------------
     private TrainingWeekManager _WeekManager;
-    static final public boolean TRAININGDEBUG = true;
+    static final public boolean TRAININGDEBUG = false;
 
     //~ Constructors -------------------------------------------------------------------------------
 
