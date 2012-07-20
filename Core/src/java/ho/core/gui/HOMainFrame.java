@@ -332,12 +332,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			// Fire CloseEvent, so all Plugins get informed
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}   else if (source.equals(m_jmCreditsItem)) {
-			StringBuilder text = new StringBuilder(200);
-			text.append("Hattrick Organizer ").append(HO.VERSION).append("\n\n");
-			text.append(HOVerwaltung.instance().getLanguageString("MenuCredits"));
-			JOptionPane.showMessageDialog(null, text.toString(),
-					HOVerwaltung.instance().getLanguageString("MenuCreditsChoice"),
-					JOptionPane.INFORMATION_MESSAGE);
+			Credits.showCredits(HOMainFrame.instance());
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			BrowserLauncher.openUrlInUserBRowser(MyConnector.getHOSite());
 		} else if (source.equals(m_jmWikiItem)) { // Forum
