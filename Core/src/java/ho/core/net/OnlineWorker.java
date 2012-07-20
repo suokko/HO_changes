@@ -671,7 +671,8 @@ public class OnlineWorker {
 			orders.append("\"min\":\"").append(sub.getMatchMinuteCriteria()).append("\",");
 		
 			// The uploaded position is not a RoleId
-			orders.append("\"pos\":\"").append(sub.getRoleId() - 100).append("\",");
+			byte pos = (byte) ((sub.getRoleId() == -1) ? -1 : sub.getRoleId() -100);
+			orders.append("\"pos\":\"").append(pos).append("\",");
 			orders.append("\"beh\":\"").append(sub.getBehaviour()).append("\",");
 			orders.append("\"card\":\"").append(sub.getRedCardCriteria().getId()).append("\",");
 			orders.append("\"standing\":\"").append(sub.getStanding().getId()).append("\"}");
@@ -680,7 +681,7 @@ public class OnlineWorker {
 			}
 		}
 		orders.append("]}");
-		
+	System.out.println(orders.toString());	
 		try {
 			result = MyConnector.instance().setMatchOrder(matchId, matchType, orders.toString());
 		} catch (IOException e) {
