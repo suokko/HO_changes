@@ -44,9 +44,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -334,13 +336,13 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}   else if (source.equals(m_jmCreditsItem)) {
 			Credits.showCredits(HOMainFrame.instance());
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
-			BrowserLauncher.openUrlInUserBRowser(MyConnector.getHOSite());
+			openURL(MyConnector.getHOSite());
 		} else if (source.equals(m_jmWikiItem)) { // Forum
-			BrowserLauncher.openUrlInUserBRowser("https://sourceforge.net/apps/trac/ho1/wiki/Manual");
+			openURL("https://sourceforge.net/apps/trac/ho1/wiki/Manual");
 		} else if (source.equals(m_jmForumItem)) { // Forum
-			BrowserLauncher.openUrlInUserBRowser("https://sourceforge.net/apps/phpbb/ho1/index.php");
+			openURL("https://sourceforge.net/apps/phpbb/ho1/index.php");
 		} else if (source.equals(m_jmHattrickItem)) { // Hattrick
-			BrowserLauncher.openUrlInUserBRowser("http://www.hattrick.org");
+			openURL("http://www.hattrick.org");
 		} else if (source.equals(m_jmiLanguages)) {
 			UpdateController.showLanguageUpdateDialog();
 		} else if (source.equals(m_jmiFlags)) {
@@ -353,6 +355,16 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			UpdateController.check4RatingsUpdate();
 		}
 		HOMainFrame.setHOStatus(HOMainFrame.READY);
+	}
+	
+	private void openURL(String url) {
+		try {
+			BrowserLauncher.openURL(url);
+		} catch (IOException ex) {
+			HOLogger.instance().log(HOMainFrame.class, ex);
+		} catch (URISyntaxException ex) {
+			HOLogger.instance().log(HOMainFrame.class, ex);
+		}
 	}
 
 	public void addTopLevelMenu(JMenu menu) {

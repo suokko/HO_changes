@@ -8,10 +8,13 @@ package ho.tool.updater;
 
 import ho.core.model.News;
 import ho.core.util.BrowserLauncher;
+import ho.core.util.HOLogger;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -75,9 +78,16 @@ class NewsPanel extends JPanel {
 		}
 		
 		b3.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (linkEnabled) {
-					BrowserLauncher.openUrlInUserBRowser(b3.getText());
+					try {
+						BrowserLauncher.openURL(b3.getText());
+					} catch (IOException ex) {
+						HOLogger.instance().log(NewsPanel.class, ex);
+					} catch (URISyntaxException ex) {
+						HOLogger.instance().log(NewsPanel.class, ex);
+					}
 				}
 			}
 		});
