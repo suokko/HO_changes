@@ -182,11 +182,9 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(MOVE_DOWN, "gui/bilder/Fugue/arrow-270-medium.png");
 		put(MOVE_LEFT, "gui/bilder/Fugue/arrow-180-medium.png");
 		put(MOVE_RIGHT, "gui/bilder/Fugue/arrow-000-medium.png");
-		put(ARROW_CURVE_180, "gui/bilder/Fugue/arrow-curve-180.png");
-		put(ARROW_CURVE, "gui/bilder/Fugue/arrow-curve.png");
-		put(ARROW_CIRCLE, "gui/bilder/Fugue/arrow-circle-double.png");
-		put(LIGHTNING, "gui/bilder/Fugue/lightning.png");
-		put(SUBSTITUTION, "gui/bilder/Fugue/arrow-circle-double2.png");
+		put(ARROW_CIRCLE, "gui/bilder/Fugue/arrow-circle-double-135.png");
+		put(ARROW_MOVE, "gui/bilder/Fugue/arrow-move-recoloured.png");
+		put(SUBSTITUTION, "gui/bilder/Fugue/arrow-circle-double-135-recoloured.png");
 	}
 
 	private void initBooleans() {
