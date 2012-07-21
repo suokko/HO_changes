@@ -212,12 +212,12 @@ public class OnlineWorker {
 		GregorianCalendar tempEnd = new GregorianCalendar();
 		tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
 		tempEnd.add(Calendar.MONTH, 3);
-
-		Date endDate = new Date();
+		
+		GregorianCalendar endDate = new GregorianCalendar();
 		if (!tempEnd.before(endDate)) {
-			tempEnd.setTimeInMillis(endDate.getTime());
+			tempEnd.setTime(endDate.getTime());
 		}
-
+		
 		String strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
 		String strDateLast = HT_FORMAT.format(tempEnd.getTime());
 
@@ -226,11 +226,12 @@ public class OnlineWorker {
 		waitDialog.setVisible(true);
 		try {
 			String matchesString = "";
+			
 			while (tempBeginn.before(endDate)) {
 				try {
 					waitDialog.setValue(10);
 					matchesString = MyConnector.instance().getMatchArchiv(teamId, strDateFirst,
-							strDateLast);
+							strDateLast);				
 					waitDialog.setValue(20);
 				} catch (Exception e) {
 					// Info
@@ -255,7 +256,7 @@ public class OnlineWorker {
 				tempEnd.add(Calendar.MONTH, 3);
 
 				if (!tempEnd.before(endDate)) {
-					tempEnd.setTimeInMillis(endDate.getTime());
+					tempEnd.setTime(endDate.getTime());
 				}
 
 				strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
