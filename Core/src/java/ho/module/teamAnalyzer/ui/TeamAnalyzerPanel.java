@@ -1,6 +1,7 @@
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.IRefreshable;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -37,7 +38,8 @@ public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 		simButton.addActionListener(new SimButtonListener(mainPanel.getMyTeamLineupPanel(),
         		mainPanel.getOpponentTeamLineupPanel(), recapPanel));
         SystemManager.refreshData();
-	}
+        RefreshManager.instance().registerRefreshable(this);
+ 	}
 
 	private void initialize() {
         filterPanel = new FilterPanel();
@@ -123,8 +125,9 @@ public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
     }
     
   
+	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		SystemManager.refreshData();
 		
 	}
 	
