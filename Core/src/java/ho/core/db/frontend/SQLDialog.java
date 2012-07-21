@@ -5,6 +5,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.util.BrowserLauncher;
+import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,8 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -87,7 +90,7 @@ public class SQLDialog extends JDialog implements ActionListener {
 
     private JSplitPane getMiddlePanel() {
         JSplitPane split = new JSplitPane(0);
-        split.add(new JScrollPane(getSQLPanel()));
+        split.add(new JScrollPane(getTextArea()));
         split.add(new JScrollPane(getTable()));
         return split;
     }
@@ -110,7 +113,13 @@ public class SQLDialog extends JDialog implements ActionListener {
     }
 
     protected void openHSQLDoc() {
-        BrowserLauncher.openUrlInUserBRowser("http://hsqldb.sourceforge.net/web/hsqlDocsFrame.html");
+        try {
+			BrowserLauncher.openURL("http://hsqldb.sourceforge.net/web/hsqlDocsFrame.html");
+		} catch (IOException ex) {
+			HOLogger.instance().log(SQLDialog.class, ex);
+		} catch (URISyntaxException ex) {
+			HOLogger.instance().log(SQLDialog.class, ex);
+		}
     }
 
     protected void showAllStatements() {
@@ -124,32 +133,16 @@ public class SQLDialog extends JDialog implements ActionListener {
         }
 
         JList list = new JList(display);
-        list.addMouseListener(new MouseListener() {
+        list.addMouseListener(new MouseAdapter() {
 
-            public void mouseClicked(MouseEvent e) {
+            @Override
+			public void mouseClicked(MouseEvent e) {
                 int i = ((JList)e.getSource()).getSelectedIndex();
                 getTextArea().setText(statements.toArray()[i].toString());
             }
-
-            public void mouseEntered(MouseEvent mouseevent) {}
-
-            public void mouseExited(MouseEvent mouseevent) {}
-
-            public void mousePressed(MouseEvent mouseevent) {}
-
-            public void mouseReleased(MouseEvent mouseevent) {}
-
         });
         JScrollPane scroll = new JScrollPane(list);
         JOptionPane.showMessageDialog(null, scroll);
-    }
-
-    private JScrollPane getSQLPanel() {
-        JScrollPane scroll = new JScrollPane(getTextArea());
-//        LineNumbers l = new LineNumbers(getTextArea(), scroll);
-//        scroll.setRowHeaderView(l);
-//        scroll.setPreferredSize(new Dimension(0, 150));
-        return scroll;
     }
 
     protected JTextPane getTextArea() {
@@ -265,8 +258,8 @@ public class SQLDialog extends JDialog implements ActionListener {
         }
     }
 
-    public void actionPerformed(ActionEvent arg0)
-    {
+    @Override
+	public void actionPerformed(ActionEvent arg0) {
         if(arg0.getSource() == butBook)
             showAllStatements();
         if(arg0.getSource() == butExecute)

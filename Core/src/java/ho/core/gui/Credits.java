@@ -54,7 +54,7 @@ public class Credits {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					BrowserLauncher.open("http://p.yusukekamiyamane.com/");
+					BrowserLauncher.openURL("http://p.yusukekamiyamane.com/");
 				} catch (IOException ex) {
 					HOLogger.instance().log(Credits.class, ex);
 				} catch (URISyntaxException ex) {
