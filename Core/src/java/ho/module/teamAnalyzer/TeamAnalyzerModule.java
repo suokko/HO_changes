@@ -44,6 +44,7 @@ public final class TeamAnalyzerModule extends DefaultModule {
 		return new SettingPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0);
 	}
