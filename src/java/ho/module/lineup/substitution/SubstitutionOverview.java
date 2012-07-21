@@ -344,7 +344,7 @@ public class SubstitutionOverview extends JPanel {
 	/**
 	 * TableModel for the overview table where existing substitutions are
 	 * listed.
-	 * 
+	 *
 	 */
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
@@ -593,7 +593,7 @@ public class SubstitutionOverview extends JPanel {
 				icon = ThemeManager.getIcon(HOIconName.SUBSTITUTION);
 				break;
 			case NEW_BEHAVIOUR:
-				icon = ThemeManager.getIcon(HOIconName.LIGHTNING);
+				icon = ThemeManager.getIcon(HOIconName.ARROW_MOVE);
 				break;
 			case POSITION_SWAP:
 				icon = ThemeManager.getIcon(HOIconName.ARROW_CIRCLE);

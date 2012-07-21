@@ -4,7 +4,7 @@ public interface HOIconName {
 
 	public static final String IMAGEPANEL_BACKGROUND = "imagePanel.background";
 	public static final String GRASSPANEL_BACKGROUND = "grassPanel.background";
-	
+
 	public static final String[] MATCHTYPES 	= { "","MatchType1","MatchType2","MatchType3","MatchType4","MatchType5","MatchType6","MatchType7","MatchType8","MatchType9","MatchType10","MatchType11","MatchType12","MatchTypeTourneyGrp","MatchTypeTourneyPlayOff"};
 	public static final String[] WEATHER 		= { "weather0","weather1","weather2","weather3"};
 	public static final String[] SPECIAL 		= { "","special1","special2","special3","special4","special5", "special6"};
@@ -113,10 +113,8 @@ public interface HOIconName {
 	public static final String MOVE_UP = "move_up";
 	public static final String MOVE_DOWN = "move_down";
 	public static final String MOVE_LEFT = "move_left";
-	public static final String MOVE_RIGHT = "move_right";	
-	public static final String ARROW_CURVE_180 = "arrow_curve_180";
-	public static final String ARROW_CURVE = "arrow_curve";
+	public static final String MOVE_RIGHT = "move_right";
 	public static final String ARROW_CIRCLE = "arrow_circle_double";
-	public static final String LIGHTNING = "lightning";
+	public static final String ARROW_MOVE = "arrow_move";
 	public static final String SUBSTITUTION = "substitution";
 }
