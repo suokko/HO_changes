@@ -521,7 +521,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
     	final Lineup lineup = HOVerwaltung.instance().getModel().getAufstellung();
 
         if (m_iPositionID == ISpielerPosition.setPieces) {
-            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
+            m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("match.setpiecestaker"));
         } else if (m_iPositionID == ISpielerPosition.captain) {
             m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Spielfuehrer"));
         } else {

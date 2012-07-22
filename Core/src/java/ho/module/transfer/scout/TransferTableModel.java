@@ -54,23 +54,23 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Form
 	    HOVerwaltung.instance().getLanguageString("Form"),
 	    //Kondition
-	    HOVerwaltung.instance().getLanguageString("skill.stamina"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"),
 	    //Loyalty
 	    HOVerwaltung.instance().getLanguageString("Loyalty"),
 	    //Torwart
-	    HOVerwaltung.instance().getLanguageString("skill.keeper"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"),
 	    //Verteidigung
-	    HOVerwaltung.instance().getLanguageString("skill.defending"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"),
 	    //Spielaufbau
-	    HOVerwaltung.instance().getLanguageString("skill.playmaking"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"),
 	    //Passpiel
-	    HOVerwaltung.instance().getLanguageString("skill.passing"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"),
 	    //Flügelspiel
-	    HOVerwaltung.instance().getLanguageString("skill.winger"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"),
 	    //Torschuss
-	    HOVerwaltung.instance().getLanguageString("skill.scoring"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"),
 	    //Standards
-	    HOVerwaltung.instance().getLanguageString("skill.set_pieces"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"),
 	    //Torwart
 	    HOVerwaltung.instance().getLanguageString("ls.player.position.keeper"),
 	    //Innenverteidiger
@@ -140,23 +140,23 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Form
 	    HOVerwaltung.instance().getLanguageString("FO"),
 	    //Kondition
-	    HOVerwaltung.instance().getLanguageString("KO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina"),
 	    // Loyalty
 	    HOVerwaltung.instance().getLanguageString("LOY"),
 	    //Torwart
-	    HOVerwaltung.instance().getLanguageString("TW"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper"),
 	    //Verteidigung
-	    HOVerwaltung.instance().getLanguageString("VE"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending"),
 	    //Spielaufbau
-	    HOVerwaltung.instance().getLanguageString("SA"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.playmaking"),
 	    //Passpiel
-	    HOVerwaltung.instance().getLanguageString("PS"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.passing"),
 	    //Flügelspiel
-	    HOVerwaltung.instance().getLanguageString("FL"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.winger"),
 	    //Torschuss
-	    HOVerwaltung.instance().getLanguageString("TS"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.scoring"),
 	    //Standards
-	    HOVerwaltung.instance().getLanguageString("ST"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.setpieces"),
 	    //Torwart
 	    HOVerwaltung.instance().getLanguageString("ls.player.position_short.keeper"),
 	    //Innenverteidiger

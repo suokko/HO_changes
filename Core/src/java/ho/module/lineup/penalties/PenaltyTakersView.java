@@ -144,7 +144,7 @@ public class PenaltyTakersView extends JPanel {
 	/**
 	 * The panel containing the two tables and the button to move players
 	 * between the tables.
-	 * 
+	 *
 	 * @return the panel
 	 */
 	private JPanel createTablesPanel() {
@@ -262,7 +262,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.weightx = 0.4;
 		gbc.weighty = 1.0;
 		tablesPanel.add(scrollPane, gbc);
-		
+
 		return tablesPanel;
 	}
 
@@ -610,9 +610,9 @@ public class PenaltyTakersView extends JPanel {
 			this.columnNames = new String[6];
 			this.columnNames[0] = "";
 			this.columnNames[1] = getLangStr("Name");
-			this.columnNames[2] = getLangStr("Erfahrung");
-			this.columnNames[3] = getLangStr("Standards");
-			this.columnNames[4] = getLangStr("Torschuss");
+			this.columnNames[2] = getLangStr("skill.experience");
+			this.columnNames[3] = getLangStr("ls.player.skill.setpieces");
+			this.columnNames[4] = getLangStr("ls.player.skill.scoring");
 			this.columnNames[5] = getLangStr("lineup.penaltytakers.colheadline.ability");
 		}
 
@@ -772,7 +772,7 @@ public class PenaltyTakersView extends JPanel {
 			return c;
 		}
 	}
-	
+
 	private enum Move {
 		UP, DOWN;
 	}

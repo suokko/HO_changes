@@ -54,7 +54,7 @@ import javax.swing.WindowConstants;
 final class SpielerDetailDialog extends JDialog implements WindowListener {
 
 	private static final long serialVersionUID = 7104209757847006926L;
-	
+
 	//~ Static fields/initializers -----------------------------------------------------------------
     private static final Dimension COMPONENTENSIZE3 = new Dimension(Helper.calcCellWidth(100),
                                                                     Helper.calcCellWidth(18));
@@ -221,7 +221,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             m_jpWertSturmAus,
             m_jpWertSturmDef
     };
-    
+
     private final byte[] playerPosition = new byte[]{
     		ISpielerPosition.KEEPER,
             ISpielerPosition.CENTRAL_DEFENDER,
@@ -242,9 +242,9 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
             ISpielerPosition.FORWARD,
             ISpielerPosition.FORWARD_TOWING,
             ISpielerPosition.FORWARD_DEF
-            
+
     };
- 
+
     public SpielerDetailDialog(JFrame owner, MatchLineupPlayer matchplayer, MatchLineup matchlineup) {
         super(owner);
         HOLogger.instance().log(getClass(),"SpielerDetailDialog");
@@ -277,12 +277,12 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         setVisible(true);
     }
 
- 
+
     @Override
 	public void windowActivated(WindowEvent e) {
     }
 
- 
+
     @Override
 	public void windowClosed(WindowEvent e) {
     }
@@ -300,7 +300,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 	public void windowDeactivated(WindowEvent e) {
     }
 
- 
+
     @Override
 	public void windowDeiconified(WindowEvent e) {
     }
@@ -310,7 +310,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 	public void windowIconified(WindowEvent e) {
     }
 
- 
+
     @Override
 	public void windowOpened(WindowEvent e) {
     }
@@ -527,11 +527,11 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
                                 + " ("
                                 + m_clSpieler.calcPosValue(m_clSpieler.getIdealPosition(), true)
                                 + ")");
-   
+
             for (int i = 0; i < playerPositionValues.length; i++) {
                	showWithCompare(playerPositionValues[i],playerPosition[i],m_clSpieler,m_clVergleichsSpieler);
     		}
-        }    
+        }
         m_jpToreFreund.setText(m_clSpieler.getToreFreund() + "");
         m_jpToreLiga.setText(m_clSpieler.getToreLiga() + "");
         m_jpTorePokal.setText(m_clSpieler.getTorePokal() + "");
@@ -540,11 +540,11 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         m_jpSpezialitaet.setText(PlayerSpeciality.toString(m_clSpieler.getSpezialitaet()));
        	m_jpSpezialitaet.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[m_clSpieler.getSpezialitaet()]));
         m_jpAggressivitaet.setText(PlayerAggressiveness.toString(m_clSpieler.getAgressivitaet()));
-       
+
         //Dreher!
         m_jpAnsehen.setText(PlayerAgreeability.toString(m_clSpieler.getCharakter()));
         m_jpCharakter.setText(PlayerHonesty.toString(m_clSpieler.getAnsehen()));
-        
+
      }
 
     private void initComponents(Spieler player, MatchLineupPlayer matchplayer) {
@@ -809,7 +809,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -830,7 +830,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 8;
@@ -851,7 +851,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -872,7 +872,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 9;
@@ -893,7 +893,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -914,7 +914,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 10;
@@ -935,7 +935,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -956,7 +956,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 11;
@@ -1394,7 +1394,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
 
         getContentPane().add(panel, BorderLayout.CENTER);
     }
-    
+
     /**
      * init a label
      * @param y
@@ -1409,7 +1409,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(label, constraints);
         panel.add(label);
     }
-    
+
     /**
      * init a value field
      * @param y
@@ -1440,12 +1440,12 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
                 ho.core.model.UserParameter.instance().anzahlNachkommastellen)+ "");
     	labelEntry.getRechts().clear();
     }
-    
-    
+
+
     private void showWithCompare(DoppelLabelEntry labelEntry,byte playerPosition,Spieler m_clSpieler,Spieler m_clVergleichsSpieler){
     	labelEntry.getLinks().setText(Helper.round(m_clSpieler.calcPosValue(playerPosition,true),
                 ho.core.model.UserParameter.instance().anzahlNachkommastellen)+ "");
-    	
+
     	labelEntry.getRechts().setSpezialNumber(m_clSpieler.calcPosValue(playerPosition,true)
     					- m_clVergleichsSpieler.calcPosValue(playerPosition,true),false);
     }

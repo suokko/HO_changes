@@ -58,7 +58,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
 {
 
 	private static final long serialVersionUID = 3466993172643378958L;
-	
+
 	//~ Static fields/initializers -----------------------------------------------------------------
 
     public static final Dimension COMPONENTENSIZE = new Dimension(Helper.calcCellWidth(150),
@@ -80,7 +80,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     private final ColorLabelEntry m_jpNationality = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
     		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private final ColorLabelEntry m_jpPositioned = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-    		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);    
+    		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
     private RatingTableEntry m_jpRating = new RatingTableEntry();
     private final ColorLabelEntry m_jpBestPosition = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
     		ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
@@ -148,7 +148,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     		ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.CENTER);
     private final ColorLabelEntry m_jpDefending = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
             ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.LEFT);
-    private final ColorLabelEntry m_jpDefendingChange = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD, 
+    private final ColorLabelEntry m_jpDefendingChange = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
     		ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.CENTER);
     private final ColorLabelEntry m_jpSetPieces = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
             ColorLabelEntry.BG_SPIELEREINZELWERTE, SwingConstants.LEFT);
@@ -200,7 +200,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
     // Players
     private Spieler m_clPlayer;
     private Spieler m_clComparisonPlayer;
-    
+
     private final DoppelLabelEntry[] playerPositionValues= new DoppelLabelEntry[]{
     		m_jpRatingKeeper,
             m_jpRatingCentralDefender,
@@ -741,42 +741,42 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initYellowMainField(5,7,constraints,layout,panel,m_jpForm.getComponent(false));
         initYellowChangesField(6,7,constraints,layout,panel,m_jpFormChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"));
         initNormalLabel(0,8,constraints,layout,panel,label);
         initYellowMainField(1,8,constraints,layout,panel,m_jpStamina.getComponent(false));
         initYellowChangesField(2,8,constraints,layout,panel,m_jpStaminaChange.getComponent(false));
 
-        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"));
         initNormalLabel(4,8,constraints,layout,panel,label);
         initYellowMainField(5,8,constraints,layout,panel,m_jpKeeper.getComponent(false));
         initYellowChangesField(6,8,constraints,layout,panel,m_jpKeeperChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"));
         initNormalLabel(0,9,constraints,layout,panel,label);
         initYellowMainField(1,9,constraints,layout,panel,m_jpPlaymaking.getComponent(false));
         initYellowChangesField(2,9,constraints,layout,panel,m_jpPlaymakingChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"));
         initNormalLabel(4,9,constraints,layout,panel,label);
         initYellowMainField(5,9,constraints,layout,panel,m_jpPassing.getComponent(false));
         initYellowChangesField(6,9,constraints,layout,panel,m_jpPassingChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"));
         initNormalLabel(0,10,constraints,layout,panel,label);
         initYellowMainField(1,10,constraints,layout,panel,m_jpWinger.getComponent(false));
         initYellowChangesField(2,10,constraints,layout,panel,m_jpWingerChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"));
         initNormalLabel(4,10,constraints,layout,panel,label);
         initYellowMainField(5,10,constraints,layout,panel,m_jpDefending.getComponent(false));
         initYellowChangesField(6,10,constraints,layout,panel,m_jpDefendingChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"));
         initNormalLabel(0,11,constraints,layout,panel,label);
         initYellowMainField(1,11,constraints,layout,panel,m_jpScoring.getComponent(false));
         initYellowChangesField(2,11,constraints,layout,panel,m_jpScoringChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"));
         initNormalLabel(4,11,constraints,layout,panel,label);
         initYellowMainField(5,11,constraints,layout,panel,m_jpSetPieces.getComponent(false));
         initYellowChangesField(6,11,constraints,layout,panel,m_jpSetPiecesChange.getComponent(false));
@@ -785,11 +785,11 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(0,12,constraints,layout,panel,label);
         initYellowMainField(1,12,constraints,layout,panel,m_jpLoyalty.getComponent(false));
         initYellowChangesField(2,12,constraints,layout,panel,m_jpLoyaltyChange.getComponent(false));
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
         initNormalLabel(4,12,constraints,layout,panel,label);
         initNormalField(5,12,constraints,layout,panel,m_jpMotherClub.getComponent(false));
-        
+
         m_jtaNotes.addFocusListener(this);
         m_jtaNotes.setEditable(false);
         m_jtaNotes.setBackground(ColorLabelEntry.BG_STANDARD);
@@ -825,7 +825,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         component.setPreferredSize(COMPONENTENSIZE3);
         layout.setConstraints(component, constraints);
         panel.add(component);
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
         initNormalLabel(8,1,constraints,layout,panel,label);
         initNormalField(9,1,constraints,layout,panel,m_jpSpeciality.getComponent(false));

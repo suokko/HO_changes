@@ -20,7 +20,7 @@ class TransferTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -7041463041956883945L;
 
@@ -52,14 +52,14 @@ class TransferTableModel extends AbstractTableModel {
         this.colNames[8] = HOVerwaltung.instance().getLanguageString("FUE");
         this.colNames[9] = HOVerwaltung.instance().getLanguageString("ER");
         this.colNames[10] = HOVerwaltung.instance().getLanguageString("FO");
-        this.colNames[11] = HOVerwaltung.instance().getLanguageString("KO");
-        this.colNames[12] = HOVerwaltung.instance().getLanguageString("TW");
-        this.colNames[13] = HOVerwaltung.instance().getLanguageString("VE");
-        this.colNames[14] = HOVerwaltung.instance().getLanguageString("SA");
-        this.colNames[15] = HOVerwaltung.instance().getLanguageString("PS");
-        this.colNames[16] = HOVerwaltung.instance().getLanguageString("FL");
-        this.colNames[17] = HOVerwaltung.instance().getLanguageString("TS");
-        this.colNames[18] = HOVerwaltung.instance().getLanguageString("ST");
+        this.colNames[11] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina");
+        this.colNames[12] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper");
+        this.colNames[13] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending");
+        this.colNames[14] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.playmaking");
+        this.colNames[15] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.passing");
+        this.colNames[16] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.winger");
+        this.colNames[17] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.scoring");
+        this.colNames[18] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.setpieces");
 
         this.values = values;
     }

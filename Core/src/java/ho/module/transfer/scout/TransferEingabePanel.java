@@ -615,42 +615,42 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"));
         panel.add(label);
         jcbStamina.addItemListener(this);
         panel.add(jcbStamina);
 
-        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"));
         panel.add(label);
         jcbKeeper.addItemListener(this);
         panel.add(jcbKeeper);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"));
         panel.add(label);
         jcbPlaymaking.addItemListener(this);
         panel.add(jcbPlaymaking);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"));
         panel.add(label);
         jcbPassing.addItemListener(this);
         panel.add(jcbPassing);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"));
         panel.add(label);
         jcbWinger.addItemListener(this);
         panel.add(jcbWinger);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"));
         panel.add(label);
         jcbDefending.addItemListener(this);
         panel.add(jcbDefending);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"));
         panel.add(label);
         jcbScoring.addItemListener(this);
         panel.add(jcbScoring);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"));
         panel.add(label);
         jcbSetPieces.addItemListener(this);
         panel.add(jcbSetPieces);

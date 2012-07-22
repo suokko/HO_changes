@@ -15,7 +15,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5399479264645517270L;
 
@@ -42,7 +42,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
         columnNames[1] = hoV.getLanguageString("Season"); //$NON-NLS-1$
         columnNames[2] = hoV.getLanguageString("Type"); //$NON-NLS-1$
         columnNames[3] = hoV.getLanguageString("Intensitaet"); //$NON-NLS-1$
-        columnNames[4] = hoV.getLanguageString("Kondition"); //$NON-NLS-1$
+        columnNames[4] = hoV.getLanguageString("training.staminashare"); //$NON-NLS-1$
     }
 
     //~ Methods ------------------------------------------------------------------------------------

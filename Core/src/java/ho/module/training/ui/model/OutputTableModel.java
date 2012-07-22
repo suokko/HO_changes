@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
  * Table Model for the main table showing training results
  *
  * @author Mag. Bernhard Hödl  AH - Solutions Augsten & Hödl OEG Neubachgasse 12 A - 2325 Himberg
- *         Tabellenmodel und Daten für die dargestellte Tabelle für das HO Plungin
+ *         Tabellenmodel und Daten für die dargestellte Tabelle für das HO Plugin
  */
 public class OutputTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -54,14 +54,14 @@ public class OutputTableModel extends AbstractTableModel {
         p_V_columnNames.add(hoV.getLanguageString("Spieler"));
         p_V_columnNames.add(hoV.getLanguageString("Alter"));
         p_V_columnNames.add(hoV.getLanguageString("BestePosition"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.keeper"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.defending"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.playmaking"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.passing"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.winger"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.scoring"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.set_pieces"));
-        p_V_columnNames.add(hoV.getLanguageString("skill.stamina"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.keeper"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.defending"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.playmaking"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.passing"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.winger"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.scoring"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.setpieces"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.stamina"));
         p_V_columnNames.add(hoV.getLanguageString("ID"));
     }
 
