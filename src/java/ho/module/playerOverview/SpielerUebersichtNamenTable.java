@@ -69,7 +69,6 @@ public class SpielerUebersichtNamenTable extends JTable implements Refreshable, 
 	 * Initialisiert das Model für die Namen
 	 */
 	private void initModelNamen() {
-		setAutoResizeMode(AUTO_RESIZE_OFF);
 		setSelectionMode(0);
 		setRowSelectionAllowed(true);
 		getColumnModel().getColumn(0).setMinWidth(167);
