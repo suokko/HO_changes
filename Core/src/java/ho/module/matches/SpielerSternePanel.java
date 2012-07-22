@@ -268,7 +268,7 @@ final class SpielerSternePanel extends ImagePanel implements ActionListener {
     	switch (posid) {
 
     		case ISpielerPosition.setPieces : {
-    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("Standards"));
+    			m_jlPosition.setText(HOVerwaltung.instance().getLanguageString("match.setpiecestaker"));
     			break;
     		}
     		case ISpielerPosition.captain : {

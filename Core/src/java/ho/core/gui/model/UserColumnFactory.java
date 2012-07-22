@@ -213,15 +213,15 @@ final public class UserColumnFactory {
 		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				PlayerSkill.LEADERSHIP);
 		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"skill.experience",			PlayerSkill.EXPERIENCE);
 		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"Form",					PlayerSkill.FORM);
-		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "KO",		"skill.stamina",			PlayerSkill.STAMINA);
+		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "ls.player.skill_short.stamina",		"ls.player.skill.stamina",			PlayerSkill.STAMINA);
 		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				PlayerSkill.LOYALTY);
-		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "TW",		"skill.keeper",				PlayerSkill.KEEPER);
-		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "VE",		"skill.defending",			PlayerSkill.DEFENDING);
-		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "SA",		"skill.playmaking",			PlayerSkill.PLAYMAKING);
-		playerSkillArray[8]  = new PlayerSkillColumn( 	150, "PS",		"skill.passing",				PlayerSkill.PASSING);
-		playerSkillArray[9]  = new PlayerSkillColumn( 	160, "FL",		"skill.winger",			PlayerSkill.WINGER);
-		playerSkillArray[10]  = new PlayerSkillColumn( 	170, "TS",		"skill.scoring",			PlayerSkill.SCORING);
-		playerSkillArray[11] = new PlayerSkillColumn( 	180, "ST",		"skill.set_pieces",			PlayerSkill.SET_PIECES);
+		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "ls.player.skill_short.keeper",		"ls.player.skill.keeper",				PlayerSkill.KEEPER);
+		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "ls.player.skill_short.defending",		"ls.player.skill.defending",			PlayerSkill.DEFENDING);
+		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "ls.player.skill_short.playmaking",	"ls.player.skill.playmaking",			PlayerSkill.PLAYMAKING);
+		playerSkillArray[8]  = new PlayerSkillColumn( 	150, "ls.player.skill_short.passing",		"ls.player.skill.passing",				PlayerSkill.PASSING);
+		playerSkillArray[9]  = new PlayerSkillColumn( 	160, "ls.player.skill_short.winger",		"ls.player.skill.winger",			PlayerSkill.WINGER);
+		playerSkillArray[10]  = new PlayerSkillColumn( 	170, "ls.player.skill_short.scoring",		"ls.player.skill.scoring",			PlayerSkill.SCORING);
+		playerSkillArray[11] = new PlayerSkillColumn( 	180, "ls.player.skill_short.setpieces",		"ls.player.skill.setpieces",			PlayerSkill.SET_PIECES);
 
 		return playerSkillArray;
 	}

@@ -44,23 +44,24 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6855218725568752692L;
 	//~ Instance fields ----------------------------------------------------------------------------
 	private static final HOVerwaltung hov = HOVerwaltung.instance();
-    private static final String SKILL_PLAYMAKING = hov.getLanguageString("skill.playmaking");
-    private static final String SKILL_PASSING = hov.getLanguageString("skill.passing");
-    private static final String SKILL_WING = hov.getLanguageString("skill.winger");
-    private static final String SKILL_DEFENSE = hov.getLanguageString("skill.defending");
-    private static final String SKILL_SCORING = hov.getLanguageString("skill.scoring");
-    private static final String SKILL_SETPIECES = hov.getLanguageString("skill.set_pieces");
-    private static final String SKILL_STAMINA = hov.getLanguageString("skill.stamina");
+    private static final String SKILL_PLAYMAKING = hov.getLanguageString("ls.player.skill.playmaking");
+    private static final String SKILL_PASSING = hov.getLanguageString("ls.player.skill.passing");
+    private static final String SKILL_WING = hov.getLanguageString("ls.player.skill.winger");
+    private static final String SKILL_DEFENSE = hov.getLanguageString("ls.player.skill.defending");
+    private static final String SKILL_SCORING = hov.getLanguageString("ls.player.skill.scoring");
+    private static final String SKILL_SETPIECES = hov.getLanguageString("ls.player.skill.setpieces");
+    private static final String SKILL_STAMINA = hov.getLanguageString("ls.player.skill.stamina");
+    private static final String SKILL_KEEPER = hov.getLanguageString("ls.player.skill.keeper");
     private static final String SKILL_EXPERIENCE = hov.getLanguageString("skill.experience");
 
     private Spieler player;
     private JButton updBtn = new JButton();
     private JLabel age = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     private JLabel currTSI = new JLabel(HOVerwaltung.instance().getLanguageString("PlayerDetail.NotAvail"),
-                                        SwingConstants.LEFT); 
+                                        SwingConstants.LEFT);
     private JLabel income = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
     private JLabel name = new JLabel("", SwingConstants.LEFT); //$NON-NLS-1$
-    
+
     private JLabel skill_defense = new JLabel("", SwingConstants.LEFT);
     private JLabel skill_experience = new JLabel("", SwingConstants.LEFT);
     private JLabel skill_keeper = new JLabel("", SwingConstants.LEFT);
@@ -70,7 +71,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     private JLabel skill_setpieces = new JLabel("", SwingConstants.LEFT);
     private JLabel skill_stamina = new JLabel("", SwingConstants.LEFT);
     private JLabel skill_wing = new JLabel("", SwingConstants.LEFT);
-    
+
     private JLabel arrow_defense = new JLabel((Icon) null, SwingConstants.CENTER);
     private JLabel arrow_experience = new JLabel((Icon) null, SwingConstants.CENTER);
     private JLabel arrow_keeper = new JLabel((Icon) null, SwingConstants.CENTER);
@@ -118,10 +119,10 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         detailPanel.setLayout(layout);
 
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Name"),
-                                   SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$ 
+                                   SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$
         detailPanel.add(name, "2, 0"); //$NON-NLS-1$
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Alter"),
-                                   SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$ 
+                                   SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$
         detailPanel.add(age, "2, 1"); //$NON-NLS-1$
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Income"), SwingConstants.LEFT), "1, 2"); //$NON-NLS-1$ //$NON-NLS-2$
         detailPanel.add(income, "2, 2"); //$NON-NLS-1$
@@ -203,8 +204,8 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         age.setText(""); //$NON-NLS-1$
         income.setText("");
         currTSI.setText(HOVerwaltung.instance().getLanguageString("PlayerDetail.NotAvail"));
-        
-        skill_keeper.setText(PlayerSkill.toString(PlayerSkill.KEEPER));
+
+        skill_keeper.setText(SKILL_KEEPER);
         skill_playmaking.setText(SKILL_PLAYMAKING);
         skill_passing.setText(SKILL_PASSING);
         skill_wing.setText(SKILL_WING);
@@ -213,7 +214,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         skill_setpieces.setText(SKILL_SETPIECES);
         skill_stamina.setText(SKILL_STAMINA);
         skill_experience.setText(SKILL_EXPERIENCE);
-        
+
         arrow_keeper.setIcon(null);
         arrow_playmaking.setIcon(null);
         arrow_passing.setIcon(null);
@@ -255,7 +256,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                     currTSI.setText(Integer.toString(this.player.getTSI()));
                 }
 
-                skill_keeper.setText(PlayerSkill.toString(PlayerSkill.KEEPER) + " (" + player.getTorwart() + ")");
+                skill_keeper.setText(SKILL_KEEPER + " (" + player.getTorwart() + ")");
                 skill_playmaking.setText(SKILL_PLAYMAKING + " (" + player.getSpielaufbau() + ")");
                 skill_passing.setText(SKILL_PASSING + " (" + player.getPasspiel() + ")");
                 skill_wing.setText(SKILL_WING + " (" + player.getFluegelspiel() + ")");
@@ -265,7 +266,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
                 skill_stamina.setText(SKILL_STAMINA + " (" + player.getKondition() + ")");
                 skill_experience.setText(SKILL_EXPERIENCE + " (" + player.getErfahrung() + ")");
 
-             
+
                 arrow_keeper.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.KEEPER).size(),true));
                 arrow_playmaking.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.PLAYMAKING).size(),true));
                 arrow_passing.setIcon(ImageUtilities.getImageIcon4Veraenderung(player.getAllLevelUp(PlayerSkill.PASSING).size(),true));

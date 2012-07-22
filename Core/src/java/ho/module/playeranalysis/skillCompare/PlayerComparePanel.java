@@ -153,16 +153,16 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		// Set the labels
-		m_L_Experience = new JLabel(hoV.getLanguageString("Erfahrung"));
+		m_L_Experience = new JLabel(hoV.getLanguageString("skill.experience"));
 		m_L_Form = new JLabel(hoV.getLanguageString("Form"));
-		m_L_Stamina = new JLabel(hoV.getLanguageString("Kondition"));
-		m_L_Keeping = new JLabel(hoV.getLanguageString("skill.keeper"));
-		m_L_Defending = new JLabel(hoV.getLanguageString("Verteidigung"));
-		m_L_Playmaking = new JLabel(hoV.getLanguageString("Spielaufbau"));
-		m_L_Passing = new JLabel(hoV.getLanguageString("Passpiel"));
-		m_L_Winger = new JLabel(hoV.getLanguageString("Fluegelspiel"));
-		m_L_Scoring = new JLabel(hoV.getLanguageString("Torschuss"));
-		m_L_SetPieces = new JLabel(hoV.getLanguageString("Standards"));
+		m_L_Stamina = new JLabel(hoV.getLanguageString("ls.player.skill.stamina"));
+		m_L_Keeping = new JLabel(hoV.getLanguageString("ls.player.skill.keeper"));
+		m_L_Defending = new JLabel(hoV.getLanguageString("ls.player.skill.defending"));
+		m_L_Playmaking = new JLabel(hoV.getLanguageString("ls.player.skill.playmaking"));
+		m_L_Passing = new JLabel(hoV.getLanguageString("ls.player.skill.passing"));
+		m_L_Winger = new JLabel(hoV.getLanguageString("ls.player.skill.winger"));
+		m_L_Scoring = new JLabel(hoV.getLanguageString("ls.player.skill.scoring"));
+		m_L_SetPieces = new JLabel(hoV.getLanguageString("ls.player.skill.setpieces"));
 		m_L_Loyalty = new JLabel(hoV.getLanguageString("Loyalty"));
 		m_L_HomeGrown = new JLabel(hoV.getLanguageString("Motherclub"));
 

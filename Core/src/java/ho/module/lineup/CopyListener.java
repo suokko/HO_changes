@@ -15,17 +15,17 @@ import javax.swing.JPopupMenu;
 
 /**
  * Listener for the "copy ratings to clipboard" feature at the lineup screen.
- * 
+ *
  * @author aik
  */
 public class CopyListener implements ActionListener {
-	
+
 	private AufstellungsRatingPanel lineup;
 	private static String LF = System.getProperty("line.separator", "\n");
 	private JMenuItem miPlaintext = new JMenuItem(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.PlainText"));
 	private JMenuItem miHattickMLDef = new JMenuItem(HOVerwaltung.instance().getLanguageString("Lineup.CopyRatings.HattrickML"));
-	final JPopupMenu menu = new JPopupMenu(); 
-	
+	final JPopupMenu menu = new JPopupMenu();
+
 	/**
 	 * Create the CopyListener and initialize the gui components.
 	 */
@@ -49,10 +49,10 @@ public class CopyListener implements ActionListener {
 			copyToClipboard(getRatingsAsHattrickML_DefTop());
 			menu.setVisible(false);
 		} else if (e != null && e.getSource() != null && e.getSource() instanceof Component) {
-			menu.show((Component)e.getSource(), 1, 1); 
+			menu.show((Component)e.getSource(), 1, 1);
 		}
 	}
-	
+
 	/**
 	 * Copy the given text into the system clip board.
 	 */
@@ -80,7 +80,7 @@ public class CopyListener implements ActionListener {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Get ratings in a HT-ML style table.
 	 */
@@ -91,7 +91,7 @@ public class CopyListener implements ActionListener {
 			sb.append("[tr][th][/th][th]"+HOVerwaltung.instance().getLanguageString("Rechts"));
 			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Mitte"));
 			sb.append("[/th][th]"+HOVerwaltung.instance().getLanguageString("Links")+"[/th][/tr]" + LF);
-			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Verteidigung"));
+			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("match.sector.defence"));
 			sb.append("[/th][td align=center]"+lineup.getRightDefenseRating());
 			sb.append("[/td][td align=center]"+lineup.getCentralDefenseRating());
 			sb.append("[/td][td align=center]"+lineup.getLeftDefenseRating());
