@@ -101,7 +101,7 @@ public class Lineup {
 	 * 
 	 * Probably up for change with new XML?
 	 */
-	public Lineup(Properties properties) throws Exception {
+	public Lineup(Properties properties) {
 		try {
 
 			// Positionen erzeugen
