@@ -59,10 +59,10 @@ import sun.misc.BASE64Encoder;
  * @author thomas.werth
  */
 public class MyConnector {
+	private final static SimpleDateFormat HT_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private static final int chppID = 3330;
 	private static final String htUrl = "http://chpp.hattrick.org/chppxml.ashx";
-	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V"
-			+ HO.VERSION;
+	public static String m_sIDENTIFIER = "HO! Hattrick Organizer V" + HO.VERSION;
 	private static MyConnector m_clInstance;
 	private final static String VERSION_TRAINING = "1.5";
 	private final static String VERSION_MATCHORDERS = "2.1";
@@ -212,8 +212,7 @@ public class MyConnector {
 	/**
 	 * lädt den Spielplan
 	 */
-	public String getLeagueFixtures(int season, int leagueID)
-			throws IOException {
+	public String getLeagueFixtures(int season, int leagueID) throws IOException {
 		String url = htUrl + "?file=leaguefixtures";
 		if (season > 0) {
 			url += "&season=" + season;
@@ -225,32 +224,43 @@ public class MyConnector {
 	}
 
 	/**
-	 * lädt das MatchArchiv als xml
+	 * Fetches matches from Hattrick's matches archive (see 'matchesarchive' in
+	 * Hattrick's CHPP API documentation) for the given team and a specified
+	 * period of time.
+	 * 
+	 * @param teamId
+	 *            the ID of the team to fetch the matches for.
+	 * @param firstDate
+	 *            the first date of the period of time.
+	 * @param lastDate
+	 *            the last date of the period of time.
+	 * @return the a string containing the matches data in XML format.
+	 * @throws IOException
+	 *             if an io-error occurred when fetching the matches.
 	 */
-	public String getMatchArchiv(int teamId, String firstDate, String lastDate)
-			throws IOException {
-		String url = htUrl + "?file=matchesarchive";
+	public String getMatchesArchive(int teamId, Date firstDate, Date lastDate) throws IOException {
+		StringBuilder url = new StringBuilder();
+		url.append(htUrl).append("?file=matchesarchive");
 
 		if (teamId > 0) {
-			url += ("&teamID=" + teamId);
+			url.append("&teamID=").append("teamId");
 		}
 
 		if (firstDate != null) {
-			url += ("&FirstMatchDate=" + firstDate);
+			url.append("&FirstMatchDate=").append(HT_FORMAT.format(firstDate));
 		}
 
 		if (lastDate != null) {
-			url += ("&LastMatchDate=" + lastDate);
+			url.append("&LastMatchDate=").append(HT_FORMAT.format(lastDate));
 		}
-
-		return getCHPPWebFile(url);
+		
+		return getCHPPWebFile(url.toString());
 	}
 
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchLineup(int matchId, int teamId, MatchType matchType)
-			throws IOException {
+	public String getMatchLineup(int matchId, int teamId, MatchType matchType) throws IOException {
 		String url = htUrl + "?file=matchlineup&version=" + VERSION_MATCHLINEUP;
 
 		if (matchId > 0) {
@@ -276,10 +286,9 @@ public class MyConnector {
 	 * @return The api content (xml)
 	 * @throws IOException
 	 */
-	public String getMatchOrder(int matchId, MatchType matchType)
-			throws IOException {
-		String url = htUrl + "?file=matchorders&version=" + VERSION_MATCHORDERS
-				+ "&matchID=" + matchId;
+	public String getMatchOrder(int matchId, MatchType matchType) throws IOException {
+		String url = htUrl + "?file=matchorders&version=" + VERSION_MATCHORDERS + "&matchID="
+				+ matchId;
 		url += "&sourceSystem=" + matchType.getSourceString();
 
 		return getCHPPWebFile(url);
@@ -298,11 +307,10 @@ public class MyConnector {
 	 * @return the result xml from the upload
 	 * @throws IOException
 	 */
-	public String setMatchOrder(int matchId, MatchType matchType,
-			String orderString) throws IOException {
+	public String setMatchOrder(int matchId, MatchType matchType, String orderString)
+			throws IOException {
 		StringBuilder urlpara = new StringBuilder();
-		urlpara.append("?file=matchorders&version=")
-				.append(VERSION_MATCHORDERS);
+		urlpara.append("?file=matchorders&version=").append(VERSION_MATCHORDERS);
 		if (matchId > 0) {
 			urlpara.append("&matchID=").append(matchId);
 		}
@@ -312,8 +320,8 @@ public class MyConnector {
 
 		Map<String, String> paras = new HashMap<String, String>();
 		paras.put("lineup", orderString);
-		String result = readStream(postWebFileWithBodyParameters(htUrl
-				+ urlpara, paras, true, "set_matchorder"));
+		String result = readStream(postWebFileWithBodyParameters(htUrl + urlpara, paras, true,
+				"set_matchorder"));
 		String sError = XMLCHPPPreParser.getError(result);
 		if (sError.length() > 0) {
 			throw new RuntimeException(sError);
@@ -324,10 +332,8 @@ public class MyConnector {
 	/**
 	 * lädt die Aufstellungsbewertung zu einem Spiel
 	 */
-	public String getMatchdetails(int matchId, MatchType matchType)
-			throws IOException {
-		String url = htUrl + "?file=matchdetails&version="
-				+ VERSION_MATCHDETAILS;
+	public String getMatchdetails(int matchId, MatchType matchType) throws IOException {
+		String url = htUrl + "?file=matchdetails&version=" + VERSION_MATCHDETAILS;
 		if (matchId > 0) {
 			url += ("&matchID=" + matchId);
 		}
@@ -352,8 +358,7 @@ public class MyConnector {
 	 * @throws IOException
 	 *             if an IO error occurs during download.
 	 */
-	public String getMatches(int teamId, boolean forceRefresh, Date date)
-			throws IOException {
+	public String getMatches(int teamId, boolean forceRefresh, Date date) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder();
 		urlBuilder.append(htUrl).append("?file=matches&version=2.6");
 		urlBuilder.append("&teamID=").append(teamId);
@@ -361,8 +366,7 @@ public class MyConnector {
 			urlBuilder.append("&actionType=refreshCache");
 		}
 		urlBuilder.append("&LastMatchDate=");
-		String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(date);
+		String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 		urlBuilder.append(URLEncoder.encode(dateString, "UTF-8"));
 		return getCHPPWebFile(urlBuilder.toString());
 	}
@@ -370,8 +374,7 @@ public class MyConnector {
 	/**
 	 * Get Matches
 	 */
-	public String getMatches(int teamId, boolean forceRefresh, boolean upcoming)
-			throws IOException {
+	public String getMatches(int teamId, boolean forceRefresh, boolean upcoming) throws IOException {
 		String url = htUrl + "?file=matches&version=2.6";
 
 		if (teamId > 0) {
@@ -444,10 +447,8 @@ public class MyConnector {
 	/**
 	 * Get the content of a web page in one string.
 	 */
-	private String getWebPage(String surl, boolean showError)
-			throws IOException {
-		final InputStream resultingInputStream = getNonCHPPWebFile(surl,
-				showError);
+	private String getWebPage(String surl, boolean showError) throws IOException {
+		final InputStream resultingInputStream = getNonCHPPWebFile(surl, showError);
 		return readStream(resultingInputStream);
 	}
 
@@ -455,8 +456,7 @@ public class MyConnector {
 	 * holt die Weltdaten
 	 */
 	public String getWorldDetails(int leagueId) throws IOException {
-		String url = htUrl + "?file=worlddetails&version="
-				+ VERSION_WORLDDETAILS;
+		String url = htUrl + "?file=worlddetails&version=" + VERSION_WORLDDETAILS;
 		if (leagueId > 0)
 			url += "&leagueID=" + leagueId;
 		return getCHPPWebFile(url);
@@ -470,17 +470,15 @@ public class MyConnector {
 		ret.setBeta(false);
 		ret.setVersion(HO.VERSION);
 		try {
-			final String s = getWebPage(MyConnector.getPluginSite()
-					+ "/version.htm", false);
+			final String s = getWebPage(MyConnector.getPluginSite() + "/version.htm", false);
 			try {
 				ret.setVersion(Double.parseDouble(s));
 			} catch (NumberFormatException e) {
-				HOLogger.instance().debug(getClass(),
-						"Error parsing version '" + s + "': " + e);
+				HOLogger.instance().debug(getClass(), "Error parsing version '" + s + "': " + e);
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),
-					"Unable to connect to the update server (HO): " + e);
+			HOLogger.instance()
+					.log(getClass(), "Unable to connect to the update server (HO): " + e);
 		}
 		return ret;
 	}
@@ -492,8 +490,7 @@ public class MyConnector {
 		BufferedReader br = null;
 		InputStream is = null;
 		try {
-			is = getNonCHPPWebFile(MyConnector.getBetaSite()
-					+ "/betaversion.htm", false);
+			is = getNonCHPPWebFile(MyConnector.getBetaSite() + "/betaversion.htm", false);
 			if (is != null) {
 				br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				VersionInfo ret = new VersionInfo();
@@ -508,17 +505,15 @@ public class MyConnector {
 					}
 				}
 				if (ret.isValid()) {
-					HOLogger.instance().log(getClass(),
-							"LatestBetaVersion: " + ret);
+					HOLogger.instance().log(getClass(), "LatestBetaVersion: " + ret);
 					return ret;
 				}
 			} else {
-				HOLogger.instance().log(getClass(),
-						"Unable to connect to the update server (HO).");
+				HOLogger.instance().log(getClass(), "Unable to connect to the update server (HO).");
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),
-					"Unable to connect to the update server (HO): " + e);
+			HOLogger.instance()
+					.log(getClass(), "Unable to connect to the update server (HO): " + e);
 		} finally {
 			IOUtils.closeQuietly(br);
 			IOUtils.closeQuietly(is);
@@ -551,8 +546,7 @@ public class MyConnector {
 	public News getLatestNews() {
 		try {
 			final String s = MyConnector.instance().getWebPage(
-					MyConnector.getResourceSite() + "/downloads/news.xml",
-					false);
+					MyConnector.getResourceSite() + "/downloads/news.xml", false);
 			XMLNewsParser parser = new XMLNewsParser();
 			return parser.parseNews(s);
 		} catch (Exception e) {
@@ -567,14 +561,10 @@ public class MyConnector {
 	// //////////////////////////////////////////////////////////////////////////////
 	public void enableProxy() {
 		if (this.proxySettings != null && this.proxySettings.isUseProxy()) {
-			System.getProperties().put("https.proxyHost",
-					proxySettings.getProxyHost());
-			System.getProperties().put("https.proxyPort",
-					proxySettings.getProxyPort());
-			System.getProperties().put("http.proxyHost",
-					proxySettings.getProxyHost());
-			System.getProperties().put("http.proxyPort",
-					proxySettings.getProxyPort());
+			System.getProperties().put("https.proxyHost", proxySettings.getProxyHost());
+			System.getProperties().put("https.proxyPort", proxySettings.getProxyPort());
+			System.getProperties().put("http.proxyHost", proxySettings.getProxyHost());
+			System.getProperties().put("http.proxyPort", proxySettings.getProxyPort());
 		} else {
 			System.getProperties().remove("https.proxyHost");
 			System.getProperties().remove("https.proxyPort");
@@ -600,8 +590,7 @@ public class MyConnector {
 		return XMLTeamDetailsParser.fetchRegionID(xmlFile);
 	}
 
-	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen)
-			throws IOException {
+	public InputStream getFileFromWeb(String url, boolean displaysettingsScreen) throws IOException {
 		if (displaysettingsScreen) {
 			// Show Screen
 			new ProxyDialog(HOMainFrame.instance());
@@ -609,8 +598,7 @@ public class MyConnector {
 		return getNonCHPPWebFile(url, false);
 	}
 
-	public String getUsalWebPage(String url, boolean displaysettingsScreen)
-			throws IOException {
+	public String getUsalWebPage(String url, boolean displaysettingsScreen) throws IOException {
 		if (displaysettingsScreen) {
 			// Show Proxy Screen
 			new ProxyDialog(HOMainFrame.instance());
@@ -632,8 +620,7 @@ public class MyConnector {
 			while (tryAgain == true) {
 				OAuthRequest request = new OAuthRequest(Verb.GET, surl);
 				infoHO(request);
-				if (m_OAAccessToken == null
-						|| m_OAAccessToken.getToken().length() == 0) {
+				if (m_OAAccessToken == null || m_OAAccessToken.getToken().length() == 0) {
 					iResponse = 401;
 				} else {
 					m_OAService.signRequest(m_OAAccessToken, request);
@@ -656,8 +643,7 @@ public class MyConnector {
 					break;
 				case 401:
 					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(),
-								m_OAService, "");
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
 					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason
@@ -673,15 +659,13 @@ public class MyConnector {
 					throw new RuntimeException(
 							"HTTP Response Code 407: Proxy authentication required.");
 				default:
-					throw new RuntimeException("HTTP Response Code: "
-							+ iResponse);
+					throw new RuntimeException("HTTP Response Code: " + iResponse);
 				}
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
-			JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(),
-					HOVerwaltung.instance().getLanguageString("Fehler"),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, surl + "\n" + sox.getMessage(), HOVerwaltung
+					.instance().getLanguageString("Fehler"), JOptionPane.ERROR_MESSAGE);
 			returnString = "";
 		}
 		return returnString;
@@ -704,17 +688,14 @@ public class MyConnector {
 				throw new RuntimeException(
 						"Download Error\nHTTP Response Code 407: Proxy authentication required.");
 			default:
-				throw new RuntimeException(
-						"Download Error\nHTTP Response Code: " + iResponse);
+				throw new RuntimeException("Download Error\nHTTP Response Code: " + iResponse);
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage)
-				JOptionPane
-						.showMessageDialog(null, sox.getMessage() + "\nURL: "
-								+ surl, HOVerwaltung.instance()
-								.getLanguageString("Fehler"),
-								JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl,
+						HOVerwaltung.instance().getLanguageString("Fehler"),
+						JOptionPane.ERROR_MESSAGE);
 			returnStream = null;
 		}
 		return returnStream;
@@ -734,9 +715,8 @@ public class MyConnector {
 	 *            The scope of the request is required, if no scope, put "".
 	 *            Example: "set_matchorder".
 	 */
-	public InputStream postWebFileWithBodyParameters(String surl,
-			Map<String, String> bodyParas, boolean showErrorMessage,
-			String scope) {
+	public InputStream postWebFileWithBodyParameters(String surl, Map<String, String> bodyParas,
+			boolean showErrorMessage, String scope) {
 
 		OAuthDialog authDialog = null;
 		Response response = null;
@@ -749,10 +729,8 @@ public class MyConnector {
 					request.addBodyParameter(entry.getKey(), entry.getValue());
 				}
 				infoHO(request);
-				request.addHeader("Content-Type",
-						"application/x-www-form-urlencoded");
-				if (m_OAAccessToken == null
-						|| m_OAAccessToken.getToken().length() == 0) {
+				request.addHeader("Content-Type", "application/x-www-form-urlencoded");
+				if (m_OAAccessToken == null || m_OAAccessToken.getToken().length() == 0) {
 					iResponse = 401;
 				} else {
 					m_OAService.signRequest(m_OAAccessToken, request);
@@ -766,8 +744,7 @@ public class MyConnector {
 					return getResultStream(response);
 				case 401:
 					if (authDialog == null) {
-						authDialog = new OAuthDialog(HOMainFrame.instance(),
-								m_OAService, scope);
+						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
 					}
 					authDialog.setVisible(true);
 					// A way out for a user unable to authorize for some reason
@@ -777,10 +754,8 @@ public class MyConnector {
 					m_OAAccessToken = authDialog.getAccessToken();
 					if (m_OAAccessToken == null) {
 						m_OAAccessToken = new Token(
-								Helper.decryptString(ho.core.model.UserParameter
-										.instance().AccessToken),
-								Helper.decryptString(ho.core.model.UserParameter
-										.instance().TokenSecret));
+								Helper.decryptString(ho.core.model.UserParameter.instance().AccessToken),
+								Helper.decryptString(ho.core.model.UserParameter.instance().TokenSecret));
 					}
 					// Try again...
 					break;
@@ -788,18 +763,15 @@ public class MyConnector {
 					throw new RuntimeException(
 							"Download Error\nHTTP Response Code 407: Proxy authentication required.");
 				default:
-					throw new RuntimeException(
-							"Download Error\nHTTP Response Code: " + iResponse);
+					throw new RuntimeException("Download Error\nHTTP Response Code: " + iResponse);
 				}
 			}
 		} catch (Exception sox) {
 			HOLogger.instance().error(getClass(), sox);
 			if (showErrorMessage) {
-				JOptionPane
-						.showMessageDialog(null, sox.getMessage() + "\nURL: "
-								+ surl, HOVerwaltung.instance()
-								.getLanguageString("Fehler"),
-								JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, sox.getMessage() + "\nURL: " + surl,
+						HOVerwaltung.instance().getLanguageString("Fehler"),
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return null;
@@ -812,10 +784,9 @@ public class MyConnector {
 			if ((encoding != null) && encoding.equalsIgnoreCase("gzip")) {
 				resultingInputStream = new GZIPInputStream(response.getStream());
 				HOLogger.instance().log(getClass(), " Read GZIP.");
-			} else if ((encoding != null)
-					&& encoding.equalsIgnoreCase("deflate")) {
-				resultingInputStream = new InflaterInputStream(
-						response.getStream(), new Inflater(true));
+			} else if ((encoding != null) && encoding.equalsIgnoreCase("deflate")) {
+				resultingInputStream = new InflaterInputStream(response.getStream(), new Inflater(
+						true));
 				HOLogger.instance().log(getClass(), " Read Deflated.");
 			} else {
 				resultingInputStream = response.getStream();
@@ -828,8 +799,8 @@ public class MyConnector {
 	private String readStream(InputStream stream) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		if (stream != null) {
-			BufferedReader bufferedreader = new BufferedReader(
-					new InputStreamReader(stream, "UTF-8"));
+			BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(stream,
+					"UTF-8"));
 			String line = bufferedreader.readLine();
 			if (line != null) {
 				builder.append(line);
@@ -851,14 +822,12 @@ public class MyConnector {
 		request.addHeader("accept-language", "de");
 		request.setConnectionKeepAlive(true);
 		request.setConnectTimeout(60, TimeUnit.SECONDS);
-		request.addHeader("accept",
-				"image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
+		request.addHeader("accept", "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*");
 		request.addHeader("accept-encoding", "gzip, deflate");
 		request.addHeader("user-agent", m_sIDENTIFIER);
 
 		// ProxyAuth hier einbinden da diese Funk immer aufgerufen wird
-		if (this.proxySettings != null
-				&& this.proxySettings.isAuthenticationNeeded()) {
+		if (this.proxySettings != null && this.proxySettings.isAuthenticationNeeded()) {
 			final String pw = this.proxySettings.getUsername() + ":"
 					+ this.proxySettings.getPassword();
 			final String epw = (new BASE64Encoder()).encode(pw.getBytes());
@@ -887,8 +856,7 @@ public class MyConnector {
 
 		df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
 		StringBuilder builder = new StringBuilder();
-		builder.append("Downloaded at ").append(df.format(downloadDate))
-				.append('\n');
+		builder.append("Downloaded at ").append(df.format(downloadDate)).append('\n');
 		builder.append("From ").append(url).append("\n\n");
 		builder.append(content);
 
@@ -900,8 +868,7 @@ public class MyConnector {
 	}
 
 	private Token createOAAccessToken() {
-		return new Token(
-				Helper.decryptString(UserParameter.instance().AccessToken),
+		return new Token(Helper.decryptString(UserParameter.instance().AccessToken),
 				Helper.decryptString(UserParameter.instance().TokenSecret));
 	}
 }
