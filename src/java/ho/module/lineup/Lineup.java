@@ -1004,12 +1004,6 @@ public class Lineup {
 		}
 		final SpielerPosition position = getPositionById(positionsid);
 		position.setSpielerId(spielerid, this);
-		if (!isSpielerAufgestellt(m_iKapitaen)) {
-			m_iKapitaen = 0;
-		}
-		if (!isSpielerAufgestellt(m_iKicker)) {
-			m_iKicker = 0;
-		}
 	}
 
 	/**
