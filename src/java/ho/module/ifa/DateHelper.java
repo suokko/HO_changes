@@ -46,9 +46,4 @@ public final class DateHelper {
 			return dateFormatter.format(date);
 		}
 	}
-
-	public static String getTodayDateString() {
-		Calendar calendar = Calendar.getInstance();
-		return getDateString(calendar.getTime());
-	}
 }

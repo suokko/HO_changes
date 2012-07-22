@@ -217,9 +217,6 @@ public class OnlineWorker {
 		if (!tempEnd.before(endDate)) {
 			tempEnd.setTime(endDate.getTime());
 		}
-		
-		String strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
-		String strDateLast = HT_FORMAT.format(tempEnd.getTime());
 
 		// Show wait Dialog
 		waitDialog = getWaitDialog();
@@ -230,8 +227,8 @@ public class OnlineWorker {
 			while (tempBeginn.before(endDate)) {
 				try {
 					waitDialog.setValue(10);
-					matchesString = MyConnector.instance().getMatchArchiv(teamId, strDateFirst,
-							strDateLast);				
+					matchesString = MyConnector.instance().getMatchesArchive(teamId, tempBeginn.getTime(),
+							tempEnd.getTime());				
 					waitDialog.setValue(20);
 				} catch (Exception e) {
 					// Info
@@ -258,9 +255,6 @@ public class OnlineWorker {
 				if (!tempEnd.before(endDate)) {
 					tempEnd.setTime(endDate.getTime());
 				}
-
-				strDateFirst = HT_FORMAT.format(tempBeginn.getTime());
-				strDateLast = HT_FORMAT.format(tempEnd.getTime());
 			}
 
 			// Store in the db if store is true

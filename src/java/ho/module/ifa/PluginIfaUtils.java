@@ -5,6 +5,7 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
+import ho.core.util.DateTimeUtils;
 import ho.core.util.HOLogger;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JWindow;
 
@@ -47,15 +49,15 @@ public class PluginIfaUtils {
 		try {
 			waitWindow.setVisible(true);
 
-			String from = DBManager.instance().getLastIFAMatchDate();
+			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate());
 			try {
-				ArrayList<String[]> times = getTimeIntervalsForRetrieval(from);
-				for (Iterator<String[]> i = times.iterator(); i.hasNext();) {
-					String[] fromTo = i.next();
+				List<Date[]> times = getTimeIntervalsForRetrieval(from);
+				for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
+					Date[] fromTo = i.next();
 					insertMatches(fromTo[0], fromTo[1]);
 				}
 			} catch (Exception e) {
-				insertMatches(from, DateHelper.getTodayDateString());
+				insertMatches(from, new Date());
 			}
 			waitWindow.setVisible(false);
 		} catch (Exception e) {
@@ -66,10 +68,10 @@ public class PluginIfaUtils {
 		return true;
 	}
 
-	private static void insertMatches(String from, String to) throws Exception {
+	private static void insertMatches(Date from, Date to) throws Exception {
 		StringBuilder errors = new StringBuilder();
-		String matchDate = from;
-		String matchesArchive = MyConnector.instance().getMatchArchiv(0,from,to);
+		String matchDate = null;
+		String matchesArchive = MyConnector.instance().getMatchesArchive(0,from,to);
 		Document doc =  XMLManager.parseString(matchesArchive);
 		
 		int matchesCount = ((Element) doc.getDocumentElement()
@@ -126,17 +128,14 @@ public class PluginIfaUtils {
 			HOLogger.instance().error(PluginIfaUtils.class,errors.toString());
 		}
 
-		if (matchesCount == 50)
-			insertMatches(
-					DateHelper.getDateString(DateHelper.getDate(matchDate)), to);
+		if (matchesCount == 50) {
+			insertMatches(DateHelper.getDate(matchDate), to);
+		}
 	}
 
-	private static ArrayList<String[]> getTimeIntervalsForRetrieval(String from) {
-		ArrayList<String[]> ret = new ArrayList<String[]>();
-		Date start = DateHelper.getDate(from);
-		start.setHours(0);
-		start.setMinutes(0);
-		start.setSeconds(0);
+	private static List<Date[]> getTimeIntervalsForRetrieval(Date from) {
+		List<Date[]> ret = new ArrayList<Date[]>();
+		Date start = DateTimeUtils.getDateWithMinTime(from);
 		Calendar end = new GregorianCalendar();
 		end.setLenient(true);
 		end.add(5, 1);
@@ -152,8 +151,7 @@ public class PluginIfaUtils {
 			if (tmpT.after(end)) {
 				tmpT = end;
 			}
-			ret.add(new String[] { DateHelper.getDateString(tmpF.getTime()),
-					DateHelper.getDateString(tmpT.getTime()) });
+			ret.add(new Date[] { tmpF.getTime(), tmpT.getTime() });
 			tmpF.setTime(tmpT.getTime());
 		}
 		return ret;
