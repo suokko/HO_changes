@@ -13,6 +13,40 @@ public class DateTimeUtils {
 	}
 
 	/**
+	 * Creates a new <code>Date</code> based on the given date with the time set
+	 * to its minimum value. The returned date will represent a day at its the
+	 * very first millisecond (00:00:00.000).
+	 * 
+	 * @param date
+	 *            The date to set the time to its minimum.
+	 * @return A new <code>Date</code> object based on the given date, with the
+	 *         time set to its minimum.
+	 */
+	public static Date getDateWithMinTime(Date date) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		setMinTime(cal);
+		return cal.getTime();
+	}
+
+	/**
+	 * Creates a new <code>Date</code> based on the given date with the time set
+	 * to its maximum value. The returned date will represent a day at its the
+	 * very last millisecond (23:59:59.999).
+	 * 
+	 * @param date
+	 *            The date to set the time to its maximum.
+	 * @return A new <code>Date</code> object based on the given date, with the
+	 *         time set to its maximum.
+	 */
+	public static Date getDateWithMaxTime(Date date) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		setMaxTime(cal);
+		return cal.getTime();
+	}
+
+	/**
 	 * Gets a date which is adjusted with the given amount of days (from today,
 	 * depending on the system clock). The returned date will be in the future
 	 * if a positive number of days is specified, and in the past for a negative
