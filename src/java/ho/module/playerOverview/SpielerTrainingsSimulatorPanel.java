@@ -518,7 +518,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlForm, eingabenconstraints);
         panel.add(m_jlForm);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -535,7 +535,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlKondition, eingabenconstraints);
         panel.add(m_jlKondition);
 
-        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 3;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -552,7 +552,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorwart, eingabenconstraints);
         panel.add(m_jlTorwart);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -569,7 +569,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlSpielaufbau, eingabenconstraints);
         panel.add(m_jlSpielaufbau);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 4;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -586,7 +586,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlPasspiel, eingabenconstraints);
         panel.add(m_jlPasspiel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -603,7 +603,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlFluegel, eingabenconstraints);
         panel.add(m_jlFluegel);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 5;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -620,7 +620,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlVerteidigung, eingabenconstraints);
         panel.add(m_jlVerteidigung);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -637,7 +637,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlTorschuss, eingabenconstraints);
         panel.add(m_jlTorschuss);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 6;
         eingabenLayout.setConstraints(label, eingabenconstraints);

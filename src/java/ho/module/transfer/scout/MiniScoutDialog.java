@@ -45,9 +45,9 @@ import javax.swing.SwingConstants;
  * @author Marco Senn
  */
 class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, FocusListener {
-	
+
 	private static final long serialVersionUID = -2092930481559683730L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 	private JButton jbApply = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JButton jbApplyScout = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
@@ -131,7 +131,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 		} else if (actionEvent.getSource().equals(jtfAge)) {
 			spielervalueChanged();
         }
-        
+
     }
 
     /**
@@ -183,7 +183,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
                 jtfPlayerID.setText(player.getPlayerID() + "");
                 jtfName.setText(player.getPlayerName());
                 jtfAge.setText(player.getAge() + "." + player.getAgeDays());
-                
+
                 jtfPrice.setText(player.getPrice() + "");
                 jtfTSI.setText(player.getTSI() + "");
                 jtaNotes.setText(player.getInfo());
@@ -224,7 +224,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
                 jchHomegrown.removeItemListener(this);
                 jchHomegrown.setSelected(player.isHomwGrown());
                 jchHomegrown.addItemListener(this);
-                
+
                 // Listener stays here for recalculation of rating
                 Helper.markierenComboBox(jcbPlaymaking, player.getPlayMaking());
 
@@ -369,42 +369,42 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         jcbForm.addItemListener(this);
         panel.add(jcbForm);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.stamina"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"));
         panel.add(label);
         jcbStamina.addItemListener(this);
         panel.add(jcbStamina);
 
-        label = new JLabel(PlayerSkill.toString(PlayerSkill.KEEPER));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"));
         panel.add(label);
         jcbKeeper.addItemListener(this);
         panel.add(jcbKeeper);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.playmaking"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"));
         panel.add(label);
         jcbPlaymaking.addItemListener(this);
         panel.add(jcbPlaymaking);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.passing"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"));
         panel.add(label);
         jcbPassing.addItemListener(this);
         panel.add(jcbPassing);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.winger"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"));
         panel.add(label);
         jcbWinger.addItemListener(this);
         panel.add(jcbWinger);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.defending"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"));
         panel.add(label);
         jcbDefense.addItemListener(this);
         panel.add(jcbDefense);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.scoring"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"));
         panel.add(label);
         jcbAttacking.addItemListener(this);
         panel.add(jcbAttacking);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.set_pieces"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"));
         panel.add(label);
         jcbStandards.addItemListener(this);
         panel.add(jcbStandards);
@@ -413,12 +413,12 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         panel.add(label);
         jcbLoyalty.addItemListener(this);
         panel.add(jcbLoyalty);
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
         panel.add(label);
         jchHomegrown.addItemListener(this);
         panel.add(jchHomegrown);
-        
+
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.NORTH;
@@ -509,7 +509,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         final Spieler tempSpieler = new Spieler();
         tempSpieler.setSpezialitaet(((CBItem) jcbSpeciality.getSelectedItem()).getId());
         tempSpieler.setErfahrung(((CBItem) jcbExperience.getSelectedItem()).getId());
-		tempSpieler.setFuehrung(3);        
+		tempSpieler.setFuehrung(3);
         tempSpieler.setForm(((CBItem) jcbForm.getSelectedItem()).getId());
         tempSpieler.setKondition(((CBItem) jcbStamina.getSelectedItem()).getId());
         tempSpieler.setVerteidigung(((CBItem) jcbDefense.getSelectedItem()).getId());
@@ -525,7 +525,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         tempSpieler.setAgeDays(Integer.parseInt(jtfAge.getText().replaceFirst(".*\\.", "")));
 		EPVData data = new EPVData(tempSpieler);
 		double price = HOVerwaltung.instance().getModel().getEPV().getPrice(data);
-		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));		
+		jtfEPV.setText(NumberFormat.getCurrencyInstance().format(price));
         jlRating.setText(SpielerPosition.getNameForPosition(tempSpieler.getIdealPosition()) + " ("
                          + tempSpieler.calcPosValue(tempSpieler.getIdealPosition(), true) + ")");
     }
