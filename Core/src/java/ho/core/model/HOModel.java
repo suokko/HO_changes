@@ -405,11 +405,16 @@ public class HOModel {
     	final java.sql.Timestamp calcDate = m_clBasics.getDatum();
     	
     	final int previousHrfId = DBManager.instance().getPreviousHRF(m_iID);
-    	final Timestamp previousTrainingDate = DBManager.instance()
-											    	.getXtraDaten(previousHrfId)
-											    	.getTrainingDate();
-    	final Timestamp actualTrainingDate = m_clXtraDaten.getTrainingDate();
-
+    	
+    	Timestamp previousTrainingDate = null;
+    	Timestamp actualTrainingDate = null;
+    	if (previousHrfId > -1) {
+    		previousTrainingDate = DBManager.instance()
+    									.getXtraDaten(previousHrfId)
+    									.getTrainingDate();
+    		actualTrainingDate = m_clXtraDaten.getTrainingDate();
+    	}
+    	
     	if ((previousTrainingDate != null) && (actualTrainingDate != null)
     			&& (!previousTrainingDate.equals(actualTrainingDate))) {
     		// Training Happened
@@ -511,9 +516,8 @@ public class HOModel {
     							
     							player.copySubSkills(calculationPlayer);
     						}
-    						
-    						
     						calculationPlayer = player;
+    	
     					} else {
     						// An old week
     						calculationPlayer = new Spieler();
