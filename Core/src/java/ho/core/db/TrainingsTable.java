@@ -5,7 +5,8 @@ import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 
 final class TrainingsTable extends AbstractTable {
@@ -50,8 +51,8 @@ final class TrainingsTable extends AbstractTable {
 	 *
 	 * @return TODO Missing Return Method Documentation
 	 */
-	Vector<TrainingPerWeek> getTrainingsVector() {
-		final Vector<TrainingPerWeek> vTrainings = new Vector<TrainingPerWeek>();
+	List<TrainingPerWeek> getTrainingList() {
+		final List<TrainingPerWeek> vTrainings = new ArrayList<TrainingPerWeek>();
 
 		final String statement = "SELECT * FROM "+getTableName()+" ORDER BY year, week ASC";
 

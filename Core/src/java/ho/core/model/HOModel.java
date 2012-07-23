@@ -22,11 +22,11 @@ import ho.module.series.Spielplan;
 import ho.tool.arenasizer.Stadium;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -395,191 +395,210 @@ public class HOModel {
     }
 
     /**
-     * berechnet die Subskills zu allen Spielern players calc subskill func
+     * Caclulates the subskill of each player, based on training and the previous hrf.
      */
     public final void calcSubskills() {
-        
-    	if (getTrainer() == null ) {
-    		HOLogger.instance().debug(getClass(), "calcSubskill aborting. Trainer is null. HrfId: " + m_iID + " Date: " + m_clBasics.getDatum());
-    		return;
-    	}
+
+    	boolean doOnce = false;
     	
     	final Vector<Spieler> vSpieler = getAllSpieler();
-        final java.sql.Timestamp calcDate = m_clBasics.getDatum();
+    	final java.sql.Timestamp calcDate = m_clBasics.getDatum();
+    	
+    	final int previousHrfId = DBManager.instance().getPreviousHRF(m_iID);
+    	final Timestamp previousTrainingDate = DBManager.instance()
+											    	.getXtraDaten(previousHrfId)
+											    	.getTrainingDate();
+    	final Timestamp actualTrainingDate = m_clXtraDaten.getTrainingDate();
 
-        /*
-           //null für aktuelles HRF-Model
-           java.sql.Timestamp       calcDate    =   null;
-           if ( this.getBasics ().getDatum ().before ( database.DBZugriff.instance ().getBasics ( database.DBZugriff.instance ().getHRF_IDByDate ()  ).getDatum () ) )
-           {
-               //nur Datum setzen wenn nicht aktuellstes HRF berechnet wird
-               calcDate    =   m_clBasics.getDatum ();
-           }
-         */
-        final int previousHrfId = DBManager.instance().getPreviousHRF(m_iID);
-        final Timestamp previousTrainingDate = DBManager.instance()
-                                                                                      .getXtraDaten(previousHrfId)
-                                                                                      .getTrainingDate();
-        final Timestamp actualTrainingDate = m_clXtraDaten.getTrainingDate();
+    	if ((previousTrainingDate != null) && (actualTrainingDate != null)
+    			&& (!previousTrainingDate.equals(actualTrainingDate))) {
+    		// Training Happened
 
-        int trainingType = 0;
+    		// Find TrainingPerWeeks that should be processed (those since last training).
+    		List<TrainingPerWeek> rawTrainingList = TrainingManager.instance().getTrainingWeekList();
+    		List<TrainingPerWeek> trainingList = new ArrayList<TrainingPerWeek>();
+    		for (TrainingPerWeek tpw : rawTrainingList) {
+    			// We want to add all weeks with nextTraining after the previous date, and stop
+    			// when we are after the current date.
+    			
+    			if (tpw.getNextTrainingDate().after(actualTrainingDate)) {
+    				break;
+    			}
+    			
+    			if (tpw.getNextTrainingDate().after(previousTrainingDate)) {
+    				trainingList.add(tpw);
+    			}
+    		}
+    		
+    		// Get the trainer skill
+    		int trainerLevel;
+    		Spieler trainer = getTrainer();
+    		if (trainer != null) {
+    			trainerLevel = trainer.getTrainer();
+    		} else {
+    			// default to solid
+    			trainerLevel = 7;
+    		}
+    		
+    		// Generate a map with spielers from the last hrf.
+    		final Map<String,Spieler> players = new HashMap<String,Spieler>();
+    		for (Iterator<Spieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
+    		iter.hasNext();) {
+    			final Spieler element = iter.next();
+    			players.put(String.valueOf(element.getSpielerID()), element);
+    		}
 
-        // Training Happened, check if we have all the hrf or we have a missing week!
-        if ((previousTrainingDate != null) && (actualTrainingDate != null)
-        		&& (!previousTrainingDate.equals(actualTrainingDate))) {
-            final Calendar cal = Calendar.getInstance(Locale.UK);
-            cal.setFirstDayOfWeek(Calendar.SUNDAY);
-            cal.setTimeInMillis(actualTrainingDate.getTime());
+    		// Train each player
+    		for (int i = 0; i < vSpieler.size(); i++) {
+    			try {
+    				final Spieler player = vSpieler.get(i);
+ 
+    				// The version of the player from last hrf
+    				Spieler old = players.get(String.valueOf(player.getSpielerID()));
+    				if (old == null) {
+    					if (TrainingManager.TRAININGDEBUG) {
+    						HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
+    					}
+    					old = new Spieler();
+    					old.setSpielerID(-1);
+    				}
 
-            final int actWeek = cal.get(Calendar.WEEK_OF_YEAR);
-            final int actYear = cal.get(Calendar.YEAR);
-            cal.setTimeInMillis(previousTrainingDate.getTime());
-            cal.add(Calendar.WEEK_OF_YEAR, 1);
+    				// Always copy subskills as the first thing
+    				player.copySubSkills(old);
 
-            final int prevWeek = cal.get(Calendar.WEEK_OF_YEAR);
-            final int prevYear = cal.get(Calendar.YEAR);
+    				// Always check skill drop if drop calculations are active.
+    				if (SkillDrops.instance().isActive()) {
+    					for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
+    						if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+    							continue;
+    						}
+    						if (player.check4SkillDown(skillType, old)) {
+    							player.dropSubskills(skillType);
+    						}
+    					}
+    				}
 
-            if ((actWeek == prevWeek) && (actYear == prevYear)) {
-                trainingType = 1;
-            } else {
-                trainingType = 2;
-            }
-        }
 
-        final Map<String,Spieler> players = new HashMap<String,Spieler>();
+    				// Perform training for all "untrained weeks"
+  
+    				
+    				// And "old" player we can mess with.
+    				Spieler tmpOld = new Spieler();
+					tmpOld.copySkills(old);
+					tmpOld.copySubSkills(old);
+					tmpOld.setSpielerID(old.getSpielerID());
 
-        for (Iterator<Spieler> iter = DBManager.instance().getSpieler(previousHrfId).iterator();
-             iter.hasNext();) {
-            final Spieler element = iter.next();
-            players.put(element.getSpielerID() + "", element);
-        }
+    				Spieler calculationPlayer = null;
+    				TrainingPerWeek tpw;
+    				Iterator<TrainingPerWeek> iter = trainingList.iterator(); 
+    				while (iter.hasNext()) {
+    					tpw = iter.next();
+    					
+    					if (tpw == null) {
+    						continue;
+    					}
+    					
+    					// The "player" is only the relevant Spieler for the current Hrf. All previous
+    					// training weeks (if any), should be calculated based on "old", and the result
+    					// of the previous week.
+    					
+    					if (getXtraDaten().getTrainingDate().getTime() == tpw.getNextTrainingDate().getTime()) {
+    						// It is the same week as this model.
+    						
+    						if (calculationPlayer != null) {
+    							// We have run previous calculations because of missing training weeks. 
+    							// Subskills may have changed, but no skillup can have happened. Copy subskills.
+    							
+    							player.copySubSkills(calculationPlayer);
+    						}
+    						
+    						
+    						calculationPlayer = player;
+    					} else {
+    						// An old week
+    						calculationPlayer = new Spieler();
+    						calculationPlayer.copySkills(tmpOld);
+    						calculationPlayer.copySubSkills(tmpOld);
+    						calculationPlayer.setSpielerID(tmpOld.getSpielerID());
+    					}
+    		
+    					calculationPlayer.calcIncrementalSubskills(tmpOld, tpw.getAssistants(),
+    							trainerLevel,
+    							tpw.getTrainingIntensity(),
+    							tpw.getStaminaPart(),
+    							tpw);
+    					
+    					if (iter.hasNext()) {
+    						// Use calculated skills and subskills as "old" if there is another week in line... 
+    						tmpOld = new Spieler();
+    						tmpOld.copySkills(calculationPlayer);
+    						tmpOld.copySubSkills(calculationPlayer);
+    						tmpOld.setSpielerID(calculationPlayer.getSpielerID());
+    					}
+    				}
 
-        for (int i = 0; i < vSpieler.size(); i++) {
-            try {
-                final Spieler player = vSpieler.get(i);
-                Spieler old = players.get("" + player.getSpielerID());
 
-                if (old == null) {
-                	if (TrainingManager.TRAININGDEBUG)
-                		HOLogger.instance().debug(HOModel.class, "Old player for id "+player.getSpielerID()+" = null");
-                    old = new Spieler();
-                    old.setSpielerID(-1);
-                }
+    				/**
+    				 * Start of debug
+    				 */
+    				if (TrainingManager.TRAININGDEBUG) {
+    					 HelperWrapper helper = HelperWrapper.instance();
+    					HTCalendar htcP;
+    					String htcPs = "";
+    					if (previousTrainingDate != null) {
+    						htcP = HTCalendarFactory.createTrainingCalendar(new Date(previousTrainingDate.getTime()));
+    						htcPs = " ("+htcP.getHTSeason()+"."+htcP.getHTWeek()+")";
+    					}
+    					HTCalendar htcA = HTCalendarFactory.createTrainingCalendar(new Date((actualTrainingDate.getTime())));
+    					String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
+    					HTCalendar htcC = HTCalendarFactory.createTrainingCalendar(new Date((calcDate.getTime())));
+    					String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
 
-                // Always copy subskills as the first thing
-   
-                player.copySubSkills(old);
-                
-                // Always check skill drop if drop calculations are active.
-                if (SkillDrops.instance().isActive()) {
-                	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
-                    	if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
-                   			continue;
-                   		}
-                		if (player.check4SkillDown(skillType, old)) {
-                			player.dropSubskills(skillType);
-                		}
-                	}
-                }
-                
-                
-                switch (trainingType) {
+    					TrainingPerWeek trWeek = TrainingWeekManager.instance().getTrainingWeek(getXtraDaten().getTrainingDate());
+    					HOLogger.instance().debug(HOModel.class,
+    							"WeeksCalculated="+trainingList.size()+", trArt="+(trWeek==null?"null":""+trWeek.getTrainingType())
+    							+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toString()+htcCs
+    							+ ", act="+actualTrainingDate.toString() +htcAs
+    							+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toString()+htcPs)
+    							+ " ("+previousHrfId+")");
 
-                    // Missing week, full recalculation
-                    case 2: {
-                        player.calcFullSubskills(old, m_clVerein.getCoTrainer(),
-                                                 getTrainer().getTrainer(),
-                                                 m_clTeam.getTrainingslevel(),
-                                                 m_clTeam.getStaminaTrainingPart(),
-                                                 calcDate);
-                        break;
-                    }
+    					if (trainingList.size() > 0)
+    						logPlayerProgress (old, player);
 
-                    // Previous week ok, incremental calculation
-                    case 1: {
-                        player.calcIncrementalSubskills(old, m_clVerein.getCoTrainer(),
-                                                        getTrainer().getTrainer(),
-                                                        m_clTeam.getTrainingslevel(),
-                                                        m_clTeam.getStaminaTrainingPart(),
-                                                        m_iID);
-                        break;
-                    }
+    				}
+    				/**
+    				 * End of debug
+    				 */
 
-                    default:
-                        break;
-                }
 
-				if ((TrainingManager.TRAININGDEBUG) && (actualTrainingDate != null)) {
-	                /**
-	                 * Start of debug
-	                 */
-					HelperWrapper helper = HelperWrapper.instance();
-					HTCalendar htcP;
-	                String htcPs = "";
-	                if (previousTrainingDate != null) {
-	                	htcP = HTCalendarFactory.createTrainingCalendar(new Date(previousTrainingDate.getTime()));
-	                	htcPs = " ("+htcP.getHTSeason()+"."+htcP.getHTWeek()+")";
-	                }
-	                HTCalendar htcA = HTCalendarFactory.createTrainingCalendar(new Date((actualTrainingDate.getTime())));
-	            	String htcAs = " ("+htcA.getHTSeason()+"."+htcA.getHTWeek()+")";
-	                HTCalendar htcC = HTCalendarFactory.createTrainingCalendar(new Date((calcDate.getTime())));
-	            	String htcCs = " ("+htcC.getHTSeason()+"."+htcC.getHTWeek()+")";
+    				/* Time to perform skill drop */
+    				if (SkillDrops.instance().isActive() && (old != null) 
+    						&& (actualTrainingDate != null)) {
+    					int weeks = trainingList.size();
+    					if (weeks > 0) {
+    						// It is messy if we calculate too far back. A 31y player has not been
+    						// 31 forever. So lets cap at a somewhat random 6 weeks.
+    						player.performSkilldrop(old, Math.min(weeks, 6));
+    					}
+    				}
 
-	            	TrainingPerWeek trWeek = TrainingWeekManager.instance().getTrainingWeek(m_iID);
-	                HOLogger.instance().debug(HOModel.class,
-	                		"TrainingType="+trainingType+", trArt="+(trWeek==null?"null":""+trWeek.getTrainingType())
-	                			+ ", numPl="+vSpieler.size()+", calcDate="+calcDate.toString()+htcCs
-	                			+ ", act="+actualTrainingDate.toString() +htcAs
-	                			+ ", prev="+(previousTrainingDate==null?"null":previousTrainingDate.toString()+htcPs)
-	                			+ " ("+previousHrfId+")");
 
-	                if (trainingType > 0)
-	                	logPlayerProgress (old, player);
+    			} catch (Exception e) {
+    				HOLogger.instance().log(getClass(),e);
+    				HOLogger.instance().log(getClass(),"Model calcSubskill: " + e);
+    			}
+    		}
 
-				}
-				/**
-				 * End of debug
-				 */
-				
-				/* Time to perform skill drop */
-				
-			
-				if (SkillDrops.instance().isActive() && (old != null) 
-						&& (actualTrainingDate != null)) {
-					int weeks = 0;
-					if ((trainingType > 0)  && (previousTrainingDate != null)) {
-						final Calendar actualDate = Calendar.getInstance(Locale.UK);
-						actualDate.setTimeInMillis(actualTrainingDate.getTime());
-	
-						final Calendar previousDate = Calendar.getInstance(Locale.UK);
-						previousDate.setTimeInMillis(previousTrainingDate.getTime());
-	
-						if (previousDate.before(actualDate)) {
-							for (int j=0; j < 20; j++) {
-								previousDate.add(Calendar.WEEK_OF_YEAR, 1);
-								weeks++;
-								if (!previousDate.before(actualDate))		{
-									break;
-								}
-							}
-						}
-					}
-				
-					if (weeks > 0) {
-						player.performSkilldrop(old, Math.min(weeks, 4));
-					}
-				}
-	
-            } catch (Exception e) {
-                HOLogger.instance().log(getClass(),e);
-                HOLogger.instance().log(getClass(),"Model calcSubskill: " + e);
-            }
-        }
-
-        //Spieler
-        DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
+    		//Spieler
+    		DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
+    	}
     }
 
+    private void logTraining() {
+    	
+    }
+    
+    
     private void logPlayerProgress (Spieler before, Spieler after) {
     	
     	if ((after == null) || (before == null)) {	
@@ -589,7 +608,7 @@ public class HOModel {
     	
     	int playerID = after.getSpielerID();
     	String playerName = after.getName();
-    	TrainingPerWeek train = TrainingWeekManager.instance().getTrainingWeek(m_iID);
+    	TrainingPerWeek train = TrainingWeekManager.instance().getTrainingWeek(getXtraDaten().getTrainingDate());
     	if (train == null) { 
     		// Just say no to logging crashes.
     		return;
