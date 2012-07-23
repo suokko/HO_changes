@@ -15,7 +15,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,7 +38,7 @@ public class EconomyCreator extends XMLCreator {
 
 
 		try {
-			Vector<TrainingPerWeek> l = TrainingManager.instance().getTrainingsVector();
+			List<TrainingPerWeek> l = TrainingManager.instance().getTrainingWeekList();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();

@@ -1412,9 +1412,9 @@ public class DBManager {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<TrainingPerWeek> getTrainingsVector() {
+	public List<TrainingPerWeek> getTrainingOverrides() {
 		return ((TrainingsTable) getTable(TrainingsTable.TABLENAME))
-				.getTrainingsVector();
+				.getTrainingList();
 	}
 
 	/**

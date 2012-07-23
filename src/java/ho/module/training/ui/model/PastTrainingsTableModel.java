@@ -73,7 +73,7 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
         p_V_data = new Vector<Object[]>();
 
         // Stores ho trainings into training vector
-        p_V_trainingsVector = TrainingManager.instance().getTrainingsVector();
+        p_V_trainingsVector = TrainingManager.instance().getTrainingWeekList();
 
         Object[] aobj;
 

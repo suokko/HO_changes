@@ -14,6 +14,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.net.login.LoginWaitDialog;
+import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 
@@ -152,6 +153,9 @@ public class HOVerwaltung {
 			waitDialog.setVisible(true);
 		}
 
+		// Make sure the training week list is up to date.
+		TrainingManager.instance().refreshTrainingWeeks();
+		
 		final Vector<CBItem> hrfListe = new Vector<CBItem>();
 		hrfListe.addAll(DBManager.instance().getCBItemHRFListe(hrfDate));
 		Collections.reverse(hrfListe);

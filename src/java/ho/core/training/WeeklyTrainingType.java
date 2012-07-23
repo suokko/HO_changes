@@ -34,6 +34,47 @@ public abstract class WeeklyTrainingType {
 	public static final float BASE_ASSISTANT_COACH_FACTOR = (float) 1.0;
 	public static final float BASE_INTENSITY_FACTOR = (float) 1.0;
 	
+	private static double[] skillFactorArray = {
+		0.3636363636, // Skill 1
+		0.5227272727,
+		0.6590909091,
+		0.7727272727,
+		0.9090909091,
+		1, // Passable... 
+		1.1136363636,
+		1.2045454545,
+		1.4318181818,
+		1.7272727273,
+		2.0227272727,
+		2.2954545455,
+		2.5909090909,
+		2.8863636364,
+		3.1818181818,
+		3.6136363636,
+		4.25,
+		5.3636363636,
+		7.6363636364, // Skill 19
+		10,  // Random from here and down
+		15,
+		21};
+	
+//	private static double[] ageFactorArray = {
+//		0.9, // age 17
+//		0.93636,
+//		0.974188944,
+//		1.0135461773,
+//		1.0544934429,
+//		1.097094978,
+//		1.1414176151,
+//		1.1875308868,
+//		1.2355071346,
+//		1.2854216228,
+//		1.3373526564,
+//		1.3913817037,
+//		1.4475935245,
+//		1.5060763029}; // Age 30
+	
+	
 	public static WeeklyTrainingType instance(int iTrainingType)
 	{
 		WeeklyTrainingType wt = null;
@@ -238,10 +279,22 @@ public abstract class WeeklyTrainingType {
 	 public static double calcTraining(double baseLength, int age, int assistants, int trainerLevel, int intensity, int stamina, int curSkill) 
 	 {
 		double ageFactor = Math.pow(1.0404, age - 17) * (UserParameter.instance().TRAINING_OFFSET_AGE + BASE_AGE_FACTOR);
-		double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill + 1d) / 20 - 0.1349d;
-		if (skillFactor < 0) {
-			skillFactor = 0;
-		}
+//		double skillFactor = - 1.4595 * Math.pow((curSkill+1d)/20, 2) + 3.7535 * (curSkill + 1d) / 20 - 0.1349d;
+//		if (skillFactor < 0) {
+//			skillFactor = 0;
+//		}
+		
+		// skill between 1 and 22
+		curSkill = Math.max(1, curSkill);
+		curSkill = Math.min(22, curSkill);
+		double skillFactor = skillFactorArray[curSkill - 1];
+	
+		// age between 17 and 30
+//		age = Math.max(17, age);
+//		age = Math.min(30, age);
+////		double ageFactor = ageFactorArray[age - 17];
+		
+		
 		double trainerFactor = (1 + (7 - Math.min(trainerLevel, 7.5)) * 0.091) * (UserParameter.instance().TrainerFaktor + BASE_COACH_FACTOR);
 		double coFactor = (1 + (Math.log(11)/Math.log(10) - Math.log(assistants+1)/Math.log(10)) * 0.2749) * (UserParameter.instance().TRAINING_OFFSET_ASSISTANTS + BASE_ASSISTANT_COACH_FACTOR);
 		double tiFactor = Double.MAX_VALUE;
@@ -258,6 +311,7 @@ public abstract class WeeklyTrainingType {
 		}
 		return trainLength;
 	 }
+	 
 	 public abstract double getTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina);
 	 public abstract double getSecondaryTrainingLength(Spieler player, int assistants, int trainerLevel, int intensity, int stamina);
 }

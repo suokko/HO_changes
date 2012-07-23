@@ -197,8 +197,7 @@ public class HO {
 
 		// Training erstellen -> dabei Trainingswochen berechnen auf Grundlage
 		// der manuellen DB Einträge
-		TrainingManager.instance().calculateTraining(
-				DBManager.instance().getTrainingsVector());
+		TrainingManager.instance().refreshTrainingWeeks();
 
 		interuptionsWindow.setInfoText(8, "Prepare to show");
 		SwingUtilities.invokeLater(new Runnable() {
