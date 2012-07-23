@@ -13,6 +13,7 @@ import ho.module.matches.SpielePanel;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -20,7 +21,7 @@ public class StatisticQuery {
 
 	public static double[][] getSpielerDaten4Statistik(int spielerId, int anzahlHRF) {
 
-		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
+		List<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingWeekList();
 		final int anzahlSpalten = 16;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
@@ -255,7 +256,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String gruppe) {
-		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
+		List<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingWeekList();
 		final int anzahlSpalten = 15;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 		double[][] returnWerte = new double[0][0];
@@ -374,7 +375,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getFinanzen4Statistik(int anzahlHRF) {
-		Vector<TrainingPerWeek> trainings =TrainingManager.instance().getTrainingsVector();
+		List<TrainingPerWeek> trainings =TrainingManager.instance().getTrainingWeekList();
 		final int anzahlSpalten = 17;
 
 		final double[][] marktwerte = getMarktwert4Statistik(anzahlHRF);
@@ -486,7 +487,7 @@ public class StatisticQuery {
 	}
 
 	public static double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
-		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
+		List<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingWeekList();
 		final int anzahlSpalten = 3;
 		final float faktor = ho.core.model.UserParameter.instance().faktorGeld;
 
@@ -535,7 +536,7 @@ public class StatisticQuery {
 
 	private static double[][] getMarktwert4Statistik(int anzahlHRF) {
 
-		Vector<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingsVector();
+		List<TrainingPerWeek> trainings = TrainingManager.instance().getTrainingWeekList();
 		final int anzahlSpalten = 2;
 
 		double[][] returnWerte = new double[0][0];
@@ -582,7 +583,7 @@ public class StatisticQuery {
 		return returnWerte;
 	}
 
-	private static String getInClause(int anzahlHRF, Vector<TrainingPerWeek> trainings) {
+	private static String getInClause(int anzahlHRF, List<TrainingPerWeek> trainings) {
 		StringBuffer inClause = new StringBuffer();
 		int start = trainings.size()-anzahlHRF;
 		if (start<0) {

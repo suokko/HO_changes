@@ -146,8 +146,7 @@ public class OnlineWorker {
 							hov.setModel(homodel);
 							// Recalculate Training
 							// Training->Subskill calculation
-							TrainingManager.instance().calculateTraining(
-									DBManager.instance().getTrainingsVector());
+							TrainingManager.instance().refreshTrainingWeeks();
 							homodel.calcSubskills();
 							AufstellungsVergleichHistoryPanel.setHRFAufstellung(
 									homodel.getAufstellung(), homodel.getLastAufstellung());

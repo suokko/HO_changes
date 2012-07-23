@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -82,7 +81,7 @@ public class PlayerCreator extends XMLCreator {
 			Element root = doc.createElement("historic");
 			doc.appendChild(root);
 
-			Vector<TrainingPerWeek> l = TrainingManager.instance().getTrainingsVector();
+			List<TrainingPerWeek> l = TrainingManager.instance().getTrainingWeekList();
 			int oldWeek = 0;
 			for (int index = l.size(); index > 0; index--) {
 				TrainingPerWeek tpw = (TrainingPerWeek) l.get(index - 1);

@@ -19,7 +19,6 @@ import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingPerWeek;
 import ho.core.training.TrainingManager;
 import ho.core.training.TrainingPoints;
-import ho.core.training.TrainingWeekManager;
 import ho.core.training.WeeklyTrainingType;
 import ho.core.util.Helper;
 
@@ -1631,55 +1630,7 @@ public final class Spieler {
         return PlayerSpeciality.getWeatherEffect(wetter, m_iSpezialitaet);
     }
 
-    /**
-     * Calculates training benefit, and updates subskill for the player.
-     * Used when there is a gap in the hrf history, that is weeks "missing".
-     *
-     * @param originalPlayer TODO Missing Constructuor Parameter Documentation
-     * @param assistants TODO Missing Constructuor Parameter Documentation
-     * @param trainerlevel TODO Missing Constructuor Parameter Documentation
-     * @param intensity TODO Missing Constructuor Parameter Documentation
-     * @param stamina TODO Missing Constructuor Parameter Documentation
-     * @param hrftimestamp TODO Missing Constructuor Parameter Documentation
-     */
-    public void calcFullSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, int stamina, Timestamp hrftimestamp) {
-        TrainingPerPlayer trPlayer = TrainingManager.instance().calculateFullTrainingForPlayer(
-        		this, TrainingManager.instance().getTrainingsVector(), hrftimestamp);
-        if (trPlayer != null && trPlayer.getTrainingWeek() != null && trPlayer.getTrainingWeek().getTrainingType() > 0) {
-	        TrainingPoints tp = trPlayer.getTrainingPair();
-	        if (tp != null && tp.getPrimary() > 0) {
-	        	
-		        //alten subskill holen und neuen addieren, jedoch nur wenn auch training stattfand seit dem letzten hrf ...
-		        int trType = trPlayer.getTrainingWeek().getTrainingType();
-		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-		        if (wt != null) {
-			        int primary = wt.getPrimaryTrainingSkill();
-			        if ((primary > 0) && (!check4SkillUp(primary, originalPlayer))) {
-		        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
-		        				this, assistants, trainerlevel, intensity, stamina), 3);
-		        		if (gain > 0) {
-		        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
-		        		}
-		        	}
-		        }
-	        }
-	        if (tp != null && tp.getSecondary() > 0) {
-		        int trType = trPlayer.getTrainingWeek().getTrainingType();
-		        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-		        if (wt != null) {
-			        int secondary = wt.getSecondaryTrainingSkill();
-			        if ((secondary > 0) && (!check4SkillUp(secondary, originalPlayer))) {
-		        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
-		        				this, assistants, trainerlevel, intensity, stamina), 3);
-		        		if (gain > 0) {
-		        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
-		        		}
-		        	}
-		        }
-	        }
-        }
-    }
-
+    
     /**
      * Calculates training benefit, and updates subskill for the player.
      * Used when there is only 1 week of training to be calculated.
@@ -1691,8 +1642,8 @@ public final class Spieler {
      * @param hrfID - the ID of the HRF
      */
     public void calcIncrementalSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, 
-    		int stamina, int hrfID) {
-    	TrainingPerWeek trainingWeek = TrainingWeekManager.instance().getTrainingWeek(hrfID);
+    		int stamina, TrainingPerWeek trainingWeek) {
+    	
     	if (trainingWeek != null) {
 	        TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek, null);
 	        if (trForPlayer != null) {
@@ -1885,6 +1836,19 @@ public final class Spieler {
     		} else {
     			setSubskill4Pos(skillType, 0);
     		}
+    	}
+    }
+    
+    /**
+     * Copy the skills of old player.
+     * Used by training
+     * 
+     * @param old
+     */
+    public void copySkills(Spieler old) {
+    	
+    	for (int skillType=0; skillType <= PlayerSkill.LOYALTY; skillType++) {
+    		setValue4Skill4(skillType, old.getValue4Skill4(skillType));
     	}
     }
         

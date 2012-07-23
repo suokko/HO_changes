@@ -1,12 +1,7 @@
 // %531033194:de.hattrickorganizer.model%
 package ho.core.training;
 
-import ho.core.model.HOVerwaltung;
-import ho.core.util.HelperWrapper;
-
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * New Training Class
@@ -27,6 +22,8 @@ public class TrainingPerWeek  {
     private int _Year = -1;
     private int _PreviousHRFID;
     private Timestamp nextTrainingDate = null;
+    private Timestamp trainingDate = null;
+    private int assistants = -1;
     
     //~ Constructors -------------------------------------------------------------------------------
     public TrainingPerWeek() {
@@ -193,7 +190,7 @@ public class TrainingPerWeek  {
         buffer.append(", year = " + _Year);
         buffer.append(", hattrickWeek = " + _HTWeek);
         buffer.append(", hattrickSeason = " + _HTSeason);
-        buffer.append(", trainDate = " + getTrainingDate().getTime().toString());
+        buffer.append(", trainDate = " + trainingDate);
         buffer.append(", hrfId = " + _HRFID);
         buffer.append("]");
         return buffer.toString();
@@ -207,50 +204,60 @@ public class TrainingPerWeek  {
 	}
 
 	/**
-	 * calculate the training date for this week/year
+	 * Returns the timestamp with the training at the start of this trainingweek.
 	 *
 	 * @return	training date
 	 */
-	public Calendar getTrainingDate () {
-		// set calendar values
-		final Calendar cal = Calendar.getInstance(Locale.UK);
-
-		/**
-		 * Start of Week is Sunday, because all Trainings in all Countries
-		 * are before Sunday (actually they are on Thursday and Friday)
-		 */
-		cal.setFirstDayOfWeek(Calendar.SUNDAY);
-		cal.setMinimalDaysInFirstWeek(1);
-		/**
-		 * Set year and week from instance fields
-		 */
-		cal.set(Calendar.YEAR, getYear());
-		cal.set(Calendar.WEEK_OF_YEAR, getWeek());
-		/**
-		 * Set day of the week to saturday, so that the
-		 * calculated training date is in this week
-		 * (remember that a week starts at sunday as stated above)
-		 */
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-
-		/**
-		 * get last training date BEFORE this date
-		 * Because our calendar date is a saturday and
-		 * the trainings are on thursday and friday,
-		 * the training date is is in the same week
-		 */
-        Calendar trainingDate = HelperWrapper.instance().getLastTrainingDate(cal.getTime(),
-        		HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate());
-
+	public Timestamp getTrainingDate() {
         return trainingDate;
 	}
 	
+	
+	/**
+	 *  Sets the date of the training at the start of this training week.
+	 *	
+	 * @param Timestamp with the training date.
+	 */
+	public void setTrainingDate(Timestamp date) {
+		trainingDate = date;
+	}
+	
+	/**
+	 * Returns a timestamp with the  of the training at the end of this training week.
+	 
+	 * @return The timestamp with the next training date.
+	 */
 	public Timestamp getNextTrainingDate() {
 		return nextTrainingDate;
 	}
 	
+	/**
+	 * Sets the time of the next training. 
+	 * 
+	 * @param A Timestamp containing the time
+	 */
 	public void setNextTrainingDate(Timestamp t) {
 		nextTrainingDate = t;
 	}
+	
+	/**
+	 * Returns the number of assistants for the week.
+	 * 
+	 * @return an integer with the number of assistants
+	 */
+	public int getAssistants() {
+		return assistants;
+	}
+	
+	/**
+	 * Sets the number of assisstants
+	 * 
+	 * @param assistants, an integer with the number of assistants
+	 */
+	public void setAssistants(int assistants) {
+		this.assistants = assistants;
+	}
+	
+	
 	
 }

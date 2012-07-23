@@ -3,6 +3,8 @@ package ho.module.training.ui.model;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
+
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -23,7 +25,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     protected Vector<Object[]> p_V_data;
 
     /** Vector of ITrainingPerWeek object */
-    protected Vector<TrainingPerWeek> p_V_trainingsVector;
+    protected List<TrainingPerWeek> p_V_trainingsVector;
     private String[] columnNames;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -77,7 +79,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return columnNames.length;
     }
 
@@ -98,7 +101,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return p_V_data.size();
     }
 
@@ -107,7 +111,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return actual training vector
      */
-    public Vector<TrainingPerWeek> getTrainingsData() {
+    public List<TrainingPerWeek> getTrainingsData() {
         return p_V_trainingsVector;
     }
 
@@ -119,7 +123,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      *
      * @return Object representing the cell value
      */
-    public Object getValueAt(int row, int column) {
+    @Override
+	public Object getValueAt(int row, int column) {
         Object[] aobj = (Object[]) p_V_data.get(row);
 
         return aobj[column];

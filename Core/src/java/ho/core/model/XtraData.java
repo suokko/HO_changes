@@ -213,6 +213,7 @@ public class XtraData  {
 
     /**
      * Getter for property m_clTrainingDate.
+     * This is the date for the next training.
      *
      * @return Value of property m_clTrainingDate.
      */

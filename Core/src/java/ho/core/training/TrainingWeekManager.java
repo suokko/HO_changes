@@ -8,24 +8,22 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.misc.Basics;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
-import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
 
 
 /**
- * Class that extract data from Database and calculates TrainingWeek and TrainingPoints earned from
- * players
+ * Class that extract data from Database and contains the list of TrainingPerWeek objects, one for
+ * each week in the database.
+ * 
  *
- * @author humorlos, Dragettho, thetom, seb04
+ * @author humorlos, Dragettho, thetom, seb04, blaghaid
  */
 public class TrainingWeekManager {
     //~ Static fields/initializers -----------------------------------------------------------------
@@ -33,7 +31,7 @@ public class TrainingWeekManager {
     private static TrainingWeekManager m_clInstance;
 
     /** TrainingWeeks */
-    private Vector<TrainingPerWeek> m_vTrainings;
+    private List<TrainingPerWeek> m_vTrainings;
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -46,10 +44,9 @@ public class TrainingWeekManager {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * liefert instance vom Trainingsmanager  vor der ersten Nutzun noch fillWithData(
-     * vorgabeTrainings ) aufrufen
-     *
-     * @return instance of NewTrainingManager
+     * Returns the instance of TrainingWeekManager.
+     * 
+     * @return instance of TrainingWeekManager
      */
     public static TrainingWeekManager instance() {
         if (m_clInstance == null) {
@@ -59,233 +56,114 @@ public class TrainingWeekManager {
         return m_clInstance;
     }
 
+    
     /**
-     * TODO Missing Method Documentation
+     * returns the current Training List
      *
-     * @param hrfId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * @return Training List, List of TrainingPerWeek
      */
-    public TrainingPerWeek getTrainingWeek(int hrfId) {
-        // TODO Load last valid training week!
-        final Timestamp tStamp = DBManager.instance().getPreviousTrainingDate(hrfId);
-
-        if (tStamp == null) {
-            return null;
-        }
-
-        Calendar calendar = HelperWrapper.instance().getLastTrainingDate(new Date(tStamp.getTime()),
-        		HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate());
-
-        final int trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
-        final int trainYear = calendar.get(Calendar.YEAR);
-
-        for (Iterator<TrainingPerWeek> iter = m_vTrainings.iterator(); iter.hasNext();) {
-            TrainingPerWeek element = iter.next();
-            if ((element.getYear() == trainYear) && (element.getWeek() == trainWeek)) {
-                return element;
-            }
-        }
-        return null;
+    public List<TrainingPerWeek> getTrainingList() {
+    	if (m_vTrainings == null) {
+    		
+    		m_vTrainings = generateTrainingList();
+    	}
+    	return m_vTrainings;
     }
-
+    
+    
     /**
-     * returns current TrainingVector calculates new vector if current is null
-     *
-     * @return Training Vector, vector of ITrainingPerWeek
+     * Forces a new training list to be generated, and returns the result.
+     * 
+     * @return The list of Team Training Weeks. 
      */
-    public Vector<TrainingPerWeek> getTrainingsVector() {
-        if (m_vTrainings == null) {
-            return calculateTrainings(DBManager.instance().getTrainingsVector());
-        }
-        return m_vTrainings;
+    public List<TrainingPerWeek> refreshTrainingList() {
+    	m_vTrainings = generateTrainingList();
+    	return m_vTrainings;
     }
-
-    /*
-     * calculates TrainingWeeks based on given input Vector
-     * @param inputTrainings must be != null, empty vector if no trainings are preset
+    
+    
+    /**
+     * Returns the TrianingPerWeek for the week with the given nextTrainingDate.
+     * 
+     * @param nextTrainingDate The timestamp of the next training found in a hrf
      *
-     * @return Vector of trainingweeks
-     **/
-    public Vector<TrainingPerWeek> calculateTrainings(Vector<TrainingPerWeek> inputTrainings) {
-        //reset trainings
-        Vector<TrainingPerWeek> output = new Vector<TrainingPerWeek>();
-
-        //get database connection
-        final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
-
-        //make timezone
-        try {
-            //get all hrfs
-            final String sdbquery = "SELECT TRAININGSART, TRAININGSINTENSITAET, " + 
-            	"STAMINATRAININGPART, HRF_ID, DATUM FROM HRF,TEAM WHERE HRF.HRF_ID=TEAM.HRF_ID ORDER BY DATUM";
-            final ResultSet rs = ijdbca.executeQuery(sdbquery);
-            rs.beforeFirst();
-
-            int lastTrainWeek = -1;
-
-            boolean isFirstTrain = true;
-            int trainIntensitaet = 0;
-            int trainStaminaTrainPart = 0;
-            int hrfId = 0;
-            int trainType = 0;
-            Timestamp tStamp = null;
-            Calendar calendar = null;
-            int trainWeek = 0;
-            int trainYear = 0;
-            while (rs.next()) {
-                //Datum der HRF filtern und schauen, welche hrf m?glichst nah an einem Freitag liegt
-                //filter date of the hrf and look, which one of them is closest to the trainings update
-                trainType = rs.getInt("TRAININGSART");
-                if (trainType != -1) {
-                    trainIntensitaet = rs.getInt("TRAININGSINTENSITAET");
-                    trainStaminaTrainPart = rs.getInt("STAMINATRAININGPART");
-                    hrfId = rs.getInt("HRF_ID");
-                    tStamp = rs.getTimestamp("DATUM");
-                    
-                    try {
-                        calendar = HelperWrapper.instance().getLastTrainingDate(
-                        		new Date(tStamp.getTime()),
-                        		HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate());
-                    } catch (Exception e) {
-                        return output;
-                    }
-
-                    trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
-                    trainYear = calendar.get(Calendar.YEAR);
-
-                    //if traintype still null -> first run
-                    if (isFirstTrain) {
-                        lastTrainWeek = trainWeek;
-                        isFirstTrain = false;
-                    }
-
-                    //in case new week: add actual temporary data the the hashset with the trainings
-                    boolean traincalculated = false;
-                    if (lastTrainWeek != trainWeek) {
-                        //in case of missing data (lost weeks) add empty trainings
-                        for (int i = lastTrainWeek + 1; i < trainWeek; i++) {
-                            try {
-                                //try catch in case of corrupted training data in the input
-                                traincalculated = false;
-
-                                for (Iterator<TrainingPerWeek> it = inputTrainings.iterator(); it.hasNext();) {
-                                    TrainingPerWeek storedTrain = it.next();
-
-                                    //altes Training nehmen
-                                    if ((storedTrain.getWeek() == i)
-                                        && (storedTrain.getYear() == trainYear)) {
-                                        storedTrain.setHrfId(hrfId);
-                                        output.add(storedTrain);
-                                        traincalculated = true;
-                                        break;
-                                    }
-                                }
-
-                                if (traincalculated == false) {
-                                    final TrainingPerWeek tpw = new TrainingPerWeek(i, trainYear, -1, -1, -1);
-                                    tpw.setHrfId(hrfId);
-                                    output.add(tpw);
-                                }
-                            } catch (Exception e) {
-                                // if training not in the input vector -> add empty train
-                                final TrainingPerWeek tpw = new TrainingPerWeek(i, trainYear, -1, -1, -1);
-                                tpw.setHrfId(hrfId);
-                                output.add(tpw);
-                            }
-                        }
-
-                        //add train of last week to the collection of trainings
-                        //try-catch if inputTrainings not as big
-                        try {
-                            traincalculated = false;
-
-                            for (Iterator<?> it = inputTrainings.iterator(); it.hasNext();) {
-                                final TrainingPerWeek storedTrain = (TrainingPerWeek) it.next();
-
-                                //altes Training nehmen
-                                if ((storedTrain.getWeek() == trainWeek)
-                                    && (storedTrain.getYear() == trainYear)) {
-                                    storedTrain.setHrfId(hrfId);
-                                    output.add(storedTrain);
-                                    traincalculated = true;
-                                    break;
-                                }
-                            }
-
-                            if (traincalculated == false) {
-                                TrainingPerWeek t = new TrainingPerWeek(trainWeek, trainYear,
-                                                                              trainType,
-                                                                              trainIntensitaet,
-                                                                              trainStaminaTrainPart);
-                                t.setHrfId(hrfId);
-                                output.add(t);
-                            }
-                        } catch (Exception e) {
-                            TrainingPerWeek t = new TrainingPerWeek(trainWeek, trainYear,
-                                                                          trainType,
-                                                                          trainIntensitaet,
-                                                                          trainStaminaTrainPart);
-                            t.setHrfId(hrfId);
-                            output.add(t);
-                        }
-
-                        lastTrainWeek = trainWeek;
-                        isFirstTrain = false;
-                    } else {
-                        //In der gleichen Woche wurde ein weiteres HRF gefunden -> Update der Werte
-                        // in the same week there is another hrf -> update of the values
-                        isFirstTrain = false;
-                    }
-                }
-            }
-
-            rs.close();
-
-            //Vector speichern
-            //save vector
-            output = getUpdateTraining(output);
-            m_vTrainings = output;
-            return output;
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),e);
-
-            final StackTraceElement[] aste = e.getStackTrace();
-            String msg = "";
-
-            for (int j = 0; j < aste.length; j++) {
-                msg = msg + "\n" + aste[j];
-            }
-
-            Helper.showMessage(null, e.getMessage(), "DatenreiheA",
-                                                       javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            Helper.showMessage(null, msg, "DatenreiheB",
-                                                       javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        m_vTrainings = new Vector<TrainingPerWeek>();
-        return m_vTrainings;
+     * @return TrainingPerWeek for the given timestamp, or null if none found.
+     */
+    public TrainingPerWeek getTrainingWeek(Timestamp nextTrainingDate) {
+        
+    	TrainingPerWeek currentCandidate = null;
+    	
+    	for (TrainingPerWeek tpw : m_vTrainings) {
+    		if (nextTrainingDate.after(tpw.getNextTrainingDate())) {
+    			return currentCandidate;
+    		}
+    		currentCandidate = tpw;
+    	}
+    	HOLogger.instance().error(getClass(), "No training week found for date:  " + nextTrainingDate);
+    	return null;
     }
 
+    
     /** Returns a list of TraingPerWeek, one for each week since the first hrf.
      * 
      * @param overrides An input list of TrainingPerWeek that will override the info for the same
      * 		week based on hrf content.
      * @return The list of TrainingPerWeek.
      */
-    public static List<TrainingPerWeek> generateTrainingVector(List<TrainingPerWeek> overrides) {
-    	List<TrainingPerWeek> output = fetchTrainingsVectorFromHrf();
+    private static List<TrainingPerWeek> generateTrainingList() {
     	
+    	List<TrainingPerWeek> output = fetchTrainingListFromHrf();
     	output = washTrainingList(output);
-    	
-    	
+    	output = updateWithOverrides(output, DBManager.instance().getTrainingOverrides());
+    	output = updateHattrickDates(output);
     	return output;
     }
     
     
+    /** Adjusts the content of items in trainingList where an item in overrides is present for the same
+     *  year and week. Apart from this the return is trainingList. Only week and year fields are used from the overrides,
+     *  in addition to training settings.
+     * 
+     *  Both lists are assumed to be sorted on date, with the first training date first, but overrides does not have
+     *  to include every training, and can be just a list of a few differences. 
+     * 
+     * @param trainingList A sorted list of all trainingWeeks.
+     * @param overrides A list of overrides for values in the trainingList.
+     * @return the adjusted trainingList.
+     */
+    private static List<TrainingPerWeek> updateWithOverrides (List<TrainingPerWeek> trainingList
+    																, List<TrainingPerWeek> overrides) {
+    	// This will break badly if they are not sorted with first date first.
+    	
+    	TrainingPerWeek tpw = null;
+    	Iterator<TrainingPerWeek> iter = trainingList.iterator();
+    	
+    	// do for each override.
+    	for (TrainingPerWeek over : overrides) {
+    		// Search forwards through the trainingList, continuing from where we left off.
+    		while (iter.hasNext()) {
+    			tpw = iter.next();
+    			if ((tpw != null) 
+    					&& (tpw.getWeek() == over.getWeek())
+    					&& (tpw.getYear() == over.getYear())) {
+ 
+    				tpw.setStaminaPart(over.getStaminaPart());
+    				tpw.setTrainingIntensity(over.getTrainingIntensity());
+    				tpw.setTrainingType(over.getTrainingType());
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return trainingList;
+    }
+
+    
     /** This one filters the list so that there is one per week. If multiple hrfs a week, the last one is used.
      * 	If there is a week with no hrf, a new will be inserted with content identical to the old one, and with a
      *  next training date one week after the previous one.
+     *  
+     *  Objects in the input are included in the output, and can be modified by this function.
      * 
      * @param input list to be filtered
      * @return the filtered list
@@ -302,15 +180,24 @@ public class TrainingWeekManager {
     	
     	for (TrainingPerWeek tpw: input) {
     		
-    		if (old == null) {
-    			// first item
-    			old = tpw;
-    			output.add(tpw);
-    			previousTraining.setTimeInMillis(tpw.getNextTrainingDate().getTime());
+    		if (tpw == null) {
     			continue;
     		}
     		
-    		actualTraining.setTimeInMillis(tpw.getNextTrainingDate().getTime());
+    		if (old == null) {
+    			// first item
+    			old = tpw;
+    			Calendar cal = Calendar.getInstance(Locale.UK);
+    			cal.setTime(tpw.getNextTrainingDate());
+    			cal.add(Calendar.WEEK_OF_YEAR, -1);
+    			tpw.setTrainingDate(new Timestamp(cal.getTimeInMillis()));
+    			output.add(tpw);
+    	
+    			previousTraining.setTime(tpw.getNextTrainingDate());
+    			continue;
+    		}
+    		
+    		actualTraining.setTime(tpw.getNextTrainingDate());
     		
     		if (!actualTraining.after(previousTraining)) {
     			// The same week, update to the contents of the newer item.
@@ -318,6 +205,8 @@ public class TrainingWeekManager {
     			old.setStaminaPart(tpw.getStaminaPart());
     			old.setTrainingIntensity(tpw.getTrainingIntensity());
     			old.setTrainingType(tpw.getTrainingType());
+    			old.setAssistants(tpw.getAssistants());
+    			old.setHrfId(tpw.getHrfId());
     			continue;
     		}
     	
@@ -334,19 +223,37 @@ public class TrainingWeekManager {
    			       int trainWeek = previousTraining.get(Calendar.WEEK_OF_YEAR);
 	               int trainYear= previousTraining.get(Calendar.YEAR);
 
+	               if (old == null) {
+	            	   // Should never, ever, happen, but makes the compiler shut up.
+	            	   continue;
+	               }
+	               
 	               TrainingPerWeek newTpw = new TrainingPerWeek(trainWeek, trainYear
 	            		   						, old.getTrainingType()
 	            		   						, old.getTrainingIntensity()
 	            		   						, old.getStaminaPart());
    					newTpw.setNextTrainingDate(new Timestamp(previousTraining.getTimeInMillis()));
    					newTpw.setHrfId(-1);
+   					newTpw.setTrainingDate(old.getNextTrainingDate());
+   					newTpw.setAssistants(old.getAssistants());
+   					
+   					int htWeek = old.getHattrickWeek() + 1;
+   					if (htWeek == 17) {
+   						newTpw.setHattrickWeek(1);
+   						newTpw.setHattrickSeason(1 + old.getHattrickSeason());
+   					} else {
+   						newTpw.setHattrickWeek(htWeek);
+   						newTpw.setHattrickSeason(old.getHattrickSeason());
+   					}
    					
    					old = newTpw;
    					output.add(newTpw);
-   					// And the previous date is already set, same with week and stuff.
+   					// The previous date is already set at the start of loop.
    					
    				} else {
-   					// We found our current item, add this.
+   					// We found our current date, add this object. 
+   					// The previousDate is correct already.
+   					tpw.setTrainingDate(old.getNextTrainingDate());
    					old = tpw;
    					output.add(tpw);
    				}
@@ -356,12 +263,20 @@ public class TrainingWeekManager {
     	return output;
     }
     
-    private static List<TrainingPerWeek> fetchTrainingsVectorFromHrf() {
+    /**
+     * Fetches a TrainingPerWeek for each hrf in the database. This could be 0, 1, or more per week.
+     * 
+     * @return A list of TrainingPerWeek
+     */
+    private static List<TrainingPerWeek> fetchTrainingListFromHrf() {
     	try {
+    		HOModel model = HOVerwaltung.instance().getModel();
+    		Basics basics = model.getBasics();
     		List<TrainingPerWeek> output = new ArrayList<TrainingPerWeek>();
     		String sql = " SELECT TRAININGSART, TRAININGSINTENSITAET, STAMINATRAININGPART, " +
-    					"HRF_ID, DATUM, TRAININGDATE FROM HRF,TEAM,XTRADATA WHERE " + 
-    					"HRF.HRF_ID=TEAM.HRF_ID and HRF.HRF_ID=XTRADATA.HRF_ID ORDER BY DATUM";
+    					"HRF_ID, DATUM, TRAININGDATE, COTRAINER FROM HRF,TEAM,XTRADATA,VEREIN WHERE " + 
+    					"HRF.HRF_ID=TEAM.HRF_ID and HRF.HRF_ID=XTRADATA.HRF_ID and HRF.HRF_ID=VEREIN.HRF_ID " +
+    					"ORDER BY DATUM";
     	
 	    	 final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
 	    	 final ResultSet rs = ijdbca.executeQuery(sql);
@@ -374,11 +289,19 @@ public class TrainingWeekManager {
 	         int trainStaminaTrainPart = 0;
 	         int hrfId = 0;
 	         int trainType = 0;
+	         int assistants = 0;
 	         Timestamp tStamp = null;
 	         Calendar calendar = null;
 	         int trainWeek = 0;
 	         int trainYear = 0;
+	         int weeks = 0;
 	         Timestamp nextTraining = null;
+	         
+	         Calendar now = Calendar.getInstance(Locale.UK);
+	         now.setTime(model.getXtraDaten().getTrainingDate());
+	         Calendar tswDate = Calendar.getInstance(Locale.UK);
+	         
+	         
 	         while (rs.next()) {
 	        	 trainType = rs.getInt("TRAININGSART");
 	             if (trainType != -1) {
@@ -387,18 +310,21 @@ public class TrainingWeekManager {
 	                 hrfId = rs.getInt("HRF_ID");
 	                 tStamp = rs.getTimestamp("DATUM");
 	                 nextTraining = rs.getTimestamp("TRAININGDATE");
-	                
+	                 assistants = rs.getInt("COTRAINER");
+	                 
 	                 calendar = Calendar.getInstance(Locale.UK);
 	         		 calendar.setFirstDayOfWeek(Calendar.SUNDAY);
-	         		 calendar.setTimeInMillis(nextTraining.getTime());
+	         		 calendar.setTime(nextTraining);
 	                 
 	                 trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 	                 trainYear = calendar.get(Calendar.YEAR);
 	                 
 	                 TrainingPerWeek tpw = new TrainingPerWeek(trainWeek, trainYear, 
 	                		 					trainType, trainIntensity, trainStaminaTrainPart);
+	                 
 	                 tpw.setNextTrainingDate(nextTraining);
 	                 tpw.setHrfId(hrfId);
+	                 tpw.setAssistants(assistants);
 	                 output.add(tpw);
 	             }
 	         }
@@ -424,23 +350,19 @@ public class TrainingWeekManager {
     }
     
     
-    
-    
-    
-    
     /**
-     * TODO Missing Method Documentation
+     * Updates the input list objects with hattrick season, hattrick week, and previousHrf.
      *
-     * @param output TODO Missing Method Parameter Documentation
+     * @param input A list of TrainingPerWeek. Sorted on date.
      *
-     * @return TODO Missing Return Method Documentation
+     * @return The input list.
      */
-    private Vector<TrainingPerWeek> getUpdateTraining(Vector<TrainingPerWeek> output) {
+    private static List<TrainingPerWeek> updateHattrickDates(List<TrainingPerWeek> input) {
     	HOModel hom = HOVerwaltung.instance().getModel();
     	Basics bas = hom.getBasics();
         int actualSeason = bas.getSeason();
         int actualWeek = bas.getSpieltag();
-        int trainNumber = output.size();
+        int trainNumber = input.size();
         try {
             // We are in the middle where season has not been updated!
             if (hom.getXtraDaten().getTrainingDate().after(hom.getXtraDaten().getSeriesMatchDate())) {
@@ -451,28 +373,24 @@ public class TrainingWeekManager {
                 }
             }
         } catch (Exception e) {
-        	HOLogger.instance().log(getClass(),"TrainingsWeekManager.getUpdateTraining: " + e);
-            return output;
+        	HOLogger.instance().log(null,"TrainingsWeekManager.updateHattrickDates: " + e);
+            return input;
         }
-        Vector<TrainingPerWeek> updatedTrainings = new Vector<TrainingPerWeek>();
-        TrainingPerWeek newTrain = null;
         TrainingPerWeek train = null;
         HattrickDate htDate = null;
         for (int index = 0; index < trainNumber; index++) {
-            train = output.get(index);
+            train = input.get(index);
             htDate = calculateByDifference(actualSeason, actualWeek, trainNumber - index);
-            newTrain = new TrainingPerWeek(train.getWeek(), train.getYear(), 
-            		train.getTrainingType(), train.getTrainingIntensity(),
-            		train.getStaminaPart());
-            newTrain.setHattrickSeason(htDate.getSeason());
-            newTrain.setHattrickWeek(htDate.getWeek());
-            newTrain.setHrfId(train.getHrfId());
-            newTrain.setPreviousHrfId(DBManager.instance().getPreviousHRF(train.getHrfId()));
-            updatedTrainings.add(newTrain);
-        }
-        return updatedTrainings;
+            train.setHattrickSeason(htDate.getSeason());
+            train.setHattrickWeek(htDate.getWeek());
+            train.setHrfId(train.getHrfId());
+            train.setPreviousHrfId(DBManager.instance().getPreviousHRF(train.getHrfId()));
+         }
+        return input;
     }
 
+    
+    
     /**
      * Method that calculate the HT date for past week before
      *
@@ -482,7 +400,7 @@ public class TrainingWeekManager {
      *
      * @return Hattrick Date
      */
-    private HattrickDate calculateByDifference(int actualSeason, int actualWeek, int pastWeek) {
+    private static HattrickDate calculateByDifference(int actualSeason, int actualWeek, int pastWeek) {
         final HattrickDate date = new HattrickDate();
         actualWeek = (actualWeek - pastWeek) - 1;
 

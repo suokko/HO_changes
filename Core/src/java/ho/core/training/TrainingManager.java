@@ -3,7 +3,6 @@ package ho.core.training;
 import ho.core.db.DBManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.UserParameter;
 import ho.core.model.match.MatchLineupTeam;
 import ho.core.model.match.MatchStatistics;
 import ho.core.model.match.MatchType;
@@ -16,9 +15,8 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
@@ -62,58 +60,11 @@ public class TrainingManager {
         return m_clInstance;
     }
 
-    public Vector<TrainingPerWeek> getTrainingsVector() {
-        return _WeekManager.getTrainingsVector();
+    public List<TrainingPerWeek> getTrainingWeekList() {
+        return _WeekManager.getTrainingList();
     }
 
-
-    /**
-     * Calculates Training for a given Player for each skill
-     *
-     * @param inputPlayer Player to use
-     * @param inputTraining preset Trainingweeks
-     * @param timestamp calc trainings up to timestamp, null for all
-     *
-     * @return TrainingPerPlayer
-     */
-    public TrainingPerPlayer calculateFullTrainingForPlayer(Spieler inputPlayer, 
-    		Vector<TrainingPerWeek> inputTraining, Timestamp timestamp) {
-        if (timestamp == null) {
-        	Calendar c = Calendar.getInstance();
-        	c.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-            timestamp = new Timestamp(c.getTimeInMillis());
-        }
-        TrainingPerPlayer output = new TrainingPerPlayer(inputPlayer);
-
-        if (TRAININGDEBUG)
-        	HOLogger.instance().debug(getClass(), "Start calcFullTraining for "+inputPlayer.getName()+", output="+output);
-
-        //Iterate through all training
-        Iterator<TrainingPerWeek> i = inputTraining.iterator();
-        while (i.hasNext()) {
-        	//get training to consider this round of the loop
-            final TrainingPerWeek train = i.next();
-            if (train.getTrainingType() == -1) {
-                continue;
-            }
-            final Calendar trainingDate = train.getTrainingDate();
-            // if (trainingDate > timestamp) then ignore training and quit, because all following 
-            // training would be after the timestamp too
-            if (trainingDate.getTimeInMillis() >= timestamp.getTime()) {
-                return output;
-            }
-            TrainingPerPlayer curTraining = calculateWeeklyTrainingForPlayer(inputPlayer, train, timestamp);
-            if (curTraining != null && curTraining.getTrainingPair() != null && output != null) {
-            	output.addValues(curTraining);
-            }
-           	if (TRAININGDEBUG)
-            	HOLogger.instance().debug(getClass(), "Mid calcFullTraining for "+inputPlayer.getName()+", "+train+", cur="+(curTraining==null?"null":curTraining.toString())+", output="+output);
-        }
-        if (TRAININGDEBUG)
-        	HOLogger.instance().debug(getClass(), "End calcFullTraining for "+inputPlayer.getName()+", output="+output);
-        return output;
-    }
-
+   
     /**
      * TODO Missing Method Documentation
      *
@@ -121,8 +72,8 @@ public class TrainingManager {
      *
      * @return TODO Missing Return Method Documentation
      */
-    public Vector<TrainingPerWeek> calculateTraining(Vector<TrainingPerWeek> inputTrainings) {
-        return _WeekManager.calculateTrainings(inputTrainings);
+    public List<TrainingPerWeek> refreshTrainingWeeks() {
+        return _WeekManager.refreshTrainingList();
     }
    
     /**
@@ -163,7 +114,8 @@ public class TrainingManager {
         			+ ", trainDate="+train.getTrainingDate().toString()+c2s);
         }
         
-        Calendar trainingDate = train.getTrainingDate();
+        Calendar trainingDate = Calendar.getInstance(Locale.UK);
+        trainingDate.setTime(train.getTrainingDate());
         WeeklyTrainingType wt = WeeklyTrainingType.instance(train.getTrainingType());
         if (wt != null) {
 	        try {

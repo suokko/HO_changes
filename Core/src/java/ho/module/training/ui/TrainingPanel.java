@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -72,7 +71,7 @@ public class TrainingPanel extends JPanel {
      *
      * @return past trainings list
      */
-    public Vector<TrainingPerWeek> getOldTrainings() {
+    public List<TrainingPerWeek> getOldTrainings() {
         return oldTableModel.getTrainingsData();
     }
 
@@ -125,7 +124,8 @@ public class TrainingPanel extends JPanel {
         JButton button = new JButton(HOVerwaltung.instance().getLanguageString("SetAll")); //$NON-NLS-1$
 
         button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                @Override
+				public void actionPerformed(ActionEvent arg0) {
                     TableCellEditor editor = futureTable.getCellEditor();
 
                     if (editor != null) {
