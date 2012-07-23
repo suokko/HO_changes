@@ -7,7 +7,6 @@ import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.misc.Basics;
 import ho.core.util.HOLogger;
-import ho.core.util.Helper;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -113,9 +112,11 @@ public class TrainingWeekManager {
     private static List<TrainingPerWeek> generateTrainingList() {
     	
     	List<TrainingPerWeek> output = fetchTrainingListFromHrf();
-    	output = washTrainingList(output);
-    	output = updateWithOverrides(output, DBManager.instance().getTrainingOverrides());
-    	output = updateHattrickDates(output);
+    	if (output != null) {
+	    	output = washTrainingList(output);
+	    	output = updateWithOverrides(output, DBManager.instance().getTrainingOverrides());
+	    	output = updateHattrickDates(output);
+    	}
     	return output;
     }
     
@@ -278,9 +279,6 @@ public class TrainingWeekManager {
     					"HRF.HRF_ID=TEAM.HRF_ID and HRF.HRF_ID=XTRADATA.HRF_ID and HRF.HRF_ID=VEREIN.HRF_ID " +
     					"ORDER BY DATUM";
     	
-	    	 final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
-	    	 final ResultSet rs = ijdbca.executeQuery(sql);
-	         rs.beforeFirst();
 	
 	         int lastTrainWeek = -1;
 	
@@ -301,6 +299,9 @@ public class TrainingWeekManager {
 	         now.setTime(model.getXtraDaten().getTrainingDate());
 	         Calendar tswDate = Calendar.getInstance(Locale.UK);
 	         
+	         final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
+	         final ResultSet rs = ijdbca.executeQuery(sql);
+	         rs.beforeFirst();
 	         
 	         while (rs.next()) {
 	        	 trainType = rs.getInt("TRAININGSART");
@@ -332,19 +333,7 @@ public class TrainingWeekManager {
 	         return output;
     	} catch (Exception e) {
 	        HOLogger.instance().log(null,e);
-	
-	        final StackTraceElement[] aste = e.getStackTrace();
-	        String msg = "";
-	
-	        for (int j = 0; j < aste.length; j++) {
-	            msg = msg + "\n" + aste[j];
-	        }
-	
-	        Helper.showMessage(null, e.getMessage(), "DatenreiheA",
-	                                                   javax.swing.JOptionPane.INFORMATION_MESSAGE);
-	        Helper.showMessage(null, msg, "DatenreiheB",
-	                                                   javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    	}
+		}
          
     	return null;
     }
