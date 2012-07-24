@@ -83,8 +83,8 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
      *
      */
     public ColorLabelEntry(int intzahl, double zahl, boolean aktuell, Color background,boolean mitText) {
-        if ((Math.abs(intzahl) != 0) || !mitText) {
-            setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(intzahl, 1), aktuell));
+        if ((intzahl != 0) || !mitText) {
+            setIcon(ImageUtilities.getImageIcon4Veraenderung(intzahl, aktuell));
         }
 
         setHorizontalAlignment(SwingConstants.RIGHT);
@@ -94,8 +94,8 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
         createComponent();
 
         if ((intzahl == 0) && (Math.abs(zahl) > 0.005d) && mitText) {
-            //Keine negativen Subskills, Kann beim Skillup passieren
-            final double zahl2 = intzahl + Math.max(0d, zahl);
+        	// Yes, we want negative numbers too
+        	final double zahl2 = intzahl + zahl;
             setValueAsText(zahl2, background, false, false, 
             		ho.core.model.UserParameter.instance().anzahlNachkommastellen, true);
         }
@@ -113,8 +113,8 @@ public class ColorLabelEntry extends JLabel implements IHOTableEntry {
      */
     public ColorLabelEntry(int changeVal, String text, double sortVal, boolean aktuell, Color background,
                            boolean mitText) {
-        if ((Math.abs(changeVal) != 0) || !mitText) {
-            setIcon(ImageUtilities.getImageIcon4Veraenderung((int) Helper.round(changeVal, 1), aktuell));
+        if ((changeVal != 0) || !mitText) {
+            setIcon(ImageUtilities.getImageIcon4Veraenderung(changeVal, aktuell));
         }
 
         setHorizontalAlignment(SwingConstants.RIGHT);
