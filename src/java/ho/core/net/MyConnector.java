@@ -243,7 +243,7 @@ public class MyConnector {
 		url.append(htUrl).append("?file=matchesarchive");
 
 		if (teamId > 0) {
-			url.append("&teamID=").append("teamId");
+			url.append("&teamID=").append(teamId);
 		}
 
 		if (firstDate != null) {
