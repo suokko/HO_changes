@@ -139,7 +139,6 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		System.out.println("Check is:" + m_jcSkillDrops.isSelected());
 		if ((event.getSource() == m_jcSkillDrops) 
 				&& (m_jcSkillDrops.isSelected() != SkillDrops.instance().isActive())) {
 			SkillDrops.instance().setActive(m_jcSkillDrops.isSelected());

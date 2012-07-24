@@ -46,7 +46,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return
 */
-    public Date getDate()
+    @Override
+	public Date getDate()
     {
         return date;
     }
@@ -66,7 +67,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return
 */
-    public int getHtSeason()
+    @Override
+	public int getHtSeason()
     {
         return htSeason;
     }
@@ -86,7 +88,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return
 */
-    public int getHtWeek()
+    @Override
+	public int getHtWeek()
     {
         return htWeek;
     }
@@ -106,7 +109,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return
 */
-    public int getTrainType()
+    @Override
+	public int getTrainType()
     {
         return trainType;
     }
@@ -126,7 +130,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return type
 */
-    public int getType()
+    @Override
+	public int getType()
     {
         return type;
     }
@@ -146,7 +151,8 @@ public class PlayerSkillup implements ISkillup
 *
 * @return value
 */
-    public int getValue()
+    @Override
+	public int getValue()
     {
         return value;
     }
