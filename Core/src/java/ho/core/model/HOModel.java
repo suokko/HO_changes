@@ -415,8 +415,7 @@ public class HOModel {
     		actualTrainingDate = m_clXtraDaten.getTrainingDate();
     	}
     	
-    	if ((previousTrainingDate != null) && (actualTrainingDate != null)
-    			&& (!previousTrainingDate.equals(actualTrainingDate))) {
+    	if ((previousTrainingDate != null) && (actualTrainingDate != null)) {
     		// Training Happened
 
     		// Find TrainingPerWeeks that should be processed (those since last training).
@@ -470,75 +469,81 @@ public class HOModel {
 
     				// Always copy subskills as the first thing
     				player.copySubSkills(old);
-
-    				// Always check skill drop if drop calculations are active.
-    				if (SkillDrops.instance().isActive()) {
-    					for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
-    						if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
-    							continue;
-    						}
-    						if (player.check4SkillDown(skillType, old)) {
-    							player.dropSubskills(skillType);
-    						}
-    					}
-    				}
-
-
-    				// Perform training for all "untrained weeks"
-  
     				
-    				// And "old" player we can mess with.
-    				Spieler tmpOld = new Spieler();
-					tmpOld.copySkills(old);
-					tmpOld.copySubSkills(old);
-					tmpOld.setSpielerID(old.getSpielerID());
+    				if (trainingList.size() > 0 ) {
+    					// Training happened
+    					
+	    				// Always check skill drop if drop calculations are active.
+	    				if (SkillDrops.instance().isActive()) {
+	    					for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
+	    						if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+	    							continue;
+	    						}
+	    						if (player.check4SkillDown(skillType, old)) {
+	    							player.dropSubskills(skillType);
+	    						}
+	    					}
+	    				}
 
-    				Spieler calculationPlayer = null;
-    				TrainingPerWeek tpw;
-    				Iterator<TrainingPerWeek> iter = trainingList.iterator(); 
-    				while (iter.hasNext()) {
-    					tpw = iter.next();
-    					
-    					if (tpw == null) {
-    						continue;
-    					}
-    					
-    					// The "player" is only the relevant Spieler for the current Hrf. All previous
-    					// training weeks (if any), should be calculated based on "old", and the result
-    					// of the previous week.
-    					
-    					if (getXtraDaten().getTrainingDate().getTime() == tpw.getNextTrainingDate().getTime()) {
-    						// It is the same week as this model.
-    						
-    						if (calculationPlayer != null) {
-    							// We have run previous calculations because of missing training weeks. 
-    							// Subskills may have changed, but no skillup can have happened. Copy subskills.
-    							
-    							player.copySubSkills(calculationPlayer);
-    						}
-    						calculationPlayer = player;
-    	
-    					} else {
-    						// An old week
-    						calculationPlayer = new Spieler();
-    						calculationPlayer.copySkills(tmpOld);
-    						calculationPlayer.copySubSkills(tmpOld);
-    						calculationPlayer.setSpielerID(tmpOld.getSpielerID());
-    					}
-    		
-    					calculationPlayer.calcIncrementalSubskills(tmpOld, tpw.getAssistants(),
-    							trainerLevel,
-    							tpw.getTrainingIntensity(),
-    							tpw.getStaminaPart(),
-    							tpw);
-    					
-    					if (iter.hasNext()) {
-    						// Use calculated skills and subskills as "old" if there is another week in line... 
-    						tmpOld = new Spieler();
-    						tmpOld.copySkills(calculationPlayer);
-    						tmpOld.copySubSkills(calculationPlayer);
-    						tmpOld.setSpielerID(calculationPlayer.getSpielerID());
-    					}
+
+	    				// Perform training for all "untrained weeks"
+    				
+	    				// An "old" player we can mess with.
+	    				Spieler tmpOld = new Spieler();
+						tmpOld.copySkills(old);
+						tmpOld.copySubSkills(old);
+						tmpOld.setSpielerID(old.getSpielerID());
+						tmpOld.setAlter(old.getAlter());
+	
+	    				Spieler calculationPlayer = null;
+	    				TrainingPerWeek tpw;
+	    				Iterator<TrainingPerWeek> iter = trainingList.iterator(); 
+	    				while (iter.hasNext()) {
+	    					tpw = iter.next();
+	    					
+	    					if (tpw == null) {
+	    						continue;
+	    					}
+	    					
+	    					// The "player" is only the relevant Spieler for the current Hrf. All previous
+	    					// training weeks (if any), should be calculated based on "old", and the result
+	    					// of the previous week.
+	    					
+	    					if (getXtraDaten().getTrainingDate().getTime() == tpw.getNextTrainingDate().getTime()) {
+	    						// It is the same week as this model.
+	    						
+	    						if (calculationPlayer != null) {
+	    							// We have run previous calculations because of missing training weeks. 
+	    							// Subskills may have changed, but no skillup can have happened. Copy subskills.
+	    							
+	    							player.copySubSkills(calculationPlayer);
+	    						}
+	    						calculationPlayer = player;
+	    	
+	    					} else {
+	    						// An old week
+	    						calculationPlayer = new Spieler();
+	    						calculationPlayer.copySkills(tmpOld);
+	    						calculationPlayer.copySubSkills(tmpOld);
+	    						calculationPlayer.setSpielerID(tmpOld.getSpielerID());
+	    						calculationPlayer.setAlter(tmpOld.getAlter());
+	    					}
+	    		
+	    					calculationPlayer.calcIncrementalSubskills(tmpOld, tpw.getAssistants(),
+	    							trainerLevel,
+	    							tpw.getTrainingIntensity(),
+	    							tpw.getStaminaPart(),
+	    							tpw);
+	    					
+	    					if (iter.hasNext()) {
+	    						// Use calculated skills and subskills as "old" if there is another week in line... 
+	    						tmpOld = new Spieler();
+	    						tmpOld.copySkills(calculationPlayer);
+	    						tmpOld.copySubSkills(calculationPlayer);
+	    						tmpOld.setSpielerID(calculationPlayer.getSpielerID());
+	    						tmpOld.setAlter(calculationPlayer.getAlter());
+	    					}
+	    				}
     				}
 
 
