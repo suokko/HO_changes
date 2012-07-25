@@ -12,6 +12,7 @@ import ho.core.file.xml.XMLCHPPPreParser;
 import ho.core.file.xml.XMLExtensionParser;
 import ho.core.file.xml.XMLNewsParser;
 import ho.core.file.xml.XMLTeamDetailsParser;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.News;
@@ -643,6 +644,8 @@ public class MyConnector {
 					break;
 				case 401:
 					if (authDialog == null) {
+						// disable WaitCursor to unblock GUI
+						CursorToolkit.stopWaitCursor(HOMainFrame.instance().getRootPane());
 						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, "");
 					}
 					authDialog.setVisible(true);
