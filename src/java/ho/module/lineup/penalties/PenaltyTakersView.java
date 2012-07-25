@@ -89,9 +89,10 @@ public class PenaltyTakersView extends JPanel {
 		this.lineup = lineup;
 		reset();
 
-		List<SpielerPosition> list = this.lineup.getPenaltyTakers();
+		// get positions already set as penalty takers in the lineup
+		List<SpielerPosition> positions = this.lineup.getPenaltyTakers();
 		List<PenaltyTaker> takers = new ArrayList<PenaltyTaker>();
-		for (SpielerPosition pos : list) {
+		for (SpielerPosition pos : positions) {
 			if (pos.getSpielerId() != 0) {
 				takers.add(getPenaltyTaker(pos.getSpielerId()));
 			}

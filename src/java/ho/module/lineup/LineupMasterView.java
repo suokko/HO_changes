@@ -1,5 +1,7 @@
 package ho.module.lineup;
 
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.SpielerPosition;
@@ -68,8 +70,7 @@ public class LineupMasterView extends JPanel {
 
 			@Override
 			public void update() {
-				substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
-				penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
+				refreshView();
 			}
 		});
 		
@@ -82,6 +83,20 @@ public class LineupMasterView extends JPanel {
 					updatePenaltyTakersInLineup();
 				}
 				oldTabIndex = tabbedPane.getSelectedIndex();
+			}
+		});
+		
+		RefreshManager.instance().registerRefreshable(new Refreshable() {
+			
+			@Override
+			public void refresh() {
+				refreshView();
+				
+			}
+			
+			@Override
+			public void reInit() {
+				refreshView();
 			}
 		});
 	}
@@ -97,5 +112,10 @@ public class LineupMasterView extends JPanel {
 				takers.get(i).setSpielerId(0);
 			}
 		}
+	}
+	
+	private void refreshView() {
+		this.substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
+		this.penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
 	}
 }
