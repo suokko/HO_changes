@@ -380,7 +380,6 @@ public class PenaltyTakersView extends JPanel {
 					int[] selectedRows = takersTable.getSelectedRows();
 					if (selectedRows.length > 0) {
 						playersTable.clearSelection();
-						removeFromTakersButton.setEnabled(true);
 					}
 					if (selectedRows.length != 1) {
 						moveUpButton.setEnabled(false);
@@ -389,6 +388,7 @@ public class PenaltyTakersView extends JPanel {
 						moveUpButton.setEnabled((selectedRows[0] > 0));
 						moveDownButton.setEnabled(selectedRows[0] < takersTable.getRowCount() - 1);
 					}
+					removeFromTakersButton.setEnabled(selectedRows.length > 0);
 				}
 			}
 		});
