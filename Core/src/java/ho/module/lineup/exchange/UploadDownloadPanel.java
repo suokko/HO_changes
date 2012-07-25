@@ -1,6 +1,7 @@
 package ho.module.lineup.exchange;
 
 import ho.core.db.DBManager;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -128,7 +129,7 @@ public class UploadDownloadPanel extends JPanel {
 			label.setFont(label.getFont().deriveFont(label.getFont().getStyle() ^ Font.BOLD));
 			add(label, gbc);
 		}
-		
+
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.fill = GridBagConstraints.BOTH;
@@ -167,8 +168,13 @@ public class UploadDownloadPanel extends JPanel {
 			return;
 		}
 
-		String result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(),
-				lineup);
+		String result = null;
+		CursorToolkit.startWaitCursor(this);
+		try {
+			result = OnlineWorker.uploadMatchOrder(match.getMatchID(), match.getMatchTyp(), lineup);
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
 
 		int messageType = JOptionPane.PLAIN_MESSAGE;
 		boolean success = false;
@@ -200,12 +206,18 @@ public class UploadDownloadPanel extends JPanel {
 		}
 
 		if (success) {
-			MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
-					.getBasics().getTeamId(), match);
-			if (refreshed != null) {
-				match.merge(refreshed);
-				((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
-				selectMatch(match);
+			MatchKurzInfo refreshed;
+			CursorToolkit.startWaitCursor(this);
+			try {
+				refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel().getBasics()
+						.getTeamId(), match);
+				if (refreshed != null) {
+					match.merge(refreshed);
+					((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
+					selectMatch(match);
+				}
+			} finally {
+				CursorToolkit.stopWaitCursor(this);
 			}
 		}
 
@@ -214,14 +226,20 @@ public class UploadDownloadPanel extends JPanel {
 	}
 
 	private void download() {
-		MatchKurzInfo match = getSelectedMatch();
-		Lineup lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
-		MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
-				.getBasics().getTeamId(), match);
-		if (refreshed != null) {
-			match.merge(refreshed);
-			((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
-			selectMatch(match);
+		Lineup lineup;
+		CursorToolkit.startWaitCursor(this);
+		try {
+			MatchKurzInfo match = getSelectedMatch();
+			lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
+			MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
+					.getBasics().getTeamId(), match);
+			if (refreshed != null) {
+				match.merge(refreshed);
+				((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
+				selectMatch(match);
+			}
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
 		}
 		if (lineup != null) {
 			int messageType = JOptionPane.PLAIN_MESSAGE;
