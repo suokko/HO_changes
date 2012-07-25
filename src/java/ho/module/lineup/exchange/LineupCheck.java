@@ -4,6 +4,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.SpielerPosition;
 import ho.module.lineup.Lineup;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
 
 public class LineupCheck {
 
-	public static boolean doUpload(Lineup lineup) {
+	public static boolean doUpload(MatchKurzInfo match, Lineup lineup) {
 		List<JLabel> problems = new ArrayList<JLabel>();
 		if (hasFreePosition(lineup)) {
 			problems.add(getErrorLabel("lineup.upload.check.lineupIncomplete"));
@@ -30,6 +31,9 @@ public class LineupCheck {
 		}
 		if (lineup.getKicker() <= 0) {
 			problems.add(getWarningLabel("lineup.upload.check.setPiecesNotSet"));
+		}
+		if (!penaltyTakersOK(match, lineup)) {
+			problems.add(getWarningLabel("lineup.upload.check.lessThan11PenaltytakersSet"));
 		}
 		if (problems.size() > 0) {
 			JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString("lineup.upload.check.uploadAnywayQ"));
@@ -58,6 +62,13 @@ public class LineupCheck {
 				|| isFree(lineup, ISpielerPosition.substForward);
 	}
 
+	private static boolean penaltyTakersOK(MatchKurzInfo match, Lineup lineup) {
+		if (!match.getMatchTyp().isCupRules()) {
+			return true;
+		}
+		return lineup.getPenaltyTakers().size() >= 11;
+	}
+	
 	private static boolean isFree(Lineup lineup, int positionId) {
 		SpielerPosition pos = lineup.getPositionById(positionId);
 		return pos == null || pos.getSpielerId() == 0;
