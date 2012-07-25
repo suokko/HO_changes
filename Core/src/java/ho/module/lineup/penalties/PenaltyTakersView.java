@@ -1,5 +1,6 @@
 package ho.module.lineup.penalties;
 
+import ho.core.constants.UIConstants;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.table.RowNumberTable;
 import ho.core.gui.theme.HOIconName;
@@ -163,6 +164,7 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(playersTableLabel, gbc);
 
 		this.playersTable = new JTable();
+		this.playersTable.setRowHeight(UIConstants.TABLE_ROW_HEIGHT);
 		this.playersTable.setModel(new PenaltyTakersTableModel());
 		this.playersTable.setAutoCreateRowSorter(true);
 		// as default, sort by if in lineup, than by ability
@@ -236,6 +238,7 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(takersTableLabel, gbc);
 
 		this.takersTable = new JTable();
+		this.takersTable.setRowHeight(UIConstants.TABLE_ROW_HEIGHT);
 		this.takersTable.setModel(new PenaltyTakersTableModel());
 
 		inLineupColumn = this.takersTable.getColumnModel().getColumn(0);
