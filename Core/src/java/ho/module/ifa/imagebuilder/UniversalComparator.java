@@ -6,14 +6,15 @@ import ho.module.ifa.FlagLabel;
 import java.util.Comparator;
 import java.util.Date;
 
-public class UniversalComparator implements Comparator {
+public class UniversalComparator implements Comparator<Object> {
 	private int direction;
 	
 	public UniversalComparator(int direction) {
 		this.direction = direction;
 	}
 	
-    public int compare(Object obj1, Object obj2) {
+    @Override
+	public int compare(Object obj1, Object obj2) {
     	int ret = 0;
 
     	if (obj1 instanceof String) {

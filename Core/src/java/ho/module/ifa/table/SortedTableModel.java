@@ -42,6 +42,7 @@ public class SortedTableModel extends AbstractTableModel {
  		fireTableDataChanged();
  	}
 
+	@Override
 	public Object getValueAt(int r, int c) {
 		return model.getValueAt(rows[r].index, c);
 	}
@@ -58,10 +59,12 @@ public class SortedTableModel extends AbstractTableModel {
 		model.setValueAt(aValue, rows[r].index, c);
 	}
 
+	@Override
 	public int getRowCount() {
 		return model.getRowCount();
 	}
 
+	@Override
 	public int getColumnCount() {
 		return model.getColumnCount();
 	}
@@ -72,7 +75,7 @@ public class SortedTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Class getColumnClass(int c){
+	public Class<?> getColumnClass(int c){
 		return model.getColumnClass(c);
 	}
 	
@@ -86,9 +89,10 @@ public class SortedTableModel extends AbstractTableModel {
 		sort(sortColumn);// Damit Model aktualisiert wird und repainted
 	}
    
-	private class Row implements Comparable 
+	private class Row implements Comparable<Object>
     {
 		public int index;
+		@Override
 		public int compareTo(Object other) {
 			Row otherRow=(Row)other;
 			Object a = model.getValueAt(index, sortColumn);
