@@ -32,6 +32,7 @@ public class GlobalActionsListener extends MouseAdapter implements
 		this.pluginIfaPanel = pluginIfaPanel;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
 //		if (arg0.getActionCommand().equalsIgnoreCase("saveImage")) {
 //			

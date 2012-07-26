@@ -175,16 +175,19 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		this.roundly = roundly;
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 	try {
 		JFileChooser fileChooser = new JFileChooser();
@@ -217,11 +220,13 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		HOLogger.instance().debug(this.getClass(), "Couldn't find file: " + path);
 		return null;
 	}
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		

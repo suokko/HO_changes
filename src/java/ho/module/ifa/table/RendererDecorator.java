@@ -27,6 +27,7 @@ public class RendererDecorator implements TableCellRenderer {
 	public RendererDecorator() {
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
 		JLabel c = new JLabel(value + "");

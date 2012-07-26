@@ -74,6 +74,7 @@ public class ImageBuilderDialog extends JDialog implements ActionListener{
 	   setLocation(getParent().getX()+x, getParent().getY()+y);     
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
