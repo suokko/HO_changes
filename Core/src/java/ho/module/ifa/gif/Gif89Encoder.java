@@ -5,7 +5,8 @@ package ho.module.ifa.gif;
 
 import java.awt.*;
 import java.io.*;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 //==============================================================================
 /** This is the central class of a JDK 1.1 compatible GIF encoder that, AFAIK,
@@ -93,7 +94,7 @@ public class Gif89Encoder {
   private int           bgIndex = 0;
   private int           loopCount = 1;
   private String        theComments;
-  private Vector        vFrames = new Vector();
+  private List<Gif89Frame>   vFrames = new ArrayList<Gif89Frame>();
 
   //----------------------------------------------------------------------------
   /** Use this default constructor if you'll be adding multiple frames
@@ -178,7 +179,7 @@ public class Gif89Encoder {
    */
   public Gif89Frame getFrameAt(int index)
   {
-    return isOk(index) ? (Gif89Frame) vFrames.elementAt(index) : null;
+    return isOk(index) ? (Gif89Frame) vFrames.get(index) : null;
   }
  
   //----------------------------------------------------------------------------
@@ -197,7 +198,7 @@ public class Gif89Encoder {
   public void addFrame(Gif89Frame gf) throws IOException
   {
     accommodateFrame(gf);
-    vFrames.addElement(gf);
+    vFrames.add(gf);
   }
 
   //----------------------------------------------------------------------------
@@ -253,7 +254,7 @@ public class Gif89Encoder {
   public void insertFrame(int index, Gif89Frame gf) throws IOException
   {
     accommodateFrame(gf);
-    vFrames.insertElementAt(gf, index);
+    vFrames.add(index, gf);
   }
 
   //----------------------------------------------------------------------------
@@ -318,7 +319,7 @@ public class Gif89Encoder {
   public void setUniformDelay(int interval)
   {
     for (int i = 0; i < vFrames.size(); ++i)
-      ((Gif89Frame) vFrames.elementAt(i)).setDelay(interval);  
+      vFrames.get(i).setDelay(interval);  
   }    
 
   //----------------------------------------------------------------------------
@@ -354,7 +355,7 @@ public class Gif89Encoder {
 
     // write out the control and rendering data for each frame
     for (int i = 0; i < nframes; ++i)
-      ((Gif89Frame) vFrames.elementAt(i)).encode(
+      ((Gif89Frame) vFrames.get(i)).encode(
         out, is_sequence, colorTable.getDepth(), colorTable.getTransparent()
       );
 

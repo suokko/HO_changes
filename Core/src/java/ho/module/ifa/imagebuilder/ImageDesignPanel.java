@@ -320,6 +320,7 @@ public class ImageDesignPanel extends JPanel {
 		StateChangeListener() {
 		}
 
+		@Override
 		public void stateChanged(ChangeEvent arg0) {
 			if ((arg0.getSource() instanceof JSpinner)) {
 				if (((JSpinner) arg0.getSource()).getName().equals("size")) {
