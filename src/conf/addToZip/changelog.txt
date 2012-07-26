@@ -17,7 +17,7 @@ Changelist HO! 1.432
 	. Training offset has been removed, and been replaced with an option to adjust the subskill directly.
 
 - Team Analyzer
-	. All update restrictions have been removed, including favorite teams. 
+	. All update restrictions have been removed, including favorite teams.
 	. Update will now download the matches to fill out your autofilter request, or the 30 last opponent matches if a manual filter is selected.
 	. Tournament opponents are in, and so are tournament matches.
 	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
@@ -25,14 +25,13 @@ Changelist HO! 1.432
 
 - Match order uploads
 	. The option to upload match orders to Hattrick have been added.
-	. This is a Hattrick supporter feature, and non-supporters will find the upload button
-	  	inactive.
-	. The lineup tab now has its own tabs, the new ones are
+	. This is a Hattrick supporter feature, and non-supporters will find the upload button inactive.
+	. The lineup tab now has its own tabs, the new ones are:
 		. Lineup - the old one.
-		. Match orders - a place to set and view match orders
-		. Penalty takers - a place to view and set the penalty shooter list
+		. Match orders - a place to set and view match orders.
+		. Penalty takers - a place to view and set the penalty shooter list.
 		. Upload/Download - a place to upload and download orders to and from specific matches.
-	
+
 - Added Tournament matches.
 - New icon and startup screen.
 - Moved intern help texts and from external files to our wiki page (https://sourceforge.net/apps/trac/ho1/wiki/Manual) and link to it in the menu.
