@@ -139,7 +139,6 @@ public class SubstitutionEditView extends JPanel {
 				.getRedCardCriteria().getId());
 		Helper.markierenComboBox(this.standingComboBox, sub.getStanding()
 				.getId());
-
 		this.whenTextField.setValue(Integer.valueOf(sub
 				.getMatchMinuteCriteria()));
 	}
@@ -224,7 +223,7 @@ public class SubstitutionEditView extends JPanel {
 						if (value != null) {
 							whenSlider.setValue(value.intValue());
 						} else {
-							whenSlider.setValue(0);
+							whenSlider.setValue(-1);
 						}
 					}
 				});
@@ -368,7 +367,7 @@ public class SubstitutionEditView extends JPanel {
 		gbc.insets = new Insets(4, 2, 4, 10);
 		add(this.whenTextField, gbc);
 
-		this.whenSlider = new JSlider(0, 119, 0);
+		this.whenSlider = new JSlider(-1, 119, -1);
 		this.whenSlider.setMinimumSize(new Dimension(this.whenTextField
 				.getMinimumSize().width,
 				this.whenSlider.getPreferredSize().height));
