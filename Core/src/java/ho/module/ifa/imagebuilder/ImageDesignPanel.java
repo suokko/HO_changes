@@ -333,9 +333,11 @@ public class ImageDesignPanel extends JPanel {
 		this.percentSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent evt) {
-				visitedEmblemPanel.setBrightness(((JSlider) evt.getSource()).getValue());
-				hostedEmblemPanel.setBrightness(((JSlider) evt.getSource()).getValue());
-				ImageDesignPanel.this.refreshFlagPanel();
+				if (!percentSlider.getValueIsAdjusting()) {
+					visitedEmblemPanel.setBrightness(percentSlider.getValue());
+					hostedEmblemPanel.setBrightness(percentSlider.getValue());
+					ImageDesignPanel.this.refreshFlagPanel();
+				}
 			}
 		});
 
