@@ -13,7 +13,6 @@ import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -42,65 +41,6 @@ public class LineupAssistant {
 
 	/** gibt das Wetter an */
 	private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
-
-	/**
-	 * findet den besten noch freien Kicker für einen Elfer
-	 * 
-	 * @param liste
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public final int getBestFreeElferKicker(List<Integer> liste, List<Spieler> players,
-			List<ISpielerPosition> positionen) {
-
-		float maxValue = -1;
-		float curValue = -1;
-		int bestPlayerID = 0;
-
-		for (Spieler player : players) {
-			curValue = (player.getErfahrung() * 1.5f)
-					+ (((player.getStandards() * 7.0f) / 10.0f) + ((player.getTorschuss() * 3.0f) / 10.0f));
-
-			if (player.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
-				curValue *= 1.1;
-			}
-
-			if ((isSpielerAufgestellt(player.getSpielerID(), positionen))
-					&& (!liste.contains(Integer.valueOf(player.getSpielerID())) && (curValue > maxValue))) {
-				maxValue = curValue;
-				bestPlayerID = player.getSpielerID();
-			}
-		}
-
-		return bestPlayerID;
-	}
-
-	/**
-	 * erstellt die beste Elfmeterreihenfolge
-	 * 
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public final List<Integer> getElferKicker(List<Spieler> players,
-			List<ISpielerPosition> positions) {
-		List<Integer> penaltyShooters = new ArrayList<Integer>();
-
-		for (ISpielerPosition position : positions) {
-			penaltyShooters.add(Integer.valueOf(getBestFreeElferKicker(penaltyShooters, players,
-					positions)));
-		}
-
-		return penaltyShooters;
-	}
 
 	/**
 	 * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
