@@ -75,9 +75,9 @@ public class LineupCreator extends XMLCreator {
 			Element penaltyTakers = doc.createElement("penaltyTakers");
 			root.appendChild(penaltyTakers);
 
-			List<Integer> list = lineup.getBestElferKicker();
-			for (Integer id : list) {
-				penaltyTakers.appendChild(createNode(doc, "id", String.valueOf(id)));
+			List<SpielerPosition> list = lineup.getPenaltyTakers();
+					for (SpielerPosition pos : list) {
+				penaltyTakers.appendChild(createNode(doc, "id", String.valueOf(pos.getSpielerId())));
 			}
 			root.appendChild(createNode(doc, "captain", String.valueOf(lineup.getKapitaen())));
 			root.appendChild(createNode(doc, "kicker", String.valueOf(lineup.getKicker())));

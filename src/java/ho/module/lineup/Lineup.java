@@ -410,14 +410,6 @@ public class Lineup {
 	}
 
 	/**
-	 * Get the best players for penalty kicks.
-	 */
-	public List<Integer> getBestElferKicker() {
-		return m_clAssi.getElferKicker(HOVerwaltung.instance().getModel().getAllSpieler(),
-				m_vPositionen);
-	}
-
-	/**
 	 * Predicts Central Attack-Rating
 	 */
 	public final double getCentralAttackRating() {
