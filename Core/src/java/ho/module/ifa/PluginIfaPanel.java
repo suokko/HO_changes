@@ -53,7 +53,7 @@ public class PluginIfaPanel extends JPanel {
 			
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), statisticScrollPanelHome);
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), statisticScrollPanelAway);
-			//tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ImageBuilder"), imageDesignPanel);
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ImageBuilder"), imageDesignPanel);
 		}
 		return tabbedPane;
 	}
