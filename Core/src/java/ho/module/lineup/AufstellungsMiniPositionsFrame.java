@@ -470,10 +470,9 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		liste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		final DefaultListModel listmodel = new DefaultListModel();
-		List<Integer> shooters = HOVerwaltung.instance().getModel().getAufstellung()
-				.getBestElferKicker();
-		for (Integer id : shooters) {
-			listmodel.addElement(createSpielerLabel(id.intValue()));
+		List<SpielerPosition> shooters = HOVerwaltung.instance().getModel().getAufstellung().getPenaltyTakers();
+		for (SpielerPosition pos : shooters) {
+			listmodel.addElement(createSpielerLabel(pos.getSpielerId()));
 		}
 
 		liste.setModel(listmodel);

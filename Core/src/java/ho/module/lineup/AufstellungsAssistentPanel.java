@@ -46,10 +46,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
     
 	private static final long serialVersionUID = 5271343329674809429L;
-
-	//~ Instance fields ----------------------------------------------------------------------------
-
-	private JButton m_jbElfmeter = new JButton(ThemeManager.getScaledIcon(HOIconName.BUTTON_BALL,24,24));
 	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
 	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
@@ -169,9 +165,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			//gui.RefreshManager.instance ().doRefresh ();
 		} else if (actionEvent.getSource().equals(m_jbOK)) {
 			displayGUI();
-
-		} else if (actionEvent.getSource().equals(m_jbElfmeter)) {
-			new PenaltyShootersDialog(mainFrame);
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
 				|| actionEvent.getSource().equals(m_jchLast)) {
 			mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
@@ -507,10 +500,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jbOK.setToolTipText(hoVerwaltung.getLanguageString("Assistent_starten"));
 		m_jbOK.addActionListener(this);
 		panel.add(m_jbOK);
-		m_jbElfmeter.setPreferredSize(new Dimension(28, 28));
-		m_jbElfmeter.setToolTipText(hoVerwaltung.getLanguageString("Elfmeterschuetzen"));
-		m_jbElfmeter.addActionListener(this);
-		panel.add(m_jbElfmeter);
 		add(panel, BorderLayout.SOUTH);
 	}
 }
