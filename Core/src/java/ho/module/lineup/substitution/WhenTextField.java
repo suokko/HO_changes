@@ -95,7 +95,7 @@ public class WhenTextField extends JFormattedTextField {
 		@Override
 		public String valueToString(Object obj) throws ParseException {
 			Integer value = (Integer) obj;
-			if (value == null || value.intValue() <= 0) {
+			if (value == null || value.intValue() < 0) {
 				return noValueDisplayString;
 			}
 			return MessageFormat.format(valueDisplayString, value);
@@ -115,7 +115,7 @@ public class WhenTextField extends JFormattedTextField {
 
 		@Override
 		public String valueToString(Object value) throws ParseException {
-			return (value == null) ? "0" : value.toString();
+			return (value == null) ? "-1" : value.toString();
 		}
 
 		@Override
