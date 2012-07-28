@@ -2,7 +2,6 @@
 package ho.core.gui;
 
 import ho.HO;
-import ho.core.constants.player.PlayerSpeciality;
 import ho.core.db.DBManager;
 import ho.core.file.hrf.HRFImport;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -15,6 +14,7 @@ import ho.core.gui.theme.nimbus.NimbusTheme;
 import ho.core.model.FormulaFactors;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.match.Weather;
 import ho.core.model.player.Spieler;
 import ho.core.module.IModule;
 import ho.core.module.ModuleManager;
@@ -274,12 +274,11 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	/**
 	 * Get the current weather.
 	 */
-	public static int getWetter() {
+	public static Weather getWetter() {
 		if (m_clHOMainFrame == null) {
-			return PlayerSpeciality.PARTIALLY_CLOUDY;
+			return Weather.PARTIALLY_CLOUDY;
 		}
 		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWeather();
-
 	}
 
 	/**

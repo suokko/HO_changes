@@ -1,14 +1,11 @@
 // %1968012293:de.hattrickorganizer.gui.model%
 package ho.core.gui.comp.renderer;
 
-import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.match.IMatchDetails;
-import ho.core.model.match.Weather;
 
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
@@ -27,29 +24,14 @@ public class WeatherListCellRenderer implements ListCellRenderer {
 
     public javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
 
-    public final java.awt.Component getListCellRendererComponent(javax.swing.JList jList,
+    @Override
+	public final java.awt.Component getListCellRendererComponent(javax.swing.JList jList,
                                                                  Object obj, int index,
                                                                  boolean isSelected,
                                                                  boolean cellHasFocus) {
         if (obj instanceof CBItem && (obj != null)) {
-        	Weather weather = Weather.RAINY;
-            switch (((CBItem) obj).getId()) {
-                case PlayerSpeciality.SUN:
-                	weather = Weather.SUNNY;
-                    break;
-                case PlayerSpeciality.PARTIALLY_CLOUDY:
-                	weather = Weather.PARTIALLY_CLOUDY;
-                    break;
-
-                case PlayerSpeciality.OVERCAST:
-                	weather = Weather.OVERCAST;
-                    break;
-
-                case PlayerSpeciality.RAIN:
-                	weather = Weather.RAINY;
-                    break;
-            }
-            m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[weather.getId()]));
+        	int id = ((CBItem) obj).getId();
+            m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[id]));
             return m_clEntry.getComponent(isSelected);
         } 
         m_jlLeer.setOpaque(true);

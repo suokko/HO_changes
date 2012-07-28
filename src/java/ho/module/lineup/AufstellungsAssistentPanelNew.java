@@ -1,14 +1,10 @@
 package ho.module.lineup;
 
-import ho.core.datatype.CBItem;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.comp.renderer.WeatherListCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
-import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.Weather;
-import ho.core.util.Helper;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,10 +12,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
+import javax.swing.ButtonModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -28,7 +26,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		IAufstellungsAssistentPanel {
 
 	private static final long serialVersionUID = -6853036429678216392L;
-	private JComboBox weatherComboBox;
+	private WeatherChooser weatherChooser;
 
 	public AufstellungsAssistentPanelNew() {
 		initComponents();
@@ -90,8 +88,8 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 	}
 
 	@Override
-	public int getWeather() {
-		return ((CBItem) this.weatherComboBox.getSelectedItem()).getId();
+	public Weather getWeather() {
+		return weatherChooser.getWeather();
 	}
 
 	@Override
@@ -116,12 +114,10 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		gbc.insets = new Insets(4, 4, 2, 2);
 		add(weatherLabel, gbc);
 
-		this.weatherComboBox = new JComboBox(Helper.WETTER);
-		this.weatherComboBox.setRenderer(new WeatherListCellRenderer());
+		this.weatherChooser = new WeatherChooser();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(4, 2, 2, 4);
-//		add(this.weatherComboBox, gbc);
-		add(new WeatherChooser(), gbc);
+		add(this.weatherChooser, gbc);
 
 		// dummy component to consume all extra space
 		gbc.gridx++;
@@ -132,56 +128,129 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 	}
 
 	private void addListeners() {
-		this.weatherComboBox.addActionListener(new ActionListener() {
+		this.weatherChooser.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("####- " + weatherChooser.getWeather());
 				HOMainFrame.instance().getAufstellungsPanel().update();
-
 			}
 		});
 	}
-	
+
+	/**
+	 * Component to show/choose the weather via some toggle buttons.
+	 * 
+	 */
 	private class WeatherChooser extends JPanel {
 
 		private static final long serialVersionUID = -3666581300985404900L;
+		private final List<ActionListener> actionListeners = new ArrayList<ActionListener>();
 		private JToggleButton sunnyBtn;
-		private JToggleButton partlyCloudyBtn;
-		private JToggleButton cloudyBtn;
-		private JToggleButton rainBtn;
-		
+		private JToggleButton partiallyCloudyBtn;
+		private JToggleButton overcastBtn;
+		private JToggleButton rainyBtn;
+		private ButtonGroup buttonGroup;
+
 		public WeatherChooser() {
 			initComponents();
+			setWeather(Weather.PARTIALLY_CLOUDY);
 		}
-		
+
+		public void addActionListener(ActionListener listener) {
+			if (!this.actionListeners.contains(listener)) {
+				this.actionListeners.add(listener);
+			}
+		}
+
+		public void removeActionListener(ActionListener listener) {
+			this.actionListeners.remove(listener);
+		}
+
+		public void setWeather(Weather weather) {
+			switch (weather) {
+			case SUNNY:
+				this.buttonGroup.setSelected(this.sunnyBtn.getModel(), true);
+				break;
+			case PARTIALLY_CLOUDY:
+				this.buttonGroup.setSelected(this.partiallyCloudyBtn.getModel(), true);
+				break;
+			case OVERCAST:
+				this.buttonGroup.setSelected(this.overcastBtn.getModel(), true);
+				break;
+			case RAINY:
+				this.buttonGroup.setSelected(this.rainyBtn.getModel(), true);
+				break;
+			default:
+				this.buttonGroup.clearSelection();
+				break;
+			}
+		}
+
+		public Weather getWeather() {
+			ButtonModel btnModel = this.buttonGroup.getSelection();
+			if (btnModel != null) {
+				if (btnModel == this.sunnyBtn.getModel()) {
+					return Weather.SUNNY;
+				}
+				if (btnModel == this.partiallyCloudyBtn.getModel()) {
+					return Weather.PARTIALLY_CLOUDY;
+				}
+				if (btnModel == this.overcastBtn.getModel()) {
+					return Weather.OVERCAST;
+				}
+				if (btnModel == this.rainyBtn.getModel()) {
+					return Weather.RAINY;
+				}
+			}
+
+			return null;
+		}
+
 		private void initComponents() {
 			setOpaque(false);
-			
+
 			Dimension btnSize = new Dimension(28, 28);
-			ButtonGroup btnGrp = new ButtonGroup();
+			this.buttonGroup = new ButtonGroup();
 			this.sunnyBtn = new JToggleButton();
 			this.sunnyBtn.setPreferredSize(btnSize);
 			this.sunnyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.SUNNY.getId()]));
 			add(this.sunnyBtn);
-			btnGrp.add(this.sunnyBtn);
-			
-			this.partlyCloudyBtn = new JToggleButton();
-			this.partlyCloudyBtn.setPreferredSize(btnSize);
-			this.partlyCloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.PARTIALLY_CLOUDY.getId()]));
-			add(this.partlyCloudyBtn);
-			btnGrp.add(this.partlyCloudyBtn);
-			
-			this.cloudyBtn = new JToggleButton();
-			this.cloudyBtn.setPreferredSize(btnSize);
-			this.cloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.OVERCAST.getId()]));
-			add(this.cloudyBtn);
-			btnGrp.add(this.cloudyBtn);
-			
-			this.rainBtn = new JToggleButton();
-			this.rainBtn.setPreferredSize(btnSize);
-			this.rainBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.RAINY.getId()]));
-			add(this.rainBtn);
-			btnGrp.add(this.rainBtn);
+			this.buttonGroup.add(this.sunnyBtn);
+
+			this.partiallyCloudyBtn = new JToggleButton();
+			this.partiallyCloudyBtn.setPreferredSize(btnSize);
+			this.partiallyCloudyBtn.setIcon(ThemeManager
+					.getIcon(HOIconName.WEATHER[Weather.PARTIALLY_CLOUDY.getId()]));
+			add(this.partiallyCloudyBtn);
+			this.buttonGroup.add(this.partiallyCloudyBtn);
+
+			this.overcastBtn = new JToggleButton();
+			this.overcastBtn.setPreferredSize(btnSize);
+			this.overcastBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.OVERCAST
+					.getId()]));
+			add(this.overcastBtn);
+			this.buttonGroup.add(this.overcastBtn);
+
+			this.rainyBtn = new JToggleButton();
+			this.rainyBtn.setPreferredSize(btnSize);
+			this.rainyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.RAINY.getId()]));
+			add(this.rainyBtn);
+			this.buttonGroup.add(this.rainyBtn);
+
+			ActionListener al = new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+					for (int i = actionListeners.size() - 1; i >= 0; i--) {
+						actionListeners.get(i).actionPerformed(e);
+					}
+				}
+			};
+			this.sunnyBtn.addActionListener(al);
+			this.partiallyCloudyBtn.addActionListener(al);
+			this.overcastBtn.addActionListener(al);
+			this.rainyBtn.addActionListener(al);
 		}
 	}
 

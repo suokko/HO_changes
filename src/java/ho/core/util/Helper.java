@@ -5,6 +5,7 @@ package ho.core.util;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Weather;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.SpielerPosition;
 
@@ -86,7 +87,9 @@ public class Helper {
 			new CBItem(SpielerPosition.getNameForPosition(ISpielerPosition.FORWARD_TOWING), ISpielerPosition.FORWARD_TOWING) };
 
     /** weather combo boxes */
-	public static final CBItem[] WETTER = { new CBItem("", 1), new CBItem("", 2), new CBItem("", 3), new CBItem("", 4) };
+	public static final CBItem[] WETTER = { new CBItem("", Weather.SUNNY.getId()), 
+		new CBItem("", Weather.PARTIALLY_CLOUDY.getId()), new CBItem("", Weather.OVERCAST.getId()), 
+		new CBItem("", Weather.RAINY.getId()) };
 
 	public static NumberFormat CURRENCYFORMAT = java.text.NumberFormat.getCurrencyInstance();
 
