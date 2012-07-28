@@ -27,7 +27,7 @@ import ho.core.util.BrowserLauncher;
 import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
 import ho.core.util.StringUtils;
-import ho.module.lineup.AufstellungsAssistentPanel;
+import ho.module.lineup.IAufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
 import ho.module.matches.SpielePanel;
@@ -728,7 +728,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - parameter.hoMainFrame_PositionX);
 		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
 
-		final AufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
+		final IAufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
 
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
