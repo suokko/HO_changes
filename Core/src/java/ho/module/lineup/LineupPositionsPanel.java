@@ -71,7 +71,7 @@ public class LineupPositionsPanel extends ho.core.gui.comp.panel.RasenPanel
     private javax.swing.JLayeredPane centerPanel;
     private final SwapPositionsManager swapPositionsManager = new SwapPositionsManager(
 			this);
-    private final AufstellungsAssistentPanel assistantPanel;
+    private final IAufstellungsAssistentPanel assistantPanel;
 
     //~ Constructors -------------------------------------------------------------------------------
 
