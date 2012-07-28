@@ -62,16 +62,16 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(TEAMSMILIES[5], "gui/bilder/smilies/E-Team.png");
 		put(TEAMSMILIES[6], "gui/bilder/smilies/F-Team.png");
 
-		put(WEATHER[0], "gui/bilder/wetter/regen.gif");
-		put(WEATHER[1], "gui/bilder/wetter/bewoelkt.gif");
-		put(WEATHER[2], "gui/bilder/wetter/leichtbewoelkt.gif");
-		put(WEATHER[3], "gui/bilder/wetter/sonnig.gif");
-		put(WEATHER_EFFECT_GOOD, "gui/bilder/wetter/gut.gif");
-		put(WEATHER_EFFECT_BAD, "gui/bilder/wetter/schlecht.gif");
-		put(WEATHER_RAIN_POS, "gui/bilder/wetter/se_rain_positive.gif");
-		put(WEATHER_RAIN_NEG, "gui/bilder/wetter/se_rain_negative.gif");
-		put(WEATHER_SUN_POS, "gui/bilder/wetter/se_sun_positive.gif");
-		put(WEATHER_SUN_NEG, "gui/bilder/wetter/se_sun_negative.gif");
+		put(WEATHER[0], "gui/bilder/Fugue/weather-rain.png");
+		put(WEATHER[1], "gui/bilder/Fugue/weather-clouds.png");
+		put(WEATHER[2], "gui/bilder/Fugue/weather-cloudy.png");
+		put(WEATHER[3], "gui/bilder/Fugue/weather.png");
+		put(WEATHER_EFFECT_GOOD, "gui/bilder/Fugue/tick-small.png");
+		put(WEATHER_EFFECT_BAD, "gui/bilder/Fugue/cross-small.png");
+		put(WEATHER_RAIN_POS, "gui/bilder/Fugue/weather-rain-pos-se.png");
+		put(WEATHER_RAIN_NEG, "gui/bilder/Fugue/weather-rain-neg-se.png");
+		put(WEATHER_SUN_POS, "gui/bilder/Fugue/weather-sun-pos-se.png");
+		put(WEATHER_SUN_NEG, "gui/bilder/Fugue/weather-sun-neg-se.png");
 
 		put(SPECIAL[1], "gui/bilder/spec1.png");
 		put(SPECIAL[2], "gui/bilder/spec2.png");
