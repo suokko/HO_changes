@@ -6,23 +6,23 @@ public interface IAufstellungsAssistentPanel {
 
 	boolean isExcludeLastMatch();
 
-	boolean isFormBeruecksichtigen();
+	boolean isConsiderForm();
 
-	boolean isGesperrtIgnorieren();
+	boolean isIgnoreSuspended();
 
-	String getGruppe();
+	String getGroup();
 
-	boolean isGruppenFilter();
+	boolean isGroupFilter();
 
 	boolean isIdealPositionZuerst();
 
-	boolean isNotGruppe();
+	boolean isNotGroup();
 
-	int getReihenfolge();
+	int getOrder();
 
-	boolean isVerletztIgnorieren();
+	boolean isIgnoreInjured();
 
-	int getWetter();
+	int getWeather();
 
 	void addToAssistant(PlayerPositionPanel positionPanel);
 

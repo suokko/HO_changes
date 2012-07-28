@@ -278,7 +278,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		if (m_clHOMainFrame == null) {
 			return PlayerSpeciality.PARTIALLY_CLOUDY;
 		}
-		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWetter();
+		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWeather();
 
 	}
 
@@ -733,14 +733,14 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
 
-		parameter.aufstellungsAssistentPanel_gruppe = aap.getGruppe();
-		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getReihenfolge();
-		parameter.aufstellungsAssistentPanel_not = aap.isNotGruppe();
-		parameter.aufstellungsAssistentPanel_cbfilter = aap.isGruppenFilter();
+		parameter.aufstellungsAssistentPanel_gruppe = aap.getGroup();
+		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getOrder();
+		parameter.aufstellungsAssistentPanel_not = aap.isNotGroup();
+		parameter.aufstellungsAssistentPanel_cbfilter = aap.isGroupFilter();
 		parameter.aufstellungsAssistentPanel_idealPosition = aap.isIdealPositionZuerst();
-		parameter.aufstellungsAssistentPanel_form = aap.isFormBeruecksichtigen();
-		parameter.aufstellungsAssistentPanel_verletzt = aap.isVerletztIgnorieren();
-		parameter.aufstellungsAssistentPanel_gesperrt = aap.isGesperrtIgnorieren();
+		parameter.aufstellungsAssistentPanel_form = aap.isConsiderForm();
+		parameter.aufstellungsAssistentPanel_verletzt = aap.isIgnoreInjured();
+		parameter.aufstellungsAssistentPanel_gesperrt = aap.isIgnoreSuspended();
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
 		// SpielerÜbersichtsPanel
