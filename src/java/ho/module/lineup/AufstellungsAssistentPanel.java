@@ -116,7 +116,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isFormBeruecksichtigen()
 	 */
 	@Override
-	public final boolean isFormBeruecksichtigen() {
+	public final boolean isConsiderForm() {
 		return m_jchForm.isSelected();
 	}
 
@@ -124,7 +124,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGesperrtIgnorieren()
 	 */
 	@Override
-	public final boolean isGesperrtIgnorieren() {
+	public final boolean isIgnoreSuspended() {
 		return m_jchGesperrte.isSelected();
 	}
 
@@ -132,7 +132,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getGruppe()
 	 */
 	@Override
-	public final String getGruppe() {
+	public final String getGroup() {
 		return m_jcbGruppe.getSelectedItem().toString();
 	}
 
@@ -140,7 +140,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGruppenFilter()
 	 */
 	@Override
-	public final boolean isGruppenFilter() {
+	public final boolean isGroupFilter() {
 		return m_jchListBoxGruppenFilter.isSelected();
 	}
 
@@ -156,7 +156,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isNotGruppe()
 	 */
 	@Override
-	public final boolean isNotGruppe() {
+	public final boolean isNotGroup() {
 		return m_jchNot.isSelected();
 	}
 
@@ -164,7 +164,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getReihenfolge()
 	 */
 	@Override
-	public final int getReihenfolge() {
+	public final int getOrder() {
 		return ((CBItem) m_jcbReihenfolge.getSelectedItem()).getId();
 	}
 
@@ -172,7 +172,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isVerletztIgnorieren()
 	 */
 	@Override
-	public final boolean isVerletztIgnorieren() {
+	public final boolean isIgnoreInjured() {
 		return m_jchVerletzte.isSelected();
 	}
 
@@ -180,7 +180,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getWetter()
 	 */
 	@Override
-	public final int getWetter() {
+	public final int getWeather() {
 		return ((CBItem) m_jcbWetter.getSelectedItem()).getId();
 	}
 
@@ -286,10 +286,10 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 			//Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, oder genau die zu der der Spieler gehört
 			if (spieler.isSpielberechtigt()
-					&& (((this.getGruppe().trim().equals("")
-							|| spieler.getTeamInfoSmilie().equals(this.getGruppe()))
+					&& (((this.getGroup().trim().equals("")
+							|| spieler.getTeamInfoSmilie().equals(this.getGroup()))
 							&& !m_jchNot.isSelected())
-							|| (!spieler.getTeamInfoSmilie().equals(this.getGruppe())
+							|| (!spieler.getTeamInfoSmilie().equals(this.getGroup())
 									&& m_jchNot.isSelected()))) {
 				boolean include = true;
 				final AufstellungCBItem lastLineup = AufstellungsVergleichHistoryPanel
@@ -316,7 +316,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						m_jchVerletzte.isSelected(),
 						m_jchGesperrte.isSelected(),
 						ho.core.model.UserParameter.instance().WetterEffektBonus,
-						getWetter());
+						getWeather());
 		mainFrame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
 		mainFrame.getAufstellungsPanel().update();
 
