@@ -17,7 +17,7 @@ import java.util.Properties;
 public final class Verein {
 	// for locale indepemdent parsing of input with commas
     final DecimalFormat DF = new DecimalFormat("0", new DecimalFormatSymbols(Locale.GERMANY));
-	
+
     /** Team Name */
     private String m_sTeamName;
     /** Datum */
@@ -77,7 +77,7 @@ public final class Verein {
     public Verein(ResultSet rs) throws Exception {
         try {
             m_iCoTrainer = rs.getInt("COTrainer");
-            m_iPsychologen = rs.getInt("Pschyologen");
+            m_iPsychologen = rs.getInt("Psychologen");
             m_iPRManager = rs.getInt("PRManager");
             m_iMasseure = rs.getInt("Physiologen");
             m_iAerzte = rs.getInt("Aerzte");
@@ -360,9 +360,9 @@ public final class Verein {
     @Deprecated
     public void setTorwartTrainer(int m_iTorwartTrainer) {}
 
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
     //Accessor
-    ////////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Getter for property m_iTorwartTrainer.
