@@ -134,10 +134,10 @@ public class LineupPositionsPanel extends ho.core.gui.comp.panel.RasenPanel
      */
     public final void refresh() {
         final boolean gruppenfilter = m_clLineupPanel.getAufstellungsAssitentPanel()
-                                                           .isGruppenFilter();
-        final String gruppe = m_clLineupPanel.getAufstellungsAssitentPanel().getGruppe();
+                                                           .isGroupFilter();
+        final String gruppe = m_clLineupPanel.getAufstellungsAssitentPanel().getGroup();
         final boolean gruppenegieren = m_clLineupPanel.getAufstellungsAssitentPanel()
-                                                            .isNotGruppe();
+                                                            .isNotGroup();
 
         final boolean exludeLast = m_clLineupPanel.getAufstellungsAssitentPanel()
                                                         .isExcludeLastMatch();
