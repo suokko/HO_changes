@@ -23,15 +23,6 @@ public interface IMatchDetails {
     /** Match of the Season */
     public static final int EINSTELLUNG_MOTS = 1;
 
-    /** rain */
-    public static final int WETTER_REGEN = 0;
-    /** overcast */
-    public static final int WETTER_BEWOELKT = 1;
-    /** cloudy */
-    public static final int WETTER_WOLKIG = 2;
-    /** sun */
-    public static final int WETTER_SONNE = 3;
-
     /** Normal tactic */
     public static final int TAKTIK_NORMAL = 0;
     /** Pressing tactic */
