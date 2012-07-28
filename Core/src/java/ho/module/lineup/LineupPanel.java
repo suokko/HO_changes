@@ -35,7 +35,7 @@ import javax.swing.event.ListSelectionListener;
 public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 
 	private static final long serialVersionUID = -8522462525789028842L;
-	private AufstellungsAssistentPanel aufstellungsAssistentPanel;
+	private IAufstellungsAssistentPanel aufstellungsAssistentPanel;
 	private AufstellungsDetailPanel aufstellungsDetailPanel;
 	private LineupPositionsPanel aufstellungsPositionsPanel;
 	private AufstellungsVergleichHistoryPanel aufstellungsVergleichHistoryPanel;
@@ -164,11 +164,12 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 		verticalSplitPaneLow = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
 
 		aufstellungsVergleichHistoryPanel = new AufstellungsVergleichHistoryPanel();
+//		aufstellungsAssistentPanel = new AufstellungsAssistentPanelNew();
 		aufstellungsAssistentPanel = new AufstellungsAssistentPanel();
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("", ThemeManager.getScaledIcon(HOIconName.BALL, 13, 13), new JScrollPane(
-				aufstellungsAssistentPanel));
+				(Component)aufstellungsAssistentPanel));
 		tabbedPane.addTab("", ThemeManager.getIcon(HOIconName.DISK),
 				aufstellungsVergleichHistoryPanel);
 
