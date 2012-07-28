@@ -8,6 +8,7 @@ import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Weather;
 
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
@@ -31,24 +32,24 @@ public class WeatherListCellRenderer implements ListCellRenderer {
                                                                  boolean isSelected,
                                                                  boolean cellHasFocus) {
         if (obj instanceof CBItem && (obj != null)) {
-        	int wert = 0;
+        	Weather weather = Weather.RAINY;
             switch (((CBItem) obj).getId()) {
                 case PlayerSpeciality.SUN:
-                    wert = IMatchDetails.WETTER_SONNE;
+                	weather = Weather.SUNNY;
                     break;
                 case PlayerSpeciality.PARTIALLY_CLOUDY:
-                	wert = IMatchDetails.WETTER_WOLKIG;
+                	weather = Weather.PARTIALLY_CLOUDY;
                     break;
 
                 case PlayerSpeciality.OVERCAST:
-                	wert = IMatchDetails.WETTER_BEWOELKT;
+                	weather = Weather.OVERCAST;
                     break;
 
                 case PlayerSpeciality.RAIN:
-                	wert = IMatchDetails.WETTER_REGEN;
+                	weather = Weather.RAINY;
                     break;
             }
-            m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[wert]));
+            m_clEntry.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[weather.getId()]));
             return m_clEntry.getComponent(isSelected);
         } 
         m_jlLeer.setOpaque(true);

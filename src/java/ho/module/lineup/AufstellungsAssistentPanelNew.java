@@ -7,6 +7,7 @@ import ho.core.gui.comp.renderer.WeatherListCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.Weather;
 import ho.core.util.Helper;
 
 import java.awt.Dimension;
@@ -160,25 +161,25 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 			ButtonGroup btnGrp = new ButtonGroup();
 			this.sunnyBtn = new JToggleButton();
 			this.sunnyBtn.setPreferredSize(btnSize);
-			this.sunnyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[IMatchDetails.WETTER_SONNE]));
+			this.sunnyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.SUNNY.getId()]));
 			add(this.sunnyBtn);
 			btnGrp.add(this.sunnyBtn);
 			
 			this.partlyCloudyBtn = new JToggleButton();
 			this.partlyCloudyBtn.setPreferredSize(btnSize);
-			this.partlyCloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[IMatchDetails.WETTER_WOLKIG]));
+			this.partlyCloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.PARTIALLY_CLOUDY.getId()]));
 			add(this.partlyCloudyBtn);
 			btnGrp.add(this.partlyCloudyBtn);
 			
 			this.cloudyBtn = new JToggleButton();
 			this.cloudyBtn.setPreferredSize(btnSize);
-			this.cloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[IMatchDetails.WETTER_BEWOELKT]));
+			this.cloudyBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.OVERCAST.getId()]));
 			add(this.cloudyBtn);
 			btnGrp.add(this.cloudyBtn);
 			
 			this.rainBtn = new JToggleButton();
 			this.rainBtn.setPreferredSize(btnSize);
-			this.rainBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[IMatchDetails.WETTER_REGEN]));
+			this.rainBtn.setIcon(ThemeManager.getIcon(HOIconName.WEATHER[Weather.RAINY.getId()]));
 			add(this.rainBtn);
 			btnGrp.add(this.rainBtn);
 		}
