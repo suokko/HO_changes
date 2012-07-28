@@ -1,6 +1,6 @@
 package ho.module.lineup;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface IAufstellungsAssistentPanel {
 
@@ -27,13 +27,13 @@ public interface IAufstellungsAssistentPanel {
 	void addToAssistant(PlayerPositionPanel positionPanel);
 
 	/**
-	 * Returns a HashMap of statuses from the position selection.
+	 * Returns a Map of statuses from the position selection.
 	 * The keys are integers containing roleIDs for the positions.
 	 * The values are booleans for whether the role should be included or not.
 	 * The map does not contain all positions, only those being sent through filtering.
 	 * 
-	 * @return The HashMap
+	 * @return The Map
 	 */
-	 HashMap<Integer, Boolean> getPositionStatuses();
+	 Map<Integer, Boolean> getPositionStatuses();
 
 }

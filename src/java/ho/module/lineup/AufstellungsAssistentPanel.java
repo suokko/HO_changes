@@ -424,7 +424,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getPositionStatuses()
 	 */
 	@Override
-	public HashMap<Integer, Boolean> getPositionStatuses() {
+	public Map<Integer, Boolean> getPositionStatuses() {
 		HashMap<Integer, Boolean> returnMap = new HashMap<Integer, Boolean>();
 		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
 		while (it.hasNext()){
