@@ -14,6 +14,7 @@ import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class LineupAssistant {
@@ -778,7 +779,7 @@ public class LineupAssistant {
 		// Remove "red" positions from the position selection of the
 		// AssistantPanel.
 		Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
-		java.util.HashMap<Integer, Boolean> statusMap = HOMainFrame.instance()
+		Map<Integer, Boolean> statusMap = HOMainFrame.instance()
 				.getAufstellungsPanel().getAufstellungsAssitentPanel().getPositionStatuses();
 		for (int i = 0; i < positions.size(); i++) {
 			SpielerPosition pos = (SpielerPosition) positions.get(i);
