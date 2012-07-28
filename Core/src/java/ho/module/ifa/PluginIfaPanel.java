@@ -31,7 +31,7 @@ public class PluginIfaPanel extends JPanel {
 	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
 	private JButton imageBuilderButton = new JButton(HOVerwaltung.instance().getLanguageString("Imagebuilder"));
 	private JTabbedPane tabbedPane;
-	
+
 	public PluginIfaPanel() {
 		initialize();
 	}
@@ -43,21 +43,21 @@ public class PluginIfaPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(getToolbar(),BorderLayout.NORTH);
 		add(getTabbedPane(),BorderLayout.CENTER);
-		
+
 	}
 
-	
+
 	private JTabbedPane getTabbedPane(){
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
-			
+
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), statisticScrollPanelHome);
 			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), statisticScrollPanelAway);
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("ImageBuilder"), imageDesignPanel);
+			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Imagebuilder"), imageDesignPanel);
 		}
 		return tabbedPane;
 	}
-	
+
 
 	public FriendlyStatisticsPanel getStatisticScrollPanelAway() {
 		return this.statisticScrollPanelAway;
@@ -66,12 +66,12 @@ public class PluginIfaPanel extends JPanel {
 	public FriendlyStatisticsPanel getStatisticScrollPanelHome() {
 		return this.statisticScrollPanelHome;
 	}
-	
+
 	public JPanel getToolbar(){
 		if(toolbarPanel == null){
 			toolbarPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			refreshButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String worldDetails;
@@ -83,23 +83,23 @@ public class PluginIfaPanel extends JPanel {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					
+
 					PluginIfaUtils.updateMatchesTable();
 					imageDesignPanel.refreshFlagPanel();
 					getStatisticScrollPanelHome().refresh();
 					getStatisticScrollPanelAway().refresh();
-					
+
 				}
 			});
 			toolbarPanel.add(refreshButton);
-			
+
 			imageBuilderButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					ImageBuilderDialog dialog = new ImageBuilderDialog();
 					dialog.setVisible(true);
-					
+
 				}
 			});
 			//toolbarPanel.add(imageBuilderButton);
