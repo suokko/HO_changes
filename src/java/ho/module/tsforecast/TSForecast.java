@@ -327,7 +327,7 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	// if(resultset != null && resultset.first()) {
 	// strLabel += HOVerwaltung.instance().getLanguageString("Staff")
 	// + resultset.getInt("PSCHYOLOGEN") + " "
-	// + HOVerwaltung.instance().getLanguageString("Psychologen")
+	// + HOVerwaltung.instance().getLanguageString("ls.club.staff.sportpsychologists")
 	// + ". ";
 	// }
 	// resultset =

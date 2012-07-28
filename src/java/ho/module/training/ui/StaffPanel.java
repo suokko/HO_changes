@@ -162,7 +162,7 @@ public class StaffPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(2, 6, 6, 2);
-        main.add(new JLabel(hoV.getLanguageString("CoTrainer")), gbc);
+        main.add(new JLabel(hoV.getLanguageString("ls.club.staff.assistantcoaches")), gbc);
         gbc.gridx = 1;
         gbc.insets = new Insets(2, 2, 6, 6);
         main.add(coTrainerCombo, gbc);
