@@ -41,7 +41,7 @@ import javax.swing.JPanel;
 /**
  * Die automatische Aufstellung wird hier konfiguriert und gestartet
  */
-public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener {
+public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener, IAufstellungsAssistentPanel {
 
 
     
@@ -104,42 +104,82 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	//~ Methods ------------------------------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isExcludeLastMatch()
+	 */
+	@Override
 	public final boolean isExcludeLastMatch() {
 		return m_jchLast.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isFormBeruecksichtigen()
+	 */
+	@Override
 	public final boolean isFormBeruecksichtigen() {
 		return m_jchForm.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGesperrtIgnorieren()
+	 */
+	@Override
 	public final boolean isGesperrtIgnorieren() {
 		return m_jchGesperrte.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getGruppe()
+	 */
+	@Override
 	public final String getGruppe() {
 		return m_jcbGruppe.getSelectedItem().toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGruppenFilter()
+	 */
+	@Override
 	public final boolean isGruppenFilter() {
 		return m_jchListBoxGruppenFilter.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isIdealPositionZuerst()
+	 */
+	@Override
 	public final boolean isIdealPositionZuerst() {
 		return m_jchIdealPosition.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isNotGruppe()
+	 */
+	@Override
 	public final boolean isNotGruppe() {
 		return m_jchNot.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getReihenfolge()
+	 */
+	@Override
 	public final int getReihenfolge() {
 		return ((CBItem) m_jcbReihenfolge.getSelectedItem()).getId();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isVerletztIgnorieren()
+	 */
+	@Override
 	public final boolean isVerletztIgnorieren() {
 		return m_jchVerletzte.isSelected();
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getWetter()
+	 */
+	@Override
 	public final int getWetter() {
 		return ((CBItem) m_jcbWetter.getSelectedItem()).getId();
 	}
@@ -213,6 +253,10 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#addToAssistant(ho.module.lineup.PlayerPositionPanel)
+	 */
+	@Override
 	public void addToAssistant(PlayerPositionPanel positionPanel) {
 		positions.put(positionPanel, null);
 	}    	
@@ -376,14 +420,10 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	}
 	
-	/**
-	 * Returns a HashMap of statuses from the position selection.
-	 * The keys are integers containing roleIDs for the positions.
-	 * The values are booleans for whether the role should be included or not.
-	 * The map does not contain all positions, only those being sent through filtering.
-	 * 
-	 * @return The HashMap
+	/* (non-Javadoc)
+	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getPositionStatuses()
 	 */
+	@Override
 	public HashMap<Integer, Boolean> getPositionStatuses() {
 		HashMap<Integer, Boolean> returnMap = new HashMap<Integer, Boolean>();
 		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();

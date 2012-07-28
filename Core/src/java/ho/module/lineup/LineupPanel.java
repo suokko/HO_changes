@@ -77,7 +77,7 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 	 * Gibt das AufstellungsAssistentPanel zurück
 	 * 
 	 */
-	public final AufstellungsAssistentPanel getAufstellungsAssitentPanel() {
+	public final IAufstellungsAssistentPanel getAufstellungsAssitentPanel() {
 		return aufstellungsAssistentPanel;
 	}
 
