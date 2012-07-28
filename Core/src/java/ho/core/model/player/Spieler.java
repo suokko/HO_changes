@@ -13,11 +13,12 @@ import ho.core.epv.EPVData;
 import ho.core.model.FactorObject;
 import ho.core.model.FormulaFactors;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Weather;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.training.SkillDrops;
+import ho.core.training.TrainingManager;
 import ho.core.training.TrainingPerPlayer;
 import ho.core.training.TrainingPerWeek;
-import ho.core.training.TrainingManager;
 import ho.core.training.TrainingPoints;
 import ho.core.training.WeeklyTrainingType;
 import ho.core.util.Helper;
@@ -1626,8 +1627,8 @@ public final class Spieler {
        1 bei positiv
        -1 bei negativ
      */
-    public int getWetterEffekt(int wetter) {
-        return PlayerSpeciality.getWeatherEffect(wetter, m_iSpezialitaet);
+    public int getWetterEffekt(Weather weather) {
+        return PlayerSpeciality.getWeatherEffect(weather, m_iSpezialitaet);
     }
 
     

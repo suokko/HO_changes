@@ -11,6 +11,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
+import ho.core.model.match.Weather;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
@@ -180,8 +181,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getWetter()
 	 */
 	@Override
-	public final int getWeather() {
-		return ((CBItem) m_jcbWetter.getSelectedItem()).getId();
+	public final Weather getWeather() {
+		int id = ((CBItem) m_jcbWetter.getSelectedItem()).getId();
+		return Weather.getById(id);
 	}
 
 	@Override
