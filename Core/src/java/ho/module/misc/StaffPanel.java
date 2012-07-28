@@ -53,7 +53,7 @@ final class StaffPanel extends JPanel {
     }
 
     private void initComponents() {
-        
+
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
@@ -65,28 +65,28 @@ final class StaffPanel extends JPanel {
         HOVerwaltung hoV = HOVerwaltung.instance();
         setBorder(BorderFactory.createTitledBorder(hoV.getLanguageString("Trainerstab")));
 
-        
+
         JLabel label;
 
         setLayout(layout);
 
-        label = new JLabel(hoV.getLanguageString("CoTrainer"));
+        label = new JLabel(hoV.getLanguageString("ls.club.staff.assistantcoaches"));
         add(label,assistantCoachesLabel.getComponent(false),0);
- 
-        label = new JLabel(hoV.getLanguageString("Psychologen"));
+
+        label = new JLabel(hoV.getLanguageString("ls.club.staff.sportpsychologists"));
         add(label,psychologistsLabel.getComponent(false),1);
 
-        label = new JLabel(hoV.getLanguageString("PRManager"));
+        label = new JLabel(hoV.getLanguageString("ls.club.staff.spokespersons"));
         add(label,spokepersonsLabel.getComponent(false),2);
 
-        label = new JLabel(hoV.getLanguageString("Physiotherapeuten"));
+        label = new JLabel(hoV.getLanguageString("ls.club.staff.physiotherapists"));
         add(label,physiotherapistsLabel.getComponent(false),3 );
 
-        label = new JLabel(hoV.getLanguageString("Aerzte"));
+        label = new JLabel(hoV.getLanguageString("ls.club.staff.doctors"));
         add(label,doctorsLabel.getComponent(false),4 );
 
     }
-    
+
     private void add(JLabel label,Component comp, int y){
     	constraints.anchor = GridBagConstraints.WEST;
     	constraints.gridx = 0;

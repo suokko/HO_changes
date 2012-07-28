@@ -10,9 +10,9 @@ import ho.core.model.HOVerwaltung;
  * @author draghetto
  */
 class UpdatePanel extends AbstractInjuryPanel {
-	
+
 	private static final long serialVersionUID = -7495655025085036037L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private String msg = HOVerwaltung.instance().getLanguageString("UpdatesNeeded");
@@ -52,7 +52,7 @@ class UpdatePanel extends AbstractInjuryPanel {
      * Reset the panel to default data
      */
     final void reset() {
-        setInputMsg(HOVerwaltung.instance().getLanguageString("Doctors"));
+        setInputMsg(HOVerwaltung.instance().getLanguageString("ls.club.staff.doctors"));
         setOutputMsg(msg);
         setHeader(HOVerwaltung.instance().getLanguageString("Injury2"));
         setInputValue(HOVerwaltung.instance().getModel().getVerein().getAerzte() + "");
