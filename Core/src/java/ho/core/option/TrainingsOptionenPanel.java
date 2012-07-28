@@ -35,7 +35,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
     private TrainingAdjustmentPanel m_jtapGoalkeeping;
     private TrainingAdjustmentPanel m_jtapDefending;
     private TrainingAdjustmentPanel m_jtapOsmosis;
-    
+
     private JCheckBox m_jcSkillDrops = new JCheckBox(HOVerwaltung.instance().getLanguageString("skillDrops"));
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         UserParameter.temp().TRAINING_OFFSET_ASSISTANTS = m_jtapAssisstantFactor.getValue();
         UserParameter.temp().TRAINING_OFFSET_INTENSITY = m_jtapIntensityFactor.getValue();
         SkillDrops.instance().setActive(m_jcSkillDrops.isSelected());
-        
+
         OptionManager.instance().setReInitNeeded();
     }
 
@@ -77,45 +77,45 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
     private void initComponents() {
     	setLayout(new GridLayout(15, 1, 4, 0));
 
-        JLabel label = new JLabel("   " + 
+        JLabel label = new JLabel("   " +
         		ho.core.model.HOVerwaltung.instance().getLanguageString("VoraussichtlicheTrainingwochen"));
         add(label);
 
-        m_jtapGoalkeeping = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.goalkeeping"),
+        m_jtapGoalkeeping = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.goalkeeping"),
                 WeeklyTrainingType.instance(TrainingType.GOALKEEPING).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_GOALKEEPING, this);
         add(m_jtapGoalkeeping);
 
-        m_jtapDefending = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.defending"),
+        m_jtapDefending = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.defending"),
         		WeeklyTrainingType.instance(TrainingType.DEFENDING).getBaseTrainingLength(),UserParameter.temp().TRAINING_OFFSET_DEFENDING, this);
         add(m_jtapDefending);
 
-        m_jtapPlaymaking = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.playmaking"),
+        m_jtapPlaymaking = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.playmaking"),
         		WeeklyTrainingType.instance(TrainingType.PLAYMAKING).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_PLAYMAKING, this);
         add(m_jtapPlaymaking);
 
-        m_jtapPassing = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.short_passes"),
+        m_jtapPassing = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.shortpasses"),
         		WeeklyTrainingType.instance(TrainingType.SHORT_PASSES).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_PASSING, this);
         add(m_jtapPassing);
 
-        m_jtapWinger = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.crossing"),
+        m_jtapWinger = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.crossing"),
         		WeeklyTrainingType.instance(TrainingType.CROSSING_WINGER).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_WINGER, this);
         add(m_jtapWinger);
 
-        m_jtapScoring = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.scoring"),
+        m_jtapScoring = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.scoring"),
         		WeeklyTrainingType.instance(TrainingType.SCORING).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_SCORING, this);
         add(m_jtapScoring);
-        
-        m_jtapSetPieces = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.set_pieces"),
+
+        m_jtapSetPieces = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingtype.setpieces"),
         		WeeklyTrainingType.instance(TrainingType.SET_PIECES).getBaseTrainingLength(), UserParameter.temp().TRAINING_OFFSET_SETPIECES, this);
         add(m_jtapSetPieces);
-        
+
         label = new JLabel("   " + HOVerwaltung.instance().getLanguageString("TrainingFaktoren"));
         add(label);
-        
+
         m_jtapOsmosis = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("training.osmosis"),
         		WeeklyTrainingType.OSMOSIS_BASE_PERCENTAGE, UserParameter.temp().TRAINING_OFFSET_OSMOSIS, this);
         add(m_jtapOsmosis);
-        
+
         m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
         		WeeklyTrainingType.BASE_AGE_FACTOR, UserParameter.temp().TRAINING_OFFSET_AGE, this);
         add(m_tapAgeFactor);
@@ -131,7 +131,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
         		WeeklyTrainingType.BASE_INTENSITY_FACTOR, UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
         add(m_jtapIntensityFactor);
-    
+
         m_jcSkillDrops.setSelected(SkillDrops.instance().isActive());
         m_jcSkillDrops.addActionListener(this);
         add(m_jcSkillDrops);
@@ -139,12 +139,12 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if ((event.getSource() == m_jcSkillDrops) 
+		if ((event.getSource() == m_jcSkillDrops)
 				&& (m_jcSkillDrops.isSelected() != SkillDrops.instance().isActive())) {
 			SkillDrops.instance().setActive(m_jcSkillDrops.isSelected());
 		}
-		
+
 	}
-	
-	
+
+
 }
