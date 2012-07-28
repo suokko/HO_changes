@@ -6,9 +6,9 @@
  */
 package ho.module.lineup;
 
-import ho.core.constants.player.PlayerSpeciality;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Weather;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
@@ -41,7 +41,7 @@ public class LineupAssistant {
 	private float m_fWetterBonus = 0.2f;
 
 	/** gibt das Wetter an */
-	private int m_iWetter = PlayerSpeciality.PARTIALLY_CLOUDY;
+	private Weather weather = Weather.PARTIALLY_CLOUDY;
 
 	/**
 	 * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
@@ -111,14 +111,14 @@ public class LineupAssistant {
 	 */
 	public final void doAufstellung(List<ISpielerPosition> positionen, List<Spieler> spieler,
 			byte reihenfolge, boolean mitForm, boolean idealPosFirst, boolean ignoreVerletzung,
-			boolean ignoreSperre, float wetterBonus, int wetter) {
+			boolean ignoreSperre, float wetterBonus, Weather weather) {
 		// m_vPositionen = new Vector ( positionen );
 		// m_vSpieler = new Vector( spieler );
 
 		positionen = filterPositions(positionen);
 
 		m_fWetterBonus = wetterBonus;
-		m_iWetter = wetter;
+		this.weather = weather;
 
 		// nur spieler auf idealpos aufstellen
 		if (idealPosFirst) {
@@ -461,7 +461,7 @@ public class LineupAssistant {
 
 			// stk inklusive Wetter effekt errechnen
 			aktuStk = spieler.calcPosValue(position, mitForm);
-			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
+			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(this.weather) * aktuStk);
 
 			if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))
 					&& ((bestSpieler == null) || (bestStk < aktuStk))
@@ -509,7 +509,7 @@ public class LineupAssistant {
 
 			// stk inklusive Wetter effekt errechnen
 			aktuStk = spieler.calcPosValue(position, mitForm);
-			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(m_iWetter) * aktuStk);
+			aktuStk += (m_fWetterBonus * spieler.getWetterEffekt(this.weather) * aktuStk);
 
 			// Idealpos STK muss > mindestwert sein
 			if ((!isSpielerAufgestellt(spieler.getSpielerID(), positionen))

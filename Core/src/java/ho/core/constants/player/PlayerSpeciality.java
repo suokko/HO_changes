@@ -2,6 +2,7 @@ package ho.core.constants.player;
 
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.Weather;
 
 public final class PlayerSpeciality {
 
@@ -12,12 +13,6 @@ public final class PlayerSpeciality {
     public static final int UNPREDICTABLE 	= 4;
     public static final int HEAD 			= 5;
     public static final int REGAINER 		= 6;
-
-    //Weather
-    public static final int SUN 				= 1;
-    public static final int PARTIALLY_CLOUDY 	= 2;
-    public static final int OVERCAST 			= 3;	
-    public static final int RAIN 				= 4;
     
     public static final CBItem[] ITEMS = {
     	new CBItem("", NO_SPECIALITY),
@@ -60,11 +55,11 @@ public final class PlayerSpeciality {
 	   1 bei positiv
 	   -1 bei negativ
 	 */
-	public static int getWeatherEffect(int wetter, int m_iSpezialitaet) {
+	public static int getWeatherEffect(Weather wetter, int m_iSpezialitaet) {
 	    int ret = 0;
 	
 	    switch (wetter) {
-	        case SUN:
+	        case SUNNY:
 	
 	            //zauberer
 	            if (m_iSpezialitaet == TECHNICAL) {
@@ -85,7 +80,7 @@ public final class PlayerSpeciality {
 	        case OVERCAST:
 	            break;
 	
-	        case RAIN:
+	        case RAINY:
 	
 	            //zauberer
 	            if (m_iSpezialitaet == TECHNICAL) {

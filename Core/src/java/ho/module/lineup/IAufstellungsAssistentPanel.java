@@ -1,5 +1,7 @@
 package ho.module.lineup;
 
+import ho.core.model.match.Weather;
+
 import java.util.Map;
 
 public interface IAufstellungsAssistentPanel {
@@ -22,7 +24,7 @@ public interface IAufstellungsAssistentPanel {
 
 	boolean isIgnoreInjured();
 
-	int getWeather();
+	Weather getWeather();
 
 	void addToAssistant(PlayerPositionPanel positionPanel);
 

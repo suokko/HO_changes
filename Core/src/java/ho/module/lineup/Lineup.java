@@ -11,6 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.Weather;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
@@ -1188,9 +1189,9 @@ public class Lineup {
 	 */
 	public final void doAufstellung(List<Spieler> spieler, byte reihenfolge, boolean mitForm,
 			boolean idealPosFirst, boolean ignoreVerletzung, boolean ignoreSperren,
-			float wetterBonus, int wetter) {
+			float wetterBonus, Weather weather) {
 		m_clAssi.doAufstellung(m_vPositionen, spieler, reihenfolge, mitForm, idealPosFirst,
-				ignoreVerletzung, ignoreSperren, wetterBonus, wetter);
+				ignoreVerletzung, ignoreSperren, wetterBonus, weather);
 		setAutoKicker(null);
 		setAutoKapitaen(null);
 	}
