@@ -1,5 +1,6 @@
 package ho.module.lineup;
 
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
@@ -7,6 +8,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.Weather;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,12 +23,14 @@ import javax.swing.ButtonModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 
 public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		IAufstellungsAssistentPanel {
 
 	private static final long serialVersionUID = -6853036429678216392L;
 	private WeatherChooser weatherChooser;
+	private GroupChooser groupChooser;
 
 	public AufstellungsAssistentPanelNew() {
 		initComponents();
@@ -59,7 +63,6 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isGroupFilter() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -71,7 +74,6 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isNotGroup() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -119,6 +121,11 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		gbc.insets = new Insets(4, 2, 2, 4);
 		add(this.weatherChooser, gbc);
 
+		this.groupChooser = new GroupChooser();
+		gbc.gridy = 1;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.groupChooser, gbc);
+
 		// dummy component to consume all extra space
 		gbc.gridx++;
 		gbc.gridy++;
@@ -132,10 +139,79 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("####- " + weatherChooser.getWeather());
-				HOMainFrame.instance().getAufstellungsPanel().update();
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						CursorToolkit.startWaitCursor(AufstellungsAssistentPanelNew.this);
+						try {
+							HOMainFrame.instance().getAufstellungsPanel().update();
+						} finally {
+							CursorToolkit.stopWaitCursor(AufstellungsAssistentPanelNew.this);
+						}
+					}
+				});
 			}
 		});
+	}
+
+	private class GroupChooser extends JPanel {
+
+		private static final long serialVersionUID = -8049080706451222927L;
+		private JToggleButton aBtn;
+		private JToggleButton bBtn;
+		private JToggleButton cBtn;
+		private JToggleButton dBtn;
+		private JToggleButton eBtn;
+		private JToggleButton fBtn;
+		private ButtonGroup buttonGroup;
+
+		public GroupChooser() {
+			initComponents();
+		}
+
+		private void initComponents() {
+			setOpaque(false);
+			setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
+
+			Dimension btnSize = new Dimension(28, 28);
+			this.buttonGroup = new ButtonGroup();
+			this.aBtn = new JToggleButton();
+			this.aBtn.setPreferredSize(btnSize);
+			this.aBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[1]));
+			add(this.aBtn);
+			this.buttonGroup.add(this.aBtn);
+
+			this.bBtn = new JToggleButton();
+			this.bBtn.setPreferredSize(btnSize);
+			this.bBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[2]));
+			add(this.bBtn);
+			this.buttonGroup.add(this.bBtn);
+
+			this.cBtn = new JToggleButton();
+			this.cBtn.setPreferredSize(btnSize);
+			this.cBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[3]));
+			add(this.cBtn);
+			this.buttonGroup.add(this.cBtn);
+
+			this.dBtn = new JToggleButton();
+			this.dBtn.setPreferredSize(btnSize);
+			this.dBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[4]));
+			add(this.dBtn);
+			this.buttonGroup.add(this.dBtn);
+
+			this.eBtn = new JToggleButton();
+			this.eBtn.setPreferredSize(btnSize);
+			this.eBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[5]));
+			add(this.eBtn);
+			this.buttonGroup.add(this.eBtn);
+
+			this.fBtn = new JToggleButton();
+			this.fBtn.setPreferredSize(btnSize);
+			this.fBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]));
+			add(this.fBtn);
+			this.buttonGroup.add(this.fBtn);
+		}
 	}
 
 	/**
@@ -209,6 +285,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 		private void initComponents() {
 			setOpaque(false);
+			setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
 
 			Dimension btnSize = new Dimension(28, 28);
 			this.buttonGroup = new ButtonGroup();
