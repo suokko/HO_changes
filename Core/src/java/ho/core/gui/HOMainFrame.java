@@ -330,7 +330,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		} else if (source.equals(m_jmBeendenItem)) { // Quit
 			// Restore normal window mode (i.e. leave full screen)
 			FullScreen.instance().restoreNormalMode(this);
-			// Fire CloseEvent, so all Plugins get informed
+			// Fire CloseEvent, so all Modules get informed
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}   else if (source.equals(m_jmCreditsItem)) {
 			Credits.showCredits(HOMainFrame.instance());
@@ -355,7 +355,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}
 		HOMainFrame.setHOStatus(HOMainFrame.READY);
 	}
-	
+
 	private void openURL(String url) {
 		try {
 			BrowserLauncher.openURL(url);
@@ -374,7 +374,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	 * Beendet HO
 	 */
 	public void beenden() {
-		
+
 		CursorToolkit.startWaitCursor(getRootPane());
 		try {
 			HOLogger.instance().debug(getClass(), "Shutting down HO!");
@@ -395,7 +395,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			HOLogger.instance().debug(getClass(), "Disconnected");
 			HOLogger.instance().debug(getClass(), "Shutdown complete!");
 			// Dispose führt zu einem windowClosed, sobald alle windowClosing
-			// (Plugins) durch sind
+			// (Modules) durch sind
 			isAppTerminated = true; // enable System.exit in windowClosed()
 			try {
 				dispose();
@@ -598,7 +598,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	}
 
 	/**
-	 * OptionsPanels für Plugins
+	 * OptionsPanels for Modules
 	 */
 	public void addOptionPanel(String name, JPanel optionpanel) {
 		m_vOptionPanels.add(optionpanel);
@@ -792,7 +792,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	public static void setHOStatus(int i) {
 		status = i;
 	}
-	
+
 	private void addListeners() {
 		addWindowListener(new WindowAdapter() {
 			/**

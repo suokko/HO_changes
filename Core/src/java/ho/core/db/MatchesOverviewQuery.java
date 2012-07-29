@@ -125,7 +125,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows[8] = new MatchesHighlightsStat("highlight_special","5,6,7,8,9,15,16,17,18,19,25,35,36,37,38,39");
 		rows[9] = new MatchesHighlightsStat("highlight_yellowcard","5", "10,11");
 		rows[10] = new MatchesHighlightsStat("highlight_redcard","5", "12,13,14");
-		rows[11] = new MatchesHighlightsStat("Verletzt","0","90,91,92,93,94,95,96,97");
+		rows[11] = new MatchesHighlightsStat("ls.player.injury.injured","0","90,91,92,93,94,95,96,97");
 
 		for (int i = 0; i < rows.length; i++) {
 			if(!rows[i].isTitle())
