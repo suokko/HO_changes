@@ -30,9 +30,9 @@ import javax.swing.SwingConstants;
  * @author draghetto
  */
 class InjuryDetailPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = -4123995368822577858L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private JComboBox injuryType = new JComboBox();
@@ -220,9 +220,9 @@ class InjuryDetailPanel extends JPanel {
      * Initialize the GUI components
      */
     private void init() {
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("Healthy"));
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("Bruised"));
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("InjuredTraining"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.healthy"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.bruised"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.injured"));
 
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -232,7 +232,7 @@ class InjuryDetailPanel extends JPanel {
         config.setLayout(new GridLayout(4, 3));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("Spieler")));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("Alter")));
-        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Verletzt")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.injury.injured")));
         config.add(createPanel(players));
         config.add(createPanel(age));
         config.add(createPanel(injury));

@@ -32,7 +32,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7187251269604772672L;
 
- 
+
     //~ Instance fields ----------------------------------------------------------------------------
 
     public String[] m_sToolTipStrings = {
@@ -53,10 +53,10 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Zuschauer"),
 			// Auslastung
 			"%",
-			HOVerwaltung.instance().getLanguageString("Stehplaetze"),
-			HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
-			HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
-			HOVerwaltung.instance().getLanguageString("Logen"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.terraces"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.basicseating"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.seatsunderroof"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.seatsinvipboxes"),
 			// Fananzahl
 			HOVerwaltung.instance().getLanguageString("Fans"),
 			HOVerwaltung.instance().getLanguageString("Fans") + " / "
@@ -82,10 +82,10 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Aktuell"), // Stadiongroesse
 			HOVerwaltung.instance().getLanguageString("Zuschauer"), // Zuschauer
 			"%", // Auslastung
-			HOVerwaltung.instance().getLanguageString("Stehplaetze"),
-			HOVerwaltung.instance().getLanguageString("Sitzplaetze"),
-			HOVerwaltung.instance().getLanguageString("Ueberdachteplaetze"),
-			HOVerwaltung.instance().getLanguageString("Logen"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.terraces"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.basicseating"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.seatsunderroof"),
+			HOVerwaltung.instance().getLanguageString("ls.club.arena.seatsinvipboxes"),
 			HOVerwaltung.instance().getLanguageString("Fans"), // Fananzahl
 			HOVerwaltung.instance().getLanguageString("Fans") + " / "
 					+ HOVerwaltung.instance().getLanguageString("Wochen"),
@@ -93,7 +93,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 					+ HOVerwaltung.instance().getLanguageString("Fans"),
 			HOVerwaltung.instance().getLanguageString("Fans"), // Stimmung
 			HOVerwaltung.instance().getLanguageString("Platzierung") // LigaPlatz
-			
+
     };
     private ArenaStatistikModel[] m_clMatches;
     private int m_iMaxArenaGroesse;
@@ -234,7 +234,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 
 
 
- 
+
 
     //-----initialisierung-----------------------------------------
 
@@ -301,22 +301,22 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    m_clData[i][9] = new ColorLabelEntry(match.getSoldTerraces()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
-			    
+
 			  //Ligaplatz
 			    m_clData[i][10] = new ColorLabelEntry(match.getSoldBasics()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
-			    
+
 			  //Ligaplatz
 			    m_clData[i][11] = new ColorLabelEntry(match.getSoldRoof()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
-			    
+
 			  //Ligaplatz
 			    m_clData[i][12] = new ColorLabelEntry(match.getSoldVip()+"",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
-			    
+
 			    //Fananzahl
 			    m_clData[i][13] = new ProgressbarTableEntry(match.getFans(), 0, m_iMaxFananzahl, 0, 1, background, new Color(80, 80, 80), "");
 
@@ -344,7 +344,7 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			    m_clData[i][17] = new ColorLabelEntry(match.getLigaPlatz() + ".",
 			                                          ColorLabelEntry.FG_STANDARD, background,
 			                                          SwingConstants.CENTER);
-			    
+
 			}
 		} catch (Exception e) {
 			HOLogger.instance().error(getClass(), e);
