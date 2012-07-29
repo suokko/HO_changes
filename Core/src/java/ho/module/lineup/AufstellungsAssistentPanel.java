@@ -286,7 +286,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			final ho.core.model.player.Spieler spieler = (ho.core.model.player.Spieler) alleSpieler
 			.get(i);
 
-			//Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, oder genau die zu der der Spieler gehört
+			// Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, 
+			// oder genau die zu der der Spieler gehört
 			if (spieler.isSpielberechtigt()
 					&& (((this.getGroup().trim().equals("")
 							|| spieler.getTeamInfoSmilie().equals(this.getGroup()))
