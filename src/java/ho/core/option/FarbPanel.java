@@ -47,12 +47,12 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    //---------------Listener-------------------------------------------    
+    //---------------Listener-------------------------------------------
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
     	HOVerwaltung hoVerwaltung = HOVerwaltung.instance();
         if (actionEvent.getSource()==bruisedButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("Angeschlagen"), temp.FG_ANGESCHLAGEN);
+            		hoVerwaltung.getLanguageString("ls.player.injury.bruised"), temp.FG_ANGESCHLAGEN);
 
             if (color != null) {
                 temp.FG_ANGESCHLAGEN = color;
@@ -61,7 +61,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource()==injuredButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("Verletzt"),temp.FG_VERLETZT);
+            		hoVerwaltung.getLanguageString("ls.player.injury.injured"),temp.FG_VERLETZT);
 
             if (color != null) {
             	temp.FG_VERLETZT = color;
@@ -116,7 +116,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        
+
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
@@ -136,11 +136,11 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         themeComboBox.setSelectedItem(ho.core.model.UserParameter.temp().theme);
         themeComboBox.addActionListener(this);
         panel.add(themeComboBox);
-        
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Angeschlagen"));
+
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injury.bruised"));
         addRowPanel(panel,label, bruisedButton, temp.FG_ANGESCHLAGEN);
 
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Verletzt"));
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injury.injured"));
         addRowPanel(panel,label, injuredButton, temp.FG_VERLETZT);
 
         label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Verwarnt"));
@@ -161,7 +161,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
 
         refresh();
     }
-    
+
     private void addRowPanel(JPanel panel,JLabel label, JButton button,Color color){
     	panel.add(label);
     	button.setBackground(color);

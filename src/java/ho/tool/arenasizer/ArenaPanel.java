@@ -51,9 +51,9 @@ final class ArenaPanel extends JPanel {
         reInit();
     }
 
-    //-------Refresh---------------------------------    
+    //-------Refresh---------------------------------
     public void reInit() {
-    	HOModel model = HOVerwaltung.instance().getModel(); 
+    	HOModel model = HOVerwaltung.instance().getModel();
         m_clStadium = model.getStadium();
         m_clStadien = m_clArenaSizer.calcConstructionArenas(m_clStadium,model.getVerein().getFans());
         //Entrys mit Werten füllen
@@ -64,13 +64,13 @@ final class ArenaPanel extends JPanel {
         //Tablewerte setzen
         values = new IHOTableEntry[9][5];
         HOVerwaltung hoV = HOVerwaltung.instance();
- 
-        String[] columnText = {"Stehplaetze","Sitzplaetze","Ueberdachteplaetze","Logen","Gesamt","Einnahmen","Unterhalt","Gewinn","Baukosten"};
+
+        String[] columnText = {"ls.club.arena.terraces","ls.club.arena.basicseating","ls.club.arena.seatsunderroof","ls.club.arena.seatsinvipboxes","Gesamt","Einnahmen","Unterhalt","Gewinn","Baukosten"};
         for (int i = 0; i < columnText.length; i++) {
         	values[i][0] = new ColorLabelEntry(hoV.getLanguageString(columnText[i]),
                     ColorLabelEntry.FG_STANDARD,  ColorLabelEntry.BG_SPIELERPOSITONSWERTE, SwingConstants.LEFT);
 		}
- 
+
 
         //Platzwerte
         for (int i = 0; i < 9; i++) {
@@ -82,7 +82,7 @@ final class ArenaPanel extends JPanel {
         		else if(i > 4)
         			 values[i][j] = createDoppelLabelEntry(ColorLabelEntry.BG_SPIELEREINZELWERTE);
 			}
-			
+
 		}
 
         m_jtArena.setModel(new TableModel(values,UEBERSCHRIFT));
@@ -108,7 +108,7 @@ final class ArenaPanel extends JPanel {
                 	            		   ColorLabelEntry.FG_STANDARD,
                 	            		   background, SwingConstants.RIGHT));
     }
-    
+
     void reinitArena(Stadium currentArena, int maxSupporter, int normalSupporter, int minSupporter) {
         m_clStadium = currentArena;
         m_clStadien = m_clArenaSizer.calcConstructionArenas(currentArena, maxSupporter, normalSupporter, minSupporter);
