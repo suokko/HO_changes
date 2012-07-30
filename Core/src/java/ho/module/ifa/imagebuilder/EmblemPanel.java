@@ -15,7 +15,6 @@ import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -39,9 +38,8 @@ public class EmblemPanel extends JPanel implements MouseListener{
 	private int brightness = 50;
 	private String imagePath = "";
 
-	public EmblemPanel( FlagLabel[] flagLabels,int countriesPlayedIn,String key) {
+	public EmblemPanel( FlagLabel[] flagLabels,int countriesPlayedIn) {
 		setOpaque(false);
-		setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString(key)));
 		this.flagPanel = new FlagPanel(flagLabels, countriesPlayedIn);
 		initialize();
 	}
@@ -231,4 +229,33 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	public void setHeaderImage(ImageDesignPanel imagePanel) {
+
+		 try {
+			 JFileChooser fileChooser = new JFileChooser();
+			 fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg",
+			 "gif" }));
+			 fileChooser.setAcceptAllFileFilterUsed(false);
+			 fileChooser.setMultiSelectionEnabled(false);
+			 if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
+			 String path = fileChooser.getSelectedFile().getPath();
+			 setImagePath(path);
+			 ImageIcon image = createImageIcon(path);
+			 setLogo(image);
+			 this.getParent().validate();
+			 this.getParent().repaint();
+			 } else {
+			 setLogo(null);
+			 this.getParent().validate();
+			 this.getParent().repaint();
+			 ConfigManager.saveConfig(imagePanel);
+		 }
+		 } catch (Exception ex) {
+			 HOLogger.instance().error(getClass(), ex);
+		 }
+		
+	}
+	
 }

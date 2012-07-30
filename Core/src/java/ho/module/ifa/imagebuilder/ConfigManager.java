@@ -61,7 +61,7 @@ public class ConfigManager {
 		config.setString(IFA_HOSTEDHEADER,visitedEmblemPanel.getHeaderText());
 		config.setString(IFA_HOSTEDPATHEMBLEM,visitedEmblemPanel.getImagePath());
 
-		config.setBoolean(IFA_GIFANIMATED,imageDesignPanel.isAnimGif());
+//		config.setBoolean(IFA_GIFANIMATED,imageDesignPanel.isAnimGif());
 		config.setString(IFA_GIFDELAY, imageDesignPanel.getDelaySpinner().getValue().toString());
 		ModuleConfig.instance().save();
 	}

@@ -1,8 +1,14 @@
 package ho.module.ifa;
 
 import ho.core.util.HOLogger;
+import ho.module.ifa.gif.Gif89Encoder;
 import ho.module.ifa.gif.Quantize;
+import ho.module.ifa.imagebuilder.ConfigManager;
+import ho.module.ifa.imagebuilder.ImageDesignPanel;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,11 +18,14 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.filechooser.FileFilter;
+import javax.swing.JFileChooser;
 
 
 public class GlobalActionsListener extends MouseAdapter implements
@@ -32,106 +41,90 @@ public class GlobalActionsListener extends MouseAdapter implements
 		this.pluginIfaPanel = pluginIfaPanel;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-//		if (arg0.getActionCommand().equalsIgnoreCase("saveImage")) {
-//			
-//			try {
-//				JFileChooser fileChooser = new JFileChooser();
-//				fileChooser.setFileFilter(new ImageFileFilter(
-//						new String[] { "gif" }));
-//				fileChooser.setAcceptAllFileFilterUsed(false);
-//				if (this.pluginIfaPanel.getImageDesignPanel().isAnimGif())
-//					fileChooser.setSelectedFile(new File("animated.gif"));
-//				else if (this.pluginIfaPanel.getImageDesignPanel().isHomeAway())
-//					fileChooser.setSelectedFile(new File("visited.gif"));
-//				else
-//					fileChooser.setSelectedFile(new File("hosted.gif"));
-//				if (fileChooser.showSaveDialog(this.parent) != 0)
-//					return;
-//				OutputStream out = new FileOutputStream(fileChooser
-//						.getSelectedFile().getPath());
-//				ImageDesignPanel imageDesignPanel = this.pluginIfaPanel
-//						.getImageDesignPanel();
-//				boolean isSelected = imageDesignPanel.getHome().isSelected();
-//
-//				ConfigManager.saveConfig(imageDesignPanel);
-//
-//				if (imageDesignPanel.isAnimGif()) {
-//					JDialog dialog = new JDialog();
-//					dialog.getContentPane().setBackground(Color.white);
-//					dialog.setUndecorated(true);
-//					dialog.getContentPane().setLayout(null);
-//
-//					if (!isSelected) {
-//						imageDesignPanel.getHome().getActionListeners()[0]
-//								.actionPerformed(new ActionEvent(
-//										imageDesignPanel.getHome(), 0,
-//										"visited"));
-//					}
-//					JComponent panel1 = imageDesignPanel.getEmblemPanel(0)
-//							.getImage();
-//					imageDesignPanel.getAway().getActionListeners()[0]
-//							.actionPerformed(new ActionEvent(imageDesignPanel
-//									.getHome(), 0, "hosted"));
-//					JComponent panel2 = imageDesignPanel.getEmblemPanel(1)
-//							.getImage();
-//
-//					Dimension size1 = panel1.getSize();
-//					Dimension size2 = panel2.getSize();
-//					int maxW = size1.width > size2.width ? size1.width
-//							: size2.width;
-//					int maxH = size1.height > size2.height ? size1.height
-//							: size2.height;
-//					panel1.setBounds(0, 0, size1.width, size1.height);
-//					panel2.setBounds(maxW, 0, size2.width, size2.height);
-//
-//					dialog.getContentPane().add(panel1);
-//					dialog.getContentPane().add(panel2);
-//					dialog.setBounds(WIDTH + 1, HEIGHT + 1, 2 * maxW, maxH);
-//					dialog.setVisible(true);
-//
-//					BufferedImage bufferedImage = new BufferedImage(
-//							dialog.getWidth(), dialog.getHeight(), 1);
-//					dialog.getContentPane().paintAll(
-//							bufferedImage.createGraphics());
-//
-//					Gif89Encoder encoder = new Gif89Encoder();
-//					BufferedImage bufIma = quantizeBufferedImage(bufferedImage);
-//					encoder.addFrame(bufIma.getSubimage(0, 0, maxW, maxH));
-//					encoder.addFrame(bufIma.getSubimage(maxW, 0, maxW, maxH));
-//					encoder.setLoopCount(0);
-//					encoder.setUniformDelay((int) (100.0D * new Double(
-//							imageDesignPanel.getDelaySpinner().getValue()
-//									.toString()).doubleValue()));
-//					encoder.encode(out);
-//					out.close();
-//
-//					if (isSelected)
-//						imageDesignPanel.getHome().getActionListeners()[0]
-//								.actionPerformed(new ActionEvent(
-//										imageDesignPanel.getHome(), 0,
-//										"visited"));
-//					else
-//						imageDesignPanel.getAway().getActionListeners()[0]
-//								.actionPerformed(new ActionEvent(
-//										imageDesignPanel.getAway(), 0, "hosted"));
-//					dialog.dispose();
-//					return;
-//				}
-//
-//				JComponent panel = imageDesignPanel.getEmblemPanel(0).getImage();
-//				BufferedImage bufferedImage = new BufferedImage(
-//						panel.getWidth(), panel.getHeight(), 1);
-//				panel.paintAll(bufferedImage.createGraphics());
-//				Gif89Encoder encoder = new Gif89Encoder();
-//				encoder.addFrame(quantizeBufferedImage(bufferedImage));
-//				encoder.encode(out);
-//				out.close();
-//			} catch (Exception e) {
-//				 HOLogger.instance().error(GlobalActionsListener.class, e);
-//			}
-//		}
+	public static void saveImage(boolean animated, boolean home, ImageDesignPanel imagePanel, Component parent) {
+			try {
+				ConfigManager.saveConfig(imagePanel);
+
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(new ImageFileFilter(
+						new String[] { "gif" }));
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				if (animated)
+					fileChooser.setSelectedFile(new File("animated.gif"));
+				else if (!home)
+					fileChooser.setSelectedFile(new File("visited.gif"));
+				else
+					fileChooser.setSelectedFile(new File("hosted.gif"));
+				if (fileChooser.showSaveDialog(parent) != 0)
+					return;
+				OutputStream out = new FileOutputStream(fileChooser
+						.getSelectedFile().getPath());
+				
+	
+
+				if (animated) {
+					JDialog dialog = new JDialog();
+					dialog.getContentPane().setBackground(Color.white);
+					dialog.setUndecorated(true);
+					dialog.getContentPane().setLayout(null);
+
+					
+					JComponent panel1 = imagePanel.getHostedEmblemPanel()
+							.getImage();
+					JComponent panel2 = imagePanel.getVisitedEmblemPanel()
+							.getImage();
+
+					Dimension size1 = panel1.getSize();
+					Dimension size2 = panel2.getSize();
+					int maxW = size1.width > size2.width ? size1.width
+							: size2.width;
+					int maxH = size1.height > size2.height ? size1.height
+							: size2.height;
+					panel1.setBounds(0, 0, size1.width, size1.height);
+					panel2.setBounds(maxW, 0, size2.width, size2.height);
+
+					dialog.getContentPane().add(panel1);
+					dialog.getContentPane().add(panel2);
+					dialog.setBounds(WIDTH + 1, HEIGHT + 1, 2 * maxW, maxH);
+					dialog.setVisible(true);
+
+					BufferedImage bufferedImage = new BufferedImage(
+							dialog.getWidth(), dialog.getHeight(), 1);
+					dialog.getContentPane().paintAll(
+							bufferedImage.createGraphics());
+
+					Gif89Encoder encoder = new Gif89Encoder();
+					BufferedImage bufIma = quantizeBufferedImage(bufferedImage);
+					encoder.addFrame(bufIma.getSubimage(0, 0, maxW, maxH));
+					encoder.addFrame(bufIma.getSubimage(maxW, 0, maxW, maxH));
+					encoder.setLoopCount(0);
+					encoder.setUniformDelay((int) (100.0D * new Double(
+							imagePanel.getDelaySpinner().getValue()
+									.toString()).doubleValue()));
+					encoder.encode(out);
+					out.close();
+
+					dialog.dispose();
+					return;
+				}
+
+				JComponent panel;
+				
+				if (home) {
+					panel = imagePanel.getHostedEmblemPanel().getImage();
+				} else {
+					panel = imagePanel.getVisitedEmblemPanel().getImage();
+				}
+				BufferedImage bufferedImage = new BufferedImage(
+						panel.getWidth(), panel.getHeight(), 1);
+				panel.paintAll(bufferedImage.createGraphics());
+				Gif89Encoder encoder = new Gif89Encoder();
+				encoder.addFrame(quantizeBufferedImage(bufferedImage));
+				encoder.encode(out);
+				out.close();
+			} catch (Exception e) {
+				 HOLogger.instance().error(GlobalActionsListener.class, e);
+			}
 	}
 
 	@Override
@@ -165,7 +158,7 @@ public class GlobalActionsListener extends MouseAdapter implements
 //		}
 	}
 
-	private BufferedImage quantizeBufferedImage(BufferedImage bufferedImage)
+	private static BufferedImage quantizeBufferedImage(BufferedImage bufferedImage)
 			throws IOException {
 		int[][] pixels = getPixels(bufferedImage);
 		int[] palette = Quantize.quantizeImage(pixels, 256);
@@ -192,7 +185,7 @@ public class GlobalActionsListener extends MouseAdapter implements
 		return null;
 	}
 
-	private int[][] getPixels(Image image) throws IOException {
+	private static int[][] getPixels(Image image) throws IOException {
 		int w = image.getWidth(null);
 		int h = image.getHeight(null);
 		int[] pix = new int[w * h];
@@ -215,38 +208,11 @@ public class GlobalActionsListener extends MouseAdapter implements
 		return pixels;
 	}
 
-	private class ImageFileFilter extends FileFilter {
-		String[] ext = new String[0];
-
-		public ImageFileFilter(String[] ext) {
-			this.ext = ext;
-		}
-
-		@Override
-		public boolean accept(File f) {
-			if (f.isDirectory()) {
-				return true;
-			}
-			String extension = "";
-			String s = f.getName();
-			int i = s.lastIndexOf('.');
-
-			if ((i > 0) && (i < s.length() - 1)) {
-				extension = s.substring(i + 1).toLowerCase();
-			}
-			if (extension != null) {
-				for (int j = 0; j < this.ext.length; j++) {
-					if (extension.equals(this.ext[j])) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-
-		@Override
-		public String getDescription() {
-			return "Images";
-		}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+		// TODO Auto-generated method stub
+		
 	}
 }
