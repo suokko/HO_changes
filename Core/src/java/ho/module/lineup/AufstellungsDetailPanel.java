@@ -89,9 +89,9 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	private JComboBox m_jcbSelbstvertrauen = new JComboBox(TeamConfidence.ITEMS);
 
-	private CBItem[] TRAINERTYPE = { new CBItem(HOVerwaltung.instance().getLanguageString("coach.defensive"), 0),
-			new CBItem(HOVerwaltung.instance().getLanguageString("coach.normal"), 2),
-			new CBItem(HOVerwaltung.instance().getLanguageString("coach.offensive"), 1), };
+	private CBItem[] TRAINERTYPE = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.coachtype.defensive"), 0),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.coachtype.neutral"), 2),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.coachtype.offensive"), 1), };
 
 	private JComboBox m_jcbTrainerType = new JComboBox(TRAINERTYPE);
 
