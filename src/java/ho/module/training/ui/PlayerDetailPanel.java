@@ -52,8 +52,7 @@ public class PlayerDetailPanel extends ImagePanel {
 	 */
 	public void reload(Spieler spieler) {
 		if (spieler == null) {
-			playerLabel.setText(HOVerwaltung.instance().getLanguageString(
-					"PlayerSelect"));
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect"));
 			for (int i = 0; i < 8; i++) {
 				skillLabel[i].setText("");
 				levelBar[i].setLevel(0f);
@@ -65,17 +64,16 @@ public class PlayerDetailPanel extends ImagePanel {
 		playerLabel.setText(spieler.getName());
 
 		// gets the list of user defined future trainings
-		List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel
-				.getTrainPanel().getFutureTrainings();
+		List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel()
+				.getFutureTrainings();
 
 		StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
 		// instantiate a future train manager to calculate the previsions */
-		FutureTrainingManager ftm = new FutureTrainingManager(spieler,
-				trainings, sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
+		FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
+				sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
 
 		// Add future skillups
-		for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter
-				.hasNext();) {
+		for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
 			ISkillup element = iter.next();
 			ho.module.training.TrainingPanel.getSkillupPanel().addRow(element);
 		}
@@ -85,8 +83,7 @@ public class PlayerDetailPanel extends ImagePanel {
 			skillLabel[i].setText(PlayerAbility.getNameForSkill(
 					Skills.getSkillValue(spieler, skillIndex), true));
 
-			FuturePlayer fp = ftm
-					.previewPlayer(UserParameter.instance().futureWeeks);
+			FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
 			double finalValue = getSkillValue(fp, skillIndex);
 			levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
 		}
@@ -156,7 +153,7 @@ public class PlayerDetailPanel extends ImagePanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(4, 4, 4, 4);
+		gbc.insets = new Insets(2, 4, 2, 4);
 		for (int i = 0; i < 8; i++) {
 			gbc.gridy = i;
 			gbc.weightx = 0.0;
@@ -171,9 +168,9 @@ public class PlayerDetailPanel extends ImagePanel {
 			gbc.gridx = 1;
 			bottom.add(skillLabel[i], gbc);
 
-			levelBar[i] = new ColorBar(0f, 200, 20);
+			levelBar[i] = new ColorBar(0f, 200, 16);
 			levelBar[i].setOpaque(false);
-			levelBar[i].setMinimumSize(new Dimension(200, 20));
+			levelBar[i].setMinimumSize(new Dimension(200, 16));
 			gbc.fill = GridBagConstraints.BOTH;
 			gbc.gridx = 2;
 			gbc.weightx = 1.0;
@@ -186,7 +183,7 @@ public class PlayerDetailPanel extends ImagePanel {
 		bottom.add(dummyPanelToConsumeAllExtraSpace, gbc);
 
 		maingbc.gridy = 1;
-		maingbc.insets = new Insets(5, 5, 10, 5);
+		maingbc.insets = new Insets(0, 0, 0, 0);
 		maingbc.fill = GridBagConstraints.BOTH;
 		maingbc.weightx = 1.0;
 		maingbc.weighty = 1.0;

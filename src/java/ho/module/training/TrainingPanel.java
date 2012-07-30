@@ -14,6 +14,7 @@ import ho.module.training.ui.comp.DividerListener;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 public class TrainingPanel extends JPanel implements IRefreshable {
@@ -66,7 +67,7 @@ public class TrainingPanel extends JPanel implements IRefreshable {
                                                new DividerListener(DividerListener.training_lowerLeftSplitPane)); //$NON-NLS-1$
 
             JSplitPane bottomPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane,
-                                                    playerDetailPanel);
+                                                  new JScrollPane(playerDetailPanel));
 
             bottomPanel.setDividerLocation(UserParameter.instance().training_bottomSplitPane); //$NON-NLS-1$
             bottomPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
