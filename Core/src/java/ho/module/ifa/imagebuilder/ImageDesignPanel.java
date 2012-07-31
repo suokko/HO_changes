@@ -178,7 +178,6 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 		
 		saveAnimatedImage.addActionListener(this);
-		saveAnimatedImage.setActionCommand("saveImage");
 		toolbar.add(saveAnimatedImage);
 	}
 
@@ -357,21 +356,21 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	public void refreshFlagPanel() {
 		
-		String hosted = hostedTextField.getText();
-		String visited = visitedTextField.getText();
-		
-		centerPanel.remove(visitedOptions);
-		centerPanel.remove(hostedOptions);
+//		String hosted = hostedTextField.getText();
+//		String visited = visitedTextField.getText();
+//		
+//		centerPanel.remove(visitedOptions);
+//		centerPanel.remove(hostedOptions);
 		
 		initVisitedEmblemPanel();
 		initHostedEmblemPanel();
-		initHomeAwayPanel();
-		
-		hostedTextField.setText(hosted);
-		visitedTextField.setText(visited);
-		
-		centerPanel.add(visitedOptions);
-		centerPanel.add(hostedOptions);
+//		initHomeAwayPanel();
+//		
+//		hostedTextField.setText(hosted);
+//		visitedTextField.setText(visited);
+//		
+//		centerPanel.add(visitedOptions);
+//		centerPanel.add(hostedOptions);
 		centerPanel.validate();
 		centerPanel.repaint();
 		validate();
