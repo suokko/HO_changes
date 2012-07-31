@@ -83,7 +83,7 @@ if "%DEBUG%" == "on" (
 	pause
 ) else (
 	:: Starting HO in background
-	start "" %JAVA_CMD% -Xmx%MAX_MEMORY% -jar ho.jar 
+	start "" %JAVA_CMD% -Xmx%MAX_MEMORY% -Djava.net.preferIPv4Stack=true -jar ho.jar 
 )
 
 if exist extension.bat call extension.bat
