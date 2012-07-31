@@ -1,6 +1,5 @@
 package ho.module.lineup;
 
-import ho.HO;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.DefaultModule;
 
@@ -27,10 +26,7 @@ public final class LineupModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
-		if (!HO.isRelease()) {
-			return new LineupMasterView();
-		}
-		return new LineupPanel();
+		return new LineupMasterView();
 	}
 
 	@Override
