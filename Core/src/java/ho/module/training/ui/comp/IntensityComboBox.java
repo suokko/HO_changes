@@ -18,12 +18,17 @@ public class IntensityComboBox extends JComboBox {
 	private static final long serialVersionUID = -4612244092459687360L;
 
 	/**
-     * Creates a new IntensityComboBox object.
-     */
-    public IntensityComboBox() {
+	 * Creates a new IntensityComboBox object.
+	 * 
+	 * @param min The minimum value for the list. Between 0 and 100.
+	 */
+    public IntensityComboBox(int min) {
         super();
-
-        for (int i = 0; i <= 100; i++) {
+        if ((min < 0) || (min > 100)) {
+        	min = 0;
+        }
+        
+        for (int i = min; i <= 100; i++) {
             addItem(new Integer(i));
         }
     }
