@@ -45,15 +45,15 @@ public abstract class WeeklyTrainingType {
 		1.20,
 		1.43,
 		1.72, // Outstanding
-		2.06,
-		2.40,
-		2.75,
-		3.12,
-		3.50, // Titanic
-		4.04,
-		4.84,
-		6.15,
-		8.30, // Skill 19
+		1.98,
+		2.18,
+		2.43,
+		2.64,
+		2.86, // Titanic
+		3.18,
+		3,45,
+		4.55,
+		7.00, // Skill 19
 		10,  // Random from here and down
 		15,
 		21};
