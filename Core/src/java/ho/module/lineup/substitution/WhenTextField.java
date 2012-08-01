@@ -50,7 +50,7 @@ public class WhenTextField extends JFormattedTextField {
 		DefaultFormatterFactory factory = new DefaultFormatterFactory(displayFormatter, displayFormatter,
 				editFormatter);
 		setFormatterFactory(factory);
-		setValue(Integer.valueOf(0));
+		setValue(Integer.valueOf(-1));
 	}
 
 	private void addListeners() {
