@@ -105,6 +105,7 @@ public class GlobalActionsListener extends MouseAdapter implements
 					out.close();
 
 					dialog.dispose();
+					imagePanel.refreshFlagPanel();
 					return;
 				}
 
