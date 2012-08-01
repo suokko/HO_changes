@@ -60,7 +60,7 @@ public class FutureSettingPanel extends JPanel {
         for (Iterator<TrainingPerWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
         	TrainingPerWeek train = iter.next();
             train.setTrainingIntensity(intensity.getSelectedIndex());
-            train.setStaminaPart(staminaTrainingPart.getSelectedIndex());
+            train.setStaminaPart(staminaTrainingPart.getSelectedIndex() + 5);
             train.setTrainingType(((CBItem)training.getSelectedItem()).getId());
             DBManager.instance().saveFutureTraining(train);
         }
@@ -80,15 +80,16 @@ public class FutureSettingPanel extends JPanel {
         training = new TrainingComboBox();
         final int ttyp = firstFutureTraining.getTrainingType();
         training.setSelectedItem(new CBItem(TrainingType.toString(ttyp), ttyp));
-        intensity = new IntensityComboBox();
+        intensity = new IntensityComboBox(0);
         intensity.setSelectedIndex(firstFutureTraining.getTrainingIntensity());
-        staminaTrainingPart = new IntensityComboBox();
+        staminaTrainingPart = new IntensityComboBox(5);
         staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaPart());
 
         JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Aendern")); //$NON-NLS-1$
 
         button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                @Override
+				public void actionPerformed(ActionEvent arg0) {
                     resetFutureTrainings();
                 }
             });

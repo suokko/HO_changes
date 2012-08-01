@@ -51,14 +51,14 @@ public class TrainingTable extends JTable {
         column.setPreferredWidth(120);
 
         //		Sets the combo box for selecting the intensity
-        JComboBox intensiBox = new IntensityComboBox();
+        JComboBox intensiBox = new IntensityComboBox(0);
         TableColumn column2 = getColumnModel().getColumn(3);
 
         column2.setCellEditor(new DefaultCellEditor(intensiBox));
         column2.setPreferredWidth(50);
 
         //		Sets the combo box for selecting the staminaTrainingPart
-        JComboBox staminaTrainingPartBox = new IntensityComboBox();
+        JComboBox staminaTrainingPartBox = new IntensityComboBox(5);
         TableColumn column3 = getColumnModel().getColumn(4);
 
         column3.setCellEditor(new DefaultCellEditor(staminaTrainingPartBox));

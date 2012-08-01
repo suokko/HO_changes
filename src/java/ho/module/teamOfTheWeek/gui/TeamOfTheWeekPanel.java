@@ -73,6 +73,11 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
     public void reloadData(boolean isSeason) {
     	 int week = ((Number)weekSpinner.getValue()).intValue();
         MatchLineupPlayer[] sl = calcBestLineup(week, true);
+        
+        if (sl == null) {
+        	return;
+        }
+        
         fillLineup(bestOfWeek, sl, false);
         sl = calcBestLineup(week,  false);
         fillLineup(worstOfWeek, sl, false);
@@ -86,8 +91,11 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
     }
 
     private MatchLineupPlayer[] calcBestLineup(int week, boolean best) {
-    	 Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
-        Map<String, MatchLineupPlayer> spieler = getPlayers(week,plan, best);
+    	Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
+        if (plan == null) {
+        	return null;
+        }
+    	Map<String, MatchLineupPlayer> spieler = getPlayers(week,plan, best);
         MatchLineupPlayer[] mlp = new MatchLineupPlayer[11];
 
         for (int i = 0; i < 11; i++) {
@@ -289,11 +297,13 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
         return (new Float(i * 2.0F)).intValue();
     }
 
+	@Override
 	public void stateChanged(ChangeEvent e) {
 		reloadData(false);
         updateUI();
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		 Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
         int week = HOVerwaltung.instance().getModel().getBasics().getSpieltag() - 1;
@@ -321,7 +331,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
      * @return Missing Return Method Documentation
      */
     private Map<String,MatchLineupPlayer> getPlayers(int week, Spielplan plan, boolean isBest) {
-        JDBCAdapter db = DBManager.instance().getAdapter();
+    	JDBCAdapter db = DBManager.instance().getAdapter();
         Vector<Paarung> matchIDs =plan.getPaarungenBySpieltag(week);
         // TODO For match of year attention of doubles
         Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
