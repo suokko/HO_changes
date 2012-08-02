@@ -70,7 +70,7 @@ resultMultiXp=1
 3MfMulti=0.8268
 1FwMulti=1
 2FwMulti=0.9480
-3FwMulti=0.8190
+3FwMulti=0.8650
 
 # SkillSubDeltas:
 # Default is to add 0.5 subskill for skills 0 (non existant) up to 7 (solid)
