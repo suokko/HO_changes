@@ -77,7 +77,7 @@ public final class Verein {
     public Verein(ResultSet rs) throws Exception {
         try {
             m_iCoTrainer = rs.getInt("COTrainer");
-            m_iPsychologen = rs.getInt("Psychologen");
+            m_iPsychologen = rs.getInt("Pschyologen");
             m_iPRManager = rs.getInt("PRManager");
             m_iMasseure = rs.getInt("Physiologen");
             m_iAerzte = rs.getInt("Aerzte");
