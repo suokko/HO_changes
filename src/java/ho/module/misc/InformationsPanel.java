@@ -39,10 +39,12 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
     public InformationsPanel() {
         initComponents();
         RefreshManager.instance().registerRefreshable(this);
+        reInit();
     }
 
     
-    public final void reInit() {
+    @Override
+	public final void reInit() {
     	m_jpBasics.setLabels();
     	m_jpAktuelleFinanzen.setLabels();
     	m_jpVorwochenFinanzen.setLabels();
@@ -50,7 +52,8 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
     	m_jpTrainerStab.setLabels();
     }
 
-    public final void refresh() {
+    @Override
+	public final void refresh() {
     		m_jpBasics.setLabels();
     		m_jpAktuelleFinanzen.setLabels();
     		m_jpVorwochenFinanzen.setLabels();
