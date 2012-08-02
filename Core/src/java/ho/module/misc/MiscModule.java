@@ -35,6 +35,7 @@ public final class MiscModule extends DefaultModule {
 
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0);
 	}
