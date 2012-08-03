@@ -32,13 +32,13 @@ Changelist HO! 1.432
 - New icon and startup screen.
 - Moved intern help texts and from external files to our wiki page (https://sourceforge.net/apps/trac/ho1/wiki/Manual) and link to it in the menu.
 - Made player name column width adjustable on squad tab.
-- Substitutes are included into the Penalty shooter list
 - Added half time results in matches tab.
 - Seat distribution is shown in arena section of Statistics tab.
 - Stadium prices HT-adapted (7/10/19/35).
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 - TS Forecast Module should now display confidence at the correct level.
 - Maintain Captain and Set piece taker when the line up is reversed.
+- The old penalty shooter button is gone. Look for the new tab instead.
 
 Language updates:
 -----------------

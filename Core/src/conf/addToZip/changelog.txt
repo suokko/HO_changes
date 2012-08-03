@@ -43,6 +43,7 @@ Changelist HO! 1.432
 - Lowered Overcrowding penalty for lineups with 3 forwards. Attack ratings with 3 forwards should now be closer to the reality.
 - TS Forecast Module should now display confidence at the correct level.
 - Maintain Captain and Set piece taker when the line up is reversed.
+- The old penalty shooter button is gone. Look for the new tab instead.
 
 Language updates:
 -----------------
