@@ -58,6 +58,7 @@ public interface HOIconName {
 	public static final String CLEARASSIST 		= "clearAssist";
 	public static final String STARTASSIST 		= "startAssist";
 	public static final String CLEARRESERVE 	= "clearReserve";
+	public static final String CLEARPOSORDERS	= "clearPositionOrders";
 
 	public static final String LOGO16 			= "logo16";
 	public static final String TRICKOT 			= "trickot";
