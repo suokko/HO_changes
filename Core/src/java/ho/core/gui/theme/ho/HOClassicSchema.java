@@ -120,6 +120,7 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(CLEARASSIST, "gui/bilder/Assist_leeren.png");
 		put(STARTASSIST, "gui/bilder/Assist_start.png");
 		put(CLEARRESERVE, "gui/bilder/Assist_reserveleeren.png");
+		put(CLEARPOSORDERS, "gui/bilder/Assist_clearPosOrders.png");
 
 		put(LOGO16, "gui/bilder/Logo-16px.png");
 		put(TRICKOT, "gui/bilder/Trickot.png");
