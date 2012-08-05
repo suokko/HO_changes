@@ -50,6 +50,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
 	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
+	private final JButton m_jbClearPostionOrders = new JButton(ThemeManager.getIcon(HOIconName.CLEARPOSORDERS));
 	private final JCheckBox m_jchForm 	= new JCheckBox(HOVerwaltung.instance().getLanguageString("Form_beruecksichtigen"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_form);
 	private final JCheckBox m_jchGesperrte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Gesperrte_aufstellen"),
@@ -191,6 +192,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		final HOModel hoModel 		= HOVerwaltung.instance().getModel();
 		final HOMainFrame mainFrame = ho.core.gui.HOMainFrame.instance();
 
+		// TODO: add event listener for clear positonal orders button
 		if (actionEvent.getSource().equals(m_jbLoeschen)) {
 			//Alle Positionen leeren
 			hoModel.getAufstellung().resetAufgestellteSpieler();
@@ -535,6 +537,10 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jbLoeschen.setToolTipText(hoVerwaltung.getLanguageString("Aufstellung_leeren"));
 		m_jbLoeschen.addActionListener(this);
 		panel.add(m_jbLoeschen);
+		m_jbClearPostionOrders.setPreferredSize(new Dimension(28, 28));
+		m_jbClearPostionOrders.setToolTipText(hoVerwaltung.getLanguageString("Clear_positional_orders"));
+		m_jbClearPostionOrders.addActionListener(this);
+		// TODO: (add this line when event listener implemented) panel.add(m_jbClearPostionOrders);
 		m_jbReserveLoeschen.setPreferredSize(new Dimension(28, 28));
 		m_jbReserveLoeschen.setToolTipText(hoVerwaltung.getLanguageString("Reservebank_leeren"));
 		m_jbReserveLoeschen.addActionListener(this);
