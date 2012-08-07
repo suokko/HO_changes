@@ -1441,7 +1441,7 @@ public class Lineup {
 	}
 
 	/**
-	 * Remove a player.
+	 * Remove all players from all positions.
 	 */
 	public final void resetAufgestellteSpieler() {
 		m_clAssi.resetPositionsbesetzungen(m_vPositionen);
@@ -1459,6 +1459,13 @@ public class Lineup {
 			}
 		}
 		m_clAssi.resetPositionsbesetzungen(vReserve);
+	}
+	
+	/**
+	 * Resets the orders for all positions to normal 
+	 */
+	public final void resetPositionOrders() {
+		m_clAssi.resetPositionOrders(m_vPositionen);
 	}
 
 	/**

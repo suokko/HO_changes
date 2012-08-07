@@ -192,7 +192,6 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		final HOModel hoModel 		= HOVerwaltung.instance().getModel();
 		final HOMainFrame mainFrame = ho.core.gui.HOMainFrame.instance();
 
-		// TODO: add event listener for clear positonal orders button
 		if (actionEvent.getSource().equals(m_jbLoeschen)) {
 			//Alle Positionen leeren
 			hoModel.getAufstellung().resetAufgestellteSpieler();
@@ -202,6 +201,12 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			mainFrame.getAufstellungsPanel().update();
 
 			//gui.RefreshManager.instance ().doRefresh ();
+		} else if (actionEvent.getSource().equals(m_jbClearPostionOrders)) {
+			// event listener for clear positonal orders button
+			hoModel.getAufstellung().resetPositionOrders();
+			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Positional_orders_cleared"));
+			mainFrame.getAufstellungsPanel().update();
+			
 		} else if (actionEvent.getSource().equals(m_jbReserveLoeschen)) {
 			hoModel.getAufstellung().resetReserveBank();
 			mainFrame.getAufstellungsPanel().update();
@@ -540,7 +545,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jbClearPostionOrders.setPreferredSize(new Dimension(28, 28));
 		m_jbClearPostionOrders.setToolTipText(hoVerwaltung.getLanguageString("Clear_positional_orders"));
 		m_jbClearPostionOrders.addActionListener(this);
-		// TODO: (add this line when event listener implemented) panel.add(m_jbClearPostionOrders);
+		panel.add(m_jbClearPostionOrders);
 		m_jbReserveLoeschen.setPreferredSize(new Dimension(28, 28));
 		m_jbReserveLoeschen.setToolTipText(hoVerwaltung.getLanguageString("Reservebank_leeren"));
 		m_jbReserveLoeschen.addActionListener(this);
