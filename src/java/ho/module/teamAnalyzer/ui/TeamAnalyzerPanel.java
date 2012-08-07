@@ -23,7 +23,7 @@ import javax.swing.JSplitPane;
 public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 
     /** The filters */
-    public static Filter filter = null;
+    public static Filter filter = new Filter();
 
 	private static final long serialVersionUID = 1L;
 	private JButton simButton = new JButton(HOVerwaltung.instance().getLanguageString("Simulate"));
@@ -34,8 +34,6 @@ public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 	
 	public TeamAnalyzerPanel() {
 		SystemManager.initialize(this);
-		if (filter == null)
-			filter = new Filter();
 		initialize();
 		simButton.addActionListener(new SimButtonListener(mainPanel.getMyTeamLineupPanel(),
         		mainPanel.getOpponentTeamLineupPanel(), recapPanel));
