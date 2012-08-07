@@ -96,6 +96,11 @@ MAX_BACKUPS=5
 
 MAX_MEMORY=512m
 
+# Debug information output level.
+# Default is empty string
+#
+DEBUG_LEVEL=
+
 # JDBC driver to use. Only if you use a remote DDBB
 # better write it in your HO.config
 # When you launch HO using the jar file, just put a link to your 
@@ -240,6 +245,7 @@ help(){
           -rd --restoredate   <date>
                               Restore the backup-file from <date>
           -bd --backupdir     Use this as the backup directory
+          -d  --debug <level> To enable HO debug prints
 	EOF
 	exit 1
 }
@@ -280,7 +286,7 @@ start(){
 		HO_PAR="-cp ${JDBC} ${HO_PAR}"
 	fi
 
-  	eval "$JAVA -Xmx$MAX_MEMORY ${HO_PAR}"
+  	eval "$JAVA -Xmx$MAX_MEMORY ${HO_PAR} ${DEBUG_LEVEL}"
 
 
 	if [ _`grep modified "${DATABASEDIR}/database.properties" | \
@@ -457,6 +463,18 @@ do
 			BACKUP=false;
 			shift
 			;;
+                -d|--debug)
+                        DEBUG_LEVEL=$2
+                        case "$DEBUG_LEVEL" in
+                                INFO|DEBUG|WARNING|ERROR)
+                                        ;;
+                                *)
+                                        echo "Option d needs parameter that can be DEBUG, INFO, WARNING or ERROR."
+                                        exit 1
+                                ;;
+                        esac
+                        shift
+                        ;;
 		*)
 			echo -e "Unknown parameter $1\n
 			Try $HONAME --help to get help." >&2
