@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.vo;
 
 import ho.core.module.config.ModuleConfig;
+import ho.module.teamAnalyzer.SystemManager;
 
 import java.util.List;
 
@@ -236,7 +237,26 @@ public class Filter {
     	return false;
     }
     
-    private void loadFilters() {
+    /**
+     * return string to be appended to setting name based on selected match
+     */
+    private String getMatchString() {
+        if (SystemManager.getActiveTeamId() == SystemManager.getTournamentOpponentId()) {
+            return "_tournament";
+        }
+
+        if (SystemManager.getActiveTeamId() == SystemManager.getLeagueOpponentId()) {
+            return "_league";
+        }
+
+        if (SystemManager.getActiveTeamId() == SystemManager.getCupOpponentId()) {
+            return "_cup";
+        }
+
+        return "_masters";
+    }
+
+    public void loadFilters() {
     	
     	/* The filter values are stored in a string where 1 signals true, and everything else false. A single
     	 * character per value, ending with 2 digits for the number of matches. The order is:
@@ -255,8 +275,7 @@ public class Filter {
     	 * 11 Masters
     	 * 12-13 number (two digit number)
     	 */
-    	
-    	String filters = ModuleConfig.instance().getString(STORAGE_FIELD_NAME);
+    	String filters = ModuleConfig.instance().getString(STORAGE_FIELD_NAME + getMatchString());
   
     	if (filters == null || filters.length() != 14) {
     		return;
@@ -295,7 +314,7 @@ public class Filter {
     	filter += (masters) ? "1" : "0";
     	filter += String.valueOf(number);
     	
-    	ModuleConfig.instance().setString(STORAGE_FIELD_NAME, filter);
+    	ModuleConfig.instance().setString(STORAGE_FIELD_NAME + getMatchString(), filter);
     	ModuleConfig.instance().save();
     }
     
