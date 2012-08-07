@@ -35,7 +35,7 @@ class TrainerCurve extends Curve {
 					"Trainer for "
 							+ new SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
 									.format(d) + " has no leadership!");
-			dRet = 0; // quick hack to fix start problems when there are only
+			dRet = 1; // quick hack to fix start problems when there are only
 						// few old datasets
 		}
 		return dRet;
