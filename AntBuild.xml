@@ -150,7 +150,7 @@
 		<property name="dev" value="" />
 		<!-- get current SVN version / release -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
-			<arg value="info" />
+			<arg line="${svn.infoarg}" />
 			<redirector outputproperty="svninfo.revnum">
 				<outputfilterchain>
 					<!-- Extract from "Revision: XXX" -->
@@ -162,7 +162,7 @@
 		<property name="svninfo.rev" value="_r${svninfo.revnum}" />
 		<!-- get current SVN URL -->
 		<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
-			<arg value="info" />
+			<arg line="${svn.infoarg}" />
 			<redirector outputproperty="svninfo.url">
 				<outputfilterchain>
 					<containsregex pattern="^URL" />
@@ -555,7 +555,7 @@
 				</loadfile>
 				<!-- get current SVN version / release -->
 				<exec executable="${svn.command}" dir="${src.dir}" failifexecutionfails="false" logerror="true">
-					<arg value="info" />
+					<arg line="${svn.infoarg}" />
 					<redirector outputproperty="makedeb.svnrev">
 						<outputfilterchain>
 							<!-- Extract from "Revision: XXX" -->
