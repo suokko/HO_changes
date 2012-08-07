@@ -129,18 +129,21 @@ public class SystemManager {
         cupOpponent = TeamManager.getNextCupOpponent();
         tournamentOpponent = TeamManager.getNextTournamentOpponent();
 
-        if (leagueOpponent.getTeamId() != 0) {
-            setActiveTeam(leagueOpponent);
-        } else if (cupOpponent.getTeamId() != 0) {
-            setActiveTeam(cupOpponent);
-        } else if (tournamentOpponent.getTeamId() != 0) {
-        	setActiveTeam(tournamentOpponent);
-        } else {
+        if (leagueOpponent.getTeamId() == 0 &&
+                cupOpponent.getTeamId() == 0 &&
+                tournamentOpponent.getTeamId() == 0) {
             Team team = new Team();
 
             team.setName(HOVerwaltung.instance().getModel().getBasics().getTeamName());
             team.setTeamId(HOVerwaltung.instance().getModel().getBasics().getTeamId());
             setActiveTeam(team);
+        } else if (leagueOpponent.isBefore(cupOpponent) && leagueOpponent.isBefore(tournamentOpponent)) {
+            // League is the next match
+            setActiveTeam(leagueOpponent);
+        } else if (cupOpponent.isBefore(tournamentOpponent)) {
+            setActiveTeam(cupOpponent);
+        } else {
+            setActiveTeam(tournamentOpponent);
         }
     }
 
