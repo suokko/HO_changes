@@ -403,11 +403,24 @@ public class LineupAssistant {
 	 * resetet alle Verbindungen zwischen Position und Spieler
 	 * 
 	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
+	 *            a vector of player positions
 	 */
 	public final void resetPositionsbesetzungen(Vector<ISpielerPosition> positionen) {
 		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
 			((ho.core.model.player.SpielerPosition) positionen.elementAt(i)).setSpielerId(0);
+		}
+	}
+	
+	/**
+	 * Resets the orders for all positions to normal
+	 * @param positions
+	 * 		a vector of player positions
+	 */
+	public final void resetPositionOrders(Vector<ISpielerPosition> positions) {
+		if (positions != null) {
+			for (int i = 0; i < positions.size(); i++) {
+				((ho.core.model.player.SpielerPosition) positions.elementAt(i)).setTaktik((byte) 0);
+			}
 		}
 	}
 
