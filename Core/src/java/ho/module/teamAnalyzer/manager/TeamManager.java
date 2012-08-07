@@ -66,6 +66,7 @@ public class TeamManager {
                     team.setName(match.getHeimName());
                     team.setTeamId(match.getHeimID());
                 }
+                team.setTime(match.getMatchDateAsTimestamp());
 
                 return team;
             }
@@ -98,6 +99,7 @@ public class TeamManager {
     				team.setName(match.getHeimName());
     				team.setTeamId(match.getHeimID());
     			}
+    			team.setTime(match.getMatchDateAsTimestamp());
     			team.setTournament(true);
     			return team;
     		}
@@ -125,6 +127,7 @@ public class TeamManager {
 
                     t.setName(element.getGastName());
                     t.setTeamId(element.getGastId());
+                    t.setTime(element.getDatum());
 
                     return t;
                 }
@@ -134,6 +137,7 @@ public class TeamManager {
 
                     t.setName(element.getHeimName());
                     t.setTeamId(element.getHeimId());
+                    t.setTime(element.getDatum());
 
                     return t;
                 }
@@ -290,6 +294,7 @@ public class TeamManager {
                     team.setName(match.getHeimName());
                     team.setTeamId(match.getHeimID());
                 }
+                team.setTime(match.getMatchDateAsTimestamp());
 
                 return team;
             }
