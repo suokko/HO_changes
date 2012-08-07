@@ -18,6 +18,9 @@ public class Team {
     // A hack for custom coloring of tournament teams in a renderer
     private boolean tournament = false;
 
+    // Timestamp when next match is played
+    private java.sql.Timestamp time;
+
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
@@ -45,6 +48,10 @@ public class Team {
      */
     public void setTeamId(int i) {
         teamId = i;
+    }
+
+    public void setTime(java.sql.Timestamp t) {
+        time = t;
     }
 
     /**
@@ -82,5 +89,24 @@ public class Team {
     @Override
 	public String toString() {
         return name;
+    }
+
+    /**
+     * Check if this team has match before team passed as parameter
+     */
+    public boolean isBefore(Team b) {
+        if (b.getTeamId() == 0 && getTeamId() == 0)
+            return false;
+
+        if (getTeamId() == 0)
+            return false;
+
+        if (b.getTeamId() == 0)
+            return true;
+
+        if (time.getTime() < b.time.getTime())
+            return true;
+
+        return false;
     }
 }
