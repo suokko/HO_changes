@@ -12,6 +12,8 @@ import ho.module.teamAnalyzer.vo.Filter;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -26,7 +28,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author samuele.peli
  */
-public class AutoFilterPanel extends JPanel {
+public class AutoFilterPanel extends JPanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
@@ -64,6 +66,7 @@ public class AutoFilterPanel extends JPanel {
      */
     public void reload() {
     	Filter filter = TeamAnalyzerPanel.filter;
+    	filter.loadFilters();
         homeGames.setSelected(filter.isHomeGames());
         awayGames.setSelected(filter.isAwayGames());
         win.setSelected(filter.isWin());
@@ -98,6 +101,14 @@ public class AutoFilterPanel extends JPanel {
     	filter.saveFilters();
     	
     }
+    
+    /**
+     * Handle action events.
+     */
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+    	setFilter();
+    }
 
     /**
      * TODO Missing Method Documentation
@@ -116,61 +127,73 @@ public class AutoFilterPanel extends JPanel {
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"))); //$NON-NLS-1$
         homeGames.setSelected(filter.isHomeGames());
         homeGames.setOpaque(false);
+        homeGames.addActionListener(this);
         filters.add(homeGames);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"))); //$NON-NLS-1$
         awayGames.setSelected(filter.isAwayGames());
         awayGames.setOpaque(false);
+        awayGames.addActionListener(this);
         filters.add(awayGames);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Win_Games"))); //$NON-NLS-1$
         win.setSelected(filter.isWin());
         win.setOpaque(false);
+        win.addActionListener(this);
         filters.add(win);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Draw_Games"))); //$NON-NLS-1$
         draw.setSelected(filter.isDraw());
         draw.setOpaque(false);
+        draw.addActionListener(this);
         filters.add(draw);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Defeat_Games"))); //$NON-NLS-1$
         defeat.setSelected(filter.isDefeat());
         defeat.setOpaque(false);
+        defeat.addActionListener(this);
         filters.add(defeat);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.LeagueGame"))); //$NON-NLS-1$
         league.setSelected(filter.isLeague());
         league.setOpaque(false);
+        league.addActionListener(this);
         filters.add(league);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.CupGame"))); //$NON-NLS-1$
         cup.setSelected(filter.isCup());
         cup.setOpaque(false);
+        cup.addActionListener(this);
         filters.add(cup);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.FriendlyGame"))); //$NON-NLS-1$
         friendly.setSelected(filter.isFriendly());
         friendly.setOpaque(false);
+        friendly.addActionListener(this);
         filters.add(friendly);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.QualifierGame"))); //$NON-NLS-1$
         qualifier.setSelected(filter.isQualifier());
         qualifier.setOpaque(false);
+        qualifier.addActionListener(this);
         filters.add(qualifier);
         
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.MastersGame"))); //$NON-NLS-1$
         masters.setSelected(filter.isQualifier());
         masters.setOpaque(false);
+        masters.addActionListener(this);
         filters.add(masters);
         
         
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.TournamentGame"))); //$NON-NLS-1$
         tournament.setSelected(filter.isTournament());
         tournament.setOpaque(false);
+        tournament.addActionListener(this);
         filters.add(tournament);
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Max_Number"))); //$NON-NLS-1$
         number.setText(filter.getNumber() + "");
+        number.addActionListener(this);
         filters.add(number);
 
         main.add(filters, BorderLayout.NORTH);
