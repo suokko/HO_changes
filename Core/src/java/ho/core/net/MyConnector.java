@@ -747,6 +747,8 @@ public class MyConnector {
 					// We are done!
 					return getResultStream(response);
 				case 401:
+					// disable WaitCursor to unblock GUI
+					CursorToolkit.stopWaitCursor(HOMainFrame.instance().getRootPane());
 					if (authDialog == null) {
 						authDialog = new OAuthDialog(HOMainFrame.instance(), m_OAService, scope);
 					}
