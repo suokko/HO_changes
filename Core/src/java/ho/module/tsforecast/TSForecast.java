@@ -356,7 +356,7 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		jpanel.add(m_jtCupMatches);
 
 		m_jtRelegationMatch = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("QualifikationSpiel"),
+				.getLanguageString("ls.match.matchtype.qualification"),
 				config.getBoolean(TS_SHOWQUALIFICATIONMATCH));
 		m_jtRelegationMatch.setToolTipText(HOVerwaltung.instance()
 				.getLanguageString("ShowQMatch"));

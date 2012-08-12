@@ -14,7 +14,7 @@ public final class MatchesModule extends DefaultModule {
 	public MatchesModule(){
 		super(true);
 	}
-	
+
 	@Override
 	public int getModuleId() {
 		return MATCHES;
@@ -22,7 +22,7 @@ public final class MatchesModule extends DefaultModule {
 
 	@Override
 	public String getDescription() {
-		return HOVerwaltung.instance().getLanguageString("Spiele");
+		return HOVerwaltung.instance().getLanguageString("Tab_Title_Matches");
 	}
 
 	@Override

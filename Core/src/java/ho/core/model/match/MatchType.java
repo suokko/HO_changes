@@ -102,7 +102,7 @@ public enum MatchType {
 				return false;
 		}
 	}
-	
+
 	public boolean isTournament() {
 		switch (this) {
 			case TOURNAMENTGROUP:
@@ -116,46 +116,46 @@ public enum MatchType {
 	public String getName() {
 		 switch (this) {
 	         case LEAGUE:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("LigaSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.league");
 
 	         case CUP:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("PokalSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.cup");
 
 	         case QUALIFICATION:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("QualifikationSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.qualification");
 
 	         case NATIONALCOMPCUPRULES:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderCupSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.nationalteamscompetition_cup");
 
 	         case MASTERS:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("IntCupSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.hattrickmasters");
 
 	         case NATIONALCOMPNORMAL:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.nationalteamscompetition_normal");
 
 	         case INTSPIEL:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("IntSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.internationalcompetition_normal");
 
 	         case INTFRIENDLYCUPRULES:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlyCupSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.internationalfriendly_cup");
 
 	         case INTFRIENDLYNORMAL:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("IntFriendlySpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.internationalfriendly_normal");
 
 	         case NATIONALFRIENDLY:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("LaenderFriendlySpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.nationalteamsfriendly");
 
 	         case FRIENDLYCUPRULES:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlyCupSpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.friendly_cup");
 
 	         case FRIENDLYNORMAL:
-	             return ho.core.model.HOVerwaltung.instance().getLanguageString("FriendlySpiel");
+	             return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.friendly_normal");
 
 	         case TOURNAMENTGROUP:
-	         	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
+	         	 return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.tournament_group");
 
 	         case TOURNAMENTPLAYOFF :
-	         	 return ho.core.model.HOVerwaltung.instance().getLanguageString("TournamentMatch");
+	         	 return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.match.matchtype.tournament_playoff");
 
 	         //Error?
 	         default:

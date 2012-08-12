@@ -214,11 +214,11 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 
         //Füllen der HashTable m_HashTable_EventInfo mit den Sprachenabhängigen Wörtern
 
-        m_HashTable_EventInfo.put("L",hoV.getLanguageString("LigaSpiel"));
-        m_HashTable_EventInfo.put("F",hoV.getLanguageString("FriendlySpiel"));
-        m_HashTable_EventInfo.put("I",hoV.getLanguageString("IntFriendlySpiel"));
-        m_HashTable_EventInfo.put("P",hoV.getLanguageString("PokalSpiel"));
-        m_HashTable_EventInfo.put("Q",hoV.getLanguageString("QualifikationSpiel"));
+        m_HashTable_EventInfo.put("L",hoV.getLanguageString("ls.match.matchtype.league"));
+        m_HashTable_EventInfo.put("F",hoV.getLanguageString("ls.match.matchtype.friendly_normal"));
+        m_HashTable_EventInfo.put("I",hoV.getLanguageString("ls.match.matchtype.internationalfriendly_normal"));
+        m_HashTable_EventInfo.put("P",hoV.getLanguageString("ls.match.matchtype.cup"));
+        m_HashTable_EventInfo.put("Q",hoV.getLanguageString("ls.match.matchtype.qualification"));
         m_HashTable_EventInfo.put("DB",hoV.getLanguageString("ttCalDB"));
         m_HashTable_EventInfo.put("FILE",hoV.getLanguageString("ttCalFile"));
 

@@ -46,7 +46,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
      * @param itemEvent TODO Missing Method Parameter Documentation
      */
     public final void itemStateChanged(ItemEvent itemEvent) {
-    	
+
     	// New Tab can not be shown immediately
     	if (itemEvent.getStateChange()== ItemEvent.SELECTED)
     		OptionManager.instance().setRestartNeeded();
@@ -94,7 +94,7 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchLigatabelle.addItemListener(this);
         add(m_jchLigatabelle);
 
-        m_jchSpiele = new JCheckBox(ho.core.model.HOVerwaltung.instance().getLanguageString("Spiele"));
+        m_jchSpiele = new JCheckBox(ho.core.model.HOVerwaltung.instance().getLanguageString("Tab_Title_Matches"));
         m_jchSpiele.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Optionen_TabManagement"));
         m_jchSpiele.setOpaque(false);
         m_jchSpiele.setSelected(!ho.core.model.UserParameter.temp().tempTabSpiele);
@@ -121,6 +121,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         m_jchInformation.setSelected(!ho.core.model.UserParameter.temp().tempTabInformation);
         m_jchInformation.addItemListener(this);
         add(m_jchInformation);
-        
+
     }
 }

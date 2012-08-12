@@ -31,7 +31,7 @@ public class RosterPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3867854224503291836L;
 	private JTable table;
@@ -46,7 +46,7 @@ public class RosterPanel extends JPanel {
     		HOVerwaltung.instance().getLanguageString("GameID"),
     		HOVerwaltung.instance().getLanguageString("Alter"),
     		HOVerwaltung.instance().getLanguageString("Form"),
-    		HOVerwaltung.instance().getLanguageString("EXPCode"),
+    		HOVerwaltung.instance().getLanguageString("ER"),
     		HOVerwaltung.instance().getLanguageString("TSI"),
     		HOVerwaltung.instance().getLanguageString("SpecialEvent"),
     		HOVerwaltung.instance().getLanguageString("Maximal"), HOVerwaltung.instance().getLanguageString("Durchschnitt"),

@@ -37,9 +37,9 @@ class Spielertabelle extends JTable {
 	public static final String spaltennamen[] = { "Spieler", "Alter",
 		"Erfahrung", "seit", "Bonus", "SchaetzungMin",
 		"SchaetzungWahrscheinlich", "SchaetzungMax", "WochenBisAufwertung",
-		"IntFriendlyCupSpiel", "IntFriendlySpiel", "IntCupSpiel", "IntSpiel",
-		"LaenderCupSpiel", "LaenderSpiel", "LigaSpiel", "PokalSpiel",
-		"QualifikationSpiel", "LaenderFriendlySpiel", "FriendlyCupSpiel", "FriendlySpiel",
+		"ls.match.matchtype.internationalfriendly_cup", "ls.match.matchtype.internationalfriendly_normal", "ls.match.matchtype.hattrickmasters", "ls.match.matchtype.internationalcompetition_normal",
+		"ls.match.matchtype.nationalteamscompetition_cup", "ls.match.matchtype.nationalteamscompetition_normal", "ls.match.matchtype.league", "ls.match.matchtype.cup",
+		"ls.match.matchtype.qualification", "ls.match.matchtype.nationalteamsfriendly", "ls.match.matchtype.friendly_cup", "ls.match.matchtype.friendly_normal",
 		"Notizen" };
 public static final int spaltenweite[] = { 120, 60, 60, 60, 40, 40, 80, 40,
 		80, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 240 };
@@ -94,7 +94,7 @@ Spielertabelle() {
 	}
 }
 
-	
+
 	private class SpielertabellenModell extends AbstractTableModel {
 		private static final long serialVersionUID = -3365452097304380041L;
 
