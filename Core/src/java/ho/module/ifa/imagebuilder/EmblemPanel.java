@@ -197,28 +197,4 @@ public class EmblemPanel extends JPanel {
 		HOLogger.instance().debug(this.getClass(), "Couldn't find file: " + path);
 		return null;
 	}
-
-	public void setHeaderImage(ImageDesignPanel imagePanel) {
-		try {
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg", "gif" }));
-			fileChooser.setAcceptAllFileFilterUsed(false);
-			fileChooser.setMultiSelectionEnabled(false);
-			if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
-				String path = fileChooser.getSelectedFile().getPath();
-				setImagePath(path);
-				ImageIcon image = createImageIcon(path);
-				setLogo(image);
-				this.getParent().validate();
-				this.getParent().repaint();
-			} else {
-				setLogo(null);
-				this.getParent().validate();
-				this.getParent().repaint();
-				ConfigManager.saveConfig(imagePanel);
-			}
-		} catch (Exception ex) {
-			HOLogger.instance().error(getClass(), ex);
-		}
-	}
 }
