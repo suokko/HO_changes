@@ -43,6 +43,7 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 		super();
 
 		initModel();
+		addListeners();
 		setDefaultRenderer(Boolean.class, new BooleanTableCellRenderer());
 		setDefaultRenderer(Object.class, new HODefaultTableCellRenderer());
 		setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
