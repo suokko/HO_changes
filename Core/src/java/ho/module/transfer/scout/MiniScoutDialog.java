@@ -1,7 +1,6 @@
 // %1128099595437:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
-import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
@@ -116,7 +115,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
      *
      * @param actionEvent event given when pressed a button
      */
-    public final void actionPerformed(ActionEvent actionEvent) {
+    @Override
+	public final void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(jbApply)) {
             clOwner.setScoutEintrag(createScoutEintrag());
             this.setVisible(false);
@@ -139,7 +139,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
      *
      * @param e event when window gets focus
      */
-    public void focusGained(FocusEvent e) {
+    @Override
+	public void focusGained(FocusEvent e) {
     }
 
     /**
@@ -147,7 +148,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
      *
      * @param e event when window loses focus
      */
-    public final void focusLost(FocusEvent e) {
+    @Override
+	public final void focusLost(FocusEvent e) {
         if (!Helper.parseInt(HOMainFrame.instance(), jtfTSI, false)
             || !Helper.parseInt(HOMainFrame.instance(), jtfPlayerID, false)
             || !Helper.parseInt(HOMainFrame.instance(), jtfPrice, false)) {
@@ -163,7 +165,8 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
      *
      * @param itemEvent event when combobox changes
      */
-    public final void itemStateChanged(ItemEvent itemEvent) {
+    @Override
+	public final void itemStateChanged(ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == ItemEvent.SELECTED || itemEvent.getSource() == jchHomegrown) {
             spielervalueChanged();
         }
