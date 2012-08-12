@@ -21,12 +21,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EmblemPanel extends JPanel implements MouseListener{
-/**
-	 * 
-	 */
+public class EmblemPanel extends JPanel implements MouseListener {
+
 	private static final long serialVersionUID = -4241847282455700992L;
-	//	private EmblemPanel emblemPanel;
 	private GridBagConstraints constraints = new GridBagConstraints();
 	private FlagPanel flagPanel;
 	private JLabel logo;
@@ -38,7 +35,7 @@ public class EmblemPanel extends JPanel implements MouseListener{
 	private int brightness = 50;
 	private String imagePath = "";
 
-	public EmblemPanel( FlagLabel[] flagLabels,int countriesPlayedIn) {
+	public EmblemPanel(FlagLabel[] flagLabels, int countriesPlayedIn) {
 		setOpaque(false);
 		this.flagPanel = new FlagPanel(flagLabels, countriesPlayedIn);
 		initialize();
@@ -69,8 +66,7 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		add(this.flagPanel, this.constraints, 0, 1, 1, 1);
 	}
 
-	private void add(Component c, GridBagConstraints constraints, int x, int y,
-			int w, int h) {
+	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
 		constraints.gridx = x;
 		constraints.gridy = y;
 		constraints.gridwidth = w;
@@ -82,8 +78,7 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		this.logo.setIcon(image);
 		if (image != null) {
 			this.logo.setText("");
-			this.logo.setPreferredSize(new Dimension(image.getIconWidth(),
-					image.getIconHeight()));
+			this.logo.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
 		} else {
 			this.logo.setText(HOVerwaltung.instance().getLanguageString("loadEmblem"));
 			this.imagePath = "";
@@ -111,7 +106,6 @@ public class EmblemPanel extends JPanel implements MouseListener{
 			return this.flagPanel;
 		return this;
 	}
-
 
 	public void setHeader(boolean header) {
 		this.header = header;
@@ -176,39 +170,37 @@ public class EmblemPanel extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-	try {
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg",
-				"gif" }));
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		fileChooser.setMultiSelectionEnabled(false);
-		if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
-			String path = fileChooser.getSelectedFile().getPath();
-			setImagePath(path);
-			ImageIcon image = createImageIcon(path);
-			setLogo(image);
-			this.getParent().validate();
-			this.getParent().repaint();
-		} else {
-			setLogo(null);
-			this.getParent().validate();
-			this.getParent().repaint();
+		try {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg", "gif" }));
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			fileChooser.setMultiSelectionEnabled(false);
+			if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
+				String path = fileChooser.getSelectedFile().getPath();
+				setImagePath(path);
+				ImageIcon image = createImageIcon(path);
+				setLogo(image);
+				this.getParent().validate();
+				this.getParent().repaint();
+			} else {
+				setLogo(null);
+				this.getParent().validate();
+				this.getParent().repaint();
+			}
+		} catch (Exception ex) {
+			HOLogger.instance().error(GlobalActionsListener.class, ex);
 		}
-	} catch (Exception ex) {
-		HOLogger.instance().error(GlobalActionsListener.class, ex);
-	}
-		
 	}
 
 	private ImageIcon createImageIcon(String path) {
@@ -218,44 +210,41 @@ public class EmblemPanel extends JPanel implements MouseListener{
 		HOLogger.instance().debug(this.getClass(), "Couldn't find file: " + path);
 		return null;
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
 	public void setHeaderImage(ImageDesignPanel imagePanel) {
 
-		 try {
-			 JFileChooser fileChooser = new JFileChooser();
-			 fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg",
-			 "gif" }));
-			 fileChooser.setAcceptAllFileFilterUsed(false);
-			 fileChooser.setMultiSelectionEnabled(false);
-			 if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
-			 String path = fileChooser.getSelectedFile().getPath();
-			 setImagePath(path);
-			 ImageIcon image = createImageIcon(path);
-			 setLogo(image);
-			 this.getParent().validate();
-			 this.getParent().repaint();
-			 } else {
-			 setLogo(null);
-			 this.getParent().validate();
-			 this.getParent().repaint();
-			 ConfigManager.saveConfig(imagePanel);
-		 }
-		 } catch (Exception ex) {
-			 HOLogger.instance().error(getClass(), ex);
-		 }
-		
+		try {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileFilter(new ExampleFileFilter(new String[] { "jpg", "gif" }));
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			fileChooser.setMultiSelectionEnabled(false);
+			if (fileChooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
+				String path = fileChooser.getSelectedFile().getPath();
+				setImagePath(path);
+				ImageIcon image = createImageIcon(path);
+				setLogo(image);
+				this.getParent().validate();
+				this.getParent().repaint();
+			} else {
+				setLogo(null);
+				this.getParent().validate();
+				this.getParent().repaint();
+				ConfigManager.saveConfig(imagePanel);
+			}
+		} catch (Exception ex) {
+			HOLogger.instance().error(getClass(), ex);
+		}
 	}
-	
 }
