@@ -21,7 +21,7 @@ class SettingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 	public static ModuleConfig config = ModuleConfig.instance();
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5721035453587068724L;
 	//private JCheckBox gamesCheckbox = new JCheckBox();
@@ -104,7 +104,8 @@ class SettingPanel extends JPanel {
         mainPanel.setOpaque(false);
         mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("PlayerCompare"),
                                   skillsCheckbox));
-        mainPanel.add(createPanel("Erfahrung", experienceCheckbox));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ExperienceViewer"),
+        		experienceCheckbox));
 //        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("Spiele"), gamesCheckbox));
 
         setLayout(new BorderLayout());

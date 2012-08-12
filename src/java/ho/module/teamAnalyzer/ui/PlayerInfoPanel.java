@@ -31,7 +31,7 @@ public class PlayerInfoPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5338615169669058973L;
 
@@ -62,7 +62,7 @@ public class PlayerInfoPanel extends JPanel {
         addInfo(HOVerwaltung.instance().getLanguageString("Alter"), ageLabel, 0, 0);
         addInfo(HOVerwaltung.instance().getLanguageString("TSI"), tsiLabel, 0, 1);
         addInfo(HOVerwaltung.instance().getLanguageString("Form"), formLabel, 1, 0);
-        addInfo(HOVerwaltung.instance().getLanguageString("EXPCode"), expLabel, 1, 1);
+        addInfo(HOVerwaltung.instance().getLanguageString("ER"), expLabel, 1, 1);
     }
 
     //~ Methods ------------------------------------------------------------------------------------

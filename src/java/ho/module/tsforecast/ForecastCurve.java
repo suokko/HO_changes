@@ -231,7 +231,7 @@ abstract class ForecastCurve extends Curve {
 									MatchType.QUALIFICATION);
 							point.m_strTooltip = new String(HOVerwaltung
 									.instance().getLanguageString(
-											"QualifikationSpiel"));
+											"ls.match.matchtype.qualification"));
 							break;
 						default:
 							point = new Curve.Point(calendar.getTime(),
@@ -242,7 +242,7 @@ abstract class ForecastCurve extends Curve {
 											+ ". "
 											+ HOVerwaltung.instance()
 													.getLanguageString(
-															"LigaSpiel"));
+															"ls.match.matchtype.league"));
 							break;
 						}
 						m_clPoints.add(point);
@@ -256,7 +256,7 @@ abstract class ForecastCurve extends Curve {
 					point.m_strTooltip = new String((ibasics.getSpieltag() + s)
 							+ ". "
 							+ HOVerwaltung.instance().getLanguageString(
-									"PokalSpiel"));
+									"ls.match.matchtype.cup"));
 					m_clPoints.add(point);
 					addUpdatePoints(point);
 					lastMatchType = MatchType.CUP;
