@@ -93,7 +93,7 @@ public class XMLMatchLineupParser {
 		return ml;
 	}
 
-	private static MatchLineupPlayer createPlayer(Element ele) throws Exception {
+	private static MatchLineupPlayer createPlayer(Element ele) {
 		int roleID = -1;
 		int behavior = 0;
 		double rating = -1.0d;
@@ -126,8 +126,9 @@ public class XMLMatchLineupParser {
 			tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
 			name = tmp.getFirstChild().getNodeValue();
 			tmp = (Element) ele.getElementsByTagName("LastName").item(0);
-			name = name + " " + tmp.getFirstChild().getNodeValue();
-			tmp = (Element) ele.getElementsByTagName("PlayerName").item(0);
+			if (tmp.getFirstChild() != null) { // there are players without a lastname
+				name = name + " " + tmp.getFirstChild().getNodeValue();
+			}
 
 			// tactic is only set for those in the lineup (and not for the keeper).
 			if (roleID == ISpielerPosition.keeper || roleID == ISpielerPosition.oldKeeper) {
@@ -136,7 +137,6 @@ public class XMLMatchLineupParser {
 				behavior = 0;
 				roleID = ISpielerPosition.keeper; // takes care of the old
 													// keeper ID.
-
 			} else if ((roleID >= 0)
 					&& (roleID < ISpielerPosition.setPieces)
 					|| ((roleID < ISpielerPosition.startReserves) && (roleID > ISpielerPosition.keeper))) {
@@ -232,7 +232,7 @@ public class XMLMatchLineupParser {
 		}
 	}
 
-	private static MatchLineupTeam createTeam(Element ele) throws Exception {
+	private static MatchLineupTeam createTeam(Element ele) {
 		Element tmp = (Element) ele.getElementsByTagName("TeamID").item(0);
 		int teamId = Integer.parseInt(tmp.getFirstChild().getNodeValue());
 		tmp = (Element) ele.getElementsByTagName("ExperienceLevel").item(0);
@@ -318,7 +318,7 @@ public class XMLMatchLineupParser {
 		return team;
 	}
 
-	private static Substitution createSubstitution(Element ele, int num) throws Exception {
+	private static Substitution createSubstitution(Element ele, int num) {
 
 		int playerOrderID = num; // We use our own
 		int playerIn = -1;
@@ -380,7 +380,7 @@ public class XMLMatchLineupParser {
 				GoalDiffCriteria.getById(standing));
 	}
 
-	private static MatchLineupPlayer createStartPlayer(Element ele) throws Exception {
+	private static MatchLineupPlayer createStartPlayer(Element ele) {
 		MatchLineupPlayer player = null;
 		int roleID = -1;
 		int behavior = 0;
@@ -398,7 +398,9 @@ public class XMLMatchLineupParser {
 			tmp = (Element) ele.getElementsByTagName("FirstName").item(0);
 			name = tmp.getFirstChild().getNodeValue();
 			tmp = (Element) ele.getElementsByTagName("LastName").item(0);
-			name = name + " " + tmp.getFirstChild().getNodeValue();
+			if (tmp.getFirstChild() != null) { // there are players without a lastname
+				name = name + " " + tmp.getFirstChild().getNodeValue();
+			}
 
 			// tactic is only set for those in the lineup (and not for the
 			// keeper).
