@@ -79,7 +79,8 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
         return MARKIERTER_VEREIN;
     }
 
-    public final void actionPerformed(ActionEvent e) {
+    @Override
+	public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jbLoeschen)) {
             if (m_jcbSaison.getSelectedItem() != null) {
                 final Spielplan spielplan = (Spielplan) m_jcbSaison.getSelectedItem();
@@ -120,7 +121,8 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
     }
 
     //Listener--------------
-    public final void itemStateChanged(ItemEvent e) {
+    @Override
+	public final void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             //Aktuellen Spielplan bestimmen
             if (m_jcbSaison.getSelectedItem() instanceof Spielplan) {
@@ -134,31 +136,39 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
         }
     }
 
-    public final void keyPressed(KeyEvent e) {
+    @Override
+	public final void keyPressed(KeyEvent e) {
         doEvent();
     }
 
-    public final void keyReleased(KeyEvent e) {
+    @Override
+	public final void keyReleased(KeyEvent e) {
         doEvent();
     }
 
-    public void keyTyped(KeyEvent e) {
+    @Override
+	public void keyTyped(KeyEvent e) {
     }
 
-    public final void mouseClicked(MouseEvent e) {
+    @Override
+	public final void mouseClicked(MouseEvent e) {
         doEvent();
     }
 
-    public void mouseEntered(MouseEvent e) {
+    @Override
+	public void mouseEntered(MouseEvent e) {
     }
 
-    public void mouseExited(MouseEvent e) {
+    @Override
+	public void mouseExited(MouseEvent e) {
     }
 
-    public void mousePressed(MouseEvent e) {
+    @Override
+	public void mousePressed(MouseEvent e) {
     }
 
-    public final void mouseReleased(MouseEvent e) {
+    @Override
+	public final void mouseReleased(MouseEvent e) {
         doEvent();
     }
 
@@ -169,11 +179,13 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
                 markierungInfo();
             }
     }
-    public final void reInit() {
+    @Override
+	public final void reInit() {
         fillSaisonCB();
     }
 
-    public void refresh() {
+    @Override
+	public void refresh() {
     }
 
     private void fillSaisonCB() {
