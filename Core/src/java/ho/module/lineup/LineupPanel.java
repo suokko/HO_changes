@@ -263,12 +263,14 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 				}
 
 				int row = sourceTable.getSelectedRow();
-				if (targetTable.getSelectedRow() != row) {
-					targetTable.setRowSelectionInterval(row, row);
-				}
-				Spieler spieler = ((PlayerTable) sourceTable).getSpieler(row);
-				if (spieler != null) {
-					HOMainFrame.instance().setActualSpieler(spieler);
+				if (row > 0) {
+					if (targetTable.getSelectedRow() != row) {
+						targetTable.setRowSelectionInterval(row, row);
+					}
+					Spieler spieler = ((PlayerTable) sourceTable).getSpieler(row);
+					if (spieler != null) {
+						HOMainFrame.instance().setActualSpieler(spieler);
+					}
 				}
 			}
 		};
