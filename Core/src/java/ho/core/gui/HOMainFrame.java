@@ -579,7 +579,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			settings.setAuthenticationNeeded(UserParameter.instance().ProxyAuthAktiv);
 			settings.setUsername(UserParameter.instance().ProxyAuthName);
 			settings.setPassword(UserParameter.instance().ProxyAuthPassword);
-			MyConnector.instance().enableProxy();
+			MyConnector.instance().enableProxy(settings);
 		}
 	}
 
