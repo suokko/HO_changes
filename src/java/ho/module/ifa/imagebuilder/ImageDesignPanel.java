@@ -61,15 +61,15 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private JCheckBox roundlyCheckBox;
 	private JSlider percentSlider;
 	private JCheckBox headerYesNoCheckBox;
-//	private JCheckBox animGif;
+	// private JCheckBox animGif;
 	private JSpinner delaySpinner;
 	private JPanel toolbar;
-	private JButton saveAnimatedImage = new JButton(HOVerwaltung.instance()
-			.getLanguageString("Speichern"));
-	private JButton saveHostedImage = new JButton(HOVerwaltung.instance()
-			.getLanguageString("Speichern"));
-	private JButton saveVisitedImage = new JButton(HOVerwaltung.instance()
-			.getLanguageString("Speichern"));
+	private JButton saveAnimatedImage = new JButton(HOVerwaltung.instance().getLanguageString(
+			"Speichern"));
+	private JButton saveHostedImage = new JButton(HOVerwaltung.instance().getLanguageString(
+			"Speichern"));
+	private JButton saveVisitedImage = new JButton(HOVerwaltung.instance().getLanguageString(
+			"Speichern"));
 
 	public ImageDesignPanel(PluginIfaPanel pluginIfaPanel) {
 		this.pluginIfaPanel = pluginIfaPanel;
@@ -85,8 +85,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private void initialize() throws Exception {
 		setLayout(new BorderLayout());
 
-		FLAG_WIDTH = Integer.parseInt(ConfigManager
-				.getTextFromConfig(ConfigManager.IFA_WIDTH));
+		FLAG_WIDTH = Integer.parseInt(ConfigManager.getTextFromConfig(ConfigManager.IFA_WIDTH));
 
 		this.centerPanel = new JPanel();
 		this.centerPanel.setLayout(new GridLayout(1, 2));
@@ -95,11 +94,10 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		initHostedEmblemPanel();
 		initToolbar();
 		initHomeAwayPanel();
-		
+
 		centerPanel.add(visitedOptions);
 		centerPanel.add(hostedOptions);
-		
-		
+
 		add(toolbar, BorderLayout.NORTH);
 		this.scroll = new JScrollPane(this.centerPanel);
 		add(scroll, BorderLayout.CENTER);
@@ -108,31 +106,24 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private void initToolbar() {
 		toolbar = new JPanel();
 		toolbar.setLayout(new FlowLayout(FlowLayout.LEADING));
-		
+
 		JPanel visitedRow = new JPanel();
 		toolbar.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-		this.headerYesNoCheckBox = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("showHeader"),
-				new Boolean(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW))
-		.booleanValue());
+		this.headerYesNoCheckBox = new JCheckBox(HOVerwaltung.instance().getLanguageString(
+				"showHeader"), new Boolean(
+				ConfigManager.getTextFromConfig(ConfigManager.IFA_HEADERSHOW)).booleanValue());
 		this.headerYesNoCheckBox.setName("header");
 		toolbar.add(headerYesNoCheckBox);
 
-		this.roundlyCheckBox = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("Roundly"),
-				new Boolean(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_ROUNDLY))
-		.booleanValue());
+		this.roundlyCheckBox = new JCheckBox(HOVerwaltung.instance().getLanguageString("Roundly"),
+				new Boolean(ConfigManager.getTextFromConfig(ConfigManager.IFA_ROUNDLY))
+						.booleanValue());
 		this.roundlyCheckBox.setName("rounded");
 		toolbar.add(roundlyCheckBox);
 
-		this.greyColoredCheckBox = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("Grey"),
-				new Boolean(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_GREY))
-		.booleanValue());
+		this.greyColoredCheckBox = new JCheckBox(HOVerwaltung.instance().getLanguageString("Grey"),
+				new Boolean(ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY)).booleanValue());
 		this.greyColoredCheckBox.setName("grey");
 		toolbar.add(greyColoredCheckBox);
 
@@ -145,102 +136,88 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		toolbar.add(percentSlider);
 
 		JPanel sizePanel = new JPanel(new FlowLayout(1, 0, 0));
-		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH,
-				MIN_FLAG_WIDTH, MAX_FLAG_WIDTH, 1));
+		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
+				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
-		sizePanel.add(new JLabel(HOVerwaltung.instance().getLanguageString(
-		"Flaggen")
-		+ "/"
-		+ (HOVerwaltung.instance().getLanguageString("Row") + ": ")));
+		sizePanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Flaggen") + "/"
+				+ (HOVerwaltung.instance().getLanguageString("Row") + ": ")));
 		sizePanel.add(this.sizeSpinner);
 		toolbar.add(sizePanel);
-		
-	
-		
-//		this.animGif = new JCheckBox(HOVerwaltung.instance().getLanguageString(
-//				"animatedGIF"),
-//				new Boolean(ConfigManager
-//						.getTextFromConfig(ConfigManager.IFA_GIFANIMATED))
-//		.booleanValue());
-		toolbar.add(new JLabel(HOVerwaltung.instance().getLanguageString(
-															"animatedGIF")));
+
+		// this.animGif = new
+		// JCheckBox(HOVerwaltung.instance().getLanguageString(
+		// "animatedGIF"),
+		// new Boolean(ConfigManager
+		// .getTextFromConfig(ConfigManager.IFA_GIFANIMATED))
+		// .booleanValue());
+		toolbar.add(new JLabel(HOVerwaltung.instance().getLanguageString("animatedGIF")));
 
 		JPanel spinnerPanel = new JPanel(new FlowLayout(1, 0, 0));
-		this.delaySpinner = new JSpinner(new SpinnerNumberModel(
-				Double.parseDouble(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_GIFDELAY)), 0.0D,
-						60.0D, 0.1D));
-		spinnerPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString(
-		"Delay")
-		+ ": "));
+		this.delaySpinner = new JSpinner(new SpinnerNumberModel(Double.parseDouble(ConfigManager
+				.getTextFromConfig(ConfigManager.IFA_GIFDELAY)), 0.0D, 60.0D, 0.1D));
+		spinnerPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Delay") + ": "));
 		spinnerPanel.add(this.delaySpinner);
 		toolbar.add(spinnerPanel);
 
-		
 		saveAnimatedImage.addActionListener(this);
 		toolbar.add(saveAnimatedImage);
 	}
 
-	
 	private void initHomeAwayPanel() {
 		hostedOptions = new JPanel();
 		hostedOptions.setLayout(new GridBagLayout());
 		hostedOptions.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance()
 				.getLanguageString("AutoFilterPanel.Home_Games")));
-		
+
 		visitedOptions = new JPanel();
 		visitedOptions.setLayout(new GridBagLayout());
 		visitedOptions.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance()
 				.getLanguageString("AutoFilterPanel.Away_Games")));
-		
+
 		GridBagConstraints constraints = new GridBagConstraints();
-		
+
 		constraints.weighty = 0;
 		constraints.weightx = 0;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.gridx = 1;
 		constraints.gridy = 1;
-		
-		
-//		JLabel hostLabel = new JLabel(HOVerwaltung.instance()
-//								.getLanguageString("AutoFilterPanel.Home_Games"));
-//		hostedOptions.add(hostLabel);
-//		
-//		JLabel visitLabel = new JLabel(HOVerwaltung.instance()
-//								.getLanguageString("AutoFilterPanel.Away_Games"));
-//		visitedOptions.add(visitLabel);
-		
+
+		// JLabel hostLabel = new JLabel(HOVerwaltung.instance()
+		// .getLanguageString("AutoFilterPanel.Home_Games"));
+		// hostedOptions.add(hostLabel);
+		//
+		// JLabel visitLabel = new JLabel(HOVerwaltung.instance()
+		// .getLanguageString("AutoFilterPanel.Away_Games"));
+		// visitedOptions.add(visitLabel);
+
 		this.hostedTextField = new JTextField(
-				ConfigManager
-				.getTextFromConfig(ConfigManager.IFA_HOSTEDHEADER));
+				ConfigManager.getTextFromConfig(ConfigManager.IFA_HOSTEDHEADER));
 		this.hostedTextField.addKeyListener(new TextKeyListener());
 		this.hostedTextField.setPreferredSize(new Dimension(150, 25));
 		hostedOptions.add(hostedTextField, constraints);
 
 		this.visitedTextField = new JTextField(
-				ConfigManager
-				.getTextFromConfig(ConfigManager.IFA_VISITEDHEADER));
+				ConfigManager.getTextFromConfig(ConfigManager.IFA_VISITEDHEADER));
 		this.visitedTextField.addKeyListener(new TextKeyListener());
 		this.visitedTextField.setPreferredSize(new Dimension(150, 25));
 		visitedOptions.add(visitedTextField, constraints);
-		
+
 		constraints.gridy = 5;
 		hostedOptions.add(saveHostedImage, constraints);
 		saveHostedImage.addActionListener(this);
-		
+
 		visitedOptions.add(saveVisitedImage, constraints);
 		saveVisitedImage.addActionListener(this);
-		
+
 		constraints.gridy = 10;
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		hostedOptions.add(hostedEmblemPanel, constraints);
 		visitedOptions.add(visitedEmblemPanel, constraints);
-		
-		
+
 	}
-	
+
 	private void initVisitedEmblemPanel() {
 		int enabled = 0;
 		try {
@@ -250,8 +227,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				FlagLabel.BRIGHTNESS = Integer.parseInt(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_BRIGHTNESS));
 				FlagLabel.GREY = new Boolean(
-						ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY))
-				.booleanValue();
+						ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY)).booleanValue();
 				FlagLabel[] flags = getAllCountries(true);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
@@ -262,8 +238,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 				emblemPanel.setGrey(FlagLabel.GREY);
 				emblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
-				String path = ConfigManager
-				.getTextFromConfig(ConfigManager.IFA_VISITEDPATHEMBLEM);
+				String path = ConfigManager.getTextFromConfig(ConfigManager.IFA_VISITEDPATHEMBLEM);
 				if (!path.equals("")) {
 					File file = new File(path);
 					if (file.exists()) {
@@ -277,8 +252,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				emblemPanel.setHeaderText(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_VISITEDHEADER));
 				emblemPanel.setHeader(new Boolean(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW))
-				.booleanValue());
+						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW)).booleanValue());
 				visitedEmblemPanel = emblemPanel;
 			} else {
 				FLAG_WIDTH = visitedEmblemPanel.getFlagWidth();
@@ -306,21 +280,19 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				FlagLabel.BRIGHTNESS = Integer.parseInt(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_BRIGHTNESS));
 				FlagLabel.GREY = new Boolean(
-						ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY))
-				.booleanValue();
+						ConfigManager.getTextFromConfig(ConfigManager.IFA_GREY)).booleanValue();
 				FlagLabel[] flags = getAllCountries(false);
 				for (int i = 0; i < flags.length; i++) {
 					if (flags[i].isEnabled())
 						enabled++;
 				}
-				
+
 				EmblemPanel emblemPanel = new EmblemPanel(flags, enabled);
 				emblemPanel.setFlagWidth(FLAG_WIDTH);
 				emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 				emblemPanel.setGrey(FlagLabel.GREY);
 				emblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
-				String path = ConfigManager
-				.getTextFromConfig(ConfigManager.IFA_HOSTEDPATHEMBLEM);
+				String path = ConfigManager.getTextFromConfig(ConfigManager.IFA_HOSTEDPATHEMBLEM);
 				if (!path.equals("")) {
 					File file = new File(path);
 					if (file.exists()) {
@@ -334,8 +306,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				emblemPanel.setHeaderText(ConfigManager
 						.getTextFromConfig(ConfigManager.IFA_HOSTEDHEADER));
 				emblemPanel.setHeader(new Boolean(ConfigManager
-						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW))
-				.booleanValue());
+						.getTextFromConfig(ConfigManager.IFA_HEADERSHOW)).booleanValue());
 				hostedEmblemPanel = emblemPanel;
 			} else {
 				FLAG_WIDTH = hostedEmblemPanel.getFlagWidth();
@@ -355,22 +326,22 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	}
 
 	public void refreshFlagPanel() {
-		
-//		String hosted = hostedTextField.getText();
-//		String visited = visitedTextField.getText();
-//		
-//		centerPanel.remove(visitedOptions);
-//		centerPanel.remove(hostedOptions);
-		
+
+		// String hosted = hostedTextField.getText();
+		// String visited = visitedTextField.getText();
+		//
+		// centerPanel.remove(visitedOptions);
+		// centerPanel.remove(hostedOptions);
+
 		initVisitedEmblemPanel();
 		initHostedEmblemPanel();
-//		initHomeAwayPanel();
-//		
-//		hostedTextField.setText(hosted);
-//		visitedTextField.setText(visited);
-//		
-//		centerPanel.add(visitedOptions);
-//		centerPanel.add(hostedOptions);
+		// initHomeAwayPanel();
+		//
+		// hostedTextField.setText(hosted);
+		// visitedTextField.setText(visited);
+		//
+		// centerPanel.add(visitedOptions);
+		// centerPanel.add(hostedOptions);
 		centerPanel.validate();
 		centerPanel.repaint();
 		validate();
@@ -393,15 +364,14 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		return this.home;
 	}
 
-	/*public boolean isAnimGif() {
-		return this.animGif.isSelected();
-	}*/
+	/*
+	 * public boolean isAnimGif() { return this.animGif.isSelected(); }
+	 */
 
 	public JSpinner getDelaySpinner() {
 		return this.delaySpinner;
 	}
 
-	
 	private void addListeners() {
 		this.headerYesNoCheckBox.addItemListener(new ItemListener() {
 
@@ -447,14 +417,12 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.sizeSpinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent evt) {
-				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner
-						.getValue()).intValue();
+				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue()).intValue();
 				visitedEmblemPanel.setFlagWidth(rowSize);
 				hostedEmblemPanel.setFlagWidth(rowSize);
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
-
 
 	}
 
@@ -464,8 +432,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 		@Override
 		public void keyReleased(KeyEvent ke) {
-			JTextField source = (JTextField)ke.getSource();
-			
+			JTextField source = (JTextField) ke.getSource();
+
 			if (source == visitedTextField) {
 				visitedEmblemPanel.setHeaderText(source.getText());
 			} else {
@@ -474,10 +442,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		}
 	}
 
-	
 	private FlagLabel[] getAllCountries(boolean homeAway) {
-		WorldDetailLeague[] leagues = WorldDetailsManager.instance()
-		.getLeagues();
+		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
 		FlagLabel[] flagLabels = null;
 		// ArrayList ret = new ArrayList();
 		flagLabels = new FlagLabel[leagues.length];
@@ -487,23 +453,20 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				flagLabel.setCountryId(leagues[i].getCountryId());
 				flagLabel.setCountryName(leagues[i].getCountryName());
 				try {
-					flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel
-							.getCountryId()));
+					flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 				} catch (Exception e) {
 					System.out.println("Error getting image icon for country "
-							+ flagLabel.getCountryId() + " "
-							+ flagLabel.getCountryName() + "\n"
+							+ flagLabel.getCountryId() + " " + flagLabel.getCountryName() + "\n"
 							+ e.getMessage());
 					flagLabel.setIcon(ImageUtilities.getFlagIcon(-1));
 				}
 				flagLabel.setToolTipText(flagLabel.getCountryName());
 				int flagLeagueID = leagues[i].getLeagueId();
-				if (flagLeagueID == HOVerwaltung.instance().getModel()
-						.getBasics().getLiga())
+				if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga())
 					flagLabel.setHomeCountry(true);
 				else {
-					flagLabel.setEnabled(DBManager.instance()
-							.isIFALeagueIDinDB(flagLeagueID, homeAway));
+					flagLabel.setEnabled(DBManager.instance().isIFALeagueIDinDB(flagLeagueID,
+							homeAway));
 				}
 				flagLabels[i] = flagLabel;
 			}
@@ -521,7 +484,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		if (e.getSource() == saveAnimatedImage) {
 			GlobalActionsListener.saveImage(true, true, this, getParent());
 		}
-		
+
 		if (e.getSource() == saveHostedImage) {
 			GlobalActionsListener.saveImage(false, true, this, getParent());
 		}
