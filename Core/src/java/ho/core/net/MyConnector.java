@@ -560,12 +560,13 @@ public class MyConnector {
 	// ///////////////////////////////////////////////////////////////////////////////
 	// Proxy
 	// //////////////////////////////////////////////////////////////////////////////
-	public void enableProxy() {
+	public void enableProxy(ProxySettings proxySettings) {
+		this.proxySettings = proxySettings;
 		if (this.proxySettings != null && this.proxySettings.isUseProxy()) {
-			System.getProperties().put("https.proxyHost", proxySettings.getProxyHost());
-			System.getProperties().put("https.proxyPort", proxySettings.getProxyPort());
-			System.getProperties().put("http.proxyHost", proxySettings.getProxyHost());
-			System.getProperties().put("http.proxyPort", proxySettings.getProxyPort());
+			System.getProperties().setProperty("https.proxyHost", proxySettings.getProxyHost());
+			System.getProperties().setProperty("https.proxyPort", String.valueOf(proxySettings.getProxyPort()));
+			System.getProperties().setProperty("http.proxyHost", proxySettings.getProxyHost());
+			System.getProperties().setProperty("http.proxyPort", String.valueOf(proxySettings.getProxyPort()));
 		} else {
 			System.getProperties().remove("https.proxyHost");
 			System.getProperties().remove("https.proxyPort");

@@ -286,7 +286,7 @@ public class ProxyDialog extends JDialog {
 		settings.setUsername(proxyAuthNameTextField.getText());
 		settings.setPassword(new String(proxyPasswordField.getPassword()));
 		
-		MyConnector.instance().enableProxy();
+		MyConnector.instance().enableProxy(settings);
 		
 		UserParameter.instance().ProxyAktiv = useProxyCheckBox.isSelected();
 		UserParameter.instance().ProxyHost = proxyHostTextField.getText();
