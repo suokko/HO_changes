@@ -64,7 +64,7 @@ public class TrainingManager {
         return _WeekManager.getTrainingList();
     }
 
-   
+
     /**
      * TODO Missing Method Documentation
      *
@@ -75,7 +75,7 @@ public class TrainingManager {
     public List<TrainingPerWeek> refreshTrainingWeeks() {
         return _WeekManager.refreshTrainingList();
     }
-   
+
     /**
      * Training for given player for each skill
      *
@@ -113,7 +113,7 @@ public class TrainingManager {
         			"Start calcWeeklyTraining for "+spieler.getName()+", zeitpunkt="+((timestamp!=null)?timestamp.toString()+c1s:"")
         			+ ", trainDate="+train.getTrainingDate().toString()+c2s);
         }
-        
+
         Calendar trainingDate = Calendar.getInstance(Locale.UK);
         trainingDate.setTime(train.getTrainingDate());
         WeeklyTrainingType wt = WeeklyTrainingType.instance(train.getTrainingType());
@@ -125,11 +125,11 @@ public class TrainingManager {
 	            tp.Name(spieler.getName());
 	        	for (int i=0; i<matches.size(); i++) {
 	                final int matchId = (matches.get(i)).intValue();
-	                
+
 	                //Get the MatchLineup by id
 	                MatchLineupTeam mlt = DBManager.instance().getMatchLineupTeam(matchId, myID);
 	                MatchStatistics ms = new MatchStatistics(matchId, mlt);
-	                
+
 	                if (wt.getPrimaryTrainingSkillPositions() != null) {
 	                	tp.addPrimarySkillPositionMinutes(ms.getMinutesPlayedInPositions(playerID, wt.getPrimaryTrainingSkillPositions()));
 	                }
@@ -163,8 +163,8 @@ public class TrainingManager {
 	    		if (TrainingManager.TRAININGDEBUG) {
 					HOLogger.instance().debug(getClass(), "Week " + train.getHattrickWeek()
 	            		+": Player " + spieler.getName() + " (" + playerID + ")"
-	            		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got " 
-	            		+ wt.getPrimaryTraining(tp) + " primary training points and " 
+	            		+" played total " + tp.getMinutesPlayed() + " mins for training purposes and got "
+	            		+ wt.getPrimaryTraining(tp) + " primary training points and "
 	            		+ wt.getSecondaryTraining(tp) + " secondary training points");
 	    		}
 	            output.setTrainingPair(trp);
@@ -184,8 +184,8 @@ public class TrainingManager {
     public void recalcSubskills(boolean showBar) {
     	HOMainFrame.setHOStatus(HOMainFrame.BUSY);
         if (JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-                                          "Depending on database volume this process takes several minutes. Start recalculation ?",
-                                          "Subskill Recalculation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+        		HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"),
+				HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             HOVerwaltung.instance().recalcSubskills(showBar, null);
         }
     }
