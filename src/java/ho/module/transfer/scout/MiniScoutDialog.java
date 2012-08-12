@@ -23,6 +23,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
@@ -90,8 +92,14 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         super(HOVerwaltung.instance().getLanguageString("ScoutMini"));
         this.setIconImage(HOMainFrame.instance().getIconImage());
         clOwner = owner;
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
+        
+        addWindowListener(new WindowAdapter() {
+        	@Override
+        	public void windowClosing(WindowEvent e) {
+        		ho.core.gui.HOMainFrame.instance().setVisible(true);
+        	}
+		});
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -119,19 +127,14 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 	public final void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(jbApply)) {
             clOwner.setScoutEintrag(createScoutEintrag());
-            this.setVisible(false);
-            this.dispose();
-            ho.core.gui.HOMainFrame.instance().setVisible(true);
+            close();
         } else if (actionEvent.getSource().equals(jbCancel)) {
-            this.setVisible(false);
-            this.dispose();
-            ho.core.gui.HOMainFrame.instance().setVisible(true);
+        	close();
         } else if (actionEvent.getSource().equals(jbApplyScout)) {
             copyPaste();
 		} else if (actionEvent.getSource().equals(jtfAge)) {
 			spielervalueChanged();
         }
-
     }
 
     /**
@@ -260,6 +263,12 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         jlStatus.setText(HOVerwaltung.instance().getLanguageString("scout_status") + ": " + message);
     }
 
+    private void close() {
+        setVisible(false);
+        dispose();
+        ho.core.gui.HOMainFrame.instance().setVisible(true);
+    }
+    
     /**
      * Create new Scout entry
      *
