@@ -263,7 +263,9 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 				}
 
 				int row = sourceTable.getSelectedRow();
-				if (row > 0) {
+				if (row == -1) {
+					targetTable.clearSelection();
+				} else {					
 					if (targetTable.getSelectedRow() != row) {
 						targetTable.setRowSelectionInterval(row, row);
 					}
