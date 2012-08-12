@@ -86,12 +86,13 @@ final class MatchDayPanel extends JPanel implements ActionListener {
             							matchdata[0],
             							MatchType.LEAGUE, // not tournament
             							false);
-            }
-            fillLabels();
-            RefreshManager.instance().doReInit();
-        } else {
+            	fillLabels();
+            	RefreshManager.instance().doReInit();
+            	
+            } else {
                 //Match zeigen
-           HOMainFrame.instance().showMatch(matchdata[0]);
+            	HOMainFrame.instance().showMatch(matchdata[0]);
+            }
         }
     }
 
