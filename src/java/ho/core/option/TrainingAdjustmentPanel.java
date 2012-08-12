@@ -9,8 +9,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 /**
  * Panel for training adjustments
  */
-public final class TrainingAdjustmentPanel extends ImagePanel implements ActionListener {
+public final class TrainingAdjustmentPanel extends ImagePanel implements KeyListener {
     //~ Static / Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
@@ -74,24 +74,6 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
         return offset;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
-    public final void addActionListener(ActionListener listener) {
-        m_jtfTextfield.addActionListener(listener);
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
-    public final void removeActionListener(ActionListener listener) {
-        m_jtfTextfield.removeActionListener(listener);
-    }
-
    
     /**
      * TODO Missing Method Documentation
@@ -139,7 +121,7 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
         m_jtfTextfield = new JTextField(offset + "", 4);
         m_jtfTextfield.setEditable(true);
         m_jtfTextfield.setHorizontalAlignment(JTextField.CENTER);
-        m_jtfTextfield.addActionListener(this);
+        m_jtfTextfield.addKeyListener(this);
         m_jtfTextfield.setMaximumSize(new Dimension(20, 20));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.NONE;
@@ -164,8 +146,17 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
         add(m_jlTotal);
     
     }
+	
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public void actionPerformed(ActionEvent e) {
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
 		try {
 			offset = new Float(m_jtfTextfield.getText());
 			m_jlTotal.setText(nf.format(offset + base));
@@ -175,5 +166,9 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements ActionL
 			// Give a hint the value was not quite what we wanted
 			m_jlTotal.setForeground(ThemeManager.getColor(HOColorName.LABEL_ERROR_FG));
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 }
