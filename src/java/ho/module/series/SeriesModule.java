@@ -30,6 +30,7 @@ public final class SeriesModule extends DefaultModule {
 		return new SeriesPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0);
 	}
