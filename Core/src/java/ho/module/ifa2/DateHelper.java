@@ -42,18 +42,6 @@ public final class DateHelper {
 		return convert(date, "2003-01-01", "yyyy-MM-dd");
 	}
 
-	public static String displayDateString(Date date) {
-		return convert(date, "01.01.2003", "dd.MM.yyyy");
-	}
-
-	public static String getTimestampString(Date date) {
-		return convert(date, "2003-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss");
-	}
-
-	public static String getTimeString(Date date) {
-		return convert(date, "00:00", "HH:mm");
-	}
-
 	private static String convert(Date date, String defaultValue, String pattern) {
 		if (date == null)
 			return defaultValue;
@@ -61,10 +49,5 @@ public final class DateHelper {
 			dateFormatter.applyPattern(pattern);
 			return dateFormatter.format(date);
 		}
-	}
-
-	public static String getTodayDateString() {
-		Calendar calendar = Calendar.getInstance();
-		return getDateString(calendar.getTime());
 	}
 }
