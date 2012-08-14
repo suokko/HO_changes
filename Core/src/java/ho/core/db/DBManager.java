@@ -45,10 +45,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -2009,12 +2009,12 @@ public class DBManager {
 		}
 	}
 
-	public HashMap<String, Object> loadModuleConfigs() {
+	public Map<String, Object> loadModuleConfigs() {
 		return ((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME))
 				.findAll();
 	}
 
-	public void saveModuleConfigs(HashMap<String, Object> values) {
+	public void saveModuleConfigs(Map<String, Object> values) {
 		((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME))
 				.saveConfig(values);
 	}

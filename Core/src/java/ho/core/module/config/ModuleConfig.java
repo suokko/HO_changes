@@ -7,10 +7,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.Map;
 
 public final class ModuleConfig {
 
-	private HashMap<String, Object> configMap = new HashMap<String, Object>();
+	private Map<String, Object> configMap = new HashMap<String, Object>();
 
 	// singleton
 	private static ModuleConfig configuration = null;
