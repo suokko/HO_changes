@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -32,7 +33,7 @@ final class ModuleConfigTable extends AbstractTable {
 	 * update & insert method
 	 * @param obj
 	 */
-	void saveConfig(HashMap<String, Object> values) {
+	void saveConfig(Map<String, Object> values) {
 		int updated = 0;
 		String key = null;
 
@@ -49,7 +50,7 @@ final class ModuleConfigTable extends AbstractTable {
 	 * 
 	 * @param obj
 	 */
-	HashMap<String,Object> findAll() {
+	Map<String,Object> findAll() {
 		final HashMap<String,Object> values = new HashMap<String,Object>();
 		final StringBuilder sql = new StringBuilder(100);
 		sql.append("SELECT * FROM ").append(getTableName());
