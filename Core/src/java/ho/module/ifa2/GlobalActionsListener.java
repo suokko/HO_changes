@@ -18,8 +18,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
@@ -28,14 +26,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-public class GlobalActionsListener extends MouseAdapter implements
-		ActionListener {
+public class GlobalActionsListener implements ActionListener {
 	public static final int WIDTH = (int) GraphicsEnvironment
 			.getLocalGraphicsEnvironment().getMaximumWindowBounds().getWidth();
 	public static final int HEIGHT = (int) GraphicsEnvironment
@@ -169,39 +165,6 @@ public class GlobalActionsListener extends MouseAdapter implements
 		}
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		try {
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileFilter(new ImageFileFilter(new String[] { "jpg",
-					"gif" }));
-			fileChooser.setAcceptAllFileFilterUsed(false);
-			fileChooser.setMultiSelectionEnabled(false);
-			if (fileChooser.showOpenDialog(this.parent) == 0) {
-				ImageDesignPanel imageDesignPanel = this.pluginIfaPanel
-						.getImageDesignPanel();
-				EmblemPanel emblemPanel = imageDesignPanel
-						.getEmblemPanel(imageDesignPanel.isHomeAway());
-				String path = fileChooser.getSelectedFile().getPath();
-				emblemPanel.setImagePath(path);
-				ImageIcon image = createImageIcon(path);
-				emblemPanel.setLogo(image);
-				imageDesignPanel.validate();
-				imageDesignPanel.repaint();
-			} else {
-				ImageDesignPanel imageDesignPanel = this.pluginIfaPanel
-						.getImageDesignPanel();
-				EmblemPanel emblemPanel = imageDesignPanel
-						.getEmblemPanel(imageDesignPanel.isHomeAway());
-				emblemPanel.setLogo(null);
-				imageDesignPanel.validate();
-				imageDesignPanel.repaint();
-			}
-		} catch (Exception e) {
-			HOLogger.instance().error(GlobalActionsListener.class, e);
-		}
-	}
-
 	private BufferedImage quantizeBufferedImage(BufferedImage bufferedImage)
 			throws IOException {
 		int[][] pixels = getPixels(bufferedImage);
@@ -219,14 +182,6 @@ public class GlobalActionsListener extends MouseAdapter implements
 			}
 		}
 		return bufIma;
-	}
-
-	private ImageIcon createImageIcon(String path) {
-		if (path != null) {
-			return new ImageIcon(path);
-		}
-		System.err.println("Couldn't find file: " + path);
-		return null;
 	}
 
 	private int[][] getPixels(Image image) throws IOException {

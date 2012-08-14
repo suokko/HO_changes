@@ -205,8 +205,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 				if (flags[i].isEnabled())
 					enabled++;
 			}
-			EmblemPanel emblemPanel = new EmblemPanel(this.pluginIfaPanel,
-					flags, enabled);
+			EmblemPanel emblemPanel = new EmblemPanel(flags, enabled);
 			emblemPanel.setFlagWidth(FLAG_WIDTH);
 			emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 			emblemPanel.setGrey(FlagLabel.GREY);
