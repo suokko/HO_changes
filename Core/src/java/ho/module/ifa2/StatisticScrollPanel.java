@@ -72,8 +72,7 @@ public class StatisticScrollPanel extends JScrollPane {
 				obj[2] = won;
 				obj[3] = draw;
 				obj[4] = lost;
-				obj[5] = DateHelper.getDateString(DateHelper.getDate(obj1[1]
-						.toString()));
+				obj[5] = obj1[1].toString();
 				newVector.add(obj);
 				counter = 0;
 				won = 0;
@@ -103,8 +102,7 @@ public class StatisticScrollPanel extends JScrollPane {
 		obj[2] = won;
 		obj[3] = draw;
 		obj[4] = lost;
-		obj[5] = DateHelper
-				.getDateString(DateHelper.getDate(obj1[1].toString()));
+		obj[5] = obj1[1].toString();
 		newVector.add(obj);
 
 		Object[][] objects = new Object[newVector.size()][6];
