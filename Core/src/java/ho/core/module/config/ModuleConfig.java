@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class ModuleConfig {
+public class ModuleConfig {
 
 	private Map<String, Object> configMap = new HashMap<String, Object>();
 
@@ -17,7 +17,6 @@ public final class ModuleConfig {
 	private static ModuleConfig configuration = null;
 
 	private ModuleConfig() {
-
 	}
 
 	public static final ModuleConfig instance() {
@@ -26,15 +25,6 @@ public final class ModuleConfig {
 			configuration.load();
 		}
 		return configuration;
-	}
-
-	/**
-	 * fill configuration values from database
-	 * 
-	 * @return
-	 */
-	public void load() {
-		configMap = DBManager.instance().loadModuleConfigs();
 	}
 
 	public void save() {
@@ -54,24 +44,54 @@ public final class ModuleConfig {
 		return (Integer) configMap.get(key);
 	}
 
-	public boolean getBoolean(String key) {
-		return ((Boolean) configMap.get(key)).booleanValue();
+	public Integer getInteger(String key, Integer defaultValue) {
+		Integer value = (Integer) configMap.get(key);
+		return (value != null) ? value : defaultValue;
+	}
+
+	public Boolean getBoolean(String key) {
+		return (Boolean) configMap.get(key);
+	}
+
+	public Boolean getBoolean(String key, Boolean defaultValue) {
+		Boolean value = (Boolean) configMap.get(key);
+		return (value != null) ? value : defaultValue;
 	}
 
 	public String getString(String key) {
 		return (String) configMap.get(key);
 	}
 
+	public String getString(String key, String defaultValue) {
+		String value = (String) configMap.get(key);
+		return (value != null) ? value : defaultValue;
+	}
+
 	public BigDecimal getBigDecimal(String key) {
 		return (BigDecimal) configMap.get(key);
+	}
+
+	public BigDecimal getBigDecimal(String key, BigDecimal defaultValue) {
+		BigDecimal value = (BigDecimal) configMap.get(key);
+		return (value != null) ? value : defaultValue;
 	}
 
 	public Timestamp getTimeStamp(String key) {
 		return (Timestamp) configMap.get(key);
 	}
 
+	public Timestamp getTimeStamp(String key, Timestamp defaultValue) {
+		Timestamp value = (Timestamp) configMap.get(key);
+		return (value != null) ? value : defaultValue;
+	}
+
 	public Date getDate(String key) {
 		return (Date) configMap.get(key);
+	}
+
+	public Date getDate(String key, Date defaultValue) {
+		Date value = (Date) configMap.get(key);
+		return (value != null) ? value : defaultValue;
 	}
 
 	public void setInteger(String key, Integer value) {
@@ -130,4 +150,12 @@ public final class ModuleConfig {
 		configMap.put(key, tmp.toString());
 	}
 
+	/**
+	 * fill configuration values from database
+	 * 
+	 * @return
+	 */
+	private void load() {
+		configMap = DBManager.instance().loadModuleConfigs();
+	}
 }
