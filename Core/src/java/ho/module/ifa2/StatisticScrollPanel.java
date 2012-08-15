@@ -10,9 +10,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm.WordListener;
-
 public class StatisticScrollPanel extends JScrollPane {
+
+	private static final long serialVersionUID = 6986848449014459415L;
 	private JTable table;
 	private SortedTableModel model;
 	private String[] columnNames;
@@ -24,25 +24,17 @@ public class StatisticScrollPanel extends JScrollPane {
 	}
 
 	public void initialize() {
-		this.columnNames = new String[] { "Country", "Matches played", "Won",
-				"Draw", "Lost", "Last Match" };
-		try {
-			this.model = new SortedTableModel(new DefaultTableModel(
-					getTableData(), this.columnNames));
-			this.model.setAlfa(true);
-			this.model.sort(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.columnNames = new String[] { "Country", "Matches played", "Won", "Draw", "Lost",
+				"Last Match" };
+		this.model = new SortedTableModel(new DefaultTableModel(getTableData(), this.columnNames));
+		this.model.setAlfa(true);
+		this.model.sort(0);
 		this.table = new JTable(this.model);
-		this.table.setDefaultRenderer(Object.class,
-				new StatisticTableCellRenderer());
+		this.table.setDefaultRenderer(Object.class, new StatisticTableCellRenderer());
 		for (int i = 0; i < this.columnNames.length; i++) {
-			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(
-					new RendererDecorator());
+			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(new RendererDecorator());
 		}
-		this.table.getTableHeader().addMouseListener(
-				new RendererSorter(this.table, this.model, 0));
+		this.table.getTableHeader().addMouseListener(new RendererSorter(this.table, this.model, 0));
 		setViewportView(this.table);
 	}
 
@@ -64,8 +56,7 @@ public class StatisticScrollPanel extends JScrollPane {
 
 		for (int i = 0; i < vector.size(); i++) {
 			Object[] obj2 = (Object[]) vector.get(i);
-			if ((obj1 != null)
-					&& (!obj1[0].toString().equals(obj2[0].toString()))) {
+			if ((obj1 != null) && (!obj1[0].toString().equals(obj2[0].toString()))) {
 				Object[] obj = new Object[6];
 				obj[0] = obj1[0].toString();
 				obj[1] = counter;
@@ -109,8 +100,10 @@ public class StatisticScrollPanel extends JScrollPane {
 		for (int i = 0; i < objects.length; i++) {
 			Object[] vecObj = (Object[]) newVector.get(i);
 			int leagueID = Integer.parseInt(vecObj[0].toString());
-			JLabel label = new JLabel(WorldDetailsManager.instance().getWorldDetailLeagueByLeagueId(leagueID).getCountryName());			
-			label.setIcon(ImageUtilities.getFlagIcon(WorldDetailsManager.instance().getWorldDetailLeagueByLeagueId(leagueID).getCountryId()));
+			JLabel label = new JLabel(WorldDetailsManager.instance()
+					.getWorldDetailLeagueByLeagueId(leagueID).getCountryName());
+			label.setIcon(ImageUtilities.getFlagIcon(WorldDetailsManager.instance()
+					.getWorldDetailLeagueByLeagueId(leagueID).getCountryId()));
 			objects[i][0] = label;
 			objects[i][1] = vecObj[1];
 			objects[i][2] = vecObj[2];
@@ -123,21 +116,13 @@ public class StatisticScrollPanel extends JScrollPane {
 	}
 
 	public void refresh() {
-		try {
-			this.model = new SortedTableModel(new DefaultTableModel(
-					getTableData(), this.columnNames));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.model = new SortedTableModel(new DefaultTableModel(getTableData(), this.columnNames));
 		this.table = new JTable(this.model);
-		this.table.setDefaultRenderer(Object.class,
-				new StatisticTableCellRenderer());
+		this.table.setDefaultRenderer(Object.class, new StatisticTableCellRenderer());
 		for (int i = 0; i < this.columnNames.length; i++) {
-			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(
-					new RendererDecorator());
+			this.table.getColumn(this.columnNames[i]).setHeaderRenderer(new RendererDecorator());
 		}
-		this.table.getTableHeader().addMouseListener(
-				new RendererSorter(this.table, this.model, 0));
+		this.table.getTableHeader().addMouseListener(new RendererSorter(this.table, this.model, 0));
 		setViewportView(this.table);
 	}
 }
