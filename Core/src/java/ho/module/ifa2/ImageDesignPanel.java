@@ -2,7 +2,6 @@ package ho.module.ifa2;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
-import ho.core.util.HOLogger;
 import ho.module.ifa2.config.Config;
 
 import java.awt.BorderLayout;
@@ -40,8 +39,6 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	public static int FLAG_WIDTH = 8;
 	public static int MIN_FLAG_WIDTH = 5;
 	public static int MAX_FLAG_WIDTH = 12;
-	private GridBagLayout layout = new GridBagLayout();
-	private GridBagConstraints constraints = new GridBagConstraints();
 	private PluginIfaPanel pluginIfaPanel;
 	private EmblemPanel[] emblemPanels = new EmblemPanel[2];
 	private JSpinner sizeSpinner;
@@ -62,25 +59,19 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	public ImageDesignPanel(PluginIfaPanel pluginIfaPanel) {
 		this.pluginIfaPanel = pluginIfaPanel;
-		try {
-			initialize();
-		} catch (Exception e) {
-			HOLogger.instance().error(ImageDesignPanel.class, e);
-		}
+		initialize();
 	}
 
-	private void initialize() throws Exception {
+	private void initialize() {
 		setLayout(new BorderLayout());
-		this.constraints.fill = 0;
-		this.constraints.anchor = 10;
-		this.constraints.insets = new Insets(5, 5, 5, 5);
-		this.constraints.weightx = 0.0D;
-		this.constraints.weighty = 0.0D;
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.insets = new Insets(5, 5, 5, 5);
 
 		this.centerPanel = new JPanel();
-		this.centerPanel.setLayout(this.layout);
+		this.centerPanel.setLayout(new GridBagLayout());
 		this.northPanel = new JPanel();
-		this.northPanel.setLayout(this.layout);
+		this.northPanel.setLayout(new GridBagLayout());
 
 		FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 				Integer.valueOf(8));
@@ -89,7 +80,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		JButton button = new JButton("Update");
 		button.setActionCommand("update");
 		button.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
-		add(this.northPanel, button, this.constraints, 0, 0, 2, 1);
+		add(this.northPanel, button, constraints, 0, 0, 2, 1);
 
 		this.home = new JRadioButton("Visited Countries", true);
 		this.home.setActionCommand("visited");
@@ -100,32 +91,32 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		ButtonGroup group = new ButtonGroup();
 		group.add(this.home);
 		group.add(this.away);
-		add(this.northPanel, this.home, this.constraints, 0, 1, 1, 1);
-		add(this.northPanel, this.away, this.constraints, 1, 1, 1, 1);
+		add(this.northPanel, this.home, constraints, 0, 1, 1, 1);
+		add(this.northPanel, this.away, constraints, 1, 1, 1, 1);
 
 		this.headerYesNo = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
 		this.headerYesNo.setName("header");
 		this.headerYesNo.addChangeListener(changeListener);
-		add(this.northPanel, this.headerYesNo, this.constraints, 0, 2, 1, 1);
+		add(this.northPanel, this.headerYesNo, constraints, 0, 2, 1, 1);
 
 		this.footerYesNo = new JCheckBox("Show Footer", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
 		this.footerYesNo.setName("footer");
 		this.footerYesNo.addChangeListener(changeListener);
-		add(this.northPanel, this.footerYesNo, this.constraints, 1, 2, 1, 1);
+		add(this.northPanel, this.footerYesNo, constraints, 1, 2, 1, 1);
 
 		this.roundly = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
 				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
 		this.roundly.setName("rounded");
 		this.roundly.addChangeListener(changeListener);
-		add(this.northPanel, this.roundly, this.constraints, 0, 3, 1, 1);
+		add(this.northPanel, this.roundly, constraints, 0, 3, 1, 1);
 
 		this.greyColored = new JCheckBox("Grey", ModuleConfig.instance().getBoolean(
 				Config.VISITED_GREY.toString(), Boolean.TRUE));
 		this.greyColored.setName("grey");
 		this.greyColored.addChangeListener(changeListener);
-		add(this.northPanel, this.greyColored, this.constraints, 1, 3, 1, 1);
+		add(this.northPanel, this.greyColored, constraints, 1, 3, 1, 1);
 
 		this.percentSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
 				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
@@ -134,7 +125,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.percentSlider.setMinorTickSpacing(5);
 		this.percentSlider.setPaintTicks(true);
 		this.percentSlider.setPaintLabels(true);
-		add(this.northPanel, this.percentSlider, this.constraints, 1, 4, 1, 1);
+		add(this.northPanel, this.percentSlider, constraints, 1, 4, 1, 1);
 
 		JPanel sizePanel = new JPanel(new FlowLayout(1, 0, 0));
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
@@ -143,18 +134,18 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.sizeSpinner.addChangeListener(changeListener);
 		sizePanel.add(new JLabel("Flags/Row: "));
 		sizePanel.add(this.sizeSpinner);
-		add(this.northPanel, sizePanel, this.constraints, 0, 5, 1, 1);
+		add(this.northPanel, sizePanel, constraints, 0, 5, 1, 1);
 
 		this.textField = new JTextField(ModuleConfig.instance().getString(
 				Config.VISITED_HEADER_TEXT.toString(),
 				HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText")));
 		this.textField.addKeyListener(new TextKeyListener());
 		this.textField.setPreferredSize(new Dimension(150, 25));
-		add(this.northPanel, this.textField, this.constraints, 1, 5, 1, 1);
+		add(this.northPanel, this.textField, constraints, 1, 5, 1, 1);
 
 		this.animGif = new JCheckBox("Animated GIF", ModuleConfig.instance().getBoolean(
 				Config.ANIMATED_GIF.toString(), Boolean.FALSE));
-		add(this.northPanel, this.animGif, this.constraints, 0, 6, 1, 1);
+		add(this.northPanel, this.animGif, constraints, 0, 6, 1, 1);
 
 		JPanel spinnerPanel = new JPanel(new FlowLayout(1, 0, 0));
 		double value = ModuleConfig.instance()
@@ -163,16 +154,16 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.delaySpinner = new JSpinner(new SpinnerNumberModel(value, 0.0, 60.0, 0.1));
 		spinnerPanel.add(new JLabel("Delay: "));
 		spinnerPanel.add(this.delaySpinner);
-		add(this.northPanel, spinnerPanel, this.constraints, 1, 6, 1, 1);
+		add(this.northPanel, spinnerPanel, constraints, 1, 6, 1, 1);
 
 		setEmblemPanel(true);
 		setEmblemPanel(false);
 
-		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1, 1);
+		add(this.centerPanel, this.emblemPanels[1], constraints, 0, 0, 1, 1);
 		JButton saveImage = new JButton("Save Image");
 		saveImage.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
 		saveImage.setActionCommand("saveImage");
-		add(this.centerPanel, saveImage, this.constraints, 0, 1, 1, 1);
+		add(this.centerPanel, saveImage, constraints, 0, 1, 1, 1);
 
 		add(this.northPanel, "North");
 		this.scroll = new JScrollPane(this.centerPanel);
@@ -270,7 +261,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.centerPanel.remove(this.emblemPanels[0]);
 		this.centerPanel.remove(this.emblemPanels[1]);
 		setEmblemPanel(this.homeAway);
-		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1, 1);
+		this.centerPanel.add(this.emblemPanels[1], new GridBagConstraints());
 		this.centerPanel.validate();
 		this.centerPanel.repaint();
 		validate();
@@ -301,6 +292,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		return this.delaySpinner;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (this.emblemPanels[1].getFlagPanel() == null)
 			return;
@@ -330,9 +322,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	}
 
 	private class TextKeyListener extends KeyAdapter {
-		TextKeyListener() {
-		}
 
+		@Override
 		public void keyReleased(KeyEvent arg0) {
 			ImageDesignPanel.this.emblemPanels[1].setHeaderText(((JTextField) arg0.getSource())
 					.getText());
@@ -340,9 +331,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	}
 
 	private class StateChangeListener implements ChangeListener {
-		StateChangeListener() {
-		}
-
+		
+		@Override
 		public void stateChanged(ChangeEvent arg0) {
 			if ((arg0.getSource() instanceof JSpinner)) {
 				if (((JSpinner) arg0.getSource()).getName().equals("size")) {
@@ -366,7 +356,6 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 					ImageDesignPanel.this.emblemPanels[1].setRoundly(box.isSelected());
 					ImageDesignPanel.this.refreshFlagPanel();
 				}
-
 			} else if ((arg0.getSource() instanceof JSlider)) {
 				ImageDesignPanel.this.emblemPanels[1].setBrightness(((JSlider) arg0.getSource())
 						.getValue());
