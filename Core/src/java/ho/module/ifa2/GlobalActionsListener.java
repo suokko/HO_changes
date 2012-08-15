@@ -36,10 +36,10 @@ public class GlobalActionsListener implements ActionListener {
 			.getLocalGraphicsEnvironment().getMaximumWindowBounds().getWidth();
 	public static final int HEIGHT = (int) GraphicsEnvironment
 			.getLocalGraphicsEnvironment().getMaximumWindowBounds().getHeight();
-	private PluginIfaPanel pluginIfaPanel;
+	private TablesPanel pluginIfaPanel;
 	private JDialog parent = null;
 
-	public GlobalActionsListener(PluginIfaPanel pluginIfaPanel) {
+	public GlobalActionsListener(TablesPanel pluginIfaPanel) {
 		this.pluginIfaPanel = pluginIfaPanel;
 	}
 

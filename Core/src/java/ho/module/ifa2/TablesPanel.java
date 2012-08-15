@@ -7,14 +7,14 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-public class PluginIfaPanel extends JPanel {
+public class TablesPanel extends JPanel {
 
 	private static final long serialVersionUID = 3806181337290704445L;
 	private ImageDesignPanel imageDesignPanel;
 	private StatisticScrollPanel statisticScrollPanelAway;
 	private StatisticScrollPanel statisticScrollPanelHome;
 
-	public PluginIfaPanel() {
+	public TablesPanel() {
 		initialize();
 	}
 
