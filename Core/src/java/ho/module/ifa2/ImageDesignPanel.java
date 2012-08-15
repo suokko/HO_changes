@@ -39,7 +39,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	public static int FLAG_WIDTH = 8;
 	public static int MIN_FLAG_WIDTH = 5;
 	public static int MAX_FLAG_WIDTH = 12;
-	private TablesPanel pluginIfaPanel;
+	private PluginIfaPanel pluginIfaPanel;
 	private EmblemPanel awayEmblemPanel;
 	private EmblemPanel homeEmblemPanel;
 	private JSpinner sizeSpinner;
@@ -58,7 +58,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private JCheckBox animGif;
 	private JSpinner delaySpinner;
 
-	public ImageDesignPanel(TablesPanel pluginIfaPanel) {
+	public ImageDesignPanel(PluginIfaPanel pluginIfaPanel) {
 		this.pluginIfaPanel = pluginIfaPanel;
 		initialize();
 	}

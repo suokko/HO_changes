@@ -27,7 +27,7 @@ public class IfaModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
-		return new TablesPanel();
+		return new PluginIfaPanel();
 	}
 
 }
