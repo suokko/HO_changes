@@ -21,6 +21,8 @@ public class DebugMode {
 		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
 		menu.add(getWaitDialogMenuItem());
+		menu.add(getPlayerHistoryMenuItem());
+		
 		return menu;
 	}
 
@@ -74,4 +76,16 @@ public class DebugMode {
 		return newItem;
 	}
 
+	private static JMenuItem getPlayerHistoryMenuItem() {
+		JMenuItem newItem = new JMenuItem("Player History");
+		newItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new ho.core.training.SkillDropTestFrame().setVisible(true);
+			}
+		});
+		return newItem;
+		
+	}
+	
 }
