@@ -8,8 +8,8 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 public class PluginIfaPanel extends JPanel {
-	private GridBagLayout layout = new GridBagLayout();
-	private GridBagConstraints constraints = new GridBagConstraints();
+
+	private static final long serialVersionUID = 3806181337290704445L;
 	private ImageDesignPanel imageDesignPanel;
 	private StatisticScrollPanel statisticScrollPanelAway;
 	private StatisticScrollPanel statisticScrollPanelHome;
@@ -19,20 +19,21 @@ public class PluginIfaPanel extends JPanel {
 	}
 
 	private void initialize() {
-		setLayout(this.layout);
-		this.constraints.fill = 1;
-		this.constraints.anchor = 10;
-		this.constraints.insets = new Insets(10, 10, 10, 10);
-		this.constraints.weightx = 1.0D;
-		this.constraints.weighty = 1.0D;
+		setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.insets = new Insets(10, 10, 10, 10);
+		constraints.weightx = 1.0;
+		constraints.weighty = 1.0;
 
 		this.imageDesignPanel = new ImageDesignPanel(this);
 		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
 		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
-		add(this.imageDesignPanel, this.constraints, 1, 0, 1, 2);
-		this.constraints.weightx = 3.0D;
-		add(this.statisticScrollPanelAway, this.constraints, 0, 0, 1, 1);
-		add(this.statisticScrollPanelHome, this.constraints, 0, 1, 1, 1);
+		add(this.imageDesignPanel, constraints, 1, 0, 1, 2);
+		constraints.weightx = 3.0;
+		add(this.statisticScrollPanelAway, constraints, 0, 0, 1, 1);
+		add(this.statisticScrollPanelHome, constraints, 0, 1, 1, 1);
 	}
 
 	private void add(Component c, GridBagConstraints constraints, int x, int y,
