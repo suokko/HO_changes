@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Ant-Version: Eclipse 3.3.1.1
 Java-Version: 1.5
-Class-Path: . ./  ./hoplugins ./hsqldb.jar ./jl1.0.jar ./jcalendar-1.3.2.jar ./jdbc.jar ./looks-2.3.1.jar ./commons-codec-1.4.jar ./scribe-1.2.2.jar
+Class-Path: . ./  ./hoplugins ./hsqldb.jar ./jl1.0.jar ./jcalendar-1.3.2.jar ./jdbc.jar ./looks-2.3.1.jar ./commons-codec-1.4.jar ./scribe-1.3.0.jar
 Created-By: HO-Team
 Main-Class: ho.HO
 
