@@ -1,7 +1,9 @@
 package ho.module.ifa2;
 
+import ho.core.model.HOVerwaltung;
+import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
-import ho.module.ifa2.config.ConfigManager;
+import ho.module.ifa2.config.Config;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -15,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.math.BigDecimal;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -32,6 +35,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ImageDesignPanel extends JPanel implements ActionListener {
+
+	private static final long serialVersionUID = 4562976951725733955L;
 	public static int FLAG_WIDTH = 8;
 	public static int MIN_FLAG_WIDTH = 5;
 	public static int MAX_FLAG_WIDTH = 12;
@@ -77,8 +82,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.northPanel = new JPanel();
 		this.northPanel.setLayout(this.layout);
 
-		FLAG_WIDTH = Integer.parseInt(ConfigManager
-				.getTextFromConfig("visitedWidth"));
+		FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
+				Integer.valueOf(8));
 
 		StateChangeListener changeListener = new StateChangeListener();
 		JButton button = new JButton("Update");
@@ -98,35 +103,32 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		add(this.northPanel, this.home, this.constraints, 0, 1, 1, 1);
 		add(this.northPanel, this.away, this.constraints, 1, 1, 1, 1);
 
-		this.headerYesNo = new JCheckBox("Show Header",
-				new Boolean(ConfigManager
-						.getTextFromConfig("visitedHeaderShow")).booleanValue());
+		this.headerYesNo = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
+				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
 		this.headerYesNo.setName("header");
 		this.headerYesNo.addChangeListener(changeListener);
 		add(this.northPanel, this.headerYesNo, this.constraints, 0, 2, 1, 1);
 
-		this.footerYesNo = new JCheckBox("Show Footer",
-				new Boolean(ConfigManager
-						.getTextFromConfig("visitedFooterShow")).booleanValue());
+		this.footerYesNo = new JCheckBox("Show Footer", ModuleConfig.instance().getBoolean(
+				Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
 		this.footerYesNo.setName("footer");
 		this.footerYesNo.addChangeListener(changeListener);
 		add(this.northPanel, this.footerYesNo, this.constraints, 1, 2, 1, 1);
 
-		this.roundly = new JCheckBox("Roundly",
-				new Boolean(ConfigManager.getTextFromConfig("visitedRoundly"))
-						.booleanValue());
+		this.roundly = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
+				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
 		this.roundly.setName("rounded");
 		this.roundly.addChangeListener(changeListener);
 		add(this.northPanel, this.roundly, this.constraints, 0, 3, 1, 1);
 
-		this.greyColored = new JCheckBox("Grey", new Boolean(
-				ConfigManager.getTextFromConfig("visitedGrey")).booleanValue());
+		this.greyColored = new JCheckBox("Grey", ModuleConfig.instance().getBoolean(
+				Config.VISITED_GREY.toString(), Boolean.TRUE));
 		this.greyColored.setName("grey");
 		this.greyColored.addChangeListener(changeListener);
 		add(this.northPanel, this.greyColored, this.constraints, 1, 3, 1, 1);
 
-		this.percentSlider = new JSlider(0, 100, Integer.parseInt(ConfigManager
-				.getTextFromConfig("visitedBrightness")));
+		this.percentSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
+				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
 		this.percentSlider.addChangeListener(changeListener);
 		this.percentSlider.setMajorTickSpacing(25);
 		this.percentSlider.setMinorTickSpacing(5);
@@ -135,28 +137,30 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		add(this.northPanel, this.percentSlider, this.constraints, 1, 4, 1, 1);
 
 		JPanel sizePanel = new JPanel(new FlowLayout(1, 0, 0));
-		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH,
-				MIN_FLAG_WIDTH, MAX_FLAG_WIDTH, 1));
+		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
+				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
 		this.sizeSpinner.addChangeListener(changeListener);
 		sizePanel.add(new JLabel("Flags/Row: "));
 		sizePanel.add(this.sizeSpinner);
 		add(this.northPanel, sizePanel, this.constraints, 0, 5, 1, 1);
 
-		this.textField = new JTextField(
-				ConfigManager.getTextFromConfig("visitedHeader"));
+		this.textField = new JTextField(ModuleConfig.instance().getString(
+				Config.VISITED_HEADER_TEXT.toString(),
+				HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText")));
 		this.textField.addKeyListener(new TextKeyListener());
 		this.textField.setPreferredSize(new Dimension(150, 25));
 		add(this.northPanel, this.textField, this.constraints, 1, 5, 1, 1);
 
-		this.animGif = new JCheckBox("Animated GIF", new Boolean(
-				ConfigManager.getTextFromConfig("gifAnimated")).booleanValue());
+		this.animGif = new JCheckBox("Animated GIF", ModuleConfig.instance().getBoolean(
+				Config.ANIMATED_GIF.toString(), Boolean.FALSE));
 		add(this.northPanel, this.animGif, this.constraints, 0, 6, 1, 1);
 
 		JPanel spinnerPanel = new JPanel(new FlowLayout(1, 0, 0));
-		this.delaySpinner = new JSpinner(
-				new SpinnerNumberModel(Double.parseDouble(ConfigManager
-						.getTextFromConfig("gifDelay")), 0.0D, 60.0D, 0.1D));
+		double value = ModuleConfig.instance()
+				.getBigDecimal(Config.ANIMATED_GIF_DELAY.toString(), BigDecimal.valueOf(5))
+				.doubleValue();
+		this.delaySpinner = new JSpinner(new SpinnerNumberModel(value, 0.0, 60.0, 0.1));
 		spinnerPanel.add(new JLabel("Delay: "));
 		spinnerPanel.add(this.delaySpinner);
 		add(this.northPanel, spinnerPanel, this.constraints, 1, 6, 1, 1);
@@ -164,11 +168,9 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		setEmblemPanel(true);
 		setEmblemPanel(false);
 
-		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1,
-				1);
+		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1, 1);
 		JButton saveImage = new JButton("Save Image");
-		saveImage.addActionListener(new GlobalActionsListener(
-				this.pluginIfaPanel));
+		saveImage.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
 		saveImage.setActionCommand("saveImage");
 		add(this.centerPanel, saveImage, this.constraints, 0, 1, 1, 1);
 
@@ -177,8 +179,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		add(this.scroll, "Center");
 	}
 
-	private void add(JPanel panel, Component c, GridBagConstraints constraints,
-			int x, int y, int w, int h) {
+	private void add(JPanel panel, Component c, GridBagConstraints constraints, int x, int y,
+			int w, int h) {
 		constraints.gridx = x;
 		constraints.gridy = y;
 		constraints.gridwidth = w;
@@ -189,17 +191,27 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private void setEmblemPanel(boolean homeAway) {
 		int enabled = 0;
 		if (this.emblemPanels[1] == null) {
-			FLAG_WIDTH = Integer.parseInt(homeAway ? ConfigManager
-					.getTextFromConfig("visitedWidth") : ConfigManager
-					.getTextFromConfig("hostedWidth"));
-			FlagLabel.BRIGHTNESS = Integer.parseInt(homeAway ? ConfigManager
-					.getTextFromConfig("visitedBrightness") : ConfigManager
-					.getTextFromConfig("hostedBrightness"));
-			FlagLabel.GREY = new Boolean(
-					homeAway ? ConfigManager.getTextFromConfig("visitedGrey")
-							: ConfigManager.getTextFromConfig("hostedGrey"))
-					.booleanValue();
-			
+			String emblemPath = "";
+			if (homeAway) {
+				FLAG_WIDTH = ModuleConfig.instance().getInteger(
+						Config.VISITED_FLAG_WIDTH.toString(), Integer.valueOf(8));
+				FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
+						Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50));
+				FlagLabel.GREY = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(),
+						Boolean.TRUE);
+				emblemPath = ModuleConfig.instance().getString(
+						Config.VISITED_EMBLEM_PATH.toString(), "");
+			} else {
+				FLAG_WIDTH = ModuleConfig.instance().getInteger(
+						Config.HOSTED_FLAG_WIDTH.toString(), Integer.valueOf(8));
+				FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
+						Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50));
+				FlagLabel.GREY = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(),
+						Boolean.TRUE);
+				emblemPath = ModuleConfig.instance().getString(
+						Config.HOSTED_EMBLEM_PATH.toString(), "");
+			}
+
 			FlagLabel[] flags = PluginIfaUtils.getAllCountries(homeAway);
 			for (int i = 0; i < flags.length; i++) {
 				if (flags[i].isEnabled())
@@ -210,29 +222,35 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			emblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
 			emblemPanel.setGrey(FlagLabel.GREY);
 			emblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
-			String path = homeAway ? ConfigManager
-					.getTextFromConfig("visitedPathEmblem") : ConfigManager
-					.getTextFromConfig("hostedPathEmblem");
-			if (!path.equals("")) {
-				File file = new File(path);
+			if (!emblemPath.equals("")) {
+				File file = new File(emblemPath);
 				if (file.exists()) {
-					ImageIcon imageIcon = new ImageIcon(path);
+					ImageIcon imageIcon = new ImageIcon(emblemPath);
 					if (imageIcon != null) {
 						emblemPanel.setLogo(imageIcon);
-						emblemPanel.setImagePath(path);
+						emblemPanel.setImagePath(emblemPath);
 					}
 				}
 			}
-			emblemPanel.setHeaderText(homeAway ? ConfigManager
-					.getTextFromConfig("visitedHeader") : ConfigManager
-					.getTextFromConfig("hostedHeader"));
-			emblemPanel.setHeader(new Boolean(homeAway ? ConfigManager
-					.getTextFromConfig("visitedHeaderShow") : ConfigManager
-					.getTextFromConfig("hostedHeaderShow")).booleanValue());
-			emblemPanel.setFooter(new Boolean(homeAway ? ConfigManager
-					.getTextFromConfig("visitedFooterShow") : ConfigManager
-					.getTextFromConfig("hostedFooterShow")).booleanValue());
-
+			if (homeAway) {
+				emblemPanel
+						.setHeaderText(ModuleConfig.instance().getString(
+								Config.VISITED_HEADER_TEXT.toString(),
+								HOVerwaltung.instance().getLanguageString(
+										"ifa.visitedHeader.defaultText")));
+				emblemPanel.setHeader(ModuleConfig.instance().getBoolean(
+						Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
+				emblemPanel.setFooter(ModuleConfig.instance().getBoolean(
+						Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
+			} else {
+				emblemPanel.setHeaderText(ModuleConfig.instance().getString(
+						Config.HOSTED_HEADER_TEXT.toString(),
+						HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText")));
+				emblemPanel.setHeader(ModuleConfig.instance().getBoolean(
+						Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE));
+				emblemPanel.setFooter(ModuleConfig.instance().getBoolean(
+						Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
+			}
 			this.emblemPanels[(homeAway ? 0 : 1)] = emblemPanel;
 		} else {
 			FLAG_WIDTH = this.emblemPanels[1].getFlagWidth();
@@ -252,8 +270,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.centerPanel.remove(this.emblemPanels[0]);
 		this.centerPanel.remove(this.emblemPanels[1]);
 		setEmblemPanel(this.homeAway);
-		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1,
-				1);
+		add(this.centerPanel, this.emblemPanels[1], this.constraints, 0, 0, 1, 1);
 		this.centerPanel.validate();
 		this.centerPanel.repaint();
 		validate();
@@ -295,8 +312,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			this.greyColored.setSelected(this.emblemPanels[1].isGrey());
 			this.roundly.setSelected(this.emblemPanels[1].isRoundly());
 			this.percentSlider.setValue(this.emblemPanels[1].getBrightness());
-			this.sizeSpinner.setValue(new Integer(this.emblemPanels[1]
-					.getFlagWidth()));
+			this.sizeSpinner.setValue(new Integer(this.emblemPanels[1].getFlagWidth()));
 
 			refreshFlagPanel();
 		}
@@ -308,8 +324,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			this.greyColored.setSelected(this.emblemPanels[1].isGrey());
 			this.roundly.setSelected(this.emblemPanels[1].isRoundly());
 			this.percentSlider.setValue(this.emblemPanels[1].getBrightness());
-			this.sizeSpinner.setValue(new Integer(this.emblemPanels[1]
-					.getFlagWidth()));
+			this.sizeSpinner.setValue(new Integer(this.emblemPanels[1].getFlagWidth()));
 			refreshFlagPanel();
 		}
 	}
@@ -319,8 +334,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		}
 
 		public void keyReleased(KeyEvent arg0) {
-			ImageDesignPanel.this.emblemPanels[1]
-					.setHeaderText(((JTextField) arg0.getSource()).getText());
+			ImageDesignPanel.this.emblemPanels[1].setHeaderText(((JTextField) arg0.getSource())
+					.getText());
 		}
 	}
 
@@ -331,34 +346,30 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		public void stateChanged(ChangeEvent arg0) {
 			if ((arg0.getSource() instanceof JSpinner)) {
 				if (((JSpinner) arg0.getSource()).getName().equals("size")) {
-					int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner
-							.getValue()).intValue();
+					int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue())
+							.intValue();
 					ImageDesignPanel.this.emblemPanels[1].setFlagWidth(rowSize);
 					ImageDesignPanel.this.refreshFlagPanel();
 				}
 			} else if ((arg0.getSource() instanceof JCheckBox)) {
 				JCheckBox box = (JCheckBox) arg0.getSource();
 				if (box.getName().equals("header")) {
-					ImageDesignPanel.this.emblemPanels[1].setHeader(box
-							.isSelected());
+					ImageDesignPanel.this.emblemPanels[1].setHeader(box.isSelected());
 					ImageDesignPanel.this.refreshFlagPanel();
 				} else if (box.getName().equals("footer")) {
-					ImageDesignPanel.this.emblemPanels[1].setFooter(box
-							.isSelected());
+					ImageDesignPanel.this.emblemPanels[1].setFooter(box.isSelected());
 					ImageDesignPanel.this.refreshFlagPanel();
 				} else if (box.getName().equals("grey")) {
-					ImageDesignPanel.this.emblemPanels[1].setGrey(box
-							.isSelected());
+					ImageDesignPanel.this.emblemPanels[1].setGrey(box.isSelected());
 					ImageDesignPanel.this.refreshFlagPanel();
 				} else if (box.getName().equals("rounded")) {
-					ImageDesignPanel.this.emblemPanels[1].setRoundly(box
-							.isSelected());
+					ImageDesignPanel.this.emblemPanels[1].setRoundly(box.isSelected());
 					ImageDesignPanel.this.refreshFlagPanel();
 				}
 
 			} else if ((arg0.getSource() instanceof JSlider)) {
-				ImageDesignPanel.this.emblemPanels[1]
-						.setBrightness(((JSlider) arg0.getSource()).getValue());
+				ImageDesignPanel.this.emblemPanels[1].setBrightness(((JSlider) arg0.getSource())
+						.getValue());
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		}
