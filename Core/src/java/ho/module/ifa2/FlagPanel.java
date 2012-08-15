@@ -18,8 +18,8 @@ import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
 public class FlagPanel extends JPanel {
-	private GridBagLayout layout = new GridBagLayout();
-	private GridBagConstraints constraints = new GridBagConstraints();
+
+	private static final long serialVersionUID = 6841405207630506680L;
 	private int countriesPlayedIn;
 	private JLabel[] flagLabels;
 	private JLabel header;
@@ -33,24 +33,23 @@ public class FlagPanel extends JPanel {
 	}
 
 	private void initialize() {
-		setLayout(this.layout);
+		setLayout(new GridBagLayout());
 		setBackground(Color.white);
 
-		this.constraints.fill = 2;
-		this.constraints.anchor = 10;
-		this.constraints.insets = new Insets(1, 1, 1, 1);
-		this.constraints.weightx = 100.0D;
-		this.constraints.weighty = 0.0D;
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = 2;
+		constraints.anchor = 10;
+		constraints.insets = new Insets(1, 1, 1, 1);
+		constraints.weightx = 100.0D;
+		constraints.weighty = 0.0D;
 
 		this.header = new JLabel("");
 		this.header.setForeground(new Color(2522928));
 		this.header.setHorizontalTextPosition(0);
-		add(this.header, this.constraints, 0, 0, ImageDesignPanel.FLAG_WIDTH, 1);
-		this.constraints.insets = new Insets(1, 1, 5, 1);
-		Color selectionForeground = (Color) UIManager
-				.get("ProgressBar.selectionForeground");
-		Color selectionBackground = (Color) UIManager
-				.get("ProgressBar.selectionBackground");
+		add(this.header, constraints, 0, 0, ImageDesignPanel.FLAG_WIDTH, 1);
+		constraints.insets = new Insets(1, 1, 5, 1);
+		Color selectionForeground = (Color) UIManager.get("ProgressBar.selectionForeground");
+		Color selectionBackground = (Color) UIManager.get("ProgressBar.selectionBackground");
 		UIManager.put("ProgressBar.selectionForeground", Color.black);
 		UIManager.put("ProgressBar.selectionBackground", Color.black);
 		this.percentState = new JProgressBar();
@@ -61,43 +60,37 @@ public class FlagPanel extends JPanel {
 		this.percentState.setForeground(new Color(15979011));
 		this.percentState.setBackground(Color.lightGray);
 		this.percentState.setString(this.countriesPlayedIn + "/"
-				+WorldDetailsManager.instance().size() + " ("
-				+ (int) (100.0D * this.percentState.getPercentComplete())
-				+ "%)");
+				+ WorldDetailsManager.instance().size() + " ("
+				+ (int) (100.0D * this.percentState.getPercentComplete()) + "%)");
 		this.percentState.setStringPainted(true);
-		this.percentState
-				.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.percentState.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		add(this.percentState, this.constraints, 0, 1,
-				ImageDesignPanel.FLAG_WIDTH, 1);
+		add(this.percentState, constraints, 0, 1, ImageDesignPanel.FLAG_WIDTH, 1);
 		UIManager.put("ProgressBar.selectionForeground", selectionForeground);
 		UIManager.put("ProgressBar.selectionBackground", selectionBackground);
-		this.constraints.fill = 0;
-		this.constraints.anchor = 10;
-		this.constraints.insets = new Insets(1, 1, 1, 1);
-		this.constraints.weightx = 0.0D;
-		this.constraints.weighty = 0.0D;
+		constraints.fill = 0;
+		constraints.anchor = 10;
+		constraints.insets = new Insets(1, 1, 1, 1);
+		constraints.weightx = 0.0D;
+		constraints.weighty = 0.0D;
 		if (this.flagLabels != null)
 			for (int i = 0; i < this.flagLabels.length; i++) {
-				add(this.flagLabels[i], this.constraints, i
-						% ImageDesignPanel.FLAG_WIDTH, 2 + i
+				add(this.flagLabels[i], constraints, i % ImageDesignPanel.FLAG_WIDTH, 2 + i
 						/ ImageDesignPanel.FLAG_WIDTH, 1, 1);
 			}
-		this.constraints.fill = 2;
-		this.constraints.anchor = 13;
-		this.constraints.insets = new Insets(1, 1, 1, 1);
-		this.constraints.weightx = 100.0D;
-		this.constraints.weighty = 0.0D;
+		constraints.fill = 2;
+		constraints.anchor = 13;
+		constraints.insets = new Insets(1, 1, 1, 1);
+		constraints.weightx = 100.0D;
+		constraints.weighty = 0.0D;
 
-		this.footer = new JLabel(new ImageIcon(
-				FlagPanel.class.getResource("image/copyright.gif")), 4);
-		add(this.footer, this.constraints, 0, WorldDetailsManager.instance().size()
-				/ ImageDesignPanel.FLAG_WIDTH + 3, ImageDesignPanel.FLAG_WIDTH,
-				1);
+		this.footer = new JLabel(new ImageIcon(FlagPanel.class.getResource("image/copyright.gif")),
+				4);
+		add(this.footer, constraints, 0, WorldDetailsManager.instance().size()
+				/ ImageDesignPanel.FLAG_WIDTH + 3, ImageDesignPanel.FLAG_WIDTH, 1);
 	}
 
-	private void add(Component c, GridBagConstraints constraints, int x, int y,
-			int w, int h) {
+	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
 		constraints.gridx = x;
 		constraints.gridy = y;
 		constraints.gridwidth = w;
@@ -105,16 +98,16 @@ public class FlagPanel extends JPanel {
 		add(c, constraints);
 	}
 
-	protected void setHeader(String header) {
+	void setHeader(String header) {
 		this.header.setText(header);
 	}
 
-	protected void setHeaderVisible(boolean enable) {
+	void setHeaderVisible(boolean enable) {
 		this.header.setVisible(enable);
 		this.percentState.setVisible(enable);
 	}
 
-	protected void setFooterVisible(boolean enable) {
+	void setFooterVisible(boolean enable) {
 		this.footer.setVisible(enable);
 	}
 }
