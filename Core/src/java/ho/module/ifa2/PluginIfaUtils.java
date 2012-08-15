@@ -10,7 +10,11 @@ import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
 import ho.core.util.XMLUtils;
 import ho.module.ifa.DateHelper;
+import hoplugins.pluginIFA.gif.Quantize;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -688,5 +692,47 @@ public class PluginIfaUtils {
 		return ((String) o).toLowerCase().replace('�', 'a').replace('�', 'o')
 				.replace('�', 'u').replace('�', 's').replace('�', 'i')
 				.replace('\u010D', 'c');// ?
+	}
+	
+	static BufferedImage quantizeBufferedImage(BufferedImage bufferedImage)
+			throws IOException {
+		int[][] pixels = getPixels(bufferedImage);
+		int[] palette = Quantize.quantizeImage(pixels, 256);
+		int w = pixels.length;
+		int h = pixels[0].length;
+		int[] pix = new int[w * h];
+
+		BufferedImage bufIma = new BufferedImage(w, h, 1);
+
+		for (int x = w; x-- > 0;) {
+			for (int y = h; y-- > 0;) {
+				pix[(y * w + x)] = palette[pixels[x][y]];
+				bufIma.setRGB(x, y, palette[pixels[x][y]]);
+			}
+		}
+		return bufIma;
+	}
+	
+	private static int[][] getPixels(Image image) throws IOException {
+		int w = image.getWidth(null);
+		int h = image.getHeight(null);
+		int[] pix = new int[w * h];
+		PixelGrabber grabber = new PixelGrabber(image, 0, 0, w, h, pix, 0, w);
+		try {
+			if (!grabber.grabPixels())
+				throw new IOException("Grabber returned false: "
+						+ grabber.status());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		int[][] pixels = new int[w][h];
+		for (int x = w; x-- > 0;) {
+			for (int y = h; y-- > 0;) {
+				pixels[x][y] = pix[(y * w + x)];
+			}
+		}
+
+		return pixels;
 	}
 }
