@@ -470,21 +470,20 @@ public class HOModel {
     				// Always copy subskills as the first thing
     				player.copySubSkills(old);
     				
+    				// Always check skill drop if drop calculations are active.
+    				if (SkillDrops.instance().isActive()) {
+    					for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
+    						if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+    							continue;
+    						}
+    						if (player.check4SkillDown(skillType, old)) {
+    							player.dropSubskills(skillType);
+    						}
+    					}
+    				}
+
     				if (trainingList.size() > 0 ) {
     					// Training happened
-    					
-	    				// Always check skill drop if drop calculations are active.
-	    				if (SkillDrops.instance().isActive()) {
-	    					for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
-	    						if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
-	    							continue;
-	    						}
-	    						if (player.check4SkillDown(skillType, old)) {
-	    							player.dropSubskills(skillType);
-	    						}
-	    					}
-	    				}
-
 
 	    				// Perform training for all "untrained weeks"
     				
