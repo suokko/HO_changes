@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class FlagLabel extends JLabel {
+
+	private static final long serialVersionUID = 2988734870943038292L;
 	public static int BRIGHTNESS;
 	public static boolean GREY = true;
 	public static boolean ROUNDFLAG = false;
@@ -47,12 +49,12 @@ public class FlagLabel extends JLabel {
 	public void setEnabled(boolean enabled) {
 		ImageIcon src = (ImageIcon) getIcon();
 		ImageFilter filter = null;
-		if (GREY)
+		if (GREY) {
 			filter = new GrayFilter(true, 100 - BRIGHTNESS);
-		else
+		} else {
 			filter = new TransparentFilter(BRIGHTNESS);
-		ImageProducer imageprod = new FilteredImageSource(src.getImage()
-				.getSource(), filter);
+		}
+		ImageProducer imageprod = new FilteredImageSource(src.getImage().getSource(), filter);
 		ImageIcon img = new ImageIcon(createImage(imageprod));
 		setDisabledIcon(img);
 		super.setEnabled(enabled);
@@ -60,17 +62,15 @@ public class FlagLabel extends JLabel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		if ((ROUNDFLAG) && (!this.homeCountry)) {
-			RoundRectangle2D.Double oval = new RoundRectangle2D.Double(0.0D,
-					0.0D, getSize().getWidth(), getSize().getHeight(), 9.0D,
-					9.0D);
+		if (ROUNDFLAG && !this.homeCountry) {
+			RoundRectangle2D.Double oval = new RoundRectangle2D.Double(0.0D, 0.0D, getSize()
+					.getWidth(), getSize().getHeight(), 9.0D, 9.0D);
 			g.setClip(oval);
 		}
 		super.paintComponent(g);
 	}
 
 	private class TransparentFilter extends RGBImageFilter {
-//		private static final int MAX_BRIGHTNESS = 255;
 		private int percent;
 
 		public TransparentFilter(int percent) {
