@@ -243,9 +243,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
         fillSeasonCombo(seasonCombo);
         seasonCombo.addActionListener(this);
        
-        int week = 14;//TotW.getWeek();
-        SpinnerNumberModel cSNM = new SpinnerNumberModel(week, 1, week, 1);
-        weekSpinner.setModel(cSNM);
+        setWeekLimits();
         weekSpinner.addChangeListener(this);
         weekSpinner.setPreferredSize(new Dimension(60, 22));
         weekSpinner.setFocusable(false);
@@ -303,19 +301,27 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
         updateUI();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
-        int week = HOVerwaltung.instance().getModel().getBasics().getSpieltag() - 1;
+	private void setWeekLimits() {
+        Spielplan plan = (Spielplan)seasonCombo.getSelectedItem();
+        int max_week = HOVerwaltung.instance().getModel().getBasics().getSpieltag() - 1;
+        int week = 1;
 
-        if (week < 1) {
-            week = 1;
-        }
+        if (max_week < 1)
+            max_week = 1;
+ 
         if (HOVerwaltung.instance().getModel().getBasics().getSeason() != plan.getSaison()) 
-        	week = 14;
+        	max_week = 14;
+        else
+        	week = max_week;
         
 
-        weekSpinner.setModel(new SpinnerNumberModel(1, 1, week, 1));
+        weekSpinner.setModel(new SpinnerNumberModel(week, 1, max_week, 1));
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+        setWeekLimits();
         reloadData(true);
         updateUI();
 		
