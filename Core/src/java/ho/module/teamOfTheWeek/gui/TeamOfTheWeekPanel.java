@@ -427,7 +427,7 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
 			matchClause += " MATCHID=" + matchIDs.get(i).getMatchId();
         }
 
-		String sql = "SELECT DISTINCT SPIELERID, NAME, RATING, HOPOSCODE, TEAMID FROM MATCHLINEUPPLAYER WHERE "+posClase;
+		String sql = "SELECT DISTINCT MATCHID, SPIELERID, NAME, RATING, HOPOSCODE, TEAMID FROM MATCHLINEUPPLAYER WHERE "+posClase;
 		if (matchClause.length()>1) {
 			sql += " AND (" + matchClause + ") ";
 		}
