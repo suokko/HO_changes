@@ -346,9 +346,19 @@ public class Lineup {
 			players = HOVerwaltung.instance().getModel().getAllSpieler();
 		}
 
+		Vector<ISpielerPosition> noKeeper = new Vector<ISpielerPosition>(m_vPositionen);
+
+		for (ISpielerPosition pos : noKeeper) {
+			SpielerPosition p = (SpielerPosition)pos;
+			if (p.getId() == ISpielerPosition.keeper) {
+				noKeeper.remove(pos);
+				break;
+			}
+		}
+
 		if (players != null) {
 			for (Spieler player : players) {
-				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), m_vPositionen)) {
+				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), noKeeper)) {
 					if (player.getStandards() > maxStandard) {
 						maxStandard = player.getStandards();
 						form = player.getForm();
