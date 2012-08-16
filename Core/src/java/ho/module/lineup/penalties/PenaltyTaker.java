@@ -6,14 +6,12 @@ import ho.core.model.player.Spieler;
 public class PenaltyTaker {
 
 	private Spieler player;
-	private double ability;
 
 	public PenaltyTaker() {
 	}
 
 	public PenaltyTaker(Spieler player) {
 		this.player = player;
-		this.ability = PenaltyUtils.getAbility(this);
 	}
 
 	public Spieler getPlayer() {
@@ -21,7 +19,7 @@ public class PenaltyTaker {
 	}
 
 	public double getAbility() {
-		return this.ability;
+		return PenaltyUtils.getAbility(this);
 	}
 
 	public double getScoring() {
