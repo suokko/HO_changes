@@ -700,6 +700,7 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 		return m_bTaktik;
 	}
 
+	@Override
 	public final int compareTo(ISpielerPosition obj) {
 		if (obj instanceof SpielerPosition) {
 			final SpielerPosition position = (SpielerPosition) obj;
