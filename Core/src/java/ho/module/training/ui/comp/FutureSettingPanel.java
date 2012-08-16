@@ -83,7 +83,7 @@ public class FutureSettingPanel extends JPanel {
         intensity = new IntensityComboBox(0);
         intensity.setSelectedIndex(firstFutureTraining.getTrainingIntensity());
         staminaTrainingPart = new IntensityComboBox(5);
-        staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaPart());
+        staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaPart() - 5);
 
         JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Aendern")); //$NON-NLS-1$
 
