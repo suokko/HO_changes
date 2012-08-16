@@ -6,6 +6,7 @@
  */
 package ho.module.lineup;
 
+import ho.core.constants.player.PlayerSkill;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -339,7 +340,7 @@ public class Lineup {
 	 * Auto-select the set best pieces taker.
 	 */
 	public final void setAutoKicker(List<Spieler> players) {
-		int maxStandard = -1;
+		double maxStandard = -1;
 		int form = -1;
 
 		if (players == null) {
@@ -359,12 +360,15 @@ public class Lineup {
 		if (players != null) {
 			for (Spieler player : players) {
 				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), noKeeper)) {
-					if (player.getStandards() > maxStandard) {
-						maxStandard = player.getStandards();
+					double sp = (double)player.getStandards()
+							+ player.getSubskill4Pos(PlayerSkill.SET_PIECES)
+							+ RatingPredictionManager.getLoyaltyHomegrownBonus(player);
+					if (sp > maxStandard) {
+						maxStandard = sp;
 						form = player.getForm();
 						m_iKicker = player.getSpielerID();
-					} else if ((player.getStandards() == maxStandard) && (form < player.getForm())) {
-						maxStandard = player.getStandards();
+					} else if ((sp == maxStandard) && (form < player.getForm())) {
+						maxStandard = sp;
 						form = player.getForm();
 						m_iKicker = player.getSpielerID();
 					}
