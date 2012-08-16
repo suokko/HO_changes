@@ -16,6 +16,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
+import ho.core.rating.RatingPredictionManager;
 import ho.core.util.Helper;
 
 import java.awt.Component;
@@ -682,7 +683,8 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         	if (m_iPositionID == ISpielerPosition.setPieces) {
                 item.setValues(spielerName,
                                spieler.getStandards()
-                               + spieler.getSubskill4Pos(PlayerSkill.SET_PIECES),
+                               + spieler.getSubskill4Pos(PlayerSkill.SET_PIECES)
+                               + RatingPredictionManager.getLoyaltyHomegrownBonus(spieler),
                                spieler);
                 return item;
             } else if (m_iPositionID == ISpielerPosition.captain) {
