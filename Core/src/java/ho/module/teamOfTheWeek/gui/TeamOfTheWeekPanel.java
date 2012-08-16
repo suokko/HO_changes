@@ -338,7 +338,14 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
      */
     private Map<String,MatchLineupPlayer> getPlayers(int week, Spielplan plan, boolean isBest) {
     	JDBCAdapter db = DBManager.instance().getAdapter();
-        Vector<Paarung> matchIDs =plan.getPaarungenBySpieltag(week);
+        Vector<Paarung> matchIDs;
+        if (week > 0)
+        	matchIDs = plan.getPaarungenBySpieltag(week);
+        else {
+        	matchIDs = plan.getPaarungenBySpieltag(1);
+        	for (week = 2; week < 15; week++)
+        		matchIDs.addAll(plan.getPaarungenBySpieltag(week));
+        }
         // TODO For match of year attention of doubles
         Map<String,MatchLineupPlayer> spieler = new HashMap<String,MatchLineupPlayer>();
         List<MatchLineupPlayer> players = getPlayetAt(db, matchIDs, ISpielerPosition.KEEPER, 1, isBest);
