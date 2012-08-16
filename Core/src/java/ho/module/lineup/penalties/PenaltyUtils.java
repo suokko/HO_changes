@@ -12,17 +12,10 @@ public class PenaltyUtils {
 	}
 
 	public static double getAbility(Spieler player) {
-		double ability = 0;
-		if (player != null) {
-			ability = (player.getErfahrung() * 1.5)
-					+ (((player.getStandards() * 7.0) / 10.0) + ((player
-							.getTorschuss() * 3.0) / 10.0));
+		if (player == null)
+			return 0.0;
 
-			if (player.getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
-				ability *= 1.1;
-			}
-		}
-		return ability;
+		return getAbility(new PenaltyTaker(player));
 	}
 
 	public static double getAbility(PenaltyTaker taker) {
