@@ -2,7 +2,6 @@ package ho.core.gui;
 
 import ho.core.db.frontend.SQLDialog;
 import ho.core.net.MyConnector;
-import ho.core.net.login.LoginWaitDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,24 +19,9 @@ public class DebugMode {
 		menu.add(getSQLDialogMenuItem());
 		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
-		menu.add(getWaitDialogMenuItem());
 		menu.add(getPlayerHistoryMenuItem());
 		
 		return menu;
-	}
-
-	private static JMenuItem getWaitDialogMenuItem() {
-		JMenuItem newItem = new JMenuItem("Wait dialog");
-		newItem.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LoginWaitDialog dlg = new LoginWaitDialog(HOMainFrame
-						.instance());
-				dlg.setVisible(true);
-			}
-		});
-		return newItem;
 	}
 
 	private static JMenuItem getLookAndFeelDialogMenuItem() {
