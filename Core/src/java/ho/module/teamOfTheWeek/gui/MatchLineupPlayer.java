@@ -45,7 +45,7 @@ class MatchLineupPlayer {
             SpielerID = rs.getInt("SPIELERID");
             PositionCode = rs.getInt("HOPOSCODE");
             Rating = rs.getFloat("RATING");
-            teamName = getTeamName(matches,TeamID);
+            teamName = getTeamName(matches,TeamID, rs.getInt("MATCHID"));
             
             nname =DBManager.deleteEscapeSequences(rs.getString("NAME"));
         } catch (SQLException e) {
@@ -56,9 +56,11 @@ class MatchLineupPlayer {
     }
 
     
-    private String getTeamName(Vector<Paarung> matches,int teamId){
+    private String getTeamName(Vector<Paarung> matches,int teamId, int matchId){
     	for (Iterator<Paarung> iterator = matches.iterator(); iterator.hasNext();) {
 			Paarung iPaarung = iterator.next();
+			if (iPaarung.getMatchId() != matchId)
+				continue;
 			if(teamId == iPaarung.getHeimId())
             	return iPaarung.getHeimName();
             else if(teamId == iPaarung.getGastId())
