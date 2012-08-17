@@ -8,9 +8,8 @@ import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
-import ho.core.util.XMLUtils;
 import ho.module.ifa.DateHelper;
-import hoplugins.pluginIFA.gif.Quantize;
+import ho.module.ifa2.gif.Quantize;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;

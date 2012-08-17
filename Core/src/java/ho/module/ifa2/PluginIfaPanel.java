@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class PluginIfaPanel extends JPanel {
 
 	private static final long serialVersionUID = 3806181337290704445L;
-	private ImageDesignPanel imageDesignPanel;
+	private RightPanel rightPanel;
 	private StatisticScrollPanel statisticScrollPanelAway;
 	private StatisticScrollPanel statisticScrollPanelHome;
 
@@ -27,10 +27,11 @@ public class PluginIfaPanel extends JPanel {
 		constraints.weightx = 1.0;
 		constraints.weighty = 1.0;
 
-		this.imageDesignPanel = new ImageDesignPanel(this);
+//		this.imageDesignPanel = new ImageDesignPanel(this);
+		this.rightPanel = new RightPanel();
 		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
 		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
-		add(this.imageDesignPanel, constraints, 1, 0, 1, 2);
+		add(this.rightPanel, constraints, 1, 0, 1, 2);
 		constraints.weightx = 3.0;
 		add(this.statisticScrollPanelAway, constraints, 0, 0, 1, 1);
 		add(this.statisticScrollPanelHome, constraints, 0, 1, 1, 1);
@@ -46,7 +47,7 @@ public class PluginIfaPanel extends JPanel {
 	}
 
 	public ImageDesignPanel getImageDesignPanel() {
-		return this.imageDesignPanel;
+		return this.rightPanel.getImageDesignPanel();
 	}
 
 	public StatisticScrollPanel getStatisticScrollPanelAway() {

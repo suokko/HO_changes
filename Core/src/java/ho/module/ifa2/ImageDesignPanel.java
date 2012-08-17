@@ -13,18 +13,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.math.BigDecimal;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -37,19 +37,15 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 4562976951725733955L;
 	public static int FLAG_WIDTH = 8;
-	public static int MIN_FLAG_WIDTH = 5;
-	public static int MAX_FLAG_WIDTH = 12;
-	private PluginIfaPanel pluginIfaPanel;
+	private static final int MIN_FLAG_WIDTH = 5;
+	private static final int MAX_FLAG_WIDTH = 12;
 	private EmblemPanel awayEmblemPanel;
-	private EmblemPanel homeEmblemPanel;
 	private JSpinner sizeSpinner;
-	private boolean homeAway = true;
+	private boolean away;
 	private JPanel northPanel;
 	private JPanel centerPanel;
 	private JScrollPane scroll;
 	private JTextField textField;
-	private JRadioButton home;
-	private JRadioButton away;
 	private JCheckBox greyColored;
 	private JCheckBox roundly;
 	private JSlider percentSlider;
@@ -58,8 +54,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private JCheckBox animGif;
 	private JSpinner delaySpinner;
 
-	public ImageDesignPanel(PluginIfaPanel pluginIfaPanel) {
-		this.pluginIfaPanel = pluginIfaPanel;
+	public ImageDesignPanel() {
 		initialize();
 	}
 
@@ -77,51 +72,68 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 				Integer.valueOf(8));
 
-		StateChangeListener changeListener = new StateChangeListener();
-		JButton button = new JButton("Update");
-		button.setActionCommand("update");
-		button.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
-		add(this.northPanel, button, constraints, 0, 0, 2, 1);
-
-		this.home = new JRadioButton("Visited Countries", true);
-		this.home.setActionCommand("visited");
-		this.home.addActionListener(this);
-		this.away = new JRadioButton("Hosted Countries", false);
-		this.away.setActionCommand("hosted");
-		this.away.addActionListener(this);
-		ButtonGroup group = new ButtonGroup();
-		group.add(this.home);
-		group.add(this.away);
-		add(this.northPanel, this.home, constraints, 0, 1, 1, 1);
-		add(this.northPanel, this.away, constraints, 1, 1, 1, 1);
-
 		this.headerYesNo = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
-		this.headerYesNo.setName("header");
-		this.headerYesNo.addChangeListener(changeListener);
+		this.headerYesNo.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				awayEmblemPanel.setHeader(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
 		add(this.northPanel, this.headerYesNo, constraints, 0, 2, 1, 1);
 
 		this.footerYesNo = new JCheckBox("Show Footer", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
-		this.footerYesNo.setName("footer");
-		this.footerYesNo.addChangeListener(changeListener);
+		this.footerYesNo.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				awayEmblemPanel.setFooter(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
 		add(this.northPanel, this.footerYesNo, constraints, 1, 2, 1, 1);
 
 		this.roundly = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
 				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
-		this.roundly.setName("rounded");
-		this.roundly.addChangeListener(changeListener);
+		this.roundly.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				awayEmblemPanel.setRoundly(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
 		add(this.northPanel, this.roundly, constraints, 0, 3, 1, 1);
 
 		this.greyColored = new JCheckBox("Grey", ModuleConfig.instance().getBoolean(
 				Config.VISITED_GREY.toString(), Boolean.TRUE));
-		this.greyColored.setName("grey");
-		this.greyColored.addChangeListener(changeListener);
+		this.greyColored.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				awayEmblemPanel.setGrey(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
 		add(this.northPanel, this.greyColored, constraints, 1, 3, 1, 1);
 
 		this.percentSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
 				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
-		this.percentSlider.addChangeListener(changeListener);
+		this.percentSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider slider = (JSlider) e.getSource();
+				if (!slider.getValueIsAdjusting()) {
+					awayEmblemPanel.setBrightness(slider.getValue());
+					ImageDesignPanel.this.refreshFlagPanel();
+				}
+			}
+		});
 		this.percentSlider.setMajorTickSpacing(25);
 		this.percentSlider.setMinorTickSpacing(5);
 		this.percentSlider.setPaintTicks(true);
@@ -132,7 +144,15 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
 				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
-		this.sizeSpinner.addChangeListener(changeListener);
+		this.sizeSpinner.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue()).intValue();
+				awayEmblemPanel.setFlagWidth(rowSize);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
 		sizePanel.add(new JLabel("Flags/Row: "));
 		sizePanel.add(this.sizeSpinner);
 		add(this.northPanel, sizePanel, constraints, 0, 5, 1, 1);
@@ -162,7 +182,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 		add(this.centerPanel, this.awayEmblemPanel, constraints, 0, 0, 1, 1);
 		JButton saveImage = new JButton("Save Image");
-		saveImage.addActionListener(new GlobalActionsListener(this.pluginIfaPanel));
+		// saveImage.addActionListener(new
+		// GlobalActionsListener(this.pluginIfaPanel));
 		saveImage.setActionCommand("saveImage");
 		add(this.centerPanel, saveImage, constraints, 0, 1, 1, 1);
 
@@ -221,7 +242,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 					Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
 			this.awayEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
 					Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
-		} else if (!homeAway && this.homeEmblemPanel == null) {
+		} else if (!homeAway) {
 			FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.HOSTED_FLAG_WIDTH.toString(),
 					Integer.valueOf(8));
 			FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
@@ -238,35 +259,34 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 					enabled++;
 				}
 			}
-			this.homeEmblemPanel = new EmblemPanel(flags, enabled);
-			this.homeEmblemPanel.setFlagWidth(FLAG_WIDTH);
-			this.homeEmblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
-			this.homeEmblemPanel.setGrey(FlagLabel.GREY);
-			this.homeEmblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
-			if (!emblemPath.equals("")) {
-				File file = new File(emblemPath);
-				if (file.exists()) {
-					ImageIcon imageIcon = new ImageIcon(emblemPath);
-					if (imageIcon != null) {
-						this.homeEmblemPanel.setLogo(imageIcon);
-						this.homeEmblemPanel.setImagePath(emblemPath);
-					}
-				}
-			}
-			this.homeEmblemPanel.setHeaderText(ModuleConfig.instance().getString(
-					Config.HOSTED_HEADER_TEXT.toString(),
-					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText")));
-			this.homeEmblemPanel.setHeader(ModuleConfig.instance().getBoolean(
-					Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE));
-			this.homeEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
-					Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
+//			this.homeEmblemPanel = new EmblemPanel(flags, enabled);
+//			this.homeEmblemPanel.setFlagWidth(FLAG_WIDTH);
+//			this.homeEmblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
+//			this.homeEmblemPanel.setGrey(FlagLabel.GREY);
+//			this.homeEmblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
+//			if (!emblemPath.equals("")) {
+//				File file = new File(emblemPath);
+//				if (file.exists()) {
+//					ImageIcon imageIcon = new ImageIcon(emblemPath);
+//					if (imageIcon != null) {
+//						this.homeEmblemPanel.setLogo(imageIcon);
+//						this.homeEmblemPanel.setImagePath(emblemPath);
+//					}
+//				}
+//			}
+//			this.homeEmblemPanel.setHeaderText(ModuleConfig.instance().getString(
+//					Config.HOSTED_HEADER_TEXT.toString(),
+//					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText")));
+//			this.homeEmblemPanel.setHeader(ModuleConfig.instance().getBoolean(
+//					Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE));
+//			this.homeEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
+//					Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
 		}
 	}
 
 	public void refreshFlagPanel() {
 		this.centerPanel.remove(this.awayEmblemPanel);
-		this.centerPanel.remove(this.homeEmblemPanel);
-		setEmblemPanel(this.homeAway);
+		setEmblemPanel(this.away);
 		this.centerPanel.add(this.awayEmblemPanel, new GridBagConstraints());
 		this.centerPanel.validate();
 		this.centerPanel.repaint();
@@ -274,24 +294,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		repaint();
 	}
 
-	public EmblemPanel getEmblemPanel(boolean homeAway) {
-		if (homeAway) {
-			return this.awayEmblemPanel;
-		} else {
-			return this.homeEmblemPanel;
-		}
-	}
-
-	public boolean isHomeAway() {
-		return this.homeAway;
-	}
-
-	public JRadioButton getAway() {
-		return this.away;
-	}
-
-	public JRadioButton getHome() {
-		return this.home;
+	public EmblemPanel getEmblemPanel() {
+		return this.awayEmblemPanel;
 	}
 
 	public boolean isAnimGif() {
@@ -304,14 +308,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		EmblemPanel panel = null;
-		if (e.getActionCommand().equals("visited")) {
-			this.homeAway = true;
-			panel = this.awayEmblemPanel;
-		} else if (e.getActionCommand().equals("hosted")) {
-			this.homeAway = false;
-			panel = this.homeEmblemPanel;
-		}
+		EmblemPanel panel = this.awayEmblemPanel;
 
 		this.textField.setText(panel.getHeaderText());
 		this.headerYesNo.setSelected(panel.isHeader());
@@ -327,53 +324,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {
-			if (ImageDesignPanel.this.homeAway) {
-				ImageDesignPanel.this.awayEmblemPanel.setHeaderText(((JTextField) arg0.getSource())
-						.getText());
-			} else {
-				ImageDesignPanel.this.homeEmblemPanel.setHeaderText(((JTextField) arg0.getSource())
-						.getText());
-			}
-		}
-	}
-
-	private class StateChangeListener implements ChangeListener {
-
-		@Override
-		public void stateChanged(ChangeEvent arg0) {
-			EmblemPanel panel = null;
-			if (ImageDesignPanel.this.homeAway) {
-				panel = ImageDesignPanel.this.awayEmblemPanel;
-			} else {
-				panel = ImageDesignPanel.this.homeEmblemPanel;
-			}
-
-			if ((arg0.getSource() instanceof JSpinner)) {
-				if (((JSpinner) arg0.getSource()).getName().equals("size")) {
-					int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue())
-							.intValue();
-					panel.setFlagWidth(rowSize);
-					ImageDesignPanel.this.refreshFlagPanel();
-				}
-			} else if ((arg0.getSource() instanceof JCheckBox)) {
-				JCheckBox box = (JCheckBox) arg0.getSource();
-				if (box.getName().equals("header")) {
-					panel.setHeader(box.isSelected());
-					ImageDesignPanel.this.refreshFlagPanel();
-				} else if (box.getName().equals("footer")) {
-					panel.setFooter(box.isSelected());
-					ImageDesignPanel.this.refreshFlagPanel();
-				} else if (box.getName().equals("grey")) {
-					panel.setGrey(box.isSelected());
-					ImageDesignPanel.this.refreshFlagPanel();
-				} else if (box.getName().equals("rounded")) {
-					panel.setRoundly(box.isSelected());
-					ImageDesignPanel.this.refreshFlagPanel();
-				}
-			} else if ((arg0.getSource() instanceof JSlider)) {
-				panel.setBrightness(((JSlider) arg0.getSource()).getValue());
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
+			ImageDesignPanel.this.awayEmblemPanel.setHeaderText(((JTextField) arg0.getSource())
+					.getText());
 		}
 	}
 }
