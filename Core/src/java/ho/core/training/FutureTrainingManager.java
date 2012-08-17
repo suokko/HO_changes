@@ -317,12 +317,12 @@ public class FutureTrainingManager {
 		if (finalSub[pos] >= 1) {
 //			Alternative 1: Set sub=0 after a skillup 
 //			(We will use this, until the training speed formula is optimized)
-			finalSub[pos] = 0;
+//			finalSub[pos] = 0;
 
 //			TODO flattermann
 //			Alternative 2: Use overflow sub after a skillup
 //			(This would be more accurate. But only if the underlaying formula is exact) 
-//			finalSub[pos] -= 1;
+			finalSub[pos] -= 1;
 
 			finalSkillup[pos]++;
 
@@ -358,7 +358,7 @@ public class FutureTrainingManager {
 		}
 		
 		// add sub to skill
-		finalSub[primaryPos] += primarySubForThisWeek;
+		finalSub[primaryPos] += Math.min(1.0f, primarySubForThisWeek);
 		if (checkSkillup(primaryPos)) {
 			PlayerSkillup su = new PlayerSkillup();
 			su.setHtSeason(tw.getHattrickSeason());
@@ -369,7 +369,7 @@ public class FutureTrainingManager {
 			futureSkillups.add(su);
 		}
 		if (secondarySubForThisWeek > 0) {
-			finalSub[secondaryPos] += secondarySubForThisWeek;
+			finalSub[secondaryPos] += Math.min(1.0f, secondarySubForThisWeek);
 			if (checkSkillup(secondaryPos)) {
 				PlayerSkillup su = new PlayerSkillup();
 				su.setHtSeason(tw.getHattrickSeason());
