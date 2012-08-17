@@ -149,7 +149,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 			OptionManager.instance().setRestartNeeded();
 		}
 		if (ho.core.model.UserParameter.temp().futureWeeks != ho.core.model.UserParameter.instance().futureWeeks) {
-			OptionManager.instance().setRestartNeeded();
+			OptionManager.instance().setReInitNeeded();
 		}
 	}
 
