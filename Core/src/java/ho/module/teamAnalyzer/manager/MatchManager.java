@@ -129,7 +129,12 @@ public class MatchManager {
                 }
 
                 if (!temp.equalsIgnoreCase(oldName)) {
-                    if (match.getWeek() > 14) {
+                    /* Team name can be changed the name between seasons
+                     * without being bot in between. Team name can be changed
+                     * after the 14th league game which makes that game the
+                     * last possible match to hold old name. 
+                     */
+                    if (match.getWeek() > 13) {
                         oldName = temp;
                     } else {
                         return teamMatches;
