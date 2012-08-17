@@ -13,7 +13,7 @@ extraMulti           = 1.000 # fixed
 squareMod            = 0.008462 # err=0.000976
 cubeMod              = -0.000017 # err=0.000003
 defleadPercentDef    = 0.000000 # fixed
-pullback             = 0.25
+pullback             = 0.125
 
 
 [goalkeeping_allsides]
