@@ -36,33 +36,35 @@ public abstract class WeeklyTrainingType {
 	
 	private static double[] skillFactorArray = {
 		// Skill 1
-		0.36,
-		0.52,
-		0.66,
-		0.77,
-		0.91,
+		0.24,
+		0.41,
+		0.58,
+		0.74,
+		0.89,
 		// Passable...
-		1,
-		1.11,
-		1.20,
-		1.43,
+		1.04, 
+		1.18,
+		1.31,
+		1.50,
 		// Outstanding
-		1.72,
-		1.98,
-		2.18,
-		2.43,
-		2.64,
+		1.71,
+		1.93,
+		2.17,
+		2.42,
+		2.71,
 		// Titanic
-		2.86,
-		3.18,
-		3,45,
-		4.55,
+		3.01,
+		3.46,
+		4.02,
+		4.71,
 		// Skill 19
-		7.00,
-		//  Random from here and down
-		10,
-		15,
-		21};
+		5.62,
+		// Extrapolated using second derivatives
+		6.84,
+		8.49,
+		10.79,
+		14.00,
+		18};
 	
 	public static WeeklyTrainingType instance(int iTrainingType)
 	{
@@ -279,7 +281,7 @@ public abstract class WeeklyTrainingType {
 		
 		// skill between 1 and 22
 		curSkill = Math.max(1, curSkill);
-		curSkill = Math.min(22, curSkill);
+		curSkill = Math.min(skillFactorArray.length, curSkill);
 		double skillFactor = skillFactorArray[curSkill - 1];
 	
 		// age between 17 and 30
