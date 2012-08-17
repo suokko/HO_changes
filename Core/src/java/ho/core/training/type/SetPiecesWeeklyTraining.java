@@ -23,7 +23,7 @@ public class SetPiecesWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
 		_PrimaryTrainingSkillBonusPositions = new int[]{ ISpielerPosition.keeper, ISpielerPosition.setPieces };
-		_PrimaryTrainingBaseLength = (float) 0.9;
+		_PrimaryTrainingBaseLength = (float) 0.665;
 		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_SETPIECES; // 100%
 		_PrimaryTrainingSkillBonus = (float) 0.25;
 		_PrimaryTrainingSkillOsmosisLengthRate = 0;

@@ -32,7 +32,7 @@ public class ShootingWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.leftInnerMidfield, ISpielerPosition.centralInnerMidfield, 
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
-		_SecondaryTrainingSkillBaseLength = ((float) 0.9 + UserParameter.instance().TRAINING_OFFSET_SETPIECES) / (float) 0.6;
+		_SecondaryTrainingSkillBaseLength = ((float) 0.665 + UserParameter.instance().TRAINING_OFFSET_SETPIECES) / (float) 0.6;
 	}
 	public static WeeklyTrainingType instance() {
         if (m_ciInstance == null) {
