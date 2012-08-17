@@ -8,8 +8,8 @@ import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
 import ho.core.util.HOLogger;
-import hoplugins.pluginIFA.config.ConfigManager;
-import hoplugins.pluginIFA.gif.Gif89Encoder;
+import ho.module.ifa2.config.ConfigManager;
+import ho.module.ifa2.gif.Gif89Encoder;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -48,17 +48,17 @@ public class GlobalActionsListener implements ActionListener {
 				fileChooser.setAcceptAllFileFilterUsed(false);
 				if (this.pluginIfaPanel.getImageDesignPanel().isAnimGif())
 					fileChooser.setSelectedFile(new File("animated.gif"));
-				else if (this.pluginIfaPanel.getImageDesignPanel().isHomeAway())
-					fileChooser.setSelectedFile(new File("visited.gif"));
+//				else if (this.pluginIfaPanel.getImageDesignPanel().isHomeAway())
+//					fileChooser.setSelectedFile(new File("visited.gif"));
 				else
 					fileChooser.setSelectedFile(new File("hosted.gif"));
 				if (fileChooser.showSaveDialog(this.parent) != 0)
 					return;
 				OutputStream out = new FileOutputStream(fileChooser.getSelectedFile().getPath());
 				ImageDesignPanel imageDesignPanel = this.pluginIfaPanel.getImageDesignPanel();
-				boolean isSelected = imageDesignPanel.getHome().isSelected();
+//				boolean isSelected = imageDesignPanel.getHome().isSelected();
 
-				ConfigManager.saveConfig(imageDesignPanel);
+//				ConfigManager.saveConfig(imageDesignPanel);
 
 				if (imageDesignPanel.isAnimGif()) {
 					JDialog dialog = new JDialog();
@@ -66,16 +66,16 @@ public class GlobalActionsListener implements ActionListener {
 					dialog.setUndecorated(true);
 					dialog.getContentPane().setLayout(null);
 
-					if (!isSelected) {
-						imageDesignPanel.getHome().getActionListeners()[0]
-								.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
-										"visited"));
-					}
-					JComponent panel1 = imageDesignPanel.getEmblemPanel(true).getImage();
-					imageDesignPanel.getAway().getActionListeners()[0]
-							.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
-									"hosted"));
-					JComponent panel2 = imageDesignPanel.getEmblemPanel(false).getImage();
+//					if (!isSelected) {
+//						imageDesignPanel.getHome().getActionListeners()[0]
+//								.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
+//										"visited"));
+//					}
+					JComponent panel1 = imageDesignPanel.getEmblemPanel().getImage();
+//					imageDesignPanel.getAway().getActionListeners()[0]
+//							.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
+//									"hosted"));
+					JComponent panel2 = imageDesignPanel.getEmblemPanel().getImage();
 
 					Dimension size1 = panel1.getSize();
 					Dimension size2 = panel2.getSize();
@@ -103,20 +103,19 @@ public class GlobalActionsListener implements ActionListener {
 					encoder.encode(out);
 					out.close();
 
-					if (isSelected)
-						imageDesignPanel.getHome().getActionListeners()[0]
-								.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
-										"visited"));
-					else
-						imageDesignPanel.getAway().getActionListeners()[0]
-								.actionPerformed(new ActionEvent(imageDesignPanel.getAway(), 0,
-										"hosted"));
+//					if (isSelected)
+//						imageDesignPanel.getHome().getActionListeners()[0]
+//								.actionPerformed(new ActionEvent(imageDesignPanel.getHome(), 0,
+//										"visited"));
+//					else
+//						imageDesignPanel.getAway().getActionListeners()[0]
+//								.actionPerformed(new ActionEvent(imageDesignPanel.getAway(), 0,
+//										"hosted"));
 					dialog.dispose();
 					return;
 				}
 
-				JComponent panel = imageDesignPanel.getEmblemPanel(imageDesignPanel.isHomeAway())
-						.getImage();
+				JComponent panel = imageDesignPanel.getEmblemPanel().getImage();
 				BufferedImage bufferedImage = new BufferedImage(panel.getWidth(),
 						panel.getHeight(), 1);
 				panel.paintAll(bufferedImage.createGraphics());
