@@ -121,10 +121,10 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		if (!config.containsKey(TS_SHOWCUPMATCHES)) {
 			config.setBoolean(TS_SHOWCUPMATCHES, false);
 			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, false);
-			config.setBoolean(TS_HISTORY, false);
-			config.setBoolean(TS_LOEPIFORECAST, false);
+			config.setBoolean(TS_HISTORY, true);
+			config.setBoolean(TS_LOEPIFORECAST, true);
 			config.setBoolean(TS_LOEPIHISTORY, false);
-			config.setBoolean(TS_CONFIDENCE, false);
+			config.setBoolean(TS_CONFIDENCE, true);
 			config.setBigDecimal(TS_GENERALSPIRIT, new BigDecimal("4.50"));
 			ModuleConfig.instance().save();
 		}
