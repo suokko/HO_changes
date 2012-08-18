@@ -1,15 +1,13 @@
 package ho.module.lineup.penalties;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.constants.player.PlayerSpeciality;
 import ho.core.model.player.Spieler;
 import ho.core.rating.RatingPredictionManager;
 
 public class PenaltyTaker {
 
 	private Spieler player;
-
-	public PenaltyTaker() {
-	}
 
 	public PenaltyTaker(Spieler player) {
 		this.player = player;
@@ -20,19 +18,27 @@ public class PenaltyTaker {
 	}
 
 	public double getAbility() {
-		return PenaltyUtils.getAbility(this);
+		double ability = 0;
+		double loy = (double)RatingPredictionManager.getLoyaltyHomegrownBonus(player);
+
+		ability = getExperience() * 1.5
+					+ (getSetPieces() + loy) * 0.7
+					+ (getScoring() + loy) * 0.3;
+
+		if (getPlayer().getSpezialitaet() == PlayerSpeciality.TECHNICAL) {
+			ability *= 1.1;
+		}
+		return ability;
 	}
 
 	public double getScoring() {
 		return ((double) this.player.getTorschuss())
-				+ this.player.getSubskill4Pos(PlayerSkill.SCORING)
-				+ (double)RatingPredictionManager.getLoyaltyHomegrownBonus(player);
+				+ this.player.getSubskill4Pos(PlayerSkill.SCORING);
 	}
 
 	public double getSetPieces() {
 		return ((double) this.player.getStandards())
-				+ this.player.getSubskill4Pos(PlayerSkill.SET_PIECES)
-				+ (double)RatingPredictionManager.getLoyaltyHomegrownBonus(player);
+				+ this.player.getSubskill4Pos(PlayerSkill.SET_PIECES);
 	}
 
 	public double getExperience() {
