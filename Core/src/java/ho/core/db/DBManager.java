@@ -1159,6 +1159,17 @@ public class DBManager {
 	}
 
 	/**
+	 * Get all matches for the given sql where claus.
+	 *
+	 * @param where
+	 *            The string containing sql where claus
+	 */
+	public MatchKurzInfo[] getMatchesKurzInfo(String where) {
+		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
+				.getMatchesKurzInfo(where);
+	}
+
+	/**
 	 * Get all matches with a certain status for the given team from the
 	 * database.
 	 * 

@@ -1,13 +1,16 @@
 package ho.module.tsforecast;
 
+import ho.core.db.DBManager;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
+import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchType;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
+import ho.module.matches.SpielePanel;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -116,10 +119,35 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		}
 	}
 
+	/**
+	 * @return true if team is still in cup
+	 */
+	private boolean isInCup() {
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
+				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" +
+				" AND MatchTyp = " + MatchType.CUP.getId() +
+				" AND Status <> " + MatchKurzInfo.FINISHED +
+				" LIMIT 1");
+		return matches.length != 0;
+	}
+
+	/**
+	 * @return true if team has qualification match scheduled
+	 */
+	private boolean hasQualificationMatch() {
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
+				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" +
+				" AND MatchTyp = " + MatchType.QUALIFICATION.getId() +
+				" AND Status <> " + MatchKurzInfo.FINISHED +
+				" LIMIT 1");
+		return matches.length != 0;
+	}
+
 	private void initializeConfig() {
 		ModuleConfig config = ModuleConfig.instance();
 		if (!config.containsKey(TS_SHOWCUPMATCHES)) {
-			config.setBoolean(TS_SHOWCUPMATCHES, false);
 			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, false);
 			config.setBoolean(TS_HISTORY, true);
 			config.setBoolean(TS_LOEPIFORECAST, true);
@@ -128,11 +156,19 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 			config.setBigDecimal(TS_GENERALSPIRIT, new BigDecimal("4.50"));
 			ModuleConfig.instance().save();
 		}
+		config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
+		if (hasQualificationMatch())
+			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
 	}
 
 	@Override
 	public void refresh() {
 		// ErrorLog.writeln("refresh");
+		ModuleConfig config = ModuleConfig.instance();
+		config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
+		if (hasQualificationMatch())
+			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
+
 		try {
 			createCurves();
 		} catch (Exception ex) {
