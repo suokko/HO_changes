@@ -246,24 +246,32 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 *            ignore this parameter
 	 */
 	MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
+
+		String sql = " WHERE";
+		boolean firstCondition = true;
+
+		if (teamId > -1) {
+			sql += " (GastID=" + teamId + " OR HeimID=" + teamId + ")";
+			firstCondition = false;
+		}
+
+		if (matchStatus > -1) {
+			sql += (firstCondition ? "" : " AND") + " Status=" + matchStatus;
+			firstCondition = false;
+		}
+
+		sql += " ORDER BY MatchDate DESC";
+		return getMatchesKurzInfo(sql);
+	}
+
+	MatchKurzInfo[] getMatchesKurzInfo(final String where) {
 		MatchKurzInfo[] matches = new MatchKurzInfo[0];
 		String sql = null;
 		ResultSet rs = null;
 		final Vector<MatchKurzInfo> liste = new Vector<MatchKurzInfo>();
 
 		try {
-			sql = "SELECT * FROM " + getTableName();
-
-			if (teamId > -1 && matchStatus > -1) {
-				sql += (" WHERE (GastID=" + teamId + " OR HeimID=" + teamId
-						+ ") AND Status=" + matchStatus);
-			} else if (teamId > -1) {
-				sql += (" WHERE GastID=" + teamId + " OR HeimID=" + teamId);
-			} else if (matchStatus > -1) {
-				sql += (" WHERE Status=" + matchStatus);
-			}
-
-			sql += " ORDER BY MatchDate DESC";
+			sql = "SELECT * FROM " + getTableName() + " " + where;
 			rs = adapter.executeQuery(sql);
 
 			while (rs.next()) {
