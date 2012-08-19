@@ -46,10 +46,12 @@ public class MainPanel extends JPanel implements ActionListener {
     	ta.append(hoV.getLanguageString("nthrf.hint1")+"\n");
     	ta.append(hoV.getLanguageString("nthrf.hint2")+"\n");
     	ta.append(hoV.getLanguageString("nthrf.hint3")+"\n");
-    	ta.append(hoV.getLanguageString("nthrf.hint4"));
+    	ta.append(hoV.getLanguageString("nthrf.hint4")+" '");
+    	ta.append(hoV.getLanguageString("Start")+"' ");
+    	ta.append(hoV.getLanguageString("nthrf.hint5"));
     	ta.setEditable(false);
     	add(new JScrollPane(ta), BorderLayout.CENTER);
-    	btnStart = new JButton("Start");
+    	btnStart = new JButton(HOVerwaltung.instance().getLanguageString("Start"));
     	btnStart.addActionListener(this);
     	add(btnStart, BorderLayout.SOUTH);
     }

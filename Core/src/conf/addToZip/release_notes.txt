@@ -48,6 +48,8 @@ Language updates:
 - Updated English translations (thx edswifa).
 - Updated French translations (thx davidatorus).
 - Updated German translations (thx Werder0405).
+- Updated Hangul (Korean) translations (thx SI-CH).
+- Updated Portugues translations (thx a_cardoso).
 
 ThemeManager:
 ------------

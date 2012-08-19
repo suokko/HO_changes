@@ -52,6 +52,8 @@ Language updates:
 - Updated English translations (thx edswifa).
 - Updated French translations (thx davidatorus).
 - Updated German translations (thx Werder0405).
+- Updated Hangul (Korean) translations (thx SI-CH).
+- Updated Portugues translations (thx a_cardoso).
 
 ThemeManager:
 ------------
@@ -127,7 +129,7 @@ Language updates:
 - Update Danish translations (thx Max_Schreck)
 - Update Finnish translations (thx paragon81)
 - Update French translations (thx fierz1998)
-- Update Galego translations (thx GZ-ivanff)
+- Update Galego translations (thx GZ-grobas)
 - Update Georgian translations (thx serjhanti, Rukhadze)
 - Update German translations (thx Werder0405)
 - Update Hangul(Korean) translations (thx SI-CH)
