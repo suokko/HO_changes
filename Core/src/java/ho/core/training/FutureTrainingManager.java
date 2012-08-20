@@ -30,6 +30,7 @@ public class FutureTrainingManager {
 	private List<TrainingPerWeek> futureTrainings;
 	private List<ISkillup> futureSkillups;
 	private int weeksPassed = 0;
+	private double trainingSpeed;
 
 	private int coTrainer;
 	private int trainer;
@@ -69,6 +70,7 @@ public class FutureTrainingManager {
 			finalSkillup[i] = 0;
 		}
 
+		trainingSpeed = 0;
 		weeksPassed = 0;
 		int position = HelperWrapper.instance().getPosition(player.getIdealPosition());
 		// Iterate thru all the future training weeks
@@ -85,10 +87,12 @@ public class FutureTrainingManager {
 				{
 					if(wt.getPrimaryTrainingSkillPositions()[i] == position) {
 						tp.addPrimarySkillPositionMinutes(90);
+						trainingSpeed += 1.0;
 						bFound = true;
 						if (wt.getPrimaryTrainingSkillBonusPositions() != null) {
 							for (int j = 0; j < wt.getPrimaryTrainingSkillBonusPositions().length; j++) {
 								if (wt.getPrimaryTrainingSkillBonusPositions()[j] == position) {
+									trainingSpeed += wt.getPrimaryTrainingSkillBonus();
 									tp.addPrimarySkillBonusPositionMinutes(90);
 									break;
 								}
@@ -103,6 +107,7 @@ public class FutureTrainingManager {
 						{
 							if(wt.getPrimaryTrainingSkillSecondaryTrainingPositions()[i] == position) {
 								tp.addPrimarySkillSecondaryPositionMinutes(90);
+								trainingSpeed += 1.0 / wt.getPrimaryTrainingSkillSecondaryBaseLengthRate();
 								bFound = true;
 								break;
 							}
@@ -115,6 +120,7 @@ public class FutureTrainingManager {
 						{
 							if(wt.getPrimaryTrainingSkillOsmosisTrainingPositions()[i] == position) {
 								tp.addPrimarySkillOsmosisPositionMinutes(90);
+								trainingSpeed += 1.0 / wt.getPrimaryTrainingSkillOsmosisBaseLengthRate();
 								bFound = true;
 								break;
 							}
@@ -172,6 +178,7 @@ public class FutureTrainingManager {
 				processTraining(wt, trp, tw);
 			}
 		}		
+		trainingSpeed /= weeksPassed;
 		FuturePlayer fp = new FuturePlayer();				
 		fp.setAttack(getFinalValue(PlayerSkill.SCORING));		
 		fp.setCross(getFinalValue(PlayerSkill.WINGER));
@@ -216,6 +223,14 @@ public class FutureTrainingManager {
 	*/
 	public List<ISkillup> getFutureSkillups() {
 		return futureSkillups;
+	}
+
+	/**
+	 * Returns training speed multiplier for training prediction sorting
+	 */
+	public int getTrainingSpeed()
+	{
+		return (int)(trainingSpeed * 100.0);
 	}
 
 	/**
