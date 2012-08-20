@@ -46,6 +46,6 @@ public class TrainingComparator implements Comparator<Vector<String>> {
             }
         }
 
-        return 1;
+        return 0;
     }
 }
