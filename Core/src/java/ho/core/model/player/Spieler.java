@@ -1631,6 +1631,34 @@ public final class Spieler {
         return PlayerSpeciality.getWeatherEffect(weather, m_iSpezialitaet);
     }
 
+    private void incrementSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity,
+            int stamina, int skill, double points, WeeklyTrainingType wt)
+    {
+        if (skill <= 0 || points <= 0)
+            return;
+        
+        float gain = (float)Helper.round(points / wt.getTrainingLength(
+                        this, assistants, trainerlevel, intensity, stamina), 3);
+
+        if (gain <= 0)
+            return;
+        
+        /* Limit training to one full level max */
+        gain = Math.min(gain, 1.0f);
+        
+        if (check4SkillUp(skill, originalPlayer)) {
+            /* Carry subskill over skillup */
+            if (1.0f - originalPlayer.getSubskill4Pos(skill) <= gain) {
+                gain -= 1.0f - originalPlayer.getSubskill4Pos(skill);
+            } else {
+                /* Level up was too early. Either we are missing subskill levels
+                 * or skill increases quicker that predicted.
+                 */
+                gain = 0.0f;
+            }
+        }
+        setSubskill4Pos(skill, Math.min(0.99f, getSubskill4Pos(skill) + gain));
+    }
     
     /**
      * Calculates training benefit, and updates subskill for the player.
@@ -1644,66 +1672,27 @@ public final class Spieler {
      */
     public void calcIncrementalSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity, 
     		int stamina, TrainingPerWeek trainingWeek) {
-    	
-    	if (trainingWeek != null) {
-	        TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek, null);
-	        if (trForPlayer != null) {
-		        TrainingPoints tp = trForPlayer.getTrainingPair();
-		        if (tp != null && tp.getPrimary() > 0) {
-			        int trType = trainingWeek.getTrainingType();
-			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			        if (wt != null) {
-				        int primary = wt.getPrimaryTrainingSkill();
-				        if (primary > 0) {
-			        		float gain = (float)Helper.round(tp.getPrimary() / wt.getTrainingLength(
-			        				this, assistants, trainerlevel, intensity, stamina), 3);
-			        		if (gain > 0) {
-			        			/* Limit training to one full level max */
-			        			if (gain > 1.0f) {
-			        				gain = 1.0f;
-			        			}
-			        			if (check4SkillUp(primary, originalPlayer)) {
-			        				/* Carry subskill over skillup */
-			        				if (1.0f - originalPlayer.getSubskill4Pos(primary) <= gain) {
-			        					gain -= 1.0f - originalPlayer.getSubskill4Pos(primary);
-			        				} else {
-			        					/* Level up was too early. Either we are missing subskill levels
-			        					 * or skill increases quicker that predicted.
-			        					 */
-			        					gain = 0.0f;
-			        				}
-			        			}
-			        			setSubskill4Pos(primary, Math.min(0.99f, getSubskill4Pos(primary) + gain));
-			        		}
-			        	}
-			        }
-		        }
-		        if (tp != null && tp.getSecondary() > 0) {
-			        int trType = trainingWeek.getTrainingType();
-			        WeeklyTrainingType wt = WeeklyTrainingType.instance(trType);
-			        if (wt != null) {
-				        int secondary = wt.getSecondaryTrainingSkill();
-				        if (secondary > 0) {
-			        		float gain = (float)Helper.round(tp.getSecondary() / wt.getTrainingLength(
-			        				this, assistants, trainerlevel, intensity, stamina), 3);
-			        		if (gain > 0) {
-			        			if (gain > 1.0f) {
-			        				gain = 1.0f;
-			        			}
-			        			if (check4SkillUp(secondary, originalPlayer)) {
-			        				if (1.0f - originalPlayer.getSubskill4Pos(secondary) <= gain) {
-			        					gain -= 1.0f - originalPlayer.getSubskill4Pos(secondary);
-			        				} else {
-			        					gain = 0.0f;
-			        				}
-			        			}
-			        			setSubskill4Pos(secondary, Math.min(0.99f, getSubskill4Pos(secondary) + gain));
-			        		}
-			        	}
-			        }
-		        }
-	    	}
-    	}
+
+        if (trainingWeek == null)
+            return;
+
+        TrainingPerPlayer trForPlayer = TrainingManager.instance().calculateWeeklyTrainingForPlayer(this, trainingWeek, null);
+
+        if (trForPlayer == null)
+            return;
+
+        TrainingPoints tp = trForPlayer.getTrainingPair();
+
+        if (tp == null)
+            return;
+        
+        WeeklyTrainingType wt = WeeklyTrainingType.instance(trainingWeek.getTrainingType());
+
+        incrementSubskills(originalPlayer, assistants, trainerlevel, intensity, stamina,
+                wt.getPrimaryTrainingSkill(), tp.getPrimary(), wt);
+
+        incrementSubskills(originalPlayer, assistants, trainerlevel, intensity, stamina,
+                wt.getSecondaryTrainingSkill(), tp.getSecondary(), wt);
     }
     
     
