@@ -21,6 +21,11 @@ import java.util.Vector;
  */
 public class TrainingComparator implements Comparator<Vector<String>> {
     //~ Methods ------------------------------------------------------------------------------------
+    private int first;
+
+    TrainingComparator(int firstColumn) {
+        first = firstColumn;
+    }
 
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
@@ -30,7 +35,7 @@ public class TrainingComparator implements Comparator<Vector<String>> {
         Vector<String> v1 =  arg0;
         Vector<String> v2 =  arg1;
 
-        for (int i = 1; i < (UserParameter.instance().futureWeeks + 1); i++) {
+        for (int i = first; i < (UserParameter.instance().futureWeeks + first); i++) {
             String s1 = "" + v1.get(i); //$NON-NLS-1$
             String s2 = "" + v2.get(i); //$NON-NLS-1$
 

@@ -40,6 +40,7 @@ public class TrainingRecapPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7240288702397251461L;
+	private static final int fixedColumns = 2;
 
 	private BaseTableModel tableModel;
 
@@ -100,7 +101,7 @@ public class TrainingRecapPanel extends JPanel {
             row.add(player.getAlterWithAgeDaysAsString());
 
             for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-                ISkillup s = (ISkillup) maps.get(columns.get(i + 2));
+                ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
 
                 if (s == null) {
                     row.add(""); //$NON-NLS-1$
@@ -118,7 +119,7 @@ public class TrainingRecapPanel extends JPanel {
         }
 
         // Sort the players
-        SortedSet<Vector<String>> set = new TreeSet<Vector<String>>(new TrainingComparator());
+        SortedSet<Vector<String>> set = new TreeSet<Vector<String>>(new TrainingComparator(2, fixedColumns));
         if ((players != null) && (players.size() > 0)) 
                 set.addAll(players);
 
@@ -204,7 +205,7 @@ public class TrainingRecapPanel extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        recapTable = new TrainingRecapTable(table, 2);
+        recapTable = new TrainingRecapTable(table, fixedColumns);
 
         recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
 
