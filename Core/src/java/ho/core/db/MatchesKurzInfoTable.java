@@ -247,16 +247,18 @@ final class MatchesKurzInfoTable extends AbstractTable {
 	 */
 	MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
 
-		String sql = " WHERE";
+		String sql = "";
 		boolean firstCondition = true;
 
 		if (teamId > -1) {
-			sql += " (GastID=" + teamId + " OR HeimID=" + teamId + ")";
+			sql += (firstCondition ? " WHERE" : " AND")
+				+ "(GastID=" + teamId + " OR HeimID=" + teamId + ")";
 			firstCondition = false;
 		}
 
 		if (matchStatus > -1) {
-			sql += (firstCondition ? "" : " AND") + " Status=" + matchStatus;
+			sql += (firstCondition ? " WHERE" : " AND")
+				+ " Status=" + matchStatus;
 			firstCondition = false;
 		}
 
