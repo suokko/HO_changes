@@ -40,7 +40,7 @@ public class TrainingRecapPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7240288702397251461L;
-	private static final int fixedColumns = 2;
+	private static final int fixedColumns = 3;
 
 	private BaseTableModel tableModel;
 
@@ -99,6 +99,7 @@ public class TrainingRecapPanel extends JPanel {
 
             row.add(player.getName());
             row.add(player.getAlterWithAgeDaysAsString());
+            row.add(Integer.toString(ftm.getTrainingSpeed()));
 
             for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
                 ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
@@ -143,6 +144,7 @@ public class TrainingRecapPanel extends JPanel {
 
         columns.add(HOVerwaltung.instance().getLanguageString("Spieler")); //$NON-NLS-1$
         columns.add(HOVerwaltung.instance().getLanguageString("Alter")); //$NON-NLS-1$
+        columns.add("Speed"); //$NON-NLS-1$
 
         int actualSeason =HOVerwaltung.instance().getModel().getBasics().getSeason();
         int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
