@@ -121,6 +121,10 @@ public abstract class WeeklyTrainingType {
 		return _PrimaryTrainingSkillBaseLength;
 	}
 
+	public float getPrimaryTrainingSkillBonus() {
+		return _PrimaryTrainingSkillBonus;
+	}
+
 	public float getPrimaryTrainingSkillSecondaryBaseLengthRate() {
 		return _PrimaryTrainingSkillSecondaryLengthRate;
 	}
