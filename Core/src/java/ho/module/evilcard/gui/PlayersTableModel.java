@@ -143,6 +143,84 @@ class PlayersTableModel extends AbstractTableModel {
         return approx / 10.0;
     }
 
+    /**
+     * Helper class to sort and show aggressive information
+     *
+     */
+    private class Aggressive implements Comparable<Aggressive> {
+        private Spieler _player;
+        Aggressive(Spieler player) {
+            _player = player;
+        }
+ 
+        @Override
+        public String toString() {
+            return PlayerAggressiveness.toString(_player.getAgressivitaet())+" (" + _player.getAgressivitaet() + ")";
+        }
+
+        @Override
+        public int compareTo(Aggressive o2) {
+            Spieler p1 = _player;
+            Spieler p2 = o2._player;
+
+            if (p1.getAgressivitaet() == p2.getAgressivitaet())
+                return 0;
+            return p1.getAgressivitaet() < p2.getAgressivitaet() ? -1 : 1;
+        }
+    }
+
+    /**
+     * Helper class to sort and show agreeability information
+     *
+     */
+    private class Agreeability implements Comparable<Agreeability> {
+        private Spieler _player;
+        Agreeability(Spieler player) {
+            _player = player;
+        }
+ 
+        @Override
+        public String toString() {
+            return PlayerAgreeability.toString(_player.getAnsehen())+" (" + _player.getAnsehen() + ")";
+        }
+
+        @Override
+        public int compareTo(Agreeability o2) {
+            Spieler p1 = _player;
+            Spieler p2 = o2._player;
+
+            if (p1.getAnsehen() == p2.getAnsehen())
+                return 0;
+            return p1.getAnsehen() < p2.getAnsehen() ? -1 : 1;
+        }
+    }
+
+    /**
+     * Helper class to sort and show honesty information
+     *
+     */
+    private class Honesty implements Comparable<Honesty> {
+        private Spieler _player;
+        Honesty(Spieler player) {
+            _player = player;
+        }
+ 
+        @Override
+        public String toString() {
+            return PlayerHonesty.toString(_player.getCharakter())+" (" + _player.getCharakter() + ")";
+        }
+
+        @Override
+        public int compareTo(Honesty o2) {
+            Spieler p1 = _player;
+            Spieler p2 = o2._player;
+
+            if (p1.getCharakter() == p2.getCharakter())
+                return 0;
+            return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
+        }
+    }
+
     private void generateData2() {
         // Get current players.
         Vector<Spieler> players = new Vector<Spieler>();
@@ -166,9 +244,9 @@ class PlayersTableModel extends AbstractTableModel {
 
             data[row][COL_NAME] = player.getName();
             data[row][COL_ID] = new Integer(id);
-            data[row][COL_AGGRESSIVITY] = PlayerAggressiveness.toString(player.getAgressivitaet())+" (" + player.getAgressivitaet() + ")";
-            data[row][COL_HONESTY] =  PlayerAgreeability.toString(player.getAnsehen())+" (" + player.getAnsehen() + ")";
-            data[row][COL_AGREEABILITY] = PlayerHonesty.toString(player.getCharakter())+" (" + player.getCharakter() + ")";
+            data[row][COL_AGGRESSIVITY] = new Aggressive(player);
+            data[row][COL_HONESTY] = new Honesty(player);
+            data[row][COL_AGREEABILITY] = new Agreeability(player);
 
             for (int col = 5; col < cols; col++) {
                 data[row][col] = new Integer(0);
