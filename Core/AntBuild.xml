@@ -59,10 +59,10 @@
 	<target name="ant-compile" description="Compile source via Ant (not necessary when building in Eclipse)">
 		<echo>src.dir is ${src.dir}</echo>
 		<echo>bin.dir is ${bin.dir}</echo>
-		<property name="java.SourcePath" value="${src.dir}/java" />
+		<property name="java.SourcePath" value="${src.dir}/java:${basedir}/test/java" />
 		<echo>java.SourcePath is ${java.SourcePath}</echo>
 		<!-- Read classpath from MANIFEST.MF -->
-		<loadfile property="compile.Classpath" srcfile="${manifestFile}">
+		<loadfile property="compile.Classpath_file" srcfile="${manifestFile}">
 			<filterchain>
 				<linecontains>
 					<contains value="Class-Path:" />
@@ -77,6 +77,7 @@
 				<striplinebreaks />
 			</filterchain>
 		</loadfile>
+		<property name="compile.Classpath" value="${compile.Classpath_file}:test/lib/hamcrest-core-1.1.jar:test/lib/junit-4.7.jar:test/lib/hamcrest-integration-1.1.jar:test/lib/hamcrest-library-1.1.jar" />
 		<!--
 		<echo>Removing old build</echo>
 		<delete>
