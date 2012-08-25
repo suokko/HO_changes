@@ -352,4 +352,14 @@ public class User {
 		} catch (Exception ex) {
 		}
 	}
+
+	/**
+	 * Check if user decided to keep data in current path
+	 *
+	 * @return true if data is in current path
+	 */
+	public static boolean isDataInCurrentPath(File dataPath) {
+		// TODO Allow user to fallback to old data path.
+		return true;
+	}
 }
