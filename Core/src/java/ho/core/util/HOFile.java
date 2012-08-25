@@ -1,8 +1,13 @@
 package ho.core.util;
 
 import ho.core.db.User;
+import ho.core.file.ExampleFileFilter;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -81,18 +86,62 @@ public class HOFile extends File {
 	}
 
 	/**
+	 * Copy the file data from source to destination
+	 *
+	 * @param dst
+	 * @param src
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static void copyFile(File dst, File src) throws FileNotFoundException, IOException {
+		FileInputStream s = null;
+		FileOutputStream d = null;
+		try {
+			long len = src.length();
+			long pos = 0;
+			s = new FileInputStream(src);
+			d = new FileOutputStream(dst);
+			while (pos < len) {
+				long t = d.getChannel().transferFrom(s.getChannel(), pos, len);
+				if (t == 0) {
+					throw new IOException("No data transfered");
+				}
+				pos += t;
+			}
+			dst.setLastModified(src.lastModified());
+		} finally {
+			if (s != null)
+				s.close();
+			if (d != null)
+				d.close();
+		}
+	}
+
+	/**
 	 * Migrate all data files to the new location for all currently configured
 	 * users.
 	 *
 	 * @param users The list of users configured
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
-	public static void migrateWritableFiles(ArrayList<User> users) {
+	public static void migrateWritableFiles(ArrayList<User> users) throws FileNotFoundException, IOException {
 		File cwd = new File(System.getProperty("user.dir"));
 		HOLogger.instance().log(HOFile.class, "Migrating data from '"+ cwd.getAbsolutePath() +"'");
 
 		/* Create shared directory */
 		dataPath.mkdirs();
 		/* user.xml migration is handled in User after call to here */
+
+		/* Migrate logs */
+		File logs = new File(dataPath, "logs");
+		File old_logs = new File(cwd, "logs");
+		ExampleFileFilter filter = new ExampleFileFilter("log");
+		File[] files = old_logs.listFiles(filter);
+		logs.mkdir();
+		for (int i = 0; i < files.length; i++) {
+			copyFile(new File(logs, files[i].getName()), files[i]);
+		}
 	}
 
 	/**
