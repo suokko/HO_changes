@@ -142,6 +142,24 @@ public class HOFile extends File {
 		for (int i = 0; i < files.length; i++) {
 			copyFile(new File(logs, files[i].getName()), files[i]);
 		}
+
+		/* Migrate users */
+		for (int u = 0; u < users.size(); u++) {
+			File userPath = new File(dataPath, users.get(u).getName());
+			userPath.mkdir();
+
+			/* Migrate database */
+			if (users.get(u).isHSQLDB()) {
+				File db = new File(userPath, "db");
+				File old_db = new File(cwd, users.get(u).getDBPath());
+				files = old_db.listFiles();
+				db.mkdir();
+				for (int i = 0; i < files.length; i++) {
+					copyFile(new File(db, files[i].getName()), files[i]);
+				}
+				users.get(u).setPath("db");
+			}
+		}
 	}
 
 	/**
