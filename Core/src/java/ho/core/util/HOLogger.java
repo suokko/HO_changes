@@ -134,9 +134,10 @@ public class HOLogger {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public static HOLogger instance() {
+	public static HOLogger instance(int level) {
 		if (clLogger == null) {
 			clLogger = new HOLogger();
+			clLogger.setLogLevel(level);
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String dirName = "logs";
@@ -163,6 +164,10 @@ public class HOLogger {
 		}
 
 		return clLogger;
+	}
+
+	public static HOLogger instance() {
+		return instance(WARNING);
 	}
 
 	/**

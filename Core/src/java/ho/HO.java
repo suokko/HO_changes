@@ -91,13 +91,13 @@ public class HO {
 			String debugLvl = args[0].trim().toUpperCase();
 
 			if (debugLvl.equals("INFO")) {
-				HOLogger.instance().setLogLevel(HOLogger.INFORMATION);
+				HOLogger.instance(HOLogger.INFORMATION);
 			} else if (debugLvl.equals("DEBUG")) {
-				HOLogger.instance().setLogLevel(HOLogger.DEBUG);
+				HOLogger.instance(HOLogger.DEBUG);
 			} else if (debugLvl.equals("WARNING")) {
-				HOLogger.instance().setLogLevel(HOLogger.WARNING);
+				HOLogger.instance(HOLogger.WARNING);
 			} else if (debugLvl.equals("ERROR")) {
-				HOLogger.instance().setLogLevel(HOLogger.ERROR);
+				HOLogger.instance(HOLogger.ERROR);
 			}
 		}
 
