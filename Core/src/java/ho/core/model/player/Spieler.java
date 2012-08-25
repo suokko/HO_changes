@@ -1634,7 +1634,7 @@ public final class Spieler {
     private void incrementSubskills(Spieler originalPlayer, int assistants, int trainerlevel, int intensity,
             int stamina, int skill, double points, WeeklyTrainingType wt)
     {
-        if (skill <= 0 || points <= 0)
+        if (skill < PlayerSkill.KEEPER || points <= 0)
             return;
 
         float gain = (float)Helper.round(points / wt.getTrainingLength(
