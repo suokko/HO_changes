@@ -39,6 +39,51 @@ public class HOLogger {
 	FileWriter logWriter = null;
 	private int logLevel = WARNING;
 
+	/**
+	 * Fake FileWriter class that queues everything in memory to avoid opening
+	 * real log file in constructor.
+	 *
+	 * This allows logs to be accumulated during setup of the logger object.
+	 */
+	private class QueuedWriter extends FileWriter {
+		private String queue;
+
+		/**
+		 *
+		 * @param fake Temporary file that should be marked for deletion
+		 * @throws IOException
+		 */
+		public QueuedWriter(File fake) throws Exception {
+			super(fake);
+		}
+
+		@Override
+		public void write(String txt) {
+			queue += txt;
+		}
+
+		@Override
+		public void finalize() {
+			try {
+				super.finalize();
+			} catch (Throwable e) {
+			}
+		}
+
+		/**
+		 * Write queue to the real FileWriter replacing the queue.
+		 * 
+		 * @param writer
+		 */
+		public void flush(FileWriter writer) {
+			try {
+				writer.write(queue);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	// ~ Constructors
 	// -------------------------------------------------------------------------------
 
@@ -46,30 +91,17 @@ public class HOLogger {
 	 * Creates a new instance of Logger
 	 */
 	private HOLogger() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String dirName = "logs";
-		String fileName = "HO-" + dateFormat.format(new Date()) + ".log";
 		try {
-			File dir = new File(dirName);
-			dir.mkdirs();
-
-			deleteOldLogs(dir);
-			File logFile = new File(dir, fileName);
-
-			if (logFile.exists()) {
-				logFile.delete();
-			}
-
-			logWriter = new FileWriter(logFile);
+			File fake = File.createTempFile("ho1", ".dummy");
+			fake.deleteOnExit();
+			logWriter = new QueuedWriter(fake);
 		} catch (Exception e) {
-			String msg = "Unable to create logfile: " + dirName + "/" + fileName;
-			System.err.println(msg);
 			e.printStackTrace();
 		}
 	}
 
 	
-	private void deleteOldLogs(File dir){
+	private static void deleteOldLogs(File dir){
 		ExampleFileFilter filter = new ExampleFileFilter("log");
 		 filter.setIgnoreDirectories(true);
 		 File[] files = dir.listFiles(filter);
@@ -81,6 +113,19 @@ public class HOLogger {
 		}
 	}
 	
+	/**
+	 * Change the file where logging goes. If current writer is QueuedWriter
+	 * everything queued will be flushed to the new writer.
+	 *
+	 * @param writer FileWriter object to replace the log destination
+	 */
+	private void setWriter(FileWriter writer) {
+		FileWriter old = logWriter;
+		logWriter = writer;
+		if (old.getClass().isAssignableFrom(QueuedWriter.class))
+			((QueuedWriter)old).flush(writer);
+	}
+
 	// ~ Methods
 	// ------------------------------------------------------------------------------------
 
@@ -92,6 +137,29 @@ public class HOLogger {
 	public static HOLogger instance() {
 		if (clLogger == null) {
 			clLogger = new HOLogger();
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String dirName = "logs";
+			String fileName = "HO-" + dateFormat.format(new Date()) + ".log";
+			try {
+				File dir = new File(dirName);
+				dir.mkdirs();
+
+				deleteOldLogs(dir);
+				File logFile = new File(dir, fileName);
+
+				if (logFile.exists()) {
+					logFile.delete();
+				}
+
+				FileWriter writer = new FileWriter(logFile);
+
+				clLogger.setWriter(writer);
+			} catch (Exception e) {
+				String msg = "Unable to create logfile: " + dirName + "/" + fileName;
+				System.err.println(msg);
+				e.printStackTrace();
+			}
 		}
 
 		return clLogger;
@@ -203,15 +271,13 @@ public class HOLogger {
 
 		System.out.println(msg + ((caller != null) ? caller.getSimpleName() : "?") + ": " + text);
 
-		if (logWriter != null) {
-			try {
-				Date d = new Date();
-				String txt = (sdf.format(d) + msg + ((caller != null) ? caller.getName() : "?") + ": " + text + "\r\n");
-				logWriter.write(txt);
-				logWriter.flush();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			Date d = new Date();
+			String txt = (sdf.format(d) + msg + ((caller != null) ? caller.getName() : "?") + ": " + text + "\r\n");
+			logWriter.write(txt);
+			logWriter.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
