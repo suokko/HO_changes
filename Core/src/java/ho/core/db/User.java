@@ -124,19 +124,20 @@ public class User {
 	 *
 	 * @throws Exception TODO Missing Method Exception Documentation
 	 */
-	public static void load() throws Exception {
-		File file = getFile();
+	public static boolean load(File file) throws Exception {
 		users = new ArrayList<User>();
 
 		if (file.exists()) {
 			Document doc = UpdateHelper.instance().getDocument(file);
 			parseFile(doc.getChildNodes());
-		} else {
-			users.add(new User());
-			save();
 		}
 		// add default user, if there was none loaded (e.g. corrupt user.xml)
-		if (users.size()<1) {
+		return users.size() < 1;
+	}
+
+	public static void load() throws Exception {
+		File file = getFile();
+		if (load(file)) {
 			users.add(new User());
 			save();
 		}
