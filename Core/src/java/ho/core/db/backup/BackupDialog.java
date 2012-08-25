@@ -4,6 +4,7 @@ import ho.core.db.User;
 import ho.core.file.ExampleFileFilter;
 import ho.core.file.ZipHelper;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.util.HOFile;
 import ho.core.util.HOLogger;
 
 import java.awt.BorderLayout;
@@ -83,7 +84,7 @@ public final class BackupDialog extends JDialog implements ActionListener{
 
 	private JScrollPane getList(){
 		
-		File dbDirectory = new File(User.getCurrentUser().getDBPath());
+		File dbDirectory = new HOFile(User.getCurrentUser().getDBPath(), HOFile.USER_ONLY);
 		ExampleFileFilter filter = new ExampleFileFilter("zip");
 		filter.setIgnoreDirectories(true);
 		File[] files = dbDirectory.listFiles(filter);
@@ -97,7 +98,9 @@ public final class BackupDialog extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == okButton){
 			try {
-				ZipHelper.unzip((File) list.getSelectedValue(), new File(User.getCurrentUser().getDBPath()));
+				ZipHelper.unzip((File) list.getSelectedValue(),
+						new HOFile(User.getCurrentUser().getDBPath(),
+								HOFile.USER_ONLY));
 			} catch (Exception e1) {
 				HOLogger.instance().log(getClass(),e1);
 			}								

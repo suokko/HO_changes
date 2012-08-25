@@ -33,7 +33,7 @@ public class HOZip extends File {
      * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     public HOZip(String filename) throws Exception {
-        super(filename);
+        super(filename, HOFile.USER_ONLY);
 
         // If source archive already exists
         //	    if(this.exists()) {

@@ -11,6 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.training.TrainingManager;
+import ho.core.util.HOFile;
 import ho.core.util.HOLogger;
 import ho.core.util.IOUtils;
 
@@ -138,7 +139,7 @@ public class HO {
 		// Backup
 		if (User.getCurrentUser().isHSQLDB()) {
 			interuptionsWindow.setInfoText(1, "Backup Database");
-			BackupHelper.backup(new File(User.getCurrentUser().getDBPath()));
+			BackupHelper.backup(new HOFile(User.getCurrentUser().getDBPath(), HOFile.USER_ONLY));
 		}
 
 		// Standardparameter aus der DB holen

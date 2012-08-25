@@ -219,7 +219,12 @@ public class User {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public final String getUrl() {
-		return url;
+		if (isHSQLDB()) {
+			HOFile f = new HOFile(getDBPath(), HOFile.USER_ONLY);
+			return "jdbc:hsqldb:file:" + new HOFile(f, "database").getPath();
+		} else {
+			return url;
+		}
 	}
 
 	/**
@@ -263,7 +268,7 @@ public class User {
 	 * @param path TODO Missing Method Parameter Documentation
 	 */
 	public final void setPath(String path) {
-		url = "jdbc:hsqldb:file:" + path + "/database";
+		url = "jdbc:hsqldb:file:" + path + File.separator + "database";
 	}
 
 	/**
