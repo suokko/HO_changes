@@ -3,6 +3,7 @@ package ho.core.db;
 
 import ho.core.util.HOLogger;
 import ho.tool.updater.UpdateHelper;
+import ho.core.util.HOFile;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,7 +23,12 @@ import org.w3c.dom.Text;
 public class User {
 	//~ Static fields/initializers -----------------------------------------------------------------
 
+	private static final int DIR_UNDECIDED = 0;
+	private static final int DIR_CWD = 1;
+	private static final int DIR_HOME = 2;
+
 	private static ArrayList<User> users = null;
+	private static int dataDirSelection = DIR_UNDECIDED;
 
 	/** TODO Missing Parameter Documentation */
 	private static final String FILENAME = "user.xml";
@@ -126,6 +132,7 @@ public class User {
 	 */
 	public static boolean load(File file) throws Exception {
 		users = new ArrayList<User>();
+		dataDirSelection = DIR_UNDECIDED;
 
 		if (file.exists()) {
 			Document doc = UpdateHelper.instance().getDocument(file);
@@ -192,7 +199,13 @@ public class User {
 				fileWriter.write(" </User>\r\n");
 			}
 
-			fileWriter.write("</HoUsers>");
+			if (dataDirSelection != DIR_UNDECIDED) {
+				fileWriter.write("  <Options>\r\n");
+				fileWriter.write("    <DataDir>" + (dataDirSelection == DIR_HOME ? "Home" : "Current") + "</DataDir>\r\n");
+				fileWriter.write("  </Options>\r\n");
+			}
+
+			fileWriter.write("</HoUsers>\r\n");
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (Exception e) {
@@ -279,7 +292,7 @@ public class User {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	private static File getFile() {
-		return new File(System.getProperty("user.dir") + File.separator + FILENAME);
+		return new HOFile(FILENAME, HOFile.SHARED);
 	}
 
 	/**
@@ -303,6 +316,18 @@ public class User {
 							User tmp = new User();
 							tmp.parseUser(element.getChildNodes());
 							users.add(tmp);
+						}
+
+						if (element.getTagName().equals("Options")) {
+							parseFile(element.getChildNodes());
+						}
+
+						if (element.getTagName().equals("DataDir")) {
+							if (txt.getData().trim().equals("Home")) {
+								dataDirSelection = DIR_HOME;
+							} else {
+								dataDirSelection = DIR_CWD;
+							}
 						}
 					}
 				}
@@ -355,12 +380,90 @@ public class User {
 	}
 
 	/**
-	 * Check if user decided to keep data in current path
+	 * Check if user decided to keep data in current path. user.xml is searched
+	 * first from dataPath and then from current working directory.
+	 *
+	 * This function MUST NOT use HOFile because HOFile uses this in construction.
 	 *
 	 * @return true if data is in current path
 	 */
 	public static boolean isDataInCurrentPath(File dataPath) {
-		// TODO Allow user to fallback to old data path.
-		return true;
+		boolean needsMigration = false;
+		/* Is result already known? */
+		if (dataDirSelection != DIR_UNDECIDED)
+			return dataDirSelection == DIR_CWD;
+
+		/* Does proposed dataPath have user.xml? */
+		try {
+			load(new File(dataPath, FILENAME));
+		} catch (Exception e) {
+			HOLogger.instance().log(User.class, e);
+		}
+
+		if (dataDirSelection == DIR_HOME) {
+			HOLogger.instance().info(User.class, "Using data from '" +
+					(dataDirSelection == DIR_HOME ? dataPath.getAbsolutePath() :
+						new File(System.getProperty("user.dir")).getAbsoluteFile()) +
+					"' based on home directory.");
+			return dataDirSelection == DIR_CWD;
+		}
+
+		/* Does current working directory have user.xml? */
+		try {
+			needsMigration = !load(new File(System.getProperty("user.dir"), FILENAME));
+		} catch (Exception e) {
+			HOLogger.instance().log(User.class, e);
+		}
+
+		if (dataDirSelection != DIR_UNDECIDED) {
+			if (dataDirSelection == DIR_CWD) {
+				HOLogger.instance().info(User.class, "Using data from '" +
+						(dataDirSelection == DIR_HOME ? dataPath.getAbsolutePath() :
+							new File(System.getProperty("user.dir")).getAbsoluteFile()) +
+						"' based on working directory.");
+				return true;
+			} else {
+				/* user.xml is configured for migration */
+				needsMigration = true;
+			}
+		}
+
+		/* If user configuration exists in current working directory but
+		 * user haven't decided yet about migration we ask user if data files
+		 * should be migrated to dataPath.
+		 */
+		if (needsMigration) {
+			/* TODO Ask user if migration is wanted if not configured in user.xml */
+
+			if (dataDirSelection == DIR_HOME) {
+				try {
+					HOFile.migrateWritableFiles(users);
+				} catch (Exception e) {
+					HOLogger.instance().log(User.class, e);
+					System.exit(-1);
+				}
+			}
+
+			/* Save user selection and user.xml to correct location */
+			if (dataDirSelection != DIR_UNDECIDED) {
+				save();
+			}
+
+			HOLogger.instance().info(User.class, "Using data from '" +
+					(dataDirSelection == DIR_HOME ? dataPath.getAbsolutePath() :
+						new File(System.getProperty("user.dir")).getAbsoluteFile()) +
+					"' based on user selection.");
+		} else {
+			/* No configured users found. We create a new user.xml to dataPath. */
+			dataDirSelection = DIR_HOME;
+			users.add(new User());
+			save();
+			HOLogger.instance().info(User.class, "Using data from '" +
+					(dataDirSelection == DIR_HOME ? dataPath.getAbsolutePath() :
+						new File(System.getProperty("user.dir")).getAbsoluteFile()) +
+					"' for a new user.");
+		}
+
+		return dataDirSelection == DIR_UNDECIDED || dataDirSelection == DIR_CWD;
 	}
 }
