@@ -101,7 +101,7 @@ public class HOLogger {
 	}
 
 	
-	private static void deleteOldLogs(File dir){
+	private static void deleteOldLogs(HOFile dir){
 		ExampleFileFilter filter = new ExampleFileFilter("log");
 		 filter.setIgnoreDirectories(true);
 		 File[] files = dir.listFiles(filter);
@@ -143,11 +143,11 @@ public class HOLogger {
 			String dirName = "logs";
 			String fileName = "HO-" + dateFormat.format(new Date()) + ".log";
 			try {
-				File dir = new File(dirName);
+				HOFile dir = new HOFile(dirName, HOFile.SHARED);
 				dir.mkdirs();
 
 				deleteOldLogs(dir);
-				File logFile = new File(dir, fileName);
+				HOFile logFile = new HOFile(dir, fileName);
 
 				if (logFile.exists()) {
 					logFile.delete();
