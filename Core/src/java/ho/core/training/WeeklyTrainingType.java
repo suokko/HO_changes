@@ -35,26 +35,32 @@ public abstract class WeeklyTrainingType {
 	public static final float BASE_INTENSITY_FACTOR = (float) 1.0;
 	
 	private static double[] skillFactorArray = {
-		0.36, // Skill 1
+		// Skill 1
+		0.36,
 		0.52,
 		0.66,
 		0.77,
 		0.91,
-		1, // Passable... 
+		// Passable...
+		1,
 		1.11,
 		1.20,
 		1.43,
-		1.72, // Outstanding
+		// Outstanding
+		1.72,
 		1.98,
 		2.18,
 		2.43,
 		2.64,
-		2.86, // Titanic
+		// Titanic
+		2.86,
 		3.18,
 		3,45,
 		4.55,
-		7.00, // Skill 19
-		10,  // Random from here and down
+		// Skill 19
+		7.00,
+		//  Random from here and down
+		10,
 		15,
 		21};
 	
