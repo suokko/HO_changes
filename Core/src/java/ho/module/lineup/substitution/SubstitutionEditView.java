@@ -80,11 +80,12 @@ public class SubstitutionEditView extends JPanel {
 					.toArray()));
 			this.positionComboBox.setSelectedItem(null);
 			this.positionChooser.init(lineupPositions);
+
+			this.behaviourComboBox.setModel(new DefaultComboBoxModel(
+					SubstitutionDataProvider.getBehaviourItems(
+							!isNewBehaviour()).toArray()));
 		}
 
-		this.behaviourComboBox.setModel(new DefaultComboBoxModel(
-				SubstitutionDataProvider.getBehaviourItems(!isNewBehaviour())
-						.toArray()));
 		if (isNewBehaviour()) {
 			this.behaviourComboBox.setSelectedItem(null);
 		}
@@ -333,20 +334,22 @@ public class SubstitutionEditView extends JPanel {
 			add(this.playerInComboBox, gbc);
 		}
 
-		JLabel behaviourLabel = new JLabel(HOVerwaltung.instance()
-				.getLanguageString("subs.Behavior"));
-		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(4, 10, 4, 2);
-		add(behaviourLabel, gbc);
+		if (!isPositionSwap()) {
+			JLabel behaviourLabel = new JLabel(HOVerwaltung.instance()
+					.getLanguageString("subs.Behavior"));
+			gbc.gridx = 0;
+			gbc.gridy++;
+			gbc.anchor = GridBagConstraints.WEST;
+			gbc.insets = new Insets(4, 10, 4, 2);
+			add(behaviourLabel, gbc);
 
-		this.behaviourComboBox = new JComboBox();
-		this.behaviourComboBox.setMinimumSize(comboBoxSize);
-		this.behaviourComboBox.setPreferredSize(comboBoxSize);
-		gbc.gridx = 1;
-		gbc.insets = new Insets(4, 2, 4, 10);
-		add(this.behaviourComboBox, gbc);
+			this.behaviourComboBox = new JComboBox();
+			this.behaviourComboBox.setMinimumSize(comboBoxSize);
+			this.behaviourComboBox.setPreferredSize(comboBoxSize);
+			gbc.gridx = 1;
+			gbc.insets = new Insets(4, 2, 4, 10);
+			add(this.behaviourComboBox, gbc);
+		}
 
 		JLabel whenLabel = new JLabel(HOVerwaltung.instance()
 				.getLanguageString("subs.When"));
