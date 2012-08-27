@@ -47,8 +47,10 @@ Language updates:
 - Added Japanese as new HO language (thx nomad331).
 - Updated English translations (thx edswifa).
 - Updated French translations (thx davidatorus).
+- Updated Galego translations (thx GZ-grobas).
 - Updated German translations (thx Werder0405).
 - Updated Hangul (Korean) translations (thx SI-CH).
+- Updated Nederlands translations (thx BrammieG).
 - Updated Portugues translations (thx a_cardoso).
 
 ThemeManager:

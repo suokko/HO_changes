@@ -29,7 +29,7 @@ public class AddPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7424042069787091891L;
 
@@ -38,6 +38,9 @@ public class AddPanel extends JPanel {
 
     /** The add button */
     JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("Hinzufuegen"));
+
+    /** The ID-Label */
+    JLabel idlabel = new JLabel(HOVerwaltung.instance().getLanguageString("ID")+": ");
 
     /** A status label */
     JLabel status = new JLabel();
@@ -72,8 +75,9 @@ public class AddPanel extends JPanel {
         setLayout(new BorderLayout());
 
         //add(name, BorderLayout.CENTER);
-        add(addButton, BorderLayout.CENTER);
-        add(teamId, BorderLayout.WEST);
+        add(addButton, BorderLayout.EAST);
+        add(idlabel, BorderLayout.WEST);
+        add(teamId, BorderLayout.CENTER);
         add(status, BorderLayout.SOUTH);
 
         addButton.addActionListener(new ActionListener() {
