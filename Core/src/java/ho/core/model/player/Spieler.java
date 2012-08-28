@@ -1648,14 +1648,7 @@ public final class Spieler {
 
         if (check4SkillUp(skill, originalPlayer)) {
             /* Carry subskill over skillup */
-            if (1.0f - originalPlayer.getSubskill4Pos(skill) <= gain) {
-                gain -= 1.0f - originalPlayer.getSubskill4Pos(skill);
-            } else {
-                /* Level up was too early. Either we are missing subskill levels
-                 * or skill increases quicker that predicted.
-                 */
-                gain = 0.0f;
-            }
+            gain = 0.0f;
         }
         setSubskill4Pos(skill, Math.min(0.99f, getSubskill4Pos(skill) + gain));
     }
