@@ -3,11 +3,13 @@ package ho.module.teamAnalyzer.ui.component;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.net.MyConnector;
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.manager.TeamManager;
 import ho.module.teamAnalyzer.ui.NumberTextField;
 import ho.module.teamAnalyzer.ui.controller.FavoriteItemListener;
 import ho.module.teamAnalyzer.vo.Team;
+import ho.module.nthrf.NtTeamDetailsParser;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -105,10 +107,18 @@ public class AddPanel extends JPanel {
 
                         team.setName(teamName);
                     } catch (Exception e1) {
-                        status.setText(HOVerwaltung.instance().getLanguageString("Favourite.Error"));
-                        teamId.setText("");
+                        try {
+                            String xml = MyConnector.instance().getHattrickXMLFile("/chppxml.axd?file=nationalteamdetails&teamid=" + teamId.getValue());
 
-                        return;
+                            NtTeamDetailsParser td = new NtTeamDetailsParser(xml);
+                            String teamName = td.getTeamName();
+                            team.setName(teamName);
+                            team.setNT(true);
+                        } catch (Exception e2) {
+                            status.setText(HOVerwaltung.instance().getLanguageString("Favourite.Error"));
+                            teamId.setText("");
+                            return;
+                        }
                     }
 
                     status.setText(team.getName() + " "

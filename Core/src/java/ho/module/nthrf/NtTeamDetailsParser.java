@@ -5,7 +5,7 @@ import ho.core.file.xml.XMLManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class NtTeamDetailsParser {
+public class NtTeamDetailsParser {
 
 	private int teamId;
 	private String teamName;
@@ -32,7 +32,7 @@ class NtTeamDetailsParser {
 	private String fetchedDate;
 	private boolean parsingSuccess;
 
-	NtTeamDetailsParser(String xmlData) {
+	public NtTeamDetailsParser(String xmlData) {
 	    parseDetails(XMLManager.parseString(xmlData));
 	}
 
@@ -120,7 +120,7 @@ class NtTeamDetailsParser {
 		return teamId;
 	}
 
-	String getTeamName() {
+	public String getTeamName() {
 		return teamName;
 	}
 
