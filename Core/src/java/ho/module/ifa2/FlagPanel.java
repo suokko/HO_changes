@@ -48,8 +48,12 @@ public class FlagPanel extends JPanel {
 			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga()) {
 				flagLabel.setHomeCountry(true);
 			} else {
-				this.countriesPlayedIn++;
-				flagLabel.setEnabled(DBManager.instance().isIFALeagueIDinDB(flagLeagueID, away));
+				if (DBManager.instance().isIFALeagueIDinDB(flagLeagueID, away)) {
+					this.countriesPlayedIn++;
+					flagLabel.setEnabled(true);
+				} else {
+					flagLabel.setEnabled(false);
+				}
 			}
 			this.flagLabels[i] = flagLabel;
 		}
