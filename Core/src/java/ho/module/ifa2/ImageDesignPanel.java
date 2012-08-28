@@ -102,7 +102,13 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				awayEmblemPanel.setRoundly(e.getStateChange() == ItemEvent.SELECTED);
+				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				if (away) {
+					ModuleConfig.instance().setBoolean(Config.VISITED_ROUNDLY.toString(), selected);
+				} else {
+					ModuleConfig.instance().setBoolean(Config.HOSTED_ROUNDLY.toString(), selected);
+				}
+				awayEmblemPanel.getFlagDisplayModel().setRoundFlag(selected);
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
@@ -115,7 +121,13 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				awayEmblemPanel.setGrey(e.getStateChange() == ItemEvent.SELECTED);
+				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				if (away) {
+					ModuleConfig.instance().setBoolean(Config.VISITED_GREY.toString(), selected);
+				} else {
+					ModuleConfig.instance().setBoolean(Config.HOSTED_GREY.toString(), selected);
+				}
+				awayEmblemPanel.getFlagDisplayModel().setGrey(selected);
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
@@ -129,7 +141,14 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			public void stateChanged(ChangeEvent e) {
 				JSlider slider = (JSlider) e.getSource();
 				if (!slider.getValueIsAdjusting()) {
-					awayEmblemPanel.setBrightness(slider.getValue());
+					if (away) {
+						ModuleConfig.instance().setInteger(Config.VISITED_BRIGHTNESS.toString(),
+								slider.getValue());
+					} else {
+						ModuleConfig.instance().setInteger(Config.HOSTED_BRIGHTNESS.toString(),
+								slider.getValue());
+					}
+					awayEmblemPanel.getFlagDisplayModel().setBrightness(slider.getValue());
 					ImageDesignPanel.this.refreshFlagPanel();
 				}
 			}
@@ -149,7 +168,12 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue()).intValue();
-				awayEmblemPanel.setFlagWidth(rowSize);
+				if (away) {
+					ModuleConfig.instance().setInteger(Config.VISITED_FLAG_WIDTH.toString(), rowSize);
+				} else {
+					ModuleConfig.instance().setInteger(Config.HOSTED_FLAG_WIDTH.toString(), rowSize);
+				}
+				awayEmblemPanel.getFlagDisplayModel().setFlagWidth(rowSize);
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
@@ -206,25 +230,19 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		if (homeAway && this.awayEmblemPanel == null) {
 			FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 					Integer.valueOf(8));
-			FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
-					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50));
-			FlagLabel.GREY = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(),
-					Boolean.TRUE);
 			String emblemPath = ModuleConfig.instance().getString(
 					Config.VISITED_EMBLEM_PATH.toString(), "");
 
-			FlagLabel[] flags = PluginIfaUtils.getAllCountries(homeAway);
-			int enabled = 0;
-			for (int i = 0; i < flags.length; i++) {
-				if (flags[i].isEnabled()) {
-					enabled++;
-				}
-			}
-			this.awayEmblemPanel = new EmblemPanel(flags, enabled);
-			this.awayEmblemPanel.setFlagWidth(FLAG_WIDTH);
-			this.awayEmblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
-			this.awayEmblemPanel.setGrey(FlagLabel.GREY);
-			this.awayEmblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
+			FlagDisplayModel flagDisplayModel = new FlagDisplayModel();
+			flagDisplayModel.setBrightness(ModuleConfig.instance().getInteger(
+					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
+			flagDisplayModel.setGrey(ModuleConfig.instance().getBoolean(
+					Config.VISITED_GREY.toString(), Boolean.TRUE));
+			flagDisplayModel.setRoundFlag((ModuleConfig.instance().getBoolean(
+					Config.VISITED_ROUNDLY.toString(), Boolean.TRUE)));
+
+			this.awayEmblemPanel = new EmblemPanel(homeAway, flagDisplayModel);
+			this.awayEmblemPanel.getFlagDisplayModel().setFlagWidth(FLAG_WIDTH);
 			if (!emblemPath.equals("")) {
 				File file = new File(emblemPath);
 				if (file.exists()) {
@@ -243,44 +261,46 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			this.awayEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
 					Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
 		} else if (!homeAway) {
-			FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.HOSTED_FLAG_WIDTH.toString(),
-					Integer.valueOf(8));
-			FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
-					Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50));
-			FlagLabel.GREY = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(),
-					Boolean.TRUE);
-			String emblemPath = ModuleConfig.instance().getString(
-					Config.HOSTED_EMBLEM_PATH.toString(), "");
-
-			int enabled = 0;
-			FlagLabel[] flags = PluginIfaUtils.getAllCountries(homeAway);
-			for (int i = 0; i < flags.length; i++) {
-				if (flags[i].isEnabled()) {
-					enabled++;
-				}
-			}
-//			this.homeEmblemPanel = new EmblemPanel(flags, enabled);
-//			this.homeEmblemPanel.setFlagWidth(FLAG_WIDTH);
-//			this.homeEmblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
-//			this.homeEmblemPanel.setGrey(FlagLabel.GREY);
-//			this.homeEmblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
-//			if (!emblemPath.equals("")) {
-//				File file = new File(emblemPath);
-//				if (file.exists()) {
-//					ImageIcon imageIcon = new ImageIcon(emblemPath);
-//					if (imageIcon != null) {
-//						this.homeEmblemPanel.setLogo(imageIcon);
-//						this.homeEmblemPanel.setImagePath(emblemPath);
-//					}
-//				}
-//			}
-//			this.homeEmblemPanel.setHeaderText(ModuleConfig.instance().getString(
-//					Config.HOSTED_HEADER_TEXT.toString(),
-//					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText")));
-//			this.homeEmblemPanel.setHeader(ModuleConfig.instance().getBoolean(
-//					Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE));
-//			this.homeEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
-//					Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
+			// FLAG_WIDTH =
+			// ModuleConfig.instance().getInteger(Config.HOSTED_FLAG_WIDTH.toString(),
+			// Integer.valueOf(8));
+			// FlagLabel.BRIGHTNESS = ModuleConfig.instance().getInteger(
+			// Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50));
+			// FlagLabel.GREY =
+			// ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(),
+			// Boolean.TRUE);
+			// String emblemPath = ModuleConfig.instance().getString(
+			// Config.HOSTED_EMBLEM_PATH.toString(), "");
+			//
+			// int enabled = 0;
+			// FlagLabel[] flags = PluginIfaUtils.getAllCountries(homeAway);
+			// for (int i = 0; i < flags.length; i++) {
+			// if (flags[i].isEnabled()) {
+			// enabled++;
+			// }
+			// }
+			// this.homeEmblemPanel = new EmblemPanel(flags, enabled);
+			// this.homeEmblemPanel.setFlagWidth(FLAG_WIDTH);
+			// this.homeEmblemPanel.setBrightness(FlagLabel.BRIGHTNESS);
+			// this.homeEmblemPanel.setGrey(FlagLabel.GREY);
+			// this.homeEmblemPanel.setRoundly(FlagLabel.ROUNDFLAG);
+			// if (!emblemPath.equals("")) {
+			// File file = new File(emblemPath);
+			// if (file.exists()) {
+			// ImageIcon imageIcon = new ImageIcon(emblemPath);
+			// if (imageIcon != null) {
+			// this.homeEmblemPanel.setLogo(imageIcon);
+			// this.homeEmblemPanel.setImagePath(emblemPath);
+			// }
+			// }
+			// }
+			// this.homeEmblemPanel.setHeaderText(ModuleConfig.instance().getString(
+			// Config.HOSTED_HEADER_TEXT.toString(),
+			// HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText")));
+			// this.homeEmblemPanel.setHeader(ModuleConfig.instance().getBoolean(
+			// Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE));
+			// this.homeEmblemPanel.setFooter(ModuleConfig.instance().getBoolean(
+			// Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
 		}
 	}
 
@@ -313,10 +333,10 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.textField.setText(panel.getHeaderText());
 		this.headerYesNo.setSelected(panel.isHeader());
 		this.footerYesNo.setSelected(panel.isFooter());
-		this.greyColored.setSelected(panel.isGrey());
-		this.roundly.setSelected(panel.isRoundly());
-		this.percentSlider.setValue(panel.getBrightness());
-		this.sizeSpinner.setValue(new Integer(panel.getFlagWidth()));
+		this.greyColored.setSelected(panel.getFlagDisplayModel().isGrey());
+		this.roundly.setSelected(panel.getFlagDisplayModel().isRoundFlag());
+		this.percentSlider.setValue(panel.getFlagDisplayModel().getBrightness());
+		this.sizeSpinner.setValue(new Integer(panel.getFlagDisplayModel().getFlagWidth()));
 		refreshFlagPanel();
 	}
 

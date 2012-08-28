@@ -9,6 +9,7 @@ public enum Config {
 	SHOW_VISITED_FOOTER("IFA_ShowVisitedFooter"),
 	SHOW_HOSTED_FOOTER("IFA_ShowHostedFooter"),
 	VISITED_ROUNDLY("IFA_VisitedRoundly"),
+	HOSTED_ROUNDLY("IFA_VisitedRoundly"),
 	VISITED_GREY("IFA_VisitedGrey"),
 	HOSTED_GREY("IFA_HostedGrey"),
 	VISITED_BRIGHTNESS("IFA_VisitedBrightness"),

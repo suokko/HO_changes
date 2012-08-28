@@ -1,7 +1,6 @@
 package ho.module.ifa2;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.util.StringUtils;
 import ho.module.ifa.ImageFileFilter;
 
 import java.awt.Color;
@@ -32,9 +31,11 @@ public class EmblemPanel extends JPanel {
 	private boolean roundly = false;
 	private int brightness = 50;
 	private String imagePath = "";
+	private FlagDisplayModel flagDisplayModel;
 
-	public EmblemPanel(FlagLabel[] flagLabels, int countriesPlayedIn) {
-		this.flagPanel = new FlagPanel(flagLabels, countriesPlayedIn);
+	public EmblemPanel(boolean away, FlagDisplayModel flagDisplayModel) {
+		this.flagDisplayModel = flagDisplayModel;
+		this.flagPanel = new FlagPanel(away, flagDisplayModel);
 		initialize();
 	}
 
@@ -84,24 +85,8 @@ public class EmblemPanel extends JPanel {
 		}
 	}
 
-	public FlagPanel getFlagPanel() {
-		return this.flagPanel;
-	}
-
-	public void setFlagPanel(FlagPanel flagPanel) {
-		remove(this.flagPanel);
-		this.flagPanel = flagPanel;
-		this.flagPanel.setHeaderVisible(this.header);
-		this.flagPanel.setFooterVisible(this.footer);
-		this.flagPanel.setHeader(this.headerText);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridy = 0;
-		gbc.gridy = 1;
-		add(this.flagPanel, gbc);
-	}
-
-	public JLabel getLogo() {
-		return this.logoLabel;
+	public FlagDisplayModel getFlagDisplayModel() {
+		return this.flagDisplayModel;
 	}
 
 	public JComponent getImage() {
@@ -138,47 +123,8 @@ public class EmblemPanel extends JPanel {
 		return this.headerText;
 	}
 
-	public int getFlagWidth() {
-		return this.flagWidth;
-	}
-
-	public void setFlagWidth(int flagWidth) {
-		this.flagWidth = flagWidth;
-	}
-
-	public String getImagePath() {
-		if (StringUtils.isEmpty(this.imagePath)) {
-			return "\"\"";
-		}
-		return this.imagePath;
-	}
-
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
-	}
-
-	public int getBrightness() {
-		return this.brightness;
-	}
-
-	public void setBrightness(int brightness) {
-		this.brightness = brightness;
-	}
-
-	public boolean isGrey() {
-		return this.grey;
-	}
-
-	public void setGrey(boolean grey) {
-		this.grey = grey;
-	}
-
-	public boolean isRoundly() {
-		return this.roundly;
-	}
-
-	public void setRoundly(boolean roundly) {
-		this.roundly = roundly;
 	}
 
 	private void loadEmblem() {

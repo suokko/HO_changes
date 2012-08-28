@@ -211,33 +211,6 @@ public class PluginIfaUtils {
 	// return rowCount;
 	// }
 
-	protected static FlagLabel[] getAllCountries(boolean homeAway) {
-		WorldDetailLeague[] leagues = WorldDetailsManager.instance()
-				.getLeagues();
-		FlagLabel[] flagLabels = null;
-		flagLabels = new FlagLabel[leagues.length];
-		for (int i = 0; i < leagues.length; i++) {
-			FlagLabel flagLabel = new FlagLabel();
-			flagLabel.setCountryId(leagues[i].getCountryId());
-			flagLabel.setCountryName(leagues[i].getCountryName());
-			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel
-					.getCountryId()));
-			flagLabel.setToolTipText(flagLabel.getCountryName());
-			int flagLeagueID = leagues[i].getLeagueId();
-			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics()
-					.getLiga()) {
-				flagLabel.setHomeCountry(true);
-			} else {
-				flagLabel.setEnabled(DBManager.instance().isIFALeagueIDinDB(
-						flagLeagueID, homeAway));
-			}
-			flagLabels[i] = flagLabel;
-		}
-
-		Arrays.sort(flagLabels, new UniversalComparator(1));
-		return flagLabels;
-	}
-
 	// protected static String getLastMatchDate() {
 	// StringBuffer select = new StringBuffer(100);
 	// select.append("SELECT MAX(");

@@ -1,5 +1,9 @@
 package ho.module.ifa2;
 
+import ho.core.db.DBManager;
+import ho.core.gui.theme.ImageUtilities;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 
 import java.awt.Color;
@@ -9,6 +13,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -26,13 +31,30 @@ public class FlagPanel extends JPanel {
 	private JLabel footer;
 	private JProgressBar percentState;
 
-	public FlagPanel(FlagLabel[] flagLabels, int countriesPlayedIn) {
-		this.flagLabels = flagLabels;
-		this.countriesPlayedIn = countriesPlayedIn;
-		initialize();
+	public FlagPanel(boolean away, FlagDisplayModel flagDisplayModel) {
+		initialize(away, flagDisplayModel);
 	}
 
-	private void initialize() {
+	private void initialize(boolean away, FlagDisplayModel flagDisplayModel) {
+		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
+		this.flagLabels = new FlagLabel[leagues.length];
+		for (int i = 0; i < leagues.length; i++) {
+			FlagLabel flagLabel = new FlagLabel(flagDisplayModel);
+			flagLabel.setCountryId(leagues[i].getCountryId());
+			flagLabel.setCountryName(leagues[i].getCountryName());
+			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
+			flagLabel.setToolTipText(flagLabel.getCountryName());
+			int flagLeagueID = leagues[i].getLeagueId();
+			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga()) {
+				flagLabel.setHomeCountry(true);
+			} else {
+				this.countriesPlayedIn++;
+				flagLabel.setEnabled(DBManager.instance().isIFALeagueIDinDB(flagLeagueID, away));
+			}
+			this.flagLabels[i] = flagLabel;
+		}
+		Arrays.sort(this.flagLabels, new UniversalComparator(1));
+
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
 
@@ -46,7 +68,7 @@ public class FlagPanel extends JPanel {
 		this.header = new JLabel("");
 		this.header.setForeground(new Color(2522928));
 		this.header.setHorizontalTextPosition(0);
-		add(this.header, constraints, 0, 0, ImageDesignPanel.FLAG_WIDTH, 1);
+		add(this.header, constraints, 0, 0, flagDisplayModel.getFlagWidth(), 1);
 		constraints.insets = new Insets(1, 1, 5, 1);
 		Color selectionForeground = (Color) UIManager.get("ProgressBar.selectionForeground");
 		Color selectionBackground = (Color) UIManager.get("ProgressBar.selectionBackground");
@@ -65,7 +87,7 @@ public class FlagPanel extends JPanel {
 		this.percentState.setStringPainted(true);
 		this.percentState.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		add(this.percentState, constraints, 0, 1, ImageDesignPanel.FLAG_WIDTH, 1);
+		add(this.percentState, constraints, 0, 1, flagDisplayModel.getFlagWidth(), 1);
 		UIManager.put("ProgressBar.selectionForeground", selectionForeground);
 		UIManager.put("ProgressBar.selectionBackground", selectionBackground);
 		constraints.fill = 0;
@@ -75,8 +97,8 @@ public class FlagPanel extends JPanel {
 		constraints.weighty = 0.0D;
 		if (this.flagLabels != null)
 			for (int i = 0; i < this.flagLabels.length; i++) {
-				add(this.flagLabels[i], constraints, i % ImageDesignPanel.FLAG_WIDTH, 2 + i
-						/ ImageDesignPanel.FLAG_WIDTH, 1, 1);
+				add(this.flagLabels[i], constraints, i % flagDisplayModel.getFlagWidth(), 2 + i
+						/ flagDisplayModel.getFlagWidth(), 1, 1);
 			}
 		constraints.fill = 2;
 		constraints.anchor = 13;
@@ -86,8 +108,9 @@ public class FlagPanel extends JPanel {
 
 		this.footer = new JLabel(new ImageIcon(FlagPanel.class.getResource("image/copyright.gif")),
 				4);
-		add(this.footer, constraints, 0, WorldDetailsManager.instance().size()
-				/ ImageDesignPanel.FLAG_WIDTH + 3, ImageDesignPanel.FLAG_WIDTH, 1);
+		add(this.footer, constraints, 0,
+				WorldDetailsManager.instance().size() / flagDisplayModel.getFlagWidth() + 3,
+				flagDisplayModel.getFlagWidth(), 1);
 	}
 
 	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
