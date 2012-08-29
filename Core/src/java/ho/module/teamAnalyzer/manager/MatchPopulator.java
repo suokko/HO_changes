@@ -195,7 +195,7 @@ public class MatchPopulator {
     private boolean isHome(Matchdetails match) {
         boolean isHome = false;
 
-        if (match.getHeimId() == SystemManager.getActiveTeamId()) {
+        if (match.getHeimId() == SystemManager.getActiveTeam().getTeamId()) {
             isHome = true;
         }
 

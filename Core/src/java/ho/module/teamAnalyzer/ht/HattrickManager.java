@@ -11,6 +11,7 @@ import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
+import ho.module.teamAnalyzer.vo.Team;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,13 +95,13 @@ public class HattrickManager {
     /**
      * Method that download from Hattrick the current players for the team
      *
-     * @param teamId teamid to download players for
+     * @param team team to download players for
      */
-    public static void downloadPlayers(int teamId) {
+    public static void downloadPlayers(Team team) {
         String xml = "";
 
         try {
-			xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=players&TeamID=" + teamId);
+			xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=players&TeamID=" + team.getTeamId());
         } catch (Exception e) {
             return;
         }
@@ -111,7 +112,7 @@ public class HattrickManager {
 
         for (int i = 0; i < (matchesList.getChildNodes().getLength() / 2); i++) {
             PlayerInfo player = new PlayerInfo();
-            player.setTeamId(teamId);
+            player.setTeamId(team.getTeamId());
 
             int id = getIntValue(matchesList, i, "PlayerID");
             player.setPlayerId(id);

@@ -10,6 +10,7 @@ import ho.module.lineup.Lineup;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.ui.lineup.FormationPanel;
+import ho.module.teamAnalyzer.vo.Team;
 import ho.module.teamAnalyzer.vo.TeamLineup;
 import ho.module.teamAnalyzer.vo.UserTeamSpotLineup;
 
@@ -124,8 +125,9 @@ public class TeamPanel extends JPanel {
      */
     public void reload(TeamLineup lineup, int week, int season) {
         if (lineup != null) {
-            lineupPanel.getOpponentTeam().setTeamName(SystemManager.getActiveTeamName() + " ("
-                                                      + SystemManager.getActiveTeamId() + ")");
+            Team team = SystemManager.getActiveTeam();
+            lineupPanel.getOpponentTeam().setTeamName(team.getName() + " ("
+                                                      + team.getTeamId() + ")");
             keeper.reload(lineup.getSpotLineup(ISpielerPosition.keeper), week, season);
             leftBack.reload(lineup.getSpotLineup(ISpielerPosition.leftBack), week, season);
             leftCentral.reload(lineup.getSpotLineup(ISpielerPosition.leftCentralDefender), week, season);
