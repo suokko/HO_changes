@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=HattrickOrganizer! HOVERSION
+Comment=Manager tool for http://www.hattrick.org
+Exec=/usr/bin/PACKAGE
+Icon=/usr/lib/PACKAGE/ho_logo.png
+Terminal=TERMINAL
+Type=Application
+Categories=Game
+StartupNotify=false
