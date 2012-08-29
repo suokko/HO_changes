@@ -55,8 +55,8 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	private JSpinner delaySpinner;
 
 	public ImageDesignPanel() {
-		setAway(true);
 		initialize();
+		setAway(true);
 	}
 
 	public void setAway(boolean away) {
@@ -89,6 +89,9 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 					Config.HOSTED_ROUNDLY.toString(), Boolean.TRUE)));
 		}
 
+		if (this.emblemPanel != null) {
+			this.centerPanel.remove(this.emblemPanel);
+		}
 		this.emblemPanel = new EmblemPanel(away, flagDisplayModel);
 		this.emblemPanel.getFlagDisplayModel().setFlagWidth(flagWidth);
 		if (!emblemPath.equals("")) {
@@ -119,6 +122,10 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 			this.emblemPanel.setFooter(ModuleConfig.instance().getBoolean(
 					Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE));
 		}
+
+		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
+		this.centerPanel.validate();
+		this.centerPanel.repaint();
 	}
 
 	private void initialize() {
@@ -265,10 +272,10 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		spinnerPanel.add(this.delaySpinner);
 		add(this.northPanel, spinnerPanel, constraints, 1, 6, 1, 1);
 
-		setEmblemPanel(true);
-		setEmblemPanel(false);
-
-		add(this.centerPanel, this.emblemPanel, constraints, 0, 0, 1, 1);
+		// setEmblemPanel(true);
+		// setEmblemPanel(false);
+		//
+		// add(this.centerPanel, this.emblemPanel, constraints, 0, 0, 1, 1);
 		JButton saveImage = new JButton("Save Image");
 		// saveImage.addActionListener(new
 		// GlobalActionsListener(this.pluginIfaPanel));
@@ -370,9 +377,9 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 	}
 
 	public void refreshFlagPanel() {
-		this.centerPanel.remove(this.emblemPanel);
-		setEmblemPanel(this.away);
-		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
+		// this.centerPanel.remove(this.emblemPanel);
+		// setEmblemPanel(this.away);
+		// this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
 		this.centerPanel.validate();
 		this.centerPanel.repaint();
 		validate();
@@ -393,15 +400,14 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		EmblemPanel panel = this.emblemPanel;
-
-		this.textField.setText(panel.getHeaderText());
-		this.headerYesNo.setSelected(panel.isHeader());
-		this.footerYesNo.setSelected(panel.isFooter());
-		this.greyColored.setSelected(panel.getFlagDisplayModel().isGrey());
-		this.roundly.setSelected(panel.getFlagDisplayModel().isRoundFlag());
-		this.percentSlider.setValue(panel.getFlagDisplayModel().getBrightness());
-		this.sizeSpinner.setValue(new Integer(panel.getFlagDisplayModel().getFlagWidth()));
+		this.textField.setText(this.emblemPanel.getHeaderText());
+		this.headerYesNo.setSelected(this.emblemPanel.isHeader());
+		this.footerYesNo.setSelected(this.emblemPanel.isFooter());
+		this.greyColored.setSelected(this.emblemPanel.getFlagDisplayModel().isGrey());
+		this.roundly.setSelected(this.emblemPanel.getFlagDisplayModel().isRoundFlag());
+		this.percentSlider.setValue(this.emblemPanel.getFlagDisplayModel().getBrightness());
+		this.sizeSpinner
+				.setValue(new Integer(this.emblemPanel.getFlagDisplayModel().getFlagWidth()));
 		refreshFlagPanel();
 	}
 

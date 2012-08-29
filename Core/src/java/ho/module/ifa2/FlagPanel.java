@@ -39,11 +39,12 @@ public class FlagPanel extends JPanel {
 		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
 		this.flagLabels = new FlagLabel[leagues.length];
 		for (int i = 0; i < leagues.length; i++) {
-			FlagLabel flagLabel = new FlagLabel(flagDisplayModel);
+			FlagLabel flagLabel = new FlagLabel(flagDisplayModel);			
 			flagLabel.setCountryId(leagues[i].getCountryId());
 			flagLabel.setCountryName(leagues[i].getCountryName());
 			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 			flagLabel.setToolTipText(flagLabel.getCountryName());
+			
 			int flagLeagueID = leagues[i].getLeagueId();
 			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga()) {
 				flagLabel.setHomeCountry(true);
