@@ -20,7 +20,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.UIManager;
 
 public class FlagPanel extends JPanel {
 
@@ -75,10 +74,6 @@ public class FlagPanel extends JPanel {
 		this.header.setHorizontalTextPosition(0);
 		add(this.header, constraints, 0, 0, flagDisplayModel.getFlagWidth(), 1);
 		constraints.insets = new Insets(1, 1, 5, 1);
-		Color selectionForeground = (Color) UIManager.get("ProgressBar.selectionForeground");
-		Color selectionBackground = (Color) UIManager.get("ProgressBar.selectionBackground");
-		UIManager.put("ProgressBar.selectionForeground", Color.black);
-		UIManager.put("ProgressBar.selectionBackground", Color.black);
 		this.percentState = new JProgressBar();
 		this.percentState.setMaximum(WorldDetailsManager.instance().size());
 		this.percentState.setValue(this.countriesPlayedIn);
@@ -93,8 +88,6 @@ public class FlagPanel extends JPanel {
 		this.percentState.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		add(this.percentState, constraints, 0, 1, flagDisplayModel.getFlagWidth(), 1);
-		UIManager.put("ProgressBar.selectionForeground", selectionForeground);
-		UIManager.put("ProgressBar.selectionBackground", selectionBackground);
 		constraints.fill = 0;
 		constraints.anchor = 10;
 		constraints.insets = new Insets(1, 1, 1, 1);
