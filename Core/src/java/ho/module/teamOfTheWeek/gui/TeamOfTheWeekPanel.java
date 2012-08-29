@@ -308,11 +308,17 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener,ActionL
 
         if (max_week < 1)
             max_week = 1;
- 
-        if (HOVerwaltung.instance().getModel().getBasics().getSeason() != plan.getSaison()) 
-        	max_week = 14;
-        else
-        	week = max_week;
+
+        try {
+            if (HOVerwaltung.instance().getModel().getBasics().getSeason() != plan.getSaison()) 
+                max_week = 14;
+            else
+                week = max_week;
+        } catch (Exception e) {
+            /* new database */
+            week = 1;
+            max_week = 1;
+        }
         
 
         weekSpinner.setModel(new SpinnerNumberModel(week, 1, max_week, 1));
