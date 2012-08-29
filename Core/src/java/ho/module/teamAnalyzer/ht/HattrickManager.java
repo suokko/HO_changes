@@ -142,20 +142,50 @@ public class HattrickManager {
      */
     public static void downloadPlayers(Team team) {
         String xml = "";
-
-        try {
-			xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=players&TeamID=" + team.getTeamId());
-        } catch (Exception e) {
-            return;
-        }
-
         List<PlayerInfo> players = new ArrayList<PlayerInfo>();
-        Document dom = XMLManager.parseString(xml);
-        Node matchesList = dom.getElementsByTagName("PlayerList").item(0);
 
-        for (int i = 0; i < (matchesList.getChildNodes().getLength() / 2); i++) {
-            PlayerInfo player = parsePlayer(team, matchesList, i);
-            players.add(player);
+        if (team.isNT()) {
+
+            try {
+                xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=nationalplayers&TeamID=" + team.getTeamId());
+            } catch (Exception e) {
+                return;
+            }
+
+            Document dom = XMLManager.parseString(xml);
+            Node playerList = dom.getElementsByTagName("Players").item(0);
+            
+            for (int i = 0; i < playerList.getChildNodes().getLength() / 2; i++) {
+                int playerId = getIntValue(playerList, i, "PlayerID");
+
+                try {
+                    xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=playerdetails&playerID=" + playerId);
+                } catch (Exception e) {
+                    return;
+                }
+
+                dom = XMLManager.parseString(xml);
+                Node player = dom.getElementsByTagName("Player").item(0);
+
+                players.add(parsePlayer(team, player, 0));
+
+            }
+
+        } else {
+
+            try {
+                xml = MyConnector.instance().getHattrickXMLFile("/common/chppxml.axd?file=players&TeamID=" + team.getTeamId());
+            } catch (Exception e) {
+                return;
+            }
+
+            Document dom = XMLManager.parseString(xml);
+            Node matchesList = dom.getElementsByTagName("PlayerList").item(0);
+
+            for (int i = 0; i < (matchesList.getChildNodes().getLength() / 2); i++) {
+                PlayerInfo player = parsePlayer(team, matchesList, i);
+                players.add(player);
+            }
         }
 
         PlayerDataManager.update(players);
