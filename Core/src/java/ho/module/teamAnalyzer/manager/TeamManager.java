@@ -29,7 +29,7 @@ import java.util.Map;
 public class TeamManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Map<String, Team> teams = null;
+    private static Map<Integer, Team> teams = null;
     private static boolean updated = false;
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ public class TeamManager {
      * @return TODO Missing Return Method Documentation
      */
     public static Team getTeam(int teamId) {
-        return teams.get(teamId + "");
+        return teams.get(teamId);
     }
 
     /**
@@ -166,7 +166,7 @@ public class TeamManager {
      * @return TODO Missing Return Method Documentation
      */
     public static boolean isTeamInList(int teamId) {
-        if (teams.get(teamId + "") != null) {
+        if (teams.get(teamId) != null) {
             return true;
         }
 
@@ -180,31 +180,31 @@ public class TeamManager {
      */
     public static Collection<Team> getTeams() {
         if (teams == null) {
-            teams = new HashMap<String, Team>();
+            teams = new HashMap<Integer, Team>();
 
             List<Team> l = loadDivisionTeams();
 
             for (Iterator<Team> iter = l.iterator(); iter.hasNext();) {
                 Team element = iter.next();
 
-                teams.put(element.getTeamId() + "", element);
+                teams.put(element.getTeamId(), element);
             }
 
             Team qualTeam = getNextQualificationOpponent();
 
             if (qualTeam.getTeamId() != 0) {
-                teams.put(qualTeam.getTeamId() + "", qualTeam);
+                teams.put(qualTeam.getTeamId(), qualTeam);
             }
 
             Team cupTeam = getNextCupOpponent();
 
             if (cupTeam.getTeamId() != 0) {
-                teams.put(cupTeam.getTeamId() + "", cupTeam);
+                teams.put(cupTeam.getTeamId(), cupTeam);
             }
             
             List<Team> teamlist = loadTournamentteams();
             for (Team tourneyteam: teamlist) {
-            	teams.put(String.valueOf(tourneyteam.getTeamId()), tourneyteam);
+            	teams.put(tourneyteam.getTeamId(), tourneyteam);
             }
             
         }
@@ -230,7 +230,7 @@ public class TeamManager {
      */
     public static void addFavouriteTeam(Team team) {
         if (!isTeamInList(team.getTeamId())) {
-            teams.put(team.getTeamId() + "", team);
+            teams.put(team.getTeamId(), team);
         }
 
         forceUpdate();

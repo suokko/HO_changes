@@ -20,7 +20,7 @@ public class TeamReport {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Map of SpotReport */
-    private Map<String,SpotReport> spotReports;
+    private Map<Integer,SpotReport> spotReports;
 
     /** Match Ratings */
     private MatchRating rating;
@@ -37,7 +37,7 @@ public class TeamReport {
      * Creates a new TeamReport object.
      */
     public TeamReport() {
-        spotReports = new LinkedHashMap<String,SpotReport>();
+        spotReports = new LinkedHashMap<Integer,SpotReport>();
         rating = new MatchRating();
         matchNumber = 0;
         averageStars = 0d;
@@ -62,7 +62,7 @@ public class TeamReport {
      * @return SpotReport
      */
     public SpotReport getSpotReport(int spot) {
-        return spotReports.get("" + spot);
+        return spotReports.get(spot);
     }
 
     /**
@@ -105,7 +105,7 @@ public class TeamReport {
 
         if (spotReport == null) {
             spotReport = new SpotReport(pp);
-            spotReports.put(pp.getId() + "", spotReport);
+            spotReports.put(pp.getId(), spotReport);
         }
 
         spotReport.addPerformance(pp);
