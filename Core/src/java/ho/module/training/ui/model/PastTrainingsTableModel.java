@@ -77,6 +77,9 @@ public class PastTrainingsTableModel extends AbstractTrainingsTableModel {
 
         Object[] aobj;
 
+        if (p_V_trainingsVector == null)
+            return;
+
         // for each training week
         for (Iterator<TrainingPerWeek> it = p_V_trainingsVector.iterator(); it.hasNext();) {
         	TrainingPerWeek train = it.next();
