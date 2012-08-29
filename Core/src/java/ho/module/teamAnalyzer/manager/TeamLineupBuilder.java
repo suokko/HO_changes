@@ -14,10 +14,12 @@ import ho.module.teamAnalyzer.vo.TeamLineup;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Vector;
 
 
 
@@ -166,7 +168,7 @@ public class TeamLineupBuilder {
      * @return TODO Missing Return Method Documentation
      */
     private PlayerAppearance[] getSortedAppearance(Collection<PlayerAppearance> appearance) {
-        SortedSet<PlayerAppearance> sorted = getSortedSet(appearance, new AppearanceComparator());
+        Vector<PlayerAppearance> sorted = getSortedSet(appearance, new AppearanceComparator());
         int size = sorted.size();
         PlayerAppearance[] array = new PlayerAppearance[size];
         int i = 0;
@@ -181,11 +183,12 @@ public class TeamLineupBuilder {
         return array;
     }
 
-    private static<T> SortedSet<T> getSortedSet(Collection<T> beans, Comparator<T> comparator) {
-        final SortedSet<T> set = new TreeSet<T>(comparator);
+    private static<T> Vector<T> getSortedSet(Collection<T> beans, Comparator<T> comparator) {
+        final Vector<T> set = new Vector<T>();
 
         if ((beans != null) && (beans.size() > 0)) {
             set.addAll(beans);
+            Collections.sort(set, comparator);
         }
 
         return set;
@@ -198,7 +201,7 @@ public class TeamLineupBuilder {
      * @return TODO Missing Return Method Documentation
      */
     private TacticReport[] getSortedTactics(Collection<TacticReport> tactics) {
-        SortedSet<TacticReport> sorted = getSortedSet(tactics, new PerformanceComparator());
+        Vector<TacticReport> sorted = getSortedSet(tactics, new PerformanceComparator());
         int size = sorted.size();
         TacticReport[] tacticsReport = new TacticReport[size];
         int i = 0;
