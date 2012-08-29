@@ -136,15 +136,10 @@ public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
         TeamLineup lineup = ReportManager.getLineup();
 
         getFilterPanel().reload();
-        if (lineup != null) {
-            getMainPanel().reload(lineup, 0, 0);
-            getRecapPanel().reload(lineup);
-            getRatingPanel().reload(lineup);
-        } else {
-            getMainPanel().reload(null, 0, 0);
-            getRecapPanel().reload(null);
-            getRatingPanel().reload(null);
-        }
+
+        getMainPanel().reload(lineup, 0, 0);
+        getRecapPanel().reload(lineup);
+        getRatingPanel().reload(lineup);
 
         if (ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP)) {
             getSimButton().setVisible(true);
