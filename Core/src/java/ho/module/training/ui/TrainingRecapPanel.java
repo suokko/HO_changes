@@ -13,6 +13,7 @@ import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -120,12 +121,10 @@ public class TrainingRecapPanel extends JPanel {
         }
 
         // Sort the players
-        SortedSet<Vector<String>> set = new TreeSet<Vector<String>>(new TrainingComparator(2, fixedColumns));
-        if ((players != null) && (players.size() > 0)) 
-                set.addAll(players);
+        Collections.sort(players, new TrainingComparator(2, fixedColumns));
 
         // and add them to the model
-        for (Iterator<Vector<String>>  iter = set.iterator(); iter.hasNext();) {
+        for (Iterator<Vector<String>>  iter = players.iterator(); iter.hasNext();) {
             Vector<String> row = iter.next();
 
             tableModel.addRow(row);
