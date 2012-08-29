@@ -56,7 +56,7 @@
           target: ant-compile
           This target is used by automatic build scripts
          ================================= -->
-	<target name="ant-compile" description="Compile source via Ant (not necessary when building in Eclipse)">
+	<target name="ant-compile" depends="init" description="Compile source via Ant (not necessary when building in Eclipse)">
 		<echo>src.dir is ${src.dir}</echo>
 		<echo>bin.dir is ${bin.dir}</echo>
 		<property name="java.SourcePath" value="${src.dir}/java:${basedir}/test/java" />
@@ -249,7 +249,7 @@
 	<!-- =================================
           target: makeJar
          ================================= -->
-	<target name="makeJar" depends="init" description="Create JAR File">
+	<target name="makeJar" depends="ant-compile" description="Create JAR File">
 		<delete dir="${tmp.target}" />
 		<mkdir dir="${tmp.target}" />
 		<copy todir="${tmp.target}" preservelastmodified="yes">
@@ -293,7 +293,7 @@
           target: deployNightly
          ================================= -->
 	<!-- To make this work, you need to have a private key auth for Sourceforge work -->
-	<target name="deployNightly" depends="init" description="Deploy the current nightly build to Sourceforge.net">
+	<target name="deployNightly" depends="makeAll" description="Deploy the current nightly build to Sourceforge.net">
 		<echo>deploy.sf.enable=${deploy.sf.enable}</echo>
 		<echo>deploy.OS.only=${deploy.OS.only}</echo>
 		<echo>os.name=${os.name}</echo>
