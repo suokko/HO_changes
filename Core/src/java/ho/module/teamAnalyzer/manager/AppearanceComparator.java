@@ -36,6 +36,6 @@ class AppearanceComparator implements Comparator<PlayerAppearance> {
             return 1;
         }
 
-        return 1;
+        return 0;
     }
 }
