@@ -222,9 +222,13 @@ public class Filter {
     	}
     	
     	switch (match.getMatchType()) {
-    	case LEAGUE : 
+    	case NATIONALFRIENDLY:
+    		return friendly;
+    	case LEAGUE :
+    	case NATIONALCOMPNORMAL:
     		return league;
     	case CUP :
+    	case NATIONALCOMPCUPRULES:
     		return cup;
     	case MASTERS :
     		return masters;
