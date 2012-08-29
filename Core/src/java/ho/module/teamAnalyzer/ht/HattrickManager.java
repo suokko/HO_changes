@@ -92,6 +92,49 @@ public class HattrickManager {
 	    }
     }
 
+    private static PlayerInfo parsePlayer(Team team, Node matchesList, int i) {
+
+        PlayerInfo player = new PlayerInfo();
+        player.setTeamId(team.getTeamId());
+
+        int id = getIntValue(matchesList, i, "PlayerID");
+        player.setPlayerId(id);
+
+        int card = getIntValue(matchesList, i, "Cards");
+        int injury = getIntValue(matchesList, i, "InjuryLevel");
+        int status = PlayerDataManager.AVAILABLE;
+
+        if (card == 3) {
+            status = PlayerDataManager.SUSPENDED;
+        }
+
+        if (injury > 0) {
+            status = PlayerDataManager.INJURED;
+        }
+
+        player.setStatus(status);
+
+        int se = getIntValue(matchesList, i, "Specialty");
+        player.setSpecialEvent(se);
+
+        int form = getIntValue(matchesList, i, "PlayerForm");
+        player.setForm(form);
+
+        int exp = getIntValue(matchesList, i, "Experience");
+        player.setExperience(exp);
+
+        int age = getIntValue(matchesList, i, "Age");
+        player.setAge(age);
+
+        int tsi = getIntValue(matchesList, i, "TSI");
+        player.setTSI(tsi);
+
+        String name = getValue(matchesList, i, "PlayerName");
+        player.setName(name);
+
+        return player;
+    }
+
     /**
      * Method that download from Hattrick the current players for the team
      *
@@ -111,44 +154,7 @@ public class HattrickManager {
         Node matchesList = dom.getElementsByTagName("PlayerList").item(0);
 
         for (int i = 0; i < (matchesList.getChildNodes().getLength() / 2); i++) {
-            PlayerInfo player = new PlayerInfo();
-            player.setTeamId(team.getTeamId());
-
-            int id = getIntValue(matchesList, i, "PlayerID");
-            player.setPlayerId(id);
-
-            int card = getIntValue(matchesList, i, "Cards");
-            int injury = getIntValue(matchesList, i, "InjuryLevel");
-            int status = PlayerDataManager.AVAILABLE;
-
-            if (card == 3) {
-                status = PlayerDataManager.SUSPENDED;
-            }
-
-            if (injury > 0) {
-                status = PlayerDataManager.INJURED;
-            }
-
-            player.setStatus(status);
-
-            int se = getIntValue(matchesList, i, "Specialty");
-            player.setSpecialEvent(se);
-
-            int form = getIntValue(matchesList, i, "PlayerForm");
-            player.setForm(form);
-
-            int exp = getIntValue(matchesList, i, "Experience");
-            player.setExperience(exp);
-
-            int age = getIntValue(matchesList, i, "Age");
-            player.setAge(age);
-
-            int tsi = getIntValue(matchesList, i, "TSI");
-            player.setTSI(tsi);
-
-            String name = getValue(matchesList, i, "PlayerName");
-            player.setName(name);
-
+            PlayerInfo player = parsePlayer(team, matchesList, i);
             players.add(player);
         }
 
