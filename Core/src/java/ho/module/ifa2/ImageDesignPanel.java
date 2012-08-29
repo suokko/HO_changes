@@ -56,6 +56,7 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 	public ImageDesignPanel() {
 		initialize();
+		addListeners();
 		setAway(true);
 	}
 
@@ -144,84 +145,23 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 
 		this.headerYesNo = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
-		this.headerYesNo.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				emblemPanel.setHeader(e.getStateChange() == ItemEvent.SELECTED);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
 		add(this.northPanel, this.headerYesNo, constraints, 0, 2, 1, 1);
 
 		this.footerYesNo = new JCheckBox("Show Footer", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
-		this.footerYesNo.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				emblemPanel.setFooter(e.getStateChange() == ItemEvent.SELECTED);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
 		add(this.northPanel, this.footerYesNo, constraints, 1, 2, 1, 1);
 
 		this.roundly = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
 				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
-		this.roundly.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
-				if (away) {
-					ModuleConfig.instance().setBoolean(Config.VISITED_ROUNDLY.toString(), selected);
-				} else {
-					ModuleConfig.instance().setBoolean(Config.HOSTED_ROUNDLY.toString(), selected);
-				}
-				emblemPanel.getFlagDisplayModel().setRoundFlag(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
 		add(this.northPanel, this.roundly, constraints, 0, 3, 1, 1);
 
 		this.greyColored = new JCheckBox("Grey", ModuleConfig.instance().getBoolean(
 				Config.VISITED_GREY.toString(), Boolean.TRUE));
-		this.greyColored.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
-				if (away) {
-					ModuleConfig.instance().setBoolean(Config.VISITED_GREY.toString(), selected);
-				} else {
-					ModuleConfig.instance().setBoolean(Config.HOSTED_GREY.toString(), selected);
-				}
-				emblemPanel.getFlagDisplayModel().setGrey(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
 		add(this.northPanel, this.greyColored, constraints, 1, 3, 1, 1);
 
 		this.percentSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
 				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
-		this.percentSlider.addChangeListener(new ChangeListener() {
 
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				JSlider slider = (JSlider) e.getSource();
-				if (!slider.getValueIsAdjusting()) {
-					if (away) {
-						ModuleConfig.instance().setInteger(Config.VISITED_BRIGHTNESS.toString(),
-								slider.getValue());
-					} else {
-						ModuleConfig.instance().setInteger(Config.HOSTED_BRIGHTNESS.toString(),
-								slider.getValue());
-					}
-					emblemPanel.getFlagDisplayModel().setBrightness(slider.getValue());
-					ImageDesignPanel.this.refreshFlagPanel();
-				}
-			}
-		});
 		this.percentSlider.setMajorTickSpacing(25);
 		this.percentSlider.setMinorTickSpacing(5);
 		this.percentSlider.setPaintTicks(true);
@@ -232,22 +172,6 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
 				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
-		this.sizeSpinner.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue()).intValue();
-				if (away) {
-					ModuleConfig.instance().setInteger(Config.VISITED_FLAG_WIDTH.toString(),
-							rowSize);
-				} else {
-					ModuleConfig.instance()
-							.setInteger(Config.HOSTED_FLAG_WIDTH.toString(), rowSize);
-				}
-				emblemPanel.getFlagDisplayModel().setFlagWidth(rowSize);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
 		sizePanel.add(new JLabel("Flags/Row: "));
 		sizePanel.add(this.sizeSpinner);
 		add(this.northPanel, sizePanel, constraints, 0, 5, 1, 1);
@@ -255,7 +179,6 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		this.textField = new JTextField(ModuleConfig.instance().getString(
 				Config.VISITED_HEADER_TEXT.toString(),
 				HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText")));
-		this.textField.addKeyListener(new TextKeyListener());
 		this.textField.setPreferredSize(new Dimension(150, 25));
 		add(this.northPanel, this.textField, constraints, 1, 5, 1, 1);
 
@@ -411,12 +334,98 @@ public class ImageDesignPanel extends JPanel implements ActionListener {
 		refreshFlagPanel();
 	}
 
-	private class TextKeyListener extends KeyAdapter {
+	private void addListeners() {
+		this.headerYesNo.addItemListener(new ItemListener() {
 
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			ImageDesignPanel.this.emblemPanel.setHeaderText(((JTextField) arg0.getSource())
-					.getText());
-		}
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				emblemPanel.setHeader(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
+		this.footerYesNo.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				emblemPanel.setFooter(e.getStateChange() == ItemEvent.SELECTED);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
+		this.roundly.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				if (away) {
+					ModuleConfig.instance().setBoolean(Config.VISITED_ROUNDLY.toString(), selected);
+				} else {
+					ModuleConfig.instance().setBoolean(Config.HOSTED_ROUNDLY.toString(), selected);
+				}
+				emblemPanel.getFlagDisplayModel().setRoundFlag(selected);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
+		this.greyColored.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				if (away) {
+					ModuleConfig.instance().setBoolean(Config.VISITED_GREY.toString(), selected);
+				} else {
+					ModuleConfig.instance().setBoolean(Config.HOSTED_GREY.toString(), selected);
+				}
+				emblemPanel.getFlagDisplayModel().setGrey(selected);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
+		this.percentSlider.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider slider = (JSlider) e.getSource();
+				if (!slider.getValueIsAdjusting()) {
+					if (away) {
+						ModuleConfig.instance().setInteger(Config.VISITED_BRIGHTNESS.toString(),
+								slider.getValue());
+					} else {
+						ModuleConfig.instance().setInteger(Config.HOSTED_BRIGHTNESS.toString(),
+								slider.getValue());
+					}
+					emblemPanel.getFlagDisplayModel().setBrightness(slider.getValue());
+					ImageDesignPanel.this.refreshFlagPanel();
+				}
+			}
+		});
+
+		this.sizeSpinner.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int rowSize = ((Integer) ImageDesignPanel.this.sizeSpinner.getValue()).intValue();
+				if (away) {
+					ModuleConfig.instance().setInteger(Config.VISITED_FLAG_WIDTH.toString(),
+							rowSize);
+				} else {
+					ModuleConfig.instance()
+							.setInteger(Config.HOSTED_FLAG_WIDTH.toString(), rowSize);
+				}
+				emblemPanel.getFlagDisplayModel().setFlagWidth(rowSize);
+				ImageDesignPanel.this.refreshFlagPanel();
+			}
+		});
+
+		this.textField.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				ImageDesignPanel.this.emblemPanel.setHeaderText(((JTextField) arg0.getSource())
+						.getText());
+			}
+		});
 	}
 }
