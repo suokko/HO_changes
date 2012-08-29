@@ -25,6 +25,8 @@ Changelist HO! 1.432
 	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
 	. Auto filter options for tournament and masters matches.
 	. Fixed bug that renaming team after the last league match prevented analyzing matches before name changes
+	. Fix bug that draws are filtered as wins for away team
+	. Allow adding national and U20 teams to favorites
 
 - Match order uploads
 	. The option to upload match orders to Hattrick have been added.
