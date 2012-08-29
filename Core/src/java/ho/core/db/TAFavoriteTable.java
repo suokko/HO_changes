@@ -26,9 +26,10 @@ final class TAFavoriteTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[2];
+		columns = new ColumnDescriptor[3];
 		columns[0] = new ColumnDescriptor("TEAMID", Types.INTEGER, false, true);
 		columns[1] = new ColumnDescriptor("NAME", Types.VARCHAR, true, 20);
+		columns[2] = new ColumnDescriptor("NT", Types.BOOLEAN, false);
 	}
 
 
@@ -37,9 +38,10 @@ final class TAFavoriteTable extends AbstractTable {
     }
     
     void addTeam(Team team) {
-        adapter.executeUpdate("insert into TA_FAVORITE (TEAMID, NAME) values ("
+        adapter.executeUpdate("insert into TA_FAVORITE (TEAMID, NAME, NT) values ("
                                                       + team.getTeamId() + ", '" + team.getName()
-                                                      + "')");
+                                                      + "', " + (team.isNT()? "true" : "false")
+                                                      + ")");
     }
 
     boolean isTAFavourite(int teamId) {
@@ -69,6 +71,7 @@ final class TAFavoriteTable extends AbstractTable {
 
                 team.setTeamId(rs.getInt(1));
                 team.setName(rs.getString(2));
+                team.setNT(rs.getBoolean(3));
                 list.add(team);
             }
         } catch (SQLException e) {

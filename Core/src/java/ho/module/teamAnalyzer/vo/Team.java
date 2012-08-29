@@ -17,6 +17,7 @@ public class Team {
  
     // A hack for custom coloring of tournament teams in a renderer
     private boolean tournament = false;
+    private boolean isNT = false;
 
     // Timestamp when next match is played
     private java.sql.Timestamp time;
@@ -63,7 +64,14 @@ public class Team {
         return teamId;
     }
 
-    
+    public void setNT(boolean nt) {
+    	isNT = nt;
+    }
+
+    public boolean isNT() {
+    	return isNT;
+    }
+
     public boolean isTournament() {
 		return tournament;
 	}
