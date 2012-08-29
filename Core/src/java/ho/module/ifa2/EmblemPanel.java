@@ -33,10 +33,23 @@ public class EmblemPanel extends JPanel {
 	private String imagePath = "";
 	private FlagDisplayModel flagDisplayModel;
 
-	public EmblemPanel(boolean away, FlagDisplayModel flagDisplayModel) {
+	public EmblemPanel(final boolean away, final FlagDisplayModel flagDisplayModel) {
 		this.flagDisplayModel = flagDisplayModel;
 		this.flagPanel = new FlagPanel(away, flagDisplayModel);
 		initialize();
+
+		this.flagDisplayModel.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void flagSizeChanged() {
+				remove(flagPanel);
+				flagPanel = new FlagPanel(away, flagDisplayModel);
+				GridBagConstraints constraints = new GridBagConstraints();
+				constraints.gridy = 1;
+				add(flagPanel, constraints);
+				validate();
+			}
+		});
 	}
 
 	private void initialize() {

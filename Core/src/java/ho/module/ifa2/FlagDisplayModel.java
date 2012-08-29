@@ -1,11 +1,15 @@
 package ho.module.ifa2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FlagDisplayModel {
 
 	private int brightness = 50;
 	private int flagWidth = 8;
 	private boolean grey = true;
 	private boolean roundFlag = false;
+	private List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
 
 	public int getBrightness() {
 		return brightness;
@@ -37,5 +41,18 @@ public class FlagDisplayModel {
 
 	public void setFlagWidth(int flagWidth) {
 		this.flagWidth = flagWidth;
+		for (int i=this.listeners.size()-1; i>=0; i--) {
+			this.listeners.get(i).flagSizeChanged();
+		}
+	}
+
+	public void addModelChangeListener(ModelChangeListener listener) {
+		if (!this.listeners.contains(listener)) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeModelChangeListener(ModelChangeListener listener) {
+		this.listeners.remove(listener);
 	}
 }
