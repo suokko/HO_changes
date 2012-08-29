@@ -396,6 +396,7 @@
 			<fileset dir="${export.dmg.targetdir}" />
 			<fileset dir="${build.dir}" />
 			<fileset dir="${debug.dir}" />
+			<fileset dir="${bin.dir}" />
 		</delete>
 	</target>
 
