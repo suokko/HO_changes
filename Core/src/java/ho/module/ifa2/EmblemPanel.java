@@ -115,16 +115,14 @@ public class EmblemPanel extends JPanel {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setMultiSelectionEnabled(false);
 		Window parent = SwingUtilities.getWindowAncestor(this);
+		ImageIcon image = null;
 		if (fileChooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
 			String path = fileChooser.getSelectedFile().getPath();
 			setImagePath(path);
-			ImageIcon image = null;
 			if (path != null) {
 				image = new ImageIcon(path);
 			}
 			setLogo(image);
-		} else {
-			setLogo(null);
 		}
 		validate();
 		repaint();
