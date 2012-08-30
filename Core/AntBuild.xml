@@ -96,12 +96,7 @@
 	<!-- =================================
           target: makeAll
          ================================= -->
-	<target name="makeAll" description="Create ho.jar, HO.zip, HO.deb, HO.rpm and HO.dmg">
-		<antcall target="makeJar" />
-		<antcall target="makeZip" />
-		<antcall target="makeDmgImage" />
-		<antcall target="makeNSIS" />
-		<antcall target="makeDeb" />
+	<target name="makeAll" depends="makeJar,makeZip,makeDmgImage,makeNSIS,makeDeb" description="Create ho.jar, HO.zip, HO.deb, HO.rpm and HO.dmg">
 	</target>
 
 	<!-- =================================
