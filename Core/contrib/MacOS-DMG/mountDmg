@@ -8,7 +8,7 @@ dmgFile=$1
 mountDir=$2
 if [ -e "${mountDir}/notmounted" ]; then
 	echo Trying to mount...
-	mount -t hfsplus -o loop,rw ${dmgFile} ${mountDir}
+	mount -t hfsplus -o loop,rw ${dmgFile} ${mountDir} || mount ${dmgFile}
 	exit $?
 else
 	echo Already mounted...
