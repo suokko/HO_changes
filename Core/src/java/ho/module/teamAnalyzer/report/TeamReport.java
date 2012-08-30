@@ -1,6 +1,7 @@
 // %3625019770:hoplugins.teamAnalyzer.report%
 package ho.module.teamAnalyzer.report;
 
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.MatchDetail;
 import ho.module.teamAnalyzer.vo.MatchRating;
@@ -98,6 +99,7 @@ public class TeamReport {
      */
     private void addPerformance(PlayerPerformance pp, boolean showUnavailable) {
         if ((!showUnavailable) && (pp.getStatus() != PlayerDataManager.AVAILABLE)) {
+        	HOLogger.instance().log(getClass(), "Unavailable player: " + pp.getSpielerName() + " " + pp.getStatus());
             return;
         }
 

@@ -1,6 +1,7 @@
 // %3324148068:hoplugins.teamAnalyzer.report%
 package ho.module.teamAnalyzer.report;
 
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.vo.PlayerPerformance;
 
 
@@ -146,6 +147,7 @@ public class Report {
     public void addPerformance(PlayerPerformance pp) {
         appearance++;
         rating = ((rating * (appearance - 1)) + pp.getRating()) / appearance;
+        HOLogger.instance().log(getClass(), pp.getSpielerName() + " " + toString());
     }
 
     /**

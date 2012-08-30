@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.vo;
 
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HOLogger;
 
 import java.util.List;
 
@@ -234,6 +235,8 @@ public class Filter {
     		return masters;
     	case QUALIFICATION :
     		return qualifier;
+    	default:
+    		HOLogger.instance().log(this.getClass(), "Match (" + match.toString() + ") type is " + match.getMatchType());
    	
     	}
     	

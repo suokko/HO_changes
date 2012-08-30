@@ -1,6 +1,8 @@
 // %381887291:hoplugins.teamAnalyzer.vo%
 package ho.module.teamAnalyzer.vo;
 
+import ho.core.util.HOLogger;
+
 /**
  * Class for collecting all the players appearance
  *
@@ -100,6 +102,7 @@ public class PlayerAppearance {
      */
     public void addApperarence() {
         apperarence++;
+        HOLogger.instance().log(getClass(), toString());
     }
 
     /**

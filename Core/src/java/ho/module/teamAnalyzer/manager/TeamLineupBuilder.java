@@ -3,6 +3,7 @@ package ho.module.teamAnalyzer.manager;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.report.PositionReport;
 import ho.module.teamAnalyzer.report.SpotReport;
 import ho.module.teamAnalyzer.report.TacticReport;
@@ -53,6 +54,7 @@ public class TeamLineupBuilder {
             if (spotReport != null) {
                 SpotLineup spotLineup = buildSpotLineup(spotReport);
 
+                HOLogger.instance().log(getClass(), spotReport.toString() + " lineup: " + (spotLineup == null ? "null" : spotLineup.toString()) + " spot: " + spot);
                 teamLineup.setSpotLineup(spotLineup, spot);
             }
         }
@@ -97,6 +99,10 @@ public class TeamLineupBuilder {
      */
     private PlayerAppearance getPlayer(Collection<PlayerAppearance> collection) {
         PlayerAppearance[] appearances = getSortedAppearance(collection);
+        
+        for (int i = 0; i < appearances.length; i++) {
+        	HOLogger.instance().log(getClass(), appearances[i].getName() + " " + appearances[i].getAppearance());
+        }
 
         if (appearances.length == 1) {
             return appearances[0];

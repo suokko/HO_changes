@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
 import java.util.Iterator;
@@ -44,6 +45,8 @@ public class PlayerDataManager {
         if (info.getPlayerId() == 0) {
             info = DBManager.instance().getTAPreviousPlayerInfo(playerId);
         }
+        
+        HOLogger.instance().log(PlayerDataManager.class, info.toString());
 
         return info;
     }
@@ -102,6 +105,7 @@ public class PlayerDataManager {
      */
     private static void setPlayer(PlayerInfo info) {
         if (info.getPlayerId() == 0) {
+        	HOLogger.instance().log(PlayerDataManager.class, "No ID for player: " + info.toString());
             return;
         }
 
@@ -109,8 +113,10 @@ public class PlayerDataManager {
 
         if (actual.getPlayerId() == 0) {
         	DBManager.instance().addTAPlayerInfo(info);
+        	HOLogger.instance().log(PlayerDataManager.class, "Add new player: " + info.toString());
         } else {
         	DBManager.instance().updateTAPlayerInfo(info);
+        	HOLogger.instance().log(PlayerDataManager.class, "Update player: " + info.toString());
         }
     }
 }

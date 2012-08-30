@@ -2,6 +2,7 @@
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.report.TeamReport;
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
@@ -75,12 +76,14 @@ public class ReportManager {
 
         for (Iterator<?> iter = matchDetails.iterator(); iter.hasNext();) {
             MatchDetail match = (MatchDetail) iter.next();
+            
+            HOLogger.instance().log(ReportManager.class, "build: " + match.toString());
 
             report.addMatch(match, ModuleConfig.instance().getBoolean(SystemManager.ISSHOWUNAVAILABLE));
         }
 
         TeamLineupBuilder builder = new TeamLineupBuilder(report);
-
+        HOLogger.instance().log(ReportManager.class, "build("+ matchDetails.size() + "): " + builder.toString());
         lineup = builder.getLineup();
     }
 

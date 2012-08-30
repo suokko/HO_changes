@@ -6,6 +6,7 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.module.config.ModuleConfig;
+import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.manager.ReportManager;
 import ho.module.teamAnalyzer.ui.controller.SimButtonListener;
@@ -137,6 +138,8 @@ public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
 
         getFilterPanel().reload();
 
+        if (lineup != null)
+        HOLogger.instance().log(getClass(), lineup.toString() + " time: not set");
         getMainPanel().reload(lineup, 0, 0);
         getRecapPanel().reload(lineup);
         getRatingPanel().reload(lineup);
