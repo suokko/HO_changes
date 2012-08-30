@@ -105,18 +105,6 @@ public class EmblemPanel extends JPanel {
 		this.flagPanel.setHeader(headerText);
 	}
 
-	public boolean isFooter() {
-		return this.footer;
-	}
-
-	public boolean isHeader() {
-		return this.header;
-	}
-
-	public String getHeaderText() {
-		return this.headerText;
-	}
-
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
