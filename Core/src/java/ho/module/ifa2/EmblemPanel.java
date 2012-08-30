@@ -38,6 +38,7 @@ public class EmblemPanel extends JPanel {
 		this.flagDisplayModel = flagDisplayModel;
 		this.flagPanel = new FlagPanel(away, flagDisplayModel);
 		initialize();
+		addListeners();
 	}
 
 	private void initialize() {
@@ -122,17 +123,28 @@ public class EmblemPanel extends JPanel {
 		repaint();
 	}
 
+	private void rebuildFlags() {
+		if (this.flagPanel != null) {
+			remove(this.flagPanel);
+		}
+		flagPanel = new FlagPanel(this.away, this.flagDisplayModel);
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridy = 1;
+		add(this.flagPanel, constraints);
+		validate();
+	}
+
 	private void addListeners() {
 		this.flagDisplayModel.addModelChangeListener(new ModelChangeListener() {
 
 			@Override
 			public void flagSizeChanged() {
-				remove(flagPanel);
-				flagPanel = new FlagPanel(away, flagDisplayModel);
-				GridBagConstraints constraints = new GridBagConstraints();
-				constraints.gridy = 1;
-				add(flagPanel, constraints);
-				validate();
+				rebuildFlags();
+			}
+
+			@Override
+			public void brightnessChanged() {
+				rebuildFlags();
 			}
 		});
 

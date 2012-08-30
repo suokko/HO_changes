@@ -16,6 +16,9 @@ public class FlagDisplayModel {
 	}
 
 	public void setBrightness(int brightness) {
+		for (int i = this.listeners.size() - 1; i >= 0; i--) {
+			this.listeners.get(i).brightnessChanged();
+		}
 		this.brightness = brightness;
 	}
 
@@ -25,6 +28,9 @@ public class FlagDisplayModel {
 
 	public void setGrey(boolean grey) {
 		this.grey = grey;
+		for (int i = this.listeners.size() - 1; i >= 0; i--) {
+			this.listeners.get(i).brightnessChanged();
+		}		
 	}
 
 	public boolean isRoundFlag() {
@@ -41,7 +47,7 @@ public class FlagDisplayModel {
 
 	public void setFlagWidth(int flagWidth) {
 		this.flagWidth = flagWidth;
-		for (int i=this.listeners.size()-1; i>=0; i--) {
+		for (int i = this.listeners.size() - 1; i >= 0; i--) {
 			this.listeners.get(i).flagSizeChanged();
 		}
 	}
@@ -51,7 +57,7 @@ public class FlagDisplayModel {
 			this.listeners.add(listener);
 		}
 	}
-	
+
 	public void removeModelChangeListener(ModelChangeListener listener) {
 		this.listeners.remove(listener);
 	}

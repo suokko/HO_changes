@@ -44,7 +44,7 @@ public class ImageDesignPanel extends JPanel {
 	private JTextField textField;
 	private JCheckBox greyColoredCheckBox;
 	private JCheckBox roundlyCheckBox;
-	private JSlider percentSlider;
+	private JSlider brightnessSlider;
 	private JCheckBox headerYesNoCheckBox;
 	private JCheckBox animGifCheckBox;
 	private JSpinner delaySpinner;
@@ -71,8 +71,7 @@ public class ImageDesignPanel extends JPanel {
 					Integer.valueOf(8));
 			emblemPath = ModuleConfig.instance().getString(Config.VISITED_EMBLEM_PATH.toString(),
 					"");
-			headerText = ModuleConfig.instance().getString(
-					Config.VISITED_HEADER_TEXT.toString(),
+			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText"));
 			flagDisplayModel.setBrightness(ModuleConfig.instance().getInteger(
 					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
@@ -87,8 +86,7 @@ public class ImageDesignPanel extends JPanel {
 					Integer.valueOf(8));
 			emblemPath = ModuleConfig.instance()
 					.getString(Config.HOSTED_EMBLEM_PATH.toString(), "");
-			headerText = ModuleConfig.instance().getString(
-					Config.VISITED_HEADER_TEXT.toString(),
+			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText"));
 			flagDisplayModel.setBrightness(ModuleConfig.instance().getInteger(
 					Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50)));
@@ -154,13 +152,13 @@ public class ImageDesignPanel extends JPanel {
 				Config.VISITED_GREY.toString(), Boolean.TRUE));
 		add(northPanel, this.greyColoredCheckBox, constraints, 1, 3, 1, 1);
 
-		this.percentSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
+		this.brightnessSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
 				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
-		this.percentSlider.setMajorTickSpacing(25);
-		this.percentSlider.setMinorTickSpacing(5);
-		this.percentSlider.setPaintTicks(true);
-		this.percentSlider.setPaintLabels(true);
-		add(northPanel, this.percentSlider, constraints, 1, 4, 1, 1);
+		this.brightnessSlider.setMajorTickSpacing(25);
+		this.brightnessSlider.setMinorTickSpacing(5);
+		this.brightnessSlider.setPaintTicks(true);
+		this.brightnessSlider.setPaintLabels(true);
+		add(northPanel, this.brightnessSlider, constraints, 1, 4, 1, 1);
 
 		JPanel sizePanel = new JPanel(new FlowLayout(1, 0, 0));
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
@@ -232,9 +230,11 @@ public class ImageDesignPanel extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
 				if (away) {
-					ModuleConfig.instance().setBoolean(Config.SHOW_VISITED_HEADER.toString(), selected);
+					ModuleConfig.instance().setBoolean(Config.SHOW_VISITED_HEADER.toString(),
+							selected);
 				} else {
-					ModuleConfig.instance().setBoolean(Config.SHOW_HOSTED_HEADER.toString(), selected);
+					ModuleConfig.instance().setBoolean(Config.SHOW_HOSTED_HEADER.toString(),
+							selected);
 				}
 				emblemPanel.setHeader(selected);
 				ImageDesignPanel.this.refreshFlagPanel();
@@ -271,20 +271,20 @@ public class ImageDesignPanel extends JPanel {
 			}
 		});
 
-		this.percentSlider.addChangeListener(new ChangeListener() {
+		this.brightnessSlider.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				JSlider slider = (JSlider) e.getSource();
-				if (!slider.getValueIsAdjusting()) {
+				if (!brightnessSlider.getValueIsAdjusting()) {
+					int value = brightnessSlider.getValue();
 					if (away) {
 						ModuleConfig.instance().setInteger(Config.VISITED_BRIGHTNESS.toString(),
-								slider.getValue());
+								value);
 					} else {
 						ModuleConfig.instance().setInteger(Config.HOSTED_BRIGHTNESS.toString(),
-								slider.getValue());
+								value);
 					}
-					emblemPanel.getFlagDisplayModel().setBrightness(slider.getValue());
+					emblemPanel.getFlagDisplayModel().setBrightness(value);
 					ImageDesignPanel.this.refreshFlagPanel();
 				}
 			}
