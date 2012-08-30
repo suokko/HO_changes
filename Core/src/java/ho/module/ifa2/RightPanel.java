@@ -44,6 +44,7 @@ public class RightPanel extends JPanel {
 
 		this.updateButton = new JButton("Update");
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridwidth = 2;
 		add(this.updateButton, gbc);
 
@@ -64,6 +65,7 @@ public class RightPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
+		gbc.weighty = 1.0;
 		add(this.imageDesignPanel, gbc);
 	}
 
@@ -77,6 +79,7 @@ public class RightPanel extends JPanel {
 				}
 			}
 		});
+		
 		this.homeRadioButton.addItemListener(new ItemListener() {
 
 			@Override

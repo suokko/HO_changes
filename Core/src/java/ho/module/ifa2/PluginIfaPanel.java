@@ -1,6 +1,5 @@
 package ho.module.ifa2;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,28 +19,25 @@ public class PluginIfaPanel extends JPanel {
 
 	private void initialize() {
 		setLayout(new GridBagLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.insets = new Insets(10, 10, 10, 10);
-		constraints.weightx = 1.0;
-		constraints.weighty = 1.0;
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(10, 10, 10, 10);
+		
+		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
+		add(this.statisticScrollPanelAway, gbc);
+		
+		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
+		gbc.gridy = 1;
+		add(this.statisticScrollPanelHome, gbc);
 
 		this.rightPanel = new RightPanel();
-		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
-		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
-		add(this.rightPanel, constraints, 1, 0, 1, 2);
-		constraints.weightx = 3.0;
-		add(this.statisticScrollPanelAway, constraints, 0, 0, 1, 1);
-		add(this.statisticScrollPanelHome, constraints, 0, 1, 1, 1);
-	}
-
-	private void add(Component c, GridBagConstraints constraints, int x, int y,
-			int w, int h) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		constraints.gridwidth = w;
-		constraints.gridheight = h;
-		add(c, constraints);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.weightx = 0;
+		add(this.rightPanel, gbc);
 	}
 }

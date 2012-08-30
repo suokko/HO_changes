@@ -166,6 +166,7 @@ public class ImageDesignPanel extends JPanel {
 
 		this.brightnessSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
 				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
+		this.brightnessSlider.setMinimumSize(new Dimension(200, brightnessSlider.getPreferredSize().height));
 		this.brightnessSlider.setMajorTickSpacing(25);
 		this.brightnessSlider.setMinorTickSpacing(5);
 		this.brightnessSlider.setPaintTicks(true);
@@ -309,6 +310,7 @@ public class ImageDesignPanel extends JPanel {
 					}
 					emblemPanel.getFlagDisplayModel().setBrightness(value);
 					ImageDesignPanel.this.refreshFlagPanel();
+					System.out.println("####- " + value);
 				}
 			}
 		});
