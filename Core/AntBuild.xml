@@ -461,9 +461,13 @@
 					<arg value="${export.dmg.mountdir}" />
 				</exec>
 				<echo>Updating dmg image...</echo>
-				<copy todir="${export.dmg.mountdir}" preservelastmodified="yes">
-					<fileset dir="${export.dmg.targetdir}" />
-				</copy>
+				<exec executable="cp">
+					<arg value="-pR" />
+					<arg value="${export.dmg.mountdir}/ChangeLog.txt" />
+					<arg value="${export.dmg.mountdir}/Hattrick Organizer.app" />
+					<arg value="${export.dmg.mountdir}/Read Me.rtf" />
+					<arg value="${export.dmg.targetdir}/" />
+				</exec>
 				<!-- Making JavaApplicationStub executable -->
 				<chmod file="${export.dmg.mountdir}/Hattrick Organizer.app/Contents/MacOS/JavaApplicationStub" perm="a+x" />
 				<exec executable="${export.dmg.contribdir}/umountDmg" resolveexecutable="true" failonerror="true">
