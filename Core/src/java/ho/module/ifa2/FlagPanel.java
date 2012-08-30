@@ -14,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ public class FlagPanel extends JPanel {
 
 	private static final long serialVersionUID = 6841405207630506680L;
 	private int countriesPlayedIn;
-	private JLabel[] flagLabels;
+	private FlagLabel[] flagLabels;
 	private JLabel header;
 	private JProgressBar percentState;
 
@@ -55,7 +56,13 @@ public class FlagPanel extends JPanel {
 			}
 			this.flagLabels[i] = flagLabel;
 		}
-		Arrays.sort(this.flagLabels, new UniversalComparator(1));
+		Arrays.sort(this.flagLabels, new Comparator<FlagLabel>() {
+
+			@Override
+			public int compare(FlagLabel l1, FlagLabel l2) {
+				return l1.getCountryName().compareTo(l2.getCountryName());
+			}
+		});
 
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
