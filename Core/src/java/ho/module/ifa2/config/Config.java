@@ -6,8 +6,6 @@ public enum Config {
 	HOSTED_FLAG_WIDTH("IFA_HostedFlagWidth"),
 	SHOW_VISITED_HEADER("IFA_ShowVisitedHeader"),
 	SHOW_HOSTED_HEADER("IFA_ShowHostedHeader"),
-	SHOW_VISITED_FOOTER("IFA_ShowVisitedFooter"),
-	SHOW_HOSTED_FOOTER("IFA_ShowHostedFooter"),
 	VISITED_ROUNDLY("IFA_VisitedRoundly"),
 	HOSTED_ROUNDLY("IFA_HostedRoundly"),
 	VISITED_GREY("IFA_VisitedGrey"),

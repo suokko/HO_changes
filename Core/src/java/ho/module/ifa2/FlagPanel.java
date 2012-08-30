@@ -16,7 +16,6 @@ import java.awt.Insets;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -27,7 +26,6 @@ public class FlagPanel extends JPanel {
 	private int countriesPlayedIn;
 	private JLabel[] flagLabels;
 	private JLabel header;
-	private JLabel footer;
 	private JProgressBar percentState;
 
 	public FlagPanel(boolean away, FlagDisplayModel flagDisplayModel) {
@@ -103,12 +101,6 @@ public class FlagPanel extends JPanel {
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.weightx = 100.0D;
 		constraints.weighty = 0.0D;
-
-		this.footer = new JLabel(new ImageIcon(FlagPanel.class.getResource("image/copyright.gif")),
-				4);
-		add(this.footer, constraints, 0,
-				WorldDetailsManager.instance().size() / flagDisplayModel.getFlagWidth() + 3,
-				flagDisplayModel.getFlagWidth(), 1);
 	}
 
 	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
@@ -126,9 +118,5 @@ public class FlagPanel extends JPanel {
 	void setHeaderVisible(boolean enable) {
 		this.header.setVisible(enable);
 		this.percentState.setVisible(enable);
-	}
-
-	void setFooterVisible(boolean enable) {
-		this.footer.setVisible(enable);
 	}
 }

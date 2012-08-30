@@ -46,7 +46,6 @@ public class ImageDesignPanel extends JPanel {
 	private JCheckBox roundlyCheckBox;
 	private JSlider percentSlider;
 	private JCheckBox headerYesNoCheckBox;
-	private JCheckBox footerYesNoCheckBox;
 	private JCheckBox animGifCheckBox;
 	private JSpinner delaySpinner;
 
@@ -66,7 +65,6 @@ public class ImageDesignPanel extends JPanel {
 		boolean roundly;
 		boolean grey;
 		boolean showHeader;
-		boolean showFooter;
 
 		if (this.away) {
 			flagWidth = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
@@ -84,8 +82,6 @@ public class ImageDesignPanel extends JPanel {
 					.getBoolean(Config.VISITED_ROUNDLY.toString(), Boolean.TRUE).booleanValue();
 			showHeader = ModuleConfig.instance()
 					.getBoolean(Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE).booleanValue();
-			showFooter = ModuleConfig.instance()
-					.getBoolean(Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE).booleanValue();
 		} else {
 			flagWidth = ModuleConfig.instance().getInteger(Config.HOSTED_FLAG_WIDTH.toString(),
 					Integer.valueOf(8));
@@ -102,8 +98,6 @@ public class ImageDesignPanel extends JPanel {
 					.getBoolean(Config.HOSTED_ROUNDLY.toString(), Boolean.TRUE).booleanValue();
 			showHeader = ModuleConfig.instance()
 					.getBoolean(Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE).booleanValue();
-			showFooter = ModuleConfig.instance()
-					.getBoolean(Config.SHOW_HOSTED_FOOTER.toString(), Boolean.TRUE).booleanValue();
 		}
 		flagDisplayModel.setRoundFlag(roundly);
 		this.roundlyCheckBox.setSelected(roundly);
@@ -112,7 +106,6 @@ public class ImageDesignPanel extends JPanel {
 		flagDisplayModel.setFlagWidth(flagWidth);
 		this.sizeSpinner.setValue(Integer.valueOf(flagWidth));
 		this.headerYesNoCheckBox.setSelected(showHeader);
-		this.footerYesNoCheckBox.setSelected(showFooter);
 
 		if (this.emblemPanel != null) {
 			this.centerPanel.remove(this.emblemPanel);
@@ -129,7 +122,6 @@ public class ImageDesignPanel extends JPanel {
 			}
 		}
 		this.emblemPanel.setHeader(showHeader);
-		this.emblemPanel.setFooter(showFooter);
 		this.emblemPanel.setHeaderText(headerText);
 		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
 		this.centerPanel.validate();
@@ -153,10 +145,6 @@ public class ImageDesignPanel extends JPanel {
 		this.headerYesNoCheckBox = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
 				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
 		add(northPanel, this.headerYesNoCheckBox, constraints, 0, 2, 1, 1);
-
-		this.footerYesNoCheckBox = new JCheckBox("Show Footer", ModuleConfig.instance().getBoolean(
-				Config.SHOW_VISITED_FOOTER.toString(), Boolean.TRUE));
-		add(northPanel, this.footerYesNoCheckBox, constraints, 1, 2, 1, 1);
 
 		this.roundlyCheckBox = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
 				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
@@ -249,21 +237,6 @@ public class ImageDesignPanel extends JPanel {
 					ModuleConfig.instance().setBoolean(Config.SHOW_HOSTED_HEADER.toString(), selected);
 				}
 				emblemPanel.setHeader(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
-			}
-		});
-
-		this.footerYesNoCheckBox.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
-				if (away) {
-					ModuleConfig.instance().setBoolean(Config.SHOW_VISITED_FOOTER.toString(), selected);
-				} else {
-					ModuleConfig.instance().setBoolean(Config.SHOW_HOSTED_FOOTER.toString(), selected);
-				}
-				emblemPanel.setFooter(selected);
 				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});

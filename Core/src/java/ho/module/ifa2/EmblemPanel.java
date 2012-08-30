@@ -26,7 +26,6 @@ public class EmblemPanel extends JPanel {
 	private int flagWidth = 8;
 	private String headerText = "";
 	private boolean header = true;
-	private boolean footer = true;
 	private boolean grey = true;
 	private boolean roundly = false;
 	private int brightness = 50;
@@ -88,11 +87,6 @@ public class EmblemPanel extends JPanel {
 			return this.flagPanel;
 		}
 		return this;
-	}
-
-	public void setFooter(boolean footer) {
-		this.footer = footer;
-		this.flagPanel.setFooterVisible(footer);
 	}
 
 	public void setHeader(boolean header) {
