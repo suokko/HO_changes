@@ -201,13 +201,12 @@ public class Filter {
     	}
 
     	boolean homeWin = (match.getHomeGoals() > match.getAwayGoals());
-    	boolean awayWin = (match.getHomeGoals() < match.getAwayGoals());
     	
-    	if (!win && ((homeWin && match.isHome()) || (awayWin && !match.isHome()))) {
+    	if (!win && ((homeWin && match.isHome()) || (!homeWin && !match.isHome()))) {
     	   	return false;
     	}
     	
-    	if (!defeat && ((awayWin && match.isHome()) || (homeWin && !match.isHome()))) {
+    	if (!defeat && ((!homeWin && match.isHome()) || (homeWin && !match.isHome()))) {
     		return false;
     	}
     	

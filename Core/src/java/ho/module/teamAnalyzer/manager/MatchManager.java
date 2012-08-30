@@ -99,7 +99,7 @@ public class MatchManager {
         String oldName = SystemManager.getActiveTeamName();
 
         MatchKurzInfo[] matchKurtzInfo = DBManager.instance().getMatchesKurzInfo(SystemManager
-                                                                                .getActiveTeam().getTeamId(),
+                                                                                .getActiveTeamId(),
                                                                                 SpielePanel.NUR_EIGENE_SPIELE,
                                                                                 false);
 
@@ -114,7 +114,7 @@ public class MatchManager {
 
             String temp;
 
-            if (match.getHomeId() == SystemManager.getActiveTeam().getTeamId()) {
+            if (match.getHomeId() == SystemManager.getActiveTeamId()) {
                 temp = match.getHomeTeam();
             } else {
                 temp = match.getAwayTeam();

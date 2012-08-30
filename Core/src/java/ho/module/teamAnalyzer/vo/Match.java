@@ -329,6 +329,6 @@ public class Match {
     }
     
     public boolean isHome() {
-        return (getHomeId() == SystemManager.getActiveTeam().getTeamId());
+        return (getHomeId() == SystemManager.getActiveTeamId());
     }
 }

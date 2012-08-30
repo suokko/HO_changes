@@ -69,8 +69,8 @@ public class SystemManager {
      *
      * @return
      */
-    public static Team getActiveTeam() {
-        return selectedTeam;
+    public static int getActiveTeamId() {
+        return selectedTeam.getTeamId();
     }
 
     /**

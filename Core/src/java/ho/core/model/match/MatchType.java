@@ -112,16 +112,6 @@ public enum MatchType {
 		}
 	}
 
-	public boolean isNT() {
-		switch (this) {
-			case NATIONALFRIENDLY:
-			case NATIONALCOMPNORMAL:
-			case NATIONALCOMPCUPRULES:
-				return true;
-			default:
-				return false;
-		}
-	}
 
 	public String getName() {
 		 switch (this) {

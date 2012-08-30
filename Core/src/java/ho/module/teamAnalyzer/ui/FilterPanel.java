@@ -90,8 +90,8 @@ public class FilterPanel extends JPanel implements ActionListener {
      * Check, if the selected opponent is among the next 2 teams (allows full update according to CHPP rules).
      */
 	private boolean isNextOpponent() {
-		return ((SystemManager.getActiveTeam().getTeamId() == SystemManager.getCupOpponentId()) //
-		|| (SystemManager.getActiveTeam().getTeamId() == SystemManager.getLeagueOpponentId()));
+		return ((SystemManager.getActiveTeamId() == SystemManager.getCupOpponentId()) //
+		|| (SystemManager.getActiveTeamId() == SystemManager.getLeagueOpponentId()));
 	}
 
     /**
@@ -132,7 +132,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		for (Iterator<Team> iter = TeamManager.getTeams().iterator(); iter.hasNext(); ) {
 			Team element = iter.next();
 			teamCombo.addItem(element);
-			if (SystemManager.getActiveTeam().getTeamId() == element.getTeamId()) {
+			if (SystemManager.getActiveTeamId() == element.getTeamId()) {
 				teamCombo.setSelectedItem(element);
 			}
 			i++;
@@ -188,9 +188,9 @@ public class FilterPanel extends JPanel implements ActionListener {
 		downloadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HOLogger.instance().log(getClass(), "UPDATE for Team " + SystemManager.getActiveTeam().getTeamId());
-				HattrickManager.downloadPlayers(SystemManager.getActiveTeam());
-					HattrickManager.downloadMatches(SystemManager.getActiveTeam().getTeamId(), TeamAnalyzerPanel.filter);
+				HOLogger.instance().log(getClass(), "UPDATE for Team " + SystemManager.getActiveTeamId());
+				HattrickManager.downloadPlayers(SystemManager.getActiveTeamId());
+					HattrickManager.downloadMatches(SystemManager.getActiveTeamId(), TeamAnalyzerPanel.filter);
 				SystemManager.refresh();
 			}
 		});
