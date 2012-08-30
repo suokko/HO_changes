@@ -31,44 +31,25 @@ public class EmblemPanel extends JPanel {
 	private boolean roundly = false;
 	private int brightness = 50;
 	private String imagePath = "";
-	private FlagDisplayModel flagDisplayModel;
+	private final FlagDisplayModel flagDisplayModel;
+	private final boolean away;
 
-	public EmblemPanel(final boolean away, final FlagDisplayModel flagDisplayModel) {
+	public EmblemPanel(boolean away, FlagDisplayModel flagDisplayModel) {
+		this.away = away;
 		this.flagDisplayModel = flagDisplayModel;
 		this.flagPanel = new FlagPanel(away, flagDisplayModel);
 		initialize();
-
-		this.flagDisplayModel.addModelChangeListener(new ModelChangeListener() {
-
-			@Override
-			public void flagSizeChanged() {
-				remove(flagPanel);
-				flagPanel = new FlagPanel(away, flagDisplayModel);
-				GridBagConstraints constraints = new GridBagConstraints();
-				constraints.gridy = 1;
-				add(flagPanel, constraints);
-				validate();
-			}
-		});
 	}
 
 	private void initialize() {
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
-		if (this.logoLabel == null) {
-			this.logoLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
-					"ifa.loadEmblem.clickHere"));
-			this.logoLabel.setPreferredSize(new Dimension(100, 100));
-			this.logoLabel.setVerticalAlignment(0);
-			this.logoLabel.setHorizontalAlignment(0);
-			this.logoLabel.setBackground(Color.white);
-			this.logoLabel.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
-					loadEmblem();
-				}
-			});
-		}
+		this.logoLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
+				"ifa.loadEmblem.clickHere"));
+		this.logoLabel.setPreferredSize(new Dimension(100, 100));
+		this.logoLabel.setVerticalAlignment(0);
+		this.logoLabel.setHorizontalAlignment(0);
+		this.logoLabel.setBackground(Color.white);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
@@ -159,5 +140,27 @@ public class EmblemPanel extends JPanel {
 		}
 		validate();
 		repaint();
+	}
+
+	private void addListeners() {
+		this.flagDisplayModel.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void flagSizeChanged() {
+				remove(flagPanel);
+				flagPanel = new FlagPanel(away, flagDisplayModel);
+				GridBagConstraints constraints = new GridBagConstraints();
+				constraints.gridy = 1;
+				add(flagPanel, constraints);
+				validate();
+			}
+		});
+
+		this.logoLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				loadEmblem();
+			}
+		});
 	}
 }
