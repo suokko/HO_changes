@@ -1,9 +1,21 @@
 package ho.module.ifa2;
 
+import ho.core.db.DBManager;
+import ho.core.file.xml.XMLManager;
+import ho.core.file.xml.XMLWorldDetailsParser;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailLeague;
+import ho.core.model.WorldDetailsManager;
+import ho.core.net.MyConnector;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -72,6 +84,35 @@ public class RightPanel extends JPanel {
 				if (evt.getStateChange() == ItemEvent.SELECTED) {
 					imageDesignPanel.setAway(false);
 				}
+			}
+		});
+		
+		this.updateButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String worldDetails;
+				try {
+					worldDetails = MyConnector.instance().getWorldDetails(0);
+					List<WorldDetailLeague> leagues = XMLWorldDetailsParser.parseDetails(XMLManager
+							.parseString(worldDetails));
+					DBManager.instance().saveWorldDetailLeagues(leagues);
+					WorldDetailsManager.instance().refresh();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == 0) {
+					PluginIfaUtils.updateTeamTable();
+				}
+				try {
+					PluginIfaUtils.updateMatchesTable();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				this.pluginIfaPanel.getImageDesignPanel().refreshFlagPanel();
+//				this.pluginIfaPanel.getStatisticScrollPanelHome().refresh();
+//				this.pluginIfaPanel.getStatisticScrollPanelAway().refresh();
 			}
 		});
 	}

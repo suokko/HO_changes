@@ -27,7 +27,6 @@ public class PluginIfaPanel extends JPanel {
 		constraints.weightx = 1.0;
 		constraints.weighty = 1.0;
 
-//		this.imageDesignPanel = new ImageDesignPanel(this);
 		this.rightPanel = new RightPanel();
 		this.statisticScrollPanelAway = new StatisticScrollPanel(true);
 		this.statisticScrollPanelHome = new StatisticScrollPanel(false);
@@ -44,17 +43,5 @@ public class PluginIfaPanel extends JPanel {
 		constraints.gridwidth = w;
 		constraints.gridheight = h;
 		add(c, constraints);
-	}
-
-	public ImageDesignPanel getImageDesignPanel() {
-		return this.rightPanel.getImageDesignPanel();
-	}
-
-	public StatisticScrollPanel getStatisticScrollPanelAway() {
-		return this.statisticScrollPanelAway;
-	}
-
-	public StatisticScrollPanel getStatisticScrollPanelHome() {
-		return this.statisticScrollPanelHome;
 	}
 }

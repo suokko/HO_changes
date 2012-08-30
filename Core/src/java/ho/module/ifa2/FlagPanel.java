@@ -98,11 +98,12 @@ public class FlagPanel extends JPanel {
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.weightx = 0.0D;
 		constraints.weighty = 0.0D;
-		if (this.flagLabels != null)
+		if (this.flagLabels != null) {
 			for (int i = 0; i < this.flagLabels.length; i++) {
 				add(this.flagLabels[i], constraints, i % flagDisplayModel.getFlagWidth(), 2 + i
 						/ flagDisplayModel.getFlagWidth(), 1, 1);
 			}
+		}
 		constraints.fill = 2;
 		constraints.anchor = 13;
 		constraints.insets = new Insets(1, 1, 1, 1);
