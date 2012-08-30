@@ -173,7 +173,10 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
     }
 
     private void doEvent(){
-    	if (((MARKIERTER_VEREIN == null) && (m_jpLigaTabelle.getSelectedTeam() != null))
+         if (MARKIERTER_VEREIN == null && m_jpLigaTabelle.getSelectedTeam() == null)
+                return;
+
+         if (MARKIERTER_VEREIN == null
                 || !MARKIERTER_VEREIN.equals(m_jpLigaTabelle.getSelectedTeam())) {
                 MARKIERTER_VEREIN = m_jpLigaTabelle.getSelectedTeam();
                 markierungInfo();
