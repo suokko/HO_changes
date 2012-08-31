@@ -7,6 +7,8 @@ Changelist HO! 1.432
 		It is possible to delete your own matches by the db cleanup tool, and download them again by
 		archive options in download. After this a full subskill recalculation could be interesting.
 	. Osmosis training has been added. A small training effect for all players on the field.
+	. Added green background for 100% trainees and yellow for 50% trainees in training prediction (white background for osmosis training).
+	. Use subskill overflow for training prediction to avoid rounding errors hiding coach and assitant number changes effects.
 	. The skill level effect on training has been adjusted.
 	. Skill drops due to age at 30 or above, or at skills of 16 or above is in as a first version.
 		Speeds will require more or less tuning.
@@ -18,6 +20,7 @@ Changelist HO! 1.432
 	. Tournament opponents are in, and so are tournament matches.
 	. Auto filter options are now saved when you analyze, and should reappear that way until changed.
 	. Auto filter options for tournament and masters matches.
+	. Fixed bug that renaming team after the last league match prevented analyzing matches before name changes.
 
 - Match order uploads
 	. The option to upload match orders to Hattrick have been added.
@@ -38,9 +41,11 @@ Changelist HO! 1.432
 - Copying ratings to the clipboard in HT-ML table format now centres all ratings in the table.
 - Lowered Overcrowding penalty for lineups with 3 forwards. Attack ratings with 3 forwards should now be closer to the reality.
 - TS Forecast Module should now display confidence at the correct level.
+- TS Forecast Module: Fixed Loepi curve with a new database, enabled TS and confidence graphs by default and detect if team is still in cup or has qualifiers.
 - Maintain Captain and Set piece taker when the line up is reversed.
 - The old penalty shooter button is gone. Look for the new tab instead.
 - Added ability to reset all positional orders in the line up tab.
+- Calculate loyalty and homegrownbonus for set pieces and penalty takers.
 
 Language updates:
 -----------------
