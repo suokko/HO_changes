@@ -16,10 +16,10 @@ public class FlagDisplayModel {
 	}
 
 	public void setBrightness(int brightness) {
+		this.brightness = brightness;
 		for (int i = this.listeners.size() - 1; i >= 0; i--) {
 			this.listeners.get(i).brightnessChanged();
-		}
-		this.brightness = brightness;
+		}		
 	}
 
 	public boolean isGrey() {

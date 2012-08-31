@@ -72,6 +72,7 @@ public class ImageDesignPanel extends JPanel {
 
 		FlagDisplayModel flagDisplayModel = new FlagDisplayModel();
 		int flagWidth;
+		int brightness;
 		String emblemPath;
 		String headerText;
 		boolean roundly;
@@ -85,8 +86,8 @@ public class ImageDesignPanel extends JPanel {
 					"");
 			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText"));
-			flagDisplayModel.setBrightness(ModuleConfig.instance().getInteger(
-					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
+			brightness = ModuleConfig.instance().getInteger(
+					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)).intValue();			
 			grey = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(), Boolean.TRUE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
@@ -100,8 +101,8 @@ public class ImageDesignPanel extends JPanel {
 					.getString(Config.HOSTED_EMBLEM_PATH.toString(), "");
 			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText"));
-			flagDisplayModel.setBrightness(ModuleConfig.instance().getInteger(
-					Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50)));
+			brightness = ModuleConfig.instance().getInteger(
+					Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50)).intValue();
 			grey = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(), Boolean.TRUE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
@@ -112,6 +113,7 @@ public class ImageDesignPanel extends JPanel {
 		flagDisplayModel.setRoundFlag(roundly);
 		flagDisplayModel.setGrey(grey);		
 		flagDisplayModel.setFlagWidth(flagWidth);
+		flagDisplayModel.setBrightness(brightness);
 		if (this.emblemPanel != null) {
 			this.centerPanel.remove(this.emblemPanel);
 		}
@@ -129,7 +131,8 @@ public class ImageDesignPanel extends JPanel {
 		this.roundlyCheckBox.setSelected(roundly);
 		this.greyColoredCheckBox.setSelected(grey);
 		this.sizeSpinner.setValue(Integer.valueOf(flagWidth));
-		this.headerYesNoCheckBox.setSelected(showHeader);		
+		this.headerYesNoCheckBox.setSelected(showHeader);
+		this.brightnessSlider.setValue(brightness);
 		this.emblemPanel.setHeader(showHeader);
 		this.emblemPanel.setHeaderText(headerText);
 		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
