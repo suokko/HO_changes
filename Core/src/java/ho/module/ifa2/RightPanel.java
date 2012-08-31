@@ -10,6 +10,7 @@ import ho.core.net.MyConnector;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -46,7 +47,7 @@ public class RightPanel extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridwidth = 2;
-		add(this.updateButton, gbc);
+//		add(this.updateButton, gbc);
 
 		this.awayRadioButton = new JRadioButton("Visited Countries", true);
 		gbc.gridy = 1;
@@ -66,6 +67,7 @@ public class RightPanel extends JPanel {
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
 		gbc.weighty = 1.0;
+		gbc.insets = new Insets(10, 6, 10, 6);
 		add(this.imageDesignPanel, gbc);
 	}
 

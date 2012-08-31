@@ -7,9 +7,7 @@ import ho.module.ifa2.gif.Gif89Encoder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -53,13 +51,15 @@ public class ImageDesignPanel extends JPanel {
 	private JSpinner sizeSpinner;
 	private boolean away;
 	private JPanel centerPanel;
-	private JTextField textField;
+	private JTextField headerTextField;
 	private JCheckBox greyColoredCheckBox;
 	private JCheckBox roundlyCheckBox;
 	private JSlider brightnessSlider;
 	private JCheckBox headerYesNoCheckBox;
 	private JCheckBox animGifCheckBox;
 	private JSpinner delaySpinner;
+	private JLabel delayLabel;
+	private JButton saveImageButton;
 
 	public ImageDesignPanel() {
 		initialize();
@@ -110,13 +110,8 @@ public class ImageDesignPanel extends JPanel {
 					.getBoolean(Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE).booleanValue();
 		}
 		flagDisplayModel.setRoundFlag(roundly);
-		this.roundlyCheckBox.setSelected(roundly);
-		flagDisplayModel.setGrey(grey);
-		this.greyColoredCheckBox.setSelected(grey);
+		flagDisplayModel.setGrey(grey);		
 		flagDisplayModel.setFlagWidth(flagWidth);
-		this.sizeSpinner.setValue(Integer.valueOf(flagWidth));
-		this.headerYesNoCheckBox.setSelected(showHeader);
-
 		if (this.emblemPanel != null) {
 			this.centerPanel.remove(this.emblemPanel);
 		}
@@ -131,6 +126,10 @@ public class ImageDesignPanel extends JPanel {
 				}
 			}
 		}
+		this.roundlyCheckBox.setSelected(roundly);
+		this.greyColoredCheckBox.setSelected(grey);
+		this.sizeSpinner.setValue(Integer.valueOf(flagWidth));
+		this.headerYesNoCheckBox.setSelected(showHeader);		
 		this.emblemPanel.setHeader(showHeader);
 		this.emblemPanel.setHeaderText(headerText);
 		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
@@ -142,90 +141,106 @@ public class ImageDesignPanel extends JPanel {
 		FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 				Integer.valueOf(8));
 
-		setLayout(new BorderLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.insets = new Insets(5, 5, 5, 5);
-
-		this.centerPanel = new JPanel();
-		this.centerPanel.setLayout(new GridBagLayout());
-
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridBagLayout());
-		this.headerYesNoCheckBox = new JCheckBox("Show Header", ModuleConfig.instance().getBoolean(
-				Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE));
-		add(northPanel, this.headerYesNoCheckBox, constraints, 0, 2, 1, 1);
 
-		this.roundlyCheckBox = new JCheckBox("Roundly", ModuleConfig.instance().getBoolean(
-				Config.VISITED_ROUNDLY.toString(), Boolean.FALSE));
-		add(northPanel, this.roundlyCheckBox, constraints, 0, 3, 1, 1);
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc1 = new GridBagConstraints();
+		gbc1.anchor = GridBagConstraints.WEST;
+		gbc1.insets = new Insets(5, 5, 5, 5);
+		this.roundlyCheckBox = new JCheckBox("Roundly");
+		this.roundlyCheckBox.setSelected(false);
+		panel.add(this.roundlyCheckBox, gbc1);
+		this.greyColoredCheckBox = new JCheckBox("Grey", true);
+		this.greyColoredCheckBox.setEnabled(true);
+		gbc1.gridx = 1;
+		panel.add(this.greyColoredCheckBox, gbc1);
 
-		this.greyColoredCheckBox = new JCheckBox("Grey", ModuleConfig.instance().getBoolean(
-				Config.VISITED_GREY.toString(), Boolean.TRUE));
-		add(northPanel, this.greyColoredCheckBox, constraints, 1, 3, 1, 1);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 3;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		northPanel.add(panel, gbc);
+		
+		JLabel brightnessLabel = new JLabel("Brightness:");
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		northPanel.add(brightnessLabel, gbc);
 
-		this.brightnessSlider = new JSlider(0, 100, ModuleConfig.instance().getInteger(
-				Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)));
-		this.brightnessSlider.setMinimumSize(new Dimension(200, brightnessSlider.getPreferredSize().height));
+		this.brightnessSlider = new JSlider(0, 100, 50);
+		this.brightnessSlider.setMinimumSize(new Dimension(200,
+				brightnessSlider.getPreferredSize().height));
 		this.brightnessSlider.setMajorTickSpacing(25);
 		this.brightnessSlider.setMinorTickSpacing(5);
 		this.brightnessSlider.setPaintTicks(true);
 		this.brightnessSlider.setPaintLabels(true);
-		add(northPanel, this.brightnessSlider, constraints, 1, 4, 1, 1);
+		gbc.gridx = 1;
+		gbc.gridwidth = 2;
+		northPanel.add(this.brightnessSlider, gbc);
 
-		JPanel sizePanel = new JPanel(new FlowLayout(1, 0, 0));
+		JLabel sizeLabel = new JLabel("Flags/Row: ");
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		northPanel.add(sizeLabel, gbc);
+		
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
 				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
-		sizePanel.add(new JLabel("Flags/Row: "));
-		sizePanel.add(this.sizeSpinner);
-		add(northPanel, sizePanel, constraints, 0, 5, 1, 1);
+		gbc.gridx = 1;
+		gbc.gridwidth = 2;		
+		northPanel.add(this.sizeSpinner, gbc);
 
-		this.textField = new JTextField(ModuleConfig.instance().getString(
+		this.headerYesNoCheckBox = new JCheckBox("Show Header", true);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		northPanel.add(this.headerYesNoCheckBox, gbc);
+
+		this.headerTextField = new JTextField(ModuleConfig.instance().getString(
 				Config.VISITED_HEADER_TEXT.toString(),
 				HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText")));
-		this.textField.setPreferredSize(new Dimension(150, 25));
-		add(northPanel, this.textField, constraints, 1, 5, 1, 1);
+		this.headerTextField.setPreferredSize(new Dimension(150, 25));
+		this.headerTextField.setMinimumSize(new Dimension(150, 25));
+		gbc.gridx = 1;
+		gbc.gridwidth = 2;
+		northPanel.add(this.headerTextField, gbc);
 
 		this.animGifCheckBox = new JCheckBox("Animated GIF", ModuleConfig.instance().getBoolean(
 				Config.ANIMATED_GIF.toString(), Boolean.FALSE));
-		add(northPanel, this.animGifCheckBox, constraints, 0, 6, 1, 1);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		northPanel.add(this.animGifCheckBox, gbc);
 
-		JPanel spinnerPanel = new JPanel(new FlowLayout(1, 0, 0));
+		this.delayLabel = new JLabel("Delay:");
+		this.delayLabel.setEnabled(false);
+		gbc.gridx = 1;
+		gbc.insets = new Insets(5, 5, 5, 2);
+		northPanel.add(this.delayLabel, gbc);
 		double value = ModuleConfig.instance()
 				.getBigDecimal(Config.ANIMATED_GIF_DELAY.toString(), BigDecimal.valueOf(5))
 				.doubleValue();
 		this.delaySpinner = new JSpinner(new SpinnerNumberModel(value, 0.0, 60.0, 0.1));
-		spinnerPanel.add(new JLabel("Delay: "));
-		spinnerPanel.add(this.delaySpinner);
-		add(northPanel, spinnerPanel, constraints, 1, 6, 1, 1);
+		this.delaySpinner.setEnabled(false);
+		gbc.gridx = 2;
+		gbc.insets = new Insets(5, 2, 5, 5);
+		northPanel.add(this.delaySpinner, gbc);
 
-		JButton saveImageButton = new JButton("Save Image");
-		saveImageButton.setActionCommand("saveImage");
-		saveImageButton.addActionListener(new ActionListener() {
+		this.saveImageButton = new JButton("Save Image");
+		this.saveImageButton.setActionCommand("saveImage");
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					saveImage();
-				} catch (IOException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
-		add(this.centerPanel, saveImageButton, constraints, 0, 1, 1, 1);
+		this.centerPanel = new JPanel();
+		this.centerPanel.setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
+		gbc.gridy = 1;
+		this.centerPanel.add(this.saveImageButton, gbc);
 
-		add(northPanel, "North");
-		add(new JScrollPane(this.centerPanel), "Center");
-	}
-
-	private void add(JPanel panel, Component c, GridBagConstraints constraints, int x, int y,
-			int w, int h) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		constraints.gridwidth = w;
-		constraints.gridheight = h;
-		panel.add(c, constraints);
+		setLayout(new BorderLayout());
+		add(northPanel, BorderLayout.NORTH);
+		add(new JScrollPane(this.centerPanel), BorderLayout.CENTER);
 	}
 
 	public void refreshFlagPanel() {
@@ -253,6 +268,7 @@ public class ImageDesignPanel extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				headerTextField.setEnabled(selected);
 				if (away) {
 					ModuleConfig.instance().setBoolean(Config.SHOW_VISITED_HEADER.toString(),
 							selected);
@@ -295,6 +311,16 @@ public class ImageDesignPanel extends JPanel {
 			}
 		});
 
+		this.animGifCheckBox.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				delaySpinner.setEnabled(selected);
+				delayLabel.setEnabled(selected);
+			}
+		});
+
 		this.brightnessSlider.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -310,7 +336,6 @@ public class ImageDesignPanel extends JPanel {
 					}
 					emblemPanel.getFlagDisplayModel().setBrightness(value);
 					ImageDesignPanel.this.refreshFlagPanel();
-					System.out.println("####- " + value);
 				}
 			}
 		});
@@ -332,12 +357,24 @@ public class ImageDesignPanel extends JPanel {
 			}
 		});
 
-		this.textField.addKeyListener(new KeyAdapter() {
+		this.headerTextField.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				ImageDesignPanel.this.emblemPanel.setHeaderText(((JTextField) arg0.getSource())
 						.getText());
+			}
+		});
+
+		this.saveImageButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					saveImage();
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
 			}
 		});
 	}
