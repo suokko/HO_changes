@@ -5,7 +5,6 @@ import ho.core.module.config.ModuleConfig;
 import ho.module.ifa2.config.Config;
 import ho.module.ifa2.gif.Gif89Encoder;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -32,7 +31,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -44,13 +42,11 @@ import javax.swing.event.ChangeListener;
 public class ImageDesignPanel extends JPanel {
 
 	private static final long serialVersionUID = 4562976951725733955L;
-	public static int FLAG_WIDTH = 8;
 	private static final int MIN_FLAG_WIDTH = 5;
 	private static final int MAX_FLAG_WIDTH = 12;
 	private EmblemPanel emblemPanel;
 	private JSpinner sizeSpinner;
 	private boolean away;
-	private JPanel centerPanel;
 	private JTextField headerTextField;
 	private JCheckBox greyColoredCheckBox;
 	private JCheckBox roundlyCheckBox;
@@ -115,7 +111,7 @@ public class ImageDesignPanel extends JPanel {
 		flagDisplayModel.setFlagWidth(flagWidth);
 		flagDisplayModel.setBrightness(brightness);
 		if (this.emblemPanel != null) {
-			this.centerPanel.remove(this.emblemPanel);
+			remove(this.emblemPanel);
 		}
 		this.emblemPanel = new EmblemPanel(away, flagDisplayModel);
 		if (!emblemPath.equals("")) {
@@ -135,18 +131,18 @@ public class ImageDesignPanel extends JPanel {
 		this.brightnessSlider.setValue(brightness);
 		this.emblemPanel.setHeader(showHeader);
 		this.emblemPanel.setHeaderText(headerText);
-		this.centerPanel.add(this.emblemPanel, new GridBagConstraints());
-		this.centerPanel.validate();
-		this.centerPanel.repaint();
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridy = 1;
+		add(this.emblemPanel, gbc);
+		validate();
+		repaint();
 	}
 
 	private void initialize() {
-		FLAG_WIDTH = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
-				Integer.valueOf(8));
-
-		JPanel northPanel = new JPanel();
-		northPanel.setLayout(new GridBagLayout());
-
+		setLayout(new GridBagLayout());
+		JPanel northPanel = new JPanel(new GridBagLayout());
+		
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc1 = new GridBagConstraints();
 		gbc1.anchor = GridBagConstraints.WEST;
@@ -189,7 +185,9 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridwidth = 1;
 		northPanel.add(sizeLabel, gbc);
 		
-		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(FLAG_WIDTH, MIN_FLAG_WIDTH,
+		int flagWidth = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
+				Integer.valueOf(8));
+		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(flagWidth, MIN_FLAG_WIDTH,
 				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
 		gbc.gridx = 1;
@@ -235,20 +233,14 @@ public class ImageDesignPanel extends JPanel {
 		this.saveImageButton = new JButton("Save Image");
 		this.saveImageButton.setActionCommand("saveImage");
 
-		this.centerPanel = new JPanel();
-		this.centerPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		gbc.gridy = 1;
-		this.centerPanel.add(this.saveImageButton, gbc);
-
-		setLayout(new BorderLayout());
-		add(northPanel, BorderLayout.NORTH);
-		add(new JScrollPane(this.centerPanel), BorderLayout.CENTER);
+		add(northPanel, gbc);
+		
+		gbc.gridy = 2;
+		add(this.saveImageButton, gbc);
 	}
 
 	public void refreshFlagPanel() {
-		this.centerPanel.validate();
-		this.centerPanel.repaint();
 		validate();
 		repaint();
 	}
