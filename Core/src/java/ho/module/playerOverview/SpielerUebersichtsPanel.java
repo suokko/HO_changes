@@ -241,6 +241,9 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
+						if (e.getValueIsAdjusting())
+							return;
+
 						selectRow(spielerUebersichtTableName,
 								spielerUebersichtTable.getSelectedRow());
 					}
@@ -251,6 +254,9 @@ public class SpielerUebersichtsPanel extends ImagePanel {
 
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
+						if (e.getValueIsAdjusting())
+							return;
+
 						int row = spielerUebersichtTableName.getSelectedRow();
 						selectRow(spielerUebersichtTable, row);
 						if (row > -1) {
