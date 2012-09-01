@@ -41,6 +41,8 @@ import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -293,6 +295,7 @@ public class PenaltyTakersView extends JPanel {
 		buttonsPanel.add(this.autoButton, gbc);
 
 		this.clearButton = new JButton(getLangStr("lineup.penaltytakers.button.reset"));
+		this.clearButton.setEnabled(false);
 		gbc.gridy = 1;
 		gbc.insets = new Insets(4, 8, 4, 10);
 		buttonsPanel.add(this.clearButton, gbc);
@@ -390,6 +393,14 @@ public class PenaltyTakersView extends JPanel {
 					}
 					removeFromTakersButton.setEnabled(selectedRows.length > 0);
 				}
+			}
+		});
+		
+		this.takersTable.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent arg0) {
+				clearButton.setEnabled(takersTable.getRowCount() > 0);				
 			}
 		});
 
@@ -600,6 +611,7 @@ public class PenaltyTakersView extends JPanel {
 
 		public void addAll(Collection<PenaltyTaker> takers) {
 			this.data.addAll(takers);
+			fireTableDataChanged();
 		}
 
 		public void setPenaltyTakers(List<PenaltyTaker> takers) {
