@@ -31,7 +31,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
      */
     public InitOptionsDialog() {
         super(new JFrame(), "Please select your language", true);
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         initComponents();
     }
@@ -50,6 +50,7 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
                                                             .getSelectedItem());
 
                 setVisible(false);
+                dispose();
             }
         }
     }

@@ -61,6 +61,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
               true);
 
         this.addWindowListener(this);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -102,6 +103,8 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 		OptionManager.deleteInstance();
 		setVisible(false);
+		removeWindowListener(this);
+		dispose();
     }
 
     /**
@@ -251,5 +254,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 		}
 		OptionManager.deleteInstance();
 		setVisible(false);
+		removeWindowListener(this);
+		dispose();
 	}
 }
