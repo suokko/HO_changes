@@ -1726,7 +1726,7 @@ public final class Spieler {
     			//and check that the player has not popped
 	    		if ((drop > 0) && (originalPlayer.getSubskill4PosAccurate(skillType) >0)
 	    				&& (getValue4Skill4(skillType) == originalPlayer.getValue4Skill4(skillType))) {
-	    			setSubskill4Pos(skillType, Math.max(0, originalPlayer.getSubskill4PosAccurate(skillType) - drop/100));
+	    			setSubskill4Pos(skillType, Math.max(0, getSubskill4PosAccurate(skillType) - drop/100));
 	    		}
     		}
     	}
