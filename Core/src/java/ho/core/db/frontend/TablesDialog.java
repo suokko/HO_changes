@@ -24,6 +24,7 @@ final class TablesDialog extends JDialog implements MouseListener {
     
     protected TablesDialog(SQLDialog owner) {
         super(owner, "Tables");
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         initialize();
     }
 
