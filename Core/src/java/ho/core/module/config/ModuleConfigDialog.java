@@ -26,6 +26,7 @@ public class ModuleConfigDialog extends JDialog implements ActionListener{
 	public ModuleConfigDialog(JDialog owner, IModule module){
 		super(owner,module.getDescription());
 		this.module = module;
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initialize();
 	}
 	
