@@ -41,6 +41,7 @@ public class ExceptionDialog extends JDialog {
 		setModal(true);
 		this.throwable = t;
 		setTitle(msg);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 	}
 
