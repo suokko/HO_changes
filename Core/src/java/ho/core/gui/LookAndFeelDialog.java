@@ -21,6 +21,7 @@ public class LookAndFeelDialog extends JDialog {
 	private static final long serialVersionUID = -5492754898221009950L;
 
 	public LookAndFeelDialog() {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 		pack();
 	}
