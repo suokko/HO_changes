@@ -1124,38 +1124,49 @@ public final class Spieler {
      * @return TODO Missing Return Method Documentation
      */
     public float getSubskill4Pos(int skill) {
+    	return Math.min(0.99f, Helper.round(getSubskill4PosAccurate(skill), 2));
+    }
+
+    /**
+     * Returns accurate subskill number. If you need subskill for UI
+     * purpose it is better to use getSubskill4Pos()
+     *
+     * @param skill
+     * @return subskill between 0.0-0.999
+     */
+    public float getSubskill4PosAccurate(int skill) {
         double value = 0;
-        
-    	switch (skill) {
+
+        switch (skill) {
             case PlayerSkill.KEEPER:
-                value = Helper.round(Math.min(0.999f, (float) m_dSubTorwart), 2);
+                value = m_dSubTorwart;
                 break;
 
             case PlayerSkill.PLAYMAKING:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubSpielaufbau), 2);
-            	 break;
-            	 
+                value =  m_dSubSpielaufbau;
+                break;
+
             case PlayerSkill.DEFENDING:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubVerteidigung), 2);
-            	 break;
-            	 
+                value =  m_dSubVerteidigung;
+                break;
+
             case PlayerSkill.PASSING:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubPasspiel), 2);
-            	 break;
-            	 
+                value =  m_dSubPasspiel;
+                break;
+
             case PlayerSkill.WINGER:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubFluegelspiel), 2);
-            	 break;
-            	 
+                value =  m_dSubFluegelspiel;
+                break;
+
             case PlayerSkill.SCORING:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubTorschuss), 2);
-            	 break;
-            	 
+                value =  m_dSubTorschuss;
+                break;
+
             case PlayerSkill.SET_PIECES:
-            	 value =  Helper.round(Math.min(0.999f, (float) m_dSubStandards), 2);
-            	 break;
+                value =  m_dSubStandards;
+                break;
         }
-    	return (float) Math.min(0.99, value);
+        return (float) Math.min(0.999, value);
     }
 
     public void setSubskill4Pos(int skill, float value) {
@@ -1650,7 +1661,7 @@ public final class Spieler {
             /* Carry subskill over skillup */
             gain = 0.0f;
         }
-        setSubskill4Pos(skill, Math.min(0.99f, getSubskill4Pos(skill) + gain));
+        setSubskill4Pos(skill, Math.min(0.99f, getSubskill4PosAccurate(skill) + gain));
     }
 
     /**
@@ -1713,9 +1724,9 @@ public final class Spieler {
 	    		
     			// Only bother if there is drop, there is something to drop from, 
     			//and check that the player has not popped
-	    		if ((drop > 0) && (originalPlayer.getSubskill4Pos(skillType) >0)
+	    		if ((drop > 0) && (originalPlayer.getSubskill4PosAccurate(skillType) >0)
 	    				&& (getValue4Skill4(skillType) == originalPlayer.getValue4Skill4(skillType))) {
-	    			setSubskill4Pos(skillType, Math.max(0, originalPlayer.getSubskill4Pos(skillType) - drop/100));
+	    			setSubskill4Pos(skillType, Math.max(0, originalPlayer.getSubskill4PosAccurate(skillType) - drop/100));
 	    		}
     		}
     	}
@@ -1840,7 +1851,7 @@ public final class Spieler {
     		}
     	
     		if (!check4SkillUp(skillType, old)) {
-    			setSubskill4Pos(skillType, old.getSubskill4Pos(skillType));
+    			setSubskill4Pos(skillType, old.getSubskill4PosAccurate(skillType));
     		} else {
     			setSubskill4Pos(skillType, 0);
     		}

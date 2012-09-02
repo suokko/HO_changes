@@ -128,13 +128,13 @@ final class SpielerTable extends AbstractTable {
 			statement.append(player.getTorschuss()).append(",");
 			statement.append(player.getPasspiel()).append(",");
 			statement.append(player.getStandards()).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.KEEPER)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.DEFENDING)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.PLAYMAKING)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.WINGER)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.SCORING)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.PASSING)).append(",");
-			statement.append(player.getSubskill4Pos(PlayerSkill.SET_PIECES)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.KEEPER)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.DEFENDING)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.PLAYMAKING)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.WINGER)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.SCORING)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.PASSING)).append(",");
+			statement.append(player.getSubskill4PosAccurate(PlayerSkill.SET_PIECES)).append(",");
 			// Training offsets below
 			statement.append("0,");
 			statement.append("0,");
