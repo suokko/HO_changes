@@ -72,6 +72,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 */
 	public DownloadDialog() {
 		super(HOMainFrame.instance(), hov.getLanguageString("Download"), true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 	}
 
@@ -87,8 +88,10 @@ public class DownloadDialog extends JDialog implements ActionListener {
 			startDownload();
 			RefreshManager.instance().doReInit();
 			setVisible(false);
+			dispose();
 		} else if (e.getSource().equals(m_jbAbort)) {
 			setVisible(false);
+			dispose();
 		} else if (e.getSource().equals(m_jbProxy)) {
 			new ProxyDialog(HOMainFrame.instance());
 		}

@@ -52,6 +52,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
               ho.core.model.HOVerwaltung.instance().getLanguageString("Liga"),
               true);
 
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         initComponents(seasonid);
     }
 

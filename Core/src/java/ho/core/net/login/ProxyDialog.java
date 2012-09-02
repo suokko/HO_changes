@@ -53,7 +53,7 @@ public class ProxyDialog extends JDialog {
 
 		this.m_clMainFrame = mainFrame;
 
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 		addListeners();
 
@@ -74,6 +74,7 @@ public class ProxyDialog extends JDialog {
 
 		pack();
 		setVisible(true);
+		dispose();
 	}
 
 	/**

@@ -54,7 +54,7 @@ public class OAuthDialog extends JDialog {
 
 		this.m_clMainFrame = mainFrame;
 		this.m_service = service;
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		if (!StringUtils.isEmpty(scope)) {
 			scopes = "&scope=" + scope;
