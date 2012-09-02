@@ -15,6 +15,7 @@ public class HrfExplorerDialog extends JDialog {
 
 	public HrfExplorerDialog(JFrame owner){
 		super(owner,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initialize();
 	}
 
