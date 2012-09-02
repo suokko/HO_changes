@@ -28,6 +28,7 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	
 	public ArenaSizerDialog(JFrame owner){
 		super(owner,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initialize();
 	}
 
