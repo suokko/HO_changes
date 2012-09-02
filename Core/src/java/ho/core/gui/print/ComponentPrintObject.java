@@ -70,6 +70,7 @@ public class ComponentPrintObject extends PrintObject {
 
         if (m_iSichtbar != SICHTBAR) {
             dialog = new JDialog();
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
             //Componente in einem Dialog sichtbar machen, damit sie gedruckt werden kann
             dialog.getContentPane().setLayout(new BorderLayout());
