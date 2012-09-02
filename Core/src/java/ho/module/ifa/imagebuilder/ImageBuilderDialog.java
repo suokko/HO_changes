@@ -26,6 +26,7 @@ public class ImageBuilderDialog extends JDialog implements ActionListener{
 	
 	public ImageBuilderDialog(){
 		super(HOMainFrame.instance(),HOVerwaltung.instance().getLanguageString("Imagebuilder"),true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(800,600);
 		initialize();
 	}
