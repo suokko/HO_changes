@@ -25,7 +25,7 @@ import javax.swing.JRadioButton;
  *
  * @author draghetto
  */
-public class KeeperToolDialog extends JDialog implements WindowListener, ActionListener {
+public class KeeperToolDialog extends JDialog implements ActionListener {
 	
 	private static final long serialVersionUID = -7475169046243634752L;
 	
@@ -58,8 +58,8 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         //setLocation(0, 0);
 
         //setResizable(false);
-        addWindowListener(this);
         reload();
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -98,64 +98,6 @@ public class KeeperToolDialog extends JDialog implements WindowListener, ActionL
         cLayout.show(cards, "Roster");
 
         rosterButton.setSelected(true);
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowActivated(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public final void windowClosed(java.awt.event.WindowEvent windowEvent) {
-        setVisible(false);
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        setVisible(false);
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowDeactivated(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowDeiconified(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowIconified(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowOpened(java.awt.event.WindowEvent windowEvent) {
     }
 
     /**
