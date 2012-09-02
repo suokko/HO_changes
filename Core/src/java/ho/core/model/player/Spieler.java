@@ -1690,6 +1690,11 @@ public final class Spieler {
         if (tp == null)
             return;
 
+        /* Time to perform skill drop */
+        if (SkillDrops.instance().isActive()) {
+            performSkilldrop(originalPlayer, 1);
+        }
+
         WeeklyTrainingType wt = WeeklyTrainingType.instance(trainingWeek.getTrainingType());
 
         incrementSubskills(originalPlayer, assistants, trainerlevel, intensity, stamina,
