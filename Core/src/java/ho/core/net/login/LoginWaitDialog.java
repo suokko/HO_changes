@@ -97,6 +97,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         }
 
         super.setVisible(sichtbar);
+        notify();
     }
 
     @Override
@@ -121,7 +122,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
                         loops = 0;
                     }
 
-                    Thread.sleep(100);
+                    wait(100);
 
                     loops++;
                 }
