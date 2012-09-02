@@ -63,6 +63,7 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 				HOVerwaltung.instance().getLanguageString("dbcleanup"),
 				true);
 		this.cleanupTool = cleanupTool;
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 	}
 
