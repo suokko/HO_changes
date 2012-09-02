@@ -64,6 +64,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 		int height = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getHeight();
 		setLocation((with - dialogWidth) / 2, (height - dialogHeight) / 2);
 		setSize(dialogWidth, dialogHeight);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 
     //~ Methods ------------------------------------------------------------------------------------
