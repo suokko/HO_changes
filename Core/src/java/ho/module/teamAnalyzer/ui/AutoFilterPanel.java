@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -28,7 +30,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author samuele.peli
  */
-public class AutoFilterPanel extends JPanel implements ActionListener {
+public class AutoFilterPanel extends JPanel implements ActionListener, KeyListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
@@ -193,7 +195,7 @@ public class AutoFilterPanel extends JPanel implements ActionListener {
 
         filters.add(new JLabel(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Max_Number"))); //$NON-NLS-1$
         number.setText(filter.getNumber() + "");
-        number.addActionListener(this);
+        number.addKeyListener(this);
         filters.add(number);
 
         main.add(filters, BorderLayout.NORTH);
@@ -207,4 +209,16 @@ public class AutoFilterPanel extends JPanel implements ActionListener {
 
         reload();
     }
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		setFilter();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+	}
 }
