@@ -39,6 +39,7 @@ public final class BackupDialog extends JDialog implements ActionListener{
 
 	public BackupDialog(){
 		super();
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initialize();
 	}
 	
@@ -103,6 +104,7 @@ public final class BackupDialog extends JDialog implements ActionListener{
 		}
 
 		setVisible(false);
+		dispose();
 	}
 	
 
