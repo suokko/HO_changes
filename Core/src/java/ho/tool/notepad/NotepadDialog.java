@@ -40,6 +40,7 @@ public class NotepadDialog extends JDialog implements ActionListener{
 	public NotepadDialog(JFrame owner, String title){
 		super(owner,title);
 		initialize();
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 	
 	private void initialize(){
