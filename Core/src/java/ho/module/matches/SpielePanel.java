@@ -283,9 +283,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
                 MatchEnginePanel matchPredictionPanel = new MatchEnginePanel(homeTeamValues, awayTeamValues);
 
-                MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel);
-                d.setTitle(match);
-                d.setVisible(true);
+                MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel, match);
         	}
         }
     }

@@ -109,9 +109,7 @@ public class SimButtonListener implements ActionListener {
             match = opponentTeamValues.getTeamName() + " - " + myTeamValues.getTeamName();
         }
 
-        MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel);
-        d.setTitle(match);
-        d.setVisible(true);
+        MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel, match);
     }
 
     /**
