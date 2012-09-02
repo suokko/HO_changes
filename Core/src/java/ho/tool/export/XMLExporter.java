@@ -86,6 +86,7 @@ public class XMLExporter  {
                     @Override
 					public void actionPerformed(ActionEvent e) {
                         dialog.setVisible(false);
+                        dialog.dispose();
                     }
                 });
             dialog.getContentPane().add(button, BorderLayout.SOUTH);
