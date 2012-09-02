@@ -105,9 +105,6 @@ public class LoginWaitDialog extends JWindow implements Runnable {
 
     @Override
     public final void run() {
-        int loops = 9;
-
-
         try {
             while (!m_bEnde) {
                 synchronized(this) {
@@ -118,16 +115,9 @@ public class LoginWaitDialog extends JWindow implements Runnable {
                             m_jpbProgressBar.setValue(0);
                         }
                     }
-                    m_jpbProgressBar.paintAll(m_jpbProgressBar.getGraphics());
-
-                    if (loops >= 10) {
-                        this.paintAll(this.getGraphics());
-                        loops = 0;
-                    }
+                    this.paint(this.getGraphics());
 
                     wait(100);
-
-                    loops++;
                 }
             }
 
