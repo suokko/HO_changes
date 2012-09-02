@@ -99,6 +99,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
         super.setVisible(sichtbar);
     }
 
+    @Override
     public final void run() {
         int loops = 9;
 
