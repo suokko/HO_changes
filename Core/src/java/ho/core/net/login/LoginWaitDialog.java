@@ -103,30 +103,31 @@ public class LoginWaitDialog extends JWindow implements Runnable {
     public final void run() {
         int loops = 9;
 
-        while (!m_bEnde) {
-            if (m_bAutoprogressbar) {
-                if (m_jpbProgressBar.getValue() < 100) {
-                    m_jpbProgressBar.setValue(m_jpbProgressBar.getValue() + 1);
-                } else {
-                    m_jpbProgressBar.setValue(0);
+
+        try {
+            while (!m_bEnde) {
+                if (m_bAutoprogressbar) {
+                    if (m_jpbProgressBar.getValue() < 100) {
+                        m_jpbProgressBar.setValue(m_jpbProgressBar.getValue() + 1);
+                    } else {
+                        m_jpbProgressBar.setValue(0);
+                    }
                 }
-            }
+                m_jpbProgressBar.paintAll(m_jpbProgressBar.getGraphics());
 
-            m_jpbProgressBar.paintAll(m_jpbProgressBar.getGraphics());
+                if (loops >= 10) {
+                    this.paintAll(this.getGraphics());
+                    loops = 0;
+                }
 
-            if (loops >= 10) {
-                this.paintAll(this.getGraphics());
-                loops = 0;
-            }
-
-            try {
                 Thread.sleep(100);
-            } catch (Exception e) {
-            }
 
-            loops++;
+                loops++;
+            }
 
             //HOLogger.instance().log(getClass(), "Value: "+m_jpbProgressBar.getValue () + " " + m_bEnde );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
