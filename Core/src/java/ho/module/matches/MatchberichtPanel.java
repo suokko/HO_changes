@@ -33,6 +33,7 @@ class MatchberichtPanel extends ImagePanel implements ActionListener {
 
     MatchberichtPanel(boolean withButton) {
 
+        matchdialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         add(m_clMatchbericht, BorderLayout.CENTER);

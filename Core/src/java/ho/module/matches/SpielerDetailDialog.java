@@ -250,6 +250,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         HOLogger.instance().log(getClass(),"SpielerDetailDialog");
         final Spieler player = DBManager.instance().getSpielerAtDate(matchplayer.getSpielerId(),matchlineup.getSpielDatum());
 
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         //Nicht gefunden
         if (player == null) {
             Helper.showMessage(owner,HOVerwaltung.instance().getLanguageString("Fehler_Spielerdetails"),
@@ -273,7 +274,6 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         setSize(getSize().width + Helper.calcCellWidth(30),getSize().height + 10);
         setLocation(ho.core.model.UserParameter.instance().spielerDetails_PositionX,
                     ho.core.model.UserParameter.instance().spielerDetails_PositionY);
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
 

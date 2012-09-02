@@ -42,6 +42,7 @@ public class SpielePrintDialog extends JDialog {
      * @param info TODO Missing Constructuor Parameter Documentation
      */
     public SpielePrintDialog(ho.core.model.match.MatchKurzInfo info) {
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         initComponents();
         initValues(info);
 
