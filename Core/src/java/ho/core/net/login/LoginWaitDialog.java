@@ -75,11 +75,11 @@ public class LoginWaitDialog extends JWindow implements Runnable {
                     - (this.getSize().height / 2));
     }
 
-    public final void setValue(int value) {
+    public final synchronized void setValue(int value) {
         m_jpbProgressBar.setValue(value);
     }
 
-    public final int getValue() {
+    public final synchronized int getValue() {
         return m_jpbProgressBar.getValue();
     }
 
@@ -88,7 +88,7 @@ public class LoginWaitDialog extends JWindow implements Runnable {
      *
      */
     @Override
-	public final void setVisible(boolean sichtbar) {
+	public final synchronized void setVisible(boolean sichtbar) {
         if (sichtbar) {
             m_bEnde = false;
             new Thread(this).start();
@@ -106,23 +106,25 @@ public class LoginWaitDialog extends JWindow implements Runnable {
 
         try {
             while (!m_bEnde) {
-                if (m_bAutoprogressbar) {
-                    if (m_jpbProgressBar.getValue() < 100) {
-                        m_jpbProgressBar.setValue(m_jpbProgressBar.getValue() + 1);
-                    } else {
-                        m_jpbProgressBar.setValue(0);
+                synchronized(this) {
+                    if (m_bAutoprogressbar) {
+                        if (m_jpbProgressBar.getValue() < 100) {
+                            m_jpbProgressBar.setValue(m_jpbProgressBar.getValue() + 1);
+                        } else {
+                            m_jpbProgressBar.setValue(0);
+                        }
                     }
+                    m_jpbProgressBar.paintAll(m_jpbProgressBar.getGraphics());
+
+                    if (loops >= 10) {
+                        this.paintAll(this.getGraphics());
+                        loops = 0;
+                    }
+
+                    Thread.sleep(100);
+
+                    loops++;
                 }
-                m_jpbProgressBar.paintAll(m_jpbProgressBar.getGraphics());
-
-                if (loops >= 10) {
-                    this.paintAll(this.getGraphics());
-                    loops = 0;
-                }
-
-                Thread.sleep(100);
-
-                loops++;
             }
 
             //HOLogger.instance().log(getClass(), "Value: "+m_jpbProgressBar.getValue () + " " + m_bEnde );
