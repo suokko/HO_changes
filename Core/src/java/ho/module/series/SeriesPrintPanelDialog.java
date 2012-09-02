@@ -33,6 +33,7 @@ public class SeriesPrintPanelDialog extends JDialog {
      * Creates a new LigaTabellePrintDialog object.
      */
     public SeriesPrintPanelDialog() {
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         initComponents();
         initValues();
 
