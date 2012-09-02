@@ -98,6 +98,9 @@ public class LoginWaitDialog extends JWindow implements Runnable {
 
         super.setVisible(sichtbar);
         notify();
+        if (!sichtbar) {
+            super.dispose();
+        }
     }
 
     @Override
