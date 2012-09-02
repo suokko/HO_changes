@@ -56,6 +56,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 	 */
 	protected SpielerOffsetDialog(javax.swing.JFrame owner, Spieler spieler) {
 		super(owner, true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle(
 			HOVerwaltung.instance().getLanguageString(
 				"OffsetTitle")
@@ -106,8 +107,10 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 			ho.core.gui.RefreshManager.instance().doReInit();
 
 			setVisible(false);
+			dispose();
 		} else if (actionEvent.getSource().equals(m_jbAbbrechen)) {
 			setVisible(false);
+			dispose();
 		}
 	}
 

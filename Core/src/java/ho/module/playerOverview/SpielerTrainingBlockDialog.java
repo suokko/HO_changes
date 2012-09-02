@@ -62,6 +62,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	 */
 	protected SpielerTrainingBlockDialog(javax.swing.JFrame owner, Spieler player) {
 		super(owner, true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle(
 			HOVerwaltung.instance().getLanguageString(
 				"TrainingBlock")
@@ -207,8 +208,10 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 //			de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
 
 			setVisible(false);
+			dispose();
 		} else if (actionEvent.getSource().equals(m_jbCancel)) {
 			setVisible(false);
+			dispose();
 		} else if (actionEvent.getSource().equals(m_jbAdd)) {
 			SingleTrainingBlock newBlock = new SingleTrainingBlock(this);
 			allTrainingBlocks.add(newBlock);
