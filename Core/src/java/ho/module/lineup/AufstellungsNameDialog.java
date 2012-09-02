@@ -49,6 +49,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
                                      Lineup aufstellung, int x, int y) {
         super(owner, true);
 
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         m_clAufstellung = aufstellung;
 
         m_jtfAufstellungsName = new JTextField("");

@@ -56,6 +56,7 @@ public class SubstitutionEditDialog extends JDialog {
 	}
 
 	private void initDialog() {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setDlgTitle();
 		initComponents();
 		pack();
