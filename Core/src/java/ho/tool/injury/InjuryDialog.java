@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author draghetto
  */
-public class InjuryDialog extends JDialog implements WindowListener {
+public class InjuryDialog extends JDialog {
 
 	private static final long serialVersionUID = 5194730460165995230L;
 
@@ -52,7 +52,7 @@ public class InjuryDialog extends JDialog implements WindowListener {
         setSize(700, 300);
         reload();
         //setResizable(false);
-        addWindowListener(this);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
@@ -74,66 +74,6 @@ public class InjuryDialog extends JDialog implements WindowListener {
         doctorPanel.reset();
         updatePanel.reset();
         tsiPanel.reset();
-    }
-
-    //--------WindowListener-------------------
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowActivated(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public final void windowClosed(java.awt.event.WindowEvent windowEvent) {
-        setVisible(false);
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        setVisible(false);
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowDeactivated(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowDeiconified(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowIconified(java.awt.event.WindowEvent windowEvent) {
-    }
-
-    /**
-     * React to Window Event
-     *
-     * @param windowEvent event
-     */
-    public void windowOpened(java.awt.event.WindowEvent windowEvent) {
     }
 
     /**
