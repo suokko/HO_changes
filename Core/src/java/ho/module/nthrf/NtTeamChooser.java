@@ -22,6 +22,7 @@ class NtTeamChooser extends JDialog implements ActionListener {
 	private long selectedTeamId = -1;
 
 	public NtTeamChooser(List<String[]> teams) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		add(new JLabel(HOVerwaltung.instance().getLanguageString("Favourite.SelectTeam")), BorderLayout.NORTH);
 		JPanel teamPanel = new JPanel();
