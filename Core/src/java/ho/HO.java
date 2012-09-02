@@ -208,6 +208,7 @@ public class HO {
 
 				// Startbild weg
 				interuptionsWindow.setVisible(false);
+				interuptionsWindow.dispose();
 
 				HOLogger.instance().log(HO.class,
 						"Zeit:" + (System.currentTimeMillis() - start));
