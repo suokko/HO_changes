@@ -220,9 +220,10 @@ public class SkillDrops {
 				return 0;
 			}
 		}
-
-		int col = Math.min(7,  Math.max(0,  age-29));
-		int row = 11 - Math.min(11,  Math.max(0,  skill - 12));
+		/* Top row is the highest skill Last row is for skill level 11 and below */
+		int row = array.length - 1 - Math.min(array.length - 1,  Math.max(0,  skill - 11));
+		/* First column is for age 29 and below */
+		int col = Math.min(array[row].length - 1,  Math.max(0,  age-29));
 
 		return (float) array[row][col];
 	}
