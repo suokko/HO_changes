@@ -176,14 +176,14 @@ public class PlayerCreator extends XMLCreator {
 
 		Element skill = doc.createElement("skill");
 		playerTag.appendChild(skill);
-		skill.appendChild(createNode(doc,"playmaking", (player.getSpielaufbau() + player.getSubskill4Pos(PlayerSkill.PLAYMAKING))+""));
-		skill.appendChild(createNode(doc,"passing", (player.getPasspiel() + player.getSubskill4Pos(PlayerSkill.PASSING))+""));
-		skill.appendChild(createNode(doc,"cross", (player.getFluegelspiel() + player.getSubskill4Pos(PlayerSkill.WINGER))+""));
-		skill.appendChild(createNode(doc,"defense", (player.getVerteidigung() + player.getSubskill4Pos(PlayerSkill.DEFENDING))+""));
-		skill.appendChild(createNode(doc,"attack", (player.getTorschuss() + player.getSubskill4Pos(PlayerSkill.SCORING))+""));
-		skill.appendChild(createNode(doc,"setpieces", (player.getStandards() + player.getSubskill4Pos(PlayerSkill.SET_PIECES))+""));
-		skill.appendChild(createNode(doc,"keeper", (player.getTorwart() + player.getSubskill4Pos(PlayerSkill.KEEPER))+""));
-		skill.appendChild(createNode(doc,"stamina", (player.getKondition() + player.getSubskill4Pos(PlayerSkill.STAMINA))+""));
+		skill.appendChild(createNode(doc,"playmaking", (player.getSpielaufbau() + player.getSubskill4PosAccurate(PlayerSkill.PLAYMAKING))+""));
+		skill.appendChild(createNode(doc,"passing", (player.getPasspiel() + player.getSubskill4PosAccurate(PlayerSkill.PASSING))+""));
+		skill.appendChild(createNode(doc,"cross", (player.getFluegelspiel() + player.getSubskill4PosAccurate(PlayerSkill.WINGER))+""));
+		skill.appendChild(createNode(doc,"defense", (player.getVerteidigung() + player.getSubskill4PosAccurate(PlayerSkill.DEFENDING))+""));
+		skill.appendChild(createNode(doc,"attack", (player.getTorschuss() + player.getSubskill4PosAccurate(PlayerSkill.SCORING))+""));
+		skill.appendChild(createNode(doc,"setpieces", (player.getStandards() + player.getSubskill4PosAccurate(PlayerSkill.SET_PIECES))+""));
+		skill.appendChild(createNode(doc,"keeper", (player.getTorwart() + player.getSubskill4PosAccurate(PlayerSkill.KEEPER))+""));
+		skill.appendChild(createNode(doc,"stamina", (player.getKondition() + player.getSubskill4PosAccurate(PlayerSkill.STAMINA))+""));
 		skill.appendChild(createNode(doc,"form", player.getForm()+""));
 		skill.appendChild(createNode(doc,"experience", player.getErfahrung()+""));
 		skill.appendChild(createNode(doc,"tsi", player.getTSI()+""));
