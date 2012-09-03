@@ -50,7 +50,6 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
                                                             .getSelectedItem());
 
                 setVisible(false);
-                dispose();
             }
         }
     }
