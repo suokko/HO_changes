@@ -165,7 +165,7 @@ abstract class ForecastCurve extends Curve {
 							+ " or GASTID="
 							+ ibasics.getTeamId()
 							+ ") "
-							+ "  and MATCHDATE = select MAX(MATCHDATE) "
+							+ "  and MATCHDATE = (select MAX(MATCHDATE) "
 							+ "    from MATCHESKURZINFO "
 							+ "    where (HEIMID="
 							+ ibasics.getTeamId()
@@ -178,7 +178,7 @@ abstract class ForecastCurve extends Curve {
 							+ MatchType.QUALIFICATION.getId()
 							+ "        or MATCHTYP="
 							+ MatchType.CUP.getId()
-							+ ")" + "      and STATUS=1");
+							+ ")" + "      and STATUS=1)");
 			/*
 			 * select MATCHDATE, MATCHTYP from MATCHESKURZINFO where
 			 * (HEIMID=132932 OR GASTID=132932) and MATCHDATE = select
@@ -280,7 +280,7 @@ abstract class ForecastCurve extends Curve {
 			// PAARUNG contains all Leaguematches, but no other
 			// MATCHESKURZINFO contains all other matches but no matchday
 			ResultSet resultset = m_clJDBC
-					.executeQuery("select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 as SPIELTAG, MATCHESKURZINFO.MATCHTYP, "
+					.executeQuery("select * from (select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 as SPIELTAG, MATCHESKURZINFO.MATCHTYP, "
 							+ "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
 							+ "from MATCHESKURZINFO, MATCHDETAILS "
 							+ "where (MATCHDETAILS.HEIMID="
@@ -291,9 +291,9 @@ abstract class ForecastCurve extends Curve {
 							+ "and MATCHESKURZINFO.MATCHTYP="
 							+ MatchType.CUP.getId()
 							+ "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID "
-							+ "and SORTDATE < '"
+							+ "and MATCHESKURZINFO.MATCHDATE < '"
 							+ ibasics.getDatum()
-							+ "' and SORTDATE > '"
+							+ "' and MATCHESKURZINFO.MATCHDATE > '"
 							+ start
 							+ "' "
 							+ "union "
@@ -313,7 +313,7 @@ abstract class ForecastCurve extends Curve {
 							+ "' "
 							+ "and PAARUNG.DATUM > '"
 							+ start
-							+ "' "
+							+ "') "
 							+ "order by SORTDATE");
 			/*
 			 * select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 as SPIELTAG,

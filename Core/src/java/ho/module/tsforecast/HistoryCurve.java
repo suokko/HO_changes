@@ -98,7 +98,7 @@ public class HistoryCurve extends Curve {
 		// Table MATCHDETAILS includes EINSTELLUNG
 		if (ibasics != null && iliga != null) {
 			ResultSet resultset = m_clJDBC
-					.executeQuery("select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 AS SPIELTAG, MATCHESKURZINFO.MATCHTYP, "
+					.executeQuery("SELECT * FROM (select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 AS SPIELTAG, MATCHESKURZINFO.MATCHTYP, "
 							+ "MATCHDETAILS.GASTEINSTELLUNG, MATCHDETAILS.HEIMEINSTELLUNG, MATCHDETAILS.HEIMID "
 							+ "from MATCHESKURZINFO, MATCHDETAILS "
 							+ "where (MATCHDETAILS.HEIMID="
@@ -107,14 +107,14 @@ public class HistoryCurve extends Curve {
 							+ ibasics.getTeamId()
 							+ ") "
 							+ "and MATCHESKURZINFO.MATCHID=MATCHDETAILS.MATCHID "
-							+ "and SORTDATE < '"
+							+ "and MATCHESKURZINFO.MATCHDATE < '"
 							+ ibasics.getDatum()
-							+ "' and SORTDATE > '"
+							+ "' and MATCHESKURZINFO.MATCHDATE > '"
 							+ start
 							+ "' "
 							+ "and MATCHTYP <> "
 							+ MatchType.LEAGUE.getId()
-							+ "union "
+							+ " union "
 							+ "select PAARUNG.DATUM as SORTDATE, PAARUNG.SPIELTAG, "
 							+ MatchType.LEAGUE.getId()
 							+ " as MATCHTYP, "
@@ -126,11 +126,11 @@ public class HistoryCurve extends Curve {
 							+ ibasics.getTeamId()
 							+ ") "
 							+ "and PAARUNG.MATCHID=MATCHDETAILS.MATCHID "
-							+ "and SORTDATE < '"
+							+ "and PAARUNG.DATUM < '"
 							+ ibasics.getDatum()
-							+ "' and SORTDATE > '"
+							+ "' and PAARUNG.DATUM > '"
 							+ start
-							+ "'"
+							+ "') "
 							+ "order by SORTDATE");
 			/*
 			 * select MATCHESKURZINFO.MATCHDATE as SORTDATE, -1 as SPIELTAG,
