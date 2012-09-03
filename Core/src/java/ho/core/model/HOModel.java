@@ -578,19 +578,6 @@ public class HOModel {
     				 * End of debug
     				 */
 
-
-    				/* Time to perform skill drop */
-    				if (SkillDrops.instance().isActive() && (old != null) 
-    						&& (actualTrainingDate != null)) {
-    					int weeks = trainingList.size();
-    					if (weeks > 0) {
-    						// It is messy if we calculate too far back. A 31y player has not been
-    						// 31 forever. So lets cap at a somewhat random 6 weeks.
-    						player.performSkilldrop(old, Math.min(weeks, 6));
-    					}
-    				}
-
-
     			} catch (Exception e) {
     				HOLogger.instance().log(getClass(),e);
     				HOLogger.instance().log(getClass(),"Model calcSubskill: " + e);
