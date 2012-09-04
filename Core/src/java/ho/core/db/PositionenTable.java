@@ -3,6 +3,7 @@ package ho.core.db;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Vector;
@@ -28,6 +29,7 @@ public final class PositionenTable extends AbstractTable {
 		columns[4]= new ColumnDescriptor("Taktik",Types.INTEGER,false);
 	}
 	
+	static PreparedStatement sSystemPositionen = null;
 	/**
 	 * lädt System Positionen
 	 *
@@ -39,54 +41,57 @@ public final class PositionenTable extends AbstractTable {
 	Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		ResultSet rs = null;
 		ho.core.model.player.SpielerPosition pos = null;
-		String sql = null;
 		final Vector<ISpielerPosition> ret = new Vector<ISpielerPosition>();
 
-		sql = "SELECT * FROM "+getTableName()+" WHERE HRF_ID = " + hrfID + " AND Aufstellungsname ='" + sysName + "'";
-		rs = adapter.executeQuery(sql);
-
 		try {
-			if (rs != null) {
-				rs.beforeFirst();
-
-				while (rs.next()) {
-					
-					int roleID = rs.getInt("ID");
-					int behavior = rs.getByte("Taktik");
-					int playerID = rs.getInt("SpielerID");
-					
-					switch (behavior) {
-					case ISpielerPosition.OLD_EXTRA_DEFENDER :
-						roleID = ISpielerPosition.middleCentralDefender;
-						behavior = ISpielerPosition.NORMAL;
-						break;
-					case ISpielerPosition.OLD_EXTRA_MIDFIELD :
-						roleID = ISpielerPosition.centralInnerMidfield;
-						behavior = ISpielerPosition.NORMAL;
-						break;
-					case ISpielerPosition.OLD_EXTRA_FORWARD :
-						roleID = ISpielerPosition.centralForward;
-						behavior = ISpielerPosition.NORMAL;
-						break;
-					case ISpielerPosition.OLD_EXTRA_DEFENSIVE_FORWARD :
-						roleID = ISpielerPosition.centralForward;
-						behavior = ISpielerPosition.DEFENSIVE;
-				}
-					
-					if (roleID < ISpielerPosition.setPieces) {
-						roleID = convertOldRoleToNew(roleID);
-					}
-					
-					if (playerID < 0) {
-						playerID = 0;
-					}
-					
-					pos = new ho.core.model.player.SpielerPosition(roleID, playerID, (byte)behavior);
-					ret.add(pos);
-				}
+			if (sSystemPositionen == null) {
+				sSystemPositionen = adapter.prepareStatement("SELECT ID, Taktik, SpielerID " +
+						" FROM " + getTableName() +
+						" WHERE hrf_id = ? AND aufstellungsname = ?");
 			}
+
+			sSystemPositionen.setInt(1, hrfID);
+			sSystemPositionen.setString(2, sysName);
+			rs = sSystemPositionen.executeQuery();
+
+			while (rs.next()) {
+
+				int roleID = rs.getInt(1);
+				int behavior = rs.getByte(2);
+				int playerID = rs.getInt(3);
+
+				switch (behavior) {
+				case ISpielerPosition.OLD_EXTRA_DEFENDER :
+					roleID = ISpielerPosition.middleCentralDefender;
+					behavior = ISpielerPosition.NORMAL;
+					break;
+				case ISpielerPosition.OLD_EXTRA_MIDFIELD :
+					roleID = ISpielerPosition.centralInnerMidfield;
+					behavior = ISpielerPosition.NORMAL;
+					break;
+				case ISpielerPosition.OLD_EXTRA_FORWARD :
+					roleID = ISpielerPosition.centralForward;
+					behavior = ISpielerPosition.NORMAL;
+					break;
+				case ISpielerPosition.OLD_EXTRA_DEFENSIVE_FORWARD :
+					roleID = ISpielerPosition.centralForward;
+					behavior = ISpielerPosition.DEFENSIVE;
+				}
+
+				if (roleID < ISpielerPosition.setPieces) {
+					roleID = convertOldRoleToNew(roleID);
+				}
+
+				if (playerID < 0) {
+					playerID = 0;
+				}
+
+				pos = new ho.core.model.player.SpielerPosition(roleID, playerID, (byte)behavior);
+				ret.add(pos);
+			}
+
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.getSystemPositionen: " + e);
+			HOLogger.instance().log(getClass(), e);
 		}
 
 		return ret;
