@@ -95,6 +95,7 @@ final class MatchHighlightsTable extends AbstractTable {
 						" WHERE MatchId = ? ORDER BY Minute, HeimTore, GastTore");
 			}
 
+			sMatchHighlights.setInt(1, matchId);
 			ResultSet rs = sMatchHighlights.executeQuery();
 
 			//Alle Highlights des Spieles holen
