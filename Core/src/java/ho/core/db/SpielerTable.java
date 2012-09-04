@@ -4,6 +4,7 @@ import ho.core.constants.player.PlayerSkill;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -197,6 +198,46 @@ final class SpielerTable extends AbstractTable {
 				
 				saveSpieler (hrfId, player, date);
 			}
+		}
+	}
+
+	static PreparedStatement sUpdateTraining = null;
+
+	/**
+	 * Run SQL updates to passed player objects
+	 *  
+	 * @param hrfId
+	 * @param players
+	 */
+	void saveSpielerTraining(int hrfId, Vector<Spieler> players) {
+		try {
+			if (sUpdateTraining == null) {
+				sUpdateTraining = adapter.prepareStatement(
+						"UPDATE " + getTableName() +
+						" SET SubTorwart = ?, SubVerteidigung = ?, SubSpielaufbau = ?, " +
+						" SubFluegel = ?, SubTorschuss = ?, SubPasspiel = ?, SubStandards = ?" +
+						" WHERE hrf_id = ? AND spielerid = ?");
+			}
+
+			for (Spieler p : players) {
+				int idx = 1;
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.KEEPER));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.DEFENDING));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.PLAYMAKING));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.WINGER));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.SCORING));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.PASSING));
+				sUpdateTraining.setFloat(idx++, p.getSubskill4PosAccurate(PlayerSkill.SET_PIECES));
+
+				sUpdateTraining.setInt(idx++, hrfId);
+				sUpdateTraining.setInt(idx++, p.getSpielerID());
+
+				sUpdateTraining.addBatch();
+			}
+
+			sUpdateTraining.executeBatch();
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), e);
 		}
 	}
 

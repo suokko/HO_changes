@@ -585,7 +585,7 @@ public class HOModel {
     		}
 
     		//Spieler
-    		DBManager.instance().saveSpieler(m_iID, m_vSpieler, m_clBasics.getDatum());
+    		DBManager.instance().savePlayerTraining(m_iID, m_vSpieler);
     	}
     }
 

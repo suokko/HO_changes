@@ -473,6 +473,14 @@ public class DBManager {
 	}
 
 	/**
+	 * Update players in DB after training calculation
+	 */
+	public void savePlayerTraining(int hrfId, Vector<Spieler> spieler){
+		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpielerTraining(hrfId,
+				spieler);
+	}
+
+	/**
 	 * saves one player to the DB
 	 * 
 	 * @param hrfId
