@@ -42,7 +42,7 @@ public class HOZip extends File {
         // Open the ZipOutputStream
         zOut = new ZipOutputStream(new FileOutputStream(this));
         zOut.setMethod(ZipOutputStream.DEFLATED);
-        zOut.setLevel(5);
+        zOut.setLevel(2);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
