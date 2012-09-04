@@ -2165,20 +2165,7 @@ public class DBManager {
 			return "";
 		}
 
-		final StringBuffer buffer = new StringBuffer();
-		final char[] chars = text.toCharArray();
-
-		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == '§') {
-				buffer.append("\\");
-			} else if (chars[i] != '#') {
-				buffer.append("" + chars[i]);
-			} else {
-				buffer.append("'");
-			}
-		}
-
-		return buffer.toString();
+		return text.replace('§', '\\').replace('#', '\'');
 	}
 
 	/**
