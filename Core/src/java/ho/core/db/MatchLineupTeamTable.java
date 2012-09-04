@@ -28,6 +28,11 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		columns[3]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 	}
 
+	@Override
+	protected String[] getCreateIndizeStatements() {
+		return new String[] { "CREATE INDEX IMATCHLINEUPTEAM_MATCHID ON matchlineupteam (matchid)" };
+	}
+
 	/**
 	 * TODO Missing Method Documentation
 	 *
