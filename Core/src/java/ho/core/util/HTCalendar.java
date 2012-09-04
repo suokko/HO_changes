@@ -192,11 +192,8 @@ public class HTCalendar {
         }
 
         workCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        for (elapsedWeeks = 0; workCal.before(cal) || workCal.equals(cal);
-            elapsedWeeks++) {
-            workCal.add(Calendar.WEEK_OF_YEAR, 1);
-        }
+        
+        elapsedWeeks = (int)((cal.getTimeInMillis() - workCal.getTimeInMillis()) / (1000*60*60*24*7));
 
         elapsedWeeks += (WEEK_IN_SEASON * SE_CORRECTION);
     }
