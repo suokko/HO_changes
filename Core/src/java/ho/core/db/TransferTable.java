@@ -298,10 +298,12 @@ public class TransferTable extends AbstractTable {
             final Spieler spieler = DBManager.instance().getSpielerAtDate(transfer.getPlayerId(),transfer.getDate());
 
             if (spieler != null) {
-            	int transferSeason = HTCalendarFactory.getHTSeason(transfer.getDate());
-                int transferWeek = HTCalendarFactory.getHTWeek(transfer.getDate());
-                int spielerSeason = HTCalendarFactory.getHTSeason(spieler.getHrfDate());
-                int spielerWeek = HTCalendarFactory.getHTWeek(spieler.getHrfDate());
+                HTCalendar cal = HTCalendarFactory.createEconomyCalendar(transfer.getDate());
+                int transferSeason = cal.getHTSeason();
+                int transferWeek = cal.getHTWeek();
+                cal = HTCalendarFactory.createEconomyCalendar(spieler.getHrfDate());
+                int spielerSeason = cal.getHTSeason();
+                int spielerWeek = cal.getHTWeek();
 
                 // Not in the same week, possible skillup so skip it
                 if (((transferSeason * 16) + transferWeek) == ((spielerSeason * 16) + spielerWeek)) {
