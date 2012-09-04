@@ -165,20 +165,14 @@ abstract class ForecastCurve extends Curve {
 							+ " or GASTID="
 							+ ibasics.getTeamId()
 							+ ") "
-							+ "  and MATCHDATE = (select MAX(MATCHDATE) "
-							+ "    from MATCHESKURZINFO "
-							+ "    where (HEIMID="
-							+ ibasics.getTeamId()
-							+ " or GASTID="
-							+ ibasics.getTeamId()
-							+ ") "
-							+ "      and (MATCHTYP="
+							+ "  and (MATCHTYP="
 							+ MatchType.LEAGUE.getId()
 							+ "        or MATCHTYP="
 							+ MatchType.QUALIFICATION.getId()
 							+ "        or MATCHTYP="
 							+ MatchType.CUP.getId()
-							+ ")" + "      and STATUS=1)");
+							+ ")" + "      and STATUS=1"
+							+ "ORDER BY MATCHDATE DESC LIMIT 1");
 			/*
 			 * select MATCHDATE, MATCHTYP from MATCHESKURZINFO where
 			 * (HEIMID=132932 OR GASTID=132932) and MATCHDATE = select

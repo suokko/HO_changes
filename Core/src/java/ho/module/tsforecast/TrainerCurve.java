@@ -62,8 +62,8 @@ class TrainerCurve extends Curve {
 		// get last skill just before start date
 		ResultSet resultset = m_clJDBC
 				.executeQuery("select SPIELERID, FUEHRUNG, DATUM from SPIELER "
-						+ "where TRAINERTYP <> -1 and DATUM <= '" + start
-						+ "' order by DATUM desc");
+						+ "where TRAINERTYP > -1 and DATUM <= '" + start
+						+ "' order by DATUM desc LIMIT 1");
 		try {
 			boolean gotInitial = false;
 			if (resultset.next()) {
@@ -76,7 +76,7 @@ class TrainerCurve extends Curve {
 
 			resultset = m_clJDBC
 					.executeQuery("select SPIELERID, FUEHRUNG, DATUM from SPIELER "
-							+ "where TRAINERTYP <> -1 and DATUM > '"
+							+ "where TRAINERTYP > -1 and DATUM > '"
 							+ start
 							+ "' and DATUM < '"
 							+ HOVerwaltung.instance().getModel().getBasics()
