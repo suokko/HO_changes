@@ -226,23 +226,23 @@ public final class HRFTable extends AbstractTable {
 
 		// Die passende HRF-ID besorgen
 		sql = "SELECT HRF_ID FROM " + getTableName() + " WHERE Datum<='" + time.toString()
-				+ "' ORDER BY Datum DESC";
+				+ "' ORDER BY Datum DESC LIMIT 1";
 		rs = adapter.executeQuery(sql);
 
 		try {
 			if (rs != null) {
 				// HRF vorher vorhanden?
-				if (rs.first()) {
-					hrfID = rs.getInt("HRF_ID");
+				if (rs.next()) {
+					hrfID = rs.getInt(1);
 				}
 				// sonst HRF nach dem Datum nehmen
 				else {
 					sql = "SELECT HRF_ID FROM " + getTableName() + " WHERE Datum>'"
-							+ time.toString() + "' ORDER BY Datum";
+							+ time.toString() + "' ORDER BY Datum LIMIT 1";
 					rs = adapter.executeQuery(sql);
 
-					if (rs.first()) {
-						hrfID = rs.getInt("HRF_ID");
+					if (rs.next()) {
+						hrfID = rs.getInt(1);
 					}
 				}
 			}
