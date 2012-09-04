@@ -84,7 +84,9 @@ final class SpielerTable extends AbstractTable {
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
 			"CREATE INDEX iSpieler_1 ON " + getTableName() + "(" + columns[3].getColumnName() + "," + columns[1].getColumnName() + ")",
-			"CREATE INDEX iSpieler_2 ON " + getTableName() + "(" + columns[0].getColumnName() + ")" };
+			"CREATE INDEX iSpieler_2 ON " + getTableName() + "(" + columns[0].getColumnName() + ")",
+			"CREATE INDEX ISPIELER_HRF_ID_SPIELERID ON " + getTableName() + " (" + columns[0].getColumnName() + "," +columns[3].getColumnName()+")",
+			"CREATE INDEX ISPIELER_TRAINERTYP ON " + getTableName() + "(" + columns[46].getColumnName()+ ")"};
 	}
 
 	/**
