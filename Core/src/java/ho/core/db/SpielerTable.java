@@ -545,65 +545,71 @@ final class SpielerTable extends AbstractTable {
     private Spieler createObject(ResultSet rs) {
     	Spieler player = new Spieler();
         try {
-        	player.setSpielerID(rs.getInt("SpielerID"));
-            player.setName(DBManager.deleteEscapeSequences(rs.getString("Name")));
-            player.setAlter(rs.getInt("Age"));
-            player.setAgeDays(rs.getInt("AgeDays"));
-            player.setKondition(rs.getInt("Kondition"));
-            player.setForm(rs.getInt("Form"));
-            player.setTorwart(rs.getInt("Torwart"));
-            player.setVerteidigung(rs.getInt("Verteidigung"));
-            player.setSpielaufbau(rs.getInt("Spielaufbau"));
-            player.setPasspiel(rs.getInt("Passpiel"));
-            player.setFluegelspiel(rs.getInt("Fluegel"));
-            player.setTorschuss(rs.getInt("Torschuss"));
-            player.setStandards(rs.getInt("Standards"));
-            player.setSpezialitaet(rs.getInt("iSpezialitaet"));
-            player.setCharakter(rs.getInt("iCharakter"));
-            player.setAnsehen(rs.getInt("iAnsehen"));
-            player.setAgressivitaet(rs.getInt("iAgressivitaet"));
-            player.setErfahrung(rs.getInt("Erfahrung"));
-            player.setLoyalty(rs.getInt("Loyalty"));
-            player.setHomeGrown(rs.getBoolean("HomeGrown"));
-            player.setFuehrung(rs.getInt("Fuehrung"));
-            player.setGehalt(rs.getInt("Gehalt"));
-            player.setNationalitaet(rs.getInt("Land"));
-            player.setTSI(rs.getInt("Marktwert"));
+            int idx = 2;
+            player.setHrfDate(rs.getTimestamp(idx++));
+            player.setGelbeKarten(rs.getInt(idx++));
+            player.setSpielerID(rs.getInt(idx++));
+            player.setName(DBManager.deleteEscapeSequences(rs.getString(idx++)));
+            player.setAlter(rs.getInt(idx++));
+            player.setKondition(rs.getInt(idx++));
+            player.setForm(rs.getInt(idx++));
+            player.setTorwart(rs.getInt(idx++));
+            player.setVerteidigung(rs.getInt(idx++));
+            player.setSpielaufbau(rs.getInt(idx++));
+            player.setFluegelspiel(rs.getInt(idx++));
+            player.setTorschuss(rs.getInt(idx++));
+            player.setPasspiel(rs.getInt(idx++));
+            player.setStandards(rs.getInt(idx++));
+            //Subskills
+            player.setSubskill4Pos(PlayerSkill.KEEPER,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.DEFENDING,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.PLAYMAKING,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.WINGER,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.SCORING,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.PASSING,rs.getFloat(idx++));
+            player.setSubskill4Pos(PlayerSkill.SET_PIECES,rs.getFloat(idx++));
+            /* Offsets not loaded */
+            idx += 7;
+            assert columns[idx - 1].getColumnName().equals("iSpezialitaet") :  "wrong idx speciality";
+            player.setSpezialitaet(rs.getInt(idx++));
+            player.setCharakter(rs.getInt(idx++));
+            player.setAnsehen(rs.getInt(idx++));
+            player.setAgressivitaet(rs.getInt(idx++));
+            player.setFuehrung(rs.getInt(idx++));
+            player.setErfahrung(rs.getInt(idx++));
+            player.setGehalt(rs.getInt(idx++));
+            /* Bonus not loaded */
+            idx++;
+            player.setNationalitaet(rs.getInt(idx++));
+            player.setTSI(rs.getInt(idx++));
 
             //TSI, alles vorher durch 1000 teilen
-            player.setHrfDate(rs.getTimestamp("Datum"));
 
             if (player.getHrfDate().before(DBManager.TSIDATE)) {
                 player.setTSI(player.getTSI()/1000);
             }
-
-            //Subskills
-            player.setSubskill4Pos(PlayerSkill.KEEPER,rs.getFloat("SubTorwart"));
-            player.setSubskill4Pos(PlayerSkill.DEFENDING,rs.getFloat("SubVerteidigung"));
-            player.setSubskill4Pos(PlayerSkill.PLAYMAKING,rs.getFloat("SubSpielaufbau"));
-            player.setSubskill4Pos(PlayerSkill.PASSING,rs.getFloat("SubPasspiel"));
-            player.setSubskill4Pos(PlayerSkill.WINGER,rs.getFloat("SubFluegel"));
-            player.setSubskill4Pos(PlayerSkill.SCORING,rs.getFloat("SubTorschuss"));
-            player.setSubskill4Pos(PlayerSkill.SET_PIECES,rs.getFloat("SubStandards"));
            
-            player.setGelbeKarten(rs.getInt("GelbeKarten"));
-            player.setVerletzt(rs.getInt("Verletzt"));
-            player.setToreFreund(rs.getInt("ToreFreund"));
-            player.setToreLiga(rs.getInt("ToreLiga"));
-            player.setTorePokal(rs.getInt("TorePokal"));
-            player.setToreGesamt(rs.getInt("ToreGesamt"));
-            player.setHattrick(rs.getInt("Hattrick"));
-            player.setBewertung(rs.getInt("Bewertung"));
-            player.setTrainerTyp(rs.getInt("TrainerTyp"));
-            player.setTrainer(rs.getInt("Trainer"));
+            player.setVerletzt(rs.getInt(idx++));
+            player.setToreFreund(rs.getInt(idx++));
+            player.setToreLiga(rs.getInt(idx++));
+            player.setTorePokal(rs.getInt(idx++));
+            player.setToreGesamt(rs.getInt(idx++));
+            player.setHattrick(rs.getInt(idx++));
+            player.setBewertung(rs.getInt(idx++));
+            player.setTrainerTyp(rs.getInt(idx++));
+            player.setTrainer(rs.getInt(idx++));
 
-            player.setTrikotnummer(rs.getInt("PlayerNumber"));
-            player.setTransferlisted(rs.getInt("TransferListed"));
-            player.setLaenderspiele(rs.getInt("Caps"));
-            player.setU20Laenderspiele(rs.getInt("CapsU20"));
+            player.setTrikotnummer(rs.getInt(idx++));
+            player.setTransferlisted(rs.getInt(idx++));
+            player.setLaenderspiele(rs.getInt(idx++));
+            player.setU20Laenderspiele(rs.getInt(idx++));
+            player.setAgeDays(rs.getInt(idx++));
 
             // Training block
-            player.setTrainingBlock(rs.getBoolean("TrainingBlock"));
+            player.setTrainingBlock(rs.getBoolean(idx++));
+            player.setLoyalty(rs.getInt(idx++));
+            assert columns[idx - 1].getColumnName().equals("HomeGrown") :  "wrong idx HomeGrown";
+            player.setHomeGrown(rs.getBoolean(idx++));
             
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),e);
