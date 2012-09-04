@@ -310,6 +310,8 @@ final class SpielerTable extends AbstractTable {
 		return ret;
 	}
 
+	static PreparedStatement sGetLastForId = null;
+
 	/**
 	 * gibt alle Spieler zurück, auch ehemalige
 	 *
@@ -318,35 +320,29 @@ final class SpielerTable extends AbstractTable {
 	Vector<Spieler> getAllSpieler() {
 		ResultSet rs = null;
 		Spieler player = null;
-		String sql = null;
-		final Vector<Spieler> ret = new Vector<Spieler>();
-
-		sql = "SELECT DISTINCT SpielerID from "+getTableName()+"";
-		rs = adapter.executeQuery(sql);
+		Vector<Spieler> ret = new Vector<Spieler>();
+		
+		if (sGetLastForId == null) {
+			try {
+			    sGetLastForId = adapter.prepareStatement(
+			    		"SELECT s2.* FROM (SELECT spielerid, MAX(hrf_id) as maxhrf_id FROM spieler GROUP BY spielerid) as s1" +
+			    		" INNER JOIN spieler as s2 ON s1.spielerid = s2.spielerid AND s1.maxhrf_id = s2.hrf_id");
+			} catch (Exception e) {
+				return new Vector<Spieler>();
+			}
+		}
 
 		try {
-			if (rs != null) {
-				final Vector<Integer> idVector = new Vector<Integer>();
-				rs.beforeFirst();
+			rs = sGetLastForId.executeQuery();
 
-				while (rs.next()) {
-					idVector.add(Integer.valueOf(rs.getInt("SpielerID")));
-				}
+			while (rs.next()) {
+				player = createObject(rs);
 
-				for (int i = 0; i < idVector.size(); i++) {
-					sql = "SELECT * from "+getTableName()+" WHERE SpielerID=" + idVector.get(i) + " ORDER BY Datum DESC";
-					rs = adapter.executeQuery(sql);
-
-					if (rs.first()) {
-						player = createObject(rs);
-
-						//HOLogger.instance().log(getClass(), player.getSpielerID () );
-						ret.add(player);
-					}
-				}
+				//HOLogger.instance().log(getClass(), player.getSpielerID () );
+				ret.add(player);
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"DatenbankZugriff.getSpieler: " + e);
+			HOLogger.instance().log(getClass(), e);
 		}
 
 		return ret;
