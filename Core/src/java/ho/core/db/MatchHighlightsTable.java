@@ -39,7 +39,8 @@ final class MatchHighlightsTable extends AbstractTable {
 	@Override
 	protected String[] getCreateIndizeStatements() {
 		return new String[] {
-			"CREATE INDEX iMATCHHIGHLIGHTS_1 ON "+ getTableName()+ "("+ columns[0].getColumnName()+ ")" };
+			"CREATE INDEX iMATCHHIGHLIGHTS_1 ON "+ getTableName()+ "("+ columns[0].getColumnName()+ ")",
+			"CREATE INDEX IMATCHHIGHLIGHTS_SPIELERID_TYP ON "+ getTableName()+ "("+ columns[5].getColumnName()+ ", " + columns[3].getColumnName() + ")"};
 	}
 
 	void storeMatchHighlights(Matchdetails details) {

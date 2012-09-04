@@ -296,6 +296,7 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("CREATE INDEX IPOSITIONEN_HRFID_AUFSTELLUNGSNAME ON positionen (hrf_id, aufstellungsname)");
 		m_clJDBCAdapter.executeUpdate("CREATE INDEX ISPIELER_TRAINERTYP ON spieler (trainertyp)");
 		m_clJDBCAdapter.executeUpdate("CREATE INDEX ISPIELER_HRF_ID_SPIELERID ON spieler (hrf_id, spielerid)");
+		m_clJDBCAdapter.executeUpdate("CREATE INDEX IMATCHHIGHLIGHTS_SPIELERID_TYP ON matchhighlights (spielerid, typ)"); 
 
 		// Follow this pattern in the future. Only set db version if not development, or
 		// if the current db is more than one version old. The last update should be made
