@@ -6,6 +6,7 @@ import ho.core.util.HOLogger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -91,6 +92,23 @@ public class JDBCAdapter {
             HOLogger.instance().error(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql);
             return 0;
         }
+    }
+
+    /**
+     * Prepare a SQL query for batched execution.
+     * 
+     * @param sql Any sql query in prepared format
+     * @return
+     * @throws Exception
+     */
+    public final PreparedStatement prepareStatement(String sql) throws Exception {
+		try {
+			return m_clConnection.prepareStatement(sql);
+		} catch (Exception e) {
+			HOLogger.instance().error(getClass(), e);
+			HOLogger.instance().error(getClass(), "Statement: " + sql);
+			throw e;
+		}
     }
 
     /**
