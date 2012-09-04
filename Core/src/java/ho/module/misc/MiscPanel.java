@@ -73,8 +73,10 @@ final class MiscPanel extends JPanel {
         m_jpAnzahlSpieler.setText(HOVerwaltung.instance().getModel().getAllSpieler().size() + "");
         m_jpAvgTSI.setText(df.format(getAvgTSI()));
         m_jpSumTSI.setText(df.format(getSumTSI()));
-        m_jpAvgEPV.setSpezialNumber(Math.round(getAvgEPV()), true);
-        m_jpSumEPV.setSpezialNumber(Math.round(getSumEPV()), true);
+        float sum = getSumEPV();
+        int players = HOVerwaltung.instance().getModel().getAllSpieler().size();
+        m_jpAvgEPV.setSpezialNumber(Math.round(sum/(players > 0 ? players : 1)), true);
+        m_jpSumEPV.setSpezialNumber(Math.round(sum), true);
         m_jpDAlter.setText(getDurchschnittsAlter() + "");
         m_jpDForm.setText(getDurchschnittsForm() + "");
         m_jpDErfahrung.setText(getDurchschnittsErfahrung() + "");
