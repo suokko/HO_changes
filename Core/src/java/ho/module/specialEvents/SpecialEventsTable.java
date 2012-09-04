@@ -93,6 +93,15 @@ public class SpecialEventsTable extends JTable {
 		};
 	}
 
+	public void updateData() {
+		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
+		SpecialEventsTableModel model = (SpecialEventsTableModel) getModel();
+		model.setDataVector(specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), //
+				FilterPanel.getSaisonTyp(), FilterPanel.showFriendlies()),
+				new Vector<String>(Arrays.asList(columnNames)));
+		model.newDataAvailable(null);
+	}
+
 	public TableModel getSEModel() {
 		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
 		Vector<Vector<Object>> matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), //

@@ -39,8 +39,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 	}
 
 	public static void newTableModel() {
-		specialEventsTable.removeAll();
-		specialEventsTable.setTableModel(specialEventsTable.getSEModel());
+		specialEventsTable.updateData();
 	}
 
 }
