@@ -28,6 +28,11 @@ public final class PositionenTable extends AbstractTable {
 		columns[3]= new ColumnDescriptor("SpielerID",Types.INTEGER,false);
 		columns[4]= new ColumnDescriptor("Taktik",Types.INTEGER,false);
 	}
+
+	@Override
+	protected String[] getCreateIndizeStatements() {
+		return new String[] { "CREATE INDEX IPOSITIONEN_HRFID_AUFSTELLUNGSNAME ON positionen (hrf_id, aufstellungsname)" };
+	}
 	
 	static PreparedStatement sSystemPositionen = null;
 	/**
