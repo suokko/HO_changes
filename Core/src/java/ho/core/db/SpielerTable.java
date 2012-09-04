@@ -373,6 +373,7 @@ final class SpielerTable extends AbstractTable {
 		return bewertung;
 	}
 
+	static PreparedStatement sSpielerAtDate = null;
 	/**
 	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
 	 *
@@ -384,76 +385,44 @@ final class SpielerTable extends AbstractTable {
 	Spieler getSpielerAtDate(int spielerid, Timestamp time) {
 		ResultSet rs = null;
 		Spieler player = null;
-		String sql = null;
-
-		//6 Tage   //1209600000  //14 Tage vorher
-		final int spanne = 518400000;
 
 		if (time == null) {
 			return null;
 		}
 
-		//--- Zuerst x Tage vor dem Datum suchen -------------------------------
-		//x Tage vorher
-		final Timestamp time2 = new Timestamp(time.getTime() - spanne);
-
-		//HOLogger.instance().log(getClass(),"Time : " + time + " : vor 14 Tage : " + time2 );
-		sql = "SELECT * from "+getTableName()+" WHERE Datum<='" + time.toString() + "' AND Datum>='" + time2.toString() + "' AND SpielerID=" + spielerid + " ORDER BY Datum DESC";
-		rs = adapter.executeQuery(sql);
-
 		try {
-			if (rs != null) {
-				if (rs.first()) {
-					player = createObject(rs);
+			if (sSpielerAtDate == null) {
+				/* Find closest hrf with single query */
+				sSpielerAtDate = adapter.prepareStatement("(SELECT *" +
+						" FROM " + getTableName() +
+						" WHERE spielerid = ? AND datum <= ?" +
+						" ORDER BY datum DESC LIMIT 1)" +
+						" union " +
+						"(SELECT *" +
+						" FROM " + getTableName() +
+						" WHERE spielerid = ? AND datum > ?" +
+						" ORDER BY datum ASC LIMIT 1)");
+			}
+			sSpielerAtDate.setInt(1, spielerid);
+			sSpielerAtDate.setTimestamp(2, time);
+			sSpielerAtDate.setInt(3, spielerid);
+			sSpielerAtDate.setTimestamp(4, time);
+			rs = sSpielerAtDate.executeQuery();
 
-					//HOLogger.instance().log(getClass(), "Spieler " + player.getName () + " vom " + rs.getTimestamp ( "Datum" ) );
+			if (rs.next()) {
+				player = createObject(rs);
+				if (rs.next()) {
+					Spieler player2 = createObject(rs);
+
+					if (time.getTime() - player.getHrfDate().getTime() > player2.getHrfDate().getTime() - time.getTime()) {
+						player = player2;
+					}
 				}
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),"1. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
+			HOLogger.instance().log(getClass(), e);
 		}
-
-		//--- Dann ein HRF später versuchen, Dort muss er dann eigenlich vorhanden sein! ---
-		if (player == null) {
-			sql = "SELECT * from "+getTableName()+" WHERE Datum>'" + time.toString() + "' AND SpielerID=" + spielerid + " ORDER BY Datum";
-			rs = adapter.executeQuery(sql);
-
-			try {
-				if (rs != null) {
-					if (rs.first()) {
-						player = createObject(rs);
-
-						//HOLogger.instance().log(getClass(), "Spieler " + player.getName () + " vom " + rs.getTimestamp ( "Datum" ) );
-					}
-				}
-			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),"2. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
-			}
-		}
-
-		//----Dann noch die dopplete Spanne vor der Spanne suchen---------------
-		if (player == null) {
-			//x Tage vorher
-			final Timestamp time3 = new Timestamp(time2.getTime() - (spanne * 2));
-
-			//HOLogger.instance().log(getClass(),"Time : " + time + " : vor 14 Tage : " + time2 );
-			sql = "SELECT * from "+getTableName()+" WHERE Datum<='" + time2.toString() + "' AND Datum>='" + time3.toString() + "' AND SpielerID=" + spielerid + " ORDER BY Datum DESC";
-			rs = adapter.executeQuery(sql);
-
-			try {
-				if (rs != null) {
-					if (rs.first()) {
-						player = createObject(rs);
-
-						//HOLogger.instance().log(getClass(), "Spieler " + player.getName () + " vom " + rs.getTimestamp ( "Datum" ) );
-					}
-				}
-			} catch (Exception e) {
-				HOLogger.instance().log(getClass(),"3. Spieler nicht gefunden für Datum " + time.toString() + " und SpielerID " + spielerid);
-			}
-		}
-
-		return player;
+        return player;
 	}
 
 	//------------------------------------------------------------------------------
