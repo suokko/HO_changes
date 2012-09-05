@@ -334,6 +334,7 @@ public class SubstitutionEditView extends JPanel {
 			add(this.playerInComboBox, gbc);
 		}
 
+		this.behaviourComboBox = new JComboBox();
 		if (!isPositionSwap()) {
 			JLabel behaviourLabel = new JLabel(HOVerwaltung.instance()
 					.getLanguageString("subs.Behavior"));
@@ -343,7 +344,6 @@ public class SubstitutionEditView extends JPanel {
 			gbc.insets = new Insets(4, 10, 4, 2);
 			add(behaviourLabel, gbc);
 
-			this.behaviourComboBox = new JComboBox();
 			this.behaviourComboBox.setMinimumSize(comboBoxSize);
 			this.behaviourComboBox.setPreferredSize(comboBoxSize);
 			gbc.gridx = 1;
