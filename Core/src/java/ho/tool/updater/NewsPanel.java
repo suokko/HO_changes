@@ -83,9 +83,7 @@ class NewsPanel extends JPanel {
 				if (linkEnabled) {
 					try {
 						BrowserLauncher.openURL(b3.getText());
-					} catch (IOException ex) {
-						HOLogger.instance().log(NewsPanel.class, ex);
-					} catch (URISyntaxException ex) {
+					} catch (Exception ex) {
 						HOLogger.instance().log(NewsPanel.class, ex);
 					}
 				}

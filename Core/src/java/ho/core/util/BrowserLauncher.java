@@ -26,7 +26,7 @@ public class BrowserLauncher {
 	 * @throws URISyntaxException
 	 *             if the given string could not be parsed as a URI reference.
 	 */
-	public static void openURL(String url) throws IOException, URISyntaxException {
+	public static void openURL(String url) throws IOException, URISyntaxException, Exception {
 		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
 			Desktop.getDesktop().browse(new URI(url));
 		} else {
@@ -39,13 +39,17 @@ public class BrowserLauncher {
 				// of "page.html#nameLink"
 				rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
 			} else if (os.indexOf("mac") >= 0) {
-				rt.exec("open " + url);
+				Class.forName("com.apple.eio.FileManager")
+				.getDeclaredMethod("openURL",
+						new Class[] { String.class })
+				.invoke(null, new Object[] { url });
 			} else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0) {
 				// Do a best guess on unix until we get a platform
 				// independent way.
 				// Build a list of browsers to try, in this order.
-				String[] browsers = { "epiphany", "firefox", "mozilla", "konqueror", "netscape",
-						"opera", "links", "lynx" };
+				String[] browsers = { "xdg-open", "google-chrome", "firefox", "opera",
+						"epiphany", "konqueror", "conkeror", "midori", "kazehakase",
+						"mozilla" };
 
 				// Build a command string which looks like
 				// "browser1 "url" || browser2 "url" ||..."

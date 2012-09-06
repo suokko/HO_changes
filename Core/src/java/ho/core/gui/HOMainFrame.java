@@ -359,9 +359,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private void openURL(String url) {
 		try {
 			BrowserLauncher.openURL(url);
-		} catch (IOException ex) {
-			HOLogger.instance().log(HOMainFrame.class, ex);
-		} catch (URISyntaxException ex) {
+		} catch (Exception ex) {
 			HOLogger.instance().log(HOMainFrame.class, ex);
 		}
 	}

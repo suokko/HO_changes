@@ -116,9 +116,7 @@ public class SQLDialog extends JDialog implements ActionListener {
     protected void openHSQLDoc() {
         try {
 			BrowserLauncher.openURL("http://hsqldb.sourceforge.net/web/hsqlDocsFrame.html");
-		} catch (IOException ex) {
-			HOLogger.instance().log(SQLDialog.class, ex);
-		} catch (URISyntaxException ex) {
+		} catch (Exception ex) {
 			HOLogger.instance().log(SQLDialog.class, ex);
 		}
     }

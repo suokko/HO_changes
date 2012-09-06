@@ -63,9 +63,7 @@ public class HyperLinkLabel extends JLabel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					BrowserLauncher.openURL(HyperLinkLabel.this.url);
-				} catch (IOException ex) {
-					HOLogger.instance().log(Credits.class, ex);
-				} catch (URISyntaxException ex) {
+				} catch (Exception ex) {
 					HOLogger.instance().log(Credits.class, ex);
 				}
 			}
