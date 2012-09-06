@@ -2,6 +2,7 @@
 package ho.core.db;
 
 
+import ho.core.util.ExceptionUtils;
 import ho.core.util.HOLogger;
 
 import java.sql.Connection;
@@ -62,7 +63,8 @@ public class JDBCAdapter {
 
             return resultat;
         } catch (Exception e) {
-            HOLogger.instance().error(getClass(),"JDBCAdapter.executeQuery : " + e + "\nStatement: " + Sql);
+            HOLogger.instance().error(getClass(),"JDBCAdapter.executeQuery : " + e + "\nStatement: " + Sql
+            		+ "\n" + ExceptionUtils.getStackTrace(e));
             return null;
         }
     }
@@ -88,7 +90,8 @@ public class JDBCAdapter {
             ret = m_clStatement.executeUpdate(Sql);
             return ret;
         } catch (Exception e) {
-            HOLogger.instance().error(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql);
+            HOLogger.instance().error(getClass(),"JDBCAdapter.executeUpdate : " + e + "\nStatement: " + Sql 
+            		+ "\n" + ExceptionUtils.getStackTrace(e));
             return 0;
         }
     }
