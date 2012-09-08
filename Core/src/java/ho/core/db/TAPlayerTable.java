@@ -39,6 +39,13 @@ final class TAPlayerTable extends AbstractTable {
 		
 	}
 
+	@Override
+	protected String[] getCreateIndizeStatements() {
+		return new String[] {
+				"CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)"
+		};
+	}
+
     PlayerInfo getPlayerInfo(int playerId, int week, int season) {
         int weekNumber = week + (season * 16);
 
