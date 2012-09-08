@@ -61,6 +61,8 @@ final class DBUpdater {
 						updateDBv13(DBVersion, version);
 					case 13:
 						updateDBv14(DBVersion, version);
+					case 14:
+						updateDBv15(DBVersion, version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -298,11 +300,19 @@ final class DBUpdater {
 		 */
 		m_clJDBCAdapter.executeUpdate("DELETE FROM IFA_MATCH");
 
+		// No more DB changes to version 14 because we delete all entries from IFA_MATCH
+		dbZugriff.saveUserParameter("DBVersion", 14); 
+	}
+	
+	private void updateDBv15(int DBVersion, int version) {
+		/* Place holder to make sure people won't add anything more to version 14 */
+		if (true)
+			return;
 		// Follow this pattern in the future. Only set db version if not development, or
 		// if the current db is more than one version old. The last update should be made
 		// during first run of a non development version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
-			dbZugriff.saveUserParameter("DBVersion", 14); 
+			dbZugriff.saveUserParameter("DBVersion", 15); 
 		}
 	}
 
