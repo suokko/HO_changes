@@ -2143,9 +2143,9 @@ public class DBManager {
 				.isMatchinDB(matchId);
 	}
 
-	public String getLastIFAMatchDate() {
+	public String getLastIFAMatchDate(String defaultValue) {
 		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME))
-				.getLastMatchDate();
+				.getLastMatchDate(defaultValue);
 	}
 
 	public IfaMatch[] getIFAMatches(boolean home) {

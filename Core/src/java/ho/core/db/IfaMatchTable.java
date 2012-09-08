@@ -62,12 +62,12 @@ public class IfaMatchTable extends AbstractTable {
 		return false;
 	}
 	
-	String getLastMatchDate() {
+	String getLastMatchDate(String defaultValue) {
 		StringBuffer select = new StringBuffer(100);
 		select.append("SELECT MAX(").append("PLAYEDDATE").append(") FROM ");
 		select.append(getTableName());
 		ResultSet rs = adapter.executeQuery(select.toString());
-		String s = "2000-01-01";
+		String s = defaultValue;
 		try {
 			if ((rs != null) && (rs.next())) {
 				String tmp = rs.getString(1);

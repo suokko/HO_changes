@@ -3,6 +3,8 @@ package ho.module.ifa;
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
+import ho.core.model.HOModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.DateTimeUtils;
@@ -49,7 +51,8 @@ public class PluginIfaUtils {
 		try {
 			waitWindow.setVisible(true);
 
-			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate());
+			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate(
+					HOVerwaltung.instance().getModel().getBasics().getActivationDate().toString()));
 			try {
 				List<Date[]> times = getTimeIntervalsForRetrieval(from);
 				for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
