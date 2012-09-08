@@ -50,6 +50,7 @@ Changelist HO! 1.432
 - The old penalty shooter button is gone. Look for the new tab instead.
 - Added ability to reset all positional orders in the line up tab.
 - Calculate loyalty and homegrownbonus for set pieces and penalty takers.
+- Fixed International Friendly tab not to download matches before the user got the team
 
 Language updates:
 -----------------
