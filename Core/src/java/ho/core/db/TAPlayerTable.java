@@ -27,7 +27,7 @@ final class TAPlayerTable extends AbstractTable {
 	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[9];
-		columns[0] = new ColumnDescriptor("TEAMID", Types.INTEGER, false, true);
+		columns[0] = new ColumnDescriptor("TEAMID", Types.INTEGER, false);
 		columns[1] = new ColumnDescriptor("PLAYERID", Types.INTEGER, true );
 		columns[2] = new ColumnDescriptor("STATUS", Types.INTEGER, true );
 		columns[3] = new ColumnDescriptor("SPECIALEVENT", Types.INTEGER, true );
