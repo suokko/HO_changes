@@ -292,6 +292,8 @@ final class DBUpdater {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
 		
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+
 		// Follow this pattern in the future. Only set db version if not development, or
 		// if the current db is more than one version old. The last update should be made
 		// during first run of a non development version.

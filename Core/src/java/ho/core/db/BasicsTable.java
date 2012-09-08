@@ -19,7 +19,7 @@ final class BasicsTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-        columns = new ColumnDescriptor[11];
+        columns = new ColumnDescriptor[12];
 		columns[0]= new ColumnDescriptor("HRF_ID",Types.INTEGER,false,true);
 		columns[1]= new ColumnDescriptor("Manager",Types.VARCHAR,false,127);
 		columns[2]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
@@ -31,6 +31,7 @@ final class BasicsTable extends AbstractTable {
 		columns[8]= new ColumnDescriptor("Datum",Types.TIMESTAMP,false);
 		columns[9]= new ColumnDescriptor("Region",Types.INTEGER,false);
 		columns[10] = new ColumnDescriptor("HasSupporter", Types.BOOLEAN,false);
+		columns[11] = new ColumnDescriptor("ActivationDate", Types.TIMESTAMP,true);
 	}
 
 	@Override
@@ -56,7 +57,7 @@ final class BasicsTable extends AbstractTable {
 			delete( awhereS, awhereV );
 
 			//insert vorbereiten
-			statement = "INSERT INTO "+getTableName()+" ( TeamID , Manager , TeamName , Land , Liga , Saison , Spieltag , HRF_ID, Datum, Region, HasSupporter ) VALUES(";
+			statement = "INSERT INTO "+getTableName()+" ( TeamID , Manager , TeamName , Land , Liga , Saison , Spieltag , HRF_ID, Datum, Region, HasSupporter, ActivationDate ) VALUES(";
 			statement
 				+= (""
 					+ basics.getTeamId()
@@ -80,6 +81,8 @@ final class BasicsTable extends AbstractTable {
 					+ basics.getRegionId()
 					+ ",'"
 					+ basics.isHasSupporter()
+					+ "','"
+					+ basics.getActivationDate()
 					+ "' )");
 			adapter.executeUpdate(statement);
 		}

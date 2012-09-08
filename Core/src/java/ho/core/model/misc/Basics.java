@@ -4,6 +4,7 @@ package ho.core.model.misc;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.Properties;
 
 
@@ -21,6 +22,9 @@ public final class Basics  {
 
     /** Datum der Erstellung */
     private java.sql.Timestamp m_clDatum = new java.sql.Timestamp(0);
+
+    /** Date of activation */
+    private java.sql.Timestamp m_tActivationDate = new java.sql.Timestamp(0);
 
     /** Land */
     private int m_iLand;
@@ -62,6 +66,12 @@ public final class Basics  {
 
         m_sTeamName = properties.getProperty("teamname", "").toString();
         m_sManager = properties.getProperty("owner", "").toString();
+
+        try {
+            m_tActivationDate = Timestamp.valueOf(properties.getProperty("activationdate", "0"));
+        } catch (Exception e) {
+            m_tActivationDate = new Timestamp(0);
+        }
 
         try {
             m_iLand = Integer.parseInt(properties.getProperty("countryid", "0"));
@@ -107,6 +117,7 @@ public final class Basics  {
             m_iTeamId = rs.getInt("TeamID");
             m_sTeamName = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("TeamName"));
             m_sManager = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("Manager"));
+            m_tActivationDate = rs.getTimestamp("ActivationDate");
             m_iLand = rs.getInt("Land");
             m_iLiga = rs.getInt("Liga");
             m_iSeason = rs.getInt("Saison");
@@ -233,6 +244,24 @@ public final class Basics  {
      */
     public java.lang.String getManager() {
         return m_sManager;
+    }
+
+    /**
+     * Setter for property m_tActivationDate.
+     *
+     * @param m_tActivationDate New value of property m_tActivationDate.
+     */
+    public void setActivationDate(Timestamp m_tActivationDate) {
+        this.m_tActivationDate = m_tActivationDate;
+    }
+
+    /**
+     * Getter for property m_tActivationDate.
+     *
+     * @return Value of property m_tActivationDate.
+     */
+    public Timestamp getActivationDate() {
+        return m_tActivationDate;
     }
 
     /**

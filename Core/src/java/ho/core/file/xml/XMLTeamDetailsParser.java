@@ -76,6 +76,8 @@ public class XMLTeamDetailsParser {
 			hash.put("Loginname", (XMLManager.getFirstChildNodeValue(ele)));
 			ele = (Element) root.getElementsByTagName("LastLoginDate").item(0);
 			hash.put("LastLoginDate", (XMLManager.getFirstChildNodeValue(ele)));
+			ele = (Element) root.getElementsByTagName("ActivationDate").item(0);
+			hash.put("ActivationDate", (XMLManager.getFirstChildNodeValue(ele)));
 
 			// Is this in the xml? - Blaghaid
 			ele = (Element) root.getElementsByTagName("Email").item(0);

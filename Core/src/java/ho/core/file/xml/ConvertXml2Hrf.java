@@ -248,6 +248,8 @@ public class ConvertXml2Hrf {
 				.append('\n');
 		buffer.append("teamName=").append(teamdetailsDataMap.get("TeamName"))
 				.append('\n');
+		buffer.append("activationDate=").append(teamdetailsDataMap.get("ActivationDate"))
+				.append('\n');
 		buffer.append("owner=").append(teamdetailsDataMap.get("Loginname"))
 				.append('\n');
 		buffer.append("ownerEmail=").append(teamdetailsDataMap.get("Email"))

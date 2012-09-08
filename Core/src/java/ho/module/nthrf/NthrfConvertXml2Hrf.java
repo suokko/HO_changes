@@ -126,6 +126,7 @@ class NthrfConvertXml2Hrf {
 		m_sHRFBuffer.append("matchround=" + "7" + "\n"); 	//TODO: MatchRound
 		m_sHRFBuffer.append("teamID=" + details.getTeamId() + "\n");
 		m_sHRFBuffer.append("teamName=" + details.getTeamName() + "\n");
+		m_sHRFBuffer.append("activationDate=0\n");
 		m_sHRFBuffer.append("owner=" + details.getCoachName() + "\n");
 		m_sHRFBuffer.append("ownerEmail=0\n");
 		m_sHRFBuffer.append("ownerICQ=0\n");
