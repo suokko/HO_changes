@@ -118,8 +118,8 @@ public final class MatchesOverviewRow {
 	
 	public void setMatchResult(int ihomeGoals, int iawayGoals, boolean home){
 		count++;
-		homeGoals = homeGoals + ihomeGoals;
-		awayGoals = awayGoals + iawayGoals;
+		homeGoals += home ? ihomeGoals : iawayGoals;
+		awayGoals += home ? iawayGoals : ihomeGoals;
 		
 		if(ihomeGoals > iawayGoals){
 			if(home)

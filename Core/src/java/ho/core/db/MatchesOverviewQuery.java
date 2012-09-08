@@ -335,8 +335,8 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 			row.setWin(rs.getInt("G"));
 			row.setDraw(rs.getInt("U"));
 			row.setLoss(rs.getInt("V"));
-			row.setHomeGoals(rs.getInt("HEIMTORE"));
-			row.setAwayGoals(rs.getInt("GASTTORE"));
+			row.setHomeGoals(rs.getInt(home ? "HEIMTORE" : "GASTTORE"));
+			row.setAwayGoals(rs.getInt(home ? "GASTTORE" : "HEIMTORE"));
 		}
 		} catch(Exception e){
 			HOLogger.instance().log(MatchesOverviewQuery.class,e);
