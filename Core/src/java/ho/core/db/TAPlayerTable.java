@@ -79,20 +79,33 @@ final class TAPlayerTable extends AbstractTable {
      * @return a numeric code
      */
     PlayerInfo getPlayerInfo(int playerId) {
-        Integer HTWeek = getCurrentHTWeek();
-        Integer HTSeason = getCurrentHTSeason();
-        return getPlayerInfo(playerId, HTWeek, HTSeason);
+        ResultSet rs = DBManager.instance().getAdapter().executeQuery("SELECT max(WEEK) FROM TA_PLAYER WHERE"
+                + " PLAYERID=" + playerId);
+
+        try {
+        	/* Take second week only */
+        	if (rs.next()) {
+        		int week = rs.getInt(1);
+        		int season = week / 16;
+        		int wk = week % 16;
+        		return getPlayerInfo(playerId, wk, season);
+        	}
+        } catch (SQLException e) {
+        }
+
+        return new PlayerInfo();
     }
     
     PlayerInfo getPreviousPlayeInfo(int playerId) {
-        ResultSet rs = DBManager.instance().getAdapter().executeQuery("SELECT WEEK FROM TA_PLAYER WHERE WEEK<"
-                                                                    + getCurrentWeekNumber()
-                                                                    + " AND PLAYERID=" + playerId
-                                                                    + " ORDER BY WEEK DESC");
+        ResultSet rs = DBManager.instance().getAdapter().executeQuery("SELECT WEEK FROM TA_PLAYER WHERE"
+                                                                    + " PLAYERID=" + playerId
+                                                                    + " ORDER BY WEEK DESC LIMIT 2");
 
         try {
+        	/* Take second week only */
+        	rs.next();
             if (rs.next()) {
-                int week = rs.getInt("WEEK");
+                int week = rs.getInt(1);
                 int season = week / 16;
                 int wk = week % 16;
                 return getPlayerInfo(playerId, wk, season);
