@@ -80,146 +80,91 @@ public class EffectDAO {
 
             trainWeeks.clear();
 
-            Calendar date = Calendar.getInstance();
-            date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
+            ResultSet tDateset = db.executeQuery("SELECT HRFMIN.hrf_id, HRFMAX.hrf_id, trainingdate" +
+                    " FROM HRF as HRFMIN, HRF as HRFMAX, (SELECT max(HRF.datum) as maxdate, min(HRF.datum) as mindate, trainingdate" +
+                        " FROM HRF, XTRADATA" +
+                        " WHERE HRF.hrf_id=XTRADATA.hrf_id" +
+                        " GROUP BY trainingdate) AS X" +
+                        " WHERE maxdate = HRFMAX.datum AND mindate = HRFMIN.datum ORDER BY trainingdate DESC");
 
-            Timestamp datum = new Timestamp(date.getTimeInMillis());
-            ResultSet tDateset = db.executeQuery("SELECT DISTINCT trainingdate FROM XTRADATA WHERE trainingdate < '"
-                                                 + datum.toString() + "'");
-            List<Timestamp> trainingDates = new Vector<Timestamp>();
+            List<TrainWeekEffect> trainingDates = new Vector<TrainWeekEffect>();
 
             try {
+                int first_in_week = 0;
+                if (tDateset.next()) {
+                    first_in_week = tDateset.getInt(1);
+                }
                 while (tDateset.next()) {
-                    trainingDates.add(tDateset.getTimestamp("trainingdate"));
+                    Timestamp trainDate = tDateset.getTimestamp(3);
+                    int HTWeek = HTCalendarFactory.getHTWeek(trainDate);
+                    int HTSeason = HTCalendarFactory.getHTSeason(trainDate);
+                    trainingDates.add(new TrainWeekEffect(HTWeek, HTSeason, tDateset.getInt(1), first_in_week));
+                    first_in_week = tDateset.getInt(1);
                 }
 
                 tDateset.close();
             } catch (Exception e) {
             }
 
-            Collections.sort(trainingDates,
-                             new Comparator<Timestamp>() {
-                    public int compare(Timestamp o1, Timestamp o2) {
-                        Timestamp t1 = o1;
-                        Timestamp t2 = o2;
+            for (Iterator<TrainWeekEffect> iter = trainingDates.iterator(); iter.hasNext();) {
+                TrainWeekEffect week = iter.next();
 
-                        return t2.compareTo(t1);
+                ResultSet set = db.executeQuery("SELECT SUM(marktwert) as totaltsi, AVG(marktwert) as avgtsi , SUM(form) as form, COUNT(form) as number FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
+                    + Integer.toString(week.getHRFafterUpdate()));
+
+                if (set != null) {
+                    set.next();
+                    week.setTotalTSI(set.getInt("totaltsi")); //$NON-NLS-1$
+                    week.setAverageTSI(set.getInt("avgtsi")); //$NON-NLS-1$
+
+                    double avgForm = 0.0d;
+
+                    if (set.getInt("number") != 0) { //$NON-NLS-1$
+                        avgForm = set.getDouble("form") / set.getInt("number"); //$NON-NLS-1$ //$NON-NLS-2$
                     }
-                });
 
-            for (Iterator<Timestamp> iter = trainingDates.iterator(); iter.hasNext();) {
-                Timestamp trainDate = iter.next();
-
-                int HTWeek = HTCalendarFactory.getHTWeek(trainDate);
-                int HTSeason =HTCalendarFactory.getHTSeason(trainDate);
-
-               
-
-                StringBuffer minHrf_SQLStmt = new StringBuffer("SELECT HRF.hrf_id FROM HRF, XTRADATA");
-
-                minHrf_SQLStmt.append(" WHERE HRF.hrf_id=XTRADATA.hrf_id");
-                minHrf_SQLStmt.append(" AND datum = (SELECT MAX(datum) FROM HRF WHERE datum < '"
-                                      + trainDate.toString() + "')");
-                minHrf_SQLStmt.append(" AND trainingdate = '" + trainDate.toString() + "'");
-
-                ResultSet minHRFSet = db.executeQuery(minHrf_SQLStmt.toString());
-
-                int hrfBeforeUpdate = 0;
-
-                try {
-                    minHRFSet.next();
-                    hrfBeforeUpdate = minHRFSet.getInt("hrf_id"); //$NON-NLS-1$
-                    minHRFSet.close();
-                } catch (Exception e) {
-                    hrfBeforeUpdate = 0;
+                    week.setAverageForm(avgForm);
+                    set.close();
                 }
 
-                TrainWeekEffect week = null;
+                Map<Integer,PlayerValues> valuesBeforeUpdate = new HashMap<Integer,PlayerValues>();
 
-                if (hrfBeforeUpdate > 0) {
-                    StringBuffer maxHrf_SQLStmt = new StringBuffer("SELECT HRF.hrf_id FROM HRF, XTRADATA");
+                set = db.executeQuery("SELECT * FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
+                        + Integer.toString(week.getHRFbeforeUpdate()));
 
-                    maxHrf_SQLStmt.append(" WHERE HRF.hrf_id=XTRADATA.hrf_id");
-                    maxHrf_SQLStmt.append(" AND datum = (SELECT MIN(datum) FROM HRF WHERE datum > '"
-                                          + trainDate.toString() + "')");
-                    maxHrf_SQLStmt.append(" AND trainingdate > '" + trainDate.toString() + "'");
+                if (set != null) {
+                    while (set.next()) {
+                        PlayerValues result = new PlayerValues(set.getInt("marktwert"), //$NON-NLS-1$
+                                set.getInt("form")); //$NON-NLS-1$
 
-                    ResultSet maxHRFSet = db.executeQuery(maxHrf_SQLStmt.toString());
-
-                    int hrfAfterUpdate = 0;
-
-                    try {
-                        maxHRFSet.next();
-                        hrfAfterUpdate = maxHRFSet.getInt("hrf_id"); //$NON-NLS-1$
-                        maxHRFSet.close();
-                    } catch (Exception e) {
-                        hrfAfterUpdate = 0;
+                        valuesBeforeUpdate.put(new Integer(set.getInt("spielerid")), result); //$NON-NLS-1$
                     }
 
-                    if (hrfAfterUpdate > 0) {
-                        week = new TrainWeekEffect(HTWeek,HTSeason,hrfBeforeUpdate,hrfAfterUpdate);
+                    set.close();
+                }
 
-                        ResultSet set = db.executeQuery("SELECT SUM(marktwert) as totaltsi, AVG(marktwert) as avgtsi , SUM(form) as form, COUNT(form) as number FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
-                                                        + Integer.toString(week.getHRFafterUpdate()));
+                set = db.executeQuery("SELECT * FROM SPIELER, BASICS WHERE trainer = 0 AND SPIELER.hrf_id = BASICS.hrf_id AND SPIELER.hrf_id = " //$NON-NLS-1$
+                        + Integer.toString(week.getHRFafterUpdate()));
 
-                        if (set != null) {
-                            set.next();
-                            week.setTotalTSI(set.getInt("totaltsi")); //$NON-NLS-1$
-                            week.setAverageTSI(set.getInt("avgtsi")); //$NON-NLS-1$
+                if (set != null) {
+                    while (set.next()) {
+                        Integer playerID = new Integer(set.getInt("spielerid")); //$NON-NLS-1$
 
-                            double avgForm = 0.0d;
+                        if (valuesBeforeUpdate.containsKey(playerID)) {
+                            PlayerValues before = (PlayerValues) valuesBeforeUpdate.get(playerID);
 
-                            if (set.getInt("number") != 0) { //$NON-NLS-1$
-                                avgForm = set.getDouble("form") / set.getInt("number"); //$NON-NLS-1$ //$NON-NLS-2$
-                            }
-
-                            week.setAverageForm(avgForm);
-                            set.close();
-                        }
-
-                        Map<Integer,PlayerValues> valuesBeforeUpdate = new HashMap<Integer,PlayerValues>();
-
-                        set = db.executeQuery("SELECT * FROM SPIELER WHERE trainer = 0 AND hrf_id = " //$NON-NLS-1$
-                                              + Integer.toString(week.getHRFbeforeUpdate()));
-
-                        if (set != null) {
-                            while (set.next()) {
-                                PlayerValues result = new PlayerValues(set.getInt("marktwert"), //$NON-NLS-1$
-                                                                       set.getInt("form")); //$NON-NLS-1$
-
-                                valuesBeforeUpdate.put(new Integer(set.getInt("spielerid")), result); //$NON-NLS-1$
-                            }
-
-                            set.close();
-                        }
-
-                        set = db.executeQuery("SELECT * FROM SPIELER, BASICS WHERE trainer = 0 AND SPIELER.hrf_id = BASICS.hrf_id AND SPIELER.hrf_id = " //$NON-NLS-1$
-                                              + Integer.toString(week.getHRFafterUpdate()));
-
-                        if (set != null) {
-                            while (set.next()) {
-                                Integer playerID = new Integer(set.getInt("spielerid")); //$NON-NLS-1$
-
-                                if (valuesBeforeUpdate.containsKey(playerID)) {
-                                    PlayerValues before = (PlayerValues) valuesBeforeUpdate.get(playerID);
-
-                                    week.addTSI(set.getInt("marktwert") - before.getTsi()); //$NON-NLS-1$
-                                    week.addForm(set.getInt("form") - before.getForm()); //$NON-NLS-1$
-                                }
-                            }
-
-                            set.close();
+                            week.addTSI(set.getInt("marktwert") - before.getTsi()); //$NON-NLS-1$
+                            week.addForm(set.getInt("form") - before.getForm()); //$NON-NLS-1$
                         }
                     }
+
+                    set.close();
                 }
 
                 // Set amount of skillups for this training week
-                String key = HTSeason + "-" + HTWeek; //$NON-NLS-1$
+                String key = week.getHattrickSeason() + "-" + week.getHattrickWeek(); //$NON-NLS-1$
 
                 if (weeklySkillups.containsKey(key)) {
-                    if (week == null) {
-                        week = new TrainWeekEffect(HTWeek,HTSeason, 0, 0);
-                    }
 
                     List<ISkillup> wsList = weeklySkillups.get(key);
                     week.setAmountSkillups(wsList.size());
