@@ -117,7 +117,6 @@ public final class Basics  {
             m_iTeamId = rs.getInt("TeamID");
             m_sTeamName = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("TeamName"));
             m_sManager = ho.core.db.DBManager.deleteEscapeSequences(rs.getString("Manager"));
-            m_tActivationDate = rs.getTimestamp("ActivationDate");
             m_iLand = rs.getInt("Land");
             m_iLiga = rs.getInt("Liga");
             m_iSeason = rs.getInt("Saison");
