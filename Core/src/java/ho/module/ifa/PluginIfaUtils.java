@@ -5,11 +5,13 @@ import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
+import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.DateTimeUtils;
 import ho.core.util.HOLogger;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +19,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JWindow;
 
 import org.w3c.dom.Document;
@@ -47,12 +50,23 @@ public class PluginIfaUtils {
 	}
 
 	static boolean updateMatchesTable() {
+		Timestamp time;
+		boolean retry = true;
+
+		do {
+			time = HOVerwaltung.instance().getModel().getBasics().getActivationDate();
+
+			if (time != null && time.getTime() > 100) {
+				break;
+			}
+			new DownloadDialog();
+		} while (retry == true && !(retry = false));
+
 		JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
 		try {
 			waitWindow.setVisible(true);
 
-			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate(
-					HOVerwaltung.instance().getModel().getBasics().getActivationDate().toString()));
+			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate(time.toString()));
 			try {
 				List<Date[]> times = getTimeIntervalsForRetrieval(from);
 				for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
