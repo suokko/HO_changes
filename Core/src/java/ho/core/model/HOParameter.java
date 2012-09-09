@@ -1,6 +1,8 @@
 // %844311304:gui%
 package ho.core.model;
 
+import ho.core.db.DBManager;
+
 import java.util.HashMap;
 
 
@@ -50,7 +52,7 @@ public final class HOParameter extends Configuration {
 	public float RatingsRelease = 1f;	
 	
     /** TODO Missing Parameter Documentation */
-    public int DBVersion = 4;
+    public int DBVersion = DBManager.getVersion();
 
     /** @deprecated since HO! 1.431 */
     @Deprecated
