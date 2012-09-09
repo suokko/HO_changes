@@ -53,7 +53,7 @@ public final class Basics  {
      */
     public Basics(Properties properties) throws Exception {
         try {
-            setDatumByString(properties.getProperty("date"));
+            m_clDatum = setDatumByString(properties.getProperty("date"));
         } catch (Exception e) {
             //Egal wenn nicht funzt...
         }
@@ -68,7 +68,7 @@ public final class Basics  {
         m_sManager = properties.getProperty("owner", "").toString();
 
         try {
-            m_tActivationDate = Timestamp.valueOf(properties.getProperty("activationdate", "0"));
+            m_tActivationDate = setDatumByString(properties.getProperty("activationdate"));
         } catch (Exception e) {
             m_tActivationDate = new Timestamp(0);
         }
@@ -125,6 +125,7 @@ public final class Basics  {
             m_clDatum = rs.getTimestamp("Datum");
             m_iRegionId = rs.getInt("Region");
             m_bHasSupporter = rs.getBoolean("HasSupporter");
+            m_tActivationDate = rs.getTimestamp("ActivationDate");
         } catch (Exception e) {
             HOLogger.instance().log(getClass(),"Konstruktor Basics: " + e.toString());
         }
@@ -155,23 +156,23 @@ public final class Basics  {
      *
      * @param date TODO Missing Method Parameter Documentation
      */
-    public void setDatumByString(String date) {
+    public java.sql.Timestamp setDatumByString(String date) {
         try {
             //Hattrick
             final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                                                                            java.util.Locale.GERMANY);
 
-            m_clDatum = new java.sql.Timestamp(simpleFormat.parse(date).getTime());
+            return new java.sql.Timestamp(simpleFormat.parse(date).getTime());
         } catch (Exception e) {
             try {
                 //Hattrick
                 final java.text.SimpleDateFormat simpleFormat = new java.text.SimpleDateFormat("yyyy-MM-dd",
                                                                                                java.util.Locale.GERMANY);
 
-                m_clDatum = new java.sql.Timestamp(simpleFormat.parse(date).getTime());
+                return new java.sql.Timestamp(simpleFormat.parse(date).getTime());
             } catch (Exception expc) {
                 HOLogger.instance().log(getClass(),e);
-                m_clDatum = new java.sql.Timestamp(System.currentTimeMillis());
+                return new java.sql.Timestamp(System.currentTimeMillis());
             }
         }
     }
