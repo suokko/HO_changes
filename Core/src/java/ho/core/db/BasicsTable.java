@@ -81,9 +81,9 @@ final class BasicsTable extends AbstractTable {
 					+ basics.getRegionId()
 					+ ",'"
 					+ basics.isHasSupporter()
-					+ "','"
-					+ basics.getActivationDate()
-					+ "' )");
+					+ "',"
+					+ (basics.getActivationDate() == null ? "NULL" : "'" + basics.getActivationDate() + "'")
+					+ " )");
 			adapter.executeUpdate(statement);
 		}
 	}

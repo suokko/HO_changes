@@ -68,7 +68,11 @@ public final class Basics  {
         m_sManager = properties.getProperty("owner", "").toString();
 
         try {
-            m_tActivationDate = setDatumByString(properties.getProperty("activationdate"));
+        	if (properties.containsKey("activationdate")) {
+        		m_tActivationDate = setDatumByString(properties.getProperty("activationdate"));
+        	} else {
+        		m_tActivationDate = null;
+        	}
         } catch (Exception e) {
             m_tActivationDate = new Timestamp(0);
         }
