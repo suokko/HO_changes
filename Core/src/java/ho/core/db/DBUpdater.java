@@ -311,6 +311,7 @@ final class DBUpdater {
 	private void updateDBv15(int DBVersion, int version) {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE ta_player DROP PRIMARY KEY");
 		m_clJDBCAdapter.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
+		m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
 
 		// Follow this pattern in the future. Only set db version if not development, or
 		// if the current db is more than one version old. The last update should be made
