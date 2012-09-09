@@ -41,7 +41,11 @@ final class DBUpdater {
 					case 3 :
 					case 4 :
 						HOLogger.instance().log(getClass(), "DB version " + DBVersion + " is to old");
-						JOptionPane.showMessageDialog(null, "DB is too old.\nPlease update first to HO 1.431","Error",JOptionPane.ERROR);
+						try {
+							JOptionPane.showMessageDialog(null, "DB is too old.\nPlease update first to HO 1.431","Error",JOptionPane.ERROR_MESSAGE);
+						} catch(Exception e) {
+							HOLogger.instance().log(getClass(), e);
+						}
 						System.exit(0);
 					case 5 :
 						updateDBv6();
