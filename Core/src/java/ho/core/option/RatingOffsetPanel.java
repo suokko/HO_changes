@@ -64,22 +64,22 @@ public final class RatingOffsetPanel
 			slider[5].getValue() / 100.0f;
 		UserParameter.temp().rightAttackOffset =
 			slider[4].getValue() / 100.0f;
-		
+
 		OptionManager.instance().setReInitNeeded();
 	}
 
 	/**
 	 * TODO Missing Method Documentation
 +	 */
-	private void initComponents() {        
+	private void initComponents() {
 		slider[0] = createSlider(UserParameter.temp().rightDefenceOffset,"rechteAbwehrseite");
         slider[1] = createSlider(UserParameter.temp().middleDefenceOffset,"Abwehrzentrum");
 		slider[2] = createSlider(UserParameter.temp().leftDefenceOffset,"linkeAbwehrseite");
         slider[3] = createSlider(UserParameter.temp().midfieldOffset,"MatchMittelfeld");
-		slider[4] = createSlider(UserParameter.temp().rightAttackOffset,"rechteAngriffsseite");        
+		slider[4] = createSlider(UserParameter.temp().rightAttackOffset,"rechteAngriffsseite");
         slider[5] = createSlider(UserParameter.temp().middleAttackOffset,"Angriffszentrum");
 		slider[6] = createSlider(UserParameter.temp().leftAttackOffset,"linkeAngriffsseite");
-               
+
 
         err[0] = new JLabel();
         err[1] = new JLabel();
@@ -87,9 +87,9 @@ public final class RatingOffsetPanel
         err[3] = new JLabel();
         err[4] = new JLabel();
         err[5] = new JLabel();
-        err[6] = new JLabel();       
+        err[6] = new JLabel();
 
-        numberMatches = new SliderPanel("Number Matches",30,1,1,1f,120,0);
+        numberMatches = new SliderPanel(HOVerwaltung.instance().getLanguageString("options.ratingpredictionoffset.numberofmatches"),30,1,1,1f,120,0);
         numberMatches.setValue(10);
 
         m_jbCalculate =
@@ -110,10 +110,10 @@ public final class RatingOffsetPanel
         c.gridx = 1;
         c.insets = new Insets(0,200,0,0);
         c.anchor = GridBagConstraints.CENTER;
-        add(new JLabel("Offset"), c);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("options.ratingpredictionoffset.offset")), c);
         c.insets = new Insets(0,25,0,0);
         c.gridx = 3;
-        add(new JLabel("Error"), c);
+        add(new JLabel(HOVerwaltung.instance().getLanguageString("options.ratingpredictionoffset.variance")), c);
 
         c.insets = new Insets(10,0,0,0);
         c.gridy = 1;
@@ -124,7 +124,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[0], c);
-        
+
         c.gridy = 2;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -133,7 +133,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[1], c);
-        
+
         c.gridy = 3;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -142,7 +142,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[2], c);
-        
+
         c.gridy = 4;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -151,7 +151,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[3], c);
-        
+
         c.gridy = 5;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -160,7 +160,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[4], c);
-        
+
         c.gridy = 6;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -169,7 +169,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[5], c);
-        
+
         c.gridy = 7;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -178,7 +178,7 @@ public final class RatingOffsetPanel
         c.gridx = 3;
         c.anchor = GridBagConstraints.LINE_END;
         add(err[6], c);
-        
+
         c.gridy = 8;
         c.gridx = 0;
         c.gridwidth = 3;
@@ -202,7 +202,7 @@ public final class RatingOffsetPanel
         slider.addChangeListener(this);
         return slider;
     }
-    
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -220,7 +220,7 @@ public final class RatingOffsetPanel
 			slider[6].setValue(0);
 			for(int i = 0; i < 7; i++) {
 				err[i].setText("");
-			}			
+			}
 			numberMatches.setValue(10);
 			stateChanged(null);
 		}
@@ -230,20 +230,20 @@ public final class RatingOffsetPanel
 
 	public void calculate() {
 		double offset[][] = RatingOptimizer.optimize((int) numberMatches.getValue());
-		if (offset.length > 7) { // length=7 -> no matches, nothing to do 
+		if (offset.length > 7) { // length=7 -> no matches, nothing to do
 			numberMatches.setValue((int) offset[7][0]);
 			for(int i = 0; i < 7; i++) {
 				slider[i].setValue((int) (100 * offset[i][0]));
 				double value = offset[i][1];
-				if (value>0) {				
+				if (value>0) {
 					if (ho.core.model.UserParameter.temp().anzahlNachkommastellen == 1) {
 						err[i].setText(Helper.DEFAULTDEZIMALFORMAT.format(value));
 					} else {
 						err[i].setText(Helper.DEZIMALFORMAT_2STELLEN.format(value));
-					}								
+					}
 				} else {
 					err[i].setText("");
-				}			
+				}
 			}
 		}
 		stateChanged(null);
