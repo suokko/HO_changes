@@ -1,5 +1,6 @@
 package ho.module.ifa2;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.ifa2.model.IfaStatistic;
 
 import java.util.ArrayList;
@@ -9,10 +10,14 @@ import javax.swing.table.AbstractTableModel;
 
 public class IfaTableModel extends AbstractTableModel {
 
+	static final int COL_COUNTRY = 0;
+	static final int COL_PLAYED = 1;
+	static final int COL_WON = 2;
+	static final int COL_DRAW = 3;
+	static final int COL_LOST = 4;
+	static final int COL_LAST = 5;
 	private static final long serialVersionUID = -5838533232544239799L;
 	private List<IfaStatistic> list;
-	private String[] columnNames = new String[] { "Country", "Matches played", "Won", "Draw",
-			"Lost", "Last Match" };
 
 	public IfaTableModel(List<IfaStatistic> data) {
 		this.list = new ArrayList<IfaStatistic>(data);
@@ -32,17 +37,17 @@ public class IfaTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		IfaStatistic stat = this.list.get(rowIndex);
 		switch (columnIndex) {
-		case 0:
+		case COL_COUNTRY:
 			return stat.getCountry();
-		case 1:
+		case COL_PLAYED:
 			return stat.getMatchesPlayed();
-		case 2:
+		case COL_WON:
 			return stat.getMatchesWon();
-		case 3:
+		case COL_DRAW:
 			return stat.getMatchesDraw();
-		case 4:
+		case COL_LOST:
 			return stat.getMatchesLost();
-		case 5:
+		case COL_LAST:
 			return stat.getLastMatchDate();
 		}
 
@@ -51,6 +56,21 @@ public class IfaTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		return this.columnNames[columnIndex];
+		switch (columnIndex) {
+		case COL_COUNTRY:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.country");
+		case COL_PLAYED:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.played");
+		case COL_WON:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.won");
+		case COL_DRAW:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.draw");
+		case COL_LOST:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lost");
+		case COL_LAST:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lastMatch");
+		}
+
+		return null;
 	}
 }
