@@ -47,7 +47,7 @@ public class RightPanel extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridwidth = 2;
-//		add(this.updateButton, gbc);
+		add(this.updateButton, gbc);
 
 		this.awayRadioButton = new JRadioButton("Visited Countries", true);
 		gbc.gridy = 1;
