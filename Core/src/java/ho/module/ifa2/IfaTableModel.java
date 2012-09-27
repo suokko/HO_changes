@@ -17,10 +17,11 @@ public class IfaTableModel extends AbstractTableModel {
 	static final int COL_LOST = 4;
 	static final int COL_LAST = 5;
 	private static final long serialVersionUID = -5838533232544239799L;
-	private List<IfaStatistic> list;
+	private List<IfaStatistic> list = new ArrayList<IfaStatistic>();
 
-	public IfaTableModel(List<IfaStatistic> data) {
+	public void setData(List<IfaStatistic> data) {
 		this.list = new ArrayList<IfaStatistic>(data);
+		fireTableDataChanged();
 	}
 
 	@Override

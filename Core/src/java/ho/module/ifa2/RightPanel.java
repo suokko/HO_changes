@@ -31,9 +31,11 @@ public class RightPanel extends JPanel {
 	private JRadioButton homeRadioButton;
 	private JRadioButton awayRadioButton;
 	private ImageDesignPanel imageDesignPanel;
+	private final IfaModel model;
 
 	public RightPanel(IfaModel model) {
-		initComponents(model);
+		this.model = model;
+		initComponents();
 		addListeners();
 	}
 
@@ -41,7 +43,7 @@ public class RightPanel extends JPanel {
 		return this.imageDesignPanel;
 	}
 
-	private void initComponents(IfaModel model) {
+	private void initComponents() {
 		setLayout(new GridBagLayout());
 
 		this.updateButton = new JButton("Update");
@@ -63,7 +65,7 @@ public class RightPanel extends JPanel {
 		group.add(this.homeRadioButton);
 		group.add(this.awayRadioButton);
 
-		this.imageDesignPanel = new ImageDesignPanel(model);
+		this.imageDesignPanel = new ImageDesignPanel(this.model);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
@@ -111,9 +113,7 @@ public class RightPanel extends JPanel {
 					PluginIfaUtils.updateTeamTable();
 				}
 				PluginIfaUtils.updateMatchesTable();
-				// this.pluginIfaPanel.getImageDesignPanel().refreshFlagPanel();
-				// this.pluginIfaPanel.getStatisticScrollPanelHome().refresh();
-				// this.pluginIfaPanel.getStatisticScrollPanelAway().refresh();
+				RightPanel.this.model.reload();
 			}
 		});
 	}

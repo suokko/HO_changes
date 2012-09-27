@@ -2,12 +2,15 @@ package ho.module.ifa2;
 
 import ho.module.ifa2.model.Country;
 import ho.module.ifa2.model.IfaModel;
+import ho.module.ifa2.model.IfaStatistic;
+import ho.module.ifa2.model.ModelChangeListener;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +30,7 @@ public class PluginIfaPanel extends JPanel {
 
 	private void initialize() {
 		IfaModel model = new IfaModel();
-		
+
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -49,13 +52,30 @@ public class PluginIfaPanel extends JPanel {
 		add(rightPanel, gbc);
 	}
 
-	private JTable createTable(boolean away, IfaModel model) {
-		IfaTableModel tblModel;
+	private JTable createTable(final boolean away, final IfaModel model) {
+		List<IfaStatistic> data;
 		if (away) {
-			tblModel = new IfaTableModel(model.getVisitedStatistic());
+			data = model.getVisitedStatistic();
 		} else {
-			tblModel = new IfaTableModel(model.getHostedStatistic());
+			data = model.getHostedStatistic();
 		}
+
+		final IfaTableModel tblModel = new IfaTableModel();
+		tblModel.setData(data);
+
+		// refresh tables on model changes
+		model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged() {
+				if (away) {
+					tblModel.setData(model.getVisitedStatistic());
+				} else {
+					tblModel.setData(model.getHostedStatistic());
+				}
+			}
+		});
+
 		JTable table = new JTable(tblModel);
 		table.getColumnModel().getColumn(0).setCellRenderer(new CountryRenderer());
 

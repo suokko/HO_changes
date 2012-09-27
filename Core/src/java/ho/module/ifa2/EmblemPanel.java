@@ -3,6 +3,7 @@ package ho.module.ifa2;
 import ho.core.model.HOVerwaltung;
 import ho.module.ifa.ImageFileFilter;
 import ho.module.ifa2.model.IfaModel;
+import ho.module.ifa2.model.ModelChangeListener;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,7 +35,6 @@ public class EmblemPanel extends JPanel {
 	private final IfaModel model;
 	private final FlagDisplayModel flagDisplayModel;
 	private final boolean away;
-	
 
 	public EmblemPanel(boolean away, IfaModel model, FlagDisplayModel flagDisplayModel) {
 		this.away = away;
@@ -156,6 +156,14 @@ public class EmblemPanel extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				loadEmblem();
+			}
+		});
+
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged() {
+				rebuildFlags();
 			}
 		});
 	}

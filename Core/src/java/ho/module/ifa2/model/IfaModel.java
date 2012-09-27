@@ -12,8 +12,9 @@ import java.util.Map;
 
 public class IfaModel {
 
-	public List<IfaMatch> visited = new ArrayList<IfaMatch>();
-	public List<IfaMatch> hosted = new ArrayList<IfaMatch>();
+	private final List<IfaMatch> visited = new ArrayList<IfaMatch>();
+	private final List<IfaMatch> hosted = new ArrayList<IfaMatch>();
+	private final List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
 
 	public IfaModel() {
 		init();
@@ -22,6 +23,7 @@ public class IfaModel {
 	private void init() {
 		this.visited.addAll(Arrays.asList(DBManager.instance().getIFAMatches(false)));
 		this.hosted.addAll(Arrays.asList(DBManager.instance().getIFAMatches(true)));
+		fireModelChanged();
 	}
 
 	public boolean isHosted(int leagueId) {
@@ -74,6 +76,26 @@ public class IfaModel {
 			updateStats(stat, match, false);
 		}
 		return new ArrayList<IfaStatistic>(map.values());
+	}
+
+	public void addModelChangeListener(ModelChangeListener listener) {
+		if (!this.listeners.contains(listener)) {
+			this.listeners.add(listener);
+		}
+	}
+
+	public void removeModelChangeListener(ModelChangeListener listener) {
+		this.listeners.remove(listener);
+	}
+
+	public void reload() {
+		init();
+	}
+	
+	private void fireModelChanged() {
+		for (int i = this.listeners.size() - 1; i >= 0; i--) {
+			this.listeners.get(i).modelChanged();
+		}
 	}
 
 	private void updateStats(IfaStatistic stat, IfaMatch match, boolean away) {
