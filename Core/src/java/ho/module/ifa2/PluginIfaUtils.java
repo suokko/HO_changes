@@ -2,10 +2,12 @@ package ho.module.ifa2;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.net.MyConnector;
+import ho.core.net.login.LoginWaitDialog;
 import ho.core.util.HOLogger;
-import ho.module.ifa.DateHelper;
+import ho.module.ifa2.DateHelper;
 import ho.module.ifa2.gif.Quantize;
 
 import java.awt.Image;
@@ -20,6 +22,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.JWindow;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,13 +59,38 @@ public class PluginIfaUtils {
 		throw new UnsupportedOperationException("not implemented yet");
 	}
 
-	static void updateMatchesTable() throws IOException {
-		Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate());
-		List<Date[]> times = getTimeIntervalsForRetrieval(from);
-		for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
-			Date[] fromTo = i.next();
-			insertMatches(fromTo[0], fromTo[1]);
+	// static void updateMatchesTable() throws IOException {
+	// Date from =
+	// DateHelper.getDate(DBManager.instance().getLastIFAMatchDate());
+	// List<Date[]> times = getTimeIntervalsForRetrieval(from);
+	// for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
+	// Date[] fromTo = i.next();
+	// insertMatches(fromTo[0], fromTo[1]);
+	// }
+	// }
+
+	static boolean updateMatchesTable() {
+		JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
+		try {
+			waitWindow.setVisible(true);
+
+			Date from = DateHelper.getDate(DBManager.instance().getLastIFAMatchDate());
+			try {
+				List<Date[]> times = getTimeIntervalsForRetrieval(from);
+				for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
+					Date[] fromTo = i.next();
+					insertMatches(fromTo[0], fromTo[1]);
+				}
+			} catch (Exception e) {
+				insertMatches(from, new Date());
+			}
+			waitWindow.setVisible(false);
+		} catch (Exception e) {
+			waitWindow.setVisible(false);
+			HOLogger.instance().error(PluginIfaUtils.class, e);
+			return false;
 		}
+		return true;
 	}
 
 	private static void insertMatches(Date from, Date to) throws IOException {
@@ -81,63 +110,69 @@ public class PluginIfaUtils {
 				int awayTeamID = Integer
 						.parseInt(parseXmlElement(doc, "AwayTeamID", i, "AwayTeam"));
 				int matchID = Integer.parseInt(parseXmlElement(doc, "MatchID", i, "Match"));
-				int homeTeamGoals = Integer.parseInt(parseXmlElement(doc, "HomeGoals", i, "Match"));
-				int awayTeamGoals = Integer.parseInt(parseXmlElement(doc, "AwayGoals", i, "Match"));
-				try {
-					Document docHomeTeam = getTeamDetails(homeTeamID);
-					Document docAwayTeam = getTeamDetails(awayTeamID);
-					if ((docHomeTeam == null) || (docAwayTeam == null)
-							|| (docHomeTeam.getDocumentElement() == null)
-							|| (docAwayTeam.getDocumentElement() == null)) {
-						errors.append("Error 2 getting data for match " + matchID + " ("
+
+				if (!DBManager.instance().isIFAMatchinDB(matchID)) {
+					int homeTeamGoals = Integer.parseInt(parseXmlElement(doc, "HomeGoals", i,
+							"Match"));
+					int awayTeamGoals = Integer.parseInt(parseXmlElement(doc, "AwayGoals", i,
+							"Match"));
+					try {
+						Document docHomeTeam = getTeamDetails(homeTeamID);
+						Document docAwayTeam = getTeamDetails(awayTeamID);
+						if ((docHomeTeam == null) || (docAwayTeam == null)
+								|| (docHomeTeam.getDocumentElement() == null)
+								|| (docAwayTeam.getDocumentElement() == null)) {
+							errors.append("Error 2 getting data for match " + matchID + " ("
+									+ matchDateStr + " / HomeTeam " + homeTeamID + " vs. AwayTeam "
+									+ awayTeamID + ")<br>");
+						} else {
+							int homeLeagueIndex = Integer.parseInt(parseXmlElement(docHomeTeam,
+									"LeagueID", 0, "League", false));
+							int awayLeagueIndex = Integer.parseInt(parseXmlElement(docAwayTeam,
+									"LeagueID", 0, "League", false));
+							StringBuilder insert = new StringBuilder(100);
+							insert.append("INSERT INTO ");
+							insert.append(MATCHES_TABLENAME);
+							insert.append(" (");
+							insert.append("MATCHID");
+							insert.append(", ");
+							insert.append("PLAYEDDATE");
+							insert.append(", ");
+							insert.append("HOMETEAMID");
+							insert.append(", ");
+							insert.append("AWAYTEAMID");
+							insert.append(", ");
+							insert.append("HOMETEAMGOALS");
+							insert.append(", ");
+							insert.append("AWAYTEAMGOALS");
+							insert.append(", ");
+							insert.append("HOME_LEAGUEID");
+							insert.append(", ");
+							insert.append("AWAY_LEAGUEID");
+							insert.append(") VALUES (");
+							insert.append(matchID);
+							insert.append(", '");
+							insert.append(matchDateStr);
+							insert.append("', ");
+							insert.append(homeTeamID);
+							insert.append(", ");
+							insert.append(awayTeamID);
+							insert.append(", ");
+							insert.append(homeTeamGoals);
+							insert.append(", ");
+							insert.append(awayTeamGoals);
+							insert.append(", ");
+							insert.append(homeLeagueIndex);
+							insert.append(", ");
+							insert.append(awayLeagueIndex);
+							insert.append(")");
+							DBManager.instance().getAdapter().executeUpdate(insert.toString());
+						}
+					} catch (Exception e) {
+						errors.append("Error 1 getting data for match " + matchID + " ("
 								+ matchDateStr + " / HomeTeam " + homeTeamID + " vs. AwayTeam "
 								+ awayTeamID + ")<br>");
-					} else {
-						int homeLeagueIndex = Integer.parseInt(parseXmlElement(docHomeTeam,
-								"LeagueID", 0, "League", false));
-						int awayLeagueIndex = Integer.parseInt(parseXmlElement(docAwayTeam,
-								"LeagueID", 0, "League", false));
-						StringBuilder insert = new StringBuilder(100);
-						insert.append("INSERT INTO ");
-						insert.append(MATCHES_TABLENAME);
-						insert.append(" (");
-						insert.append("MATCHID");
-						insert.append(", ");
-						insert.append("PLAYEDDATE");
-						insert.append(", ");
-						insert.append("HOMETEAMID");
-						insert.append(", ");
-						insert.append("AWAYTEAMID");
-						insert.append(", ");
-						insert.append("HOMETEAMGOALS");
-						insert.append(", ");
-						insert.append("AWAYTEAMGOALS");
-						insert.append(", ");
-						insert.append("HOME_LEAGUEID");
-						insert.append(", ");
-						insert.append("AWAY_LEAGUEID");
-						insert.append(") VALUES (");
-						insert.append(matchID);
-						insert.append(", '");
-						insert.append(matchDateStr);
-						insert.append("', ");
-						insert.append(homeTeamID);
-						insert.append(", ");
-						insert.append(awayTeamID);
-						insert.append(", ");
-						insert.append(homeTeamGoals);
-						insert.append(", ");
-						insert.append(awayTeamGoals);
-						insert.append(", ");
-						insert.append(homeLeagueIndex);
-						insert.append(", ");
-						insert.append(awayLeagueIndex);
-						insert.append(")");
-						DBManager.instance().getAdapter().executeUpdate(insert.toString());
 					}
-				} catch (Exception e) {
-					errors.append("Error 1 getting data for match " + matchID + " (" + matchDateStr
-							+ " / HomeTeam " + homeTeamID + " vs. AwayTeam " + awayTeamID + ")<br>");
 				}
 			}
 

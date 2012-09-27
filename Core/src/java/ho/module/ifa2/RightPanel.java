@@ -81,7 +81,7 @@ public class RightPanel extends JPanel {
 				}
 			}
 		});
-		
+
 		this.homeRadioButton.addItemListener(new ItemListener() {
 
 			@Override
@@ -91,9 +91,9 @@ public class RightPanel extends JPanel {
 				}
 			}
 		});
-		
+
 		this.updateButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String worldDetails;
@@ -109,15 +109,10 @@ public class RightPanel extends JPanel {
 				if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == 0) {
 					PluginIfaUtils.updateTeamTable();
 				}
-				try {
-					PluginIfaUtils.updateMatchesTable();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//				this.pluginIfaPanel.getImageDesignPanel().refreshFlagPanel();
-//				this.pluginIfaPanel.getStatisticScrollPanelHome().refresh();
-//				this.pluginIfaPanel.getStatisticScrollPanelAway().refresh();
+				PluginIfaUtils.updateMatchesTable();
+				// this.pluginIfaPanel.getImageDesignPanel().refreshFlagPanel();
+				// this.pluginIfaPanel.getStatisticScrollPanelHome().refresh();
+				// this.pluginIfaPanel.getStatisticScrollPanelAway().refresh();
 			}
 		});
 	}
