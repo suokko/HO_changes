@@ -7,6 +7,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
+import ho.module.ifa2.model.IfaModel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,8 +32,8 @@ public class RightPanel extends JPanel {
 	private JRadioButton awayRadioButton;
 	private ImageDesignPanel imageDesignPanel;
 
-	public RightPanel() {
-		initComponents();
+	public RightPanel(IfaModel model) {
+		initComponents(model);
 		addListeners();
 	}
 
@@ -40,7 +41,7 @@ public class RightPanel extends JPanel {
 		return this.imageDesignPanel;
 	}
 
-	private void initComponents() {
+	private void initComponents(IfaModel model) {
 		setLayout(new GridBagLayout());
 
 		this.updateButton = new JButton("Update");
@@ -62,7 +63,7 @@ public class RightPanel extends JPanel {
 		group.add(this.homeRadioButton);
 		group.add(this.awayRadioButton);
 
-		this.imageDesignPanel = new ImageDesignPanel();
+		this.imageDesignPanel = new ImageDesignPanel(model);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;

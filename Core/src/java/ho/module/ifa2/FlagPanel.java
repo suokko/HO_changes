@@ -1,10 +1,10 @@
 package ho.module.ifa2;
 
-import ho.core.db.DBManager;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
+import ho.module.ifa2.model.IfaModel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -29,25 +29,26 @@ public class FlagPanel extends JPanel {
 	private JLabel header;
 	private JProgressBar percentState;
 
-	public FlagPanel(boolean away, FlagDisplayModel flagDisplayModel) {
-		initialize(away, flagDisplayModel);
+	public FlagPanel(boolean away, IfaModel ifaModel, FlagDisplayModel flagDisplayModel) {
+		initialize(away, ifaModel, flagDisplayModel);
 	}
 
-	private void initialize(boolean away, FlagDisplayModel flagDisplayModel) {
+	private void initialize(boolean away, IfaModel ifaModel, FlagDisplayModel flagDisplayModel) {
 		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
 		this.flagLabels = new FlagLabel[leagues.length];
 		for (int i = 0; i < leagues.length; i++) {
-			FlagLabel flagLabel = new FlagLabel(flagDisplayModel);			
+			FlagLabel flagLabel = new FlagLabel(flagDisplayModel);
 			flagLabel.setCountryId(leagues[i].getCountryId());
 			flagLabel.setCountryName(leagues[i].getCountryName());
 			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 			flagLabel.setToolTipText(flagLabel.getCountryName());
-			
+
 			int flagLeagueID = leagues[i].getLeagueId();
 			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga()) {
 				flagLabel.setHomeCountry(true);
 			} else {
-				if (DBManager.instance().isIFALeagueIDinDB(flagLeagueID, away)) {
+				if ((away && ifaModel.isVisited(flagLeagueID))
+						|| (!away && ifaModel.isHosted(flagLeagueID))) {
 					this.countriesPlayedIn++;
 					flagLabel.setEnabled(true);
 				} else {

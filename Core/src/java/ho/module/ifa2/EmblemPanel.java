@@ -2,6 +2,7 @@ package ho.module.ifa2;
 
 import ho.core.model.HOVerwaltung;
 import ho.module.ifa.ImageFileFilter;
+import ho.module.ifa2.model.IfaModel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,11 +33,12 @@ public class EmblemPanel extends JPanel {
 	private String imagePath = "";
 	private final FlagDisplayModel flagDisplayModel;
 	private final boolean away;
+	
 
-	public EmblemPanel(boolean away, FlagDisplayModel flagDisplayModel) {
+	public EmblemPanel(boolean away, IfaModel model, FlagDisplayModel flagDisplayModel) {
 		this.away = away;
 		this.flagDisplayModel = flagDisplayModel;
-		this.flagPanel = new FlagPanel(away, flagDisplayModel);
+		this.flagPanel = new FlagPanel(away, model, flagDisplayModel);
 		initialize();
 		addListeners();
 	}
@@ -127,7 +129,7 @@ public class EmblemPanel extends JPanel {
 		if (this.flagPanel != null) {
 			remove(this.flagPanel);
 		}
-		flagPanel = new FlagPanel(this.away, this.flagDisplayModel);
+		flagPanel = new FlagPanel(this.away, new IfaModel(), this.flagDisplayModel);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 1;
 		add(this.flagPanel, constraints);

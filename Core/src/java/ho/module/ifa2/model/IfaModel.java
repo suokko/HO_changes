@@ -24,6 +24,24 @@ public class IfaModel {
 		this.hosted.addAll(Arrays.asList(DBManager.instance().getIFAMatches(true)));
 	}
 
+	public boolean isHosted(int leagueId) {
+		for (IfaMatch match : this.hosted) {
+			if (leagueId == match.getAwayLeagueId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isVisited(int leagueId) {
+		for (IfaMatch match : this.visited) {
+			if (leagueId == match.getHomeLeagueId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<IfaStatistic> getVisitedStatistic() {
 		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
 		for (IfaMatch match : this.visited) {

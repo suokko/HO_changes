@@ -4,6 +4,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.ifa2.config.Config;
 import ho.module.ifa2.gif.Gif89Encoder;
+import ho.module.ifa2.model.IfaModel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,8 +57,10 @@ public class ImageDesignPanel extends JPanel {
 	private JSpinner delaySpinner;
 	private JLabel delayLabel;
 	private JButton saveImageButton;
+	private final IfaModel model;
 
-	public ImageDesignPanel() {
+	public ImageDesignPanel(IfaModel model) {
+		this.model = model;
 		initialize();
 		addListeners();
 		setAway(true);
@@ -113,7 +116,7 @@ public class ImageDesignPanel extends JPanel {
 		if (this.emblemPanel != null) {
 			remove(this.emblemPanel);
 		}
-		this.emblemPanel = new EmblemPanel(away, flagDisplayModel);
+		this.emblemPanel = new EmblemPanel(away, this.model, flagDisplayModel);
 		if (!emblemPath.equals("")) {
 			File file = new File(emblemPath);
 			if (file.exists()) {

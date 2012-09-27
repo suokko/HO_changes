@@ -26,6 +26,8 @@ public class PluginIfaPanel extends JPanel {
 	}
 
 	private void initialize() {
+		IfaModel model = new IfaModel();
+		
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -33,12 +35,12 @@ public class PluginIfaPanel extends JPanel {
 		gbc.weighty = 1;
 		gbc.insets = new Insets(10, 10, 10, 10);
 
-		add(new JScrollPane(createTable(true)), gbc);
+		add(new JScrollPane(createTable(true, model)), gbc);
 
 		gbc.gridy = 1;
-		add(new JScrollPane(createTable(false)), gbc);
+		add(new JScrollPane(createTable(false, model)), gbc);
 
-		RightPanel rightPanel = new RightPanel();
+		RightPanel rightPanel = new RightPanel(model);
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridheight = 2;
@@ -47,8 +49,7 @@ public class PluginIfaPanel extends JPanel {
 		add(rightPanel, gbc);
 	}
 
-	private JTable createTable(boolean away) {
-		IfaModel model = new IfaModel();
+	private JTable createTable(boolean away, IfaModel model) {
 		IfaTableModel tblModel;
 		if (away) {
 			tblModel = new IfaTableModel(model.getVisitedStatistic());
