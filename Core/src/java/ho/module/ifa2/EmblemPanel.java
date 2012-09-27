@@ -31,12 +31,14 @@ public class EmblemPanel extends JPanel {
 	private boolean roundly = false;
 	private int brightness = 50;
 	private String imagePath = "";
+	private final IfaModel model;
 	private final FlagDisplayModel flagDisplayModel;
 	private final boolean away;
 	
 
 	public EmblemPanel(boolean away, IfaModel model, FlagDisplayModel flagDisplayModel) {
 		this.away = away;
+		this.model = model;
 		this.flagDisplayModel = flagDisplayModel;
 		this.flagPanel = new FlagPanel(away, model, flagDisplayModel);
 		initialize();
@@ -129,7 +131,7 @@ public class EmblemPanel extends JPanel {
 		if (this.flagPanel != null) {
 			remove(this.flagPanel);
 		}
-		flagPanel = new FlagPanel(this.away, new IfaModel(), this.flagDisplayModel);
+		flagPanel = new FlagPanel(this.away, this.model, this.flagDisplayModel);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 1;
 		add(this.flagPanel, constraints);
