@@ -1,6 +1,6 @@
 package ho.module.ifa2;
 
-public interface ModelChangeListener {
+public interface FlagModelChangeListener {
 
 	void flagSizeChanged();
 	void brightnessChanged();

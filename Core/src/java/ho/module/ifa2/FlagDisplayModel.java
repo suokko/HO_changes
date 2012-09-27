@@ -9,7 +9,7 @@ public class FlagDisplayModel {
 	private int flagWidth = 8;
 	private boolean grey = true;
 	private boolean roundFlag = false;
-	private List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
+	private List<FlagModelChangeListener> listeners = new ArrayList<FlagModelChangeListener>();
 
 	public int getBrightness() {
 		return brightness;
@@ -52,13 +52,13 @@ public class FlagDisplayModel {
 		}
 	}
 
-	public void addModelChangeListener(ModelChangeListener listener) {
+	public void addModelChangeListener(FlagModelChangeListener listener) {
 		if (!this.listeners.contains(listener)) {
 			this.listeners.add(listener);
 		}
 	}
 
-	public void removeModelChangeListener(ModelChangeListener listener) {
+	public void removeModelChangeListener(FlagModelChangeListener listener) {
 		this.listeners.remove(listener);
 	}
 }

@@ -137,7 +137,7 @@ public class EmblemPanel extends JPanel {
 	}
 
 	private void addListeners() {
-		this.flagDisplayModel.addModelChangeListener(new ModelChangeListener() {
+		this.flagDisplayModel.addModelChangeListener(new FlagModelChangeListener() {
 
 			@Override
 			public void flagSizeChanged() {
