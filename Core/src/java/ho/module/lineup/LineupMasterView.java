@@ -116,6 +116,7 @@ public class LineupMasterView extends JPanel {
 	
 	private void refreshView() {
 		this.substitutionOverview.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
-		this.penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());
+		this.penaltyTakersView.setPlayers(HOVerwaltung.instance().getModel().getAllSpieler());
+		this.penaltyTakersView.setLineup(HOVerwaltung.instance().getModel().getAufstellung());		
 	}
 }
