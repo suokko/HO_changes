@@ -24,7 +24,6 @@ import ho.core.net.MyConnector;
 import ho.core.net.login.ProxySettings;
 import ho.core.option.OptionenDialog;
 import ho.core.util.BrowserLauncher;
-import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
 import ho.core.util.StringUtils;
 import ho.module.lineup.IAufstellungsAssistentPanel;
@@ -44,11 +43,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -143,9 +140,6 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 						+ System.getProperty("java.vendor") + ")");
 
 		RefreshManager.instance().registerRefreshable(this);
-
-		System.setProperty("sun.awt.exception.handler", ExceptionHandler.class.getName());
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

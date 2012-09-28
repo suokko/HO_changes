@@ -11,6 +11,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.net.MyConnector;
 import ho.core.training.TrainingManager;
+import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
 import ho.core.util.IOUtils;
 
@@ -60,7 +61,7 @@ public class HO {
 	 * release ("Beta" or "DEV" version). The DEVELOPMENT flag is used by the
 	 * ant build script. Keep around.
 	 */
-	private static final boolean DEVELOPMENT = true;
+	private static final boolean DEVELOPMENT = false;
 	/**
 	 * A RELEASE is when a build artifact gets delivered to users. Note that
 	 * even a DEVELOPMENT version can be a RELEASE ("Beta"). So when a version
@@ -68,7 +69,7 @@ public class HO {
 	 * true. The main purpose for the flag is to disable code (unfinished new
 	 * features, debug code) which should not be seen in a release.
 	 */
-	private static final boolean RELEASE = false;
+	private static final boolean RELEASE = true;
 
 	public static boolean isDevelopment() {
 		return DEVELOPMENT;
@@ -86,7 +87,10 @@ public class HO {
 	 */
 	public static void main(String[] args) {
 		final long start = System.currentTimeMillis();
-
+		
+		System.setProperty("sun.awt.exception.handler", ExceptionHandler.class.getName());
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+		
 		if ((args != null) && (args.length > 0)) {
 			String debugLvl = args[0].trim().toUpperCase();
 
