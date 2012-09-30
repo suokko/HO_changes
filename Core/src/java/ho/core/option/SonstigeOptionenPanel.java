@@ -69,7 +69,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 			new CBItem(HOVerwaltung.instance().getLanguageString("BestePosition"), ho.core.model.UserParameter.SORT_BESTPOS),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Aufgestellt"), ho.core.model.UserParameter.SORT_AUFGESTELLT),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Gruppe"), ho.core.model.UserParameter.SORT_GRUPPE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("Bewertung"), ho.core.model.UserParameter.SORT_BEWERTUNG), };
+			new CBItem(HOVerwaltung.instance().getLanguageString("Rating"), ho.core.model.UserParameter.SORT_BEWERTUNG), };
 
 	private ComboBoxPanel m_jcbNachkomma;
 	private ComboBoxPanel m_jcbSortierung;

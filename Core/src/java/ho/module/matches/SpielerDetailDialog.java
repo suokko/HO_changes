@@ -640,7 +640,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         panel.add(component);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Aktuell") + " "
-                           + HOVerwaltung.instance().getLanguageString("Bewertung"));
+                           + HOVerwaltung.instance().getLanguageString("Rating"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 4;
@@ -740,7 +740,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Rating"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 4;
@@ -1205,7 +1205,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.insets = new Insets(1, 2, 1, 1);
 
         JPanel subpanel = new ImagePanel(sublayout);
-        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")));
+        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Rating")));
 
         subconstraints.gridx = 0;
         subconstraints.gridy = 0;
@@ -1302,7 +1302,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         subconstraints.weighty = 0.0;
         subconstraints.insets = new Insets(1, 2, 1, 1);
         subpanel = new ImagePanel(sublayout);
-        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Bewertung")
+        subpanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Rating")
                                                             + " "
                                                             + SpielerPosition.getNameForPosition(ho.core.model.player.SpielerPosition
                                                                                   .getPosition(matchplayer.getId(),

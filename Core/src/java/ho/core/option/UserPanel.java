@@ -38,7 +38,7 @@ public class UserPanel extends ImagePanel implements ActionListener {
     private String[] columnNames = new String[]{
 			HOVerwaltung.instance().getLanguageString("Benutzername"),
 			HOVerwaltung.instance().getLanguageString("Datenbank"),
-			HOVerwaltung.instance().getLanguageString("AnzahlHRF").replaceAll("HRF","ZIP")
+			HOVerwaltung.instance().getLanguageString("AnzahlZIP")
 	};
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -73,26 +73,26 @@ public class UserPanel extends ImagePanel implements ActionListener {
 
        	if(e.getSource() == m_jbSaveUser){
     			ArrayList<User> users = User.getAllUser();
-    			
+
     			for (int i = 0; i < table.getRowCount(); i++) {
     				User user = users.get(i);
-    				
+
     				if(Pattern.matches("\\w*", table.getValueAt(i,0).toString()))
     						user.setName(table.getValueAt(i,0).toString());
     				else{
     					JOptionPane.showMessageDialog(getTopLevelAncestor(),table.getValueAt(i,0)+" is incorrect!");
     					return;
     				}
-    				
+
     				if (user.isHSQLDB()) {
 						user.setPath(table.getValueAt(i,1).toString());
-    				}    				
-    				
+    				}
+
     				try{
-    				
+
     					int level = Integer.parseInt(table.getValueAt(i,2).toString().trim());
     					user.setBackupLevel(level);
-    				
+
     				} catch (Exception ex){
     					JOptionPane.showMessageDialog(getTopLevelAncestor(),table.getValueAt(i,2)+" is not a number!");
     					return;
@@ -117,11 +117,11 @@ public class UserPanel extends ImagePanel implements ActionListener {
             value[i][0] = tmp.getName();
             if (tmp.isHSQLDB()) {
 				value[i][1] = tmp.getDBPath();
-				value[i][2] = tmp.getBackupLevel()+"";				
+				value[i][2] = tmp.getBackupLevel()+"";
             } else {
 				value[i][1] = "Real DB";
 				value[i][2] = "0";
-            }            
+            }
         }
 
         DefaultTableModel model = new DefaultTableModel(value, columnNames);

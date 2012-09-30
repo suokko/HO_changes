@@ -74,7 +74,7 @@ public class SpieleStatistikPanel extends ImagePanel
 			.instance().getLanguageString("Angriffszentrum"),forwardColor,
 			UserParameter.instance().statistikSpieleAngriffszentrum);
 	private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Bewertung"),ratingColor,
+			.instance().getLanguageString("Rating"),ratingColor,
 			UserParameter.instance().statistikSpieleBewertung);
 	private ImageCheckbox m_jchGesamt = new ImageCheckbox(HOVerwaltung
 			.instance().getLanguageString("Gesamtstaerke"), totalColor,
@@ -101,10 +101,10 @@ public class SpieleStatistikPanel extends ImagePanel
 			.instance().getLanguageString("Stimmung"),moodColor,
 			UserParameter.instance().statistikSpieleStimmung);
 	private ImageCheckbox m_jchHatStats = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Hatstats"),hatStatsColor,
+			.instance().getLanguageString("ls.match.ratingtype.hatstats"),hatStatsColor,
 			UserParameter.instance().statistikSpieleHatStats);
 	private ImageCheckbox m_jchLoddarStats = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("LoddarStats"),loddarStatsColor,
+			.instance().getLanguageString("ls.match.ratingtype.loddarstats"),loddarStatsColor,
 			UserParameter.instance().statistikSpieleLoddarStats);
 	private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance()
@@ -231,7 +231,7 @@ public class SpieleStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Stimmung", m_jchStimmung.isSelected());
             UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchHatStats.getCheckbox())) {
-            m_clStatistikPanel.setShow("Hatstats", m_jchHatStats.isSelected());
+            m_clStatistikPanel.setShow("HatStats", m_jchHatStats.isSelected());
             UserParameter.instance().statistikSpieleHatStats = m_jchHatStats.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoddarStats.getCheckbox())) {
             m_clStatistikPanel.setShow("LoddarStats", m_jchLoddarStats.isSelected());
@@ -710,7 +710,7 @@ public class SpieleStatistikPanel extends ImagePanel
                                                 m_jchSelbstvertrauen.isSelected(), confidenceColor,
                                                 format2);
                 faktor = 20 / getMaxValue(statistikWerte[11]);
-                models[11] = new StatistikModel(statistikWerte[11], "Hatstats",
+                models[11] = new StatistikModel(statistikWerte[11], "HatStats",
                         m_jchHatStats.isSelected(), hatStatsColor,
                         format2, faktor);
                 faktor = 20 / getMaxValue(statistikWerte[12]);

@@ -27,7 +27,7 @@ public class SettingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 	public static ModuleConfig config = ModuleConfig.instance();
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5721035453587068724L;
 	private JCheckBox checkName = new JCheckBox();
@@ -137,21 +137,21 @@ public class SettingPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSTARS,stars.isSelected());
                     SystemManager.updateUI();
-                    
+
                 }
             });
         totalStrength.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISTOTALSTRENGTH,totalStrength.isSelected());
                     SystemManager.updateUI();
-                   
+
                 }
             });
         checkName.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISCHECKTEAMNAME,checkName.isSelected());
                     SystemManager.updateUI();
-                    
+
                 }
             });
 
@@ -159,14 +159,14 @@ public class SettingPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSQUAD,squad.isSelected());
                     SystemManager.updateUI();
-                    
+
                 }
             });
         smartSquad.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSMARTSQUAD,smartSquad.isSelected());
                     SystemManager.updateUI();
-                    
+
                 }
             });
 
@@ -174,7 +174,7 @@ public class SettingPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISLODDARSTATS,loddarStats.isSelected());
                     SystemManager.updateUI();
-                   
+
                 }
             });
 
@@ -223,21 +223,18 @@ public class SettingPanel extends JPanel {
         mainPanel.setLayout(new GridLayout(12, 1));
         mainPanel.setOpaque(false);
         mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.MyLineup"), myLineup));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.TacticDetail"),
-                                  tacticDetail));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.TacticDetail"), tacticDetail));
         mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.MixedLineup"), mixedLineup));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.NumericRatings"),
-                                  numberRating));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.DescriptionRatings"),
-                                  descRating));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.NumericRatings"), numberRating));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.DescriptionRatings"), descRating));
 
         //mainPanel.add(createPanel(PluginProperty.getString("SettingPanel.ShowUnavailable"), unavailable));
+
         mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("RecapPanel.Stars"), stars));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"),
-                                  totalStrength));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("Squad"), squad));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SmartSquad"), smartSquad));
-        mainPanel.add(createPanel("LoddarStats", loddarStats));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"), totalStrength));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.squad"), squad));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.smartsquad"), smartSquad));
+        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"), loddarStats));
         mainPanel.add(createPanel("Player Info", playerInfo));
         mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("SettingPanel.CheckName"), checkName));
 

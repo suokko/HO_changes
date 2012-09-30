@@ -55,6 +55,7 @@ Changelist HO! 1.432
 Language updates:
 -----------------
 - Added Japanese as new HO language (thx nomad331).
+- Updated Danish translations (thx Max_Schreck).
 - Updated English translations (thx edswifa).
 - Updated French translations (thx davidatorus).
 - Updated Galego translations (thx GZ-grobas).
@@ -62,6 +63,7 @@ Language updates:
 - Updated Hangul (Korean) translations (thx SI-CH).
 - Updated Nederlands translations (thx BrammieG).
 - Updated Portugues translations (thx a_cardoso).
+- Updated Romanian translations (thx DragosE).
 
 ThemeManager:
 ------------

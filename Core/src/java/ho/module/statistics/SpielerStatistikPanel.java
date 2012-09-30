@@ -72,7 +72,7 @@ class SpielerStatistikPanel extends ImagePanel
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Bewertung"),
+    private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Rating"),
                                                              ratingColor,ho.core.model.UserParameter.instance().statistikBewertung);
     private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.experience"),
                                                              experienceColor,ho.core.model.UserParameter.instance().statistikErfahrung);
@@ -217,7 +217,7 @@ class SpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("ls.player.skill.setpieces", m_jchStandards.isSelected());
             ho.core.model.UserParameter.instance().statistikStandards = m_jchStandards.isSelected();
         } else if (actionEvent.getSource().equals(m_jchBewertung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Bewertung", m_jchBewertung.isSelected());
+            m_clStatistikPanel.setShow("Rating", m_jchBewertung.isSelected());
             ho.core.model.UserParameter.instance().statistikBewertung = m_jchBewertung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchMarktwert.getCheckbox())) {
             m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
@@ -604,7 +604,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                     m_jchTorschuss.isSelected(), scoringColor, format);
                     models[12] = new StatistikModel(statistikWerte[12], "ls.player.skill.setpieces",
                                                     m_jchStandards.isSelected(), setPiecesColor, format);
-                    models[13] = new StatistikModel(statistikWerte[13], "Bewertung",
+                    models[13] = new StatistikModel(statistikWerte[13], "Rating",
                                                     m_jchBewertung.isSelected(), ratingColor, format);
                     models[14] = new StatistikModel(statistikWerte[14], "Loyalty",
                             						m_jchLoyalty.isSelected(), loyaltyColor, format);

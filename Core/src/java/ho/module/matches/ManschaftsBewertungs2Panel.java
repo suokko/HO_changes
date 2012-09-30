@@ -76,7 +76,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
 
         setLayout(mainlayout);
 
-        
+
         constraints.anchor = GridBagConstraints.NORTH;
         constraints.weighty = 0.0;
         constraints.weightx = 1.0;
@@ -129,7 +129,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
         m_clHeimTeamTore.setFont(m_clHeimTeamTore.getFont().deriveFont(Font.BOLD));
         layout.setConstraints(m_clHeimTeamTore, constraints);
         panel.add(m_clHeimTeamTore);
-        
+
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
@@ -139,7 +139,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
         m_clGastTeamName.setFont(m_clGastTeamName.getFont().deriveFont(Font.BOLD));
         layout.setConstraints(m_clGastTeamName, constraints);
         panel.add(m_clGastTeamName);
-        
+
         constraints.anchor = GridBagConstraints.EAST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
@@ -155,14 +155,14 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
 
         //Bewertungen
         //Mittelfeld
-        initRow(panel,"Gesamtstaerke","Gesamtstaerke",0, 6);
-       
+        initRow(panel,"Gesamt","Gesamt",0, 6);
+
 
         //Platzhalter
         label = new JLabel(" ");
         add(panel,label,layout,constraints,0,7);
 
-       
+
         initRow(panel,"MatchMittelfeld","MatchMittelfeld",1, 8);
         initRow(panel,"rechteAbwehrseite","linkeAngriffsseite",2, 9);
         initRow(panel,"Abwehrzentrum","Angriffszentrum",3, 10);
@@ -178,16 +178,16 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
 
         clear();
     }
-    
+
     private void initRow(JPanel panel , String txt1,String txt2, int index, int row){
          add(panel,new JLabel(HOVerwaltung.instance().getLanguageString(txt1)),layout,constraints,1,row);
          add(panel,homePercent[index],layout,constraints,2,row);
          add(panel,bars[index],layout,constraints,3,row);
          add(panel,awayPercent[index],layout,constraints,4,row);
          add(panel,new JLabel(HOVerwaltung.instance().getLanguageString(txt2)),layout,constraints,5,row);
-        
+
     }
-   
+
     private void add(JPanel panel,JComponent label,GridBagLayout layout,GridBagConstraints constraints, int x, int y){
     	if(x == 0){
             constraints.weightx = 0.0;
@@ -196,7 +196,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
             constraints.weightx = 1.0;
             constraints.gridwidth = 1;
     	}
-    		
+
     	constraints.gridx = x;
         constraints.gridy = y;
     	constraints.anchor = GridBagConstraints.WEST;
@@ -275,7 +275,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
 
         repaint();
     }
-    
+
     private void setBarValue(int index,float home, float away){
         bars[index].setValue((int)getPercent(home,away));
         bars[index].setToolTipText(bars[index].getValue()+" %"+ " -- "+(100-bars[index].getValue())+" %");
@@ -284,7 +284,7 @@ class ManschaftsBewertungs2Panel extends ImagePanel {
         bars[index].setForeground(bars[index].getValue()<50?red:green);
         bars[index].setBackground(bars[index].getValue()<50?green:red);
     }
-    
+
     public float getPercent(float home, float opponnent) {
 		return home * 100 / (home + opponnent);
 	}

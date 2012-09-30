@@ -38,7 +38,7 @@ public class RecapPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 486150690031160261L;
 
@@ -67,10 +67,10 @@ public class RecapPanel extends JPanel {
     		HOVerwaltung.instance().getLanguageString("Angriffszentrum"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("RecapPanel.Stars"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("Gesamtstaerke"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("Squad"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("SmartSquad"), //$NON-NLS-1$
-    "LoddarStats", //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.squad"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.smartsquad"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"), //$NON-NLS-1$
     HOVerwaltung.instance().getLanguageString("Taktik"), //$NON-NLS-1$
     HOVerwaltung.instance().getLanguageString("Taktikstaerke"), //$NON-NLS-1$
     HOVerwaltung.instance().getLanguageString("RecapPanel.Formation"), //$NON-NLS-1$
@@ -310,7 +310,7 @@ public class RecapPanel extends JPanel {
      * @return TODO Missing Return Method Documentation
      */
     private String getRating(int rating) {
-        return RatingUtil.getRating(rating, 
+        return RatingUtil.getRating(rating,
         		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
         		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING));
     }

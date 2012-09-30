@@ -525,10 +525,10 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         yPos++;
         panel = new JPanel(new BorderLayout());
         panel.setOpaque(true);
-        m_jpGesamtStaerke.setToolTipText(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
+        m_jpGesamtStaerke.setToolTipText(HOVerwaltung.instance().getLanguageString("Rating"));
         panel.add(m_jpGesamtStaerke.getComponent(false), BorderLayout.CENTER);
         m_jpGesamtStaerkeText.setFontStyle(Font.BOLD);
-        m_jpGesamtStaerkeText.setToolTipText(HOVerwaltung.instance().getLanguageString("Gesamtstaerke"));
+        m_jpGesamtStaerkeText.setToolTipText(HOVerwaltung.instance().getLanguageString("Rating"));
         panel.add(m_jpGesamtStaerkeText.getComponent(false), BorderLayout.EAST);
         constraints.gridx = 1;
         constraints.gridy = yPos;
@@ -569,23 +569,20 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
 
-        //model.HOVerwaltung.instance().getLanguageString( "HATStat" ) );
-        label = new JLabel("HatStats");
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 
-        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance().getLanguageString( "tt_AufstellungsDetails_HatStat" ) );
         layout.setConstraints(m_jpHatstat.getComponent(false), constraints);
         add(m_jpHatstat.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel("Loddar Stats"), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 
-        //m_jpHatstat.setToolTipText( model.HOVerwaltung.instance().getLanguageString( "tt_AufstellungsDetails_LoddarStat" ) );
         layout.setConstraints(m_jpLoddarstat.getComponent(false), constraints);
         add(m_jpLoddarstat.getComponent(false));
 

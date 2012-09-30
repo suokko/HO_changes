@@ -258,7 +258,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         panel.add(m_clGastTeamTore);
 
         //Sterne
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Rating"));
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.0;
@@ -304,14 +304,14 @@ class StaerkenvergleichPanel extends ImagePanel {
         layout.setConstraints(m_clGastSterne, constraints);
         panel.add(m_clGastSterne);
 
-        // Hatstats
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Hatstats"));
+        // HatStats
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"));
         add(panel,label,layout,constraints,0,6);
         add(panel,m_clHeimTeamHatstats,layout,constraints,1,6);
         add(panel,m_clGastTeamHatstats,layout,constraints,4,6);
 
-     // Loddar Stats
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("LoddarStats"));
+        // LoddarStats
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"));
         add(panel,label,layout,constraints,0,7);
         add(panel,m_clHeimTeamLoddar,layout,constraints,1,7);
         add(panel,m_clGastTeamLoddar,layout,constraints,4,7);

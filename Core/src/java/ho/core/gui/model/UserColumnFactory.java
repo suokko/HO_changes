@@ -110,7 +110,7 @@ final public class UserColumnFactory {
 			}
 		};
 
-		playerCBItemArray[3] = new PlayerCBItem(RATING,"Bewertung"){
+		playerCBItemArray[3] = new PlayerCBItem(RATING,"Rating"){
 			@Override
 			public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				return new RatingTableEntry(spielerCBItem.getRating(), false);
@@ -662,7 +662,7 @@ final public class UserColumnFactory {
 				}
 			};
 
-			playerAdditionalArray[9] = new PlayerColumn(RATING,"Bewertung",50){
+			playerAdditionalArray[9] = new PlayerColumn(RATING,"Rating",50){
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					if (player.getBewertung() > 0) {

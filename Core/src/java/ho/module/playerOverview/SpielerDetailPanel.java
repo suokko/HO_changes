@@ -661,7 +661,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(0,3,constraints,layout,panel,label);
         initNormalField(1,3,constraints,layout,panel,m_jpPositioned.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Bewertung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Rating"));
         initNormalLabel(0,4,constraints,layout,panel,label);
         initNormalField(1,4,constraints,layout,panel,m_jpRating.getComponent(false));
 
