@@ -35,10 +35,10 @@ public class RatingPanel extends JPanel {
     private UiRatingTableModel tableModel;
     private String[] columns = {
     		HOVerwaltung.instance().getLanguageString("RatingPanel.Area"),
-    		HOVerwaltung.instance().getLanguageString("Bewertung"),
+    		HOVerwaltung.instance().getLanguageString("Rating"),
     		HOVerwaltung.instance().getLanguageString("Differenz_kurz"),
     		HOVerwaltung.instance().getLanguageString("RatingPanel.Relative")
-                               }; 
+                               };
 
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -113,7 +113,7 @@ public class RatingPanel extends JPanel {
     private Vector<Object> getRow(String label, double myRating, double opponentRating) {
         Vector<Object> rowData = new Vector<Object>();
 
-        rowData.add(label); 
+        rowData.add(label);
         rowData.add("" + getRating((int) myRating));
 
         int diff = (int) myRating - (int) opponentRating;
@@ -123,10 +123,10 @@ public class RatingPanel extends JPanel {
         	relativeVal = Helper.round(myRating/(myRating+opponentRating),2);
         else
         	relativeVal = 0;
-        
+
 //        System.out.println ("mR="+myRating+", oR="+opponentRating+", rV="+relativeVal);
         String relValString = (int)(relativeVal * 100) + "%";
-        
+
         // Add a character indicating more or less than 50%
         // will be used in RatingTableCellRenderer to set the foreground color
         if (relativeVal > 0.5)
