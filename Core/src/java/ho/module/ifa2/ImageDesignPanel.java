@@ -71,8 +71,9 @@ public class ImageDesignPanel extends JPanel {
 					"");
 			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText"));
-			brightness = ModuleConfig.instance().getInteger(
-					Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50)).intValue();			
+			brightness = ModuleConfig.instance()
+					.getInteger(Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50))
+					.intValue();
 			grey = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(), Boolean.TRUE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
@@ -86,8 +87,9 @@ public class ImageDesignPanel extends JPanel {
 					.getString(Config.HOSTED_EMBLEM_PATH.toString(), "");
 			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText"));
-			brightness = ModuleConfig.instance().getInteger(
-					Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50)).intValue();
+			brightness = ModuleConfig.instance()
+					.getInteger(Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50))
+					.intValue();
 			grey = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(), Boolean.TRUE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
@@ -96,7 +98,7 @@ public class ImageDesignPanel extends JPanel {
 					.getBoolean(Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE).booleanValue();
 		}
 		flagDisplayModel.setRoundFlag(roundly);
-		flagDisplayModel.setGrey(grey);		
+		flagDisplayModel.setGrey(grey);
 		flagDisplayModel.setFlagWidth(flagWidth);
 		flagDisplayModel.setBrightness(brightness);
 		if (this.emblemPanel != null) {
@@ -120,12 +122,13 @@ public class ImageDesignPanel extends JPanel {
 		this.brightnessSlider.setValue(brightness);
 		this.emblemPanel.setHeader(showHeader);
 		this.emblemPanel.setHeaderText(headerText);
-		
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 1;
 		gbc.weighty = 0.2;
+		gbc.anchor = GridBagConstraints.NORTH;
 		add(this.emblemPanel, gbc);
-		
+
 		validate();
 		repaint();
 	}
@@ -133,15 +136,15 @@ public class ImageDesignPanel extends JPanel {
 	private void initialize() {
 		setLayout(new GridBagLayout());
 		JPanel northPanel = new JPanel(new GridBagLayout());
-		
+
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc1 = new GridBagConstraints();
 		gbc1.anchor = GridBagConstraints.WEST;
-		gbc1.insets = new Insets(5, 5, 5, 5);
-		this.roundlyCheckBox = new JCheckBox("Roundly");
+		gbc1.insets = new Insets(3, 5, 3, 5);
+		this.roundlyCheckBox = new JCheckBox(getLangString("ifa.imageBuilder.roundly"));
 		this.roundlyCheckBox.setSelected(false);
 		panel.add(this.roundlyCheckBox, gbc1);
-		this.greyColoredCheckBox = new JCheckBox("Grey", true);
+		this.greyColoredCheckBox = new JCheckBox(getLangString("ifa.imageBuilder.grey"), true);
 		this.greyColoredCheckBox.setEnabled(true);
 		gbc1.gridx = 1;
 		panel.add(this.greyColoredCheckBox, gbc1);
@@ -151,10 +154,10 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridy = 0;
 		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(3, 5, 3, 5);
 		northPanel.add(panel, gbc);
-		
-		JLabel brightnessLabel = new JLabel("Brightness:");
+
+		JLabel brightnessLabel = new JLabel(getLangString("ifa.imageBuilder.brightness"));
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
 		northPanel.add(brightnessLabel, gbc);
@@ -170,19 +173,19 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridwidth = 2;
 		northPanel.add(this.brightnessSlider, gbc);
 
-		JLabel sizeLabel = new JLabel("Flags/Row: ");
+		JLabel sizeLabel = new JLabel(getLangString("ifa.imageBuilder.flagsPerRow"));
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		northPanel.add(sizeLabel, gbc);
-		
+
 		int flagWidth = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 				Integer.valueOf(8));
 		this.sizeSpinner = new JSpinner(new SpinnerNumberModel(flagWidth, MIN_FLAG_WIDTH,
 				MAX_FLAG_WIDTH, 1));
 		this.sizeSpinner.setName("size");
 		gbc.gridx = 1;
-		gbc.gridwidth = 2;		
+		gbc.gridwidth = 2;
 		northPanel.add(this.sizeSpinner, gbc);
 
 		this.headerYesNoCheckBox = new JCheckBox("Show Header", true);
@@ -193,21 +196,21 @@ public class ImageDesignPanel extends JPanel {
 
 		this.headerTextField = new JTextField(ModuleConfig.instance().getString(
 				Config.VISITED_HEADER_TEXT.toString(),
-				HOVerwaltung.instance().getLanguageString("ifa.visitedHeader.defaultText")));
+				getLangString("ifa.visitedHeader.defaultText")));
 		this.headerTextField.setPreferredSize(new Dimension(150, 25));
 		this.headerTextField.setMinimumSize(new Dimension(150, 25));
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
 		northPanel.add(this.headerTextField, gbc);
 
-		this.animGifCheckBox = new JCheckBox("Animated GIF", ModuleConfig.instance().getBoolean(
-				Config.ANIMATED_GIF.toString(), Boolean.FALSE));
+		this.animGifCheckBox = new JCheckBox(getLangString("ifa.imageBuilder.animGif"),
+				ModuleConfig.instance().getBoolean(Config.ANIMATED_GIF.toString(), Boolean.FALSE));
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		gbc.gridwidth = 1;
 		northPanel.add(this.animGifCheckBox, gbc);
 
-		this.delayLabel = new JLabel("Delay:");
+		this.delayLabel = new JLabel(getLangString("ifa.imageBuilder.delay"));
 		this.delayLabel.setEnabled(false);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(5, 5, 5, 2);
@@ -335,5 +338,15 @@ public class ImageDesignPanel extends JPanel {
 						.getText());
 			}
 		});
+	}
+
+	/**
+	 * Convenience method
+	 * 
+	 * @param key
+	 * @return
+	 */
+	private static String getLangString(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
 	}
 }

@@ -62,10 +62,10 @@ public class RightPanel extends JPanel {
 
 		JPanel buttonPanel = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
-		this.updateButton = new JButton(getLangString("ifa.button.update"));
+		this.updateButton = new JButton(getLangString("ifa.imageBuilder.button.update"));
 		gbc.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(this.updateButton, gbc);
-		this.saveImageButton = new JButton(getLangString("ifa.button.save"));
+		this.saveImageButton = new JButton(getLangString("ifa.imageBuilder.button.save"));
 		gbc.gridx = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		buttonPanel.add(this.saveImageButton, gbc);
@@ -76,13 +76,13 @@ public class RightPanel extends JPanel {
 		gbc.gridwidth = 2;
 		add(buttonPanel, gbc);
 
-		this.awayRadioButton = new JRadioButton(getLangString("ifa.visited"), true);
+		this.awayRadioButton = new JRadioButton(getLangString("ifa.imageBuilder.visited"), true);
 		gbc.insets = new Insets(5, 6, 5, 6);
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
 		add(this.awayRadioButton, gbc);
 
-		this.homeRadioButton = new JRadioButton(getLangString("ifa.hosted"), false);
+		this.homeRadioButton = new JRadioButton(getLangString("ifa.imageBuilder.hosted"), false);
 		gbc.gridx = 1;
 		add(this.homeRadioButton, gbc);
 
@@ -95,6 +95,7 @@ public class RightPanel extends JPanel {
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
 		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(5, 6, 10, 6);
 		add(this.imageDesignPanel, gbc);
 	}
