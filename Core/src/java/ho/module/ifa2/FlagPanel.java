@@ -82,7 +82,7 @@ public class FlagPanel extends JPanel {
 		}
 	}
 
-	void setHeader(String header) {
+	void setHeaderText(String header) {
 		this.header.setText(header);
 	}
 

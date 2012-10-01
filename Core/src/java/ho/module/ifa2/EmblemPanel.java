@@ -101,7 +101,7 @@ public class EmblemPanel extends JPanel {
 
 	public void setHeaderText(String headerText) {
 		this.headerText = headerText;
-		this.flagPanel.setHeader(headerText);
+		this.flagPanel.setHeaderText(headerText);
 	}
 
 	public void setImagePath(String imagePath) {
@@ -131,7 +131,8 @@ public class EmblemPanel extends JPanel {
 		if (this.flagPanel != null) {
 			remove(this.flagPanel);
 		}
-		flagPanel = new FlagPanel(this.away, this.model, this.flagDisplayModel);
+		this.flagPanel = new FlagPanel(this.away, this.model, this.flagDisplayModel);
+		this.flagPanel.setHeaderText(this.headerText);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 1;
 		add(this.flagPanel, constraints);
