@@ -3,40 +3,27 @@ package ho.module.ifa2;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.ifa2.config.Config;
-import ho.module.ifa2.gif.Gif89Encoder;
 import ho.module.ifa2.model.IfaModel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -56,7 +43,6 @@ public class ImageDesignPanel extends JPanel {
 	private JCheckBox animGifCheckBox;
 	private JSpinner delaySpinner;
 	private JLabel delayLabel;
-	private JButton saveImageButton;
 	private final IfaModel model;
 
 	public ImageDesignPanel(IfaModel model) {
@@ -235,15 +221,8 @@ public class ImageDesignPanel extends JPanel {
 		gbc.insets = new Insets(5, 2, 5, 5);
 		northPanel.add(this.delaySpinner, gbc);
 
-		this.saveImageButton = new JButton("Save Image");
-		this.saveImageButton.setActionCommand("saveImage");
-
 		gbc = new GridBagConstraints();
 		add(northPanel, gbc);
-		
-		gbc.gridy = 2;
-		gbc.weighty = 0.8;
-		add(this.saveImageButton, gbc);
 	}
 
 	public EmblemPanel getEmblemPanel() {
@@ -356,79 +335,5 @@ public class ImageDesignPanel extends JPanel {
 						.getText());
 			}
 		});
-
-		this.saveImageButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					saveImage();
-				} catch (IOException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
-	}
-
-	private void saveImage() throws IOException {
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new ImageFileFilter(new String[] { "gif" }));
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		if (isAnimGif()) {
-			fileChooser.setSelectedFile(new File("animated.gif"));
-		} else {
-			fileChooser.setSelectedFile(new File("hosted.gif"));
-		}
-		if (fileChooser.showSaveDialog(SwingUtilities.getWindowAncestor(this)) != 0) {
-			return;
-		}
-		OutputStream out = new FileOutputStream(fileChooser.getSelectedFile().getPath());
-
-		if (isAnimGif()) {
-			JDialog dialog = new JDialog();
-			dialog.getContentPane().setBackground(Color.white);
-			dialog.setUndecorated(true);
-			dialog.getContentPane().setLayout(null);
-
-			JComponent panel1 = getEmblemPanel().getImage();
-			JComponent panel2 = getEmblemPanel().getImage();
-
-			Dimension size1 = panel1.getSize();
-			Dimension size2 = panel2.getSize();
-			int maxW = size1.width > size2.width ? size1.width : size2.width;
-			int maxH = size1.height > size2.height ? size1.height : size2.height;
-			panel1.setBounds(0, 0, size1.width, size1.height);
-			panel2.setBounds(maxW, 0, size2.width, size2.height);
-
-			dialog.getContentPane().add(panel1);
-			dialog.getContentPane().add(panel2);
-			dialog.setBounds(WIDTH + 1, HEIGHT + 1, 2 * maxW, maxH);
-			dialog.setVisible(true);
-
-			BufferedImage bufferedImage = new BufferedImage(dialog.getWidth(), dialog.getHeight(),
-					1);
-			dialog.getContentPane().paintAll(bufferedImage.createGraphics());
-
-			Gif89Encoder encoder = new Gif89Encoder();
-			BufferedImage bufIma = PluginIfaUtils.quantizeBufferedImage(bufferedImage);
-			encoder.addFrame(bufIma.getSubimage(0, 0, maxW, maxH));
-			encoder.addFrame(bufIma.getSubimage(maxW, 0, maxW, maxH));
-			encoder.setLoopCount(0);
-			encoder.setUniformDelay((int) (100.0D * new Double(getDelaySpinner().getValue()
-					.toString()).doubleValue()));
-			encoder.encode(out);
-			out.close();
-			dialog.dispose();
-			return;
-		}
-
-		JComponent panel = getEmblemPanel().getImage();
-		BufferedImage bufferedImage = new BufferedImage(panel.getWidth(), panel.getHeight(), 1);
-		panel.paintAll(bufferedImage.createGraphics());
-		Gif89Encoder encoder = new Gif89Encoder();
-		encoder.addFrame(PluginIfaUtils.quantizeBufferedImage(bufferedImage));
-		encoder.encode(out);
-		out.close();
-
 	}
 }
