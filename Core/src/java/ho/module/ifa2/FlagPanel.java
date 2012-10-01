@@ -39,17 +39,19 @@ public class FlagPanel extends JPanel {
 		setBackground(Color.white);
 
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = 2;
-		constraints.anchor = 10;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.weightx = 1.0;
-		constraints.weighty = 0.0;
 
 		this.header = new JLabel("");
 		this.header.setForeground(new Color(2522928));
 		this.header.setHorizontalTextPosition(0);
-		add(this.header, constraints, 0, 0, flagDisplayModel.getFlagWidth(), 1);
-		constraints.insets = new Insets(1, 1, 5, 1);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = flagDisplayModel.getFlagWidth();
+		add(this.header, constraints);
+
 		this.percentState = new JProgressBar();
 		this.percentState.setMaximum(WorldDetailsManager.instance().size());
 		this.percentState.setValue(this.countriesPlayedIn);
@@ -62,26 +64,23 @@ public class FlagPanel extends JPanel {
 				+ (int) (100.0D * this.percentState.getPercentComplete()) + "%)");
 		this.percentState.setStringPainted(true);
 		this.percentState.setBorder(BorderFactory.createLineBorder(Color.black));
+		constraints.insets = new Insets(1, 1, 5, 1);
+		constraints.gridy = 1;
+		add(this.percentState, constraints);
 
-		add(this.percentState, constraints, 0, 1, flagDisplayModel.getFlagWidth(), 1);
-		constraints.fill = 0;
-		constraints.anchor = 10;
+		constraints.fill = GridBagConstraints.NONE;
 		constraints.insets = new Insets(1, 1, 1, 1);
-		constraints.weightx = 0.0D;
-		constraints.weighty = 0.0D;
-		
+		constraints.weightx = 0.0;
+		constraints.gridwidth = 1;
+
 		createFlagLabels(away, ifaModel, flagDisplayModel);
 		if (this.flagLabels != null) {
 			for (int i = 0; i < this.flagLabels.length; i++) {
-				add(this.flagLabels[i], constraints, i % flagDisplayModel.getFlagWidth(), 2 + i
-						/ flagDisplayModel.getFlagWidth(), 1, 1);
+				constraints.gridx = i % flagDisplayModel.getFlagWidth();
+				constraints.gridy = 2 + i / flagDisplayModel.getFlagWidth();
+				add(this.flagLabels[i], constraints);
 			}
 		}
-		constraints.fill = 2;
-		constraints.anchor = 13;
-		constraints.insets = new Insets(1, 1, 1, 1);
-		constraints.weightx = 100.0D;
-		constraints.weighty = 0.0D;
 	}
 
 	void setHeader(String header) {
@@ -92,7 +91,7 @@ public class FlagPanel extends JPanel {
 		this.header.setVisible(enable);
 		this.percentState.setVisible(enable);
 	}
-	
+
 	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
 		constraints.gridx = x;
 		constraints.gridy = y;
@@ -100,7 +99,7 @@ public class FlagPanel extends JPanel {
 		constraints.gridheight = h;
 		add(c, constraints);
 	}
-	
+
 	private void createFlagLabels(boolean away, IfaModel ifaModel, FlagDisplayModel flagDisplayModel) {
 		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
 		this.flagLabels = new FlagLabel[leagues.length];
