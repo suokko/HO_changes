@@ -1,9 +1,8 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
-import ho.module.ifa.ImageFileFilter;
-import ho.module.ifa2.model.IfaModel;
-import ho.module.ifa2.model.ModelChangeListener;
+import ho.module.ifa.model.IfaModel;
+import ho.module.ifa.model.ModelChangeListener;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,10 +1,10 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
-import ho.module.ifa2.model.IfaModel;
+import ho.module.ifa.model.IfaModel;
 
 import java.awt.Color;
 import java.awt.Dimension;

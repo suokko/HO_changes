@@ -1,4 +1,4 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 public interface FlagModelChangeListener {
 

@@ -1,7 +1,7 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
-import ho.module.ifa2.model.IfaStatistic;
+import ho.module.ifa.model.IfaStatistic;
 
 import java.text.DateFormat;
 import java.util.ArrayList;

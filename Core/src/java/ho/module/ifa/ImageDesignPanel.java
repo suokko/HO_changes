@@ -1,9 +1,9 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
-import ho.module.ifa2.config.Config;
-import ho.module.ifa2.model.IfaModel;
+import ho.module.ifa.config.Config;
+import ho.module.ifa.model.IfaModel;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

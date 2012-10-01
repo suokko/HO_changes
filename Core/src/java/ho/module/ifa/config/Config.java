@@ -1,4 +1,4 @@
-package ho.module.ifa2.config;
+package ho.module.ifa.config;
 
 public enum Config {
 

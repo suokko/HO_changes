@@ -1,4 +1,4 @@
-package ho.module.ifa2;
+package ho.module.ifa;
 
 import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
@@ -9,8 +9,8 @@ import ho.core.model.WorldDetailsManager;
 import ho.core.net.MyConnector;
 import ho.core.util.GUIUtils;
 import ho.core.util.IOUtils;
-import ho.module.ifa2.gif.Gif89Encoder;
-import ho.module.ifa2.model.IfaModel;
+import ho.module.ifa.gif.Gif89Encoder;
+import ho.module.ifa.model.IfaModel;
 
 import java.awt.Color;
 import java.awt.Dimension;

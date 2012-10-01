@@ -1,4 +1,4 @@
-package ho.module.ifa2.model;
+package ho.module.ifa.model;
 
 import ho.core.db.DBManager;
 import ho.core.model.WorldDetailsManager;

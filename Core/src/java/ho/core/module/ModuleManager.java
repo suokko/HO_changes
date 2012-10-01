@@ -63,8 +63,7 @@ public final class ModuleManager {
 				new TeamOfTheWeekModule());
 		map.put(Integer.valueOf(IModule.NTHRF), new NthrfModule());
 		map.put(Integer.valueOf(IModule.EVIL_CARD), new EvilCardModule());
-//		map.put(Integer.valueOf(IModule.IFA), new IfaModule());
-		map.put(Integer.valueOf(IModule.IFA), new ho.module.ifa2.IfaModule());
+		map.put(Integer.valueOf(IModule.IFA), new IfaModule());
 	}
 
 	private void initialize() {

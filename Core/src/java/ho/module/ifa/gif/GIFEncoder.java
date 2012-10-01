@@ -1,4 +1,4 @@
-package ho.module.ifa2.gif;
+package ho.module.ifa.gif;
 
 /*
  * @(#)GIFEncoder.java    0.90 4/21/96 Adam Doppelt

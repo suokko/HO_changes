@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+
 import java.awt.Graphics;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.FilteredImageSource;
@@ -12,15 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class FlagLabel extends JLabel {
-	private static final long serialVersionUID = 3960081673874595876L;
-	
-	public static int BRIGHTNESS;
-	public static boolean GREY = true;
-	public static boolean ROUNDFLAG = false;
-	
+
+	private static final long serialVersionUID = 2988734870943038292L;
 	private String countryName;
 	private int countryId;
 	private boolean homeCountry;
+	private FlagDisplayModel flagDisplayModel;
+
+	public FlagLabel(FlagDisplayModel flagDisplayModel) {
+		this.flagDisplayModel = flagDisplayModel;
+	}
 
 	public int getCountryId() {
 		return this.countryId;
@@ -50,12 +52,12 @@ public class FlagLabel extends JLabel {
 	public void setEnabled(boolean enabled) {
 		ImageIcon src = (ImageIcon) getIcon();
 		ImageFilter filter = null;
-		if (GREY)
-			filter = new GrayFilter(true, 100 - BRIGHTNESS);
-		else
-			filter = new TransparentFilter(BRIGHTNESS);
-		ImageProducer imageprod = new FilteredImageSource(src.getImage()
-				.getSource(), filter);
+		if (this.flagDisplayModel.isGrey()) {
+			filter = new GrayFilter(true, 100 - this.flagDisplayModel.getBrightness());
+		} else {
+			filter = new TransparentFilter(this.flagDisplayModel.getBrightness());
+		}
+		ImageProducer imageprod = new FilteredImageSource(src.getImage().getSource(), filter);
 		ImageIcon img = new ImageIcon(createImage(imageprod));
 		setDisabledIcon(img);
 		super.setEnabled(enabled);
@@ -63,10 +65,9 @@ public class FlagLabel extends JLabel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		if ((ROUNDFLAG) && (!this.homeCountry)) {
-			RoundRectangle2D.Double oval = new RoundRectangle2D.Double(0.0D,
-					0.0D, getSize().getWidth(), getSize().getHeight(), 9.0D,
-					9.0D);
+		if (this.flagDisplayModel.isRoundFlag() && !this.homeCountry) {
+			RoundRectangle2D.Double oval = new RoundRectangle2D.Double(0.0D, 0.0D, getSize()
+					.getWidth(), getSize().getHeight(), 9.0D, 9.0D);
 			g.setClip(oval);
 		}
 		super.paintComponent(g);
