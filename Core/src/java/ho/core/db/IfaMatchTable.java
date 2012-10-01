@@ -7,35 +7,35 @@ import ho.module.ifa.IfaMatch;
 
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class IfaMatchTable extends AbstractTable {
 
 	public final static String TABLENAME = "IFA_MATCH";
-	
-	IfaMatchTable(JDBCAdapter adapter){
-		super(TABLENAME,adapter);
+
+	IfaMatchTable(JDBCAdapter adapter) {
+		super(TABLENAME, adapter);
 	}
-	
+
 	@Override
 	protected void initColumns() {
 		columns = new ColumnDescriptor[8];
-		columns[0]= new ColumnDescriptor("MATCHID",Types.INTEGER,false,true);
-		columns[1]= new ColumnDescriptor("PLAYEDDATE",Types.VARCHAR,false,25);
-		columns[2]= new ColumnDescriptor("HOMETEAMID",Types.INTEGER,false);
-		columns[3]= new ColumnDescriptor("AWAYTEAMID",Types.INTEGER,false);
-		columns[4]= new ColumnDescriptor("HOMETEAMGOALS",Types.INTEGER,false);
-		columns[5]= new ColumnDescriptor("AWAYTEAMGOALS",Types.INTEGER,false);
-		columns[6]= new ColumnDescriptor("HOME_LEAGUEID",Types.INTEGER,false);
-		columns[7]= new ColumnDescriptor("AWAY_LEAGUEID",Types.INTEGER,false);
+		columns[0] = new ColumnDescriptor("MATCHID", Types.INTEGER, false, true);
+		columns[1] = new ColumnDescriptor("PLAYEDDATE", Types.VARCHAR, false, 25);
+		columns[2] = new ColumnDescriptor("HOMETEAMID", Types.INTEGER, false);
+		columns[3] = new ColumnDescriptor("AWAYTEAMID", Types.INTEGER, false);
+		columns[4] = new ColumnDescriptor("HOMETEAMGOALS", Types.INTEGER, false);
+		columns[5] = new ColumnDescriptor("AWAYTEAMGOALS", Types.INTEGER, false);
+		columns[6] = new ColumnDescriptor("HOME_LEAGUEID", Types.INTEGER, false);
+		columns[7] = new ColumnDescriptor("AWAY_LEAGUEID", Types.INTEGER, false);
 	}
 
-	
 	boolean isLeagueIDinDB(int leagueID, boolean homeAway) {
 		StringBuffer select = new StringBuffer(100);
 		select.append("SELECT * FROM ").append(getTableName());
 		select.append(" WHERE ");
-		select.append(homeAway?"HOME_LEAGUEID":"AWAY_LEAGUEID");
+		select.append(homeAway ? "HOME_LEAGUEID" : "AWAY_LEAGUEID");
 		select.append(" = ").append(leagueID);
 		ResultSet rs = adapter.executeQuery(select.toString());
 		try {
@@ -43,10 +43,10 @@ public class IfaMatchTable extends AbstractTable {
 				return true;
 		} catch (Exception localException) {
 			return false;
-		} 
+		}
 		return false;
 	}
-	
+
 	boolean isMatchinDB(int matchId) {
 		StringBuffer select = new StringBuffer(100);
 		select.append("SELECT * FROM ").append(getTableName());
@@ -58,10 +58,10 @@ public class IfaMatchTable extends AbstractTable {
 				return true;
 		} catch (Exception localException) {
 			return false;
-		} 
+		}
 		return false;
 	}
-	
+
 	String getLastMatchDate(String defaultValue) {
 		StringBuffer select = new StringBuffer(100);
 		select.append("SELECT MAX(").append("PLAYEDDATE").append(") FROM ");
@@ -77,27 +77,32 @@ public class IfaMatchTable extends AbstractTable {
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage() + "\ns=" + s);
 			e.printStackTrace();
-		} 
+		}
 		return s;
 	}
-	
+
 	IfaMatch[] getMatches(boolean home) {
 		ArrayList<IfaMatch> list = new ArrayList<IfaMatch>();
 		StringBuffer select = new StringBuffer(100);
 		select.append("SELECT * FROM ").append(getTableName());
-		select.append(" WHERE ").append(home?"HOMETEAMID":"AWAYTEAMID");
+		select.append(" WHERE ").append(home ? "HOMETEAMID" : "AWAYTEAMID");
 		select.append(" = ").append(HOVerwaltung.instance().getModel().getBasics().getTeamId());
 		select.append(" ORDER BY ");
-		select.append(home?"AWAY_LEAGUEID":"HOME_LEAGUEID");
+		select.append(home ? "AWAY_LEAGUEID" : "HOME_LEAGUEID");
 		select.append(" ASC ");
 		ResultSet rs = adapter.executeQuery(select.toString());
-		if (rs == null)
+
+		if (rs == null) {
 			return new IfaMatch[0];
+		}
 		try {
+			SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 			while (rs.next()) {
 				IfaMatch tmp = new IfaMatch();
 				tmp.setAwayLeagueId(rs.getInt("AWAY_LEAGUEID"));
 				tmp.setHomeLeagueId(rs.getInt("HOME_LEAGUEID"));
+				tmp.setPlayedDate(simpleFormat.parse(rs.getString("PLAYEDDATE")));
 				tmp.setPlayedDateString(rs.getString("PLAYEDDATE"));
 				tmp.setHomeTeamId(rs.getInt("HOMETEAMID"));
 				tmp.setAwayTeamId(rs.getInt("AWAYTEAMID"));
@@ -108,17 +113,16 @@ public class IfaMatchTable extends AbstractTable {
 
 		} catch (Exception e) {
 			HOLogger.instance().error(this.getClass(), e);
-		} 
+		}
 		return list.toArray(new IfaMatch[list.size()]);
 	}
-	
-	
-	void insertMatch(IfaMatch match){
+
+	void insertMatch(IfaMatch match) {
 		StringBuilder statement = new StringBuilder(100);
 		statement.append("insert into ").append(getTableName()).append("(");
 		for (int i = 0; i < columns.length; i++) {
 			statement.append(columns[i].getColumnName());
-			if(i<columns.length-1)
+			if (i < columns.length - 1)
 				statement.append(",");
 		}
 		statement.append(") VALUES (");

@@ -1,109 +1,112 @@
 package ho.module.ifa;
 
-import ho.core.db.DBManager;
-import ho.core.file.xml.XMLManager;
-import ho.core.file.xml.XMLWorldDetailsParser;
-import ho.core.model.HOVerwaltung;
-import ho.core.model.WorldDetailLeague;
-import ho.core.model.WorldDetailsManager;
-import ho.core.net.MyConnector;
-import ho.module.ifa.imagebuilder.ImageBuilderDialog;
-import ho.module.ifa.imagebuilder.ImageDesignPanel;
-import ho.module.ifa.table.FriendlyStatisticsPanel;
+import ho.module.ifa.model.Country;
+import ho.module.ifa.model.IfaModel;
+import ho.module.ifa.model.IfaStatistic;
+import ho.module.ifa.model.ModelChangeListener;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class PluginIfaPanel extends JPanel {
-	private static final long serialVersionUID = 6250843484613905192L;
-	private ImageDesignPanel imageDesignPanel;
-	private FriendlyStatisticsPanel statisticScrollPanelAway;
-	private FriendlyStatisticsPanel statisticScrollPanelHome;
-	private JPanel toolbarPanel;
-	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private JButton imageBuilderButton = new JButton(HOVerwaltung.instance().getLanguageString("Imagebuilder"));
-	private JTabbedPane tabbedPane;
+
+	private static final long serialVersionUID = 3806181337290704445L;
 
 	public PluginIfaPanel() {
 		initialize();
 	}
 
 	private void initialize() {
-		imageDesignPanel = new ImageDesignPanel(this);
-		this.statisticScrollPanelAway = new FriendlyStatisticsPanel(false);
-		this.statisticScrollPanelHome = new FriendlyStatisticsPanel(true);
-		setLayout(new BorderLayout());
-		add(getToolbar(),BorderLayout.NORTH);
-		add(getTabbedPane(),BorderLayout.CENTER);
+		IfaModel model = new IfaModel();
 
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(10, 10, 10, 10);
+
+		add(new JScrollPane(createTable(true, model)), gbc);
+
+		gbc.gridy = 1;
+		add(new JScrollPane(createTable(false, model)), gbc);
+
+		RightPanel rightPanel = new RightPanel(model);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.weightx = 0;
+		add(rightPanel, gbc);
 	}
 
-
-	private JTabbedPane getTabbedPane(){
-		if(tabbedPane == null){
-			tabbedPane = new JTabbedPane();
-
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Home_Games"), statisticScrollPanelHome);
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("AutoFilterPanel.Away_Games"), statisticScrollPanelAway);
-			tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Imagebuilder"), imageDesignPanel);
+	private JTable createTable(final boolean away, final IfaModel model) {
+		List<IfaStatistic> data;
+		if (away) {
+			data = model.getVisitedStatistic();
+		} else {
+			data = model.getHostedStatistic();
 		}
-		return tabbedPane;
-	}
 
+		final IfaTableModel tblModel = new IfaTableModel();
+		tblModel.setData(data);
 
-	public FriendlyStatisticsPanel getStatisticScrollPanelAway() {
-		return this.statisticScrollPanelAway;
-	}
+		// refresh tables on model changes
+		model.addModelChangeListener(new ModelChangeListener() {
 
-	public FriendlyStatisticsPanel getStatisticScrollPanelHome() {
-		return this.statisticScrollPanelHome;
-	}
-
-	public JPanel getToolbar(){
-		if(toolbarPanel == null){
-			toolbarPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			refreshButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String worldDetails;
-					try {
-						worldDetails = MyConnector.instance().getWorldDetails(0);
-						List<WorldDetailLeague> leagues = XMLWorldDetailsParser.parseDetails(XMLManager.parseString(worldDetails));
-						DBManager.instance().saveWorldDetailLeagues(leagues);
-						WorldDetailsManager.instance().refresh();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-					PluginIfaUtils.updateMatchesTable();
-					imageDesignPanel.refreshFlagPanel();
-					getStatisticScrollPanelHome().refresh();
-					getStatisticScrollPanelAway().refresh();
-
+			@Override
+			public void modelChanged() {
+				if (away) {
+					tblModel.setData(model.getVisitedStatistic());
+				} else {
+					tblModel.setData(model.getHostedStatistic());
 				}
-			});
-			toolbarPanel.add(refreshButton);
+			}
+		});
 
-			imageBuilderButton.addActionListener(new ActionListener() {
+		JTable table = new JTable(tblModel);
+		table.getColumnModel().getColumn(0).setCellRenderer(new CountryRenderer());
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					ImageBuilderDialog dialog = new ImageBuilderDialog();
-					dialog.setVisible(true);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>();
+		table.setRowSorter(sorter);
+		sorter.setModel(tblModel);
+		sorter.setComparator(0, new Comparator<Country>() {
 
-				}
-			});
-			//toolbarPanel.add(imageBuilderButton);
+			@Override
+			public int compare(Country o1, Country o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+
+		});
+		return table;
+	}
+
+	private class CountryRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 571839185052133812L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+
+			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
+					hasFocus, row, column);
+			Country country = (Country) value;
+			label.setText(country.getName());
+			label.setIcon(country.getCountryFlag());
+			return label;
 		}
-		return toolbarPanel;
-		}
+	}
 }

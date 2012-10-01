@@ -47,7 +47,7 @@ import java.io.IOException;
  * @see DirectGif89Frame
  * @see IndexGif89Frame
  */
-abstract class Gif89Frame {
+public abstract class Gif89Frame {
 
   //// Public "Disposal Mode" constants ////
 
@@ -93,7 +93,7 @@ abstract class Gif89Frame {
    *   (Default: The logical display's origin [0, 0])
    * @see Gif89Encoder#setLogicalDisplay
    */
-  void setPosition(Point p)
+  public void setPosition(Point p)
   {
     thePosition = new Point(p);
   }   

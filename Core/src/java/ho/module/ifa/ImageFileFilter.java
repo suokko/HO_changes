@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class ImageFileFilter extends FileFilter {
+class ImageFileFilter extends FileFilter {
 	String[] ext = new String[0];
 
 	public ImageFileFilter(String[] ext) {
