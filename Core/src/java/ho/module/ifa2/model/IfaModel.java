@@ -52,7 +52,7 @@ public class IfaModel {
 			IfaStatistic stat = map.get(id);
 			if (stat == null) {
 				stat = new IfaStatistic();
-				stat.setLeague(new Country(id));
+				stat.setCountry(new Country(id));
 				map.put(id, stat);
 			}
 
@@ -69,7 +69,7 @@ public class IfaModel {
 			IfaStatistic stat = map.get(id);
 			if (stat == null) {
 				stat = new IfaStatistic();
-				stat.setLeague(new Country(id));
+				stat.setCountry(new Country(id));
 				map.put(id, stat);
 			}
 

@@ -14,8 +14,8 @@ public class IfaStatistic {
 		return this.country;
 	}
 
-	public void setLeague(Country league) {
-		this.country = league;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	public int getMatchesPlayed() {
