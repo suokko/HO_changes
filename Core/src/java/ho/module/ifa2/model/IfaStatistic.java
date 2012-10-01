@@ -1,6 +1,5 @@
 package ho.module.ifa2.model;
 
-import java.util.Date;
 
 public class IfaStatistic {
 
@@ -9,6 +8,7 @@ public class IfaStatistic {
 	private int matchesDraw;
 	private int matchesLost;
 	private Country country;
+	private long lastMatchDate;
 
 	public Country getCountry() {
 		return this.country;
@@ -34,8 +34,12 @@ public class IfaStatistic {
 		return this.matchesLost;
 	}
 
-	public Date getLastMatchDate() {
-		return new Date();
+	public long getLastMatchDate() {
+		return this.lastMatchDate;
+	}
+	
+	public void setLastMatchDate(long timestamp) {
+		this.lastMatchDate = timestamp;
 	}
 
 	public void increasePlayed() {

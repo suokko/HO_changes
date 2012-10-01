@@ -91,7 +91,7 @@ public class IfaModel {
 	public void reload() {
 		init();
 	}
-	
+
 	private void fireModelChanged() {
 		for (int i = this.listeners.size() - 1; i >= 0; i--) {
 			this.listeners.get(i).modelChanged();
@@ -117,6 +117,11 @@ public class IfaModel {
 					stat.increaseWon();
 				}
 			}
+		}
+
+		long matchTimestamp = match.getPlayedDate().getTime();
+		if (stat.getLastMatchDate() < matchTimestamp) {
+			stat.setLastMatchDate(matchTimestamp);
 		}
 	}
 }

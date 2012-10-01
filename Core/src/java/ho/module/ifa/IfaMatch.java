@@ -1,8 +1,11 @@
 package ho.module.ifa;
 
+import java.util.Date;
+
 public class IfaMatch {
 
 	private int matchId;
+	private Date playedDate;
 	private String playedDateString;
 	private int homeTeamId;
 	private int awayTeamId;
@@ -18,11 +21,29 @@ public class IfaMatch {
 	public final void setMatchId(int matchId) {
 		this.matchId = matchId;
 	}
+	
+	public Date getPlayedDate() {
+		// be defensive, java.util.Date is not immutable
+		return new Date(this.playedDate.getTime());
+	}
 
+	public void setPlayedDate(Date playedDate) {
+		// be defensive, java.util.Date is not immutable
+		this.playedDate = new Date(playedDate.getTime());
+	}
+
+	/**
+	 * @deprecated use {@link IfaMatch#getPlayedDate()} instead
+	 * @return
+	 */
 	public final String getPlayedDateString() {
 		return playedDateString;
 	}
 
+	/**
+	 * @deprecated use {@link IfaMatch#setPlayedDate(Date)} instead
+	 * @param playedDateString
+	 */
 	public final void setPlayedDateString(String playedDateString) {
 		this.playedDateString = playedDateString;
 	}

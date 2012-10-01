@@ -3,7 +3,9 @@ package ho.module.ifa2;
 import ho.core.model.HOVerwaltung;
 import ho.module.ifa2.model.IfaStatistic;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -18,6 +20,8 @@ public class IfaTableModel extends AbstractTableModel {
 	static final int COL_LAST = 5;
 	private static final long serialVersionUID = -5838533232544239799L;
 	private List<IfaStatistic> list = new ArrayList<IfaStatistic>();
+	private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+			DateFormat.SHORT);
 
 	public void setData(List<IfaStatistic> data) {
 		this.list = new ArrayList<IfaStatistic>(data);
@@ -49,7 +53,7 @@ public class IfaTableModel extends AbstractTableModel {
 		case COL_LOST:
 			return stat.getMatchesLost();
 		case COL_LAST:
-			return stat.getLastMatchDate();
+			return this.dateFormat.format(new Date(stat.getLastMatchDate()));
 		}
 
 		return null;

@@ -7,6 +7,7 @@ import ho.module.ifa.IfaMatch;
 
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class IfaMatchTable extends AbstractTable {
@@ -90,13 +91,18 @@ public class IfaMatchTable extends AbstractTable {
 		select.append(home ? "AWAY_LEAGUEID" : "HOME_LEAGUEID");
 		select.append(" ASC ");
 		ResultSet rs = adapter.executeQuery(select.toString());
-		if (rs == null)
+
+		if (rs == null) {
 			return new IfaMatch[0];
+		}
 		try {
+			SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 			while (rs.next()) {
 				IfaMatch tmp = new IfaMatch();
 				tmp.setAwayLeagueId(rs.getInt("AWAY_LEAGUEID"));
 				tmp.setHomeLeagueId(rs.getInt("HOME_LEAGUEID"));
+				tmp.setPlayedDate(simpleFormat.parse(rs.getString("PLAYEDDATE")));
 				tmp.setPlayedDateString(rs.getString("PLAYEDDATE"));
 				tmp.setHomeTeamId(rs.getInt("HOMETEAMID"));
 				tmp.setAwayTeamId(rs.getInt("AWAYTEAMID"));
