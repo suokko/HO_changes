@@ -165,20 +165,20 @@ public class ImageDesignPanel extends JPanel {
 		settingsPanel.add(brightnessLabel, gbc);
 
 		this.brightnessSlider = new JSlider(0, 100, 50);
-		this.brightnessSlider.setMinimumSize(new Dimension(200,
-				brightnessSlider.getPreferredSize().height));
 		this.brightnessSlider.setMajorTickSpacing(25);
 		this.brightnessSlider.setMinorTickSpacing(5);
 		this.brightnessSlider.setPaintTicks(true);
 		this.brightnessSlider.setPaintLabels(true);
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		settingsPanel.add(this.brightnessSlider, gbc);
 
 		JLabel sizeLabel = new JLabel(getLangString("ifa.imageBuilder.flagsPerRow"));
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.NONE;
 		settingsPanel.add(sizeLabel, gbc);
 
 		int flagWidth = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
@@ -190,7 +190,7 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridwidth = 2;
 		settingsPanel.add(this.sizeSpinner, gbc);
 
-		this.headerYesNoCheckBox = new JCheckBox("Show Header", true);
+		this.headerYesNoCheckBox = new JCheckBox(getLangString("ifa.imageBuilder.showHeader"), true);
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
@@ -228,7 +228,7 @@ public class ImageDesignPanel extends JPanel {
 
 		gbc = new GridBagConstraints();
 		add(settingsPanel, gbc);
-		
+
 		this.scrollPane = new JScrollPane();
 		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.NORTH;
