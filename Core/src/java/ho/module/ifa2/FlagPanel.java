@@ -7,7 +7,6 @@ import ho.core.model.WorldDetailsManager;
 import ho.module.ifa2.model.IfaModel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -90,14 +89,6 @@ public class FlagPanel extends JPanel {
 	void setHeaderVisible(boolean enable) {
 		this.header.setVisible(enable);
 		this.percentState.setVisible(enable);
-	}
-
-	private void add(Component c, GridBagConstraints constraints, int x, int y, int w, int h) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		constraints.gridwidth = w;
-		constraints.gridheight = h;
-		add(c, constraints);
 	}
 
 	private void createFlagLabels(boolean away, IfaModel ifaModel, FlagDisplayModel flagDisplayModel) {
