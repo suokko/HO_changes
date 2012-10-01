@@ -246,11 +246,6 @@ public class ImageDesignPanel extends JPanel {
 		add(this.saveImageButton, gbc);
 	}
 
-	public void refreshFlagPanel() {
-		validate();
-		repaint();
-	}
-
 	public EmblemPanel getEmblemPanel() {
 		return this.emblemPanel;
 	}
@@ -278,7 +273,6 @@ public class ImageDesignPanel extends JPanel {
 							selected);
 				}
 				emblemPanel.setHeader(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
 
@@ -293,7 +287,6 @@ public class ImageDesignPanel extends JPanel {
 					ModuleConfig.instance().setBoolean(Config.HOSTED_ROUNDLY.toString(), selected);
 				}
 				emblemPanel.getFlagDisplayModel().setRoundFlag(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
 
@@ -308,7 +301,6 @@ public class ImageDesignPanel extends JPanel {
 					ModuleConfig.instance().setBoolean(Config.HOSTED_GREY.toString(), selected);
 				}
 				emblemPanel.getFlagDisplayModel().setGrey(selected);
-				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
 
@@ -336,7 +328,6 @@ public class ImageDesignPanel extends JPanel {
 								value);
 					}
 					emblemPanel.getFlagDisplayModel().setBrightness(value);
-					ImageDesignPanel.this.refreshFlagPanel();
 				}
 			}
 		});
@@ -354,7 +345,6 @@ public class ImageDesignPanel extends JPanel {
 							.setInteger(Config.HOSTED_FLAG_WIDTH.toString(), rowSize);
 				}
 				emblemPanel.getFlagDisplayModel().setFlagWidth(rowSize);
-				ImageDesignPanel.this.refreshFlagPanel();
 			}
 		});
 
