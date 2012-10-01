@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -33,6 +34,7 @@ public class ImageDesignPanel extends JPanel {
 	private static final int MIN_FLAG_WIDTH = 5;
 	private static final int MAX_FLAG_WIDTH = 12;
 	private EmblemPanel emblemPanel;
+	private JScrollPane scrollPane;
 	private JSpinner sizeSpinner;
 	private boolean away;
 	private JTextField headerTextField;
@@ -102,7 +104,7 @@ public class ImageDesignPanel extends JPanel {
 		flagDisplayModel.setFlagWidth(flagWidth);
 		flagDisplayModel.setBrightness(brightness);
 		if (this.emblemPanel != null) {
-			remove(this.emblemPanel);
+			this.scrollPane.getViewport().remove(this.emblemPanel);
 		}
 		this.emblemPanel = new EmblemPanel(away, this.model, flagDisplayModel);
 		if (!emblemPath.equals("")) {
@@ -127,7 +129,7 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridy = 1;
 		gbc.weighty = 0.2;
 		gbc.anchor = GridBagConstraints.NORTH;
-		add(this.emblemPanel, gbc);
+		this.scrollPane.getViewport().add(this.emblemPanel, gbc);
 
 		validate();
 		repaint();
@@ -135,7 +137,7 @@ public class ImageDesignPanel extends JPanel {
 
 	private void initialize() {
 		setLayout(new GridBagLayout());
-		JPanel northPanel = new JPanel(new GridBagLayout());
+		JPanel settingsPanel = new JPanel(new GridBagLayout());
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc1 = new GridBagConstraints();
@@ -155,12 +157,12 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(3, 5, 3, 5);
-		northPanel.add(panel, gbc);
+		settingsPanel.add(panel, gbc);
 
 		JLabel brightnessLabel = new JLabel(getLangString("ifa.imageBuilder.brightness"));
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
-		northPanel.add(brightnessLabel, gbc);
+		settingsPanel.add(brightnessLabel, gbc);
 
 		this.brightnessSlider = new JSlider(0, 100, 50);
 		this.brightnessSlider.setMinimumSize(new Dimension(200,
@@ -171,13 +173,13 @@ public class ImageDesignPanel extends JPanel {
 		this.brightnessSlider.setPaintLabels(true);
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
-		northPanel.add(this.brightnessSlider, gbc);
+		settingsPanel.add(this.brightnessSlider, gbc);
 
 		JLabel sizeLabel = new JLabel(getLangString("ifa.imageBuilder.flagsPerRow"));
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
-		northPanel.add(sizeLabel, gbc);
+		settingsPanel.add(sizeLabel, gbc);
 
 		int flagWidth = ModuleConfig.instance().getInteger(Config.VISITED_FLAG_WIDTH.toString(),
 				Integer.valueOf(8));
@@ -186,13 +188,13 @@ public class ImageDesignPanel extends JPanel {
 		this.sizeSpinner.setName("size");
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
-		northPanel.add(this.sizeSpinner, gbc);
+		settingsPanel.add(this.sizeSpinner, gbc);
 
 		this.headerYesNoCheckBox = new JCheckBox("Show Header", true);
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
-		northPanel.add(this.headerYesNoCheckBox, gbc);
+		settingsPanel.add(this.headerYesNoCheckBox, gbc);
 
 		this.headerTextField = new JTextField(ModuleConfig.instance().getString(
 				Config.VISITED_HEADER_TEXT.toString(),
@@ -201,20 +203,20 @@ public class ImageDesignPanel extends JPanel {
 		this.headerTextField.setMinimumSize(new Dimension(150, 25));
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
-		northPanel.add(this.headerTextField, gbc);
+		settingsPanel.add(this.headerTextField, gbc);
 
 		this.animGifCheckBox = new JCheckBox(getLangString("ifa.imageBuilder.animGif"),
 				ModuleConfig.instance().getBoolean(Config.ANIMATED_GIF.toString(), Boolean.FALSE));
 		gbc.gridx = 0;
 		gbc.gridy = 4;
 		gbc.gridwidth = 1;
-		northPanel.add(this.animGifCheckBox, gbc);
+		settingsPanel.add(this.animGifCheckBox, gbc);
 
 		this.delayLabel = new JLabel(getLangString("ifa.imageBuilder.delay"));
 		this.delayLabel.setEnabled(false);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(5, 5, 5, 2);
-		northPanel.add(this.delayLabel, gbc);
+		settingsPanel.add(this.delayLabel, gbc);
 		double value = ModuleConfig.instance()
 				.getBigDecimal(Config.ANIMATED_GIF_DELAY.toString(), BigDecimal.valueOf(5))
 				.doubleValue();
@@ -222,10 +224,18 @@ public class ImageDesignPanel extends JPanel {
 		this.delaySpinner.setEnabled(false);
 		gbc.gridx = 2;
 		gbc.insets = new Insets(5, 2, 5, 5);
-		northPanel.add(this.delaySpinner, gbc);
+		settingsPanel.add(this.delaySpinner, gbc);
 
 		gbc = new GridBagConstraints();
-		add(northPanel, gbc);
+		add(settingsPanel, gbc);
+		
+		this.scrollPane = new JScrollPane();
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		add(this.scrollPane, gbc);
 	}
 
 	public EmblemPanel getEmblemPanel() {

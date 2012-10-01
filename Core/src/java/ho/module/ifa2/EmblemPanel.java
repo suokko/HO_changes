@@ -35,6 +35,7 @@ public class EmblemPanel extends JPanel {
 	private final IfaModel model;
 	private final FlagDisplayModel flagDisplayModel;
 	private final boolean away;
+	JPanel panel;
 
 	public EmblemPanel(boolean away, IfaModel model, FlagDisplayModel flagDisplayModel) {
 		this.away = away;
@@ -46,8 +47,10 @@ public class EmblemPanel extends JPanel {
 	}
 
 	private void initialize() {
-		setLayout(new GridBagLayout());
-		setBackground(Color.white);
+		panel = new JPanel();
+		
+		panel.setLayout(new GridBagLayout());
+		panel.setBackground(Color.white);
 		this.logoLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.loadEmblem.clickHere"));
 		this.logoLabel.setPreferredSize(new Dimension(100, 100));
@@ -56,18 +59,14 @@ public class EmblemPanel extends JPanel {
 		this.logoLabel.setBackground(Color.white);
 
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = GridBagConstraints.BOTH;
 		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.weightx = 1.0;
-		constraints.weighty = 1.0;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		add(this.logoLabel, constraints);
-		constraints.fill = GridBagConstraints.NONE;
-		constraints.weightx = 0.0;
-		constraints.weighty = 0.0;
+		panel.add(this.logoLabel, constraints);
 		constraints.gridy = 1;
-		add(this.flagPanel, constraints);
+		panel.add(this.flagPanel, constraints);
+		
+		add(panel);
 	}
 
 	public void setLogo(ImageIcon image) {
@@ -129,13 +128,13 @@ public class EmblemPanel extends JPanel {
 
 	private void rebuildFlags() {
 		if (this.flagPanel != null) {
-			remove(this.flagPanel);
+			panel.remove(this.flagPanel);
 		}
 		this.flagPanel = new FlagPanel(this.away, this.model, this.flagDisplayModel);
 		this.flagPanel.setHeaderText(this.headerText);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 1;
-		add(this.flagPanel, constraints);
+		panel.add(this.flagPanel, constraints);
 		validate();
 	}
 
