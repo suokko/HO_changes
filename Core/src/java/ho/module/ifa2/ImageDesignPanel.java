@@ -137,7 +137,9 @@ public class ImageDesignPanel extends JPanel {
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 1;
+		gbc.weighty = 0.2;
 		add(this.emblemPanel, gbc);
+		
 		validate();
 		repaint();
 	}
@@ -240,6 +242,7 @@ public class ImageDesignPanel extends JPanel {
 		add(northPanel, gbc);
 		
 		gbc.gridy = 2;
+		gbc.weighty = 0.8;
 		add(this.saveImageButton, gbc);
 	}
 
