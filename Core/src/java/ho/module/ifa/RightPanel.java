@@ -168,11 +168,15 @@ public class RightPanel extends JPanel {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new ImageFileFilter(new String[] { "gif" }));
 		fileChooser.setAcceptAllFileFilterUsed(false);
+		String fileName;
 		if (this.imageDesignPanel.isAnimGif()) {
-			fileChooser.setSelectedFile(new File("animated.gif"));
+			fileName = "animated.gif";			
+		} else if (this.awayRadioButton.isSelected()) {
+			fileName = "visited.gif";
 		} else {
-			fileChooser.setSelectedFile(new File("hosted.gif"));
+			fileName = "hosted.gif";
 		}
+		fileChooser.setSelectedFile(new File(fileName));
 		if (fileChooser.showSaveDialog(SwingUtilities.getWindowAncestor(this)) != 0) {
 			return;
 		}
