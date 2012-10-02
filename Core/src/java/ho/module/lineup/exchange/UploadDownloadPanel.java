@@ -3,6 +3,7 @@ package ho.module.lineup.exchange;
 import ho.core.db.DBManager;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.renderer.DateTimeRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -22,7 +23,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +105,7 @@ public class UploadDownloadPanel extends JPanel {
 
 		// TODO use column identifiers instead of index
 		TableColumn dateColumn = this.matchesTable.getColumnModel().getColumn(0);
-		dateColumn.setCellRenderer(new DateRenderer());
+		dateColumn.setCellRenderer(new DateTimeRenderer());
 
 		// TODO use column identifiers instead of index
 		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);
@@ -423,22 +423,6 @@ public class UploadDownloadPanel extends JPanel {
 				component.setIcon(null);
 			}
 			return component;
-		}
-	}
-
-	private class DateRenderer extends DefaultTableCellRenderer {
-
-		private static final long serialVersionUID = -5869341433817862361L;
-		private DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-				DateFormat.SHORT);
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
-
-			String dateString = this.format.format((Timestamp) value);
-			return super.getTableCellRendererComponent(table, dateString, isSelected, hasFocus,
-					row, column);
 		}
 	}
 }
