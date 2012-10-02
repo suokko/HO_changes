@@ -23,7 +23,6 @@ import javax.swing.JProgressBar;
 public class FlagPanel extends JPanel {
 
 	private static final long serialVersionUID = 6841405207630506680L;
-	private int countriesPlayedIn;
 	private FlagLabel[] flagLabels;
 	private JLabel header;
 	private JProgressBar percentState;
@@ -33,6 +32,10 @@ public class FlagPanel extends JPanel {
 	}
 
 	private void initialize(boolean away, IfaModel ifaModel, FlagDisplayModel flagDisplayModel) {
+		createFlagLabels(away, ifaModel, flagDisplayModel);
+		int totalCountryCount = WorldDetailsManager.instance().size();
+		int playedCountryCount = (away) ? ifaModel.getVistedCountriesCount() : ifaModel
+				.getHostedCountriesCount();
 
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
@@ -52,14 +55,13 @@ public class FlagPanel extends JPanel {
 		add(this.header, constraints);
 
 		this.percentState = new JProgressBar();
-		this.percentState.setMaximum(WorldDetailsManager.instance().size());
-		this.percentState.setValue(this.countriesPlayedIn);
+		this.percentState.setMaximum(totalCountryCount);
+		this.percentState.setValue(playedCountryCount);
 		this.percentState.setPreferredSize(new Dimension(100, 10));
 		this.percentState.setFont(new Font("Verdana", 1, 10));
 		this.percentState.setForeground(new Color(15979011));
 		this.percentState.setBackground(Color.lightGray);
-		this.percentState.setString(this.countriesPlayedIn + "/"
-				+ WorldDetailsManager.instance().size() + " ("
+		this.percentState.setString(playedCountryCount + "/" + totalCountryCount + " ("
 				+ (int) (100.0D * this.percentState.getPercentComplete()) + "%)");
 		this.percentState.setStringPainted(true);
 		this.percentState.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -72,7 +74,6 @@ public class FlagPanel extends JPanel {
 		constraints.weightx = 0.0;
 		constraints.gridwidth = 1;
 
-		createFlagLabels(away, ifaModel, flagDisplayModel);
 		if (this.flagLabels != null) {
 			for (int i = 0; i < this.flagLabels.length; i++) {
 				constraints.gridx = i % flagDisplayModel.getFlagWidth();
@@ -101,13 +102,12 @@ public class FlagPanel extends JPanel {
 			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 			flagLabel.setToolTipText(flagLabel.getCountryName());
 
-			int flagLeagueID = leagues[i].getLeagueId();
-			if (flagLeagueID == HOVerwaltung.instance().getModel().getBasics().getLiga()) {
+			if (leagues[i].getLeagueId() == HOVerwaltung.instance().getModel().getBasics()
+					.getLiga()) {
 				flagLabel.setHomeCountry(true);
 			} else {
-				if ((away && ifaModel.isVisited(flagLeagueID))
-						|| (!away && ifaModel.isHosted(flagLeagueID))) {
-					this.countriesPlayedIn++;
+				if ((away && ifaModel.isVisited(leagues[i].getCountryId()))
+						|| (!away && ifaModel.isHosted(leagues[i].getCountryId()))) {
 					flagLabel.setEnabled(true);
 				} else {
 					flagLabel.setEnabled(false);

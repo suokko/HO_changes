@@ -30,23 +30,24 @@ public class IfaModel {
 		fireModelChanged();
 	}
 
-	public boolean isHosted(int leagueId) {
-		for (IfaMatch match : this.hosted) {
-			if (leagueId == match.getAwayLeagueId()) {
+	public boolean isHosted(int countryId) {
+		List<IfaStatistic> hosted = getHostedStatistic();
+		for (IfaStatistic stat : hosted) {
+			if (countryId == stat.getCountry().getCountryId()) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public boolean isVisited(int leagueId) {
-		for (IfaMatch match : this.visited) {
-			if (leagueId == match.getHomeLeagueId()) {
+	public boolean isVisited(int countryId) {
+		List<IfaStatistic> visited = getVisitedStatistic();
+		for (IfaStatistic stat : visited) {
+			if (countryId == stat.getCountry().getCountryId()) {
 				return true;
 			}
 		}
-		return false;
-	}
+		return false;	}
 
 	public List<IfaStatistic> getVisitedStatistic() {
 		if (this.visitedStatistic == null) {
