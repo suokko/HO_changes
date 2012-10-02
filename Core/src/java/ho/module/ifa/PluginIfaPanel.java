@@ -1,11 +1,13 @@
 package ho.module.ifa;
 
+import ho.core.model.HOVerwaltung;
 import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
 import ho.module.ifa.model.ModelChangeListener;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -33,20 +35,40 @@ public class PluginIfaPanel extends JPanel {
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.insets = new Insets(10, 10, 10, 10);
 
+		JLabel visitedLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
+				"ifa.statisticsTable.header.visited"));
+		Font boldFont = visitedLabel.getFont().deriveFont(
+				visitedLabel.getFont().getStyle() ^ Font.BOLD);
+		visitedLabel.setFont(boldFont);
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(10, 10, 3, 10);
+		add(visitedLabel, gbc);
+
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridy = 1;
+		gbc.weightx = 1;
+		gbc.weighty = 0.5;
+		gbc.insets = new Insets(3, 10, 5, 10);
 		add(new JScrollPane(createTable(true, model)), gbc);
 
-		gbc.gridy = 1;
+		JLabel hostedLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
+				"ifa.statisticsTable.header.hosted"));
+		hostedLabel.setFont(boldFont);
+		gbc.gridy = 2;
+		gbc.weighty = 0;
+		gbc.insets = new Insets(5, 10, 3, 10);
+		add(hostedLabel, gbc);
+		
+		gbc.gridy = 3;
+		gbc.weighty = 0.5;
+		gbc.insets = new Insets(3, 10, 10, 10);
 		add(new JScrollPane(createTable(false, model)), gbc);
 
 		RightPanel rightPanel = new RightPanel(model);
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.gridheight = 2;
+		gbc.gridheight = 4;
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.weightx = 0;
 		add(rightPanel, gbc);
