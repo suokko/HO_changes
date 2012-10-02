@@ -87,7 +87,7 @@ public class EmblemPanel extends JPanel {
 		return this;
 	}
 
-	public void setHeader(boolean header) {
+	public void setHeaderVisible(boolean header) {
 		this.flagPanel.setHeaderVisible(header);
 	}
 

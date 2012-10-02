@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -76,8 +78,8 @@ public class ImageDesignPanel extends JPanel {
 			brightness = ModuleConfig.instance()
 					.getInteger(Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50))
 					.intValue();
-			grey = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(), Boolean.FALSE)
-					.booleanValue();
+			grey = ModuleConfig.instance()
+					.getBoolean(Config.VISITED_GREY.toString(), Boolean.FALSE).booleanValue();
 			roundly = ModuleConfig.instance()
 					.getBoolean(Config.VISITED_ROUNDLY.toString(), Boolean.FALSE).booleanValue();
 			showHeader = ModuleConfig.instance()
@@ -87,7 +89,7 @@ public class ImageDesignPanel extends JPanel {
 					Integer.valueOf(8));
 			emblemPath = ModuleConfig.instance()
 					.getString(Config.HOSTED_EMBLEM_PATH.toString(), "");
-			headerText = ModuleConfig.instance().getString(Config.VISITED_HEADER_TEXT.toString(),
+			headerText = ModuleConfig.instance().getString(Config.HOSTED_HEADER_TEXT.toString(),
 					HOVerwaltung.instance().getLanguageString("ifa.hostedHeader.defaultText"));
 			brightness = ModuleConfig.instance()
 					.getInteger(Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50))
@@ -122,8 +124,9 @@ public class ImageDesignPanel extends JPanel {
 		this.sizeSpinner.setValue(Integer.valueOf(flagWidth));
 		this.headerYesNoCheckBox.setSelected(showHeader);
 		this.brightnessSlider.setValue(brightness);
-		this.emblemPanel.setHeader(showHeader);
+		this.emblemPanel.setHeaderVisible(showHeader);
 		this.emblemPanel.setHeaderText(headerText);
+		this.headerTextField.setText(headerText);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 1;
@@ -196,9 +199,7 @@ public class ImageDesignPanel extends JPanel {
 		gbc.gridwidth = 1;
 		settingsPanel.add(this.headerYesNoCheckBox, gbc);
 
-		this.headerTextField = new JTextField(ModuleConfig.instance().getString(
-				Config.VISITED_HEADER_TEXT.toString(),
-				getLangString("ifa.visitedHeader.defaultText")));
+		this.headerTextField = new JTextField();
 		this.headerTextField.setPreferredSize(new Dimension(150, 25));
 		this.headerTextField.setMinimumSize(new Dimension(150, 25));
 		gbc.gridx = 1;
@@ -264,7 +265,7 @@ public class ImageDesignPanel extends JPanel {
 					ModuleConfig.instance().setBoolean(Config.SHOW_HOSTED_HEADER.toString(),
 							selected);
 				}
-				emblemPanel.setHeader(selected);
+				emblemPanel.setHeaderVisible(selected);
 			}
 		});
 
@@ -346,6 +347,16 @@ public class ImageDesignPanel extends JPanel {
 			public void keyReleased(KeyEvent arg0) {
 				ImageDesignPanel.this.emblemPanel.setHeaderText(((JTextField) arg0.getSource())
 						.getText());
+			}
+		});
+
+		this.headerTextField.addFocusListener(new FocusAdapter() {
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				String key = (away) ? Config.VISITED_HEADER_TEXT.toString()
+						: Config.HOSTED_HEADER_TEXT.toString();
+				ModuleConfig.instance().setString(key, headerTextField.getText());
 			}
 		});
 	}
