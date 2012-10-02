@@ -348,7 +348,9 @@ final class DBUpdater {
 		}
 		m_clJDBCAdapter
 				.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+		if (!columnExistsInTable("ActivationDate", "basics")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+		}
 
 		// Follow this pattern in the future. Only set db version if not
 		// development, or if the current db is more than one version old. The
@@ -535,6 +537,16 @@ final class DBUpdater {
 	private boolean hasPrimaryKey(String tableName) throws SQLException {
 		String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS WHERE TABLE_NAME = '"
 				+ tableName.toUpperCase() + "'";
+		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
+		return rs.next();
+	}
+
+	private boolean columnExistsInTable(String columnName, String tableName) throws SQLException {
+		String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.SYSTEM_COLUMNS WHERE TABLE_NAME = '"
+				+ tableName.toUpperCase()
+				+ "' AND COLUMN_NAME = '"
+				+ columnName.toUpperCase()
+				+ "'";
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
 	}
