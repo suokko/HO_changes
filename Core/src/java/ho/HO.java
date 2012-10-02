@@ -61,7 +61,7 @@ public class HO {
 	 * release ("Beta" or "DEV" version). The DEVELOPMENT flag is used by the
 	 * ant build script. Keep around.
 	 */
-	private static final boolean DEVELOPMENT = false;
+	private static final boolean DEVELOPMENT = true;
 	/**
 	 * A RELEASE is when a build artifact gets delivered to users. Note that
 	 * even a DEVELOPMENT version can be a RELEASE ("Beta"). So when a version
@@ -69,7 +69,7 @@ public class HO {
 	 * true. The main purpose for the flag is to disable code (unfinished new
 	 * features, debug code) which should not be seen in a release.
 	 */
-	private static final boolean RELEASE = true;
+	private static final boolean RELEASE = false;
 
 	public static boolean isDevelopment() {
 		return DEVELOPMENT;
