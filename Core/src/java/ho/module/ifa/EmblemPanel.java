@@ -24,17 +24,12 @@ public class EmblemPanel extends JPanel {
 	private static final long serialVersionUID = 5771493941186321587L;
 	private FlagPanel flagPanel;
 	private JLabel logoLabel;
-	private int flagWidth = 8;
 	private String headerText = "";
-	private boolean header = true;
-	private boolean grey = true;
-	private boolean roundly = false;
-	private int brightness = 50;
 	private String imagePath = "";
 	private final IfaModel model;
 	private final FlagDisplayModel flagDisplayModel;
 	private final boolean away;
-	JPanel panel;
+	private JPanel panel;
 
 	public EmblemPanel(boolean away, IfaModel model, FlagDisplayModel flagDisplayModel) {
 		this.away = away;
@@ -46,10 +41,10 @@ public class EmblemPanel extends JPanel {
 	}
 
 	private void initialize() {
-		panel = new JPanel();
+		this.panel = new JPanel();
 		
-		panel.setLayout(new GridBagLayout());
-		panel.setBackground(Color.white);
+		this.panel.setLayout(new GridBagLayout());
+		this.panel.setBackground(Color.white);
 		this.logoLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.loadEmblem.clickHere"));
 		this.logoLabel.setPreferredSize(new Dimension(100, 100));
@@ -61,11 +56,11 @@ public class EmblemPanel extends JPanel {
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		panel.add(this.logoLabel, constraints);
+		this.panel.add(this.logoLabel, constraints);
 		constraints.gridy = 1;
-		panel.add(this.flagPanel, constraints);
+		this.panel.add(this.flagPanel, constraints);
 		
-		add(panel);
+		add(this.panel);
 	}
 
 	public void setLogo(ImageIcon image) {
@@ -93,7 +88,6 @@ public class EmblemPanel extends JPanel {
 	}
 
 	public void setHeader(boolean header) {
-		this.header = header;
 		this.flagPanel.setHeaderVisible(header);
 	}
 
@@ -127,13 +121,13 @@ public class EmblemPanel extends JPanel {
 
 	private void rebuildFlags() {
 		if (this.flagPanel != null) {
-			panel.remove(this.flagPanel);
+			this.panel.remove(this.flagPanel);
 		}
 		this.flagPanel = new FlagPanel(this.away, this.model, this.flagDisplayModel);
 		this.flagPanel.setHeaderText(this.headerText);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridy = 1;
-		panel.add(this.flagPanel, constraints);
+		this.panel.add(this.flagPanel, constraints);
 		validate();
 	}
 
