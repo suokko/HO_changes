@@ -3,7 +3,7 @@ package ho.module.lineup.exchange;
 import ho.core.db.DBManager;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.comp.renderer.DateTimeRenderer;
+import ho.core.gui.comp.renderer.DateTimeTableCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -105,7 +105,7 @@ public class UploadDownloadPanel extends JPanel {
 
 		// TODO use column identifiers instead of index
 		TableColumn dateColumn = this.matchesTable.getColumnModel().getColumn(0);
-		dateColumn.setCellRenderer(new DateTimeRenderer());
+		dateColumn.setCellRenderer(new DateTimeTableCellRenderer());
 
 		// TODO use column identifiers instead of index
 		TableColumn matchTypeColumn = this.matchesTable.getColumnModel().getColumn(1);

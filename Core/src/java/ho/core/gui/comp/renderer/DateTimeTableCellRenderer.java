@@ -7,7 +7,7 @@ import java.text.DateFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class DateTimeRenderer extends DefaultTableCellRenderer {
+public class DateTimeTableCellRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = -5869341433817862361L;
 	private DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
