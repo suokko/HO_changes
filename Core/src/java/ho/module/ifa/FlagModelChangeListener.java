@@ -4,4 +4,5 @@ public interface FlagModelChangeListener {
 
 	void flagSizeChanged();
 	void brightnessChanged();
+	void flagShapeChanged();
 }

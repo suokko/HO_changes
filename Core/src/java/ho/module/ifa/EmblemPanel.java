@@ -143,6 +143,11 @@ public class EmblemPanel extends JPanel {
 			public void brightnessChanged() {
 				rebuildFlags();
 			}
+
+			@Override
+			public void flagShapeChanged() {
+				rebuildFlags();				
+			}
 		});
 
 		this.logoLabel.addMouseListener(new MouseAdapter() {

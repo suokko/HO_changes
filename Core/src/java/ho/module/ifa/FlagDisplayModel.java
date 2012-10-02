@@ -30,8 +30,8 @@ public class FlagDisplayModel {
 	public void setGrey(boolean grey) {
 		this.grey = grey;
 		for (int i = this.listeners.size() - 1; i >= 0; i--) {
-			this.listeners.get(i).brightnessChanged();
-		}		
+			this.listeners.get(i).flagShapeChanged();
+		}
 	}
 
 	public boolean isRoundFlag() {
@@ -40,6 +40,9 @@ public class FlagDisplayModel {
 
 	public void setRoundFlag(boolean roundflag) {
 		this.roundFlag = roundflag;
+		for (int i = this.listeners.size() - 1; i >= 0; i--) {
+			this.listeners.get(i).flagShapeChanged();
+		}
 	}
 
 	public int getFlagWidth() {
