@@ -57,10 +57,8 @@ public class FlagPanel extends JPanel {
 		this.percentState = new JProgressBar();
 		this.percentState.setMaximum(totalCountryCount);
 		this.percentState.setValue(playedCountryCount);
-		this.percentState.setPreferredSize(new Dimension(100, 10));
+		this.percentState.setPreferredSize(new Dimension(100, 12));
 		this.percentState.setFont(new Font("Verdana", 1, 10));
-		this.percentState.setForeground(new Color(15979011));
-		this.percentState.setBackground(Color.lightGray);
 		this.percentState.setString(playedCountryCount + "/" + totalCountryCount + " ("
 				+ (int) (100.0D * this.percentState.getPercentComplete()) + "%)");
 		this.percentState.setStringPainted(true);
@@ -81,6 +79,8 @@ public class FlagPanel extends JPanel {
 				add(this.flagLabels[i], constraints);
 			}
 		}
+		
+		this.percentState.setValue(60);
 	}
 
 	void setHeaderText(String header) {
