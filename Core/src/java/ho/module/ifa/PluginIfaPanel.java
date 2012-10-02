@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.gui.comp.renderer.DateTimeTableCellRenderer;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
 import ho.module.ifa.model.Country;
@@ -113,6 +114,7 @@ public class PluginIfaPanel extends JPanel {
 
 		JTable table = new JTable(tblModel);
 		table.getColumnModel().getColumn(0).setCellRenderer(new CountryRenderer());
+		table.getColumnModel().getColumn(5).setCellRenderer(new DateTimeTableCellRenderer());
 
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>();
 		table.setRowSorter(sorter);

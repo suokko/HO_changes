@@ -1,9 +1,9 @@
 package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
+import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaStatistic;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +20,6 @@ public class IfaTableModel extends AbstractTableModel {
 	static final int COL_LAST = 5;
 	private static final long serialVersionUID = -5838533232544239799L;
 	private List<IfaStatistic> list = new ArrayList<IfaStatistic>();
-	private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-			DateFormat.SHORT);
 
 	public void setData(List<IfaStatistic> data) {
 		this.list = new ArrayList<IfaStatistic>(data);
@@ -53,10 +51,29 @@ public class IfaTableModel extends AbstractTableModel {
 		case COL_LOST:
 			return stat.getMatchesLost();
 		case COL_LAST:
-			return this.dateFormat.format(new Date(stat.getLastMatchDate()));
+			return new Date(stat.getLastMatchDate());
 		}
 
 		return null;
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+		case COL_COUNTRY:
+			return Country.class;
+		case COL_PLAYED:
+			return Integer.class;
+		case COL_WON:
+			return Integer.class;
+		case COL_DRAW:
+			return Integer.class;
+		case COL_LOST:
+			return Integer.class;
+		case COL_LAST:
+			return Date.class;
+		}
+		return super.getColumnClass(columnIndex);
 	}
 
 	@Override
