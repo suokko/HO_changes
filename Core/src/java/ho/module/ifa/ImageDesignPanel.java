@@ -76,10 +76,10 @@ public class ImageDesignPanel extends JPanel {
 			brightness = ModuleConfig.instance()
 					.getInteger(Config.VISITED_BRIGHTNESS.toString(), Integer.valueOf(50))
 					.intValue();
-			grey = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(), Boolean.TRUE)
+			grey = ModuleConfig.instance().getBoolean(Config.VISITED_GREY.toString(), Boolean.FALSE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
-					.getBoolean(Config.VISITED_ROUNDLY.toString(), Boolean.TRUE).booleanValue();
+					.getBoolean(Config.VISITED_ROUNDLY.toString(), Boolean.FALSE).booleanValue();
 			showHeader = ModuleConfig.instance()
 					.getBoolean(Config.SHOW_VISITED_HEADER.toString(), Boolean.TRUE).booleanValue();
 		} else {
@@ -92,10 +92,10 @@ public class ImageDesignPanel extends JPanel {
 			brightness = ModuleConfig.instance()
 					.getInteger(Config.HOSTED_BRIGHTNESS.toString(), Integer.valueOf(50))
 					.intValue();
-			grey = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(), Boolean.TRUE)
+			grey = ModuleConfig.instance().getBoolean(Config.HOSTED_GREY.toString(), Boolean.FALSE)
 					.booleanValue();
 			roundly = ModuleConfig.instance()
-					.getBoolean(Config.HOSTED_ROUNDLY.toString(), Boolean.TRUE).booleanValue();
+					.getBoolean(Config.HOSTED_ROUNDLY.toString(), Boolean.FALSE).booleanValue();
 			showHeader = ModuleConfig.instance()
 					.getBoolean(Config.SHOW_HOSTED_HEADER.toString(), Boolean.TRUE).booleanValue();
 		}
