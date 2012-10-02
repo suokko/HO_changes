@@ -1,6 +1,7 @@
 package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailsManager;
 import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
@@ -25,25 +26,38 @@ import javax.swing.table.TableRowSorter;
 public class PluginIfaPanel extends JPanel {
 
 	private static final long serialVersionUID = 3806181337290704445L;
+	private JLabel visitedHeaderLabel;
+	private JLabel hostedHeaderLabel;
+	private final IfaModel model;
 
 	public PluginIfaPanel() {
+		this.model = new IfaModel();
 		initialize();
+		setHeaderTexts();
+		addListeners();
+	}
+
+	private void addListeners() {
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged() {
+				setHeaderTexts();
+			}
+		});
 	}
 
 	private void initialize() {
-		IfaModel model = new IfaModel();
-
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		JLabel visitedLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ifa.statisticsTable.header.visited"));
-		Font boldFont = visitedLabel.getFont().deriveFont(
-				visitedLabel.getFont().getStyle() ^ Font.BOLD);
-		visitedLabel.setFont(boldFont);
+		this.visitedHeaderLabel = new JLabel();
+		Font boldFont = this.visitedHeaderLabel.getFont().deriveFont(
+				this.visitedHeaderLabel.getFont().getStyle() ^ Font.BOLD);
+		this.visitedHeaderLabel.setFont(boldFont);
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 10, 3, 10);
-		add(visitedLabel, gbc);
+		add(this.visitedHeaderLabel, gbc);
 
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridy = 1;
@@ -52,14 +66,13 @@ public class PluginIfaPanel extends JPanel {
 		gbc.insets = new Insets(3, 10, 5, 10);
 		add(new JScrollPane(createTable(true, model)), gbc);
 
-		JLabel hostedLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
-				"ifa.statisticsTable.header.hosted"));
-		hostedLabel.setFont(boldFont);
+		this.hostedHeaderLabel = new JLabel();
+		this.hostedHeaderLabel.setFont(boldFont);
 		gbc.gridy = 2;
 		gbc.weighty = 0;
 		gbc.insets = new Insets(5, 10, 3, 10);
-		add(hostedLabel, gbc);
-		
+		add(this.hostedHeaderLabel, gbc);
+
 		gbc.gridy = 3;
 		gbc.weighty = 0.5;
 		gbc.insets = new Insets(3, 10, 10, 10);
@@ -130,5 +143,17 @@ public class PluginIfaPanel extends JPanel {
 			label.setIcon(country.getCountryFlag());
 			return label;
 		}
+	}
+
+	private void setHeaderTexts() {
+		int totalCountries = WorldDetailsManager.instance().size();
+		String txt = HOVerwaltung.instance().getLanguageString(
+				"ifa.statisticsTable.header.visited", this.model.getVistedCountriesCount(),
+				totalCountries);
+		this.visitedHeaderLabel.setText(txt);
+
+		txt = HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.header.hosted",
+				this.model.getHostedCountriesCount(), totalCountries);
+		this.hostedHeaderLabel.setText(txt);
 	}
 }

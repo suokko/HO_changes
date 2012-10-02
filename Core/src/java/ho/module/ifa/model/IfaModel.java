@@ -14,6 +14,8 @@ public class IfaModel {
 
 	private final List<IfaMatch> visited = new ArrayList<IfaMatch>();
 	private final List<IfaMatch> hosted = new ArrayList<IfaMatch>();
+	private List<IfaStatistic> hostedStatistic;
+	private List<IfaStatistic> visitedStatistic;
 	private final List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
 
 	public IfaModel() {
@@ -47,37 +49,17 @@ public class IfaModel {
 	}
 
 	public List<IfaStatistic> getVisitedStatistic() {
-		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
-		for (IfaMatch match : this.visited) {
-			Integer id = Integer.valueOf(WorldDetailsManager.instance()
-					.getWorldDetailLeagueByLeagueId(match.getHomeLeagueId()).getCountryId());
-			IfaStatistic stat = map.get(id);
-			if (stat == null) {
-				stat = new IfaStatistic();
-				stat.setCountry(new Country(id));
-				map.put(id, stat);
-			}
-
-			updateStats(stat, match, true);
+		if (this.visitedStatistic == null) {
+			createVisitedStatistic();
 		}
-		return new ArrayList<IfaStatistic>(map.values());
+		return this.visitedStatistic;
 	}
 
 	public List<IfaStatistic> getHostedStatistic() {
-		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
-		for (IfaMatch match : this.hosted) {
-			Integer id = Integer.valueOf(WorldDetailsManager.instance()
-					.getWorldDetailLeagueByLeagueId(match.getHomeLeagueId()).getCountryId());
-			IfaStatistic stat = map.get(id);
-			if (stat == null) {
-				stat = new IfaStatistic();
-				stat.setCountry(new Country(id));
-				map.put(id, stat);
-			}
-
-			updateStats(stat, match, false);
+		if (this.hostedStatistic == null) {
+			createHostedStatistic();
 		}
-		return new ArrayList<IfaStatistic>(map.values());
+		return this.hostedStatistic;
 	}
 
 	public void addModelChangeListener(ModelChangeListener listener) {
@@ -91,7 +73,17 @@ public class IfaModel {
 	}
 
 	public void reload() {
+		this.visitedStatistic = null;
+		this.hostedStatistic = null;
 		init();
+	}
+
+	public int getVistedCountriesCount() {
+		return getVisitedStatistic().size();
+	}
+
+	public int getHostedCountriesCount() {
+		return getHostedStatistic().size();
 	}
 
 	private void fireModelChanged() {
@@ -126,4 +118,39 @@ public class IfaModel {
 			stat.setLastMatchDate(matchTimestamp);
 		}
 	}
+
+	private void createVisitedStatistic() {
+		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
+		for (IfaMatch match : this.visited) {
+			Integer id = Integer.valueOf(WorldDetailsManager.instance()
+					.getWorldDetailLeagueByLeagueId(match.getHomeLeagueId()).getCountryId());
+			IfaStatistic stat = map.get(id);
+			if (stat == null) {
+				stat = new IfaStatistic();
+				stat.setCountry(new Country(id));
+				map.put(id, stat);
+			}
+
+			updateStats(stat, match, true);
+		}
+		this.visitedStatistic = new ArrayList<IfaStatistic>(map.values());
+	}
+
+	private void createHostedStatistic() {
+		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
+		for (IfaMatch match : this.hosted) {
+			Integer id = Integer.valueOf(WorldDetailsManager.instance()
+					.getWorldDetailLeagueByLeagueId(match.getHomeLeagueId()).getCountryId());
+			IfaStatistic stat = map.get(id);
+			if (stat == null) {
+				stat = new IfaStatistic();
+				stat.setCountry(new Country(id));
+				map.put(id, stat);
+			}
+
+			updateStats(stat, match, false);
+		}
+		this.hostedStatistic = new ArrayList<IfaStatistic>(map.values());
+	}
+
 }
