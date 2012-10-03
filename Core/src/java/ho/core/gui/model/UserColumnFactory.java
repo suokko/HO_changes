@@ -470,12 +470,16 @@ final public class UserColumnFactory {
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					int sort = player.getTrikotnummer();
 					if (sort <= 0) {
-		                //Damit die Spieler ohne Trickot nach den andern kommen
+		                // Temporary players don't have a shirt number
 		                sort = 10000;
 		            }
-					//FIXME getImageIcon4Trickotnummer
+					String shirtNumberText = String.valueOf(sort);
+					// If the player does not have a shirt number then display an empty string
+					if (sort >= 100) {
+						shirtNumberText = "";
+					}
 
-					return new ColorLabelEntry(sort,sort+"", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD,
+					return new ColorLabelEntry(sort,shirtNumberText, ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD,
                                     		SwingConstants.LEFT);
 							}
 
