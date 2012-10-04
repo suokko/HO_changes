@@ -1,15 +1,14 @@
 package ho.module.ifa;
 
-import ho.core.gui.comp.renderer.DateTimeTableCellRenderer;
-import ho.core.gui.comp.renderer.DoubleTableCellRenderer;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
 import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
 import ho.module.ifa.model.ModelChangeListener;
-import ho.module.ifa.table.CountryRenderer;
+import ho.module.ifa.table.IfaTableCellRenderer;
 import ho.module.ifa.table.IfaTableModel;
+import ho.module.ifa.table.SummaryTableSorter;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -117,13 +116,17 @@ public class PluginIfaPanel extends JPanel {
 		});
 
 		JTable table = new JTable(tblModel);
-		table.getColumnModel().getColumn(0).setCellRenderer(new CountryRenderer());
-		table.getColumnModel().getColumn(5).setCellRenderer(new DateTimeTableCellRenderer());
-		table.getColumnModel().getColumn(6).setCellRenderer(new DoubleTableCellRenderer(2));
+		IfaTableCellRenderer renderer = new IfaTableCellRenderer();
+		table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(1).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(3).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(4).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(5).setCellRenderer(renderer);
+		table.getColumnModel().getColumn(6).setCellRenderer(renderer);
 
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>();
-		table.setRowSorter(sorter);
-		sorter.setModel(tblModel);
+		TableRowSorter<TableModel> sorter = new SummaryTableSorter<TableModel>(table.getModel());
+		 table.setRowSorter(sorter); 
 		sorter.setComparator(0, new Comparator<Country>() {
 
 			@Override
