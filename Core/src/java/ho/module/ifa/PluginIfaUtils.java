@@ -132,8 +132,6 @@ public class PluginIfaUtils {
 	static double getCoolness(int countryId) {
 		WorldDetailLeague league = WorldDetailsManager.instance().getWorldDetailLeagueByCountryId(
 				countryId);
-		System.out.println("####- " + WorldDetailsManager.instance().getTotalUsers());
-		System.out.println("####- " + league.getActiveUsers());
 		return (double) WorldDetailsManager.instance().getTotalUsers()
 				/ (double) league.getActiveUsers();
 	}
