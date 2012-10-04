@@ -18,6 +18,7 @@ public class IfaTableModel extends AbstractTableModel {
 	static final int COL_DRAW = 3;
 	static final int COL_LOST = 4;
 	static final int COL_LAST = 5;
+	static final int COL_COOLNESS = 6;
 	private static final long serialVersionUID = -5838533232544239799L;
 	private List<IfaStatistic> list = new ArrayList<IfaStatistic>();
 
@@ -33,7 +34,7 @@ public class IfaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 6;
+		return 7;
 	}
 
 	@Override
@@ -52,6 +53,8 @@ public class IfaTableModel extends AbstractTableModel {
 			return stat.getMatchesLost();
 		case COL_LAST:
 			return new Date(stat.getLastMatchDate());
+		case COL_COOLNESS:
+			return PluginIfaUtils.getCoolness(stat.getCountry().getCountryId());
 		}
 
 		return null;
@@ -72,6 +75,8 @@ public class IfaTableModel extends AbstractTableModel {
 			return Integer.class;
 		case COL_LAST:
 			return Date.class;
+		case COL_COOLNESS:
+			return Double.class;
 		}
 		return super.getColumnClass(columnIndex);
 	}
@@ -91,6 +96,8 @@ public class IfaTableModel extends AbstractTableModel {
 			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lost");
 		case COL_LAST:
 			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lastMatch");
+		case COL_COOLNESS:
+			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.coolness");
 		}
 
 		return null;

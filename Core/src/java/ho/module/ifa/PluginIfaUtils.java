@@ -4,6 +4,8 @@ import ho.core.db.DBManager;
 import ho.core.file.xml.XMLManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.WorldDetailLeague;
+import ho.core.model.WorldDetailsManager;
 import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -125,6 +127,15 @@ public class PluginIfaUtils {
 		}
 
 		return pixels;
+	}
+
+	static double getCoolness(int countryId) {
+		WorldDetailLeague league = WorldDetailsManager.instance().getWorldDetailLeagueByCountryId(
+				countryId);
+		System.out.println("####- " + WorldDetailsManager.instance().getTotalUsers());
+		System.out.println("####- " + league.getActiveUsers());
+		return (double) WorldDetailsManager.instance().getTotalUsers()
+				/ (double) league.getActiveUsers();
 	}
 
 	private static void insertMatches(Date from, Date to) throws Exception {
