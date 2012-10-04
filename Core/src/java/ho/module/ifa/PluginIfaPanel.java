@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -127,6 +130,10 @@ public class PluginIfaPanel extends JPanel {
 			}
 
 		});
+		List<SortKey> list = new ArrayList<SortKey>();
+		list.add(new SortKey(5, SortOrder.DESCENDING));
+		sorter.setSortKeys(list);
+		
 		return table;
 	}
 
