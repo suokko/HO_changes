@@ -27,6 +27,7 @@ public class WorldDetailsManager {
 		leagues = DBManager.instance().getAllWorldDetailLeagues();
 		leagueMap.clear();
 		countryMap.clear();
+		totalUsers = 0;
 		for (int i = 0; i < leagues.length; i++) {
 			totalUsers += leagues[i].getActiveUsers();
 			countryMap.put(Integer.valueOf(leagues[i].getCountryId()), leagues[i]);
