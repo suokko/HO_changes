@@ -70,7 +70,7 @@ public class ModuleConfig {
 	public BigDecimal getBigDecimal(String key) {
 		return (BigDecimal) configMap.get(key);
 	}
-
+	
 	public BigDecimal getBigDecimal(String key, BigDecimal defaultValue) {
 		BigDecimal value = (BigDecimal) configMap.get(key);
 		return (value != null) ? value : defaultValue;

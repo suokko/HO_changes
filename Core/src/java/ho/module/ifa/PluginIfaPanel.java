@@ -2,6 +2,8 @@ package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
+import ho.core.module.config.ModuleConfig;
+import ho.module.ifa.config.Config;
 import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
@@ -14,6 +16,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +28,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
@@ -32,6 +40,7 @@ public class PluginIfaPanel extends JPanel {
 	private static final long serialVersionUID = 3806181337290704445L;
 	private JLabel visitedHeaderLabel;
 	private JLabel hostedHeaderLabel;
+	private JSplitPane splitPane;
 	private final IfaModel model;
 
 	public PluginIfaPanel() {
@@ -49,38 +58,70 @@ public class PluginIfaPanel extends JPanel {
 				setHeaderTexts();
 			}
 		});
+
+		this.splitPane.addPropertyChangeListener("dividerLocation", new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (splitPane.getSize().height > 0 && splitPane.getDividerLocation() > 0) {
+					double proportionalDividerLocation = 1.0 / (splitPane.getSize().height / splitPane
+							.getDividerLocation());
+					ModuleConfig.instance().setBigDecimal(
+							Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
+							BigDecimal.valueOf(proportionalDividerLocation));
+				}
+			}
+		});
+
+		// setDividerLocation(double proportionalLocation) will only have an
+		// effect if the split pane is correctly realized and on screen
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				double dividerLocation = ModuleConfig
+						.instance()
+						.getBigDecimal(Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
+								BigDecimal.valueOf(0.5)).doubleValue();
+				splitPane.setDividerLocation(dividerLocation);
+				removeComponentListener(this);
+			}
+		});
 	}
 
 	private void initialize() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
+		JPanel visitedStatsPanel = new JPanel();
+		visitedStatsPanel.setLayout(new GridBagLayout());
 		this.visitedHeaderLabel = new JLabel();
 		Font boldFont = this.visitedHeaderLabel.getFont().deriveFont(
 				this.visitedHeaderLabel.getFont().getStyle() ^ Font.BOLD);
 		this.visitedHeaderLabel.setFont(boldFont);
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(10, 10, 3, 10);
-		add(this.visitedHeaderLabel, gbc);
+		visitedStatsPanel.add(this.visitedHeaderLabel, gbc);
 
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridy = 1;
 		gbc.weightx = 1;
-		gbc.weighty = 0.5;
+		gbc.weighty = 1;
 		gbc.insets = new Insets(3, 10, 5, 10);
-		add(new JScrollPane(createTable(true, model)), gbc);
+		visitedStatsPanel.add(new JScrollPane(createTable(true, model)), gbc);
 
+		JPanel hostedStatsPanel = new JPanel();
+		hostedStatsPanel.setLayout(new GridBagLayout());
 		this.hostedHeaderLabel = new JLabel();
 		this.hostedHeaderLabel.setFont(boldFont);
-		gbc.gridy = 2;
+		gbc.gridy = 0;
 		gbc.weighty = 0;
 		gbc.insets = new Insets(5, 10, 3, 10);
-		add(this.hostedHeaderLabel, gbc);
+		hostedStatsPanel.add(this.hostedHeaderLabel, gbc);
 
-		gbc.gridy = 3;
-		gbc.weighty = 0.5;
+		gbc.gridy = 1;
+		gbc.weighty = 1;
 		gbc.insets = new Insets(3, 10, 10, 10);
-		add(new JScrollPane(createTable(false, model)), gbc);
+		hostedStatsPanel.add(new JScrollPane(createTable(false, model)), gbc);
 
 		RightPanel rightPanel = new RightPanel(model);
 		gbc.gridx = 1;
@@ -88,6 +129,21 @@ public class PluginIfaPanel extends JPanel {
 		gbc.gridheight = 4;
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.weightx = 0;
+
+		this.splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		this.splitPane.add(visitedStatsPanel, 0);
+		this.splitPane.add(hostedStatsPanel, 1);
+
+		gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		add(this.splitPane, gbc);
+
+		gbc.gridx = 1;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.BOTH;
 		add(rightPanel, gbc);
 	}
 
@@ -126,7 +182,7 @@ public class PluginIfaPanel extends JPanel {
 		table.getColumnModel().getColumn(6).setCellRenderer(renderer);
 
 		TableRowSorter<TableModel> sorter = new SummaryTableSorter<TableModel>(table.getModel());
-		 table.setRowSorter(sorter); 
+		table.setRowSorter(sorter);
 		sorter.setComparator(0, new Comparator<Country>() {
 
 			@Override

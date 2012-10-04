@@ -17,7 +17,8 @@ public enum Config {
 	ANIMATED_GIF("IFA_AnimatedGif"),
 	ANIMATED_GIF_DELAY("IFA_AnimatedGifDelay"),
 	VISITED_EMBLEM_PATH("IFA_VisitedEmblemPath"),
-	HOSTED_EMBLEM_PATH("IFA_HostedEmblemPath");
+	HOSTED_EMBLEM_PATH("IFA_HostedEmblemPath"),
+	STATS_TABLES_DIVIDER_LOCATION("IFA_StatsTableDividerLocation");
 
 	private String txt;
 
