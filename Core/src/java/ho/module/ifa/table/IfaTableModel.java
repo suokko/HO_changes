@@ -1,6 +1,7 @@
-package ho.module.ifa;
+package ho.module.ifa.table;
 
 import ho.core.model.HOVerwaltung;
+import ho.module.ifa.PluginIfaUtils;
 import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaStatistic;
 

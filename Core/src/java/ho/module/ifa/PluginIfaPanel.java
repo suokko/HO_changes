@@ -8,8 +8,9 @@ import ho.module.ifa.model.Country;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
 import ho.module.ifa.model.ModelChangeListener;
+import ho.module.ifa.table.CountryRenderer;
+import ho.module.ifa.table.IfaTableModel;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -137,23 +137,6 @@ public class PluginIfaPanel extends JPanel {
 		sorter.setSortKeys(list);
 
 		return table;
-	}
-
-	private class CountryRenderer extends DefaultTableCellRenderer {
-
-		private static final long serialVersionUID = 571839185052133812L;
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
-
-			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
-					hasFocus, row, column);
-			Country country = (Country) value;
-			label.setText(country.getName());
-			label.setIcon(country.getCountryFlag());
-			return label;
-		}
 	}
 
 	private void setHeaderTexts() {

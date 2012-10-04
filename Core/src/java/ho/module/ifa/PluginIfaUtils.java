@@ -129,7 +129,7 @@ public class PluginIfaUtils {
 		return pixels;
 	}
 
-	static double getCoolness(int countryId) {
+	public static double getCoolness(int countryId) {
 		WorldDetailLeague league = WorldDetailsManager.instance().getWorldDetailLeagueByCountryId(
 				countryId);
 		return (double) WorldDetailsManager.instance().getTotalUsers()
