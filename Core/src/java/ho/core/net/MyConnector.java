@@ -24,6 +24,8 @@ import ho.core.net.login.ProxySettings;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.IOUtils;
+import ho.core.util.StringUtils;
+import ho.core.util.XMLUtils;
 import ho.tool.updater.VersionInfo;
 
 import java.io.BufferedReader;
@@ -51,6 +53,7 @@ import org.scribe.model.SignatureType;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
+import org.w3c.dom.Document;
 
 import sun.misc.BASE64Encoder;
 
@@ -254,7 +257,7 @@ public class MyConnector {
 		if (lastDate != null) {
 			url.append("&LastMatchDate=").append(HT_FORMAT.format(lastDate));
 		}
-		
+
 		return getCHPPWebFile(url.toString());
 	}
 
@@ -564,9 +567,11 @@ public class MyConnector {
 		this.proxySettings = proxySettings;
 		if (this.proxySettings != null && this.proxySettings.isUseProxy()) {
 			System.getProperties().setProperty("https.proxyHost", proxySettings.getProxyHost());
-			System.getProperties().setProperty("https.proxyPort", String.valueOf(proxySettings.getProxyPort()));
+			System.getProperties().setProperty("https.proxyPort",
+					String.valueOf(proxySettings.getProxyPort()));
 			System.getProperties().setProperty("http.proxyHost", proxySettings.getProxyHost());
-			System.getProperties().setProperty("http.proxyPort", String.valueOf(proxySettings.getProxyPort()));
+			System.getProperties().setProperty("http.proxyPort",
+					String.valueOf(proxySettings.getProxyPort()));
 		} else {
 			System.getProperties().remove("https.proxyHost");
 			System.getProperties().remove("https.proxyPort");
@@ -855,9 +860,23 @@ public class MyConnector {
 			outDir.mkdirs();
 		}
 
+		String xmlName = null;
+		try {
+			Document doc = XMLUtils.createDocument(content);
+			xmlName = XMLUtils.getTagData(doc, "FileName");
+			if (xmlName != null && xmlName.indexOf('.') != -1) {
+				xmlName = xmlName.substring(0, xmlName.lastIndexOf('.'));
+			}
+		} catch (Exception ex) {
+			HOLogger.instance().error(getClass(), ex);
+		}
+
 		Date downloadDate = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd-HHmmss-S");
 		String outFileName = df.format(downloadDate) + ".txt";
+		if (!StringUtils.isEmpty(xmlName)) {
+			outFileName = xmlName + "_" + outFileName;
+		}
 		File outFile = new File(outDir, outFileName);
 
 		df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
