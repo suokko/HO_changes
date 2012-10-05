@@ -88,26 +88,24 @@ public class IfaTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	// @Override
-	// public Class<?> getColumnClass(int columnIndex) {
-	// switch (columnIndex) {
-	// case COL_COUNTRY:
-	// return Country.class;
-	// case COL_PLAYED:
-	// return Integer.class;
-	// case COL_WON:
-	// return Integer.class;
-	// case COL_DRAW:
-	// return Integer.class;
-	// case COL_LOST:
-	// return Integer.class;
-	// case COL_LAST:
-	// return Date.class;
-	// case COL_COOLNESS:
-	// return Double.class;
-	// }
-	// return super.getColumnClass(columnIndex);
-	// }
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+		case COL_PLAYED:
+			return Integer.class;
+		case COL_WON:
+			return Integer.class;
+		case COL_DRAW:
+			return Integer.class;
+		case COL_LOST:
+			return Integer.class;
+		case COL_LASTMATCH:
+			return Date.class;
+		case COL_COOLNESS:
+			return Double.class;
+		}
+		return super.getColumnClass(columnIndex);
+	}
 
 	@Override
 	public String getColumnName(int columnIndex) {
