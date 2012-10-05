@@ -141,7 +141,7 @@ public class IfaModel {
 		Map<Integer, IfaStatistic> map = new HashMap<Integer, IfaStatistic>();
 		for (IfaMatch match : this.hosted) {
 			Integer id = Integer.valueOf(WorldDetailsManager.instance()
-					.getWorldDetailLeagueByLeagueId(match.getHomeLeagueId()).getCountryId());
+					.getWorldDetailLeagueByLeagueId(match.getAwayLeagueId()).getCountryId());
 			IfaStatistic stat = map.get(id);
 			if (stat == null) {
 				stat = new IfaStatistic();
