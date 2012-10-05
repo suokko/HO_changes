@@ -2,15 +2,17 @@ package ho.module.ifa.table;
 
 import ho.core.model.HOVerwaltung;
 import ho.module.ifa.PluginIfaUtils;
+import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.IfaStatistic;
+import ho.module.ifa.model.ModelChangeListener;
+import ho.module.ifa.model.Summary;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class IfaTableModel extends AbstractTableModel {
+public class IfaTableModel extends AbstractTableModel implements ModelChangeListener {
 
 	static final int COL_COUNTRY = 0;
 	static final int COL_PLAYED = 1;
@@ -20,17 +22,21 @@ public class IfaTableModel extends AbstractTableModel {
 	static final int COL_LASTMATCH = 5;
 	static final int COL_COOLNESS = 6;
 	private static final long serialVersionUID = -5838533232544239799L;
+	private IfaModel model;
 	private List<IfaStatistic> list;
 	private Summary summary;
+	private boolean visited;
 
-	public IfaTableModel() {
-		setData(new ArrayList<IfaStatistic>());
-	}
 
-	public void setData(List<IfaStatistic> data) {
-		this.list = new ArrayList<IfaStatistic>(data);
-		this.summary = new Summary(this.list);
-		fireTableDataChanged();
+	public void setData(IfaModel model, boolean visited) {
+		if (this.model != null) {
+			this.model.removeModelChangeListener(this);
+		}
+		this.model = model;
+		this.visited = visited;
+		
+		this.model.addModelChangeListener(this);
+		refresh();
 	}
 
 	@Override
@@ -129,61 +135,19 @@ public class IfaTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	private class Summary {
-
-		private int countriesTotal;
-		private int playedTotal;
-		private int wonTotal;
-		private int drawTotal;
-		private int lostTotal;
-		private long lastMatch;
-		private double coolnessTotal;
-
-		Summary(List<IfaStatistic> data) {
-			init(data);
+	@Override
+	public void modelChanged() {
+		refresh();
+	}
+	
+	private void refresh() {
+		if (this.visited) {
+			this.list = this.model.getVisitedStatistic();
+			this.summary = this.model.getVisitedSummary();
+		} else {
+			this.list = this.model.getHostedStatistic();
+			this.summary = this.model.getHostedSummary();			
 		}
-
-		public int getCountriesTotal() {
-			return countriesTotal;
-		}
-
-		public int getPlayedTotal() {
-			return playedTotal;
-		}
-
-		public int getWonTotal() {
-			return wonTotal;
-		}
-
-		public int getDrawTotal() {
-			return drawTotal;
-		}
-
-		public int getLostTotal() {
-			return lostTotal;
-		}
-
-		public long getLastMatch() {
-			return lastMatch;
-		}
-
-		public double getCoolnessTotal() {
-			return coolnessTotal;
-		}
-
-		private void init(List<IfaStatistic> data) {
-			for (IfaStatistic stat : data) {
-				countriesTotal++;
-				playedTotal += stat.getMatchesPlayed();
-				wonTotal += stat.getMatchesWon();
-				drawTotal += stat.getMatchesDraw();
-				lostTotal += stat.getMatchesLost();
-				coolnessTotal += PluginIfaUtils.getCoolness(stat.getCountry().getCountryId());
-				if (lastMatch < stat.getLastMatchDate()) {
-					lastMatch = stat.getLastMatchDate();
-				}
-			}
-		}
-
+		fireTableDataChanged();
 	}
 }

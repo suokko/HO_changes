@@ -1,8 +1,10 @@
 package ho.module.ifa.model;
 
 import ho.core.db.DBManager;
+import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.module.ifa.IfaMatch;
+import ho.module.ifa.PluginIfaUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,9 @@ public class IfaModel {
 	private final List<IfaMatch> hosted = new ArrayList<IfaMatch>();
 	private List<IfaStatistic> hostedStatistic;
 	private List<IfaStatistic> visitedStatistic;
+	private Summary visitedSummary;
+	private Summary hostedSummary;
+	private double maxCoolness;
 	private final List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
 
 	public IfaModel() {
@@ -27,7 +32,31 @@ public class IfaModel {
 		this.hosted.clear();
 		this.visited.addAll(Arrays.asList(DBManager.instance().getIFAMatches(false)));
 		this.hosted.addAll(Arrays.asList(DBManager.instance().getIFAMatches(true)));
+
+		this.maxCoolness = 0.0;
+		WorldDetailLeague[] leagues = WorldDetailsManager.instance().getLeagues();
+		for (WorldDetailLeague league : leagues) {
+			this.maxCoolness += PluginIfaUtils.getCoolness(league.getCountryId());
+		}
 		fireModelChanged();
+	}
+
+	public double getMaxCoolness() {
+		return this.maxCoolness;
+	}
+	
+	public Summary getVisitedSummary() {
+		if (this.visitedSummary == null) {
+			this.visitedSummary = new Summary(getVisitedStatistic());
+		}
+		return this.visitedSummary;
+	}
+
+	public Summary getHostedSummary() {
+		if (this.hostedSummary == null) {
+			this.hostedSummary = new Summary(getHostedStatistic());
+		}
+		return this.hostedSummary;
 	}
 
 	public boolean isHosted(int countryId) {
@@ -47,7 +76,8 @@ public class IfaModel {
 				return true;
 			}
 		}
-		return false;	}
+		return false;
+	}
 
 	public List<IfaStatistic> getVisitedStatistic() {
 		if (this.visitedStatistic == null) {
@@ -76,6 +106,8 @@ public class IfaModel {
 	public void reload() {
 		this.visitedStatistic = null;
 		this.hostedStatistic = null;
+		this.visitedSummary = null;
+		this.hostedSummary = null;
 		init();
 	}
 
