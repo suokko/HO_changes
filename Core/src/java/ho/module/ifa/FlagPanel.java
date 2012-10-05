@@ -12,6 +12,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -57,8 +59,8 @@ public class FlagPanel extends JPanel {
 		this.percentState = new JProgressBar();
 		this.percentState.setMaximum(totalCountryCount);
 		this.percentState.setValue(playedCountryCount);
-		this.percentState.setPreferredSize(new Dimension(100, 12));
-		this.percentState.setFont(new Font("Verdana", 1, 10));
+		this.percentState.setPreferredSize(new Dimension(100, 14));
+		this.percentState.setFont(new Font("Verdana", 1, 8));
 		this.percentState.setString(playedCountryCount + "/" + totalCountryCount + " ("
 				+ (int) (100.0D * this.percentState.getPercentComplete()) + "%)");
 		this.percentState.setStringPainted(true);
@@ -66,6 +68,13 @@ public class FlagPanel extends JPanel {
 		constraints.insets = new Insets(1, 1, 5, 1);
 		constraints.gridy = 1;
 		add(this.percentState, constraints);
+		
+		this.percentState.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				percentState.getForeground();
+			}
+		});
 
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.insets = new Insets(1, 1, 1, 1);
