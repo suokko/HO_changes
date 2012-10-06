@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -59,6 +60,8 @@ public class RightPanel extends JPanel {
 
 	private void initComponents() {
 		setLayout(new GridBagLayout());
+		setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString(
+				"ifa.imageBuilder.title")));
 
 		JPanel buttonPanel = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -170,7 +173,7 @@ public class RightPanel extends JPanel {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		String fileName;
 		if (this.imageDesignPanel.isAnimGif()) {
-			fileName = "animated.gif";			
+			fileName = "animated.gif";
 		} else if (this.awayRadioButton.isSelected()) {
 			fileName = "visited.gif";
 		} else {
