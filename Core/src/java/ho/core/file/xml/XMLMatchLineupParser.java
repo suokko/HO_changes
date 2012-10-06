@@ -66,7 +66,8 @@ public class XMLMatchLineupParser {
 			ml.setMatchTyp(MatchType.getById(Integer.parseInt(ele.getFirstChild().getNodeValue())));
 
 			if ((ml.getMatchTyp() != MatchType.TOURNAMENTGROUP)
-					&& (ml.getMatchTyp() != MatchType.TOURNAMENTPLAYOFF)) {
+					&& (ml.getMatchTyp() != MatchType.TOURNAMENTPLAYOFF)
+					&& (ml.getMatchTyp() != MatchType.NONE)) { // HT bug
 				ele = (Element) root.getElementsByTagName("Arena").item(0);
 				ml.setArenaID(Integer.parseInt(ele.getElementsByTagName("ArenaID").item(0)
 						.getFirstChild().getNodeValue()));
