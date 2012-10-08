@@ -12,8 +12,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -68,13 +66,6 @@ public class FlagPanel extends JPanel {
 		constraints.insets = new Insets(1, 1, 5, 1);
 		constraints.gridy = 1;
 		add(this.percentState, constraints);
-		
-		this.percentState.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				percentState.getForeground();
-			}
-		});
 
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.insets = new Insets(1, 1, 1, 1);
