@@ -79,8 +79,6 @@ public class FlagPanel extends JPanel {
 				add(this.flagLabels[i], constraints);
 			}
 		}
-		
-		this.percentState.setValue(60);
 	}
 
 	void setHeaderText(String header) {
