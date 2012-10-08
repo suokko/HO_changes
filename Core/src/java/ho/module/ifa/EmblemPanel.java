@@ -84,7 +84,7 @@ public class EmblemPanel extends JPanel {
 		if (this.logoLabel.getIcon() == null) {
 			return this.flagPanel;
 		}
-		return this;
+		return this.panel;
 	}
 
 	public void setHeaderVisible(boolean header) {
