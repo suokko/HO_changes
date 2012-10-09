@@ -219,6 +219,9 @@ public class RightPanel extends JPanel {
 					.getDelaySpinner().getValue().toString()).doubleValue()));
 			encoder.encode(out);
 			dialog.dispose();
+			
+			// enforce refresh
+			this.imageDesignPanel.setAway(awayRadioButton.isSelected());
 		} else {
 			JComponent panel = this.imageDesignPanel.getEmblemPanel().getImage();
 			BufferedImage bufferedImage = new BufferedImage(panel.getWidth(), panel.getHeight(), 1);
