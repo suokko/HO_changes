@@ -6,6 +6,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
+import ho.core.model.match.MatchType;
 import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.login.LoginWaitDialog;
@@ -147,9 +148,13 @@ public class PluginIfaUtils {
 		for (int i = 0; i < matchesCount; i++) {
 			IfaMatch match = new IfaMatch();
 
-			int matchType = Integer.parseInt(parseXmlElement(doc, "MatchType", i, "Match"));
+			int matchTypeId = Integer.parseInt(parseXmlElement(doc, "MatchType", i, "Match"));
+			MatchType matchType = MatchType.getById(matchTypeId);
 			matchDate = parseXmlElement(doc, "MatchDate", i, "Match");
-			if ((matchType == 8) || (matchType == 9)) {
+			if (matchType == MatchType.FRIENDLYCUPRULES || matchType == MatchType.FRIENDLYNORMAL
+					|| matchType == MatchType.INTFRIENDLYCUPRULES
+					|| matchType == MatchType.INTFRIENDLYNORMAL
+					|| matchType == MatchType.NATIONALFRIENDLY) {
 				int homeTeamID = Integer
 						.parseInt(parseXmlElement(doc, "HomeTeamID", i, "HomeTeam"));
 				int awayTeamID = Integer
