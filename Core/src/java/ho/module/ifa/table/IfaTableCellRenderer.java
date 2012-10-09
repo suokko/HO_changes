@@ -38,11 +38,11 @@ public class IfaTableCellRenderer extends DefaultTableCellRenderer {
 
 		switch (modelColumnIndex) {
 		case IfaTableModel.COL_COUNTRY:
+			alignment = SwingConstants.LEFT;
 			if (!isSummaryRow(row, table)) {
 				Country country = (Country) value;
 				displayValue = country.getName();
-				icon = country.getCountryFlag();
-				alignment = SwingConstants.LEFT;
+				icon = country.getCountryFlag();				
 			} else {
 				displayValue = String.valueOf(value);
 			}
