@@ -148,10 +148,10 @@ public class StatsPanel extends JPanel {
 		gbc.gridx = 6;
 		add(ofLabel, gbc);
 
-		this.coolnessSumTotalValueLabel = new JLabel();
+		this.coolnessTotalValueLabel2 = new JLabel();
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 7;
-		add(this.coolnessSumTotalValueLabel, gbc);
+		add(this.coolnessTotalValueLabel2, gbc);
 
 		// ROW 3
 
@@ -175,10 +175,10 @@ public class StatsPanel extends JPanel {
 		gbc.gridx = 6;
 		add(ofLabel, gbc);
 
-		this.coolnessTotalValueLabel2 = new JLabel();
+		this.coolnessSumTotalValueLabel = new JLabel();
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 7;
-		add(this.coolnessTotalValueLabel2, gbc);
+		add(this.coolnessSumTotalValueLabel, gbc);
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(4, 20, 3, 6);
