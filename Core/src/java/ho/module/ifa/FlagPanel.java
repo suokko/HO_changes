@@ -1,7 +1,6 @@
 package ho.module.ifa;
 
 import ho.core.gui.theme.ImageUtilities;
-import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailLeague;
 import ho.core.model.WorldDetailsManager;
 import ho.module.ifa.model.IfaModel;
@@ -100,16 +99,11 @@ public class FlagPanel extends JPanel {
 			flagLabel.setIcon(ImageUtilities.getFlagIcon(flagLabel.getCountryId()));
 			flagLabel.setToolTipText(flagLabel.getCountryName());
 
-			if (leagues[i].getLeagueId() == HOVerwaltung.instance().getModel().getBasics()
-					.getLiga()) {
-				flagLabel.setHomeCountry(true);
+			if ((away && ifaModel.isVisited(leagues[i].getCountryId()))
+					|| (!away && ifaModel.isHosted(leagues[i].getCountryId()))) {
+				flagLabel.setEnabled(true);
 			} else {
-				if ((away && ifaModel.isVisited(leagues[i].getCountryId()))
-						|| (!away && ifaModel.isHosted(leagues[i].getCountryId()))) {
-					flagLabel.setEnabled(true);
-				} else {
-					flagLabel.setEnabled(false);
-				}
+				flagLabel.setEnabled(false);
 			}
 			this.flagLabels[i] = flagLabel;
 		}
