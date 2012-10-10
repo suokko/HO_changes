@@ -1,6 +1,8 @@
 package ho.module.ifa;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.module.config.ModuleConfig;
+import ho.module.ifa.config.Config;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.ModelChangeListener;
 
@@ -42,7 +44,7 @@ public class EmblemPanel extends JPanel {
 
 	private void initialize() {
 		this.panel = new JPanel();
-		
+
 		this.panel.setLayout(new GridBagLayout());
 		this.panel.setBackground(Color.white);
 		this.logoLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
@@ -59,7 +61,7 @@ public class EmblemPanel extends JPanel {
 		this.panel.add(this.logoLabel, constraints);
 		constraints.gridy = 1;
 		this.panel.add(this.flagPanel, constraints);
-		
+
 		add(this.panel);
 	}
 
@@ -114,6 +116,11 @@ public class EmblemPanel extends JPanel {
 				image = new ImageIcon(path);
 			}
 			setLogo(image);
+			if (away) {
+				ModuleConfig.instance().setString(Config.VISITED_EMBLEM_PATH.toString(), path);
+			} else {
+				ModuleConfig.instance().setString(Config.HOSTED_EMBLEM_PATH.toString(), path);
+			}
 		}
 		validate();
 		repaint();
@@ -146,7 +153,7 @@ public class EmblemPanel extends JPanel {
 
 			@Override
 			public void flagShapeChanged() {
-				rebuildFlags();				
+				rebuildFlags();
 			}
 		});
 

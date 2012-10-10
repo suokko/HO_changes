@@ -168,10 +168,13 @@ public class RightPanel extends JPanel {
 	}
 
 	private void saveImage() throws IOException {
+		boolean away = this.awayRadioButton.isSelected();
+		
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new ImageFileFilter(new String[] { "gif" }));
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		String fileName;
+		
 		if (this.imageDesignPanel.isAnimGif()) {
 			fileName = "animated.gif";
 		} else if (this.awayRadioButton.isSelected()) {
@@ -192,8 +195,9 @@ public class RightPanel extends JPanel {
 			dialog.getContentPane().setLayout(null);
 
 			JComponent panel1 = this.imageDesignPanel.getEmblemPanel().getImage();
+			this.imageDesignPanel.setAway(!away);
 			JComponent panel2 = this.imageDesignPanel.getEmblemPanel().getImage();
-
+		
 			Dimension size1 = panel1.getSize();
 			Dimension size2 = panel2.getSize();
 			int maxW = size1.width > size2.width ? size1.width : size2.width;
@@ -221,7 +225,7 @@ public class RightPanel extends JPanel {
 			dialog.dispose();
 			
 			// enforce refresh
-			this.imageDesignPanel.setAway(awayRadioButton.isSelected());
+			this.imageDesignPanel.setAway(away);
 		} else {
 			JComponent panel = this.imageDesignPanel.getEmblemPanel().getImage();
 			BufferedImage bufferedImage = new BufferedImage(panel.getWidth(), panel.getHeight(), 1);
