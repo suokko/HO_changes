@@ -65,6 +65,7 @@ Language updates:
 - Updated Nederlands translations (thx BrammieG).
 - Updated Portugues translations (thx a_cardoso).
 - Updated Romanian translations (thx DragosE).
+- Updated Spanish translations (thx LarsVegas).
 
 ThemeManager:
 ------------

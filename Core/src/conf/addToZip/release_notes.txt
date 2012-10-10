@@ -47,6 +47,7 @@ Changelist HO! 1.432
 - Added ability to reset all positional orders in the line up tab.
 - Calculate loyalty and homegrownbonus for set pieces and penalty takers.
 - Fixed IFA module not to download matches before the user got the team.
+- Removed Shirt number 100 for players without a shirt number.
 
 Language updates:
 -----------------
@@ -60,6 +61,7 @@ Language updates:
 - Updated Nederlands translations (thx BrammieG).
 - Updated Portugues translations (thx a_cardoso).
 - Updated Romanian translations (thx DragosE).
+- Updated Spanish translations (thx LarsVegas).
 
 ThemeManager:
 ------------

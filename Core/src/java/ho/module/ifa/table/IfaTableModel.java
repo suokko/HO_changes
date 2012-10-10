@@ -34,7 +34,7 @@ public class IfaTableModel extends AbstractTableModel implements ModelChangeList
 		}
 		this.model = model;
 		this.visited = visited;
-		
+
 		this.model.addModelChangeListener(this);
 		refresh();
 	}
@@ -121,11 +121,11 @@ public class IfaTableModel extends AbstractTableModel implements ModelChangeList
 		case COL_PLAYED:
 			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.played");
 		case COL_WON:
-			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.won");
+			return HOVerwaltung.instance().getLanguageString("Gewonnen");
 		case COL_DRAW:
-			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.draw");
+			return HOVerwaltung.instance().getLanguageString("Unendschieden");
 		case COL_LOST:
-			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lost");
+			return HOVerwaltung.instance().getLanguageString("Verloren");
 		case COL_LASTMATCH:
 			return HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.col.lastMatch");
 		case COL_COOLNESS:
@@ -139,14 +139,14 @@ public class IfaTableModel extends AbstractTableModel implements ModelChangeList
 	public void modelChanged() {
 		refresh();
 	}
-	
+
 	private void refresh() {
 		if (this.visited) {
 			this.list = this.model.getVisitedStatistic();
 			this.summary = this.model.getVisitedSummary();
 		} else {
 			this.list = this.model.getHostedStatistic();
-			this.summary = this.model.getHostedSummary();			
+			this.summary = this.model.getHostedSummary();
 		}
 		fireTableDataChanged();
 	}
