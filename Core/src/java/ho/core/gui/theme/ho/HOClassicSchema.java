@@ -185,6 +185,7 @@ public class HOClassicSchema extends Schema implements HOIconName, HOColorName, 
 		put(ARROW_CIRCLE, "gui/bilder/Fugue/arrow-circle-double-135.png");
 		put(ARROW_MOVE, "gui/bilder/Fugue/arrow-move-recoloured.png");
 		put(SUBSTITUTION, "gui/bilder/Fugue/arrow-circle-double-135-recoloured.png");
+		put(IFA_VISITED, "gui/bilder/Fugue/status.png");		
 	}
 
 	private void initBooleans() {

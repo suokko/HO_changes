@@ -1,7 +1,9 @@
 package ho.module.ifa;
 
+import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
+import ho.core.util.GUIUtils;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.ModelChangeListener;
 
@@ -69,12 +71,10 @@ public class StatsPanel extends JPanel {
 
 		JLabel ofLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.statisticsTable.stats.of"));
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 2;
 		add(ofLabel, gbc);
 
 		this.countriesTotalValueLabel = new JLabel();
-		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 3;
 		add(this.countriesTotalValueLabel, gbc);
 
@@ -93,12 +93,10 @@ public class StatsPanel extends JPanel {
 
 		ofLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.statisticsTable.stats.of"));
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 6;
 		add(ofLabel, gbc);
 
 		this.coolnessTotalValueLabel = new JLabel();
-		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 7;
 		add(this.coolnessTotalValueLabel, gbc);
 
@@ -120,12 +118,10 @@ public class StatsPanel extends JPanel {
 
 		ofLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.statisticsTable.stats.of"));
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 2;
 		add(ofLabel, gbc);
 
 		this.countriesTotalValueLabel2 = new JLabel();
-		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 3;
 		add(this.countriesTotalValueLabel2, gbc);
 
@@ -144,12 +140,10 @@ public class StatsPanel extends JPanel {
 
 		ofLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.statisticsTable.stats.of"));
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 6;
 		add(ofLabel, gbc);
 
 		this.coolnessTotalValueLabel2 = new JLabel();
-		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 7;
 		add(this.coolnessTotalValueLabel2, gbc);
 
@@ -160,7 +154,7 @@ public class StatsPanel extends JPanel {
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(4, 20, 3, 6);
 		gbc.gridx = 4;
-		gbc.gridy = 4;
+		gbc.gridy = 2;
 		add(coolnessSumTotalLabel, gbc);
 
 		this.coolnessSumValueLabel = new JLabel();
@@ -171,28 +165,30 @@ public class StatsPanel extends JPanel {
 
 		ofLabel = new JLabel(HOVerwaltung.instance().getLanguageString(
 				"ifa.statisticsTable.stats.of"));
-		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 6;
 		add(ofLabel, gbc);
 
 		this.coolnessSumTotalValueLabel = new JLabel();
-		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.gridx = 7;
 		add(this.coolnessSumTotalValueLabel, gbc);
-		
-		gbc.anchor = GridBagConstraints.CENTER;
+
+		gbc.anchor = GridBagConstraints.SOUTHWEST;
 		gbc.insets = new Insets(4, 20, 3, 6);
-		gbc.gridheight = 2;
+		gbc.gridheight = 3;
 		gbc.gridx = 8;
 		gbc.gridy = 0;
-		JButton infoButton = new JButton("info");
-//		add(infoButton, gbc);
-		
+		gbc.weighty = 1.0;
+		JButton infoButton = new JButton();
+		infoButton.setText(HOVerwaltung.instance().getLanguageString("ifa.infoDialogButton.txt"));
+		add(infoButton, gbc);
+
 		infoButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				IfaOverviewDialog dlg = new IfaOverviewDialog();
+				IfaOverviewDialog dlg = new IfaOverviewDialog(model, HOMainFrame.instance());
+				GUIUtils.decorateWithDisposeOnESC(dlg);
+				GUIUtils.setLocationCenteredToComponent(dlg, HOMainFrame.instance());
 				dlg.setVisible(true);
 			}
 		});
@@ -219,29 +215,5 @@ public class StatsPanel extends JPanel {
 				+ currentHostedCoolness));
 		this.coolnessSumTotalValueLabel
 				.setText(doubleFormat.format(this.model.getMaxCoolness() * 2));
-		// txt =
-		// HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.stats.coolness",
-		// doubleFormat.format(currentVisitedCoolness), maxCoolness);
-		// this.visitedCoolnessLabel.setText(txt);
-		//
-		// txt = HOVerwaltung.instance().getLanguageString(
-		// "ifa.statisticsTable.stats.hostedCountries",
-		// this.model.getHostedCountriesCount(),
-		// totalCountries);
-		// this.hostedLabel.setText(txt);
-		//
-		// double currentHostedCoolness =
-		// this.model.getHostedSummary().getCoolnessTotal();
-		// txt =
-		// HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.stats.coolness",
-		// doubleFormat.format(currentHostedCoolness), maxCoolness);
-		// this.hostedCoolnessLabel.setText(txt);
-		//
-		// maxCoolness = doubleFormat.format(this.model.getMaxCoolness() * 2);
-		// txt =
-		// HOVerwaltung.instance().getLanguageString("ifa.statisticsTable.stats.coolnessTotal",
-		// doubleFormat.format(currentVisitedCoolness + currentHostedCoolness),
-		// maxCoolness);
-		// this.totalCoolnessLabel.setText(txt);
 	}
 }

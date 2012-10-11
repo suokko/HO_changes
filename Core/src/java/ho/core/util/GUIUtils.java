@@ -2,6 +2,8 @@ package ho.core.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -80,8 +82,7 @@ public class GUIUtils {
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
 			}
-		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-				JComponent.WHEN_IN_FOCUSED_WINDOW);
+		}, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	/**
@@ -96,8 +97,7 @@ public class GUIUtils {
 	 */
 	public static void decorateWithActionOnESC(JDialog dialog, Action action) {
 		dialog.getRootPane().registerKeyboardAction(action,
-				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-				JComponent.WHEN_IN_FOCUSED_WINDOW);
+				KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	/**
@@ -111,6 +111,31 @@ public class GUIUtils {
 	public static void selectFirstRow(JTable table) {
 		if (table != null && table.getRowCount() > 0) {
 			table.getSelectionModel().setSelectionInterval(0, 0);
+		}
+	}
+
+	/**
+	 * Centers the <code>window</code> over the given <code>component</code>.
+	 * The <code>window</code> might not be exactly centered over the
+	 * <code>component</code> if the <code>window</code> would not fit on the
+	 * screen if set to the calculated position.
+	 * <p>
+	 * The window instance must be visible, otherwise the location won't be set.
+	 * 
+	 * @param window
+	 *            The <code>window</code> to be positioned.
+	 * @param component
+	 *            The <code>component</code>, the <code>window</code> should be
+	 *            centered over.
+	 */
+	public static void setLocationCenteredToComponent(Window window, Component component) {
+		if (component != null && component.isVisible()) {
+			Point componentLocation = component.getLocationOnScreen();
+			Point componentCenter = new Point(componentLocation.x + component.getWidth() / 2,
+					componentLocation.y + component.getHeight() / 2);
+
+			window.setLocation(componentCenter.x - window.getWidth() / 2, componentCenter.y
+					- window.getHeight() / 2);
 		}
 	}
 }
