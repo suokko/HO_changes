@@ -52,10 +52,6 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
         final ImagePanel panel = new ImagePanel(null);
         m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
 
-        // Nur Pflichtspiele ist default
-        m_jcbSpieleFilter.setSelectedIndex(1);
-
-        //tools.Helper.markierenComboBox( m_jcbSpieleFilter, UserParameter.instance().spieleFilter );
         m_jcbSpieleFilter.addItemListener(this);
         m_jcbSpieleFilter.setFont(m_jcbSpieleFilter.getFont().deriveFont(Font.BOLD));
         m_jcbSpieleFilter.setSize(200, 25);
@@ -69,9 +65,11 @@ public class ArenaStatistikPanel extends ImagePanel implements MouseListener, Ke
         m_jtArenaStatistikTable.addKeyListener(this);
 
         final JScrollPane scrollpane = new JScrollPane(m_jtArenaStatistikTable);
-        //scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
 
         add(scrollpane, BorderLayout.CENTER);
+        
+        // Nur Pflichtspiele ist default
+        m_jcbSpieleFilter.setSelectedIndex(1);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
