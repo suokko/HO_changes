@@ -14,6 +14,7 @@ import ho.module.matches.SpielHighlightPanel;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -79,9 +80,8 @@ class SpecialEventsDM {
 		teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 	}
 
-	Vector<Vector<Object>> holeInfos(boolean allMatches, SeasonFilterValue period,
-			boolean friendlies) {
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	List<List<Object>> holeInfos(boolean allMatches, SeasonFilterValue period, boolean friendlies) {
+		List<List<Object>> data = new ArrayList<List<Object>>();
 		highlightText = new Vector<String>();
 		try {
 			List<MatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getMatchKurzInfos(period,
@@ -89,15 +89,15 @@ class SpecialEventsDM {
 			int zInd = 1;
 			for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter.hasNext();) {
 				MatchKurzInfo element = iter.next();
-				Vector<Vector<Object>> v = getMatchlines(element, allMatches);
+				List<List<Object>> v = getMatchlines(element, allMatches);
 				if (v != null && v.size() > 0) {
 					for (int j = 0; j < v.size(); j++) {
 						if (j == 0) {
 							zInd *= -1;
 						}
-						Vector<Object> vTemp = v.elementAt(j);
-						vTemp.setElementAt((new Integer(zInd)).toString(),
-								SpecialEventsTable.HIDDENCOLUMN);
+						List<Object> vTemp = v.get(j);
+						vTemp.set(SpecialEventsTableModel.HIDDENCOLUMN,
+								(new Integer(zInd)).toString());
 						data.add(vTemp);
 					}
 				}
@@ -110,7 +110,7 @@ class SpecialEventsDM {
 		return data;
 	}
 
-	private Vector<Vector<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
+	private List<List<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
 		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
 		String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
 		Integer matchId = new Integer(kurzInfos.getMatchID());
@@ -133,9 +133,9 @@ class SpecialEventsDM {
 			}
 		}
 
-		Vector<Vector<Object>> lines = new Vector<Vector<Object>>();
+		List<List<Object>> lines = new ArrayList<List<Object>>();
 		if (allMatches && seHighlights.size() == 0) {
-			Vector<Object> allNoSELine = new Vector<Object>();
+			List<Object> allNoSELine = new ArrayList<Object>();
 			allNoSELine.add(datum);
 			allNoSELine.add(matchId);
 			allNoSELine.add(heimTaktik);
@@ -699,39 +699,9 @@ class SpecialEventsDM {
 		return name;
 	}
 
-	// private String getStandardsSpielerName(int matchId)
-	// {
-	// String name = "";
-	// IMatchLineup matchLineup = DBManager.instance().getMatchLineup(matchId);
-	// IMatchLineupTeam teamLineup = null;
-	// if(matchLineup.getHeimId() == teamId)
-	// {
-	// teamLineup = matchLineup.getHeim();
-	// } else
-	// {
-	// teamLineup = matchLineup.getGast();
-	// }
-	// IMatchLineupPlayer player = teamLineup.getPlayerByPosition(17);
-	// name = player.getSpielerName();
-	// return name;
-	// }
-
 	private void showDebug(String s) {
 		HOLogger.instance().log(this.getClass(), s);
 	}
-
-	// protected static ImageIcon createImageIcon(Object object, String path)
-	// {
-	// java.net.URL imageURL = object.getClass().getResource(path);
-	// if(imageURL == null)
-	// {
-	// System.err.println("Resource not found: " + path);
-	// return null;
-	// } else
-	// {
-	// return new ImageIcon(imageURL);
-	// }
-	// }
 
 	public Vector<String> getHighlightText() {
 		return highlightText;

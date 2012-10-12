@@ -11,6 +11,7 @@ import javax.swing.KeyStroke;
 
 public class SpecialEventsModule extends DefaultModule {
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_2, KeyEvent.CTRL_MASK);
 	}
