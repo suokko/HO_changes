@@ -33,11 +33,13 @@ public class SpecialEventsTable extends JTable {
 	static final int NAMECOLUMN = 13;
 	static final int HIDDENCOLUMN = 14;
 	static final int NUMCOLUMNS = 15;
+	private final Filter filter;
 
 	private String columnNames[];
 	private Vector<String> highlightTexte;
 
-	SpecialEventsTable() {
+	SpecialEventsTable(Filter filter) {
+		this.filter = filter;
 		columnNames = new String[NUMCOLUMNS];
 		setColumnHeaders();
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // AUTO_RESIZE_ALL_COLUMNS
@@ -94,9 +96,9 @@ public class SpecialEventsTable extends JTable {
 	}
 
 	public TableModel getSEModel() {
-		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
-		Vector<Vector<Object>> matches = specialEventsDM.holeInfos(FilterPanel.getGameTypAll().isSelected(), //
-				FilterPanel.getSaisonTyp(), FilterPanel.showFriendlies());
+		SpecialEventsDM specialEventsDM = new SpecialEventsDM(this.filter);		
+		Vector<Vector<Object>> matches = specialEventsDM.holeInfos(!this.filter.isShowMatchesWithSEOnly(),
+				this.filter.getSeasonFilterValue(), true);
 		highlightTexte = specialEventsDM.getHighlightText();
 		TableModel tableModel = new SpecialEventsTableModel(matches, new Vector<String>(Arrays.asList(columnNames)));
 		return tableModel;
