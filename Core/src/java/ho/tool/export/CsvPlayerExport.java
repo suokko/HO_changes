@@ -74,7 +74,7 @@ public class CsvPlayerExport {
 			FileWriter writer = new FileWriter(file);
 			writer.write("id,shirtno,name,age,agedays,form,stamina,"
 					+ "skill_gk,skill_pm,skill_ps,skill_wi,skill_de,skill_sc,skill_setpieces,"
-					+ "specialty,tsi,wage,xp,leadership,pop,agg,hon,cards,injury,"
+					+ "loyalty,homegrown,specialty,tsi,wage,xp,leadership,pop,agg,hon,cards,injury,"
 					+ "GK,CD,CD_off,CD_tw,WB,WB_off,WB_def,WB_tm,IM,IM_off,IM_def,IM_tw,WI,WI_off,WI_def,WI_tm,FW,FW_def,FW_tw"
 					+ "\n");
 			Iterator<Spieler> iter = list.iterator();
@@ -95,6 +95,8 @@ public class CsvPlayerExport {
 						"" + (curPlayer.getVerteidigung() + curPlayer.getSubskill4PosAccurate(PlayerSkill.DEFENDING)),
 						"" + (curPlayer.getTorschuss() + curPlayer.getSubskill4PosAccurate(PlayerSkill.SCORING)),
 						"" + (curPlayer.getStandards() + curPlayer.getSubskill4PosAccurate(PlayerSkill.SET_PIECES)),
+						"" + (curPlayer.getLoyalty()),
+						"" + (curPlayer.isHomeGrown()),
 						"" + curPlayer.getSpezialitaet(),
 						"" + curPlayer.getTSI(),
 						"" + (int)(curPlayer.getGehalt() / HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate()),

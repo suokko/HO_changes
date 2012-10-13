@@ -48,6 +48,7 @@ Changelist HO! 1.432
 - Calculate loyalty and homegrownbonus for set pieces and penalty takers.
 - Fixed IFA module not to download matches before the user got the team.
 - Removed Shirt number 100 for players without a shirt number.
+- Included Loyalty and mother club into csv player export
 
 Language updates:
 -----------------
