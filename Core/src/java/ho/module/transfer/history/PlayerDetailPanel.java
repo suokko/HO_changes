@@ -118,7 +118,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         final TableLayout layout = new TableLayout(sizes);
         detailPanel.setLayout(layout);
 
-        detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Name"),
+        detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"),
                                    SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$
         detailPanel.add(name, "2, 0"); //$NON-NLS-1$
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Alter"),

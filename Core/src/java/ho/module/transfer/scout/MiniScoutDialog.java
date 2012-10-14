@@ -93,7 +93,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         this.setIconImage(HOMainFrame.instance().getIconImage());
         clOwner = owner;
         initComponents();
-        
+
         addWindowListener(new WindowAdapter() {
         	@Override
         	public void windowClosing(WindowEvent e) {
@@ -268,7 +268,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         dispose();
         ho.core.gui.HOMainFrame.instance().setVisible(true);
     }
-    
+
     /**
      * Create new Scout entry
      *
@@ -334,7 +334,7 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
         jtfPlayerID.addFocusListener(this);
         panel.add(jtfPlayerID);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"));
         panel.add(label);
         jtfName.addFocusListener(this);
         panel.add(jtfName);

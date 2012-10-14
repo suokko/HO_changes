@@ -1054,7 +1054,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
     	Player dummy = new Player();
     	JLabel l_SpielerName = new JLabel();
     	l_SpielerName.setPreferredSize(new Dimension(100,30));
-    	l_SpielerName.setText(HOVerwaltung.instance().getLanguageString("Name"));
+    	l_SpielerName.setText(HOVerwaltung.instance().getLanguageString("ls.player.name"));
     	l_SpielerName.setOpaque(true);
 
     	JLabel platzhalter = new JLabel();

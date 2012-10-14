@@ -20,7 +20,7 @@ class TransferTypeTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2943508984461781906L;
 	private List<TransferredPlayer> values;
@@ -37,7 +37,7 @@ class TransferTypeTableModel extends AbstractTableModel {
         super();
 
         this.colNames[0] = HOVerwaltung.instance().getLanguageString("ID");
-        this.colNames[1] = HOVerwaltung.instance().getLanguageString("Name");
+        this.colNames[1] = HOVerwaltung.instance().getLanguageString("ls.player.name");
         this.colNames[2] = HOVerwaltung.instance().getLanguageString("Type");
         this.colNames[3] = HOVerwaltung.instance().getLanguageString("Income");
 

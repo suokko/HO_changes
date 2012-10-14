@@ -64,7 +64,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 	{
 		label = new JLabel();
 
-		if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Name"))) {
+		if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.name"))) {
 			int i = 0;
 			int spezWert = 0;
 			StringTokenizer tk = new StringTokenizer(table.getValueAt(row,column).toString(),";");

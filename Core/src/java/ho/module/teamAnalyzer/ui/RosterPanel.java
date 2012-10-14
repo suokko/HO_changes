@@ -39,7 +39,7 @@ public class RosterPanel extends JPanel {
     private Map<String,RosterPlayerData> players = new HashMap<String,RosterPlayerData>();
     private UiRosterTableModel tableModel;
     private String[] columns = {
-    		HOVerwaltung.instance().getLanguageString("Name"),
+    		HOVerwaltung.instance().getLanguageString("ls.player.name"),
     		HOVerwaltung.instance().getLanguageString("Role"),
     		HOVerwaltung.instance().getLanguageString("Position"),
     		HOVerwaltung.instance().getLanguageString("Secondary"),

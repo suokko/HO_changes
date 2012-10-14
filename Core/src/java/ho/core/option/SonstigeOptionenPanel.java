@@ -65,7 +65,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 	// ----------------------------------------------------------------------------
 
 	// Nicht Statik, da es sonst zu früh initialisiert wird
-	public CBItem[] SORTIERUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("Name"), ho.core.model.UserParameter.SORT_NAME),
+	public CBItem[] SORTIERUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.name"), ho.core.model.UserParameter.SORT_NAME),
 			new CBItem(HOVerwaltung.instance().getLanguageString("BestePosition"), ho.core.model.UserParameter.SORT_BESTPOS),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Aufgestellt"), ho.core.model.UserParameter.SORT_AUFGESTELLT),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Gruppe"), ho.core.model.UserParameter.SORT_GRUPPE),

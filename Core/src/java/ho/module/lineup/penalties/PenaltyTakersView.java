@@ -146,7 +146,7 @@ public class PenaltyTakersView extends JPanel {
 	/**
 	 * The panel containing the two tables and the button to move players
 	 * between the tables.
-	 * 
+	 *
 	 * @return the panel
 	 */
 	private JPanel createTablesPanel() {
@@ -395,12 +395,12 @@ public class PenaltyTakersView extends JPanel {
 				}
 			}
 		});
-		
+
 		this.takersTable.getModel().addTableModelListener(new TableModelListener() {
-			
+
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
-				clearButton.setEnabled(takersTable.getRowCount() > 0);				
+				clearButton.setEnabled(takersTable.getRowCount() > 0);
 			}
 		});
 
@@ -585,7 +585,7 @@ public class PenaltyTakersView extends JPanel {
 		public PenaltyTakersTableModel() {
 			this.columnNames = new String[6];
 			this.columnNames[0] = "";
-			this.columnNames[1] = getLangStr("Name");
+			this.columnNames[1] = getLangStr("ls.player.name");
 			this.columnNames[2] = getLangStr("skill.experience");
 			this.columnNames[3] = getLangStr("ls.player.skill.setpieces");
 			this.columnNames[4] = getLangStr("ls.player.skill.scoring");

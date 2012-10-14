@@ -645,7 +645,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         constraints.gridheight = 1;
 
         // ***** Block 1
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"));
         initNormalLabel(0,0,constraints,layout,panel,label);
         initNormalField(1,0,constraints,layout,panel,m_jpName.getComponent(false));
 

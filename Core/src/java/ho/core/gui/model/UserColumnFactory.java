@@ -232,7 +232,7 @@ final public class UserColumnFactory {
 	 */
 	public static PlayerColumn[] createPlayerBasicArray(){
 		final PlayerColumn[] playerBasicArray = new PlayerColumn[2];
-		playerBasicArray[0] = new PlayerColumn(NAME,"Name",0){
+		playerBasicArray[0] = new PlayerColumn(NAME,"ls.player.name",0){
 			@Override
 			public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 				return new SpielerLabelEntry(player,

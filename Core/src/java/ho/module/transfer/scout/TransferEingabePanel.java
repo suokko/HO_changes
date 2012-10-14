@@ -568,7 +568,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfPlayerID.addKeyListener(this);
         panel.add(jtfPlayerID);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"));
         panel.add(label);
         jtfName.addFocusListener(this);
         panel.add(jtfName);

@@ -447,7 +447,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         panel = new ImagePanel();
         panel.setLayout(eingabenLayout);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"));
         eingabenconstraints.gridx = 0;
         eingabenconstraints.gridy = 0;
         eingabenLayout.setConstraints(label, eingabenconstraints);

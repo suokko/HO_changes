@@ -107,7 +107,7 @@ class PlayerTable extends JTable{
 	    	{
 	    		width = 60;
 	    	}
-	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("Name"))
+	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.name"))
 	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("BestePosition"))
 	    			)
 	    	{

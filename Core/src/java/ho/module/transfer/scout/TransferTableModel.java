@@ -36,7 +36,7 @@ public class TransferTableModel extends AbstractTableModel {
     {
     	HOVerwaltung.instance().getLanguageString("ID"),
         //Name
-	    HOVerwaltung.instance().getLanguageString("Name"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.name"),
 	    //Current price
 	    HOVerwaltung.instance().getLanguageString("scout_price"),
 	    //Ablaufdatum
@@ -122,7 +122,7 @@ public class TransferTableModel extends AbstractTableModel {
     {
         HOVerwaltung.instance().getLanguageString("ID"),
         //Name
-	    HOVerwaltung.instance().getLanguageString("Name"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.name"),
 	    //Current price
 	    HOVerwaltung.instance().getLanguageString("scout_price"),
 	    //Ablaufdatum

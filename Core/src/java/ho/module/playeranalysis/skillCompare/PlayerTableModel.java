@@ -102,7 +102,7 @@ class PlayerTableModel extends DefaultTableModel{
 
 
 		columnNames[0] = "";
-		columnNames[1] = HOVerwaltung.instance().getLanguageString("Name");
+		columnNames[1] = HOVerwaltung.instance().getLanguageString("ls.player.name");
 		columnNames[2] = "";
 		columnNames[3] = "";
 		columnNames[4] = HOVerwaltung.instance().getLanguageString("BestePosition");

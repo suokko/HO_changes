@@ -575,7 +575,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         panel.add(label);
         constraints.gridheight = 1;
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 0;
