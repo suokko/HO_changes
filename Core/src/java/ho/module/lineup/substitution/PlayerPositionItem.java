@@ -23,10 +23,14 @@ public class PlayerPositionItem {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (this.position != null) {
-			builder.append(LanguageStringLookup.getPosition(this.position.byteValue()));			
+			builder.append(LanguageStringLookup.getPosition(this.position.byteValue()));
 		}
 		if (this.player != null) {
 			builder.append(" - ");
+			if (this.player.getTrikotnummer() > 0) {
+				builder.append(player.getTrikotnummer());
+				builder.append(" ");
+			}
 			builder.append(this.player.getName());
 		}
 
