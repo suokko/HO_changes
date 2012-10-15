@@ -27,7 +27,7 @@ public class PlayerPositionItem {
 		}
 		if (this.player != null) {
 			builder.append(" - ");
-			if (this.player.getTrikotnummer() > 0) {
+			if (this.player.getTrikotnummer() > 0 && this.player.getTrikotnummer() != 100) {
 				builder.append(player.getTrikotnummer());
 				builder.append(" ");
 			}
