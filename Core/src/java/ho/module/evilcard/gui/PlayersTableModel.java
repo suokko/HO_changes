@@ -52,9 +52,9 @@ class PlayersTableModel extends AbstractTableModel {
 
     PlayersTableModel(int matchType, int beginSeason, int endSeason, int typePlayer) {
         columnNames = new String[cols];
-        
+
         // Riempimento valori
-        columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ID");
+        columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ls.player.id");
         columnNames[COL_NAME] = HOVerwaltung.instance().getLanguageString("Spieler");
         columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString("Ansehen");
         columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString("Aggressivitaet");
@@ -152,7 +152,7 @@ class PlayersTableModel extends AbstractTableModel {
         Aggressive(Spieler player) {
             _player = player;
         }
- 
+
         @Override
         public String toString() {
             return PlayerAggressiveness.toString(_player.getAgressivitaet())+" (" + _player.getAgressivitaet() + ")";
@@ -178,7 +178,7 @@ class PlayersTableModel extends AbstractTableModel {
         Agreeability(Spieler player) {
             _player = player;
         }
- 
+
         @Override
         public String toString() {
             return PlayerAgreeability.toString(_player.getAnsehen())+" (" + _player.getAnsehen() + ")";
@@ -204,7 +204,7 @@ class PlayersTableModel extends AbstractTableModel {
         Honesty(Spieler player) {
             _player = player;
         }
- 
+
         @Override
         public String toString() {
             return PlayerHonesty.toString(_player.getCharakter())+" (" + _player.getCharakter() + ")";
@@ -319,7 +319,7 @@ class PlayersTableModel extends AbstractTableModel {
                             break;
                     }
                 }
-            
+
              Vector<SpielerMatchCBItem> matches = DBManager.instance().getSpieler4Matches(id);
              data[row][COL_MATCHES] = matches.size();
 

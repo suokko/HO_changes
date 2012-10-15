@@ -231,7 +231,7 @@ class InjuryDetailPanel extends JPanel {
         config.setOpaque(false);
         config.setLayout(new GridLayout(4, 3));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("Spieler")));
-        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Alter")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.age")));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.injury.injured")));
         config.add(createPanel(players));
         config.add(createPanel(age));

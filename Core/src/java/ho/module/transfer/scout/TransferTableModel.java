@@ -34,7 +34,7 @@ public class TransferTableModel extends AbstractTableModel {
     /** Array of ToolTip Strings shown in the table header (first row of table) */
     public String[] m_sToolTipStrings =
     {
-    	HOVerwaltung.instance().getLanguageString("ID"),
+    	HOVerwaltung.instance().getLanguageString("ls.player.id"),
         //Name
 	    HOVerwaltung.instance().getLanguageString("ls.player.name"),
 	    //Current price
@@ -43,8 +43,8 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
 	    //Beste Position
 	    HOVerwaltung.instance().getLanguageString("BestePosition"),
-	    //Alter
-	    HOVerwaltung.instance().getLanguageString("Alter"),
+	    //Age
+	    HOVerwaltung.instance().getLanguageString("ls.player.age"),
 	    //TSI
 	    "TSI",
 	    // Homegrown
@@ -52,7 +52,7 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Erfahrung
 	    HOVerwaltung.instance().getLanguageString("Erfahrung"),
 	    //Form
-	    HOVerwaltung.instance().getLanguageString("Form"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.form"),
 	    //Kondition
 	    HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"),
 	    //Loyalty
@@ -120,7 +120,7 @@ public class TransferTableModel extends AbstractTableModel {
     /** Array of Strings shown in the table header (first row of table) */
     protected String[] m_sColumnNames =
     {
-        HOVerwaltung.instance().getLanguageString("ID"),
+        HOVerwaltung.instance().getLanguageString("ls.player.id"),
         //Name
 	    HOVerwaltung.instance().getLanguageString("ls.player.name"),
 	    //Current price
@@ -129,8 +129,8 @@ public class TransferTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("Ablaufdatum"),
 	    //Beste Position
 	    HOVerwaltung.instance().getLanguageString("BestePosition"),
-	    //Alter
-	    HOVerwaltung.instance().getLanguageString("Alter"),
+	    //Age
+	    HOVerwaltung.instance().getLanguageString("ls.player.age"),
 	    //TSI
 	    "TSI",
 	    // Homegrown
@@ -442,7 +442,7 @@ public class TransferTableModel extends AbstractTableModel {
             		+ " ("
             		+ aktuellerSpieler.calcPosValue(aktuellerSpieler.getIdealPosition(), true) + ")",
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
-            //Alter
+            //Age
             m_clData[i][5] = new ColorLabelEntry(aktuellerScoutEintrag.getAlterWithAgeDays(),
             		aktuellerScoutEintrag.getAlterWithAgeDaysAsString(),
             		ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.CENTER);

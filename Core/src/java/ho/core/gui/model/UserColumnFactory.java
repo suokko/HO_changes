@@ -212,7 +212,7 @@ final public class UserColumnFactory {
 		final PlayerSkillColumn[] playerSkillArray = new PlayerSkillColumn[12];
 		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				PlayerSkill.LEADERSHIP);
 		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"skill.experience",			PlayerSkill.EXPERIENCE);
-		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"Form",					PlayerSkill.FORM);
+		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"ls.player.form",					PlayerSkill.FORM);
 		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "ls.player.skill_short.stamina",		"ls.player.skill.stamina",			PlayerSkill.STAMINA);
 		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				PlayerSkill.LOYALTY);
 		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "ls.player.skill_short.keeper",		"ls.player.skill.keeper",				PlayerSkill.KEEPER);
@@ -248,7 +248,7 @@ final public class UserColumnFactory {
 		};
 		playerBasicArray[0].setDisplay(false);
 
-		playerBasicArray[1] = new PlayerColumn(ID,"ID",0){
+		playerBasicArray[1] = new PlayerColumn(ID,"ls.player.id",0){
 			@Override
 			public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 				return new ColorLabelEntry(player.getSpielerID(),
@@ -489,7 +489,7 @@ final public class UserColumnFactory {
 				}
 			};
 
-			playerAdditionalArray[1] =new PlayerColumn(20," ","Nationalitaet",25){
+			playerAdditionalArray[1] =new PlayerColumn(20," ","ls.player.nationality",25){
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					return new ColorLabelEntry(ImageUtilities.getFlagIcon(player.getNationalitaet()),
@@ -499,7 +499,7 @@ final public class UserColumnFactory {
 				}
 			};
 
-			playerAdditionalArray[2] = new PlayerColumn(30, "Alter", 40){
+			playerAdditionalArray[2] = new PlayerColumn(30, "ls.player.age", 40){
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					String ageString = player.getAlterWithAgeDaysAsString();

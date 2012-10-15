@@ -131,7 +131,7 @@ class PlayerTable extends JTable{
 	    		width = 40;
 	    	}
 	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("Gehalt"))
-	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ID"))
+	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.id"))
 					|| columnName.equals("TSI")
 					)
 	    	{

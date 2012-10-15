@@ -34,7 +34,7 @@ import javax.swing.table.TableColumnModel;
 class Spielertabelle extends JTable {
 	private static final long serialVersionUID = 3117625304079832033L;
 
-	public static final String spaltennamen[] = { "Spieler", "Alter",
+	public static final String spaltennamen[] = { "Spieler", "ls.player.age",
 		"Erfahrung", "seit", "Bonus", "SchaetzungMin",
 		"SchaetzungWahrscheinlich", "SchaetzungMax", "WochenBisAufwertung",
 		"ls.match.matchtype.internationalfriendly_cup", "ls.match.matchtype.internationalfriendly_normal", "ls.match.matchtype.hattrickmasters", "ls.match.matchtype.internationalcompetition_normal",

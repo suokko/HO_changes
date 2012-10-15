@@ -36,7 +36,7 @@ class TransferTypeTableModel extends AbstractTableModel {
     TransferTypeTableModel(List<TransferredPlayer> values) {
         super();
 
-        this.colNames[0] = HOVerwaltung.instance().getLanguageString("ID");
+        this.colNames[0] = HOVerwaltung.instance().getLanguageString("ls.player.id");
         this.colNames[1] = HOVerwaltung.instance().getLanguageString("ls.player.name");
         this.colNames[2] = HOVerwaltung.instance().getLanguageString("Type");
         this.colNames[3] = HOVerwaltung.instance().getLanguageString("Income");

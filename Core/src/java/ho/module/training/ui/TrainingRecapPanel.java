@@ -38,7 +38,7 @@ public class TrainingRecapPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7240288702397251461L;
 	private static final int fixedColumns = 3;
@@ -79,7 +79,7 @@ public class TrainingRecapPanel extends JPanel {
         for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
             Spieler player = iter.next();
             StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
-            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings, 
+            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
             		sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
             List<ISkillup> su = ftm.getFutureSkillups();
 
@@ -142,7 +142,7 @@ public class TrainingRecapPanel extends JPanel {
         Vector<String> columns = new Vector<String>();
 
         columns.add(HOVerwaltung.instance().getLanguageString("Spieler")); //$NON-NLS-1$
-        columns.add(HOVerwaltung.instance().getLanguageString("Alter")); //$NON-NLS-1$
+        columns.add(HOVerwaltung.instance().getLanguageString("ls.player.age")); //$NON-NLS-1$
         columns.add("Speed"); //$NON-NLS-1$
 
         int actualSeason =HOVerwaltung.instance().getModel().getBasics().getSeason();
@@ -161,7 +161,7 @@ public class TrainingRecapPanel extends JPanel {
                 }
             }
         } catch (Exception e1) {
-            // Null when first time HO is launched		
+            // Null when first time HO is launched
         }
 
         for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
@@ -174,7 +174,7 @@ public class TrainingRecapPanel extends JPanel {
             columns.add(season + " " + week); //$NON-NLS-1$
         }
 
-        columns.add(HOVerwaltung.instance().getLanguageString("ID")); //$NON-NLS-1$
+        columns.add(HOVerwaltung.instance().getLanguageString("ls.player.id")); //$NON-NLS-1$
 
         return columns;
     }
@@ -225,7 +225,7 @@ public class TrainingRecapPanel extends JPanel {
         panel.add(recapTable, BorderLayout.CENTER);
         recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
 
-        // Add legend panel. 
+        // Add legend panel.
         panel.add(new TrainingLegendPanel(), BorderLayout.SOUTH);
         add(panel, BorderLayout.CENTER);
     }

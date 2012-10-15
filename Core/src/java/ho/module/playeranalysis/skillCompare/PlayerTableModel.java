@@ -141,7 +141,7 @@ class PlayerTableModel extends DefaultTableModel{
 		columnNames[37] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing");
 		columnNames[38] = HOVerwaltung.instance().getLanguageString("Gehalt");
 		columnNames[39] = "TSI";
-		columnNames[40] = HOVerwaltung.instance().getLanguageString("ID");
+		columnNames[40] = HOVerwaltung.instance().getLanguageString("ls.player.id");
 
 		m_anzZeilen = spieler.length;
 

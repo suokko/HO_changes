@@ -52,7 +52,7 @@ public class OutputTableModel extends AbstractTableModel {
 
         //Spaltennamen festlegen
         p_V_columnNames.add(hoV.getLanguageString("Spieler"));
-        p_V_columnNames.add(hoV.getLanguageString("Alter"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.age"));
         p_V_columnNames.add(hoV.getLanguageString("BestePosition"));
         p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.keeper"));
         p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.defending"));
@@ -62,7 +62,7 @@ public class OutputTableModel extends AbstractTableModel {
         p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.scoring"));
         p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.setpieces"));
         p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.stamina"));
-        p_V_columnNames.add(hoV.getLanguageString("ID"));
+        p_V_columnNames.add(hoV.getLanguageString("ls.player.id"));
     }
 
     //~ Methods ------------------------------------------------------------------------------------

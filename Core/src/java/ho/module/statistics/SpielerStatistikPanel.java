@@ -78,7 +78,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                              experienceColor,ho.core.model.UserParameter.instance().statistikErfahrung);
     private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"),
                                                            wingerColor,ho.core.model.UserParameter.instance().statistikFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Form"),
+    private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.form"),
                                                         formColor,ho.core.model.UserParameter.instance().statistikForm);
     private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
     		leadershipColor,ho.core.model.UserParameter.instance().statistikFuehrung);
@@ -190,7 +190,7 @@ class SpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
             ho.core.model.UserParameter.instance().statistikLoyalty = m_jchLoyalty.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
-            m_clStatistikPanel.setShow("Form", m_jchForm.isSelected());
+            m_clStatistikPanel.setShow("ls.player.form", m_jchForm.isSelected());
             ho.core.model.UserParameter.instance().statistikForm = m_jchForm.isSelected();
         } else if (actionEvent.getSource().equals(m_jchKondition.getCheckbox())) {
             m_clStatistikPanel.setShow("ls.player.skill.stamina", m_jchKondition.isSelected());
@@ -584,7 +584,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                    m_jchFuehrung.isSelected(), leadershipColor, format);
                     models[3] = new StatistikModel(statistikWerte[3], "skill.experience",
                                                    m_jchErfahrung.isSelected(), experienceColor, format);
-                    models[4] = new StatistikModel(statistikWerte[4], "Form",
+                    models[4] = new StatistikModel(statistikWerte[4], "ls.player.form",
                                                    m_jchForm.isSelected(), formColor, format);
                     models[5] = new StatistikModel(statistikWerte[5], "ls.player.skill.stamina",
                                                    m_jchKondition.isSelected(), staminaColor, format);

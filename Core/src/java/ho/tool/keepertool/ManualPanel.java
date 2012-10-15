@@ -27,9 +27,9 @@ import javax.swing.SwingConstants;
  * @author draghetto
  */
 class ManualPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = -4449286683961509922L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private JComboBox form = new JComboBox();
@@ -76,7 +76,7 @@ class ManualPanel extends JPanel {
         buttonPanel.add(tsi);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
-        buttonPanel.add(label(ho.core.model.HOVerwaltung.instance().getLanguageString("Form")));
+        buttonPanel.add(label(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.player.form")));
         buttonPanel.add(form);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));

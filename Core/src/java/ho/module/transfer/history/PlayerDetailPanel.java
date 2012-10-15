@@ -121,7 +121,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.name"),
                                    SwingConstants.LEFT), "1, 0"); //$NON-NLS-1$
         detailPanel.add(name, "2, 0"); //$NON-NLS-1$
-        detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Alter"),
+        detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.age"),
                                    SwingConstants.LEFT), "1, 1"); //$NON-NLS-1$
         detailPanel.add(age, "2, 1"); //$NON-NLS-1$
         detailPanel.add(new JLabel(HOVerwaltung.instance().getLanguageString("Income"), SwingConstants.LEFT), "1, 2"); //$NON-NLS-1$ //$NON-NLS-2$

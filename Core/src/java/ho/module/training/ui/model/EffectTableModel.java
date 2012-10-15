@@ -22,7 +22,7 @@ public class EffectTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6647124384624067021L;
 
@@ -52,7 +52,7 @@ public class EffectTableModel extends AbstractTableModel {
         this.colNames[3] = hoV.getLanguageString("AverageTSI"); //$NON-NLS-1$
         this.colNames[4] = hoV.getLanguageString("TSI") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[5] = hoV.getLanguageString("DurchschnittForm"); //$NON-NLS-1$
-        this.colNames[6] = hoV.getLanguageString("Form") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
+        this.colNames[6] = hoV.getLanguageString("ls.player.form") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[7] = hoV.getLanguageString("Skillups"); //$NON-NLS-1$
         this.colNames[8] = hoV.getLanguageString("Skill"); //$NON-NLS-1$
 

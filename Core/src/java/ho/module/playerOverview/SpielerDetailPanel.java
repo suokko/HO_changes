@@ -649,11 +649,11 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(0,0,constraints,layout,panel,label);
         initNormalField(1,0,constraints,layout,panel,m_jpName.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.age"));
         initNormalLabel(0,1,constraints,layout,panel,label);
         initNormalField(1,1,constraints,layout,panel,m_jpAge.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Nationalitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.nationality"));
         initNormalLabel(0,2,constraints,layout,panel,label);
         initNormalField(1,2,constraints,layout,panel,m_jpNationality.getComponent(false));
 
@@ -736,7 +736,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initYellowMainField(1,7,constraints,layout,panel,m_jpExperience.getComponent(false));
         initYellowChangesField(2,7,constraints,layout,panel,m_jpExperienceChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.form"));
         initNormalLabel(4,7,constraints,layout,panel,label);
         initYellowMainField(5,7,constraints,layout,panel,m_jpForm.getComponent(false));
         initYellowChangesField(6,7,constraints,layout,panel,m_jpFormChange.getComponent(false));

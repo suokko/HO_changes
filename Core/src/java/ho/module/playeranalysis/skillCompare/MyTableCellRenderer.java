@@ -265,7 +265,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			label.setBackground(table.getBackground());
 		}
 		else if(table.getColumnName(column).equals("TSI")
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ID"))){
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.id"))){
 			label.setText(value.toString());
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setBackground(table.getBackground());

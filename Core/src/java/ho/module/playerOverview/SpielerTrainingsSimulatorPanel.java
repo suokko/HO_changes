@@ -471,7 +471,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 		eingabenLayout.setConstraints(m_jcbSpeciality, eingabenconstraints);
 		panel.add(m_jcbSpeciality);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.age"));
 		eingabenconstraints.gridx = 3;
 		eingabenconstraints.gridy = 1;
 		eingabenLayout.setConstraints(label, eingabenconstraints);
@@ -501,7 +501,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         eingabenLayout.setConstraints(m_jlErfahrung, eingabenconstraints);
         panel.add(m_jlErfahrung);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.form"));
         eingabenconstraints.gridx = 3;
         eingabenconstraints.gridy = 2;
         eingabenLayout.setConstraints(label, eingabenconstraints);

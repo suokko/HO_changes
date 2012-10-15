@@ -59,9 +59,9 @@ public class PlayerInfoPanel extends JPanel {
         this.setLayout(new GridBagLayout());
 
         //this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        addInfo(HOVerwaltung.instance().getLanguageString("Alter"), ageLabel, 0, 0);
+        addInfo(HOVerwaltung.instance().getLanguageString("ls.player.age"), ageLabel, 0, 0);
         addInfo(HOVerwaltung.instance().getLanguageString("TSI"), tsiLabel, 0, 1);
-        addInfo(HOVerwaltung.instance().getLanguageString("Form"), formLabel, 1, 0);
+        addInfo(HOVerwaltung.instance().getLanguageString("ls.player.form"), formLabel, 1, 0);
         addInfo(HOVerwaltung.instance().getLanguageString("ER"), expLabel, 1, 1);
     }
 

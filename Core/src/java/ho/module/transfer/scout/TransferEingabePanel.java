@@ -561,7 +561,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         panel = new ImagePanel();
         panel.setLayout(new GridLayout(10, 4, 4, 4));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("ID"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.id"));
         panel.add(label);
         jtfPlayerID.setHorizontalAlignment(JLabel.RIGHT);
         jtfPlayerID.addFocusListener(this);
@@ -573,7 +573,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfName.addFocusListener(this);
         panel.add(jtfName);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.age"));
         panel.add(label);
         jtfAge.setHorizontalAlignment(JLabel.RIGHT);
         jtfAge.addFocusListener(this);
@@ -610,7 +610,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jcbExperience.addItemListener(this);
         panel.add(jcbExperience);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.form"));
         panel.add(label);
         jcbForm.addItemListener(this);
         panel.add(jcbForm);

@@ -591,7 +591,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Alter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.age"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 1;
@@ -607,7 +607,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Nationalitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.nationality"));
         constraints.gridx = 0;
         constraints.weightx = 0.0;
         constraints.gridy = 2;
@@ -788,7 +788,7 @@ final class SpielerDetailDialog extends JDialog implements WindowListener {
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Form"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.form"));
         constraints.gridx = 4;
         constraints.weightx = 0.0;
         constraints.gridy = 7;

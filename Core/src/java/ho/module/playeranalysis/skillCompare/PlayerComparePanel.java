@@ -154,7 +154,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		// Set the labels
 		m_L_Experience = new JLabel(hoV.getLanguageString("skill.experience"));
-		m_L_Form = new JLabel(hoV.getLanguageString("Form"));
+		m_L_Form = new JLabel(hoV.getLanguageString("ls.player.form"));
 		m_L_Stamina = new JLabel(hoV.getLanguageString("ls.player.skill.stamina"));
 		m_L_Keeping = new JLabel(hoV.getLanguageString("ls.player.skill.keeper"));
 		m_L_Defending = new JLabel(hoV.getLanguageString("ls.player.skill.defending"));
