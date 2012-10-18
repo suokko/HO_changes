@@ -9,12 +9,14 @@ import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.Matchdetails;
+import ho.core.model.match.Weather;
 import ho.core.util.HOLogger;
 import ho.module.matches.SpielHighlightPanel;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -90,6 +92,7 @@ class SpecialEventsDM {
 			for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter.hasNext();) {
 				MatchKurzInfo element = iter.next();
 				List<List<Object>> v = getMatchlines(element, allMatches);
+
 				if (v != null && v.size() > 0) {
 					for (int j = 0; j < v.size(); j++) {
 						if (j == 0) {
@@ -108,6 +111,57 @@ class SpecialEventsDM {
 			showDebug(e.toString());
 		}
 		return data;
+	}
+
+	List<MatchLine> getLines() {
+		List<MatchLine> lines = new ArrayList<MatchLine>();
+		MatchKurzInfo modelKurzInfos[] = DBManager.instance().getMatchesKurzInfo(
+				HOVerwaltung.instance().getModel().getBasics().getTeamId(), MatchKurzInfo.FINISHED);
+
+		for (MatchKurzInfo matchKurzInfo : modelKurzInfos) {
+			lines.addAll(getMatchLines(matchKurzInfo));
+		}
+
+		return lines;
+	}
+
+	private List<MatchLine> getMatchLines(MatchKurzInfo kurzInfos) {
+		List<MatchLine> matchLines = new ArrayList<MatchLine>();
+
+		// the matchline
+		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
+		Match match = new Match();
+		match.setHostingTeam(kurzInfos.getHeimName());
+		match.setHostingTeamTactic(details.getHomeTacticType());
+		match.setMatchDate(new Date(kurzInfos.getMatchDateAsTimestamp().getTime()));
+		match.setMatchId(kurzInfos.getMatchID());
+		match.setMatchResult(String.valueOf(kurzInfos.getHeimTore()) + " - "
+				+ String.valueOf(kurzInfos.getGastTore()));
+		match.setVisitingTeam(kurzInfos.getGastName());
+		match.setVisitingTeamTactic(details.getGuestTacticType());
+		match.setWeather(Weather.getById(details.getWetterId()));
+
+		List<MatchHighlight> highlights = details.getHighlights();
+		boolean isFirst = true;
+		MatchLine matchLine = new MatchLine();
+		matchLine.setMatch(match);
+		matchLine.setMatchHeaderLine(true);
+		matchLines.add(matchLine);
+
+		for (MatchHighlight highlight : highlights) {
+			if (checkForSE(highlight)) {
+				if (!isFirst) {
+					matchLine = new MatchLine();
+					matchLine.setMatch(match);
+					matchLine.setMatchHeaderLine(false);
+					matchLines.add(matchLine);
+				}
+				matchLine.setMatchHighlight(highlight);
+				isFirst = false;
+			}
+		}
+
+		return matchLines;
 	}
 
 	private List<List<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
@@ -461,7 +515,7 @@ class SpecialEventsDM {
 		return rString;
 	}
 
-	private String getSEText(MatchHighlight highlight) {
+	public static String getSEText(MatchHighlight highlight) {
 
 		if (isWeatherSE(highlight)) {
 			switch (highlight.getHighlightSubTyp()) {
@@ -600,7 +654,7 @@ class SpecialEventsDM {
 		}
 	}
 
-	private String findName(MatchHighlight highlight) {
+	private static String findName(MatchHighlight highlight) {
 		if (isWeatherSE(highlight)) {
 			return highlight.getSpielerName();
 		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
@@ -668,10 +722,10 @@ class SpecialEventsDM {
 		return "?";
 	}
 
-	private String getSpielerName(MatchHighlight highlight) {
+	public static String getSpielerName(MatchHighlight highlight) {
 		String name = "";
 		// if(highlight.getTeamID() == teamId && !isNegativeSE(highlight))
-		if (highlight.getTeamID() == teamId) {
+		if (highlight.getTeamID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 			// Our team has an SE
 			if (!isNegativeSE(highlight)) {
 				name = findName(highlight) + "|*"; // positive SE (our player)

@@ -39,8 +39,8 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		JPanel filterPanel = new FilterPanelNew(filter);
 		specialEventsTable = new SpecialEventsTable(filter);
 		specialEventsTable.getTableHeader().setReorderingAllowed(false);
-		specialEventsTable.setDefaultRenderer(Object.class, new SpecialEventsTableRenderer());
-		specialEventsTable.setModel(new SpecialEventsTableModel());
+//		specialEventsTable.setDefaultRenderer(Object.class, new SpecialEventsTableRenderer());
+		specialEventsTable.setModel(new SpecialEventsTableModelNew());
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHDATECOLUMN)
 				.setPreferredWidth(66);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHIDCOLUMN)
@@ -73,7 +73,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 				.setPreferredWidth(0);
 		specialEventsTable.setRowHeight(20);
 		setTableData();
-		
+
 		JScrollPane matchArea = new JScrollPane(specialEventsTable);
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel, matchArea);
 		splitPane.setDividerSize(5);
@@ -89,9 +89,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
 	private void setTableData() {
 		SpecialEventsDM specialEventsDM = new SpecialEventsDM(this.filter);
-		List<List<Object>> matches = specialEventsDM.holeInfos(
-				!this.filter.isShowMatchesWithSEOnly(), this.filter.getSeasonFilterValue(), true);
 		specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
-		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(matches);
+		((SpecialEventsTableModelNew) specialEventsTable.getModel()).setData(specialEventsDM.getLines());
 	}
 }

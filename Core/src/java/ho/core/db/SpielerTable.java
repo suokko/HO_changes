@@ -588,7 +588,6 @@ final class SpielerTable extends AbstractTable {
             player.setBewertung(rs.getInt("Bewertung"));
             player.setTrainerTyp(rs.getInt("TrainerTyp"));
             player.setTrainer(rs.getInt("Trainer"));
-
             player.setTrikotnummer(rs.getInt("PlayerNumber"));
             player.setTransferlisted(rs.getInt("TransferListed"));
             player.setLaenderspiele(rs.getInt("Caps"));
