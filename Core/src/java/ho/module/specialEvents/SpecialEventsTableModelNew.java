@@ -53,7 +53,7 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 			}
 			break;
 		case HOMEEVENTCOLUMN:
-			break;
+			return line;
 		case HOMETEAMCOLUMN:
 			if (line.isMatchHeaderLine()) {
 				return line.getMatch().getHostingTeam();
@@ -70,7 +70,7 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 			}
 			break;
 		case AWAYEVENTCOLUMN:
-			break;
+			return line;
 		case AWAYTACTICCOLUMN:
 			if (line.isMatchHeaderLine()) {
 				return line.getMatch().getVisitingTeamTactic();
@@ -84,7 +84,7 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 		case CHANCECOLUMN:
 			break;
 		case EVENTTYPCOLUMN:
-			break;
+			return line.getMatchHighlight();
 		case SETEXTCOLUMN:
 			if (line.getMatchHighlight() != null) {
 				return SpecialEventsDM.getSEText(line.getMatchHighlight());

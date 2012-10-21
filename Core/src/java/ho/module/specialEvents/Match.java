@@ -11,6 +11,8 @@ public class Match {
 	private int matchId;
 	private int hostingTeamTactic;
 	private int visitingTeamTactic;
+	private int hostingTeamId;
+	private int visitingTeamId;
 	private Weather weather;
 	private String hostingTeam;
 	private String visitingTeam;
@@ -88,5 +90,20 @@ public class Match {
 	public void setWeather(Weather weather) {
 		this.weather = weather;
 	}
-	
+
+	public int getHostingTeamId() {
+		return hostingTeamId;
+	}
+
+	public void setHostingTeamId(int hostingTeamId) {
+		this.hostingTeamId = hostingTeamId;
+	}
+
+	public int getVisitingTeamId() {
+		return visitingTeamId;
+	}
+
+	public void setVisitingTeamId(int visitingTeamId) {
+		this.visitingTeamId = visitingTeamId;
+	}
 }

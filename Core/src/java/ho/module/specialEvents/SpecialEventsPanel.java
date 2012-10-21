@@ -5,7 +5,6 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 
 import java.awt.BorderLayout;
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,16 +38,23 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		JPanel filterPanel = new FilterPanelNew(filter);
 		specialEventsTable = new SpecialEventsTable(filter);
 		specialEventsTable.getTableHeader().setReorderingAllowed(false);
-//		specialEventsTable.setDefaultRenderer(Object.class, new SpecialEventsTableRenderer());
+		// specialEventsTable.setDefaultRenderer(Object.class, new
+		// SpecialEventsTableRenderer());
 		specialEventsTable.setModel(new SpecialEventsTableModelNew());
+
+		TacticsTableCellRenderer tacticsTableCellRenderer = new TacticsTableCellRenderer();
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHDATECOLUMN)
 				.setPreferredWidth(66);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHIDCOLUMN)
 				.setPreferredWidth(66);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETACTICCOLUMN)
 				.setPreferredWidth(37);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETACTICCOLUMN)
+				.setCellRenderer(tacticsTableCellRenderer);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMEEVENTCOLUMN)
 				.setPreferredWidth(20);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMEEVENTCOLUMN)
+				.setCellRenderer(new SETypeTableCellRenderer(false));
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETEAMCOLUMN)
 				.setPreferredWidth(150);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.RESULTCOLUMN)
@@ -57,14 +63,20 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 				.setPreferredWidth(150);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYEVENTCOLUMN)
 				.setPreferredWidth(20);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYEVENTCOLUMN)
+				.setCellRenderer(new SETypeTableCellRenderer(true));
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYTACTICCOLUMN)
 				.setPreferredWidth(37);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYTACTICCOLUMN)
+				.setCellRenderer(tacticsTableCellRenderer);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MINUTECOLUMN)
 				.setPreferredWidth(27);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.CHANCECOLUMN)
 				.setPreferredWidth(22);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
 				.setPreferredWidth(23);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
+				.setCellRenderer(new EventTypeTableCellRenderer());
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.SETEXTCOLUMN)
 				.setPreferredWidth(270);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.NAMECOLUMN)
@@ -90,6 +102,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 	private void setTableData() {
 		SpecialEventsDM specialEventsDM = new SpecialEventsDM(this.filter);
 		specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
-		((SpecialEventsTableModelNew) specialEventsTable.getModel()).setData(specialEventsDM.getLines());
+		((SpecialEventsTableModelNew) specialEventsTable.getModel()).setData(specialEventsDM
+				.getLines());
 	}
 }

@@ -132,12 +132,14 @@ class SpecialEventsDM {
 		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
 		Match match = new Match();
 		match.setHostingTeam(kurzInfos.getHeimName());
+		match.setHostingTeamId(kurzInfos.getHeimID());
 		match.setHostingTeamTactic(details.getHomeTacticType());
 		match.setMatchDate(new Date(kurzInfos.getMatchDateAsTimestamp().getTime()));
 		match.setMatchId(kurzInfos.getMatchID());
 		match.setMatchResult(String.valueOf(kurzInfos.getHeimTore()) + " - "
 				+ String.valueOf(kurzInfos.getGastTore()));
 		match.setVisitingTeam(kurzInfos.getGastName());
+		match.setVisitingTeamId(kurzInfos.getGastID());
 		match.setVisitingTeamTactic(details.getGuestTacticType());
 		match.setWeather(Weather.getById(details.getWetterId()));
 
@@ -262,7 +264,7 @@ class SpecialEventsDM {
 		return DF.format(date);
 	}
 
-	private ImageIcon getEventTypIcon(MatchHighlight highlight) {
+	public static ImageIcon getEventTypIcon(MatchHighlight highlight) {
 		if (isPositiveWeatherSE(highlight)) {
 			return weatherPositiveIcon;
 		} else if (isNegativeWeatherSE(highlight)) {
@@ -342,7 +344,8 @@ class SpecialEventsDM {
 
 	}
 
-	private ImageIcon getOwnerIcon(MatchHighlight highlight, boolean home, int heimId, int gastId) {
+	public static ImageIcon getOwnerIcon(MatchHighlight highlight, boolean home, int heimId,
+			int gastId) {
 		ImageIcon icon = null;
 		if (home) {
 			// Create home icon
@@ -481,11 +484,11 @@ class SpecialEventsDM {
 		return true;
 	}
 
-	private static boolean isWeatherSE(MatchHighlight highlight) {
+	public static boolean isWeatherSE(MatchHighlight highlight) {
 		return (isPositiveWeatherSE(highlight) || isNegativeWeatherSE(highlight));
 	}
 
-	private static boolean isPositiveWeatherSE(MatchHighlight highlight) {
+	public static boolean isPositiveWeatherSE(MatchHighlight highlight) {
 		if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
 			if (highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY
 					|| highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY) {
@@ -495,7 +498,7 @@ class SpecialEventsDM {
 		return false;
 	}
 
-	private static boolean isNegativeWeatherSE(MatchHighlight highlight) {
+	public static boolean isNegativeWeatherSE(MatchHighlight highlight) {
 		if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_SPEZIAL) {
 			if (highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY
 					|| highlight.getHighlightSubTyp() == IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY
