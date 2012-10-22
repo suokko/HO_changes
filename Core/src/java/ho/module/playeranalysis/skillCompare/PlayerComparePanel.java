@@ -153,7 +153,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		// Set the labels
-		m_L_Experience = new JLabel(hoV.getLanguageString("skill.experience"));
+		m_L_Experience = new JLabel(hoV.getLanguageString("ls.player.experience"));
 		m_L_Form = new JLabel(hoV.getLanguageString("ls.player.form"));
 		m_L_Stamina = new JLabel(hoV.getLanguageString("ls.player.skill.stamina"));
 		m_L_Keeping = new JLabel(hoV.getLanguageString("ls.player.skill.keeper"));
@@ -163,8 +163,8 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_L_Winger = new JLabel(hoV.getLanguageString("ls.player.skill.winger"));
 		m_L_Scoring = new JLabel(hoV.getLanguageString("ls.player.skill.scoring"));
 		m_L_SetPieces = new JLabel(hoV.getLanguageString("ls.player.skill.setpieces"));
-		m_L_Loyalty = new JLabel(hoV.getLanguageString("Loyalty"));
-		m_L_HomeGrown = new JLabel(hoV.getLanguageString("Motherclub"));
+		m_L_Loyalty = new JLabel(hoV.getLanguageString("ls.player.loyalty"));
+		m_L_HomeGrown = new JLabel(hoV.getLanguageString("ls.player.motherclub"));
 
 		// Create table model for top table
 		m_playerTableModelTop = new PlayerTableModel( m_ar_allPlayers, 1);

@@ -72,7 +72,7 @@ class ManualPanel extends JPanel {
         buttonPanel.setLayout(new GridLayout(6, 2));
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));
-        buttonPanel.add(label("TSI"));
+        buttonPanel.add(label(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.player.tsi")));
         buttonPanel.add(tsi);
         buttonPanel.add(label(""));
         buttonPanel.add(label(""));

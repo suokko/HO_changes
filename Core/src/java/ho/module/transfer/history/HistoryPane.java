@@ -51,7 +51,7 @@ public class HistoryPane extends JSplitPane {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5465572622813044852L;
 	private ButtonModel spinSeason;
@@ -121,7 +121,7 @@ public class HistoryPane extends JSplitPane {
             });
 
         rb1.setSelected(true);
-        
+
         rb1.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
                 	JRadioButton button = (JRadioButton)e.getSource();
@@ -143,14 +143,14 @@ public class HistoryPane extends JSplitPane {
 
         JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Menu.refreshData"));
         button.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
-				
+
 				 HOVerwaltung hoV = HOVerwaltung.instance();
-				 int teamId = hoV.getModel().getBasics().getTeamId(); 
+				 int teamId = hoV.getModel().getBasics().getTeamId();
 	            if ( teamId != 0) {
 	                final StringBuffer sBuffer = new StringBuffer();
-	               
+
 	                sBuffer.append(hoV.getLanguageString("UpdConfirmMsg.0"));
 	                sBuffer.append("\n" + hoV.getLanguageString("UpdConfirmMsg.1"));
 	                sBuffer.append("\n" + hoV.getLanguageString("UpdConfirmMsg.2"));
@@ -165,7 +165,7 @@ public class HistoryPane extends JSplitPane {
 	                    try {
 	                        final JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
 	                        waitWindow.setVisible(true);
-	                        
+
 	                        DBManager.instance().reloadTeamTransfers(teamId);
 	                        waitWindow.setVisible(false);
 	                        waitWindow.dispose();
@@ -178,16 +178,16 @@ public class HistoryPane extends JSplitPane {
 	            } else {
 	            	 Helper.showMessage(HOMainFrame.instance(),hoV.getLanguageString("UpdMsg"), "", 1);
 	            }
-				
+
 			}
 		});
-        		
-        		
+
+
         filterPanel.add(button,"1,1,2,1");
         filterPanel.add(rb1, "1, 2"); //$NON-NLS-1$
         filterPanel.add(rb2, "1, 3"); //$NON-NLS-1$
         filterPanel.add(spinner, "2, 3"); //$NON-NLS-1$
-        
+
 
         final ButtonGroup bg = new ButtonGroup();
         bg.add(rb1);
@@ -213,8 +213,8 @@ public class HistoryPane extends JSplitPane {
         amountPanel.add(amountTransfersOut, "5, 2");
 
         pricePanel = new TotalsPanel(hoV.getLanguageString("Price"),
-        		hoV.getModel().getXtraDaten().getCurrencyName()); 
-        tsiPanel = new TotalsPanel(hoV.getLanguageString("TSI")); //$NON-NLS-1$
+        		hoV.getModel().getXtraDaten().getCurrencyName());
+        tsiPanel = new TotalsPanel(hoV.getLanguageString("ls.player.tsi")); //$NON-NLS-1$
 
         sidePanel.add(filterPanel, "0, 0");
         sidePanel.add(new JSeparator(), "0, 2");

@@ -73,41 +73,41 @@ class SpielerStatistikPanel extends ImagePanel
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ImageCheckbox m_jchBewertung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Rating"),
-                                                             ratingColor,ho.core.model.UserParameter.instance().statistikBewertung);
-    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("skill.experience"),
-                                                             experienceColor,ho.core.model.UserParameter.instance().statistikErfahrung);
+    		ratingColor,ho.core.model.UserParameter.instance().statistikBewertung);
+    private ImageCheckbox m_jchErfahrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.experience"),
+    		experienceColor,ho.core.model.UserParameter.instance().statistikErfahrung);
     private ImageCheckbox m_jchFluegel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.winger"),
-                                                           wingerColor,ho.core.model.UserParameter.instance().statistikFluegel);
+    		wingerColor,ho.core.model.UserParameter.instance().statistikFluegel);
     private ImageCheckbox m_jchForm = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.form"),
-                                                        formColor,ho.core.model.UserParameter.instance().statistikForm);
-    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fuehrung"),
+    		formColor,ho.core.model.UserParameter.instance().statistikForm);
+    private ImageCheckbox m_jchFuehrung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.leadership"),
     		leadershipColor,ho.core.model.UserParameter.instance().statistikFuehrung);
-    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Loyalty"),
+    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.loyalty"),
     		loyaltyColor, ho.core.model.UserParameter.instance().statistikLoyalty);
-    private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gehalt"),
-                                                          wageColor,ho.core.model.UserParameter.instance().statistikSpielerFinanzenGehalt);
+    private ImageCheckbox m_jchGehalt = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.wage"),
+    		wageColor,ho.core.model.UserParameter.instance().statistikSpielerFinanzenGehalt);
     private ImageCheckbox m_jchKondition = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"),
-                                                             staminaColor,ho.core.model.UserParameter.instance().statistikKondition);
-    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",marketValueColor,
-                                                             ho.core.model.UserParameter.instance().statistikSpielerFinanzenMarktwert);
+    		staminaColor,ho.core.model.UserParameter.instance().statistikKondition);
+    private ImageCheckbox m_jchMarktwert = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.tsi"),
+    		marketValueColor,ho.core.model.UserParameter.instance().statistikSpielerFinanzenMarktwert);
     private ImageCheckbox m_jchPasspiel = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.passing"),
-                                                            passingColor,ho.core.model.UserParameter.instance().statistikPasspiel);
+    		passingColor,ho.core.model.UserParameter.instance().statistikPasspiel);
     private ImageCheckbox m_jchSpielaufbau = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking"),
-                                                               playmakingColor,ho.core.model.UserParameter.instance().statistikSpielaufbau);
+    		playmakingColor,ho.core.model.UserParameter.instance().statistikSpielaufbau);
     private ImageCheckbox m_jchStandards = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces"),
-                                                             setPiecesColor,ho.core.model.UserParameter.instance().statistikStandards);
+    		setPiecesColor,ho.core.model.UserParameter.instance().statistikStandards);
     private ImageCheckbox m_jchTorschuss = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring"),
-                                                             scoringColor,ho.core.model.UserParameter.instance().statistikTorschuss);
+    		scoringColor,ho.core.model.UserParameter.instance().statistikTorschuss);
     private ImageCheckbox m_jchTorwart = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"),
-                                                           keeperColor,ho.core.model.UserParameter.instance().statistikTorwart);
+    		keeperColor,ho.core.model.UserParameter.instance().statistikTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"),
-                                                               defendingColor,ho.core.model.UserParameter.instance().statistikVerteidigung);
+    		defendingColor,ho.core.model.UserParameter.instance().statistikVerteidigung);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
-                                                        ho.core.model.UserParameter.instance().statistikBeschriftung);
+    		ho.core.model.UserParameter.instance().statistikBeschriftung);
     private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
-                                                      ho.core.model.UserParameter.instance().statistikHilfslinien);
+    		ho.core.model.UserParameter.instance().statistikHilfslinien);
     private JComboBox m_jcbSpieler = new JComboBox();
     private JTextField m_jtfAnzahlHRF = new JTextField(ho.core.model.UserParameter.instance().statistikAnzahlHRF
                                                        + "");
@@ -181,13 +181,13 @@ class SpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
             ho.core.model.UserParameter.instance().statistikBeschriftung = m_jchBeschriftung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchFuehrung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fuehrung", m_jchFuehrung.isSelected());
+            m_clStatistikPanel.setShow("ls.player.leadership", m_jchFuehrung.isSelected());
             ho.core.model.UserParameter.instance().statistikFuehrung = m_jchFuehrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchErfahrung.getCheckbox())) {
-            m_clStatistikPanel.setShow("skill.experience", m_jchErfahrung.isSelected());
+            m_clStatistikPanel.setShow("ls.player.experience", m_jchErfahrung.isSelected());
             ho.core.model.UserParameter.instance().statistikErfahrung = m_jchErfahrung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
-            m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
+            m_clStatistikPanel.setShow("ls.player.loyalty", m_jchLoyalty.isSelected());
             ho.core.model.UserParameter.instance().statistikLoyalty = m_jchLoyalty.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
             m_clStatistikPanel.setShow("ls.player.form", m_jchForm.isSelected());
@@ -224,7 +224,7 @@ class SpielerStatistikPanel extends ImagePanel
             ho.core.model.UserParameter.instance().statistikSpielerFinanzenMarktwert = m_jchMarktwert
                                                                              .isSelected();
         } else if (actionEvent.getSource().equals(m_jchGehalt.getCheckbox())) {
-            m_clStatistikPanel.setShow("Gehalt", m_jchGehalt.isSelected());
+            m_clStatistikPanel.setShow("ls.player.wage", m_jchGehalt.isSelected());
             ho.core.model.UserParameter.instance().statistikSpielerFinanzenGehalt = m_jchGehalt.isSelected();
         }
     }
@@ -578,11 +578,11 @@ class SpielerStatistikPanel extends ImagePanel
                                                    m_jchMarktwert.isSelected(), marketValueColor, format,
                                                    faktor);
                     faktor = 20 / getMaxValue(statistikWerte[1]);
-                    models[1] = new StatistikModel(statistikWerte[1], "Gehalt",
+                    models[1] = new StatistikModel(statistikWerte[1], "ls.player.wage",
                                                    m_jchGehalt.isSelected(), wageColor, format2, faktor);
-                    models[2] = new StatistikModel(statistikWerte[2], "Fuehrung",
+                    models[2] = new StatistikModel(statistikWerte[2], "ls.player.leadership",
                                                    m_jchFuehrung.isSelected(), leadershipColor, format);
-                    models[3] = new StatistikModel(statistikWerte[3], "skill.experience",
+                    models[3] = new StatistikModel(statistikWerte[3], "ls.player.experience",
                                                    m_jchErfahrung.isSelected(), experienceColor, format);
                     models[4] = new StatistikModel(statistikWerte[4], "ls.player.form",
                                                    m_jchForm.isSelected(), formColor, format);
@@ -606,7 +606,7 @@ class SpielerStatistikPanel extends ImagePanel
                                                     m_jchStandards.isSelected(), setPiecesColor, format);
                     models[13] = new StatistikModel(statistikWerte[13], "Rating",
                                                     m_jchBewertung.isSelected(), ratingColor, format);
-                    models[14] = new StatistikModel(statistikWerte[14], "Loyalty",
+                    models[14] = new StatistikModel(statistikWerte[14], "ls.player.loyalty",
                             						m_jchLoyalty.isSelected(), loyaltyColor, format);
                 }
 

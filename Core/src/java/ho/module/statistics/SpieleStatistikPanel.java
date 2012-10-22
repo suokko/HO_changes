@@ -95,10 +95,10 @@ public class SpieleStatistikPanel extends ImagePanel
 			.instance().getLanguageString("rechteAngriffsseite"),rightForwardColor,
 			UserParameter.instance().statistikSpieleRechterAngriff);
 	private ImageCheckbox m_jchSelbstvertrauen = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Selbstvertrauen"), confidenceColor,
+			.instance().getLanguageString("ls.team.confidence"), confidenceColor,
 			UserParameter.instance().statistikSpieleSelbstvertrauen);
 	private ImageCheckbox m_jchStimmung = new ImageCheckbox(HOVerwaltung
-			.instance().getLanguageString("Stimmung"),moodColor,
+			.instance().getLanguageString("ls.team.teamspirit"),moodColor,
 			UserParameter.instance().statistikSpieleStimmung);
 	private ImageCheckbox m_jchHatStats = new ImageCheckbox(HOVerwaltung
 			.instance().getLanguageString("ls.match.ratingtype.hatstats"),hatStatsColor,
@@ -228,16 +228,16 @@ public class SpieleStatistikPanel extends ImagePanel
             UserParameter.instance().statistikSpieleLinkerAngriff = m_jchLinkerAngriff
                                                                         .isSelected();
         } else if (actionEvent.getSource().equals(m_jchStimmung.getCheckbox())) {
-            m_clStatistikPanel.setShow("Stimmung", m_jchStimmung.isSelected());
+            m_clStatistikPanel.setShow("ls.team.teamspirit", m_jchStimmung.isSelected());
             UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
         } else if (actionEvent.getSource().equals(m_jchHatStats.getCheckbox())) {
-            m_clStatistikPanel.setShow("HatStats", m_jchHatStats.isSelected());
+            m_clStatistikPanel.setShow("ls.match.ratingtype.hatstats", m_jchHatStats.isSelected());
             UserParameter.instance().statistikSpieleHatStats = m_jchHatStats.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoddarStats.getCheckbox())) {
-            m_clStatistikPanel.setShow("LoddarStats", m_jchLoddarStats.isSelected());
+            m_clStatistikPanel.setShow("ls.match.ratingtype.loddarstats", m_jchLoddarStats.isSelected());
             UserParameter.instance().statistikSpieleLoddarStats = m_jchLoddarStats.isSelected();
         } else if (actionEvent.getSource().equals(m_jchSelbstvertrauen.getCheckbox())) {
-            m_clStatistikPanel.setShow("Selbstvertrauen", m_jchSelbstvertrauen.isSelected());
+            m_clStatistikPanel.setShow("ls.team.confidence", m_jchSelbstvertrauen.isSelected());
             UserParameter.instance().statistikSpieleSelbstvertrauen = m_jchSelbstvertrauen
                                                                           .isSelected();
         }
@@ -704,17 +704,17 @@ public class SpieleStatistikPanel extends ImagePanel
                                                format);
                 models[8] = new StatistikModel(statistikWerte[8], "Gesamtstaerke",
                                                m_jchGesamt.isSelected(), totalColor, format3);
-                models[9] = new StatistikModel(statistikWerte[9], "Stimmung",
+                models[9] = new StatistikModel(statistikWerte[9], "ls.team.teamspirit",
                                                m_jchStimmung.isSelected(), moodColor, format2);
-                models[10] = new StatistikModel(statistikWerte[10], "Selbstvertrauen",
+                models[10] = new StatistikModel(statistikWerte[10], "ls.team.confidence",
                                                 m_jchSelbstvertrauen.isSelected(), confidenceColor,
                                                 format2);
                 faktor = 20 / getMaxValue(statistikWerte[11]);
-                models[11] = new StatistikModel(statistikWerte[11], "HatStats",
+                models[11] = new StatistikModel(statistikWerte[11], "ls.match.ratingtype.hatstats",
                         m_jchHatStats.isSelected(), hatStatsColor,
                         format2, faktor);
                 faktor = 20 / getMaxValue(statistikWerte[12]);
-                models[12] = new StatistikModel(statistikWerte[12], "LoddarStats",
+                models[12] = new StatistikModel(statistikWerte[12], "ls.match.ratingtype.loddarstats",
                         m_jchLoddarStats.isSelected(), loddarStatsColor,
                         format3, faktor);
             }
@@ -732,7 +732,7 @@ public class SpieleStatistikPanel extends ImagePanel
 
         //Test
         //double[] werte = { 1d, 2d, 1.5d, 3d, 2.5d };
-        //StatistikModel[] model   = { new StatistikModel( werte, "Fuehrung", true, FUEHRUNG ) };
+        //StatistikModel[] model   = { new StatistikModel( werte, "ls.player.leadership", true, FUEHRUNG ) };
         //m_clStatistikPanel.setModel ( model );
     }
 

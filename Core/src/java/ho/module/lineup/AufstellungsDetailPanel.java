@@ -82,9 +82,9 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
 	private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
-	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool"), IMatchDetails.EINSTELLUNG_PIC),
-			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal"), IMatchDetails.EINSTELLUNG_NORMAL),
-			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason"), IMatchDetails.EINSTELLUNG_MOTS) };
+	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool"), IMatchDetails.EINSTELLUNG_PIC),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.normal"), IMatchDetails.EINSTELLUNG_NORMAL),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.matchoftheseason"), IMatchDetails.EINSTELLUNG_MOTS) };
 	private JComboBox m_jcbEinstellung = new JComboBox(EINSTELLUNG);
 
 	private JComboBox m_jcbSelbstvertrauen = new JComboBox(TeamConfidence.ITEMS);
@@ -542,7 +542,12 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         yPos++;
         constraints.gridx = 1;
         constraints.gridy = yPos;
-        constraints.gridwidth = 2;
+        constraints.gridwidth = 1;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
+        m_jcbSelbstvertrauen.setMaximumRowCount(3);
         m_jcbEinstellung.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Einstellung"));
         layout.setConstraints(m_jcbEinstellung, constraints);
         add(m_jcbEinstellung);
@@ -550,7 +555,12 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         yPos++;
         constraints.gridx = 1;
         constraints.gridy = yPos;
-        constraints.gridwidth = 2;
+        constraints.gridwidth = 1;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Taktik")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
+        m_jcbSelbstvertrauen.setMaximumRowCount(7);
         m_jcbTaktik.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Taktik"));
         layout.setConstraints(m_jcbTaktik, constraints);
         add(m_jcbTaktik);
@@ -558,7 +568,12 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         yPos++;
         constraints.gridx = 1;
         constraints.gridy = yPos;
-        constraints.gridwidth = 2;
+        constraints.gridwidth = 1;
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Venue")), yPos);
+        constraints.gridx = 2;
+        constraints.gridy = yPos;
+		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
+        m_jcbSelbstvertrauen.setMaximumRowCount(4);
         m_jcbLocation.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_AufstellungsDetails_Spielort"));
         m_jcbLocation.setOpaque(false);
         layout.setConstraints(m_jcbLocation, constraints);
@@ -568,13 +583,11 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
-
         label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-
         layout.setConstraints(m_jpHatstat.getComponent(false), constraints);
         add(m_jpHatstat.getComponent(false));
 
@@ -582,7 +595,6 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-
         layout.setConstraints(m_jpLoddarstat.getComponent(false), constraints);
         add(m_jpLoddarstat.getComponent(false));
 
@@ -600,7 +612,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         add(m_jpTaktikStaerke.getComponent(false));
 
 		yPos++;
-		initLabel(constraints, layout, new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+		initLabel(constraints, layout, new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit")), yPos);
 		constraints.gridx = 2;
 		constraints.gridy = yPos;
 		m_jcbMainStimmung.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
@@ -609,7 +621,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 		add(m_jcbMainStimmung);
 
 		yPos++;
-		initLabel(constraints, layout, new JLabel("Sub" + HOVerwaltung.instance().getLanguageString("Stimmung")), yPos);
+		initLabel(constraints, layout, new JLabel("Sub" + HOVerwaltung.instance().getLanguageString("ls.team.teamspirit")), yPos);
 		constraints.gridx = 2;
 		constraints.gridy = yPos;
 		m_jcbSubStimmung.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
@@ -618,7 +630,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 		add(m_jcbSubStimmung);
 
         yPos++;
-        initLabel(constraints,layout, new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen")), yPos);
+        initLabel(constraints,layout, new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.confidence")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
@@ -649,8 +661,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         initLabel(constraints, layout, new JLabel(""), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jchPullBackOverride.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("PullBack.Override.ToolTip"));
+        m_jchPullBackOverride.setToolTipText(HOVerwaltung.instance().getLanguageString("PullBack.Override.ToolTip"));
         m_jchPullBackOverride.setOpaque(false);
 		layout.setConstraints(m_jchPullBackOverride, constraints);
 		add(m_jchPullBackOverride);
@@ -659,14 +670,13 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("PredictionType")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
-        m_jcbPredictionType.setPreferredSize(
-        		new Dimension(50, ho.core.util.Helper.calcCellWidth(20)));
+        m_jcbPredictionType.setPreferredSize(new Dimension(50, ho.core.util.Helper.calcCellWidth(20)));
         //m_jcbPredictionType.setMaximumRowCount(3);
          layout.setConstraints(m_jcbPredictionType, constraints);
          add(m_jcbPredictionType);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("DurchschnittErfahrung")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpDurchschnittErfahrung.getComponent(false), constraints);

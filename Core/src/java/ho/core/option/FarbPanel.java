@@ -52,7 +52,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
     	HOVerwaltung hoVerwaltung = HOVerwaltung.instance();
         if (actionEvent.getSource()==bruisedButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("ls.player.injury.bruised"), temp.FG_ANGESCHLAGEN);
+            		hoVerwaltung.getLanguageString("ls.player.injurystatus.bruised"), temp.FG_ANGESCHLAGEN);
 
             if (color != null) {
                 temp.FG_ANGESCHLAGEN = color;
@@ -61,7 +61,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource()==injuredButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("ls.player.injury.injured"),temp.FG_VERLETZT);
+            		hoVerwaltung.getLanguageString("ls.player.injurystatus.injured"),temp.FG_VERLETZT);
 
             if (color != null) {
             	temp.FG_VERLETZT = color;
@@ -70,7 +70,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource()==twoCardsButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("Verwarnt"),temp.FG_ZWEIKARTEN);
+            		hoVerwaltung.getLanguageString("ls.player.warningstatus.twobookings"),temp.FG_ZWEIKARTEN);
 
             if (color != null) {
             	temp.FG_ZWEIKARTEN = color;
@@ -79,7 +79,7 @@ final class FarbPanel extends ImagePanel implements ActionListener {
             }
         } else if (actionEvent.getSource()==redCardButton) {
             Color color = JColorChooser.showDialog(this,
-            		hoVerwaltung.getLanguageString("Gesperrt"),temp.FG_GESPERRT);
+            		hoVerwaltung.getLanguageString("ls.player.warningstatus.suspended"),temp.FG_GESPERRT);
 
             if (color != null) {
             	temp.FG_GESPERRT = color;
@@ -137,16 +137,16 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         themeComboBox.addActionListener(this);
         panel.add(themeComboBox);
 
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injury.bruised"));
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.bruised"));
         addRowPanel(panel,label, bruisedButton, temp.FG_ANGESCHLAGEN);
 
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injury.injured"));
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.injured"));
         addRowPanel(panel,label, injuredButton, temp.FG_VERLETZT);
 
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Verwarnt"));
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.warningstatus.twobookings"));
         addRowPanel(panel,label, twoCardsButton, temp.FG_ZWEIKARTEN);
 
-        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Gesperrt"));
+        label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("ls.player.warningstatus.suspended"));
         addRowPanel(panel,label, redCardButton, temp.FG_GESPERRT);
 
         label = new JLabel("  " + HOVerwaltung.instance().getLanguageString("Transfermarkt"));

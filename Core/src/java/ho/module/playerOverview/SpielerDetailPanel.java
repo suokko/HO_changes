@@ -701,11 +701,11 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initNormalLabel(4,2,constraints,layout,panel,label);
         initNormalField(5,2,constraints,layout,panel,m_jpStatus.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Gehalt"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.wage"));
         initNormalLabel(4,3,constraints,layout,panel,label);
         initNormalField(5,3,constraints,layout,panel,m_jpSalary.getComponent(false));
 
-        label = new JLabel("TSI");
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.tsi"));
         initNormalLabel(4,4,constraints,layout,panel,label);
         initNormalField(5,4,constraints,layout,panel,m_jpTSI.getComponent(false));
 
@@ -731,7 +731,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         panel.add(label);
 
         constraints.gridwidth = 1;
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.experience"));
         initNormalLabel(0,7,constraints,layout,panel,label);
         initYellowMainField(1,7,constraints,layout,panel,m_jpExperience.getComponent(false));
         initYellowChangesField(2,7,constraints,layout,panel,m_jpExperienceChange.getComponent(false));
@@ -781,12 +781,12 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         initYellowMainField(5,11,constraints,layout,panel,m_jpSetPieces.getComponent(false));
         initYellowChangesField(6,11,constraints,layout,panel,m_jpSetPiecesChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Loyalty"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.loyalty"));
         initNormalLabel(0,12,constraints,layout,panel,label);
         initYellowMainField(1,12,constraints,layout,panel,m_jpLoyalty.getComponent(false));
         initYellowChangesField(2,12,constraints,layout,panel,m_jpLoyaltyChange.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.motherclub"));
         initNormalLabel(4,12,constraints,layout,panel,label);
         initNormalField(5,12,constraints,layout,panel,m_jpMotherClub.getComponent(false));
 
@@ -817,7 +817,7 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         panel.add(label);
         constraints.gridheight = 1;
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Fuehrung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.leadership"));
         initNormalLabel(8,0,constraints,layout,panel,label);
         setPosition(constraints,9,0);
         constraints.weightx = 1.0;
@@ -826,19 +826,19 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         layout.setConstraints(component, constraints);
         panel.add(component);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.speciality"));
         initNormalLabel(8,1,constraints,layout,panel,label);
         initNormalField(9,1,constraints,layout,panel,m_jpSpeciality.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Aggressivitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.aggressiveness"));
         initNormalLabel(8,2,constraints,layout,panel,label);
         initNormalField(9,2,constraints,layout,panel,m_jpAggressivity.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Ansehen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.agreeability"));
         initNormalLabel(8,3,constraints,layout,panel,label);
         initNormalField(9,3,constraints,layout,panel,m_jpHonesty.getComponent(false));
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Charakter"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.honesty"));
         initNormalLabel(8,4,constraints,layout,panel,label);
         initNormalField(9,4,constraints,layout,panel,m_jpAgreeability.getComponent(false));
 

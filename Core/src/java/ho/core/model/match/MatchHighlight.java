@@ -327,13 +327,13 @@ public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
         } else if (typ == HIGHLIGHT_INFORMATION) {
         	if ((subtyp == HIGHLIGHT_SUB_PFLASTER)
         			|| (subtyp == HIGHLIGHT_SUB_PFLASTER_BEHANDLUNG)) {
-        		return HOVerwaltung.instance().getLanguageString("ls.player.injury.bruised");
+        		return HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.bruised");
         	} else if ((subtyp == HIGHLIGHT_SUB_VERLETZT_LEICHT)
                    || (subtyp == HIGHLIGHT_SUB_VERLETZT_SCHWER)
                    || (subtyp == HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_EINS)
                    || (subtyp == HIGHLIGHT_SUB_VERLETZT)
                    || (subtyp == HIGHLIGHT_SUB_VERLETZT_KEIN_ERSATZ_ZWEI)) {
-            return HOVerwaltung.instance().getLanguageString("ls.player.injury.injured");
+            return HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.injured");
         	}
         }
 

@@ -20,7 +20,7 @@ class PlayerTransferTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3205025253995412306L;
 
@@ -48,7 +48,7 @@ class PlayerTransferTableModel extends AbstractTableModel {
         this.colNames[4] = ""; //$NON-NLS-1$
         this.colNames[5] = HOVerwaltung.instance().getLanguageString("Seller"); //$NON-NLS-1$
         this.colNames[6] = HOVerwaltung.instance().getLanguageString("Price"); //$NON-NLS-1$
-        this.colNames[7] = "TSI"; //$NON-NLS-1$
+        this.colNames[7] = HOVerwaltung.instance().getLanguageString("ls.player.tsi"); //$NON-NLS-1$
 
         this.values = values;
     }

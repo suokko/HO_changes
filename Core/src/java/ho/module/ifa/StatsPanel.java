@@ -1,12 +1,15 @@
 package ho.module.ifa;
 
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.WorldDetailsManager;
 import ho.core.util.GUIUtils;
 import ho.module.ifa.model.IfaModel;
 import ho.module.ifa.model.ModelChangeListener;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -178,9 +181,10 @@ public class StatsPanel extends JPanel {
 		gbc.gridx = 8;
 		gbc.gridy = 0;
 		gbc.weighty = 1.0;
-		JButton infoButton = new JButton();
-		infoButton.setText(HOVerwaltung.instance().getLanguageString("ifa.infoDialogButton.txt"));
-		add(infoButton, gbc);
+
+	    JButton infoButton = new JButton(ThemeManager.getIcon(HOIconName.INFORMATION));
+	    infoButton.setPreferredSize(new Dimension(28, 28));
+	    add(infoButton, gbc);
 
 		infoButton.addActionListener(new ActionListener() {
 

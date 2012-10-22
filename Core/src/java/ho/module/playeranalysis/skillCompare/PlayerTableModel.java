@@ -107,12 +107,12 @@ class PlayerTableModel extends DefaultTableModel{
 		columnNames[3] = "";
 		columnNames[4] = HOVerwaltung.instance().getLanguageString("BestePosition");
 		columnNames[5] = HOVerwaltung.instance().getLanguageString("Gruppe");
-		columnNames[6] = HOVerwaltung.instance().getLanguageString("MC");
-		columnNames[7] = HOVerwaltung.instance().getLanguageString("FUE");
-		columnNames[8] = HOVerwaltung.instance().getLanguageString("ER");
-		columnNames[9] = HOVerwaltung.instance().getLanguageString("FO");
+		columnNames[6] = HOVerwaltung.instance().getLanguageString("ls.player.short_motherclub");
+		columnNames[7] = HOVerwaltung.instance().getLanguageString("ls.player.short_leadership");
+		columnNames[8] = HOVerwaltung.instance().getLanguageString("ls.player.short_experience");
+		columnNames[9] = HOVerwaltung.instance().getLanguageString("ls.player.short_form");
 		columnNames[10] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina");
-		columnNames[11] = HOVerwaltung.instance().getLanguageString("LOY");
+		columnNames[11] = HOVerwaltung.instance().getLanguageString("ls.player.short_loyalty");
 		columnNames[12] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper");
 		columnNames[13] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending");
 		columnNames[14] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.playmaking");
@@ -139,8 +139,8 @@ class PlayerTableModel extends DefaultTableModel{
 		columnNames[35] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.innermidfieldertowardswing");
 		columnNames[36] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwarddefensive");
 		columnNames[37] = HOVerwaltung.instance().getLanguageString("ls.player.position_short.forwardtowardswing");
-		columnNames[38] = HOVerwaltung.instance().getLanguageString("Gehalt");
-		columnNames[39] = "TSI";
+		columnNames[38] = HOVerwaltung.instance().getLanguageString("ls.player.wage");
+		columnNames[39] = HOVerwaltung.instance().getLanguageString("ls.player.tsi");
 		columnNames[40] = HOVerwaltung.instance().getLanguageString("ls.player.id");
 
 		m_anzZeilen = spieler.length;

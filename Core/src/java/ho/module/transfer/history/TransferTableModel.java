@@ -48,10 +48,10 @@ class TransferTableModel extends AbstractTableModel {
         this.colNames[4] = ""; //$NON-NLS-1$
         this.colNames[5] = HOVerwaltung.instance().getLanguageString("FromTo"); //$NON-NLS-1$
         this.colNames[6] = HOVerwaltung.instance().getLanguageString("Price"); //$NON-NLS-1$
-        this.colNames[7] = HOVerwaltung.instance().getLanguageString("TSI"); //$NON-NLS-1$
-        this.colNames[8] = HOVerwaltung.instance().getLanguageString("FUE");
-        this.colNames[9] = HOVerwaltung.instance().getLanguageString("ER");
-        this.colNames[10] = HOVerwaltung.instance().getLanguageString("FO");
+        this.colNames[7] = HOVerwaltung.instance().getLanguageString("ls.player.tsi"); //$NON-NLS-1$
+        this.colNames[8] = HOVerwaltung.instance().getLanguageString("ls.player.short_leadership");
+        this.colNames[9] = HOVerwaltung.instance().getLanguageString("ls.player.short_experience");
+        this.colNames[10] = HOVerwaltung.instance().getLanguageString("ls.player.short_form");
         this.colNames[11] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina");
         this.colNames[12] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper");
         this.colNames[13] = HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending");

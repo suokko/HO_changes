@@ -113,9 +113,9 @@ class PlayerTable extends JTable{
 	    	{
 	    		width = 175;
 	    	}
-	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("FUE"))
-	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ER"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("FO"))
+	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.short_leadership"))
+	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.short_experience"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.short_form"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending"))
@@ -124,15 +124,15 @@ class PlayerTable extends JTable{
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.winger"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.scoring"))
 					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.setpieces"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("LOY"))
-					|| columnName.equals(HOVerwaltung.instance().getLanguageString("MC"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.short_loyalty"))
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.short_motherclub"))
 					)
 	    	{
 	    		width = 40;
 	    	}
-	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("Gehalt"))
+	    	else if(columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.wage"))
 	    			|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.id"))
-					|| columnName.equals("TSI")
+					|| columnName.equals(HOVerwaltung.instance().getLanguageString("ls.player.tsi"))
 					)
 	    	{
 	    		width = 80;

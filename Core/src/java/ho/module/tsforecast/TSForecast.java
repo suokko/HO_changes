@@ -405,29 +405,29 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		ModuleConfig config = ModuleConfig.instance();
 		createCurves();
 
-		m_jtHistory = new CheckBox(HOVerwaltung.instance().getLanguageString(
-				"HistoryCurve"), m_History.getColor(),
+		m_jtHistory = new CheckBox(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit"),
+				m_History.getColor(),
 				config.getBoolean(TS_HISTORY));
 		m_jtHistory.setAlignmentX(0.0F);
 		m_jtHistory.addItemListener(this);
 		jpanel.add(m_jtHistory);
 
-		m_jtConfidence = new CheckBox(HOVerwaltung.instance()
-				.getLanguageString("Selbstvertrauen"), m_Confidence.getColor(),
+		m_jtConfidence = new CheckBox(HOVerwaltung.instance().getLanguageString("ls.team.confidence"),
+				m_Confidence.getColor(),
 				config.getBoolean(TS_CONFIDENCE));
 		m_jtConfidence.setAlignmentX(0.0F);
 		m_jtConfidence.addItemListener(this);
 		jpanel.add(m_jtConfidence);
 
-		m_jtLoepiHist = new CheckBox(HOVerwaltung.instance().getLanguageString(
-				"LoepiCurve"), m_LoepiHist.getColor(),
+		m_jtLoepiHist = new CheckBox(HOVerwaltung.instance().getLanguageString("LoepiCurve"),
+				m_LoepiHist.getColor(),
 				config.getBoolean(TS_LOEPIHISTORY));
 		m_jtLoepiHist.setAlignmentX(0.0F);
 		m_jtLoepiHist.addItemListener(this);
 		jpanel.add(m_jtLoepiHist);
 
-		m_jtLoepiFore = new CheckBox(HOVerwaltung.instance().getLanguageString(
-				"TSForecast"), m_LoepiForecast.getColor(),
+		m_jtLoepiFore = new CheckBox(HOVerwaltung.instance().getLanguageString("TSForecast"),
+				m_LoepiForecast.getColor(),
 				config.getBoolean(TS_LOEPIFORECAST));
 		m_jtLoepiFore.setAlignmentX(0.0F);
 		m_jtLoepiFore.addItemListener(this);

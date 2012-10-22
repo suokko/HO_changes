@@ -100,13 +100,13 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     public static String getNameForEinstellung(int einstellung) {
         switch (einstellung) {
             case EINSTELLUNG_PIC:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool");
 
             case EINSTELLUNG_NORMAL:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.normal");
 
             case EINSTELLUNG_MOTS:
-                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
+                return ho.core.model.HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.matchoftheseason");
 
             default:
                 return ho.core.model.HOVerwaltung.instance().getLanguageString("Unbestimmt");

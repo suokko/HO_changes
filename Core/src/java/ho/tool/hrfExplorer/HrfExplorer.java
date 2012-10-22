@@ -348,9 +348,9 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Ar_Detail_Label_fix[4] = hoV.getLanguageString("Training");
         m_Ar_Detail_Label_fix[5] = hoV.getLanguageString("Intensitaet");
         m_Ar_Detail_Label_fix[6] = hoV.getLanguageString("ls.club.staff.assistantcoaches");
-        m_Ar_Detail_Label_fix[7] = hoV.getLanguageString("Selbstvertrauen");
+        m_Ar_Detail_Label_fix[7] = hoV.getLanguageString("ls.team.confidence");
         m_Ar_Detail_Label_fix[8] = hoV.getLanguageString("AnzahlSpieler");
-        m_Ar_Detail_Label_fix[9] =hoV.getLanguageString("Stimmung");
+        m_Ar_Detail_Label_fix[9] =hoV.getLanguageString("ls.team.teamspirit");
 		m_Ar_Detail_Label_fix[10] = hoV.getLanguageString("lasthrf");
 		m_Ar_Detail_Label_fix[11] = hoV.getLanguageString("nexthrf");
 

@@ -118,4 +118,5 @@ public interface HOIconName {
 	public static final String ARROW_MOVE = "arrow_move";
 	public static final String SUBSTITUTION = "substitution";
 	public static final String IFA_VISITED  = "ifa_visited";
+	public static final String INFORMATION  = "information";
 }

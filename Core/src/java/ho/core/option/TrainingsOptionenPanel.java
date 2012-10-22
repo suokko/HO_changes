@@ -116,7 +116,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         		WeeklyTrainingType.OSMOSIS_BASE_PERCENTAGE, UserParameter.temp().TRAINING_OFFSET_OSMOSIS, this);
         add(m_jtapOsmosis);
 
-        m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorSpieleralter"),
+        m_tapAgeFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.player.age"),
         		WeeklyTrainingType.BASE_AGE_FACTOR, UserParameter.temp().TRAINING_OFFSET_AGE, this);
         add(m_tapAgeFactor);
 

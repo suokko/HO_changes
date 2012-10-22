@@ -317,7 +317,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         add(panel,m_clGastTeamLoddar,layout,constraints,4,7);
 
         //Einstellung
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Einstellung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude"));
         add(panel,label,layout,constraints,0,8);
         add(panel,m_clHeimEinstellung,layout,constraints,1,8);
         add(panel,m_clGastEinstellung,layout,constraints,4,8);
@@ -335,13 +335,13 @@ class StaerkenvergleichPanel extends ImagePanel {
         add(panel,m_clGastTaktikskill,layout,constraints,4,10);
 
         //Stimmung
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Stimmung"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit"));
         add(panel,label,layout,constraints,0,11);
         add(panel,m_clHeimStimmung,layout,constraints,1,11);
         add(panel,m_clGastStimmung,layout,constraints,4,11);
 
         //Selbstvertrauen
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Selbstvertrauen"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.confidence"));
         label.setPreferredSize(new Dimension(label.getPreferredSize().width + 10,
                                              label.getPreferredSize().height));
         add(panel,label,layout,constraints,0,12);
@@ -516,15 +516,15 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             switch (details.getHomeEinstellung()) {
                 case IMatchDetails.EINSTELLUNG_NORMAL:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.normal");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_PIC:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_MOTS:
-                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
+                    heimEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.matchoftheseason");
                     break;
 
                 default:
@@ -533,15 +533,15 @@ class StaerkenvergleichPanel extends ImagePanel {
 
             switch (details.getGuestEinstellung()) {
                 case IMatchDetails.EINSTELLUNG_NORMAL:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.normal");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.normal");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_PIC:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool");
                     break;
 
                 case IMatchDetails.EINSTELLUNG_MOTS:
-                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.attitude.matchoftheseason");
+                    gastEinstellung = HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.matchoftheseason");
                     break;
 
                 default:

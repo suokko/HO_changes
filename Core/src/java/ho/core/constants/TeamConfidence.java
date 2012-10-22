@@ -17,16 +17,16 @@ public class TeamConfidence {
 	public static final int COMPLETELY_EXAGGERATED 	= 9;
 
 	public static CBItem[] ITEMS = {
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.non-existent"), NON_EXISTENT),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.disastrous"), DISASTROUS),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.wretched"), WRETCHED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.poor"), POOR),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.decent"), DECENT),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.strong"), STRONG),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.wonderful"), WONDERFUL),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.slightlyexaggerated"), SLIGHTLY_EXAGGERATED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.exaggerated"), EXAGGERATED),
-		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamconfidence.completelyexaggerated"), COMPLETELY_EXAGGERATED)
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.non-existent"), NON_EXISTENT),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.disastrous"), DISASTROUS),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.wretched"), WRETCHED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.poor"), POOR),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.decent"), DECENT),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.strong"), STRONG),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.wonderful"), WONDERFUL),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.slightlyexaggerated"), SLIGHTLY_EXAGGERATED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.exaggerated"), EXAGGERATED),
+		new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.confidence.completelyexaggerated"), COMPLETELY_EXAGGERATED)
 	};
 
 

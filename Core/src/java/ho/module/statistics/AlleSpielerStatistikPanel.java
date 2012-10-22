@@ -68,15 +68,15 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     //~ Instance fields ----------------------------------------------------------------------------
     private UserParameter gup = ho.core.model.UserParameter.instance();
     private HOVerwaltung hov = HOVerwaltung.instance();
-    private ImageCheckbox m_jchExperience = new ImageCheckbox(hov.getLanguageString("skill.experience"),
+    private ImageCheckbox m_jchExperience = new ImageCheckbox(hov.getLanguageString("DurchschnittErfahrung"),
     		experienceColor, gup.statistikAlleErfahrung);
     private ImageCheckbox m_jchWinger = new ImageCheckbox(hov.getLanguageString("ls.player.skill.winger"),
     		wingerColor, gup.statistikAlleFluegel);
-    private ImageCheckbox m_jchForm = new ImageCheckbox(hov.getLanguageString("ls.player.form"),
+    private ImageCheckbox m_jchForm = new ImageCheckbox(hov.getLanguageString("DurchschnittForm"),
     		formColor, gup.statistikAlleForm);
-    private ImageCheckbox m_jchLeadership = new ImageCheckbox(hov.getLanguageString("Fuehrung"),
+    private ImageCheckbox m_jchLeadership = new ImageCheckbox(hov.getLanguageString("ls.player.leadership"),
     		leadershipColor, gup.statistikAlleFuehrung);
-    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(hov.getLanguageString("Loyalty"),
+    private ImageCheckbox m_jchLoyalty = new ImageCheckbox(hov.getLanguageString("ls.player.loyalty"),
     		loyaltyColor, gup.statistikAllLoyalty);
     private ImageCheckbox m_jchStamina = new ImageCheckbox(hov.getLanguageString("ls.player.skill.stamina"),
     		staminaColor, gup.statistikAlleKondition);
@@ -92,8 +92,9 @@ public class AlleSpielerStatistikPanel extends ImagePanel
     		keeperColor,gup.statistikAlleTorwart);
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(hov.getLanguageString("ls.player.skill.defending"),
     		defendingColor,gup.statistikAlleVerteidigung);
-    private ImageCheckbox m_jchTSI = new ImageCheckbox("TSI", TSIColor, gup.statistikAllTSI);
-    private ImageCheckbox m_jchWages = new ImageCheckbox(hov.getLanguageString("Gehalt"),
+    private ImageCheckbox m_jchTSI = new ImageCheckbox(hov.getLanguageString("AverageTSI"),
+    		TSIColor, gup.statistikAllTSI);
+    private ImageCheckbox m_jchWages = new ImageCheckbox(hov.getLanguageString("ls.player.wage"),
     		wageColor,gup.statistikAllWages);
 
 
@@ -146,25 +147,25 @@ public class AlleSpielerStatistikPanel extends ImagePanel
             m_clStatistikPanel.setBeschriftung(m_jchInscription.isSelected());
             gup.statistikAlleBeschriftung = m_jchInscription.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLeadership.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fuehrung", m_jchLeadership.isSelected());
+            m_clStatistikPanel.setShow("ls.player.leadership", m_jchLeadership.isSelected());
             gup.statistikAlleFuehrung = m_jchLeadership.isSelected();
         } else if (actionEvent.getSource().equals(m_jchTSI.getCheckbox())) {
             m_clStatistikPanel.setShow("Marktwert", m_jchTSI.isSelected());
             gup.statistikAllTSI = m_jchTSI.isSelected();
         } else if (actionEvent.getSource().equals(m_jchWages.getCheckbox())) {
-            m_clStatistikPanel.setShow("Gehalt", m_jchWages.isSelected());
+            m_clStatistikPanel.setShow("ls.player.wage", m_jchWages.isSelected());
             gup.statistikAllWages = m_jchWages.isSelected();
         } else if (actionEvent.getSource().equals(m_jchExperience.getCheckbox())) {
-            m_clStatistikPanel.setShow("skill.experience", m_jchExperience.isSelected());
+            m_clStatistikPanel.setShow("DurchschnittErfahrung", m_jchExperience.isSelected());
             gup.statistikAlleErfahrung = m_jchExperience.isSelected();
         } else if (actionEvent.getSource().equals(m_jchForm.getCheckbox())) {
-            m_clStatistikPanel.setShow("ls.player.form", m_jchForm.isSelected());
+            m_clStatistikPanel.setShow("DurchschnittForm", m_jchForm.isSelected());
             gup.statistikAlleForm = m_jchForm.isSelected();
         } else if (actionEvent.getSource().equals(m_jchStamina.getCheckbox())) {
             m_clStatistikPanel.setShow("ls.player.skill.stamina", m_jchStamina.isSelected());
             gup.statistikAlleKondition = m_jchStamina.isSelected();
         } else if (actionEvent.getSource().equals(m_jchLoyalty.getCheckbox())) {
-            m_clStatistikPanel.setShow("Loyalty", m_jchLoyalty.isSelected());
+            m_clStatistikPanel.setShow("ls.player.loyalty", m_jchLoyalty.isSelected());
             gup.statistikAllLoyalty = m_jchLoyalty.isSelected();
         } else if (actionEvent.getSource().equals(m_jchKeeper.getCheckbox())) {
             m_clStatistikPanel.setShow("ls.player.skill.keeper", m_jchKeeper.isSelected());
@@ -385,11 +386,11 @@ public class AlleSpielerStatistikPanel extends ImagePanel
 
             //There are 14 values
             if (statistikWerte.length > 0) {
-            	models[0] = new StatistikModel(statistikWerte[0], "Fuehrung",
+            	models[0] = new StatistikModel(statistikWerte[0], "ls.player.leadership",
                                                m_jchLeadership.isSelected(), leadershipColor, format);
-                models[1] = new StatistikModel(statistikWerte[1], "skill.experience",
+                models[1] = new StatistikModel(statistikWerte[1], "DurchschnittErfahrung",
                                                m_jchExperience.isSelected(), experienceColor, format);
-                models[2] = new StatistikModel(statistikWerte[2], "ls.player.form", m_jchForm.isSelected(),
+                models[2] = new StatistikModel(statistikWerte[2], "DurchschnittForm", m_jchForm.isSelected(),
                                                formColor, format);
                 models[3] = new StatistikModel(statistikWerte[3], "ls.player.skill.stamina",
                                                m_jchStamina.isSelected(), staminaColor, format);
@@ -407,13 +408,13 @@ public class AlleSpielerStatistikPanel extends ImagePanel
                                                m_jchScoring.isSelected(), scoringColor, format);
                 models[10] = new StatistikModel(statistikWerte[10], "ls.player.skill.setpieces",
                                                 m_jchSetPieces.isSelected(), setPiecesColor, format);
-                models[11] = new StatistikModel(statistikWerte[11], "Loyalty",
+                models[11] = new StatistikModel(statistikWerte[11], "ls.player.loyalty",
                         						m_jchLoyalty.isSelected(), loyaltyColor, format);
                 double faktor = 20 / getMaxValue(statistikWerte[12]);
                 models[12] = new StatistikModel(statistikWerte[12], "Marktwert",
 						m_jchTSI.isSelected(), TSIColor, format, faktor);
                 faktor = 20 / getMaxValue(statistikWerte[13]);
-                models[13] = new StatistikModel(statistikWerte[13], "Gehalt",
+                models[13] = new StatistikModel(statistikWerte[13], "ls.player.wage",
 						m_jchTSI.isSelected(), wageColor, format2, faktor);
             }
 

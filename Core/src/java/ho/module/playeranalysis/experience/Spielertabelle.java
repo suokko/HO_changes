@@ -35,7 +35,7 @@ class Spielertabelle extends JTable {
 	private static final long serialVersionUID = 3117625304079832033L;
 
 	public static final String spaltennamen[] = { "Spieler", "ls.player.age",
-		"Erfahrung", "seit", "Bonus", "SchaetzungMin",
+		"ls.player.experience", "seit", "Bonus", "SchaetzungMin",
 		"SchaetzungWahrscheinlich", "SchaetzungMax", "WochenBisAufwertung",
 		"ls.match.matchtype.internationalfriendly_cup", "ls.match.matchtype.internationalfriendly_normal", "ls.match.matchtype.hattrickmasters", "ls.match.matchtype.internationalcompetition_normal",
 		"ls.match.matchtype.nationalteamscompetition_cup", "ls.match.matchtype.nationalteamscompetition_normal", "ls.match.matchtype.league", "ls.match.matchtype.cup",

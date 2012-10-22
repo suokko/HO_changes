@@ -22,7 +22,7 @@ public class ChangesTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -9082549798814304017L;
 	private List<SkillChange> values;
@@ -41,7 +41,7 @@ public class ChangesTableModel extends AbstractTableModel {
         this.colNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$
         this.colNames[1] = hoV.getLanguageString("Season"); //$NON-NLS-1$
         this.colNames[2] = hoV.getLanguageString("Spieler"); //$NON-NLS-1$
-        this.colNames[3] = hoV.getLanguageString("Skill"); //$NON-NLS-1$
+        this.colNames[3] = hoV.getLanguageString("ls.player.skill"); //$NON-NLS-1$
         this.colNames[4] = hoV.getLanguageString("TO"); //$NON-NLS-1$
         this.colNames[5] = "isOld"; //$NON-NLS-1$
         this.colNames[6] = "playerId"; //$NON-NLS-1$

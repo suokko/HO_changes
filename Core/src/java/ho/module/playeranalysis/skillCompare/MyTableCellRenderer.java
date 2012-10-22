@@ -103,7 +103,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			float tmpFloat =Helper.round((((Float)table.getValueAt(row,column)).floatValue() - tmpPos)*100,UserParameter.instance().anzahlNachkommastellen);
 			label.setText(SpielerPosition.getNameForPosition(tmpPos) + " ("+ tmpFloat +")");
 			label.setBackground(table.getBackground());
-		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("MC"))) {
+		} else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_motherclub"))) {
 			double skillwert = 0;
 			String skillwertS = "";
 			try	{
@@ -127,9 +127,9 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			else
 				label.setBackground(table.getBackground());
 		}
-		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ER"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FUE"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FO"))
+		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_experience"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_leadership"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_form"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.defending"))
@@ -138,7 +138,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.winger"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.scoring"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.skill_short.setpieces"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("LOY"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_loyalty"))
 				)
 		{
 			double skillwert = 0;
@@ -157,9 +157,9 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			Icon ii =  ImageUtilities.getImageIcon4Veraenderung(changeWert,true);
 			label = new JLabel(""+skillWertNew,ii,SwingConstants.CENTER);
 			label.setHorizontalTextPosition(SwingConstants.LEADING);
-			if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ER"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FUE"))
-				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("FO"))
+			if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_experience"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_leadership"))
+				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.short_form"))
 				)
 			{
 				label.setBackground(gruen);
@@ -256,7 +256,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 
 			label.validate();
 		}
-		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("Gehalt")))	{
+		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.wage")))	{
 			XtraData extraData = HOVerwaltung.instance().getModel().getXtraDaten();
 			String curr = "" + df.format(Double.parseDouble(value.toString())) + " " + extraData.getCurrencyName();
 			label.setText(curr);
@@ -264,7 +264,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setBackground(table.getBackground());
 		}
-		else if(table.getColumnName(column).equals("TSI")
+		else if(table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.tsi"))
 				|| table.getColumnName(column).equals(HOVerwaltung.instance().getLanguageString("ls.player.id"))){
 			label.setText(value.toString());
 			label.setHorizontalAlignment(SwingConstants.RIGHT);

@@ -586,7 +586,7 @@ public class PenaltyTakersView extends JPanel {
 			this.columnNames = new String[6];
 			this.columnNames[0] = "";
 			this.columnNames[1] = getLangStr("ls.player.name");
-			this.columnNames[2] = getLangStr("skill.experience");
+			this.columnNames[2] = getLangStr("ls.player.experience");
 			this.columnNames[3] = getLangStr("ls.player.skill.setpieces");
 			this.columnNames[4] = getLangStr("ls.player.skill.scoring");
 			this.columnNames[5] = getLangStr("lineup.penaltytakers.colheadline.ability");

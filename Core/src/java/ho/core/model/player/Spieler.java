@@ -82,7 +82,7 @@ public final class Spieler {
 
     /** Verteidigung */
     private double m_dSubVerteidigung;
-   
+
     /** Agressivität */
     private int m_iAgressivitaet;
 
@@ -121,7 +121,7 @@ public final class Spieler {
 
     /** Hattricks */
     private int m_iHattrick;
-    
+
     /** Home Grown */
     private boolean m_bHomeGrown = false;
 
@@ -167,7 +167,7 @@ public final class Spieler {
 
     /** Standards */
     private int m_iStandards = 1;
-    
+
     /** Tore Freundschaftspiel */
     private int m_iToreFreund;
 
@@ -240,7 +240,7 @@ public final class Spieler {
       throws Exception
     {
     	// Separate first, nick and last names are available. Utilize them?
-    	
+
         m_iSpielerID = Integer.parseInt(properties.getProperty("id", "0"));
         m_sName = properties.getProperty("name", "");
         m_iAlter = Integer.parseInt(properties.getProperty("ald", "0"));
@@ -449,14 +449,14 @@ public final class Spieler {
     	StringBuffer ret = new StringBuffer();
     	ret.append(years);
     	ret.append(" ");
-    	ret.append(HOVerwaltung.instance().getLanguageString("age.years"));
+    	ret.append(HOVerwaltung.instance().getLanguageString("ls.player.age.years"));
     	ret.append(" ");
     	ret.append(days);
     	ret.append(" ");
-    	ret.append(HOVerwaltung.instance().getLanguageString("age.days"));
+    	ret.append(HOVerwaltung.instance().getLanguageString("ls.player.age.days"));
     	if (birthday) {
     		ret.append(" (");
-    		ret.append(HOVerwaltung.instance().getLanguageString("age.birthday"));
+    		ret.append(HOVerwaltung.instance().getLanguageString("ls.player.age.birthday"));
     		ret.append(")");
     	}
     	return ret.toString();
@@ -710,8 +710,8 @@ public final class Spieler {
     public boolean isHomeGrown() {
     	return m_bHomeGrown;
     }
-    
-    
+
+
     /**
      * TODO Missing Method Documentation
      *
@@ -850,7 +850,7 @@ public final class Spieler {
         return m_iLastBewertung;
     }
 
-    
+
     /**
      * Returns the loyalty stat
      *
@@ -859,7 +859,7 @@ public final class Spieler {
     public int getLoyalty() {
     	return m_iLoyalty;
     }
-    
+
     /**
      * Sets the loyalty stat
      *
@@ -868,8 +868,8 @@ public final class Spieler {
     public void  setLoyalty(int loy) {
     	m_iLoyalty = loy;
     }
-    
-    
+
+
     /**
      * Setter for property m_sManuellerSmilie.
      *
@@ -1194,7 +1194,7 @@ public final class Spieler {
                 break;
         }
     }
-    
+
     /**
      * Setter for property m_sTeamInfoSmilie.
      *
@@ -1513,7 +1513,7 @@ public final class Spieler {
 
             case PlayerSkill.LEADERSHIP:
                 return m_iFuehrung;
-                
+
             case PlayerSkill.LOYALTY:
             	return m_iLoyalty;
 
@@ -1573,13 +1573,13 @@ public final class Spieler {
 			case PlayerSkill.LEADERSHIP:
 				setFuehrung(value);
 				break;
-				
+
 			case PlayerSkill.LOYALTY:
 				setLoyalty(value);
 		}
 	}
 
-	
+
     /**
      * Setter for property m_iVerletzt.
      *
@@ -1703,31 +1703,31 @@ public final class Spieler {
         incrementSubskills(originalPlayer, assistants, trainerlevel, intensity, stamina,
                 wt.getSecondaryTrainingSkill(), tp.getSecondary(), wt);
     }
-    
-    
+
+
     /**
      * Performs skill drops on the player based on age and skills
-     * 
+     *
      * @param originalPlayer The player as he was before this week. Used to find a subskill to drop from.
      * @param weeks The number of weeks to drop in case of missing info.
      */
-    
+
     public void performSkilldrop(Spieler originalPlayer, int weeks) {
 
     	if (originalPlayer == null) {
     		return;
     	}
-    	
+
     	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
-    		
-    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+
+    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) {
     			continue;
     		}
 
    			if (getValue4Skill4(skillType) >= 1) {
     			float drop = weeks * SkillDrops.instance().getSkillDrop(getValue4Skill4(skillType), originalPlayer.getAlter(), skillType);
-	    		
-    			// Only bother if there is drop, there is something to drop from, 
+
+    			// Only bother if there is drop, there is something to drop from,
     			//and check that the player has not popped
 	    		if ((drop > 0) && (originalPlayer.getSubskill4PosAccurate(skillType) >0)
 	    				&& (getValue4Skill4(skillType) == originalPlayer.getValue4Skill4(skillType))) {
@@ -1767,9 +1767,9 @@ public final class Spieler {
          * (calling RPM.calcPlayerStrength() is quite expensive and
          * this method is used very often)
          */
-        
+
         float loy = RatingPredictionManager.getLoyaltyHomegrownBonus(this);
-        
+
         String key = fo.getPosition() + ":"
         					+ Helper.round(getTorwart() + getSubskill4Pos(PlayerSkill.KEEPER) + loy, 2) + "|"
         					+ Helper.round(getSpielaufbau() + getSubskill4Pos(PlayerSkill.PLAYMAKING) + loy, 2) + "|"
@@ -1850,11 +1850,11 @@ public final class Spieler {
      */
     public void copySubSkills(Spieler old) {
     	for (int skillType=0; skillType < PlayerSkill.EXPERIENCE; skillType++) {
-    		
-    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) { 
+
+    		if ((skillType == PlayerSkill.FORM) || (skillType == PlayerSkill.STAMINA)) {
     			continue;
     		}
-    	
+
     		if (!check4SkillUp(skillType, old)) {
     			setSubskill4Pos(skillType, old.getSubskill4PosAccurate(skillType));
     		} else {
@@ -1862,36 +1862,36 @@ public final class Spieler {
     		}
     	}
     }
-    
+
     /**
      * Copy the skills of old player.
      * Used by training
-     * 
+     *
      * @param old
      */
     public void copySkills(Spieler old) {
-    	
+
     	for (int skillType=0; skillType <= PlayerSkill.LOYALTY; skillType++) {
     		setValue4Skill4(skillType, old.getValue4Skill4(skillType));
     	}
     }
-        
-    
+
+
     /**
      * Performs the subskill reset needed at skill drop.
-     * 
+     *
      * @param SkillType The ID of the skill to perform drop on.
      */
     public void dropSubskills(int skillType) {
     	if (getValue4Skill4(skillType) > 0) {
 			// non-existent has no subskill.
-			setSubskill4Pos(skillType, 0.999f); 
-			
+			setSubskill4Pos(skillType, 0.999f);
+
 		} else {
 			setSubskill4Pos(skillType, 0);
 		}
 	}
-    
+
 
     //////////////////////////////////////////////////////////////////////////////////
     //equals
@@ -1916,7 +1916,7 @@ public final class Spieler {
      * @return TODO Missing Return Method Documentation
      */
     protected boolean check4SkillUp(int skill, Spieler oldPlayer) {
-    	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) 
+    	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0))
         	return oldPlayer.getValue4Skill4(skill) < getValue4Skill4(skill);
         return false;
     }
@@ -1931,11 +1931,11 @@ public final class Spieler {
      */
     public boolean check4SkillDown(int skill, Spieler oldPlayer) {
     	if (skill < PlayerSkill.EXPERIENCE)
-    	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0)) 
+    	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0))
         	return oldPlayer.getValue4Skill4(skill) > getValue4Skill4(skill);
         return false;
     }
-    
+
     /**
      * Does this player have a training block?
      * @return training block

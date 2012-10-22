@@ -220,9 +220,9 @@ class InjuryDetailPanel extends JPanel {
      * Initialize the GUI components
      */
     private void init() {
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.healthy"));
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.bruised"));
-        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injury.injured"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.healthy"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.bruised"));
+        injuryType.addItem(HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.injured"));
 
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -232,11 +232,11 @@ class InjuryDetailPanel extends JPanel {
         config.setLayout(new GridLayout(4, 3));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("Spieler")));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.age")));
-        config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.injury.injured")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.injurystatus.injured")));
         config.add(createPanel(players));
         config.add(createPanel(age));
         config.add(createPanel(injury));
-        config.add(createLabel(HOVerwaltung.instance().getLanguageString("Status")));
+        config.add(createLabel(HOVerwaltung.instance().getLanguageString("ls.player.injurystatus")));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("TSIPre")));
         config.add(createLabel(HOVerwaltung.instance().getLanguageString("TSIPost")));
         config.add(createPanel(injuryType));

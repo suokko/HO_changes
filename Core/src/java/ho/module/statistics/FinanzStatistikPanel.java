@@ -38,7 +38,7 @@ public class FinanzStatistikPanel extends ImagePanel
     implements ActionListener, FocusListener, ho.core.gui.Refreshable
 {
 	private static final long serialVersionUID = 5245162268414878290L;
-	
+
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private Color cashColor 			= ThemeManager.getColor(HOColorName.STAT_CASH);
@@ -61,42 +61,43 @@ public class FinanzStatistikPanel extends ImagePanel
     //~ Instance fields ----------------------------------------------------------------------------
 
     private ImageCheckbox m_jchFans = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fans"),
-                                                        fansColor, ho.core.model.UserParameter.instance().statistikFananzahl);
+    		fansColor, ho.core.model.UserParameter.instance().statistikFananzahl);
     private ImageCheckbox m_jchGesamtausgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"),
-                                                                  costSumColor,ho.core.model.UserParameter.instance().statistikGesamtAusgaben);
+    		costSumColor,ho.core.model.UserParameter.instance().statistikGesamtAusgaben);
     private ImageCheckbox m_jchGesamteinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"),
-                                                                   incomeSumColor,ho.core.model.UserParameter.instance().statistikGesamtEinnahmen);
+    		incomeSumColor,ho.core.model.UserParameter.instance().statistikGesamtEinnahmen);
     private ImageCheckbox m_jchGewinnVerlust = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("GewinnVerlust"),
-                                                                 winLostColor,ho.core.model.UserParameter.instance().statistikGewinnVerlust);
+    		winLostColor,ho.core.model.UserParameter.instance().statistikGewinnVerlust);
     private ImageCheckbox m_jchJugend = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Jugend"),
-                                                          costsYouthColor,ho.core.model.UserParameter.instance().statistikJugend);
+    		costsYouthColor,ho.core.model.UserParameter.instance().statistikJugend);
     private ImageCheckbox m_jchKontostand = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Kontostand"),
-                                                              cashColor,ho.core.model.UserParameter.instance().statistikKontostand);
-    private ImageCheckbox m_jchMarktwert = new ImageCheckbox("TSI",marketValueColor,ho.core.model.UserParameter.instance().statistikMarktwert);
+    		cashColor,ho.core.model.UserParameter.instance().statistikKontostand);
+    private ImageCheckbox m_jchMarktwert = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("TotalTSI"),
+    		marketValueColor,ho.core.model.UserParameter.instance().statistikMarktwert);
     private ImageCheckbox m_jchSonstigeAusgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
-                                                                    costTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeAusgaben);
+    		costTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeAusgaben);
     private ImageCheckbox m_jchSonstigeEinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
-                                                                     incomeTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeEinnahmen);
+    		incomeTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeEinnahmen);
     private ImageCheckbox m_jchSpielergehaelter = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Spielergehaelter"),
-                                                                    costsPlayersColor,ho.core.model.UserParameter.instance().statistikSpielergehaelter);
+    		costsPlayersColor,ho.core.model.UserParameter.instance().statistikSpielergehaelter);
     private ImageCheckbox m_jchSponsoren = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sponsoren"),
-                                                             incomeSponsorsColor,ho.core.model.UserParameter.instance().statistikSponsoren);
+    		incomeSponsorsColor,ho.core.model.UserParameter.instance().statistikSponsoren);
     private ImageCheckbox m_jchStadion = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Stadion"),
-                                                           costArena,ho.core.model.UserParameter.instance().statistikStadion);
+    		costArena,ho.core.model.UserParameter.instance().statistikStadion);
     private ImageCheckbox m_jchTrainerstab = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Trainerstab"),
-                                                               costStaffColor,ho.core.model.UserParameter.instance().statistikTrainerstab);
+    		costStaffColor,ho.core.model.UserParameter.instance().statistikTrainerstab);
 //    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
-//                                                                    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
+//    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
 //    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsertraege"),
-//                                                                incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
+//    incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
     private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
-                                                             incomeSpectatorsColor,ho.core.model.UserParameter.instance().statistikZuschauer);
+    		incomeSpectatorsColor,ho.core.model.UserParameter.instance().statistikZuschauer);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
-                                                        ho.core.model.UserParameter.instance().statistikFinanzenBeschriftung);
+    		ho.core.model.UserParameter.instance().statistikFinanzenBeschriftung);
     private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
-                                                      ho.core.model.UserParameter.instance().statistikFinanzenHilfslinien);
+    		ho.core.model.UserParameter.instance().statistikFinanzenHilfslinien);
     private JTextField m_jtfAnzahlHRF = new JTextField(ho.core.model.UserParameter.instance().statistikFinanzenAnzahlHRF + "");
     private StatistikPanel m_clStatistikPanel;
     private boolean m_bInitialisiert;
@@ -122,7 +123,7 @@ public class FinanzStatistikPanel extends ImagePanel
         return m_bInitialisiert;
     }
 
-    //--------Listener-------------------------------    
+    //--------Listener-------------------------------
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbUbernehmen)) {
             initStatistik();
@@ -199,12 +200,12 @@ public class FinanzStatistikPanel extends ImagePanel
     public void focusGained(java.awt.event.FocusEvent focusEvent) {
     }
 
- 
+
     public final void focusLost(java.awt.event.FocusEvent focusEvent) {
         Helper.parseInt(HOMainFrame.instance(),((JTextField) focusEvent.getSource()), false);
     }
 
-    //-------Refresh---------------------------------    
+    //-------Refresh---------------------------------
     public final void reInit() {
         m_bInitialisiert = false;
 

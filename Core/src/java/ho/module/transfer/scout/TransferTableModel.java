@@ -46,17 +46,17 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Age
 	    HOVerwaltung.instance().getLanguageString("ls.player.age"),
 	    //TSI
-	    "TSI",
+	    HOVerwaltung.instance().getLanguageString("ls.player.tsi"),
 	    // Homegrown
-	    HOVerwaltung.instance().getLanguageString("Motherclub"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.motherclub"),
 	    //Erfahrung
-	    HOVerwaltung.instance().getLanguageString("Erfahrung"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.experience"),
 	    //Form
 	    HOVerwaltung.instance().getLanguageString("ls.player.form"),
 	    //Kondition
 	    HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina"),
 	    //Loyalty
-	    HOVerwaltung.instance().getLanguageString("Loyalty"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.loyalty"),
 	    //Torwart
 	    HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper"),
 	    //Verteidigung
@@ -132,17 +132,17 @@ public class TransferTableModel extends AbstractTableModel {
 	    //Age
 	    HOVerwaltung.instance().getLanguageString("ls.player.age"),
 	    //TSI
-	    "TSI",
+	    HOVerwaltung.instance().getLanguageString("ls.player.tsi"),
 	    // Homegrown
-	    HOVerwaltung.instance().getLanguageString("MC"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.short_motherclub"),
 	    //Erfahrung
-	    HOVerwaltung.instance().getLanguageString("ER"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.short_experience"),
 	    //Form
-	    HOVerwaltung.instance().getLanguageString("FO"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.short_form"),
 	    //Kondition
 	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.stamina"),
 	    // Loyalty
-	    HOVerwaltung.instance().getLanguageString("LOY"),
+	    HOVerwaltung.instance().getLanguageString("ls.player.short_loyalty"),
 	    //Torwart
 	    HOVerwaltung.instance().getLanguageString("ls.player.skill_short.keeper"),
 	    //Verteidigung

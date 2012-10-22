@@ -125,7 +125,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows[8] = new MatchesHighlightsStat("highlight_special","5,6,7,8,9,15,16,17,18,19,25,35,36,37,38,39");
 		rows[9] = new MatchesHighlightsStat("highlight_yellowcard","5", "10,11");
 		rows[10] = new MatchesHighlightsStat("highlight_redcard","5", "12,13,14");
-		rows[11] = new MatchesHighlightsStat("ls.player.injury.injured","0","90,91,92,93,94,95,96,97");
+		rows[11] = new MatchesHighlightsStat("ls.player.injurystatus.injured","0","90,91,92,93,94,95,96,97");
 
 		for (int i = 0; i < rows.length; i++) {
 			if(!rows[i].isTitle())
@@ -218,7 +218,7 @@ WHERE TEAMID = 1247417 AND SubTyp in(0,10,20,30,50,60,70,80) GROUP BY TYP HAVING
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_WINGS), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_WINGS));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_CREATIVE), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_CREATIVE));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForTaktik(IMatchDetails.TAKTIK_LONGSHOTS), MatchesOverviewRow.TYPE_TACTICS, IMatchDetails.TAKTIK_LONGSHOTS));
-		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("Einstellung"),MatchesOverviewRow.TYPE_TITLE));
+		rows.add(new MatchesOverviewRow(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude"),MatchesOverviewRow.TYPE_TITLE));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_PIC), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_PIC));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_NORMAL), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_NORMAL));
 		rows.add(new MatchesOverviewRow(Matchdetails.getNameForEinstellung(IMatchDetails.EINSTELLUNG_MOTS), MatchesOverviewRow.TYPE_MOT, IMatchDetails.EINSTELLUNG_MOTS));

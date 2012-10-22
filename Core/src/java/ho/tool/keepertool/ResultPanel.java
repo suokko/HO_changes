@@ -25,9 +25,9 @@ import javax.swing.JTextArea;
  * @author draghetto
  */
 class ResultPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 272383166131665396L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private DecimalFormat df = new DecimalFormat("#.00");
@@ -58,7 +58,7 @@ class ResultPanel extends JPanel {
         id = 0;
         average = 0;
         set.setEnabled(false);
-        result.setText("Skill");
+        result.setText("ls.player.skill");
         set.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("Disabled"));
     }
 

@@ -52,7 +52,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
     private static final String SKILL_SETPIECES = hov.getLanguageString("ls.player.skill.setpieces");
     private static final String SKILL_STAMINA = hov.getLanguageString("ls.player.skill.stamina");
     private static final String SKILL_KEEPER = hov.getLanguageString("ls.player.skill.keeper");
-    private static final String SKILL_EXPERIENCE = hov.getLanguageString("skill.experience");
+    private static final String SKILL_EXPERIENCE = hov.getLanguageString("ls.player.experience");
 
     private Spieler player;
     private JButton updBtn = new JButton();

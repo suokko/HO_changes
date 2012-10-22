@@ -70,7 +70,7 @@ final public class UserColumnFactory {
 	 */
 	public static PlayerCBItem[] createPlayerCBItemArray(){
 		final PlayerCBItem[] playerCBItemArray = new PlayerCBItem[4];
-		playerCBItemArray[0] = new PlayerCBItem(590,"Stimmung"){
+		playerCBItemArray[0] = new PlayerCBItem(590,"ls.team.teamspirit"){
 			@Override
 			public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				return new ColorLabelEntry(spielerCBItem.getStimmung(),
@@ -79,7 +79,7 @@ final public class UserColumnFactory {
 			}
 		};
 
-		playerCBItemArray[1] = new PlayerCBItem(600,"Selbstvertrauen"){
+		playerCBItemArray[1] = new PlayerCBItem(600,"ls.team.confidence"){
 			@Override
 			public IHOTableEntry getTableEntry(SpielerMatchCBItem spielerCBItem){
 				return new ColorLabelEntry(spielerCBItem.getSelbstvertrauen(),
@@ -135,7 +135,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.BG_STANDARD, SwingConstants.RIGHT);
 			}
 		};// Wetter
-		matchDetailsColumnsArray[1] = new MatchDetailsColumn(560,"Einstellung"){
+		matchDetailsColumnsArray[1] = new MatchDetailsColumn(560,"ls.team.teamattitude"){
 			@Override
 			public IHOTableEntry getTableEntry(Matchdetails matchdetails){
 				final int teamid = HOVerwaltung.instance().getModel()
@@ -210,11 +210,11 @@ final public class UserColumnFactory {
 	 */
 	public static PlayerSkillColumn[] createPlayerSkillArray(){
 		final PlayerSkillColumn[] playerSkillArray = new PlayerSkillColumn[12];
-		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "FUE",		"Fuehrung",				PlayerSkill.LEADERSHIP);
-		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ER",		"skill.experience",			PlayerSkill.EXPERIENCE);
-		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "FO",		"ls.player.form",					PlayerSkill.FORM);
+		playerSkillArray[0]  = new PlayerSkillColumn( 	80,  "ls.player.short_leadership",		"ls.player.leadership",				PlayerSkill.LEADERSHIP);
+		playerSkillArray[1]  = new PlayerSkillColumn( 	90,  "ls.player.short_experience",		"ls.player.experience",			PlayerSkill.EXPERIENCE);
+		playerSkillArray[2]  = new PlayerSkillColumn( 	100, "ls.player.short_form",		"ls.player.form",					PlayerSkill.FORM);
 		playerSkillArray[3]  = new PlayerSkillColumn( 	110, "ls.player.skill_short.stamina",		"ls.player.skill.stamina",			PlayerSkill.STAMINA);
-		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "LOY",		"Loyalty",				PlayerSkill.LOYALTY);
+		playerSkillArray[4]  = new PlayerSkillColumn( 	115, "ls.player.short_loyalty",		"ls.player.loyalty",				PlayerSkill.LOYALTY);
 		playerSkillArray[5]  = new PlayerSkillColumn( 	120, "ls.player.skill_short.keeper",		"ls.player.skill.keeper",				PlayerSkill.KEEPER);
 		playerSkillArray[6]  = new PlayerSkillColumn( 	130, "ls.player.skill_short.defending",		"ls.player.skill.defending",			PlayerSkill.DEFENDING);
 		playerSkillArray[7]  = new PlayerSkillColumn( 	140, "ls.player.skill_short.playmaking",	"ls.player.skill.playmaking",			PlayerSkill.PLAYMAKING);
@@ -601,7 +601,7 @@ final public class UserColumnFactory {
 
 
 
-			playerAdditionalArray[7] = new PlayerColumn(420,"Gehalt",100){
+			playerAdditionalArray[7] = new PlayerColumn(420,"ls.player.wage",100){
 			@Override
 			public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 				final String bonus = "";
@@ -631,7 +631,7 @@ final public class UserColumnFactory {
 									                        true, false, 0));
 			}
 			};
-			playerAdditionalArray[8] = new PlayerColumn(430,"TSI",0){
+			playerAdditionalArray[8] = new PlayerColumn(430,"ls.player.tsi",0){
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					final String text = Helper.getNumberFormat(false, 0).format(player.getTSI());
@@ -715,7 +715,7 @@ final public class UserColumnFactory {
 				}
 			};
 
-			playerAdditionalArray[11] = new PlayerColumn(437, "MC", "Motherclub",  25) {
+			playerAdditionalArray[11] = new PlayerColumn(437, "ls.player.short_motherclub", "ls.player.motherclub",  25) {
 				@Override
 				public IHOTableEntry getTableEntry(Spieler player,Spieler playerCompare){
 					HomegrownEntry home = new HomegrownEntry();

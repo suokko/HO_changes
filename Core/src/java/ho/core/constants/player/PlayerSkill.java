@@ -6,7 +6,7 @@ import ho.core.model.HOVerwaltung;
 public final class PlayerSkill {
 
 	private static final String[] languageKeys = {
-		"ls.player.skill.keeper","ls.player.skill.defending","ls.player.skill.winger","ls.player.skill.playmaking","ls.player.skill.scoring","ls.player.skill.passing","ls.player.skill.stamina","ls.player.form","ls.player.skill.setpieces","skill.experience","Fuehrung","Loyalty"
+		"ls.player.skill.keeper","ls.player.skill.defending","ls.player.skill.winger","ls.player.skill.playmaking","ls.player.skill.scoring","ls.player.skill.passing","ls.player.skill.stamina","ls.player.form","ls.player.skill.setpieces","ls.player.experience","ls.player.leadership","ls.player.loyalty"
 	};
 
 	public static final int KEEPER = 0;

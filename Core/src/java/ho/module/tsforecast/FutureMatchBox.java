@@ -44,17 +44,17 @@ final class FutureMatchBox extends JPanel {
 			MatchType iType) {
 		m_rbPIC = new JRadioButton();
 		m_rbPIC.setActionCommand("P" + iCmd);
-		m_rbPIC.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.team.attitude.playitcool"));
+		m_rbPIC.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool"));
 
 		m_rbNORM = new JRadioButton();
 		m_rbNORM.setActionCommand("N" + iCmd);
 		m_rbNORM.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"ls.team.attitude.normal"));
+				"ls.team.teamattitude.normal"));
 
 		m_rbMOTS = new JRadioButton();
 		m_rbMOTS.setActionCommand("M" + iCmd);
 		m_rbMOTS.setToolTipText(HOVerwaltung.instance().getLanguageString(
-				"ls.team.attitude.matchoftheseason"));
+				"ls.team.teamattitude.matchoftheseason"));
 
 		ButtonGroup buttongroup = new ButtonGroup();
 		buttongroup.add(m_rbPIC);

@@ -56,9 +56,9 @@ class PlayersTableModel extends AbstractTableModel {
         // Riempimento valori
         columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ls.player.id");
         columnNames[COL_NAME] = HOVerwaltung.instance().getLanguageString("Spieler");
-        columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString("Ansehen");
-        columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString("Aggressivitaet");
-        columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("Charakter");
+        columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString("ls.player.agreeability");
+        columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString("ls.player.aggressiveness");
+        columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("ls.player.honesty");
         columnNames[COL_CARDS] = HOVerwaltung.instance().getLanguageString("Gesamt");
         columnNames[COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString("column.RedCards");
         columnNames[COL_WARNINGS] = HOVerwaltung.instance().getLanguageString("GelbeKarten");

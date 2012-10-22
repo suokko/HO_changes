@@ -60,9 +60,9 @@ public class PlayerInfoPanel extends JPanel {
 
         //this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         addInfo(HOVerwaltung.instance().getLanguageString("ls.player.age"), ageLabel, 0, 0);
-        addInfo(HOVerwaltung.instance().getLanguageString("TSI"), tsiLabel, 0, 1);
+        addInfo(HOVerwaltung.instance().getLanguageString("ls.player.tsi"), tsiLabel, 0, 1);
         addInfo(HOVerwaltung.instance().getLanguageString("ls.player.form"), formLabel, 1, 0);
-        addInfo(HOVerwaltung.instance().getLanguageString("ER"), expLabel, 1, 1);
+        addInfo(HOVerwaltung.instance().getLanguageString("ls.player.short_experience"), expLabel, 1, 1);
     }
 
     //~ Methods ------------------------------------------------------------------------------------

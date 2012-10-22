@@ -48,13 +48,13 @@ public class EffectTableModel extends AbstractTableModel {
         HOVerwaltung hoV = HOVerwaltung.instance();
         this.colNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$
         this.colNames[1] = hoV.getLanguageString("Season"); //$NON-NLS-1$
-        this.colNames[2] = hoV.getLanguageString("TSI"); //$NON-NLS-1$
+        this.colNames[2] = hoV.getLanguageString("TotalTSI"); //$NON-NLS-1$
         this.colNames[3] = hoV.getLanguageString("AverageTSI"); //$NON-NLS-1$
-        this.colNames[4] = hoV.getLanguageString("TSI") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
+        this.colNames[4] = hoV.getLanguageString("ls.player.tsi") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[5] = hoV.getLanguageString("DurchschnittForm"); //$NON-NLS-1$
         this.colNames[6] = hoV.getLanguageString("ls.player.form") + " +/-"; //$NON-NLS-1$ //$NON-NLS-2$
         this.colNames[7] = hoV.getLanguageString("Skillups"); //$NON-NLS-1$
-        this.colNames[8] = hoV.getLanguageString("Skill"); //$NON-NLS-1$
+        this.colNames[8] = hoV.getLanguageString("ls.player.skill"); //$NON-NLS-1$
 
         this.values = values;
     }

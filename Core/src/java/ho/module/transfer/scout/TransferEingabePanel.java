@@ -579,7 +579,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jtfAge.addFocusListener(this);
         panel.add(jtfAge);
 
-        label = new JLabel("TSI");
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.tsi"));
         panel.add(label);
         jtfTSI.setHorizontalAlignment(JLabel.RIGHT);
         jtfTSI.addFocusListener(this);
@@ -596,7 +596,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jsSpinner.addFocusListener(this);
         panel.add(jsSpinner);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Spezialitaet"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.speciality"));
         panel.add(label);
         jcbSpeciality.addItemListener(this);
         panel.add(jcbSpeciality);
@@ -605,7 +605,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
 		panel.add(label);
 		panel.add(jtfEPV);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("skill.experience"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.experience"));
         panel.add(label);
         jcbExperience.addItemListener(this);
         panel.add(jcbExperience);
@@ -655,12 +655,12 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
         jcbSetPieces.addItemListener(this);
         panel.add(jcbSetPieces);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Loyalty"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.loyalty"));
         panel.add(label);
         jcbLoyalty.addItemListener(this);
         panel.add(jcbLoyalty);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Motherclub"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.player.motherclub"));
         panel.add(label);
         jchHomegrown.addItemListener(this);
         panel.add(jchHomegrown);
