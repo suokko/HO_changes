@@ -82,7 +82,7 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 			}
 			break;
 		case CHANCECOLUMN:
-			break;
+			return line;
 		case EVENTTYPCOLUMN:
 			return line.getMatchHighlight();
 		case SETEXTCOLUMN:

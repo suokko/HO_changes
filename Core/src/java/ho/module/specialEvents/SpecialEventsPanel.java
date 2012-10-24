@@ -73,6 +73,8 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 				.setPreferredWidth(27);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.CHANCECOLUMN)
 				.setPreferredWidth(22);
+		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.CHANCECOLUMN)
+				.setCellRenderer(new ChanceTableCellRenderer());
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
 				.setPreferredWidth(23);
 		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
