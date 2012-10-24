@@ -28,7 +28,7 @@ public class FutureSettingPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 4872598003436712955L;
 	private FutureTrainingsTableModel futureModel;
@@ -85,7 +85,7 @@ public class FutureSettingPanel extends JPanel {
         staminaTrainingPart = new IntensityComboBox(5);
         staminaTrainingPart.setSelectedIndex(firstFutureTraining.getStaminaPart() - 5);
 
-        JButton button = new JButton(HOVerwaltung.instance().getLanguageString("Aendern")); //$NON-NLS-1$
+        JButton button = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply")); //$NON-NLS-1$
 
         button.addActionListener(new ActionListener() {
                 @Override

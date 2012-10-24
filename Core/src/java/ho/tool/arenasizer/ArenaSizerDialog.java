@@ -24,8 +24,8 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 	private ArenaPanel infoPanel;
 	private ControlPanel controlPanel;
 	private JPanel toolbar;
-	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-	
+	private JButton refreshButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
+
 	public ArenaSizerDialog(JFrame owner){
 		super(owner,true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -37,58 +37,57 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 		setLayout(new BorderLayout());
 		setTitle(HOVerwaltung.instance().getLanguageString("ArenaSizer"));
 		add(getToolbar(), BorderLayout.NORTH);
-		
+
 		JPanel centerPanel = new JPanel(new BorderLayout());
-		
+
 		JPanel panelC = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		panelC.add(getControlPanel());
 		centerPanel.add(panelC,BorderLayout.NORTH);
 		centerPanel.add(getTabbedPane(), BorderLayout.CENTER);
-		
+
 		add(centerPanel,BorderLayout.CENTER);
-		
+
 	}
-	
+
 	private JPanel getToolbar(){
 		if(toolbar == null){
 			toolbar = new JPanel(new FlowLayout(FlowLayout.LEADING));
 			toolbar.add(refreshButton);
 			refreshButton.addActionListener(this);
-			refreshButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
 			// reset
 			// save
 		}
 		return toolbar;
 	}
-	
+
 	private ControlPanel getControlPanel(){
 		if(controlPanel == null){
 			controlPanel = new ControlPanel();
 		}
 		return controlPanel;
 	}
-	
+
 	private JPanel getHistoryPanel(){
 		if(historyPanel == null){
 			historyPanel = new DistributionStatisticsPanel();
 		}
 		return historyPanel;
 	}
-	
+
 	ArenaPanel getArenaPanel(){
 		if(panel == null){
 			panel = new ArenaPanel();
 		}
 		return panel;
 	}
-	
+
 	ArenaPanel getInfoPanel(){
 		if(infoPanel == null){
 			infoPanel = new ArenaPanel();
 		}
 		return infoPanel;
 	}
-	
+
 	private JTabbedPane getTabbedPane(){
 		if(tabbedPane == null){
 			tabbedPane = new JTabbedPane();
@@ -99,16 +98,16 @@ public class ArenaSizerDialog extends JDialog implements ActionListener {
 		}
 		return tabbedPane;
 	}
-	
+
 	@Override
-	public void setSize(int width, int height) {  
-	   super.setSize(width, height);  
-		    
-	   Dimension screenSize = getParent().getSize();  
-	   int x = (screenSize.width - getWidth()) / 2;  
-	   int y = (screenSize.height - getHeight()) / 2;  
-	    
-	   setLocation(getParent().getX()+x, getParent().getY()+y);     
+	public void setSize(int width, int height) {
+	   super.setSize(width, height);
+
+	   Dimension screenSize = getParent().getSize();
+	   int x = (screenSize.width - getWidth()) / 2;
+	   int y = (screenSize.height - getHeight()) / 2;
+
+	   setLocation(getParent().getX()+x, getParent().getY()+y);
 	}
 
 	public void actionPerformed(ActionEvent e) {

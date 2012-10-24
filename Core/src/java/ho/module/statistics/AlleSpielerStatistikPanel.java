@@ -99,7 +99,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel
 
 
     private JButton m_jbPrint = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbUbernehmen = new JButton(hov.getLanguageString("Uebernehmen"));
+    private JButton m_jbUbernehmen = new JButton(hov.getLanguageString("ls.button.apply"));
     private JCheckBox m_jchInscription = new JCheckBox(hov.getLanguageString("Beschriftung"),
     		gup.statistikAlleBeschriftung);
     private JCheckBox m_jchHelpLines = new JCheckBox(hov.getLanguageString("Hilflinien"),

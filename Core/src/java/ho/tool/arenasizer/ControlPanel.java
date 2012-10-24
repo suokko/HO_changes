@@ -27,8 +27,7 @@ class ControlPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private static final BigDecimal HUNDRED = new BigDecimal(100);
-	private JButton m_jbUbernehmenGesamt = new JButton("   =>");
-
+	private JButton m_jbUbernehmenGesamt = new JButton(HOVerwaltung.instance().getLanguageString("Calculate"));
 	private JTextField m_jtfFans = new JTextField(7);
 	private JTextField m_jtfGesamtgroesse = new JTextField(7);
 

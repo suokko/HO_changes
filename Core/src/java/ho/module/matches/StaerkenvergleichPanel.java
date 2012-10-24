@@ -323,7 +323,7 @@ class StaerkenvergleichPanel extends ImagePanel {
         add(panel,m_clGastEinstellung,layout,constraints,4,8);
 
         //Taktiktyp
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktik"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.tactic"));
         add(panel,label,layout,constraints,0,9);
         add(panel,m_clHeimTaktik,layout,constraints,1,9);
         add(panel,m_clGastTaktik,layout,constraints,4,9);

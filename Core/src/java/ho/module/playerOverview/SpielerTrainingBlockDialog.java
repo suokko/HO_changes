@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 
 /**
  * Dialog to enter the training block dates for a player
- * 
+ *
  * @author flattermann <HO@flattermann.net>
  *
  */
@@ -42,16 +42,16 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 	private JButton m_jbCancel;
 	private JButton m_jbOK;
     private JButton m_jbAdd;
-	
+
     /* A list of <SingleTrainingBlock> */
 	private List<SingleTrainingBlock> allTrainingBlocks;
-	
+
 	/* current player */
 	private Spieler m_clPlayer;
 
 	/* the panels with the training blocks */
 	private JPanel panel;
-	
+
 	//~ Constructors -------------------------------------------------------------------------------
 
 	/**
@@ -72,7 +72,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		m_clPlayer = player;
 
 		initTrainingBlockList();
-		
+
 		initComponents();
 
 		pack();
@@ -102,7 +102,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		boolean lastBlock = false;
 		Timestamp startDate = null;
 		Timestamp lastDate = null;
-		
+
 		// Iterate through all HRFs for this player
 		do {
 			// Fetch the player from that HRF
@@ -128,14 +128,14 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 			}
 			lastDate = player.getHrfDate();
 		} while ((hrfId = DBManager.instance().getFollowingHRF(hrfId)) > 0);
-		
+
 		// Block is still active
         if (lastBlock) {
 			SingleTrainingBlock newBlock = new SingleTrainingBlock(this, startDate);
 			allTrainingBlocks.add (newBlock);
         }
 	}
-	
+
 	/**
 	 * Save the training blocks to the player table (for every HRF)
 	 */
@@ -144,7 +144,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 		Timestamp timestampFirstPlayerHRF = DBManager.instance().getTimestamp4FirstPlayerHRF(playerId);
 		int hrfId = DBManager.instance().getHRFID4Date(timestampFirstPlayerHRF);
-			
+
 		// Iterate through all HRFs for this player
 		do {
 			// Fetch the player from that HRF
@@ -162,18 +162,18 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 			}
 		} while ((hrfId = DBManager.instance().getFollowingHRF(hrfId)) > 0);
 	}
-	
+
 	/**
 	 * Does a training block exist at this date
-	 * 
-	 * @param date		the date to check 
+	 *
+	 * @param date		the date to check
 	 */
 	private boolean isBlockedAt (Timestamp date) {
 		for (int i=0; i < allTrainingBlocks.size(); i++) {
 			SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
 			Date blockStart = curBlock.getBlockStart();
 			Date blockEnd = curBlock.getBlockEnd();
-			
+
 			if (date.after(blockStart) && date.before(blockEnd)) {
 				HOLogger.instance().log(getClass(), "Player " + m_clPlayer.getSpielerID()+" is blocked at "+date.toString());
 				return true;
@@ -182,7 +182,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		HOLogger.instance().log(getClass(), "Player " + m_clPlayer.getSpielerID()+" is NOT blocked at "+date.toString());
 		return false;
 	}
-	
+
 	/**
 	 * Button pressed
 	 *
@@ -192,12 +192,12 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		if (actionEvent.getSource().equals(m_jbOK)) {
 			for (int i=0; i<allTrainingBlocks.size(); i++) {
 				SingleTrainingBlock curBlock = allTrainingBlocks.get(i);
-				HOLogger.instance().log(getClass(), 
+				HOLogger.instance().log(getClass(),
 						"Block found from: "+curBlock.getBlockStart().toString()+" to:"+curBlock.getBlockEnd().toString());
 			}
 			// TODO save training blocks
 			saveBlocks();
-			// TODO Re-Calc Subskills 
+			// TODO Re-Calc Subskills
 
 //			DBZugriff.instance().saveSpieler(
 //				HOVerwaltung.instance().getModel().getID(),
@@ -232,7 +232,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 	/**
 	 * Add a block to the panel
-	 * 
+	 *
 	 * @param block
 	 */
 	private void addBlock (SingleTrainingBlock block) {
@@ -242,14 +242,14 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 	/**
 	 * Remove a block from the panel
-	 * 
+	 *
 	 * @param block
 	 */
 	private void removeBlock (SingleTrainingBlock block) {
-		panel.remove(block);		
+		panel.remove(block);
 		pack();
 	}
-	
+
 	/**
 	 * Init the GUI components
 	 */
@@ -293,7 +293,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbAdd);
 
 		m_jbOK =
-			new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("ls.button.ok"));
 		m_jbOK.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -305,7 +305,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 		getContentPane().add(m_jbOK);
 
 		m_jbCancel =
-			new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 		m_jbCancel.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.EAST;

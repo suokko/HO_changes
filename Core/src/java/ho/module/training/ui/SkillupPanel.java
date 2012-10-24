@@ -29,13 +29,13 @@ public class SkillupPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 57377377617909870L;
 	private BaseTableModel tableModel;
     private SkillupTable table;
     private String[] columns = {
-                                   HOVerwaltung.instance().getLanguageString("Type"), //$NON-NLS-1$
+                                   HOVerwaltung.instance().getLanguageString("ls.team.trainingtype"), //$NON-NLS-1$
                                    HOVerwaltung.instance().getLanguageString("Week"), //$NON-NLS-1$
                                    HOVerwaltung.instance().getLanguageString("Season"), //$NON-NLS-1$
     "", "", "" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

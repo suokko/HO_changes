@@ -49,7 +49,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------/
 	private static HOVerwaltung hov = HOVerwaltung.instance();
-	private JButton m_jbAbort = new JButton(hov.getLanguageString("Abbrechen"));
+	private JButton m_jbAbort = new JButton(hov.getLanguageString("ls.button.cancel"));
 	final private JButton m_jbDownload = new JButton(hov.getLanguageString("Download"));
 	private JButton m_jbProxy = new JButton(hov.getLanguageString("ConfigureProxy"));
 	private JCheckBox m_jchOldFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), false);
@@ -184,13 +184,13 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		buttonKeys.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,true), "released");
 
 		getContentPane().add(m_jbDownload);
-		
+
 		m_jbProxy.setToolTipText(hov.getLanguageString("tt_ConfigureProxy"));
 		m_jbProxy.addActionListener(this);
 		m_jbProxy.setFont(m_jbProxy.getFont().deriveFont(Font.BOLD));
 		m_jbProxy.setSize(140, 30);
 		m_jbProxy.setLocation(195, 220);
-		
+
 		getContentPane().add(m_jbProxy);
 
 		m_jbAbort.setToolTipText(hov.getLanguageString("tt_Download_Abbrechen"));
@@ -207,7 +207,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 			// Center
 			this.setLocation((size.width / 2) - (this.getSize().width / 2), (size.height / 2) - (this.getSize().height / 2));
 		}
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -216,7 +216,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 				HOLogger.instance().log(getClass(), "Request success 1: " + succ);
 			}
 		});
-		
+
 		setVisible(true);
 	}
 
@@ -241,7 +241,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 				OnlineWorker.getAllLineups();
 			}
 		}
-		
+
 		if (bOK && m_jchFixtures.isSelected()) {
 			// Always get actual season and league
 			bOK = OnlineWorker.getSpielplan(-1, -1);
@@ -249,7 +249,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 				StandingCreator.extractActual();
 			}
 		}
-		
+
 		if (bOK && m_jchOldFixtures.isSelected()) {
 			if (m_jlOldSeasons.getSelectedValues() != null) {
 				final Object[] saisons = m_jlOldSeasons.getSelectedValues();

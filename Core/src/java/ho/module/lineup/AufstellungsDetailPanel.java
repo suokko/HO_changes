@@ -556,7 +556,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Taktik")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.tactic")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbSelbstvertrauen.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));
@@ -639,7 +639,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         add(m_jcbSelbstvertrauen);
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Trainer")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.coachtype")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
 		m_jcbTrainerType.setPreferredSize(new Dimension(50, Helper.calcCellWidth(20)));

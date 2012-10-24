@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * option panel for usermanagement
- * 
+ *
  * @author Thorsten Dietz
  */
 public class UserPanel extends ImagePanel implements ActionListener {
@@ -39,7 +39,7 @@ public class UserPanel extends ImagePanel implements ActionListener {
 
 	/**
 	 * Panel for usermanagement
-	 * 
+	 *
 	 * @author Thorsten Dietz
 	 * @since 1.36
 	 */
@@ -130,11 +130,11 @@ public class UserPanel extends ImagePanel implements ActionListener {
 
 	private JPanel getTopPanel() {
 		JPanel topPanel = new ImagePanel();
-		m_jbNewUser = new JButton(HOVerwaltung.instance().getLanguageString("Hinzufuegen"));
+		m_jbNewUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 		m_jbNewUser.addActionListener(this);
 		m_jbDeleteUser = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
 		m_jbDeleteUser.addActionListener(this);
-		m_jbSaveUser = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
+		m_jbSaveUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
 		m_jbSaveUser.addActionListener(this);
 
 		topPanel.add(m_jbNewUser);

@@ -108,7 +108,7 @@ public class SpieleStatistikPanel extends ImagePanel
 			UserParameter.instance().statistikSpieleLoddarStats);
 	private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance()
-			.getLanguageString("Uebernehmen"));
+			.getLanguageString("ls.button.apply"));
 	private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance()
 			.getLanguageString("Beschriftung"),
 			UserParameter.instance().statistikSpielerFinanzenBeschriftung);

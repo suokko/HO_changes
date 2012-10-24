@@ -22,14 +22,14 @@ public class ModuleConfigDialog extends JDialog implements ActionListener{
 	private IModule module;
 	JButton okButton;
 //	JButton cancelButton;
-	
+
 	public ModuleConfigDialog(JDialog owner, IModule module){
 		super(owner,module.getDescription());
 		this.module = module;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initialize();
 	}
-	
+
 
 	private void initialize() {
 		setSize(300,500);
@@ -40,25 +40,25 @@ public class ModuleConfigDialog extends JDialog implements ActionListener{
 
 
 	@Override
-	public void setSize(int width, int height) {  
-	   super.setSize(width, height);  
-		    
-	   Dimension screenSize = getParent().getSize();  
-	   int x = (screenSize.width - getWidth()) / 2;  
-	   int y = (screenSize.height - getHeight()) / 2;  
-	    
-	   setLocation(getParent().getX()+x, getParent().getY()+y);     
+	public void setSize(int width, int height) {
+	   super.setSize(width, height);
+
+	   Dimension screenSize = getParent().getSize();
+	   int x = (screenSize.width - getWidth()) / 2;
+	   int y = (screenSize.height - getHeight()) / 2;
+
+	   setLocation(getParent().getX()+x, getParent().getY()+y);
 	}
-	
-	
+
+
     private JPanel createButtons() {
         JPanel buttonPanel = new ImagePanel();
         ((FlowLayout) buttonPanel.getLayout()).setAlignment(FlowLayout.CENTER);
 
-        okButton = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
+        okButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
         okButton.addActionListener(this);
 
-//        cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+//        cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 //        cancelButton.addActionListener(this);
 
         buttonPanel.add(okButton);
@@ -72,6 +72,6 @@ public class ModuleConfigDialog extends JDialog implements ActionListener{
 			ModuleConfig.instance().save();
 			dispose();
 		}
-		
+
 	}
 }

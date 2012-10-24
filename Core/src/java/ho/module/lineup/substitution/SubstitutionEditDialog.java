@@ -82,14 +82,14 @@ public class SubstitutionEditDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
-		JButton okButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Ok"));
+		JButton okButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.ok"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.weightx = 1.0;
 		gbc.insets = new Insets(12, 8, 8, 2);
 		buttonPanel.add(okButton, gbc);
 
-		JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("subs.Cancel"));
+		JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 		gbc.gridx = 1;
 		gbc.weightx = 0.0;
 		gbc.insets = new Insets(12, 2, 8, 8);
@@ -119,7 +119,7 @@ public class SubstitutionEditDialog extends JDialog {
 			}
 
 		};
-		cancelAction.putValue(Action.NAME, HOVerwaltung.instance().getLanguageString("subs.Cancel"));
+		cancelAction.putValue(Action.NAME, HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 		cancelButton.setAction(cancelAction);
 		GUIUtils.decorateWithActionOnESC(this, cancelAction);
 

@@ -27,7 +27,7 @@ public class DeletePanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 3360500719618041012L;
 
@@ -35,7 +35,7 @@ public class DeletePanel extends JPanel {
     FavouriteMenu menu;
 
     /** The add button */
-    JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("Hinzufuegen"));
+    JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 
     /** The delete button */
     JButton deletebutton = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));

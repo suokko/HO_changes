@@ -103,7 +103,7 @@ class SpielerStatistikPanel extends ImagePanel
     private ImageCheckbox m_jchVerteidigung = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("ls.player.skill.defending"),
     		defendingColor,ho.core.model.UserParameter.instance().statistikVerteidigung);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
     		ho.core.model.UserParameter.instance().statistikBeschriftung);
     private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),

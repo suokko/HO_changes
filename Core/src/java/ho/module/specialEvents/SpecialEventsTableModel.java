@@ -32,7 +32,7 @@ class SpecialEventsTableModel extends AbstractTableModel {
 		this.data = data;
 		fireTableDataChanged();
 	}
-	
+
 	@Override
 	public Object getValueAt(int row, int column) {
 			return this.data.get(row).get(column);
@@ -66,13 +66,13 @@ class SpecialEventsTableModel extends AbstractTableModel {
 		case MATCHIDCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("GameID");
 		case HOMETACTICCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("Taktik");
+			return HOVerwaltung.instance().getLanguageString("ls.team.tactic");
 		case HOMETEAMCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Heim");
 		case AWAYTEAMCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Gast");
 		case AWAYTACTICCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("Taktik");
+			return HOVerwaltung.instance().getLanguageString("ls.team.tactic");
 		case MINUTECOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Min");
 		case SETEXTCOLUMN:

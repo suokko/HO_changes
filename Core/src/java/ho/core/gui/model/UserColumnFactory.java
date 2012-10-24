@@ -145,7 +145,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 			}
 		};
-		matchDetailsColumnsArray[2] = new MatchDetailsColumn(570,"Taktik"){
+		matchDetailsColumnsArray[2] = new MatchDetailsColumn(570,"ls.team.tactic"){
 			@Override
 			public IHOTableEntry getTableEntry(Matchdetails matchdetails){
 				final int teamid = HOVerwaltung.instance().getModel()

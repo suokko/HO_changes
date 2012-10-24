@@ -425,7 +425,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_Select_All.setToolTipText(hoV.getLanguageString("ttSelect"));
         m_Button_Select_All.addActionListener(this);
 
-        m_Button_reset = new JButton(hoV.getLanguageString("Reset"));
+        m_Button_reset = new JButton(hoV.getLanguageString("ls.button.reset"));
         m_Button_reset.setToolTipText(hoV.getLanguageString("ttReset"));
         m_Button_reset.addActionListener(this);
 
@@ -433,7 +433,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_Delete_Row.setToolTipText(hoV.getLanguageString("ttRemove"));
         m_Button_Delete_Row.addActionListener(this);
 
-        m_Button_GoTo = new JButton(hoV.getLanguageString("ok"));
+        m_Button_GoTo = new JButton(hoV.getLanguageString("ls.button.ok"));
         m_Button_GoTo.setToolTipText(hoV.getLanguageString("ttok"));
         m_Button_GoTo.setBackground(hellblau);
         m_Button_GoTo.addActionListener(this);

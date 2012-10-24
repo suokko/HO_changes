@@ -39,7 +39,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -991600939074866793L;
 	protected JTable table;
 	protected String ACT_SHOW_INFO = "ShowInfo";
-	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("Uebernehmen");
+	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("ls.button.apply");
 	protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
 	protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
 	protected String PROP_NAME = HOVerwaltung.instance().getLanguageString("Name");
@@ -81,7 +81,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
             dialog.action();
         }
 
-        
+
     }
 
     protected abstract TableModel getModel(boolean selected, String[] columnNames2);
@@ -114,7 +114,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         okButton.setActionCommand(ACT_FIND);
         okButton.addActionListener(this);
 
-        JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+        JButton cancelButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
         cancelButton.setActionCommand(ACT_CANCEL);
         cancelButton.addActionListener(this);
 

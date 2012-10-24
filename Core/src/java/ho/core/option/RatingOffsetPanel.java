@@ -99,7 +99,7 @@ public final class RatingOffsetPanel
 
         m_jbReset =
             new JButton(
-                HOVerwaltung.instance().getLanguageString("Reset"));
+                HOVerwaltung.instance().getLanguageString("ls.button.reset"));
         m_jbReset.addActionListener(this);
 
         //Layout components

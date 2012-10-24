@@ -35,7 +35,7 @@ class NthrfUtil {
             final File path = new File(ho.core.model.UserParameter.instance().hrfImport_HRFPath);
             File file = new File(ho.core.model.UserParameter.instance().hrfImport_HRFPath + File.separator + fname);
             fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-            fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("Speichern"));
+            fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("ls.button.save"));
 
             fileChooser.setFileFilter(new ExampleFileFilter("hrf"));
             try {

@@ -37,7 +37,7 @@ public class AddPanel extends JPanel {
     FavouriteMenu menu;
 
     /** The add button */
-    JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("Hinzufuegen"));
+    JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 
     /** The ID-Label */
     JLabel idlabel = new JLabel(HOVerwaltung.instance().getLanguageString("ID")+": ");

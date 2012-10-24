@@ -44,8 +44,8 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
     private UserPanel m_jpUserOptionen;
     private UserColumnsPanel m_jpUserColumns;
     private DownloadPanel m_jpDownloadPanel;
-    private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("Speichern"));
-    private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+    private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
+    private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
     private ImagePanel m_jpButtonPanel = new ImagePanel();
 
     //~ Constructors -------------------------------------------------------------------------------

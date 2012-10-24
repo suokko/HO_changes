@@ -213,7 +213,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		getContentPane().add(panel);
 
 		m_jbOK =
-			new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("ls.button.ok"));
 		m_jbOK.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.WEST;
@@ -225,7 +225,7 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		getContentPane().add(m_jbOK);
 
 		m_jbAbbrechen =
-			new JButton(HOVerwaltung.instance().getLanguageString("Abbrechen"));
+			new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 		m_jbAbbrechen.addActionListener(this);
 
 		constraints.anchor = GridBagConstraints.EAST;

@@ -193,7 +193,7 @@ public class PenaltyTakersView extends JPanel {
 		tablesPanel.add(new JScrollPane(this.playersTable), gbc);
 
 		JPanel moveButtonsPanel = new JPanel(new GridBagLayout());
-		this.addToTakersButton = new JButton(getLangStr("lineup.penaltytakers.button.add"));
+		this.addToTakersButton = new JButton(getLangStr("ls.button.add"));
 		this.addToTakersButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_RIGHT));
 		this.addToTakersButton.setEnabled(false);
 		gbc = new GridBagConstraints();
@@ -294,7 +294,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.insets = new Insets(10, 8, 4, 10);
 		buttonsPanel.add(this.autoButton, gbc);
 
-		this.clearButton = new JButton(getLangStr("lineup.penaltytakers.button.reset"));
+		this.clearButton = new JButton(getLangStr("ls.button.reset"));
 		this.clearButton.setEnabled(false);
 		gbc.gridy = 1;
 		gbc.insets = new Insets(4, 8, 4, 10);

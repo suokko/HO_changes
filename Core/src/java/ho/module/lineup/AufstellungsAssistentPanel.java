@@ -45,7 +45,7 @@ import javax.swing.JPanel;
 public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener, IAufstellungsAssistentPanel {
 
 
-    
+
 	private static final long serialVersionUID = 5271343329674809429L;
 	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
 	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
@@ -206,7 +206,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			hoModel.getAufstellung().resetPositionOrders();
 			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Positional_orders_cleared"));
 			mainFrame.getAufstellungsPanel().update();
-			
+
 		} else if (actionEvent.getSource().equals(m_jbReserveLoeschen)) {
 			hoModel.getAufstellung().resetReserveBank();
 			mainFrame.getAufstellungsPanel().update();
@@ -224,7 +224,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 				mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
 			}
 		} else if (actionEvent.getSource().equals(overlayOk)) {
-			
+
 			// Check that max 11 positions are sent
 			Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
 			int reds = 0;
@@ -241,7 +241,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
-			
+
 			removeGUI();
 			updateDefaultSelection();
 
@@ -268,14 +268,14 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	@Override
 	public void addToAssistant(PlayerPositionPanel positionPanel) {
 		positions.put(positionPanel, null);
-	}    	
+	}
 
 
 
 	private void startAssistant(HOModel hoModel, HOMainFrame mainFrame) {
 
 		// First, clear all positions that are not selected. We need to clear the way.
-		
+
 		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
 		while (it.hasNext()){
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
@@ -284,7 +284,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 					setSpielerAtPosition(entry.getKey().getPositionsID(), 0);
 			}
 		}
-		
+
 
 		final Vector<Spieler> vSpieler = new Vector<Spieler>();
 		final Vector<Spieler> alleSpieler = hoModel.getAllSpieler();
@@ -293,7 +293,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			final ho.core.model.player.Spieler spieler = (ho.core.model.player.Spieler) alleSpieler
 			.get(i);
 
-			// Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen, 
+			// Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen,
 			// oder genau die zu der der Spieler gehört
 			if (spieler.isSpielberechtigt()
 					&& (((this.getGroup().trim().equals("")
@@ -355,7 +355,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 						selected = false;
 					}
 				}
-				
+
 				laso.setSelected(selected);
 				entry.setValue(laso);
 			}
@@ -387,7 +387,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		if (overlayOk == null) {
-			overlayOk = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.OK"));
+			overlayOk = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.ok"));
 			overlayOk.setFont(new Font("serif", Font.BOLD, 16));
 			overlayOk.setBackground(ThemeManager.getColor(HOColorName.BUTTON_ASSIST_BG));
 			overlayOk.addActionListener(this);
@@ -398,7 +398,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		if (overlayCancel == null) {
-			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString("lineupassist.Cancel"));
+			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 			overlayCancel.addActionListener(this);
 			overlayCancel.setFont(new Font("serif", Font.BOLD, 16));
 			overlayCancel.setBackground(overlayOk.getBackground());
@@ -429,7 +429,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		HOMainFrame.instance().getAufstellungsPanel().repaint();
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getPositionStatuses()
 	 */
@@ -441,14 +441,14 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			returnMap.put(entry.getKey().getPositionsID(), entry.getValue().isSelected());
 		}
-		
+
 		return returnMap;
 	}
 
 	private void updateDefaultSelection() {
 		// There should be a more sensible way to do this. Merging maps or something...
 		// But brute force and ignorance should never be underestimated.
-		
+
 		UserParameter.instance().assistant101 = getStatusForPosition(101);
 		UserParameter.instance().assistant102 = getStatusForPosition(102);
 		UserParameter.instance().assistant103 = getStatusForPosition(103);
@@ -464,7 +464,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		UserParameter.instance().assistant113 = getStatusForPosition(113);
 		UserParameter.instance().assistantSaved = true;
 	}
-	
+
 	private boolean getStatusForPosition(int position) {
 		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
 		while (it.hasNext()){
@@ -475,7 +475,7 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 		return false;
 	}
-	
+
 	private void initComponents() {
 		setLayout(new BorderLayout());
 

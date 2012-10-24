@@ -93,7 +93,7 @@ public class FinanzStatistikPanel extends ImagePanel
     private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
     		incomeSpectatorsColor,ho.core.model.UserParameter.instance().statistikZuschauer);
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
     private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
     		ho.core.model.UserParameter.instance().statistikFinanzenBeschriftung);
     private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),

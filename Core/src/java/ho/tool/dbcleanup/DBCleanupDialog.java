@@ -25,23 +25,23 @@ import javax.swing.JTextArea;
 
 /**
  * Database Cleanup Dialog
- * 
+ *
  * @author flattermann <HO@flattermann.net>
  */
 class DBCleanupDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 3533368597781557223L;
 	private JButton m_jbCleanupNow = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cleanupnow"));
-	private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("dbcleanup.cancel"));
+	private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 	private DBCleanupTool cleanupTool;
 
 	private JTextArea textIntro = new JTextArea (HOVerwaltung.instance().getLanguageString("dbcleanup.intro"));
-	
+
 	private JLabel labelOwnMatches = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownMatches"));
 	private JLabel labelOwnFriendlies = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.ownFriendlies"));
 	private JLabel labelOtherMatches = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherMatches"));
 	private JLabel labelOtherFriendlies = new JLabel (HOVerwaltung.instance().getLanguageString("dbcleanup.otherFriendlies"));
-	
+
 	private WeekSelectionPanel wsp_OwnMatches =	new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
 	private WeekSelectionPanel wsp_OwnFriendlies = new WeekSelectionPanel (DBCleanupTool.REMOVE_NONE);
 	private WeekSelectionPanel wsp_OtherMatches = new WeekSelectionPanel (16);
@@ -59,7 +59,7 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 	 * Creates a new DBCleanupDialog object.
 	 */
 	DBCleanupDialog(JFrame owner, DBCleanupTool cleanupTool) {
-		super(owner, 
+		super(owner,
 				HOVerwaltung.instance().getLanguageString("dbcleanup"),
 				true);
 		this.cleanupTool = cleanupTool;
@@ -78,7 +78,7 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 		textIntro.setWrapStyleWord(true);
 		textIntro.setLineWrap(true);
 		JPanel weekSelectionPanel = new JPanel(new GridBagLayout());
-		
+
 		labelOwnMatches.setFont(labelOwnMatches.getFont().deriveFont(Font.BOLD));
 		labelOwnFriendlies.setFont(labelOwnFriendlies.getFont().deriveFont(Font.BOLD));
 		labelOtherMatches.setFont(labelOtherMatches.getFont().deriveFont(Font.BOLD));
@@ -87,14 +87,14 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 //		labelHrfAutoremove.setFont(labelHrfAutoremove.getFont().deriveFont(Font.BOLD));
 
 		m_jcbHrfAutoremove.setSelected(true);
-		
+
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.gridx=0;
 		c.gridy=0;
 		c.anchor=GridBagConstraints.LINE_START;
 		c.ipadx=20;
-		
+
 		weekSelectionPanel.add (labelOwnMatches, c);
 		c.gridy++;
 		weekSelectionPanel.add (labelOwnFriendlies, c);
@@ -120,8 +120,8 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 		weekSelectionPanel.add(m_jcbHrfAutoremove, c);
 //		c.gridy++;
 //		weekSelectionPanel.add (wsp_Hrf, c);
-		
-		
+
+
 		ImagePanel m_jpButtonPanel = new ImagePanel();
 		// Add Buttons
 		m_jpButtonPanel.add(m_jbCleanupNow);
@@ -136,7 +136,7 @@ class DBCleanupDialog extends JDialog implements ActionListener {
 		getContentPane().add(m_jpButtonPanel, BorderLayout.SOUTH);
 
 		pack();
-		
+
         final Dimension size = HOMainFrame.instance().getToolkit().getScreenSize();
 
         if (size.width > this.getSize().width) {
@@ -144,7 +144,7 @@ class DBCleanupDialog extends JDialog implements ActionListener {
             this.setLocation((size.width / 2) - (this.getSize().width / 2),
                              (size.height / 2) - (this.getSize().height / 2));
         }
-        
+
 		setVisible(true);
 	}
 

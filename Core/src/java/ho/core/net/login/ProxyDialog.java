@@ -190,7 +190,7 @@ public class ProxyDialog extends JDialog {
 
 		cancelButton
 				.setToolTipText(hov.getLanguageString("tt_Login_Abbrechen"));
-		cancelButton.setText(hov.getLanguageString("Abbrechen"));
+		cancelButton.setText(hov.getLanguageString("ls.button.cancel"));
 		gbc.gridx = 1;
 		gbc.weightx = 0.0;
 		gbc.insets = new Insets(6, 4, 6, 6);
@@ -286,9 +286,9 @@ public class ProxyDialog extends JDialog {
 		settings.setAuthenticationNeeded(useProxyAuthCheckBox.isSelected());
 		settings.setUsername(proxyAuthNameTextField.getText());
 		settings.setPassword(new String(proxyPasswordField.getPassword()));
-		
+
 		MyConnector.instance().enableProxy(settings);
-		
+
 		UserParameter.instance().ProxyAktiv = useProxyCheckBox.isSelected();
 		UserParameter.instance().ProxyHost = proxyHostTextField.getText();
 		UserParameter.instance().ProxyPort = proxyPortTextField.getText();

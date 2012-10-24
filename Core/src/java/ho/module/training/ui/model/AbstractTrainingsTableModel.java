@@ -42,7 +42,7 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
         HOVerwaltung hoV = HOVerwaltung.instance();
         columnNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$
         columnNames[1] = hoV.getLanguageString("Season"); //$NON-NLS-1$
-        columnNames[2] = hoV.getLanguageString("Type"); //$NON-NLS-1$
+        columnNames[2] = hoV.getLanguageString("ls.team.trainingtype"); //$NON-NLS-1$
         columnNames[3] = hoV.getLanguageString("Intensitaet"); //$NON-NLS-1$
         columnNames[4] = hoV.getLanguageString("training.staminashare"); //$NON-NLS-1$
     }

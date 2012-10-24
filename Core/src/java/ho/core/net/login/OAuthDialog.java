@@ -60,7 +60,7 @@ public class OAuthDialog extends JDialog {
 		if (!StringUtils.isEmpty(scope)) {
 			scopes = "&scope=" + scope;
 		}
-		
+
 		obtainUserURL();
 		initComponents();
 		addListeners();
@@ -228,7 +228,7 @@ public class OAuthDialog extends JDialog {
 		panel.add(m_jbOK, constraints);
 
 		m_jbCancel.setText(HOVerwaltung.instance().getLanguageString(
-				"oauth.Cancel"));
+				"ls.button.cancel"));
 		m_jbCancel.setEnabled(true);
 		constraints.gridx = 1;
 		constraints.gridy = 7;

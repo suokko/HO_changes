@@ -85,9 +85,9 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
     private DoppelLabelEntry jpRatingKeeper = new DoppelLabelEntry(ColorLabelEntry.BG_SPIELERPOSITONSWERTE);
     private JButton jbAddTempSpieler = new JButton(HOVerwaltung.instance().getLanguageString("AddTempspieler"));
     private JButton jbRemove = new JButton(HOVerwaltung.instance().getLanguageString("ScoutEntfernen"));
-    private JButton jbAdd = new JButton(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+    private JButton jbAdd = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
     private JButton jbMiniScout = new JButton(HOVerwaltung.instance().getLanguageString("ScoutMini"));
-    private JButton jbApply = new JButton(HOVerwaltung.instance().getLanguageString("Uebernehmen"));
+    private JButton jbApply = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
     private JButton jbRemoveAll = new JButton(HOVerwaltung.instance().getLanguageString("Scout.RemoveAll"));
     private JComboBox jcbExperience = new JComboBox(PlayerAbility.ITEMS);
     private JComboBox jcbWinger = new JComboBox(PlayerAbility.ITEMS);
@@ -155,13 +155,13 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
                 jbRemove.setEnabled(true);
             } else {
                 jbAdd.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Transferscout_hinzufuegen"));
-                jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+                jbAdd.setText(HOVerwaltung.instance().getLanguageString("ls.button.add"));
                 jbRemove.setEnabled(false);
             }
             jbAdd.setEnabled(true);
         } else {
             clScoutEntry = new ScoutEintrag();
-            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ls.button.add"));
             jbRemove.setEnabled(false);
             jbAdd.setEnabled(false);
         }
@@ -447,7 +447,7 @@ public class TransferEingabePanel extends ImagePanel implements ItemListener, Ac
             jbRemove.setEnabled(true);
         } else {
             jbAdd.setEnabled(true);
-            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ScoutHinzu"));
+            jbAdd.setText(HOVerwaltung.instance().getLanguageString("ls.button.add"));
             jbRemove.setEnabled(false);
         }
     }

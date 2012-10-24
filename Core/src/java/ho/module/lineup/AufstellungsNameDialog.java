@@ -25,9 +25,9 @@ import javax.swing.JTextField;
  * gewünscht
  */
 final class AufstellungsNameDialog extends JDialog implements ActionListener {
-	
+
 	private static final long serialVersionUID = 7318780000118008882L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 	private Lineup m_clAufstellung;
     private JButton m_jbAbbrechen;
@@ -59,8 +59,8 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
         }
 
         setTitle(ho.core.model.HOVerwaltung.instance().getLanguageString("AufstellungSpeichern"));
-        m_jbOK = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Speichern"));
-        m_jbAbbrechen = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+        m_jbOK = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.save"));
+        m_jbAbbrechen = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
 
         setContentPane(new ho.core.gui.comp.panel.ImagePanel());
         getContentPane().setLayout(new GridLayout(2, 2, 4, 4));
@@ -110,13 +110,11 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup(m_jtfAufstellungsName.getText());
 				FileExtensionManager.extractLineup(m_jtfAufstellungsName.getText());
                 setVisible(false);
-                
+
             } else {
                 final int value = JOptionPane.showConfirmDialog(this,
                                                                 ho.core.model.HOVerwaltung.instance().getLanguageString("Aufstellung_NameSchonVorhanden")
-                                                                + " "
-                                                                + ho.core.model.HOVerwaltung.instance().getLanguageString("Ueberschreiben")
-                                                                + "?", "", JOptionPane.YES_NO_OPTION);
+                                                                , "", JOptionPane.YES_NO_OPTION);
 
                 if (value == JOptionPane.YES_OPTION) {
                     m_clAufstellung.save(m_jtfAufstellungsName.getText());
@@ -132,10 +130,10 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
                                                                                                      .getText(),
                                                                                                      m_clAufstellung
                                                                                                      .duplicate()));
-					
+
 					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup(m_jtfAufstellungsName.getText());
 					FileExtensionManager.extractLineup(m_jtfAufstellungsName.getText());
-					
+
 					HOMainFrame.instance().getAufstellungsPanel().update(); // Should prepare it for the new lineup
 					setVisible(false);
                 }

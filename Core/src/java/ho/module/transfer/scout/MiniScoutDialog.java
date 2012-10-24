@@ -50,9 +50,9 @@ class MiniScoutDialog extends JFrame implements ItemListener, ActionListener, Fo
 	private static final long serialVersionUID = -2092930481559683730L;
 
     //~ Instance fields ----------------------------------------------------------------------------
-	private JButton jbApply = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JButton jbApplyScout = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Uebernehmen"));
-    private JButton jbCancel = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Abbrechen"));
+	private JButton jbApply = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.ok"));
+    private JButton jbApplyScout = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.apply"));
+    private JButton jbCancel = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
     private JComboBox jcbAttacking = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
     private JComboBox jcbDefense = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
     private JComboBox jcbExperience = new JComboBox(ho.core.constants.player.PlayerAbility.ITEMS);
