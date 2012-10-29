@@ -16,7 +16,10 @@ public class DateTimeTableCellRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 			boolean hasFocus, int row, int column) {
 
-		String dateString = this.format.format((Date) value);
+		String dateString = "";
+		if (value != null) {
+			dateString = this.format.format((Date) value);
+		}
 		return super.getTableCellRendererComponent(table, dateString, isSelected, hasFocus, row,
 				column);
 	}

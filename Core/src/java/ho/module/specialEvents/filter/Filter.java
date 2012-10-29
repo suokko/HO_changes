@@ -1,4 +1,6 @@
-package ho.module.specialEvents;
+package ho.module.specialEvents.filter;
+
+import ho.module.specialEvents.SeasonFilterValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,10 @@ public class Filter {
 	// season
 	private SeasonFilterValue seasonFilterValue = SeasonFilterValue.ALL_SEASONS;
 	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
+	// player
+	private Integer playerId;
+	private boolean showCurrentPlayersOnly;
+	private boolean showOwnPlayersOnly;
 
 	public boolean isShowMatchesWithSEOnly() {
 		return showMatchesWithSEOnly;
@@ -175,6 +181,41 @@ public class Filter {
 	public void setSeasonFilterValue(SeasonFilterValue seasonFilterValue) {
 		if (this.seasonFilterValue != seasonFilterValue) {
 			this.seasonFilterValue = seasonFilterValue;
+			fireFilterChanged();
+		}
+	}
+
+	public Integer getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(Integer playerId) {
+		if ((this.playerId != null && playerId == null)
+				|| (this.playerId == null && playerId != null)
+				|| this.playerId.compareTo(playerId) != 0) {
+			this.playerId = playerId;
+			fireFilterChanged();
+		}
+	}
+
+	public boolean isShowCurrentPlayersOnly() {
+		return showCurrentPlayersOnly;
+	}
+
+	public void setShowCurrentPlayersOnly(boolean showCurrentPlayersOnly) {
+		if (this.showCurrentPlayersOnly != showCurrentPlayersOnly) {
+			this.showCurrentPlayersOnly = showCurrentPlayersOnly;
+			fireFilterChanged();
+		}
+	}
+
+	public boolean isShowOwnPlayersOnly() {
+		return showOwnPlayersOnly;
+	}
+
+	public void setShowOwnPlayersOnly(boolean showOwnPlayersOnly) {
+		if (this.showOwnPlayersOnly != showOwnPlayersOnly) {
+			this.showOwnPlayersOnly = showOwnPlayersOnly;
 			fireFilterChanged();
 		}
 	}

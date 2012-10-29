@@ -1,4 +1,4 @@
-package ho.module.specialEvents;
+package ho.module.specialEvents.table;
 
 import ho.core.util.StringUtils;
 
@@ -30,11 +30,14 @@ public class PlayerNameTableCellRenderer extends DefaultTableCellRenderer {
 				label.setForeground(Color.RED);
 			} else if (rType.equals("#")) {
 				label.setForeground(Color.LIGHT_GRAY);
+			} else {
+				label.setForeground(Color.BLACK);
 			}
 		} else {
 			label.setForeground(Color.BLACK);
 			label.setText("");
 		}
+		RowColorDecorator.decorate(table, row, label);
 		return label;
 	}
 

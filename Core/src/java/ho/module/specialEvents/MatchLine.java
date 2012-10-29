@@ -7,6 +7,7 @@ public class MatchLine {
 	private Match match;
 	private MatchHighlight matchHighlight;
 	private boolean isMatchHeaderLine;
+	private int matchCount;	
 
 	public Match getMatch() {
 		return match;
@@ -32,4 +33,11 @@ public class MatchLine {
 		this.matchHighlight = matchHighlight;
 	}
 
+	public int getMatchCount() {
+		return matchCount;
+	}
+
+	public void setMatchCount(int matchCount) {
+		this.matchCount = matchCount;
+	}
 }

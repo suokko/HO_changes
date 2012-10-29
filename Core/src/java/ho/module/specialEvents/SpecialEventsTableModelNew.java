@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-class SpecialEventsTableModelNew extends AbstractTableModel {
+public class SpecialEventsTableModel extends AbstractTableModel {
 
 	static final int MATCHDATECOLUMN = 0;
 	static final int MATCHIDCOLUMN = 1;
@@ -110,7 +110,7 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 15;
+		return 14;
 	}
 
 	@Override
@@ -136,13 +136,13 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 		case MATCHIDCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("GameID");
 		case HOMETACTICCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("ls.team.tactic");
+			return HOVerwaltung.instance().getLanguageString("Taktik");
 		case HOMETEAMCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Heim");
 		case AWAYTEAMCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Gast");
 		case AWAYTACTICCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("ls.team.tactic");
+			return HOVerwaltung.instance().getLanguageString("Taktik");
 		case MINUTECOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Min");
 		case SETEXTCOLUMN:
@@ -159,5 +159,9 @@ class SpecialEventsTableModelNew extends AbstractTableModel {
 		default:
 			return super.getColumnName(columnIndex);
 		}
+	}
+	
+	public MatchLine getMatchRow(int index) {
+		return this.data.get(index);
 	}
 }

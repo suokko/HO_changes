@@ -1,4 +1,4 @@
-package ho.module.specialEvents;
+package ho.module.specialEvents.table;
 
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
@@ -27,7 +27,8 @@ public class TacticsTableCellRenderer extends DefaultTableCellRenderer {
 				tactic = HOVerwaltung.instance().getLanguageString("specialEvents.tactic.pressing");
 				break;
 			case IMatchDetails.TAKTIK_KONTER:
-				tactic = HOVerwaltung.instance().getLanguageString("specialEvents.tactic.counterattack");
+				tactic = HOVerwaltung.instance().getLanguageString(
+						"specialEvents.tactic.counterattack");
 				break;
 			case IMatchDetails.TAKTIK_MIDDLE:
 				tactic = HOVerwaltung.instance().getLanguageString("specialEvents.tactic.middle");
@@ -39,15 +40,18 @@ public class TacticsTableCellRenderer extends DefaultTableCellRenderer {
 				tactic = HOVerwaltung.instance().getLanguageString("specialEvents.tactic.creative");
 				break;
 			case IMatchDetails.TAKTIK_LONGSHOTS:
-				tactic = HOVerwaltung.instance().getLanguageString("specialEvents.tactic.longshots");
+				tactic = HOVerwaltung.instance()
+						.getLanguageString("specialEvents.tactic.longshots");
 				break;
 			default:
 				tactic = " ? " + tacticId;
 			}
 		}
 
-		return super
-				.getTableCellRendererComponent(table, tactic, isSelected, hasFocus, row, column);
+		Component component = super.getTableCellRendererComponent(table, tactic, isSelected,
+				hasFocus, row, column);
+		RowColorDecorator.decorate(table, row, component);
+		return component;
 	}
 
 }

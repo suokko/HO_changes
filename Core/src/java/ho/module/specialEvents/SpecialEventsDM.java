@@ -1,49 +1,29 @@
 package ho.module.specialEvents;
 
 import ho.core.db.DBManager;
-import ho.core.gui.theme.HOIconName;
-import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchKurzInfo;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.match.Weather;
+import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
-import ho.module.matches.SpielHighlightPanel;
+import ho.module.specialEvents.filter.Filter;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-
-class SpecialEventsDM {
-	private static ImageIcon goalIcon;
-	private static ImageIcon chanceIcon;
-	private static ImageIcon leerIcon;
-	private static ImageIcon homeEventIcon;
-	private static ImageIcon guestEventIcon;
-	private static ImageIcon wingIcon;
-	private static ImageIcon babyIcon;
-	private static ImageIcon homeEventIconNegative;
-	private static ImageIcon guestEventIconNegative;
-	private static ImageIcon ballZaubererIcon;
-	private static ImageIcon schnellIcon;
-	private static ImageIcon unberechenbarIcon;
-	private static ImageIcon cornerIcon;
-	private static ImageIcon cannonIcon;
-	private static ImageIcon downIcon;
-	private static ImageIcon oldmanIcon;
-	private static ImageIcon counterIcon;
-	private static ImageIcon weatherPositiveIcon;
-	private static ImageIcon weatherNegativeIcon;
+public class SpecialEventsDM {
 	private int teamId;
 	private Vector<String> highlightText;
 
@@ -56,102 +36,116 @@ class SpecialEventsDM {
 	public static final int PENALTY = 6;
 	private static final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM,
 			Locale.getDefault());
-	private final Filter filter;
+	private final DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public SpecialEventsDM(Filter filter) {
-		this.filter = filter;
-		homeEventIcon = ThemeManager.getIcon(HOIconName.ARROW_RIGHT1);
-		guestEventIcon = ThemeManager.getIcon(HOIconName.ARROW_LEFT1);
-		homeEventIconNegative = ThemeManager.getIcon(HOIconName.ARROW_RIGHT2);
-		guestEventIconNegative = ThemeManager.getIcon(HOIconName.ARROW_LEFT2);
-		goalIcon = ThemeManager.getIcon(HOIconName.GOAL);
-		wingIcon = ThemeManager.getIcon(HOIconName.GOAL_RIGHT);
-		babyIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);
-		chanceIcon = ThemeManager.getIcon(HOIconName.NOGOAL);
-		leerIcon = ThemeManager.getIcon(HOIconName.EMPTY);
-		cornerIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);
-		cannonIcon = ThemeManager.getIcon(HOIconName.GOAL_LONGSHOT);
-		downIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);
-		oldmanIcon = ThemeManager.getIcon(HOIconName.GOAL_SPECIAL);
-		counterIcon = ThemeManager.getIcon(HOIconName.GOAL_COUNTER);
-		ballZaubererIcon = ThemeManager.getIcon(HOIconName.SPECIAL[1]);
-		schnellIcon = ThemeManager.getIcon(HOIconName.SPECIAL[2]);
-		unberechenbarIcon = ThemeManager.getIcon(HOIconName.SPECIAL[4]);
-		weatherPositiveIcon = ThemeManager.getIcon(HOIconName.WEATHER_EFFECT_GOOD);
-		weatherNegativeIcon = ThemeManager.getIcon(HOIconName.WEATHER_EFFECT_BAD);
+	public SpecialEventsDM() {
 		teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 	}
 
-	List<List<Object>> holeInfos(boolean allMatches, SeasonFilterValue period, boolean friendlies) {
-		List<List<Object>> data = new ArrayList<List<Object>>();
-		highlightText = new Vector<String>();
-		try {
-			List<MatchKurzInfo> kurzInfos = SpecialEventsDataAccess.getMatchKurzInfos(period,
-					friendlies);
-			int zInd = 1;
-			for (Iterator<MatchKurzInfo> iter = kurzInfos.iterator(); iter.hasNext();) {
-				MatchKurzInfo element = iter.next();
-				List<List<Object>> v = getMatchlines(element, allMatches);
+	List<MatchLine> getLines(Filter filter) {
+		List<MatchLine> lines = new ArrayList<MatchLine>();
 
-				if (v != null && v.size() > 0) {
-					for (int j = 0; j < v.size(); j++) {
-						if (j == 0) {
-							zInd *= -1;
-						}
-						List<Object> vTemp = v.get(j);
-						vTemp.set(SpecialEventsTableModel.HIDDENCOLUMN,
-								(new Integer(zInd)).toString());
-						data.add(vTemp);
+		MatchKurzInfo[] matches = getMatches(filter);
+		if (matches != null) {
+			int matchCount = 1;
+			for (MatchKurzInfo matchKurzInfo : matches) {
+				List<MatchLine> rows = getMatchLines(matchKurzInfo, filter);
+				if (rows != null && !rows.isEmpty()) {
+					for (MatchLine row : rows) {
+						row.setMatchCount(matchCount);
 					}
+					lines.addAll(rows);
+					matchCount++;
 				}
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			showDebug(e.toString());
-		}
-		return data;
-	}
-
-	List<MatchLine> getLines() {
-		List<MatchLine> lines = new ArrayList<MatchLine>();
-		MatchKurzInfo modelKurzInfos[] = DBManager.instance().getMatchesKurzInfo(
-				HOVerwaltung.instance().getModel().getBasics().getTeamId(), MatchKurzInfo.FINISHED);
-
-		for (MatchKurzInfo matchKurzInfo : modelKurzInfos) {
-			lines.addAll(getMatchLines(matchKurzInfo));
 		}
 
 		return lines;
 	}
 
-	private List<MatchLine> getMatchLines(MatchKurzInfo kurzInfos) {
+	MatchKurzInfo[] getMatches(Filter filter) {
 		List<MatchLine> matchLines = new ArrayList<MatchLine>();
+		StringBuilder whereClause = new StringBuilder(" WHERE ");
 
-		// the matchline
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		whereClause.append(" (GastID=" + teamId + " OR HeimID=" + teamId + ") ");
+		whereClause.append(" AND (Status=").append(MatchKurzInfo.FINISHED).append(")");
+
+		if (filter.getSeasonFilterValue() != SeasonFilterValue.ALL_SEASONS) {
+			Timestamp datumAb = getDatumAb(filter.getSeasonFilterValue());
+			whereClause.append(" AND (MATCHDATE > '").append(this.dateformat.format(datumAb));
+			whereClause.append("')");
+		}
+
+		List<Integer> matchTypes = new ArrayList<Integer>();
+		if (filter.isShowFriendlies()) {
+			matchTypes.add(MatchType.FRIENDLYNORMAL.getId());
+			matchTypes.add(MatchType.FRIENDLYCUPRULES.getId());
+			matchTypes.add(MatchType.INTFRIENDLYCUPRULES.getId());
+			matchTypes.add(MatchType.INTFRIENDLYNORMAL.getId());
+		}
+		if (filter.isShowCup()) {
+			matchTypes.add(MatchType.CUP.getId());
+		}
+		if (filter.isShowFriendlies()) {
+			matchTypes.add(MatchType.CUP.getId());
+		}
+		if (filter.isShowLeague()) {
+			matchTypes.add(MatchType.LEAGUE.getId());
+		}
+		if (filter.isShowMasters()) {
+			matchTypes.add(MatchType.MASTERS.getId());
+		}
+		if (filter.isShowTournament()) {
+			matchTypes.add(MatchType.TOURNAMENTGROUP.getId());
+			matchTypes.add(MatchType.TOURNAMENTPLAYOFF.getId());
+		}
+
+		if (matchTypes.size() > 0) {
+			whereClause.append(" AND (MatchTyp IN (");
+			for (Integer id : matchTypes) {
+				whereClause.append(id).append(',');
+			}
+			// remove last ','
+			whereClause.deleteCharAt(whereClause.length() - 1);
+			whereClause.append("))");
+		} else {
+			// NO matches at all
+			return null;
+		}
+		whereClause.append(" ORDER BY MatchDate DESC");
+
+		return DBManager.instance().getMatchesKurzInfo(whereClause.toString());
+	}
+
+	private List<MatchLine> getMatchLines(MatchKurzInfo kurzInfos, Filter filter) {
+		List<MatchLine> matchLines = new ArrayList<MatchLine>();
 		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
-		Match match = new Match();
-		match.setHostingTeam(kurzInfos.getHeimName());
-		match.setHostingTeamId(kurzInfos.getHeimID());
-		match.setHostingTeamTactic(details.getHomeTacticType());
-		match.setMatchDate(new Date(kurzInfos.getMatchDateAsTimestamp().getTime()));
-		match.setMatchId(kurzInfos.getMatchID());
-		match.setMatchResult(String.valueOf(kurzInfos.getHeimTore()) + " - "
-				+ String.valueOf(kurzInfos.getGastTore()));
-		match.setVisitingTeam(kurzInfos.getGastName());
-		match.setVisitingTeamId(kurzInfos.getGastID());
-		match.setVisitingTeamTactic(details.getGuestTacticType());
-		match.setWeather(Weather.getById(details.getWetterId()));
+		List<MatchHighlight> highlights = getMatchHighlights(details, filter);
 
-		List<MatchHighlight> highlights = details.getHighlights();
-		boolean isFirst = true;
-		MatchLine matchLine = new MatchLine();
-		matchLine.setMatch(match);
-		matchLine.setMatchHeaderLine(true);
-		matchLines.add(matchLine);
+		if (!highlights.isEmpty() || !filter.isShowMatchesWithSEOnly()) {
+			// the matchline
+			Match match = new Match();
+			match.setHostingTeam(kurzInfos.getHeimName());
+			match.setHostingTeamId(kurzInfos.getHeimID());
+			match.setHostingTeamTactic(details.getHomeTacticType());
+			match.setMatchDate(new Date(kurzInfos.getMatchDateAsTimestamp().getTime()));
+			match.setMatchId(kurzInfos.getMatchID());
+			match.setMatchResult(String.valueOf(kurzInfos.getHeimTore()) + " - "
+					+ String.valueOf(kurzInfos.getGastTore()));
+			match.setVisitingTeam(kurzInfos.getGastName());
+			match.setVisitingTeamId(kurzInfos.getGastID());
+			match.setVisitingTeamTactic(details.getGuestTacticType());
+			match.setWeather(Weather.getById(details.getWetterId()));
+			match.setMatchType(kurzInfos.getMatchTyp());
 
-		for (MatchHighlight highlight : highlights) {
-			if (checkForSE(highlight)) {
+			boolean isFirst = true;
+			MatchLine matchLine = new MatchLine();
+			matchLine.setMatch(match);
+			matchLine.setMatchHeaderLine(true);
+			matchLines.add(matchLine);
+
+			for (MatchHighlight highlight : highlights) {
 				if (!isFirst) {
 					matchLine = new MatchLine();
 					matchLine.setMatch(match);
@@ -162,232 +156,24 @@ class SpecialEventsDM {
 				isFirst = false;
 			}
 		}
-
 		return matchLines;
 	}
 
-	private List<List<Object>> getMatchlines(MatchKurzInfo kurzInfos, boolean allMatches) {
-		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
-		String datum = getDateAsString(kurzInfos.getMatchDateAsTimestamp());
-		Integer matchId = new Integer(kurzInfos.getMatchID());
-		String heimTaktik = getTaktik(details.getHomeTacticType());
-		String heimName = kurzInfos.getHeimName();
-		String ergebnis = (new Integer(kurzInfos.getHeimTore())).toString() + " - "
-				+ (new Integer(kurzInfos.getGastTore())).toString();
-		int heimId = kurzInfos.getHeimID();
-		String gastName = kurzInfos.getGastName();
-		int gastId = kurzInfos.getGastID();
-		String gastTaktik = getTaktik(details.getGuestTacticType());
-		Vector<MatchHighlight> vHighlights = details.getHighlights();
-		Vector<MatchHighlight> seHighlights = new Vector<MatchHighlight>();
-		int weather = details.getWetterId();
+	private List<MatchHighlight> getMatchHighlights(Matchdetails details, Filter filter) {
+		List<MatchHighlight> allHighlights = details.getHighlights();
+		List<MatchHighlight> filteredHighlights = new ArrayList<MatchHighlight>();
 
-		for (Iterator<MatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
-			MatchHighlight highlight = iter.next();
-			if (checkForSE(highlight)) {
-				seHighlights.add(highlight);
+		for (MatchHighlight highlight : allHighlights) {
+			if (checkForSE(highlight, filter)) {
+				filteredHighlights.add(highlight);
 			}
 		}
 
-		List<List<Object>> lines = new ArrayList<List<Object>>();
-		if (allMatches && seHighlights.size() == 0) {
-			List<Object> allNoSELine = new ArrayList<Object>();
-			allNoSELine.add(datum);
-			allNoSELine.add(matchId);
-			allNoSELine.add(heimTaktik);
-			allNoSELine.add(null);
-			allNoSELine.add(heimName);
-			allNoSELine.add(ergebnis);
-			allNoSELine.add(gastName);
-			allNoSELine.add(null);
-			allNoSELine.add(gastTaktik);
-			allNoSELine.add("");
-			allNoSELine.add("");
-			allNoSELine.add("");
-			allNoSELine.add("");
-			allNoSELine.add("");
-			allNoSELine.add("");
-			lines.add(allNoSELine);
-			highlightText.add("");
-		} else {
-			int lCounter = 0;
-			for (Iterator<MatchHighlight> iter = vHighlights.iterator(); iter.hasNext();) {
-				MatchHighlight highlight = iter.next();
-				String se = format_Highlights(highlight);
-				if (se != null && !se.equals("")) {
-					Vector<Object> singleLine = new Vector<Object>();
-					if (++lCounter == 1) {
-						singleLine.add(datum);
-						singleLine.add(matchId);
-						singleLine.add(heimTaktik);
-						singleLine.add(getOwnerIcon(highlight, true, heimId, gastId));
-						singleLine.add(heimName);
-						singleLine.add(ergebnis);
-						singleLine.add(gastName);
-						singleLine.add(getOwnerIcon(highlight, false, heimId, gastId));
-						singleLine.add(gastTaktik);
-					} else {
-						singleLine.add("");
-						singleLine.add("");
-						singleLine.add("");
-						singleLine.add(getOwnerIcon(highlight, true, heimId, gastId));
-						singleLine.add("");
-						singleLine.add("");
-						singleLine.add("");
-						singleLine.add(getOwnerIcon(highlight, false, heimId, gastId));
-						singleLine.add("");
-					}
-					singleLine.add((new Integer(highlight.getMinute())).toString());
-					if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
-						singleLine.add(goalIcon);
-					} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
-						singleLine.add(chanceIcon);
-					} else if (isWeatherSE(highlight)) {
-						singleLine.add(ThemeManager.getIcon(HOIconName.WEATHER[weather]));
-					} else {
-						singleLine.add(null);
-					}
-					singleLine.add(getEventTypIcon(highlight));
-					singleLine.add(se);
-					singleLine.add(getSpielerName(highlight));
-					singleLine.add("");
-					lines.add(singleLine);
-					highlightText.add(highlight.getEventText());
-				}
-			}
-
-		}
-		return lines;
+		return filteredHighlights;
 	}
 
 	private String getDateAsString(Timestamp date) {
 		return DF.format(date);
-	}
-
-	public static ImageIcon getEventTypIcon(MatchHighlight highlight) {
-		if (isPositiveWeatherSE(highlight)) {
-			return weatherPositiveIcon;
-		} else if (isNegativeWeatherSE(highlight)) {
-			return weatherNegativeIcon;
-		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
-				|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
-			// Non-weather SE
-			switch (highlight.getHighlightSubTyp()) {
-			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
-				return cannonIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
-				return unberechenbarIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
-				return schnellIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
-				return downIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
-				return cornerIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
-				return oldmanIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
-				return babyIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
-				return wingIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-				return ballZaubererIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
-			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
-			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
-			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
-			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-				return counterIcon;
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_4:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_5:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
-			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_4:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_5:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
-			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
-			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-			case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
-				return SpielHighlightPanel.getImageIcon4SpielHighlight(
-						IMatchHighlight.HIGHLIGHT_ERFOLGREICH, highlight.getHighlightSubTyp()); // Always
-																								// return
-																								// the
-																								// icon
-																								// for
-																								// "SUCCESS"
-																								// because
-																								// we
-																								// only
-																								// want
-																								// the
-																								// chance
-																								// type
-																								// icon
-			}
-		}
-		return leerIcon;
-
-	}
-
-	public static ImageIcon getOwnerIcon(MatchHighlight highlight, boolean home, int heimId,
-			int gastId) {
-		ImageIcon icon = null;
-		if (home) {
-			// Create home icon
-			if (highlight.getTeamID() == heimId) {
-				if (isPositiveWeatherSE(highlight)) {
-					// Positive weather SE for home team
-					icon = homeEventIcon;
-				} else if (isNegativeWeatherSE(highlight)) {
-					// Negative weather SE for home team
-					icon = homeEventIconNegative;
-				} else if (!isNegativeSE(highlight)) {
-					// Positive non-weather SE for home
-					icon = homeEventIcon;
-				}
-			} else {
-				if (!isWeatherSE(highlight) && isNegativeSE(highlight)) {
-					// Negative non-weather SE against home team
-					icon = homeEventIconNegative;
-				}
-			}
-		} else {
-			// Create guest icon
-			if (highlight.getTeamID() == gastId) {
-				if (isPositiveWeatherSE(highlight)) {
-					// Positive weather SE for guest team
-					icon = guestEventIcon;
-				} else if (isNegativeWeatherSE(highlight)) {
-					// Negative weather SE for guest team
-					icon = guestEventIconNegative;
-				} else if (!isNegativeSE(highlight)) {
-					// Positive non-weather SE for guest
-					icon = guestEventIcon;
-				}
-			} else {
-				if (!isWeatherSE(highlight) && isNegativeSE(highlight)) {
-					// Negative non-weather SE against guest team
-					icon = guestEventIconNegative;
-				}
-			}
-		}
-
-		return icon;
 	}
 
 	public static boolean isNegativeSE(MatchHighlight highlight) {
@@ -406,7 +192,7 @@ class SpecialEventsDM {
 		return false;
 	}
 
-	private static int getEventType(MatchHighlight highlight) {
+	public static int getEventType(MatchHighlight highlight) {
 		if (isWeatherSE(highlight)) {
 			return WEATHERSE;
 		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
@@ -462,25 +248,69 @@ class SpecialEventsDM {
 		return -1;
 	}
 
-	private boolean checkForSE(MatchHighlight highlight) {
+	private boolean checkForSE(MatchHighlight highlight, Filter filter) {
 		int eventType = getEventType(highlight);
 		if (eventType < 0) {
 			return false;
-		} else if (!this.filter.isShowSpecialitySE() && eventType == SPECIALTYSE) {
+		} else if (!filter.isShowSpecialitySE() && eventType == SPECIALTYSE) {
 			return false;
-		} else if (!this.filter.isShowWeatherSE() && eventType == WEATHERSE) {
+		} else if (!filter.isShowWeatherSE() && eventType == WEATHERSE) {
 			return false;
-		} else if (!this.filter.isShowCounterAttack() && eventType == COUNTER) {
+		} else if (!filter.isShowCounterAttack() && eventType == COUNTER) {
 			return false;
-		} else if (!this.filter.isShowFreeKick() && eventType == FREEKICK) {
+		} else if (!filter.isShowFreeKick() && eventType == FREEKICK) {
 			return false;
-		} else if (!this.filter.isShowPenalty() && eventType == PENALTY) {
+		} else if (!filter.isShowPenalty() && eventType == PENALTY) {
 			return false;
-		} else if (!this.filter.isShowFreeKickIndirect() && eventType == IFK) {
+		} else if (!filter.isShowFreeKickIndirect() && eventType == IFK) {
 			return false;
-		} else if (!this.filter.isShowLongShot() && eventType == LONGSHOT) {
+		} else if (!filter.isShowLongShot() && eventType == LONGSHOT) {
 			return false;
 		}
+
+		if (filter.getPlayerId() != null) {
+			if (!isInvolved(filter.getPlayerId(), highlight)) {
+				return false;
+			}
+		}
+
+		boolean found = false;
+		if (filter.isShowCurrentPlayersOnly()) {
+			List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
+			if (filter.isShowCurrentPlayersOnly()) {
+				for (Spieler player : oldplayers) {
+					if (isInvolved(player.getSpielerID(), highlight)) {
+						// player is in "old" players -> do not show
+						return false;
+					}
+				}
+			}
+		}
+		
+		if (filter.isShowOwnPlayersOnly()) {
+			List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+			boolean playerFound = false;
+			for (Spieler player : players) {
+				if (isInvolved(player.getSpielerID(), highlight)) {
+					// player found in list of current players
+					playerFound = true;
+				}
+			}
+
+			if (!playerFound && !filter.isShowCurrentPlayersOnly()) {
+				List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
+				for (Spieler player : oldplayers) {
+					if (isInvolved(player.getSpielerID(), highlight)) {
+						// player found in list of old players
+						playerFound = true;
+					}
+				}
+			}
+			if (!playerFound) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -510,9 +340,9 @@ class SpecialEventsDM {
 		return false;
 	}
 
-	private String format_Highlights(MatchHighlight highlight) {
+	private String format_Highlights(MatchHighlight highlight, Filter filter) {
 		String rString = "";
-		if (checkForSE(highlight)) {
+		if (checkForSE(highlight, filter)) {
 			rString = getSEText(highlight);
 		}
 		return rString;
@@ -657,6 +487,77 @@ class SpecialEventsDM {
 		}
 	}
 
+	private boolean isInvolved(int playerId, MatchHighlight highlight) {
+		if (isWeatherSE(highlight)) {
+			return playerId == highlight.getSpielerID();
+		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
+				|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
+			switch (highlight.getHighlightSubTyp()) {
+			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
+				return (playerId == highlight.getGehilfeID() || playerId == highlight
+						.getSpielerID());
+			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
+			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
+			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
+			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
+			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_4:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_5:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
+			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_4:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_5:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
+			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
+			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
+				return playerId == highlight.getSpielerID();
+			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
+				return playerId == highlight.getSpielerID();
+			}
+		}
+		return false;
+	}
+
 	private static String findName(MatchHighlight highlight) {
 		if (isWeatherSE(highlight)) {
 			return highlight.getSpielerName();
@@ -693,7 +594,6 @@ class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
 				return highlight.getSpielerName();
-
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -703,7 +603,6 @@ class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
 				return highlight.getSpielerName();
-
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -713,11 +612,9 @@ class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
 				return highlight.getSpielerName();
-
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
 				return highlight.getSpielerName();
-
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
 				return highlight.getSpielerName();
 			}
@@ -731,26 +628,25 @@ class SpecialEventsDM {
 		if (highlight.getTeamID() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
 			// Our team has an SE
 			if (!isNegativeSE(highlight)) {
-				name = findName(highlight) + "|*"; // positive SE (our player)
-													// -> black
+				// positive SE (our player) -> black
+				name = findName(highlight) + "|*";
 			} else if (isNegativeWeatherSE(highlight)) {
-				name = findName(highlight) + "|-"; // negative weather SE (our
-													// player) -> red
+				// negative weather SE (our player) -> red
+				name = findName(highlight) + "|-";
 			} else {
 				// Negative SE of other Team
-				name = highlight.getGehilfeName() + "|#"; // negative SE (other
-															// player helps our
-															// team) -> gray
+				// negative SE (other player helps our team) -> gray
+				name = highlight.getGehilfeName() + "|#";
 			}
 		} else {
 			// other team has an SE
+
 			if (!isWeatherSE(highlight) && isNegativeSE(highlight)) {
-				name = highlight.getGehilfeName() + "|-"; // negative SE (our
-															// player helps the
-															// other team) ->
-															// red
+				// negative SE (our player helps the other team) -> red
+				name = highlight.getGehilfeName() + "|-";
 			} else {
-				name = findName(highlight) + "|#"; // SE from other team -> gray
+				// SE from other team -> gray
+				name = findName(highlight) + "|#";
 			}
 		}
 		return name;
@@ -762,5 +658,27 @@ class SpecialEventsDM {
 
 	public Vector<String> getHighlightText() {
 		return highlightText;
+	}
+
+	private static Timestamp getDatumAb(SeasonFilterValue period) {
+		Date date = null;
+		if (period.getId() == 1) {
+			return null;
+		}
+		Calendar cal = Calendar.getInstance();
+		// Date toDay = cal.getTime();
+		int week = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
+		int tag = cal.get(7);
+		int corrTag = 0;
+		if (tag != 7) {
+			corrTag = tag;
+		}
+		cal.add(7, -corrTag);
+		cal.add(3, -(week - 1));
+		if (period.getId() == 2) {
+			cal.add(3, -16);
+		}
+		date = cal.getTime();
+		return new Timestamp(date.getTime());
 	}
 }

@@ -1,6 +1,7 @@
 package ho.module.specialEvents;
 
 import ho.core.model.match.MatchHighlight;
+import ho.core.model.match.MatchType;
 import ho.core.model.match.Weather;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Match {
 	private String visitingTeam;
 	private String matchResult;
 	private MatchHighlight matchHighlight;
+	private MatchType matchType;
 
 	public Date getMatchDate() {
 		return matchDate;
@@ -105,5 +107,13 @@ public class Match {
 
 	public void setVisitingTeamId(int visitingTeamId) {
 		this.visitingTeamId = visitingTeamId;
+	}
+
+	public MatchType getMatchType() {
+		return matchType;
+	}
+
+	public void setMatchType(MatchType matchType) {
+		this.matchType = matchType;
 	}
 }

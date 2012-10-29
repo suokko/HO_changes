@@ -1,9 +1,11 @@
-package ho.module.specialEvents;
+package ho.module.specialEvents.table;
 
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
+import ho.module.specialEvents.MatchLine;
+import ho.module.specialEvents.SpecialEventsDM;
 
 import java.awt.Component;
 
@@ -24,7 +26,7 @@ public class ChanceTableCellRenderer extends DefaultTableCellRenderer {
 				hasFocus, row, column);
 
 		Icon icon = null;
-		MatchLine matchRow = (MatchLine)value;
+		MatchLine matchRow = (MatchLine) value;
 		MatchHighlight highlight = matchRow.getMatchHighlight();
 		if (highlight != null) {
 			if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {
@@ -32,10 +34,12 @@ public class ChanceTableCellRenderer extends DefaultTableCellRenderer {
 			} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
 				icon = ThemeManager.getIcon(HOIconName.NOGOAL);
 			} else if (SpecialEventsDM.isWeatherSE(highlight)) {
-				icon = ThemeManager.getIcon(HOIconName.WEATHER[matchRow.getMatch().getWeather().getId()]);
+				icon = ThemeManager.getIcon(HOIconName.WEATHER[matchRow.getMatch().getWeather()
+						.getId()]);
 			}
 		}
 		component.setIcon(icon);
+		RowColorDecorator.decorate(table, row, component);
 		return component;
 	}
 

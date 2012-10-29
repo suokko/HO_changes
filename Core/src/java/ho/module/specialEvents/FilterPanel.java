@@ -2,6 +2,8 @@ package ho.module.specialEvents;
 
 import ho.core.datatype.CBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.player.Spieler;
+import ho.module.specialEvents.filter.Filter;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,14 +12,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class FilterPanelNew extends JPanel {
+public class FilterPanel extends JPanel {
 
 	private static final long serialVersionUID = 6299290138063653349L;
 	// matches
@@ -37,16 +45,20 @@ public class FilterPanelNew extends JPanel {
 	private JCheckBox freeKickIndirectSECheckBox;
 	private JCheckBox penaltySECheckBox;
 	private JCheckBox longshotSECheckBox;
+	// player
+	private JComboBox playerComboBox;
+	private JCheckBox currentPlayersCheckBox;
+	private JCheckBox ownPlayersInvolvedCheckBox;
 	private final Filter filter;
 
-	public FilterPanelNew(Filter filter) {
+	public FilterPanel(Filter filter) {
 		this.filter = filter;
 		initComponents();
 		initFromFilter();
 		addListeners();
 	}
 
-	private void initFromFilter() {		
+	private void initFromFilter() {
 		SeasonFilterValue period = this.filter.getSeasonFilterValue();
 		CBItem itemToSelect = null;
 		if (period != null) {
@@ -60,7 +72,7 @@ public class FilterPanelNew extends JPanel {
 			}
 		}
 		this.seasonComboBox.setSelectedItem(itemToSelect);
-		
+
 		this.onlySEMatchesCheckBox.setSelected(this.filter.isShowMatchesWithSEOnly());
 		this.friendliesCheckBox.setSelected(this.filter.isShowFriendlies());
 		this.leagueCheckBox.setSelected(this.filter.isShowLeague());
@@ -74,6 +86,10 @@ public class FilterPanelNew extends JPanel {
 		this.freeKickIndirectSECheckBox.setSelected(this.filter.isShowFreeKickIndirect());
 		this.penaltySECheckBox.setSelected(this.filter.isShowPenalty());
 		this.longshotSECheckBox.setSelected(this.filter.isShowLongShot());
+
+		this.currentPlayersCheckBox.setSelected(this.filter.isShowCurrentPlayersOnly());
+		updatePlayerComboBoxData(this.filter.isShowCurrentPlayersOnly());
+		this.playerComboBox.setSelectedItem(null);
 	}
 
 	private void initComponents() {
@@ -86,9 +102,10 @@ public class FilterPanelNew extends JPanel {
 		gbc.gridx = 1;
 		add(createMatchTypeFilterPanel(), gbc);
 		gbc.gridx = 2;
-		gbc.weightx = 1.0;
 		add(createSEFilterPanel(), gbc);
-
+		gbc.gridx = 3;
+		gbc.weightx = 1.0;
+		add(createPlayerFilterPanel(), gbc);
 	}
 
 	private void addListeners() {
@@ -139,6 +156,10 @@ public class FilterPanelNew extends JPanel {
 					filter.setShowPenalty(selected);
 				} else if (source == longshotSECheckBox) {
 					filter.setShowLongShot(selected);
+				} else if (source == ownPlayersInvolvedCheckBox) {
+					filter.setShowOwnPlayersOnly(selected);
+				} else if (source == currentPlayersCheckBox) {
+					filter.setShowCurrentPlayersOnly(selected);
 				}
 			}
 		};
@@ -156,14 +177,28 @@ public class FilterPanelNew extends JPanel {
 		this.freeKickIndirectSECheckBox.addItemListener(checkBoxListener);
 		this.penaltySECheckBox.addItemListener(checkBoxListener);
 		this.longshotSECheckBox.addItemListener(checkBoxListener);
+		this.ownPlayersInvolvedCheckBox.addItemListener(checkBoxListener);
+		this.currentPlayersCheckBox.addItemListener(checkBoxListener);
+
+		this.playerComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CBItem item = (CBItem) playerComboBox.getSelectedItem();
+				if (item == null || item.getId() == -1) {
+					filter.setPlayerId(null);
+				} else {
+					filter.setPlayerId(Integer.valueOf(item.getId()));
+				}
+			}
+		});
 	}
 
 	private JPanel createSEFilterPanel() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory
 				.createTitledBorder(getLangStr("specialEvents.filter.se.title")));
 
-		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(4, 4, 4, 4);
@@ -209,11 +244,10 @@ public class FilterPanelNew extends JPanel {
 	}
 
 	private JPanel createMatchFilterPanel() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory
 				.createTitledBorder(getLangStr("specialEvents.filter.matches.title")));
 
-		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(4, 4, 4, 4);
@@ -236,11 +270,10 @@ public class FilterPanelNew extends JPanel {
 	}
 
 	private JPanel createMatchTypeFilterPanel() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory
 				.createTitledBorder(getLangStr("specialEvents.filter.matchTypes.title")));
 
-		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(4, 4, 4, 4);
@@ -273,6 +306,33 @@ public class FilterPanelNew extends JPanel {
 		return panel;
 	}
 
+	private JPanel createPlayerFilterPanel() {
+		JPanel panel = new JPanel(new GridBagLayout());
+		// panel.setBorder(BorderFactory
+		// .createTitledBorder(getLangStr("specialEvents.filter.matchTypes.title")));
+		panel.setBorder(BorderFactory.createTitledBorder("Players"));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
+
+		JLabel playerLabel = new JLabel("Player");
+		panel.add(playerLabel, gbc);
+
+		this.playerComboBox = new JComboBox();
+		gbc.gridx = 1;
+		panel.add(this.playerComboBox, gbc);
+
+		this.currentPlayersCheckBox = new JCheckBox("current players");
+		gbc.gridy = 1;
+		panel.add(this.currentPlayersCheckBox, gbc);
+
+		this.ownPlayersInvolvedCheckBox = new JCheckBox("own players");
+		gbc.gridy = 2;
+		panel.add(this.ownPlayersInvolvedCheckBox, gbc);
+
+		return panel;
+	}
+
 	/**
 	 * Convenience method.
 	 * 
@@ -281,5 +341,34 @@ public class FilterPanelNew extends JPanel {
 	 */
 	private String getLangStr(String key) {
 		return HOVerwaltung.instance().getLanguageString(key);
+	}
+
+	private void updatePlayerComboBoxData(boolean currentPlayersOnly) {
+		Comparator<Spieler> comparator = new Comparator<Spieler>() {
+
+			@Override
+			public int compare(Spieler o1, Spieler o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		};
+
+		List<CBItem> playerItems = new ArrayList<CBItem>();
+		List<Spieler> players = new ArrayList<Spieler>(HOVerwaltung.instance().getModel()
+				.getAllSpieler());
+		Collections.sort(players, comparator);
+		for (Spieler player : players) {
+			playerItems.add(new CBItem(player.getName(), player.getSpielerID()));
+		}
+
+		if (!currentPlayersOnly) {
+			players = new ArrayList<Spieler>(HOVerwaltung.instance().getModel().getAllOldSpieler());
+			Collections.sort(players, comparator);
+			for (Spieler player : players) {
+				playerItems.add(new CBItem(player.getName(), player.getSpielerID()));
+			}
+		}
+
+		playerItems.add(0, new CBItem("", -1));
+		this.playerComboBox.setModel(new DefaultComboBoxModel(playerItems.toArray()));
 	}
 }

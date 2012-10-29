@@ -1,14 +1,39 @@
 package ho.module.specialEvents;
 
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTEAMCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.CHANCECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.EVENTTYPCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMEEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMETACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMETEAMCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHDATECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHIDCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.module.specialEvents.filter.Filter;
+import ho.module.specialEvents.filter.FilterChangeEvent;
+import ho.module.specialEvents.filter.FilterChangeListener;
+import ho.module.specialEvents.table.ChanceTableCellRenderer;
+import ho.module.specialEvents.table.DateTableCellRenderer;
+import ho.module.specialEvents.table.DefaultSETableCellRenderer;
+import ho.module.specialEvents.table.EventTypeTableCellRenderer;
+import ho.module.specialEvents.table.PlayerNameTableCellRenderer;
+import ho.module.specialEvents.table.SETypeTableCellRenderer;
+import ho.module.specialEvents.table.TacticsTableCellRenderer;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
@@ -35,63 +60,69 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 			}
 		});
 
-		JPanel filterPanel = new FilterPanelNew(filter);
-		specialEventsTable = new SpecialEventsTable(filter);
+		JPanel filterPanel = new FilterPanel(filter);
+		specialEventsTable = new SpecialEventsTable();
 		specialEventsTable.getTableHeader().setReorderingAllowed(false);
-		// specialEventsTable.setDefaultRenderer(Object.class, new
-		// SpecialEventsTableRenderer());
-		specialEventsTable.setModel(new SpecialEventsTableModelNew());
+		SpecialEventsTableModel tblModel = new SpecialEventsTableModel();
 
+		specialEventsTable.setModel(tblModel);
+		TableColumnModel columnModel = specialEventsTable.getColumnModel();
+		specialEventsTable.setDefaultRenderer(Object.class, new DefaultSETableCellRenderer());
 		TacticsTableCellRenderer tacticsTableCellRenderer = new TacticsTableCellRenderer();
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHDATECOLUMN)
-				.setPreferredWidth(66);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MATCHIDCOLUMN)
-				.setPreferredWidth(66);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETACTICCOLUMN)
-				.setPreferredWidth(37);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETACTICCOLUMN)
-				.setCellRenderer(tacticsTableCellRenderer);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMEEVENTCOLUMN)
-				.setPreferredWidth(20);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMEEVENTCOLUMN)
-				.setCellRenderer(new SETypeTableCellRenderer(false));
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HOMETEAMCOLUMN)
-				.setPreferredWidth(150);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.RESULTCOLUMN)
-				.setPreferredWidth(40);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYTEAMCOLUMN)
-				.setPreferredWidth(150);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYEVENTCOLUMN)
-				.setPreferredWidth(20);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYEVENTCOLUMN)
-				.setCellRenderer(new SETypeTableCellRenderer(true));
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYTACTICCOLUMN)
-				.setPreferredWidth(37);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.AWAYTACTICCOLUMN)
-				.setCellRenderer(tacticsTableCellRenderer);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.MINUTECOLUMN)
-				.setPreferredWidth(27);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.CHANCECOLUMN)
-				.setPreferredWidth(22);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.CHANCECOLUMN)
-				.setCellRenderer(new ChanceTableCellRenderer());
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
-				.setPreferredWidth(23);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.EVENTTYPCOLUMN)
-				.setCellRenderer(new EventTypeTableCellRenderer());
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.SETEXTCOLUMN)
-				.setPreferredWidth(270);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.NAMECOLUMN)
-				.setPreferredWidth(200);
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.NAMECOLUMN)
-				.setCellRenderer(new PlayerNameTableCellRenderer());
-		specialEventsTable.getColumnModel().getColumn(SpecialEventsTableModel.HIDDENCOLUMN)
-				.setPreferredWidth(0);
+
+		TableColumn matchDateColumn = columnModel.getColumn(MATCHDATECOLUMN);
+		matchDateColumn.setPreferredWidth(66);
+		matchDateColumn.setCellRenderer(new DateTableCellRenderer());
+
+		columnModel.getColumn(MATCHIDCOLUMN).setPreferredWidth(66);
+		columnModel.getColumn(HOMETACTICCOLUMN).setPreferredWidth(37);
+
+		TableColumn homeTacticColumn = columnModel.getColumn(HOMETACTICCOLUMN);
+		homeTacticColumn.setCellRenderer(tacticsTableCellRenderer);
+
+		TableColumn homeEventColumn = columnModel.getColumn(HOMEEVENTCOLUMN);
+		homeEventColumn.setPreferredWidth(20);
+		homeEventColumn.setCellRenderer(new SETypeTableCellRenderer(false));
+
+		TableColumn homeTeamColumn = columnModel.getColumn(HOMETEAMCOLUMN);
+		homeTeamColumn.setPreferredWidth(150);
+
+		TableColumn resultColumn = columnModel.getColumn(SpecialEventsTableModel.RESULTCOLUMN);
+		resultColumn.setPreferredWidth(40);
+
+		TableColumn awayTeamColumn = columnModel.getColumn(AWAYTEAMCOLUMN);
+		awayTeamColumn.setPreferredWidth(150);
+
+		TableColumn awayEventColumn = columnModel.getColumn(AWAYEVENTCOLUMN);
+		awayEventColumn.setPreferredWidth(20);
+		awayEventColumn.setCellRenderer(new SETypeTableCellRenderer(true));
+
+		TableColumn awayTacticColumn = columnModel.getColumn(AWAYTACTICCOLUMN);
+		awayTacticColumn.setPreferredWidth(37);
+		awayTacticColumn.setCellRenderer(tacticsTableCellRenderer);
+
+		TableColumn minuteColumn = columnModel.getColumn(MINUTECOLUMN);
+		minuteColumn.setPreferredWidth(27);
+
+		TableColumn chanceColumn = columnModel.getColumn(CHANCECOLUMN);
+		chanceColumn.setPreferredWidth(22);
+		chanceColumn.setCellRenderer(new ChanceTableCellRenderer());
+
+		TableColumn eventTypeColumn = columnModel.getColumn(EVENTTYPCOLUMN);
+		eventTypeColumn.setPreferredWidth(23);
+		eventTypeColumn.setCellRenderer(new EventTypeTableCellRenderer());
+
+		TableColumn settExtColumn = columnModel.getColumn(SETEXTCOLUMN);
+		settExtColumn.setPreferredWidth(270);
+
+		TableColumn nameColumn = columnModel.getColumn(NAMECOLUMN);
+		nameColumn.setPreferredWidth(200);
+		nameColumn.setCellRenderer(new PlayerNameTableCellRenderer());
 		specialEventsTable.setRowHeight(20);
 		setTableData();
 
-		JScrollPane matchArea = new JScrollPane(specialEventsTable);
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel, matchArea);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel,
+				new JScrollPane(specialEventsTable));
 		splitPane.setDividerSize(5);
 		splitPane.setContinuousLayout(true);
 		add(splitPane, BorderLayout.CENTER);
@@ -104,9 +135,14 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 	}
 
 	private void setTableData() {
-		SpecialEventsDM specialEventsDM = new SpecialEventsDM(this.filter);
+		// CursorToolkit.startWaitCursor(this);
+		// try {
+		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
 		specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
-		((SpecialEventsTableModelNew) specialEventsTable.getModel()).setData(specialEventsDM
-				.getLines());
+		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
+				.getLines(this.filter));
+		// } finally {
+		// CursorToolkit.stopWaitCursor(this);
+		// }
 	}
 }

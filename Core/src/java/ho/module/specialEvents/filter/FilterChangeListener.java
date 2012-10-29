@@ -1,4 +1,5 @@
-package ho.module.specialEvents;
+package ho.module.specialEvents.filter;
+
 
 public interface FilterChangeListener {
 	
