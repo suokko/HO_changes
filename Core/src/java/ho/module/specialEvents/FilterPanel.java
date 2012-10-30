@@ -355,7 +355,9 @@ public class FilterPanel extends JPanel {
 		this.currentPlayersCheckBox = new JCheckBox("current players");
 		this.currentPlayersCheckBox
 				.setText(getLangStr("specialEvents.filter.players.currentPlayers"));
+		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.gridwidth = 2;
 		panel.add(this.currentPlayersCheckBox, gbc);
 
 		this.ownPlayersInvolvedCheckBox = new JCheckBox();
