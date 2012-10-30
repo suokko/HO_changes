@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.gui.CursorToolkit;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.ifa.config.Config;
@@ -36,12 +37,31 @@ public class PluginIfaPanel extends JPanel {
 
 	private static final long serialVersionUID = 3806181337290704445L;
 	private JSplitPane splitPane;
-	private final IfaModel model;
+	private IfaModel model;
+	private boolean initialized = false;
 
 	public PluginIfaPanel() {
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if (isShowing() && !initialized) {
+					CursorToolkit.startWaitCursor(PluginIfaPanel.this);
+					try {
+						initialize();
+					} finally {
+						CursorToolkit.stopWaitCursor(PluginIfaPanel.this);
+					}
+				}
+			}
+		});
+	}
+
+	private void initialize() {
 		this.model = new IfaModel();
-		initialize();
+		initComponents();
 		addListeners();
+		this.initialized = true;
 	}
 
 	private void addListeners() {
@@ -50,7 +70,7 @@ public class PluginIfaPanel extends JPanel {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (splitPane.getSize().height > 0 && splitPane.getDividerLocation() > 0) {
-					double proportionalDividerLocation = 1.0 / (splitPane.getSize().height / splitPane
+					double proportionalDividerLocation = 1.0 / ((double) splitPane.getSize().height / (double) splitPane
 							.getDividerLocation());
 					ModuleConfig.instance().setBigDecimal(
 							Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
@@ -58,23 +78,9 @@ public class PluginIfaPanel extends JPanel {
 				}
 			}
 		});
-
-		// setDividerLocation(double proportionalLocation) will only have an
-		// effect if the split pane is correctly realized and on screen
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				double dividerLocation = ModuleConfig
-						.instance()
-						.getBigDecimal(Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
-								BigDecimal.valueOf(0.5)).doubleValue();
-				splitPane.setDividerLocation(dividerLocation);
-				removeComponentListener(this);
-			}
-		});
 	}
 
-	private void initialize() {
+	private void initComponents() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -100,6 +106,14 @@ public class PluginIfaPanel extends JPanel {
 		gbc.weighty = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		add(new RightPanel(this.model), gbc);
+
+		validate();
+		
+		double dividerLocation = ModuleConfig
+				.instance()
+				.getBigDecimal(Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
+						BigDecimal.valueOf(0.5)).doubleValue();		
+		this.splitPane.setDividerLocation(dividerLocation);
 	}
 
 	private JPanel createTablePanel(boolean away) {
