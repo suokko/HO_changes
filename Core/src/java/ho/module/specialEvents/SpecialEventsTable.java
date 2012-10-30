@@ -59,7 +59,7 @@ public class SpecialEventsTable extends JTable {
 			tip = HOVerwaltung.instance().getLanguageString("TipName");
 		}
 		if (modelColumnIndex == EVENTTYPCOLUMN) {
-			MatchLine row = ((SpecialEventsTableModel)getModel()).getMatchRow(modelRowIndex);
+			MatchRow row = ((SpecialEventsTableModel)getModel()).getMatchRow(modelRowIndex);
 			String highlightText = "<table width='300'><tr><td>" + row.getMatchHighlight().getEventText()
 					+ "</td></tr></table>";
 			String text = "<html>" + highlightText + "</html>";

@@ -140,7 +140,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
 		specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
 		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
-				.getLines(this.filter));
+				.getRows(this.filter));
 		// } finally {
 		// CursorToolkit.stopWaitCursor(this);
 		// }

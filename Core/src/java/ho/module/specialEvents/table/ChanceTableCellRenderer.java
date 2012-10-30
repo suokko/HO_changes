@@ -4,7 +4,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
-import ho.module.specialEvents.MatchLine;
+import ho.module.specialEvents.MatchRow;
 import ho.module.specialEvents.SpecialEventsDM;
 
 import java.awt.Component;
@@ -26,7 +26,7 @@ public class ChanceTableCellRenderer extends DefaultTableCellRenderer {
 				hasFocus, row, column);
 
 		Icon icon = null;
-		MatchLine matchRow = (MatchLine) value;
+		MatchRow matchRow = (MatchRow) value;
 		MatchHighlight highlight = matchRow.getMatchHighlight();
 		if (highlight != null) {
 			if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH) {

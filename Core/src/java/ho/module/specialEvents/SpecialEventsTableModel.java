@@ -23,73 +23,73 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 	static final int SETEXTCOLUMN = 12;
 	static final int NAMECOLUMN = 13;
 	private static final long serialVersionUID = 8499826497766216534L;
-	private List<MatchLine> data;
+	private List<MatchRow> data;
 
-	public void setData(List<MatchLine> data) {
+	public void setData(List<MatchRow> data) {
 		this.data = data;
 		fireTableDataChanged();
 	}
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		MatchLine line = this.data.get(row);
+		MatchRow matchRow = this.data.get(row);
 		switch (column) {
 		case MATCHDATECOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getMatchDate();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getMatchDate();
 			}
 			break;
 		case MATCHIDCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getMatchId();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getMatchId();
 			}
 			break;
 		case HOMETACTICCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getHostingTeamTactic();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getHostingTeamTactic();
 			}
 			break;
 		case HOMEEVENTCOLUMN:
-			return line;
+			return matchRow;
 		case HOMETEAMCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getHostingTeam();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getHostingTeam();
 			}
 			break;
 		case RESULTCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getMatchResult();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getMatchResult();
 			}
 			break;
 		case AWAYTEAMCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getVisitingTeam();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getVisitingTeam();
 			}
 			break;
 		case AWAYEVENTCOLUMN:
-			return line;
+			return matchRow;
 		case AWAYTACTICCOLUMN:
-			if (line.isMatchHeaderLine()) {
-				return line.getMatch().getVisitingTeamTactic();
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getVisitingTeamTactic();
 			}
 			break;
 		case MINUTECOLUMN:
-			if (line.getMatchHighlight() != null) {
-				return line.getMatchHighlight().getMinute();
+			if (matchRow.getMatchHighlight() != null) {
+				return matchRow.getMatchHighlight().getMinute();
 			}
 			break;
 		case CHANCECOLUMN:
-			return line;
+			return matchRow;
 		case EVENTTYPCOLUMN:
-			return line.getMatchHighlight();
+			return matchRow.getMatchHighlight();
 		case SETEXTCOLUMN:
-			if (line.getMatchHighlight() != null) {
-				return SpecialEventsDM.getSEText(line.getMatchHighlight());
+			if (matchRow.getMatchHighlight() != null) {
+				return SpecialEventsDM.getSEText(matchRow.getMatchHighlight());
 			}
 			break;
 		case NAMECOLUMN:
-			if (line.getMatchHighlight() != null) {
-				return SpecialEventsDM.getSpielerName(line.getMatchHighlight());
+			if (matchRow.getMatchHighlight() != null) {
+				return SpecialEventsDM.getSpielerName(matchRow.getMatchHighlight());
 			}
 			break;
 		}
@@ -143,7 +143,7 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 		}
 	}
 	
-	public MatchLine getMatchRow(int index) {
+	public MatchRow getMatchRow(int index) {
 		return this.data.get(index);
 	}
 }

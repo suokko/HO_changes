@@ -42,29 +42,29 @@ public class SpecialEventsDM {
 		teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 	}
 
-	List<MatchLine> getLines(Filter filter) {
-		List<MatchLine> lines = new ArrayList<MatchLine>();
+	List<MatchRow> getRows(Filter filter) {
+		List<MatchRow> matchRows = new ArrayList<MatchRow>();
 
 		MatchKurzInfo[] matches = getMatches(filter);
 		if (matches != null) {
 			int matchCount = 1;
 			for (MatchKurzInfo matchKurzInfo : matches) {
-				List<MatchLine> rows = getMatchLines(matchKurzInfo, filter);
+				List<MatchRow> rows = getMatchRows(matchKurzInfo, filter);
 				if (rows != null && !rows.isEmpty()) {
-					for (MatchLine row : rows) {
+					for (MatchRow row : rows) {
 						row.setMatchCount(matchCount);
 					}
-					lines.addAll(rows);
+					matchRows.addAll(rows);
 					matchCount++;
 				}
 			}
 		}
 
-		return lines;
+		return matchRows;
 	}
 
 	MatchKurzInfo[] getMatches(Filter filter) {
-		List<MatchLine> matchLines = new ArrayList<MatchLine>();
+		List<MatchRow> matchRows = new ArrayList<MatchRow>();
 		StringBuilder whereClause = new StringBuilder(" WHERE ");
 
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -121,8 +121,8 @@ public class SpecialEventsDM {
 		return DBManager.instance().getMatchesKurzInfo(whereClause.toString());
 	}
 
-	private List<MatchLine> getMatchLines(MatchKurzInfo kurzInfos, Filter filter) {
-		List<MatchLine> matchLines = new ArrayList<MatchLine>();
+	private List<MatchRow> getMatchRows(MatchKurzInfo kurzInfos, Filter filter) {
+		List<MatchRow> matchLines = new ArrayList<MatchRow>();
 		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
 		List<MatchHighlight> highlights = getMatchHighlights(details, filter);
 
@@ -143,19 +143,19 @@ public class SpecialEventsDM {
 			match.setMatchType(kurzInfos.getMatchTyp());
 
 			boolean isFirst = true;
-			MatchLine matchLine = new MatchLine();
-			matchLine.setMatch(match);
-			matchLine.setMatchHeaderLine(true);
-			matchLines.add(matchLine);
+			MatchRow matchRow = new MatchRow();
+			matchRow.setMatch(match);
+			matchRow.setMatchHeaderLine(true);
+			matchLines.add(matchRow);
 
 			for (MatchHighlight highlight : highlights) {
 				if (!isFirst) {
-					matchLine = new MatchLine();
-					matchLine.setMatch(match);
-					matchLine.setMatchHeaderLine(false);
-					matchLines.add(matchLine);
+					matchRow = new MatchRow();
+					matchRow.setMatch(match);
+					matchRow.setMatchHeaderLine(false);
+					matchLines.add(matchRow);
 				}
-				matchLine.setMatchHighlight(highlight);
+				matchRow.setMatchHighlight(highlight);
 				isFirst = false;
 			}
 		}

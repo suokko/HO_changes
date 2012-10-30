@@ -3,7 +3,7 @@ package ho.module.specialEvents.table;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.MatchHighlight;
-import ho.module.specialEvents.MatchLine;
+import ho.module.specialEvents.MatchRow;
 import ho.module.specialEvents.SpecialEventsDM;
 
 import java.awt.Component;
@@ -29,7 +29,7 @@ public class SETypeTableCellRenderer extends DefaultTableCellRenderer {
 		JLabel component = (JLabel) super.getTableCellRendererComponent(table, "", isSelected,
 				hasFocus, row, column);
 
-		MatchLine matchRow = (MatchLine) value;
+		MatchRow matchRow = (MatchRow) value;
 		if (matchRow.getMatchHighlight() != null) {
 			component.setIcon(getOwnerIcon(matchRow.getMatchHighlight(), !this.away, matchRow
 					.getMatch().getHostingTeamId(), matchRow.getMatch().getVisitingTeamId()));

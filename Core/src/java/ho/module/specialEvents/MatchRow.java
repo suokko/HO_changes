@@ -2,7 +2,7 @@ package ho.module.specialEvents;
 
 import ho.core.model.match.MatchHighlight;
 
-public class MatchLine {
+public class MatchRow {
 
 	private Match match;
 	private MatchHighlight matchHighlight;
