@@ -296,7 +296,7 @@ public class FilterPanel extends JPanel {
 		this.relegationCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.relegation"));
 		gbc.gridy = 2;
 		panel.add(this.relegationCheckBox, gbc);
-		
+
 		this.cupCheckBox = new JCheckBox();
 		this.cupCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.cup"));
 		gbc.gridy = 0;
@@ -318,14 +318,14 @@ public class FilterPanel extends JPanel {
 
 	private JPanel createPlayerFilterPanel() {
 		JPanel panel = new JPanel(new GridBagLayout());
-		// panel.setBorder(BorderFactory
-		// .createTitledBorder(getLangStr("specialEvents.filter.matchTypes.title")));
-		panel.setBorder(BorderFactory.createTitledBorder("Players"));
+		panel.setBorder(BorderFactory
+				.createTitledBorder(getLangStr("specialEvents.filter.players.title")));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 
-		JLabel playerLabel = new JLabel("Player");
+		JLabel playerLabel = new JLabel();
+		playerLabel.setText(getLangStr("specialEvents.filter.players.player"));
 		panel.add(playerLabel, gbc);
 
 		this.playerComboBox = new JComboBox();
@@ -333,10 +333,14 @@ public class FilterPanel extends JPanel {
 		panel.add(this.playerComboBox, gbc);
 
 		this.currentPlayersCheckBox = new JCheckBox("current players");
+		this.currentPlayersCheckBox
+				.setText(getLangStr("specialEvents.filter.players.currentPlayers"));
 		gbc.gridy = 1;
 		panel.add(this.currentPlayersCheckBox, gbc);
 
-		this.ownPlayersInvolvedCheckBox = new JCheckBox("own players");
+		this.ownPlayersInvolvedCheckBox = new JCheckBox();
+		this.ownPlayersInvolvedCheckBox
+				.setText(getLangStr("specialEvents.filter.players.ownPlayers"));
 		gbc.gridy = 2;
 		panel.add(this.ownPlayersInvolvedCheckBox, gbc);
 
