@@ -87,9 +87,6 @@ public class SpecialEventsDM {
 		if (filter.isShowCup()) {
 			matchTypes.add(MatchType.CUP.getId());
 		}
-		if (filter.isShowFriendlies()) {
-			matchTypes.add(MatchType.CUP.getId());
-		}
 		if (filter.isShowLeague()) {
 			matchTypes.add(MatchType.LEAGUE.getId());
 		}
