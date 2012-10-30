@@ -13,6 +13,7 @@ import static ho.module.specialEvents.SpecialEventsTableModel.MATCHIDCOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -28,6 +29,8 @@ import ho.module.specialEvents.table.SETypeTableCellRenderer;
 import ho.module.specialEvents.table.TacticsTableCellRenderer;
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,13 +42,35 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
 	private static final long serialVersionUID = 1L;
 	private static SpecialEventsTable specialEventsTable;
-	private Filter filter = new Filter();
+	private Filter filter;
+	private boolean initialized = false;
+	private boolean needsRefresh = true;
 
 	SpecialEventsPanel() {
-		initialize();
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if (isShowing()) {
+					if (!initialized) {
+						CursorToolkit.startWaitCursor(SpecialEventsPanel.this);
+						try {
+							initialize();
+						} finally {
+							CursorToolkit.stopWaitCursor(SpecialEventsPanel.this);
+						}
+					} else {
+						if (needsRefresh) {
+							setTableData();
+						}
+					}
+				}
+
+			}
+		});
 	}
 
 	private void initialize() {
+		this.filter = new Filter();
 		setLayout(new BorderLayout());
 
 		this.filter.addFilterChangeListener(new FilterChangeListener() {
@@ -123,22 +148,29 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		splitPane.setContinuousLayout(true);
 		add(splitPane, BorderLayout.CENTER);
 		RefreshManager.instance().registerRefreshable(this);
+
+		initialized = true;
 	}
 
 	@Override
 	public void refresh() {
-		setTableData();
+		if (isShowing()) {
+			setTableData();
+		} else {
+			this.needsRefresh = true;
+		}
 	}
 
 	private void setTableData() {
-		// CursorToolkit.startWaitCursor(this);
-		// try {
-		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
-		specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
-		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
-				.getRows(this.filter));
-		// } finally {
-		// CursorToolkit.stopWaitCursor(this);
-		// }
+		CursorToolkit.startWaitCursor(this);
+		try {
+			SpecialEventsDM specialEventsDM = new SpecialEventsDM();
+			specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
+			((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
+					.getRows(this.filter));
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
 	}
 }
