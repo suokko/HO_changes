@@ -8,20 +8,21 @@ import javax.swing.table.AbstractTableModel;
 
 public class SpecialEventsTableModel extends AbstractTableModel {
 
-	static final int MATCHDATECOLUMN = 0;
+	static final int MATCHDATECOLUMN = 0;	
 	static final int MATCHIDCOLUMN = 1;
-	static final int HOMETACTICCOLUMN = 2;
-	static final int HOMEEVENTCOLUMN = 3;
-	static final int HOMETEAMCOLUMN = 4;
-	static final int RESULTCOLUMN = 5;
-	static final int AWAYTEAMCOLUMN = 6;
-	static final int AWAYEVENTCOLUMN = 7;
-	static final int AWAYTACTICCOLUMN = 8;
-	static final int MINUTECOLUMN = 9;
-	static final int CHANCECOLUMN = 10;
-	static final int EVENTTYPCOLUMN = 11;
-	static final int SETEXTCOLUMN = 12;
-	static final int NAMECOLUMN = 13;
+	static final int MATCHTYPECOLUMN = 2;
+	static final int HOMETACTICCOLUMN = 3;
+	static final int HOMEEVENTCOLUMN = 4;
+	static final int HOMETEAMCOLUMN = 5;
+	static final int RESULTCOLUMN = 6;
+	static final int AWAYTEAMCOLUMN = 7;
+	static final int AWAYEVENTCOLUMN = 8;
+	static final int AWAYTACTICCOLUMN = 9;
+	static final int MINUTECOLUMN = 10;
+	static final int CHANCECOLUMN = 11;
+	static final int EVENTTYPCOLUMN = 12;
+	static final int SETEXTCOLUMN = 13;
+	static final int NAMECOLUMN = 14;
 	private static final long serialVersionUID = 8499826497766216534L;
 	private List<MatchRow> data;
 
@@ -42,6 +43,11 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 		case MATCHIDCOLUMN:
 			if (matchRow.isMatchHeaderLine()) {
 				return matchRow.getMatch().getMatchId();
+			}
+			break;
+		case MATCHTYPECOLUMN:
+			if (matchRow.isMatchHeaderLine()) {
+				return matchRow.getMatch().getMatchType();
 			}
 			break;
 		case HOMETACTICCOLUMN:
@@ -107,7 +113,7 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 14;
+		return 15;
 	}
 
 	@Override
@@ -117,7 +123,7 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 		case MATCHDATECOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Datum");
 		case MATCHIDCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("GameID");
+			return HOVerwaltung.instance().getLanguageString("GameID");			
 		case HOMETACTICCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Taktik");
 		case HOMETEAMCOLUMN:
@@ -137,6 +143,7 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 		case RESULTCOLUMN:
 		case HOMEEVENTCOLUMN:
 		case EVENTTYPCOLUMN:
+		case MATCHTYPECOLUMN:
 			return " ";
 		default:
 			return super.getColumnName(columnIndex);

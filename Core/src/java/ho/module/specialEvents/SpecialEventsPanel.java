@@ -1,18 +1,6 @@
 package ho.module.specialEvents;
 
-import static ho.module.specialEvents.SpecialEventsTableModel.AWAYEVENTCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTACTICCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTEAMCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.CHANCECOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.EVENTTYPCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.HOMEEVENTCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.HOMETACTICCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.HOMETEAMCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.MATCHDATECOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.MATCHIDCOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
-import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.*;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
@@ -24,6 +12,7 @@ import ho.module.specialEvents.table.ChanceTableCellRenderer;
 import ho.module.specialEvents.table.DateTableCellRenderer;
 import ho.module.specialEvents.table.DefaultSETableCellRenderer;
 import ho.module.specialEvents.table.EventTypeTableCellRenderer;
+import ho.module.specialEvents.table.MatchTypeTableCellRenderer;
 import ho.module.specialEvents.table.PlayerNameTableCellRenderer;
 import ho.module.specialEvents.table.SETypeTableCellRenderer;
 import ho.module.specialEvents.table.TacticsTableCellRenderer;
@@ -92,16 +81,23 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		TacticsTableCellRenderer tacticsTableCellRenderer = new TacticsTableCellRenderer();
 
 		TableColumn matchDateColumn = columnModel.getColumn(MATCHDATECOLUMN);
-		matchDateColumn.setPreferredWidth(66);
+		matchDateColumn.setPreferredWidth(75);
 		matchDateColumn.setCellRenderer(new DateTableCellRenderer());
 
 		columnModel.getColumn(MATCHIDCOLUMN).setPreferredWidth(66);
+		
+		TableColumn matchTypeColumn = columnModel.getColumn(MATCHTYPECOLUMN);
+		matchTypeColumn.setMaxWidth(25);
+		matchTypeColumn.setPreferredWidth(25);
+		matchTypeColumn.setCellRenderer(new MatchTypeTableCellRenderer());
+		
 		columnModel.getColumn(HOMETACTICCOLUMN).setPreferredWidth(37);
 
 		TableColumn homeTacticColumn = columnModel.getColumn(HOMETACTICCOLUMN);
 		homeTacticColumn.setCellRenderer(tacticsTableCellRenderer);
 
 		TableColumn homeEventColumn = columnModel.getColumn(HOMEEVENTCOLUMN);
+		homeEventColumn.setMaxWidth(20);
 		homeEventColumn.setPreferredWidth(20);
 		homeEventColumn.setCellRenderer(new SETypeTableCellRenderer(false));
 
@@ -115,6 +111,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		awayTeamColumn.setPreferredWidth(150);
 
 		TableColumn awayEventColumn = columnModel.getColumn(AWAYEVENTCOLUMN);
+		awayEventColumn.setMaxWidth(20);
 		awayEventColumn.setPreferredWidth(20);
 		awayEventColumn.setCellRenderer(new SETypeTableCellRenderer(true));
 
@@ -126,10 +123,12 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		minuteColumn.setPreferredWidth(27);
 
 		TableColumn chanceColumn = columnModel.getColumn(CHANCECOLUMN);
-		chanceColumn.setPreferredWidth(22);
+		chanceColumn.setMaxWidth(23);
+		chanceColumn.setPreferredWidth(23);
 		chanceColumn.setCellRenderer(new ChanceTableCellRenderer());
 
 		TableColumn eventTypeColumn = columnModel.getColumn(EVENTTYPCOLUMN);
+		eventTypeColumn.setMaxWidth(23);
 		eventTypeColumn.setPreferredWidth(23);
 		eventTypeColumn.setCellRenderer(new EventTypeTableCellRenderer());
 
