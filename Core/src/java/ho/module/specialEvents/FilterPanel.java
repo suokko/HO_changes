@@ -1,10 +1,13 @@
 package ho.module.specialEvents;
 
 import ho.core.datatype.CBItem;
+import ho.core.gui.theme.HOIconName;
+import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.module.specialEvents.filter.Filter;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -23,7 +26,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 
 public class FilterPanel extends JPanel {
 
@@ -92,6 +97,7 @@ public class FilterPanel extends JPanel {
 		this.currentPlayersCheckBox.setSelected(this.filter.isShowCurrentPlayersOnly());
 		updatePlayerComboBoxData(this.filter.isShowCurrentPlayersOnly());
 		this.playerComboBox.setSelectedItem(null);
+		this.ownPlayersInvolvedCheckBox.setSelected(this.filter.isShowOwnPlayersOnly());
 	}
 
 	private void initComponents() {
@@ -164,6 +170,7 @@ public class FilterPanel extends JPanel {
 					filter.setShowOwnPlayersOnly(selected);
 				} else if (source == currentPlayersCheckBox) {
 					filter.setShowCurrentPlayersOnly(selected);
+					updatePlayerComboBoxData(selected);
 				}
 			}
 		};
@@ -190,13 +197,17 @@ public class FilterPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CBItem item = (CBItem) playerComboBox.getSelectedItem();
-				if (item == null || item.getId() == -1) {
+				if (item == null || item.getId() == -1 || item.getId() == -2) {
+					filter.setPlayerId(null);
+				} else if (item.getId() == -2) {
+					playerComboBox.setSelectedItem(null);
 					filter.setPlayerId(null);
 				} else {
 					filter.setPlayerId(Integer.valueOf(item.getId()));
 				}
 			}
 		});
+
 	}
 
 	private JPanel createSEFilterPanel() {
@@ -237,12 +248,15 @@ public class FilterPanel extends JPanel {
 		this.penaltySECheckBox = new JCheckBox();
 		this.penaltySECheckBox.setText(getLangStr("highlight_penalty"));
 		gbc.gridy = 2;
+		gbc.weighty = 1.0;
 		panel.add(this.penaltySECheckBox, gbc);
 
 		this.longshotSECheckBox = new JCheckBox();
 		this.longshotSECheckBox.setText(getLangStr("ls.match.event.longshot"));
 		gbc.gridx = 2;
 		gbc.gridy = 0;
+		gbc.weightx = 1.0;
+		gbc.weighty = 0.0;
 		panel.add(this.longshotSECheckBox, gbc);
 
 		return panel;
@@ -269,6 +283,8 @@ public class FilterPanel extends JPanel {
 		comboItems[2] = new CBItem(getLangStr("AllSeasons"), SeasonFilterValue.ALL_SEASONS.getId());
 		this.seasonComboBox = new JComboBox(comboItems);
 		gbc.gridy = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		panel.add(this.seasonComboBox, gbc);
 
 		return panel;
@@ -311,6 +327,8 @@ public class FilterPanel extends JPanel {
 		this.mastersCheckBox = new JCheckBox();
 		this.mastersCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.masters"));
 		gbc.gridy = 2;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		panel.add(this.mastersCheckBox, gbc);
 
 		return panel;
@@ -323,12 +341,14 @@ public class FilterPanel extends JPanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(4, 4, 4, 4);
 
 		JLabel playerLabel = new JLabel();
 		playerLabel.setText(getLangStr("specialEvents.filter.players.player"));
 		panel.add(playerLabel, gbc);
 
 		this.playerComboBox = new JComboBox();
+		this.playerComboBox.setRenderer(new ComboBoxRenderer(this.playerComboBox.getRenderer()));
 		gbc.gridx = 1;
 		panel.add(this.playerComboBox, gbc);
 
@@ -342,6 +362,8 @@ public class FilterPanel extends JPanel {
 		this.ownPlayersInvolvedCheckBox
 				.setText(getLangStr("specialEvents.filter.players.ownPlayers"));
 		gbc.gridy = 2;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		panel.add(this.ownPlayersInvolvedCheckBox, gbc);
 
 		return panel;
@@ -358,6 +380,8 @@ public class FilterPanel extends JPanel {
 	}
 
 	private void updatePlayerComboBoxData(boolean currentPlayersOnly) {
+		CBItem oldItem = (CBItem) this.playerComboBox.getSelectedItem();
+
 		Comparator<Spieler> comparator = new Comparator<Spieler>() {
 
 			@Override
@@ -371,18 +395,96 @@ public class FilterPanel extends JPanel {
 				.getAllSpieler());
 		Collections.sort(players, comparator);
 		for (Spieler player : players) {
-			playerItems.add(new CBItem(player.getName(), player.getSpielerID()));
+			playerItems.add(new PlayerCBItem(player.getName(), player.getSpielerID(), player
+					.getSpezialitaet()));
 		}
 
 		if (!currentPlayersOnly) {
 			players = new ArrayList<Spieler>(HOVerwaltung.instance().getModel().getAllOldSpieler());
 			Collections.sort(players, comparator);
+			if (!players.isEmpty()) {
+				playerItems.add(new PlayerCBItem("--------------------", -2, -1));
+			}
 			for (Spieler player : players) {
-				playerItems.add(new CBItem(player.getName(), player.getSpielerID()));
+				playerItems.add(new PlayerCBItem(player.getName(), player.getSpielerID(), player
+						.getSpezialitaet()));
 			}
 		}
 
-		playerItems.add(0, new CBItem("", -1));
+		playerItems.add(0, new PlayerCBItem("", -1, -1));
 		this.playerComboBox.setModel(new DefaultComboBoxModel(playerItems.toArray()));
+
+		if (oldItem != null) {
+			restorePlayerComboSelection(oldItem.getId());
+		} else {
+			this.playerComboBox.setSelectedItem(null);
+		}
+	}
+
+	private void restorePlayerComboSelection(int playerId) {
+		ComboBoxModel model = this.playerComboBox.getModel();
+		CBItem item = null;
+		for (int i = 0; i < model.getSize(); i++) {
+			if (((CBItem) model.getElementAt(i)).getId() == playerId) {
+				item = (CBItem) model.getElementAt(i);
+				break;
+			}
+		}
+		this.playerComboBox.setSelectedItem(item);
+	}
+
+	private class ComboBoxRenderer extends JLabel implements ListCellRenderer {
+
+		private static final long serialVersionUID = 1148438406134827829L;
+		private final ListCellRenderer delegate;
+
+		public ComboBoxRenderer(ListCellRenderer delegate) {
+			this.delegate = delegate;
+		}
+
+		/*
+		 * This method finds the image and text corresponding to the selected
+		 * value and returns the label, set up to display the text and image.
+		 */
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+
+			PlayerCBItem item = (PlayerCBItem) value;
+			String text = (item != null) ? item.getText() : null;
+			setText(text);
+
+			Component component = this.delegate.getListCellRendererComponent(list, text, index,
+					isSelected, cellHasFocus);
+
+			if (component instanceof JLabel) {
+				if (item != null && item.getId() >= 0) {
+					if (item.getSpeciality() > 0) {
+						((JLabel) component).setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[item
+								.getSpeciality()]));
+					} else {
+						((JLabel) component).setIcon(ThemeManager.getIcon(HOIconName.EMPTY));
+					}
+				} else {
+					((JLabel) component).setIcon(null);
+				}
+			}
+
+			return component;
+		}
+	}
+
+	private class PlayerCBItem extends CBItem {
+
+		private int speciality = -1;
+
+		public PlayerCBItem(String text, int id, int speciality) {
+			super(text, id);
+			this.speciality = speciality;
+		}
+
+		public int getSpeciality() {
+			return speciality;
+		}
 	}
 }

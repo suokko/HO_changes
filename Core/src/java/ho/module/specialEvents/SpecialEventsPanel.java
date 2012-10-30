@@ -47,12 +47,8 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
 	private void initialize() {
 		setLayout(new BorderLayout());
-		// TODO initial values for testing (settings should be save/restored
-		// from DB later)
-		filter.setShowMatchesWithSEOnly(false);
-		filter.setSeasonFilterValue(SeasonFilterValue.LAST_TWO_SEASONS);
 
-		filter.addFilterChangeListener(new FilterChangeListener() {
+		this.filter.addFilterChangeListener(new FilterChangeListener() {
 
 			@Override
 			public void filterChanged(FilterChangeEvent evt) {

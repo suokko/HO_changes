@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Filter {
 
-	private boolean showMatchesWithSEOnly = false;
+	private boolean showMatchesWithSEOnly = true;
 	// the single matchtypes
 	private boolean showFriendlies = true;
 	private boolean showLeague = true;
@@ -24,7 +24,7 @@ public class Filter {
 	private boolean showPenalty = true;
 	private boolean showLongShot = true;
 	// season
-	private SeasonFilterValue seasonFilterValue = SeasonFilterValue.ALL_SEASONS;
+	private SeasonFilterValue seasonFilterValue = SeasonFilterValue.CURRENT_SEASON;
 	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
 	// player
 	private Integer playerId;
@@ -204,7 +204,7 @@ public class Filter {
 	public void setPlayerId(Integer playerId) {
 		if ((this.playerId != null && playerId == null)
 				|| (this.playerId == null && playerId != null)
-				|| this.playerId.compareTo(playerId) != 0) {
+				|| (this.playerId != null && playerId != null && this.playerId.compareTo(playerId) != 0)) {
 			this.playerId = playerId;
 			fireFilterChanged();
 		}
