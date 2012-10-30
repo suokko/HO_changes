@@ -59,11 +59,14 @@ public class SpecialEventsTable extends JTable {
 			tip = HOVerwaltung.instance().getLanguageString("TipName");
 		}
 		if (modelColumnIndex == EVENTTYPCOLUMN) {
-			MatchRow row = ((SpecialEventsTableModel)getModel()).getMatchRow(modelRowIndex);
-			String highlightText = "<table width='300'><tr><td>" + row.getMatchHighlight().getEventText()
-					+ "</td></tr></table>";
-			String text = "<html>" + highlightText + "</html>";
-			tip = text;
+			MatchRow row = ((SpecialEventsTableModel) getModel()).getMatchRow(modelRowIndex);
+			if (row.getMatchHighlight() != null) {
+				String highlightText = "<table width='300'><tr><td>"
+						+ row.getMatchHighlight().getEventText() + "</td></tr></table>";
+				tip = "<html>" + highlightText + "</html>";
+			} else {
+				tip = "";
+			}
 		}
 		return tip;
 	}
