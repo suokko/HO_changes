@@ -37,7 +37,7 @@ public class PlayerNameTableCellRenderer extends DefaultTableCellRenderer {
 			label.setForeground(Color.BLACK);
 			label.setText("");
 		}
-		RowColorDecorator.decorate(table, row, label);
+		RowColorDecorator.decorate(table, row, label, isSelected);
 		return label;
 	}
 

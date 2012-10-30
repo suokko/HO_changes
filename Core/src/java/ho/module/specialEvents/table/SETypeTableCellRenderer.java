@@ -36,7 +36,7 @@ public class SETypeTableCellRenderer extends DefaultTableCellRenderer {
 		} else {
 			component.setIcon(null);
 		}
-		RowColorDecorator.decorate(table, row, component);
+		RowColorDecorator.decorate(table, row, component, isSelected);
 		return component;
 	}
 

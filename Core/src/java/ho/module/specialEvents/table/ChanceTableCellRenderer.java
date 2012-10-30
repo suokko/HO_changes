@@ -39,7 +39,7 @@ public class ChanceTableCellRenderer extends DefaultTableCellRenderer {
 			}
 		}
 		component.setIcon(icon);
-		RowColorDecorator.decorate(table, row, component);
+		RowColorDecorator.decorate(table, row, component, isSelected);
 		return component;
 	}
 

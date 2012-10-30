@@ -14,7 +14,7 @@ public class DateTableCellRenderer extends DateTimeTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 			boolean hasFocus, int row, int column) {
 		Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		RowColorDecorator.decorate(table, row, component);
+		RowColorDecorator.decorate(table, row, component, isSelected);
 		return component;
 	}
 	

@@ -16,13 +16,17 @@ public class RowColorDecorator {
 		return model.getMatchRow(table.convertRowIndexToModel(row));
 	}
 
-	static void decorate(JTable table, int row, Component component) {
-		MatchRow matchRow = getMatchLine(table, row);
-		if (matchRow.getMatchCount() % 2 == 0) {
-			component.setBackground(ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG));
+	static void decorate(JTable table, int row, Component component, boolean isSelected) {
+		if (!isSelected) {
+			MatchRow matchRow = getMatchLine(table, row);
+			if (matchRow.getMatchCount() % 2 == 0) {
+				component.setBackground(ThemeManager.getColor(HOColorName.PLAYER_SUBPOS_BG));
+			} else {
+				component.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
+			}
 		} else {
-			component.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
+			component.setBackground(table.getSelectionBackground());
 		}
 	}
-	
+
 }

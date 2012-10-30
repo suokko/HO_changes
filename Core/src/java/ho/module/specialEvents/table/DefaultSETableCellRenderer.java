@@ -17,7 +17,7 @@ public class DefaultSETableCellRenderer extends DefaultTableCellRenderer {
 
 		JLabel component = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
 				hasFocus, row, column);
-		RowColorDecorator.decorate(table, row, component);
+		RowColorDecorator.decorate(table, row, component, isSelected);
 		return component;
 	}
 

@@ -50,7 +50,7 @@ public class TacticsTableCellRenderer extends DefaultTableCellRenderer {
 
 		Component component = super.getTableCellRendererComponent(table, tactic, isSelected,
 				hasFocus, row, column);
-		RowColorDecorator.decorate(table, row, component);
+		RowColorDecorator.decorate(table, row, component, isSelected);
 		return component;
 	}
 
