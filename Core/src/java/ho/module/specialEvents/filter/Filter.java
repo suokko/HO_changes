@@ -11,6 +11,7 @@ public class Filter {
 	// the single matchtypes
 	private boolean showFriendlies = true;
 	private boolean showLeague = true;
+	private boolean showRelegation = true;
 	private boolean showTournament = true;
 	private boolean showCup = true;
 	private boolean showMasters = true;
@@ -61,6 +62,17 @@ public class Filter {
 		if (this.showLeague != showLeague) {
 			this.showLeague = showLeague;
 			fireFilterChanged();
+		}
+	}
+
+	public boolean isShowRelegation() {
+		return showRelegation;
+	}
+
+	public void setShowRelegation(boolean showRelegation) {
+		if (this.showRelegation != showRelegation) {
+			fireFilterChanged();
+			this.showRelegation = showRelegation;
 		}
 	}
 

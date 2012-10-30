@@ -34,6 +34,7 @@ public class FilterPanel extends JPanel {
 	// match types
 	private JCheckBox friendliesCheckBox;
 	private JCheckBox leagueCheckBox;
+	private JCheckBox relegationCheckBox;
 	private JCheckBox tournamentCheckBox;
 	private JCheckBox cupCheckBox;
 	private JCheckBox mastersCheckBox;
@@ -76,6 +77,7 @@ public class FilterPanel extends JPanel {
 		this.onlySEMatchesCheckBox.setSelected(this.filter.isShowMatchesWithSEOnly());
 		this.friendliesCheckBox.setSelected(this.filter.isShowFriendlies());
 		this.leagueCheckBox.setSelected(this.filter.isShowLeague());
+		this.relegationCheckBox.setSelected(this.filter.isShowRelegation());
 		this.tournamentCheckBox.setSelected(this.filter.isShowTournament());
 		this.cupCheckBox.setSelected(this.filter.isShowCup());
 		this.mastersCheckBox.setSelected(this.filter.isShowMasters());
@@ -136,6 +138,8 @@ public class FilterPanel extends JPanel {
 					filter.setShowFriendlies(selected);
 				} else if (source == leagueCheckBox) {
 					filter.setShowLeague(selected);
+				} else if (source == relegationCheckBox) {
+					filter.setShowRelegation(selected);
 				} else if (source == tournamentCheckBox) {
 					filter.setShowTournament(selected);
 				} else if (source == cupCheckBox) {
@@ -167,6 +171,7 @@ public class FilterPanel extends JPanel {
 		this.onlySEMatchesCheckBox.addItemListener(checkBoxListener);
 		this.friendliesCheckBox.addItemListener(checkBoxListener);
 		this.leagueCheckBox.addItemListener(checkBoxListener);
+		this.relegationCheckBox.addItemListener(checkBoxListener);
 		this.tournamentCheckBox.addItemListener(checkBoxListener);
 		this.cupCheckBox.addItemListener(checkBoxListener);
 		this.mastersCheckBox.addItemListener(checkBoxListener);
@@ -287,20 +292,25 @@ public class FilterPanel extends JPanel {
 		gbc.gridy = 1;
 		panel.add(this.leagueCheckBox, gbc);
 
+		this.relegationCheckBox = new JCheckBox();
+		this.relegationCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.relegation"));
+		gbc.gridy = 2;
+		panel.add(this.relegationCheckBox, gbc);
+		
 		this.cupCheckBox = new JCheckBox();
 		this.cupCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.cup"));
-		gbc.gridy = 2;
+		gbc.gridy = 0;
+		gbc.gridx = 1;
 		panel.add(this.cupCheckBox, gbc);
 
 		this.tournamentCheckBox = new JCheckBox();
 		this.tournamentCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.tournament"));
-		gbc.gridy = 0;
-		gbc.gridx = 1;
+		gbc.gridy = 1;
 		panel.add(this.tournamentCheckBox, gbc);
 
 		this.mastersCheckBox = new JCheckBox();
 		this.mastersCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.masters"));
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		panel.add(this.mastersCheckBox, gbc);
 
 		return panel;

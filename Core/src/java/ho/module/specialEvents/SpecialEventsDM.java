@@ -100,6 +100,9 @@ public class SpecialEventsDM {
 			matchTypes.add(MatchType.TOURNAMENTGROUP.getId());
 			matchTypes.add(MatchType.TOURNAMENTPLAYOFF.getId());
 		}
+		if (filter.isShowRelegation()) {
+			matchTypes.add(MatchType.QUALIFICATION.getId());
+		}
 
 		if (matchTypes.size() > 0) {
 			whereClause.append(" AND (MatchTyp IN (");
@@ -286,7 +289,7 @@ public class SpecialEventsDM {
 				}
 			}
 		}
-		
+
 		if (filter.isShowOwnPlayersOnly()) {
 			List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 			boolean playerFound = false;
