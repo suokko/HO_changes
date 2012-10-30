@@ -71,8 +71,8 @@ public class Filter {
 
 	public void setShowRelegation(boolean showRelegation) {
 		if (this.showRelegation != showRelegation) {
-			fireFilterChanged();
 			this.showRelegation = showRelegation;
+			fireFilterChanged();			
 		}
 	}
 
