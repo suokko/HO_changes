@@ -152,7 +152,7 @@ public class PlayerDetailPanel extends JPanel implements ActionListener {
         detailPanel.add(skill_experience, "12, 2"); //$NON-NLS-1$
 
         updBtn.setEnabled(false);
-        updBtn.setText(HOVerwaltung.instance().getLanguageString("update"));
+        updBtn.setText(HOVerwaltung.instance().getLanguageString("ls.button.update"));
         updBtn.setToolTipText(HOVerwaltung.instance().getLanguageString("UpdTooltip"));
         updBtn.addActionListener(this);
         updBtn.setFocusable(false);

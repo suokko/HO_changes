@@ -50,7 +50,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	// ----------------------------------------------------------------------------/
 	private static HOVerwaltung hov = HOVerwaltung.instance();
 	private JButton m_jbAbort = new JButton(hov.getLanguageString("ls.button.cancel"));
-	final private JButton m_jbDownload = new JButton(hov.getLanguageString("Download"));
+	final private JButton m_jbDownload = new JButton(hov.getLanguageString("ls.button.download"));
 	private JButton m_jbProxy = new JButton(hov.getLanguageString("ConfigureProxy"));
 	private JCheckBox m_jchOldFixtures = new JCheckBox(hov.getLanguageString("FixturesDownload"), false);
 	private JCheckBox m_jchOwnFixtures = new JCheckBox(hov.getLanguageString("AktuellerSpielplanDownload"),
@@ -71,7 +71,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 	 * Creates a new DownloadDialog object.
 	 */
 	public DownloadDialog() {
-		super(HOMainFrame.instance(), hov.getLanguageString("Download"), true);
+		super(HOMainFrame.instance(), hov.getLanguageString("ls.button.download"), true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		initComponents();
 	}
@@ -121,7 +121,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 		setContentPane(new ImagePanel(null));
 
 		final JPanel normalDownloadPanel = new ImagePanel(new GridLayout(3, 1, 4, 4));
-		normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(hov.getLanguageString("Download")));
+		normalDownloadPanel.setBorder(BorderFactory.createTitledBorder(hov.getLanguageString("ls.button.download")));
 
 		m_jchHRF.setToolTipText(hov.getLanguageString("tt_Download_XML"));
 		m_jchOwnFixtures.setToolTipText(hov.getLanguageString("tt_Download_AktuellerSpielplan"));

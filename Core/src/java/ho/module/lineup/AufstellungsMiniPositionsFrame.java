@@ -80,7 +80,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 	/**
 	 * Creates a new AufstellungsMiniPositionsFrame object.
-	 * 
+	 *
 	 * @param aufstellungsPanel
 	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param print
@@ -110,7 +110,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 	/**
 	 * Position des MiniScouts speichern
-	 * 
+	 *
 	 */
 	@Override
 	public final void setVisible(boolean sichtbar) {
@@ -453,7 +453,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		sidePanel.setOpaque(false);
 
 		final JLabel label = new JLabel(ho.core.model.HOVerwaltung.instance().getLanguageString(
-				"Elfmeterschuetzen"));
+				"lineup.penaltytakers.takerstable.title"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 
 		if (!m_bPrint) {
@@ -506,7 +506,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 	 * A private, very specific extension to the PlayerPositionPanel that takes
 	 * care of adding and removing the player panel depending on the presence of
 	 * a player in that position.
-	 * 
+	 *
 	 */
 	private class MiniPosPlayer extends PlayerPositionPanel {
 
@@ -523,7 +523,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 		/**
 		 * Creates a new SpielerPositionsPanel object.
-		 * 
+		 *
 		 * @param updater
 		 *            TODO Missing Constructuor Parameter Documentation
 		 * @param positionsID
@@ -556,7 +556,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		}
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 8546453871916507058L;
 

@@ -180,7 +180,7 @@ public class ProxyDialog extends JDialog {
 		// Buttons
 		JPanel buttonPanel = new ImagePanel(new GridBagLayout());
 		okButton.setToolTipText(hov.getLanguageString("tt_Login_Anmelden"));
-		okButton.setText(hov.getLanguageString("Anmelden"));
+		okButton.setText(hov.getLanguageString("ls.button.save"));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.anchor = GridBagConstraints.NORTHEAST;

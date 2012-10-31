@@ -187,7 +187,7 @@ public class PlayerComparePanel extends ImagePanel implements  MouseListener, Ac
 		m_btCompare.addActionListener(this);
 		m_btCompare.setToolTipText(hoV.getLanguageString("ttCompare"));
 
-		m_btReset = new JButton("ls.button.reset");
+		m_btReset = new JButton(hoV.getLanguageString ("ls.button.reset"));
 		m_btReset.addActionListener(this);
 
 		m_L_GroupBy = new JLabel(hoV.getLanguageString("vergleichen_alle"));

@@ -39,7 +39,7 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -991600939074866793L;
 	protected JTable table;
 	protected String ACT_SHOW_INFO = "ShowInfo";
-	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("ls.button.apply");
+	protected String PROP_APPLY = HOVerwaltung.instance().getLanguageString("ls.button.ok");
 	protected String PROP_FILE_NOT_FOUND = HOVerwaltung.instance().getLanguageString("DateiNichtGefunden");
 	protected String PROP_HOMEPAGE = HOVerwaltung.instance().getLanguageString("Homepage");
 	protected String PROP_NAME = HOVerwaltung.instance().getLanguageString("Name");

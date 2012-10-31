@@ -550,7 +550,7 @@ public class SubstitutionOverview extends JPanel {
 		private static final long serialVersionUID = 715531467612457L;
 
 		public RemoveAction() {
-			super(HOVerwaltung.instance().getLanguageString("subs.Remove"));
+			super(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
 		}
 
 		@Override
@@ -568,7 +568,7 @@ public class SubstitutionOverview extends JPanel {
 		private static final long serialVersionUID = 715531467677812457L;
 
 		public EditAction() {
-			super(HOVerwaltung.instance().getLanguageString("subs.Edit"));
+			super(HOVerwaltung.instance().getLanguageString("ls.button.edit"));
 		}
 
 		@Override

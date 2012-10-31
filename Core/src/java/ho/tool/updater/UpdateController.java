@@ -172,9 +172,11 @@ public final class UpdateController {
 				(version.getVersion() == HO.VERSION && HO.isDevelopment()))
 			) {
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-					HOVerwaltung.instance().getLanguageString("updateMSG") + "\n"
-							+ HOVerwaltung.instance().getLanguageString("update") + "?", HOVerwaltung
-							.instance().getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
+					HOVerwaltung.instance().getLanguageString("updateavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": " + version.getVersionString() + "\n"
+					+ HOVerwaltung.instance().getLanguageString("Source") + ": http://www.hattrickorganizer.net/\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
+					HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				// updateHO(version.getVersion());
@@ -183,9 +185,10 @@ public final class UpdateController {
 		} else {
 			final int currRev = HO.getRevisionNumber();
 			JOptionPane.showMessageDialog(HOMainFrame.instance(),
-					"No update available\n\nYour HO! version is: " + HO.VERSION
-							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
-							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
+					HOVerwaltung.instance().getLanguageString("updatenotavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": " + HO.VERSION
+					+ (currRev > 1 ? " (Build " + currRev + ")" : ""), HOVerwaltung.instance()
+					.getLanguageString("ls.button.update"), JOptionPane.INFORMATION_MESSAGE);
 
 		}
 	}
@@ -227,27 +230,30 @@ public final class UpdateController {
 	}
 
 	/**
-	 * Check the external site for the latest beta version. TODO: i18n
+	 * Check the external site for the latest beta version.
 	 */
 	public static void check4latestbeta() {
 		final VersionInfo vi = MyConnector.instance().getLatestBetaVersion();
 		final int currRev = HO.getRevisionNumber();
 		if (vi != null && vi.isValid()
 				&& (vi.getVersion() > HO.VERSION || (vi.getVersion() == HO.VERSION && currRev > 1 && currRev < vi.getBuild()))) {
-			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), "Update your HO to this "
-					+ (vi.isBeta() ? "beta " : "") + "version:" + "\n\nVersion: " + vi.getVersionString()
-					+ "\nReleased: " + vi.getReleaseDate() + "\n\n"
-					+ HOVerwaltung.instance().getLanguageString("update") + "?", HOVerwaltung.instance()
-					.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
+			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+					HOVerwaltung.instance().getLanguageString("updateavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": " + vi.getVersionString() + "\n"
+					+ HOVerwaltung.instance().getLanguageString("Released") + ": " + vi.getReleaseDate() + "\n"
+					+ HOVerwaltung.instance().getLanguageString("Source") + ": http://ho1.sourceforge.net/development/\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
+					HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateHO(MyConnector.getBetaSite() + "/" + vi.getZipFileName());
 			}
 		} else {
 			JOptionPane.showMessageDialog(HOMainFrame.instance(),
-					"No update available\n\nYour HO! version is: " + HO.VERSION
-							+ (currRev > 1 ? " (r" + currRev + ")" : ""), HOVerwaltung.instance()
-							.getLanguageString("update"), JOptionPane.INFORMATION_MESSAGE);
+					HOVerwaltung.instance().getLanguageString("updatenotavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": " + HO.VERSION
+					+ (currRev > 1 ? " (Build " + currRev + ")" : ""), HOVerwaltung.instance()
+					.getLanguageString("ls.button.update"), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -258,15 +264,16 @@ public final class UpdateController {
 			// Info anzeigen, dass es ein Update gibt
 			// Show update info
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
-					.getLanguageString("updateFile"), HOVerwaltung.instance().getLanguageString("update")
-					+ "?", JOptionPane.YES_NO_OPTION);
+					.getLanguageString("updateavailable") + "\n\n" +
+					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?", HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateEPV(data.getRelease());
 			}
 		} else
-			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
-					+ " (" + HOParameter.instance().EpvRelease + ").", HOVerwaltung.instance()
+			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("updatenotavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": "
+					+ HOParameter.instance().EpvRelease, HOVerwaltung.instance()
 					.getLanguageString("EPV"), JOptionPane.INFORMATION_MESSAGE);
 
 	}
@@ -303,15 +310,16 @@ public final class UpdateController {
 				&& data.getRelease() > HOParameter.instance().RatingsRelease) {
 			// Info anzeigen das es ein Update gibt
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
-					.getLanguageString("updateFile"), HOVerwaltung.instance().getLanguageString("Ratings")
-					+ "?", JOptionPane.YES_NO_OPTION);
+					.getLanguageString("updateavailable") + "\n\n" +
+					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?", HOVerwaltung.instance().getLanguageString("Ratings"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateRatings(data.getRelease());
 			}
 		} else
-			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("LatestVersion")
-					+ " (" + HOParameter.instance().RatingsRelease + ").", HOVerwaltung.instance()
+			JOptionPane.showMessageDialog(null, HOVerwaltung.instance().getLanguageString("updatenotavailable") + "\n\n"
+					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": "
+					+ HOParameter.instance().RatingsRelease, HOVerwaltung.instance()
 					.getLanguageString("Ratings"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -352,8 +360,8 @@ public final class UpdateController {
 				case News.HO: {
 					if (!UserParameter.instance().updateCheck && news.getVersion() > HO.VERSION) {
 						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung
-								.instance().getLanguageString("updateMSG"), HOVerwaltung.instance()
-								.getLanguageString("update") + "?", JOptionPane.YES_NO_OPTION);
+								.instance().getLanguageString("updateavailable") , HOVerwaltung.instance()
+								.getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 							UpdateController.updateHO(news.getVersion());
 						}
@@ -363,7 +371,7 @@ public final class UpdateController {
 				case News.EPV: {
 					if (news.getVersion() > HOParameter.instance().EpvRelease) {
 						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
-								.get(0), HOVerwaltung.instance().getLanguageString("update") + "?",
+								.get(0), HOVerwaltung.instance().getLanguageString("ls.button.update"),
 								JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 							UpdateController.updateEPV(news.getVersion());
@@ -376,7 +384,7 @@ public final class UpdateController {
 					if (news.getVersion() > HOParameter.instance().RatingsRelease) {
 
 						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
-								.get(0), HOVerwaltung.instance().getLanguageString("update") + "?",
+								.get(0), HOVerwaltung.instance().getLanguageString("ls.button.update"),
 								JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 

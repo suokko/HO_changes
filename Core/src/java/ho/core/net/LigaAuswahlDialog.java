@@ -31,7 +31,7 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
 	private JButton m_jbAbbrechen = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
-    private JButton m_jbOk = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("Download"));
+    private JButton m_jbOk = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.download"));
     private JComboBox m_jcbLiga;
     private JRadioButton m_jrbLigaAktuell = new JRadioButton(ho.core.model.HOVerwaltung.instance().getLanguageString("AktuelleLiga"),
                                                              true);

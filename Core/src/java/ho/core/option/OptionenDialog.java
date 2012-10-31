@@ -184,7 +184,7 @@ public class OptionenDialog extends JDialog implements WindowListener, ActionLis
 
 		//Download
         m_jpDownloadPanel = new DownloadPanel();
-        tabbedPane.addTab(ho.core.model.HOVerwaltung.instance().getLanguageString("Download"),
+        tabbedPane.addTab(ho.core.model.HOVerwaltung.instance().getLanguageString("options.tabtitle.download"),
                           new JScrollPane(m_jpDownloadPanel));
 
 //		 HO Check

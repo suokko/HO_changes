@@ -29,16 +29,16 @@ public class DownloadPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3212179990708350342L;
 
 	String[] matchTypes = {HOVerwaltung.instance().getLanguageString("NormalMatch"),
    		 HOVerwaltung.instance().getLanguageString("TournamentMatch")};
 
-	
+
 	/** Download Button */
-    JButton downloadButton = new JButton(HOVerwaltung.instance().getLanguageString("Download"));
+    JButton downloadButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.download"));
 
     /** Description label */
     JLabel jLabel1 = new JLabel();
@@ -48,11 +48,11 @@ public class DownloadPanel extends JPanel {
 
     /** The matchid text field */
     NumberTextField matchId = new NumberTextField(10);
-    
+
     JRadioButton normal = new JRadioButton(HOVerwaltung.instance().getLanguageString("NormalMatch"));
     JRadioButton tournament = new JRadioButton(HOVerwaltung.instance().getLanguageString("TournamentMatch"));
     ButtonGroup radioGroup = new ButtonGroup();
-    
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -70,35 +70,35 @@ public class DownloadPanel extends JPanel {
     private void jbInit() {
         jLabel1.setText(HOVerwaltung.instance().getLanguageString("GameID"));
         setLayout(new GridBagLayout());
-        
+
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
-        
+
         constraints.gridx = 1;
         constraints.gridy = 1;
         add(jLabel1, constraints);
-        
+
         constraints.gridx = 2;
         add(matchId, constraints);
-        
+
         constraints.gridx = 1;
         constraints.gridy = 3;
         normal.setSelected(true);
         radioGroup.add(normal);
         add(normal, constraints);
-        
+
         constraints.gridy = 4;
         radioGroup.add(tournament);
         add(tournament, constraints);
-        
+
         constraints.gridy = 6;
         add(downloadButton, constraints);
-        
+
         constraints.gridy = 7;
         add(status, constraints);
-        
+
         downloadButton.addActionListener(new ActionListener() {
                 @Override
 				public void actionPerformed(ActionEvent e) {
@@ -107,7 +107,7 @@ public class DownloadPanel extends JPanel {
                     if (tournament.isSelected()) {
                     	type = MatchType.TOURNAMENTGROUP;
                     }
-                    
+
 //                    if (id == 0) {
 //                        status.setText(HOVerwaltung.instance().getLanguageString("ImportError"));
 //
@@ -115,9 +115,9 @@ public class DownloadPanel extends JPanel {
 //                    }
 
                     if (OnlineWorker.downloadMatchData(id, type, false)) {
-	
+
                     	Matchdetails md = DBManager.instance().getMatchDetails(id);
-	
+
 	                    if (md.getFetchDatum() != null) {
 	                        status.setText(HOVerwaltung.instance().getLanguageString("ImportOK"));
 	                        matchId.setText("");
@@ -128,6 +128,6 @@ public class DownloadPanel extends JPanel {
                 }
             });
     }
-    
-    
+
+
 }

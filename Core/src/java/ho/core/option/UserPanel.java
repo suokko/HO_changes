@@ -132,9 +132,9 @@ public class UserPanel extends ImagePanel implements ActionListener {
 		JPanel topPanel = new ImagePanel();
 		m_jbNewUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 		m_jbNewUser.addActionListener(this);
-		m_jbDeleteUser = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
+		m_jbDeleteUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
 		m_jbDeleteUser.addActionListener(this);
-		m_jbSaveUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
+		m_jbSaveUser = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
 		m_jbSaveUser.addActionListener(this);
 
 		topPanel.add(m_jbNewUser);

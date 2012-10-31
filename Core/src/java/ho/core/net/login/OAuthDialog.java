@@ -219,7 +219,7 @@ public class OAuthDialog extends JDialog {
 		constraints.gridwidth = 2;
 		panel.add(m_jtfAuthString, constraints);
 
-		m_jbOK.setText(HOVerwaltung.instance().getLanguageString("oauth.Enter"));
+		m_jbOK.setText(HOVerwaltung.instance().getLanguageString("ls.button.ok"));
 		m_jbOK.setSize(170, 35);
 		constraints.gridx = 0;
 		constraints.gridy = 7;

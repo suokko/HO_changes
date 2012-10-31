@@ -433,7 +433,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Button_Delete_Row.setToolTipText(hoV.getLanguageString("ttRemove"));
         m_Button_Delete_Row.addActionListener(this);
 
-        m_Button_GoTo = new JButton(hoV.getLanguageString("ls.button.ok"));
+        m_Button_GoTo = new JButton(hoV.getLanguageString("ls.button.apply"));
         m_Button_GoTo.setToolTipText(hoV.getLanguageString("ttok"));
         m_Button_GoTo.setBackground(hellblau);
         m_Button_GoTo.addActionListener(this);
@@ -903,7 +903,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 	    	// Entfernen-Panel und -Label erstellen
 	    	HrfPanel entfernen = new HrfPanel(m_int_Breite_Detail_Var,m_int_Hoehe_Label + 5,rot);
 	    	entfernen.setLayout(new GridLayout(1,1));
-	    	JLabel remove = createLabel(HOVerwaltung.instance().getLanguageString("entf"),m_int_Breite_Detail_Var,m_int_Hoehe_Label,JLabel.CENTER,rot);
+	    	JLabel remove = createLabel(HOVerwaltung.instance().getLanguageString("ls.button.remove"),m_int_Breite_Detail_Var,m_int_Hoehe_Label,JLabel.CENTER,rot);
 	    	remove.getInsets();
 	    	entfernen.add(remove);
 
@@ -1445,7 +1445,7 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 		    	// Entfernen-Panel und -Label erstellen
 		    	HrfPanel entfernen = new HrfPanel(m_int_Breite_Detail_Var,m_int_Hoehe_Label + 5,rot);
 		    	entfernen.setLayout(new GridLayout(1,1));
-		    	HrfLabel remove = new HrfLabel(hoV.getLanguageString("entf"),m_int_Breite_Detail_Var,m_int_Hoehe_Label,JLabel.CENTER,rot);
+		    	HrfLabel remove = new HrfLabel(hoV.getLanguageString("ls.button.remove"),m_int_Breite_Detail_Var,m_int_Hoehe_Label,JLabel.CENTER,rot);
 		    	remove.getInsets();
 		    	entfernen.add(remove);
 

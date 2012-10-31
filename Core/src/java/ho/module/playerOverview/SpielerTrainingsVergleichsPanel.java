@@ -43,7 +43,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private JButton m_jbLoeschen = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
+    private JButton m_jbLoeschen = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
     private JList m_jlHRFs = new JList();
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -84,12 +84,12 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
      */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         final Object[] hrfs = m_jlHRFs.getSelectedValues();
-        String text = HOVerwaltung.instance().getLanguageString("loeschen");
+        String text = HOVerwaltung.instance().getLanguageString("ls.button.delete");
 
         if (hrfs.length > 1) {
             text += (" (" + hrfs.length + " Files) : ");
         } else {
-            text += " : ";
+            text += ": ";
         }
 
         for (int i = 0; (i < hrfs.length) && (i < 11); i++) {
@@ -101,7 +101,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
 
         final int value = JOptionPane.showConfirmDialog(this, text,
-				HOVerwaltung.instance().getLanguageString("loeschen"), JOptionPane.YES_NO_OPTION);
+				HOVerwaltung.instance().getLanguageString("ls.button.delete"), JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.OK_OPTION) {
             for (int i = 0; i < hrfs.length; i++) {

@@ -90,23 +90,24 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 
 	// Menus
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString(
-			"Refresh"));
-	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Beenden"));
-	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Credits"));
-	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Download"));
-	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Forum"));
-	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Hattrick"));
-	private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString(
-			"Help"));
-	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("Homepage"));
-	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
-			.getLanguageString("FullScreen.toggle"));
+	"ls.button.update"));
+private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("Beenden"));
+private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("Credits"));
+private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("ls.button.download"));
+private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("Forum"));
+private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("Hattrick"));
+private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+	"Help"));
+private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("Homepage"));
+private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
+	.getLanguageString("FullScreen.toggle"));
+
 
 	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance()
 			.getLanguageString("HRFImportieren"));

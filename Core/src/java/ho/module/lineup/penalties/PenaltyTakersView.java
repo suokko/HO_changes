@@ -201,7 +201,7 @@ public class PenaltyTakersView extends JPanel {
 		gbc.insets = new Insets(15, 8, 4, 8);
 		moveButtonsPanel.add(this.addToTakersButton, gbc);
 
-		this.removeFromTakersButton = new JButton(getLangStr("lineup.penaltytakers.button.remove"));
+		this.removeFromTakersButton = new JButton(getLangStr("ls.button.remove"));
 		this.removeFromTakersButton.setIcon(ThemeManager.getIcon(HOIconName.MOVE_LEFT));
 		this.removeFromTakersButton.setEnabled(false);
 		gbc.insets = new Insets(4, 8, 15, 8);

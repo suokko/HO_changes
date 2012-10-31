@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Main HO starter class.
- * 
+ *
  * @author thomas.werth
  */
 public class HO {
@@ -81,16 +81,16 @@ public class HO {
 
 	/**
 	 * Main method to start a HOMainFrame.
-	 * 
+	 *
 	 * @param args
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
 		final long start = System.currentTimeMillis();
-		
+
 		System.setProperty("sun.awt.exception.handler", ExceptionHandler.class.getName());
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-		
+
 		if ((args != null) && (args.length > 0)) {
 			String debugLvl = args[0].trim().toUpperCase();
 
@@ -167,11 +167,9 @@ public class HO {
 		if (DBManager.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new ho.core.option.InitOptionsDialog();
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"To load your team data into HO! select File > Download from the main menu.",
-							"Team Data", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Select File > Download in the main menu to load your team data into HO.",
+					"Get team data into HO",
+							JOptionPane.INFORMATION_MESSAGE);
 			interuptionsWindow.setVisible(true);
 		}
 

@@ -40,9 +40,9 @@ import javax.swing.JViewport;
  * Panel, das die Ligatabelle sowie das letzte und das nächste Spiel enthält
  */
 public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener, ActionListener, MouseListener, KeyListener{
-	
+
 	private static final long serialVersionUID = -5179683183917344230L;
-	
+
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static Spielplan AKTUELLER_SPIELPLAN;
@@ -53,7 +53,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
 
     private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
     private JButton m_jbLoeschen = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
-    
+
     private JComboBox m_jcbSaison;
     private SeriesTablePanel m_jpLigaTabelle;
     private MatchDayPanel[] matchDayPanels = new MatchDayPanel[14];
@@ -85,9 +85,9 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
             if (m_jcbSaison.getSelectedItem() != null) {
                 final Spielplan spielplan = (Spielplan) m_jcbSaison.getSelectedItem();
                 final int value = JOptionPane.showConfirmDialog(this,
-                                                                HOVerwaltung.instance().getLanguageString("Ligatabelle")
+                                                                HOVerwaltung.instance().getLanguageString("ls.button.delete")
                                                                 + " "
-                                                                + HOVerwaltung.instance().getLanguageString("loeschen")
+                                                                + HOVerwaltung.instance().getLanguageString("Ligatabelle")
                                                                 + ":\n" + spielplan.toString(), "",
                                                                 JOptionPane.YES_NO_OPTION);
 
@@ -235,7 +235,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable, ItemListener
 
     private void initComponents() {
         setLayout(new BorderLayout());
-        
+
         //ComboBox für Saisonauswahl
         final JPanel panel = new ImagePanel(new BorderLayout());
 

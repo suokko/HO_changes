@@ -35,7 +35,7 @@ public final class LanguagesDialog extends UpdaterDialog {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -8429766970834045846L;
 
@@ -45,7 +45,7 @@ public final class LanguagesDialog extends UpdaterDialog {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** TODO Missing Parameter Documentation */
-    protected final String PROP_REFRESH = HOVerwaltung.instance().getLanguageString("Refresh");
+    protected final String PROP_REFRESH = HOVerwaltung.instance().getLanguageString("ls.button.update");
 
     /** TODO Missing Parameter Documentation */
     protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/sprache/";

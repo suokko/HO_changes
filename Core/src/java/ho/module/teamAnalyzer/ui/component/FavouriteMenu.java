@@ -37,7 +37,7 @@ public class FavouriteMenu extends JMenu {
     public JMenuItem itemAdd = new JMenuItem(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 
     /** Delete menu item */
-    public JMenuItem itemDelete = new JMenuItem(HOVerwaltung.instance().getLanguageString("loeschen"));
+    public JMenuItem itemDelete = new JMenuItem(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
 
     /** List of favourite team menu items */
     public List<JMenuItem> items;
@@ -89,7 +89,7 @@ public class FavouriteMenu extends JMenu {
                 public void actionPerformed(ActionEvent arg0) {
                     JOptionPane.showMessageDialog(SystemManager.getPlugin(),
                                                   new DeletePanel(me),
-                                                  HOVerwaltung.instance().getLanguageString("loeschen")
+                                                  HOVerwaltung.instance().getLanguageString("ls.button.delete")
                                                   + " "
                                                   + HOVerwaltung.instance().getLanguageString("Verein"),
                                                   JOptionPane.PLAIN_MESSAGE);

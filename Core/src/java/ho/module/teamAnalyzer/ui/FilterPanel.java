@@ -32,7 +32,7 @@ public class FilterPanel extends JPanel implements ActionListener {
     //~ Static fields/initializers -----------------------------------------------------------------
 
 	private static final long serialVersionUID = -2795086705715618810L;
-	
+
     private static final String CARD_AUTOMATIC = "AUTOMATIC CARD";
     private static final String CARD_MANUAL = "MANUAL CARD";
     private static boolean teamComboUpdating = false;
@@ -40,13 +40,13 @@ public class FilterPanel extends JPanel implements ActionListener {
     //~ Instance fields ----------------------------------------------------------------------------
 
     private AutoFilterPanel autoPanel;
-    private JButton downloadButton = new JButton(HOVerwaltung.instance().getLanguageString("update"));
+    private JButton downloadButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.update"));
     private JComboBox teamCombo = new JComboBox();
     private JPanel cards = new JPanel(new CardLayout());
     private JRadioButton radioAutomatic;
     private JRadioButton radioManual;
     private ManualFilterPanel manualPanel;
-   
+
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -85,7 +85,7 @@ public class FilterPanel extends JPanel implements ActionListener {
             return;
         }
     }
-    
+
     /**
      * Check, if the selected opponent is among the next 2 teams (allows full update according to CHPP rules).
      */
@@ -103,7 +103,7 @@ public class FilterPanel extends JPanel implements ActionListener {
         }
 
         downloadButton.setEnabled(true);
-        downloadButton.setText(HOVerwaltung.instance().getLanguageString("update"));
+        downloadButton.setText(HOVerwaltung.instance().getLanguageString("ls.button.update"));
 
         CardLayout cLayout = (CardLayout) (cards.getLayout());
 

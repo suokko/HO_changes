@@ -65,7 +65,7 @@ public class RightPanel extends JPanel {
 
 		JPanel buttonPanel = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
-		this.updateButton = new JButton(getLangString("ifa.imageBuilder.button.update"));
+		this.updateButton = new JButton(getLangString("ls.button.update"));
 		gbc.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(this.updateButton, gbc);
 		this.saveImageButton = new JButton(getLangString("ifa.imageBuilder.button.save"));
@@ -159,7 +159,7 @@ public class RightPanel extends JPanel {
 
 	/**
 	 * Convenience method
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -169,12 +169,12 @@ public class RightPanel extends JPanel {
 
 	private void saveImage() throws IOException {
 		boolean away = this.awayRadioButton.isSelected();
-		
+
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new ImageFileFilter(new String[] { "gif" }));
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		String fileName;
-		
+
 		if (this.imageDesignPanel.isAnimGif()) {
 			fileName = "animated.gif";
 		} else if (this.awayRadioButton.isSelected()) {
@@ -197,7 +197,7 @@ public class RightPanel extends JPanel {
 			JComponent panel1 = this.imageDesignPanel.getEmblemPanel().getImage();
 			this.imageDesignPanel.setAway(!away);
 			JComponent panel2 = this.imageDesignPanel.getEmblemPanel().getImage();
-		
+
 			Dimension size1 = panel1.getSize();
 			Dimension size2 = panel2.getSize();
 			int maxW = size1.width > size2.width ? size1.width : size2.width;
@@ -223,7 +223,7 @@ public class RightPanel extends JPanel {
 					.getDelaySpinner().getValue().toString()).doubleValue()));
 			encoder.encode(out);
 			dialog.dispose();
-			
+
 			// enforce refresh
 			this.imageDesignPanel.setAway(away);
 		} else {

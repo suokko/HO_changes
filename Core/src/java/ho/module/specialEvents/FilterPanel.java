@@ -129,9 +129,9 @@ public class FilterPanel extends JPanel {
 				}
 			}
 		});
-		
+
 		this.tacticComboBox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CBItem item = (CBItem) tacticComboBox.getSelectedItem();
@@ -139,7 +139,7 @@ public class FilterPanel extends JPanel {
 					filter.setTactic(null);
 				} else {
 					filter.setTactic(item.getId());
-				}							
+				}
 			}
 		});
 
@@ -305,7 +305,7 @@ public class FilterPanel extends JPanel {
 		panel.add(this.seasonComboBox, gbc);
 
 		JLabel tacticsLabel = new JLabel();
-		tacticsLabel.setText(getLangStr("specialEvents.filter.matches.tactic"));
+		tacticsLabel.setText(getLangStr("ls.team.tactic") + ":");
 		gbc.gridy = 2;
 		gbc.gridx = 0;
 		panel.add(tacticsLabel, gbc);
@@ -341,7 +341,7 @@ public class FilterPanel extends JPanel {
 		});
 
 		list.add(0,
-				new CBItem(getLangStr("specialEvents.tactic.none"), IMatchDetails.TAKTIK_NORMAL));
+				new CBItem(getLangStr("ls.team.tactic.normal"), IMatchDetails.TAKTIK_NORMAL));
 		list.add(0, new CBItem("", -1));
 		return list;
 	}
@@ -429,7 +429,7 @@ public class FilterPanel extends JPanel {
 
 	/**
 	 * Convenience method.
-	 * 
+	 *
 	 * @param key
 	 * @return
 	 */

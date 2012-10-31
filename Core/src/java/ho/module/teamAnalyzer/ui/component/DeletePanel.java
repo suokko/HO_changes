@@ -38,7 +38,7 @@ public class DeletePanel extends JPanel {
     JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 
     /** The delete button */
-    JButton deletebutton = new JButton(HOVerwaltung.instance().getLanguageString("loeschen"));
+    JButton deletebutton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
 
     /** ComboBox with the list of favourite teams */
     JComboBox teams = new JComboBox();

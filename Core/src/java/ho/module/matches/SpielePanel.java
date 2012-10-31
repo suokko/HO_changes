@@ -171,13 +171,13 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
             }
 
             final StringBuilder text = new StringBuilder(100);
-            text.append(HOVerwaltung.instance().getLanguageString("loeschen"));
+            text.append(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
             if (infos.length > 1) {
             	text.append(" (" + infos.length + " ");
             	text.append(HOVerwaltung.instance().getLanguageString("Spiele"));
                 text.append(")");
             }
-            text.append(" :");
+            text.append(":");
 
 
             for (int i = 0; (i < infos.length) && (i < 11); i++) {
@@ -187,7 +187,7 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
                 }
             }
 
-            final int value = JOptionPane.showConfirmDialog(this, text, HOVerwaltung.instance().getLanguageString("loeschen"),
+            final int value = JOptionPane.showConfirmDialog(this, text, HOVerwaltung.instance().getLanguageString("ls.button.delete"),
 					JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
