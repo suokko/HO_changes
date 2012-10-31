@@ -1,13 +1,16 @@
 package ho.module.specialEvents;
 
 import static ho.module.specialEvents.SpecialEventsTableModel.*;
+import ho.core.gui.ApplicationClosingListener;
 import ho.core.gui.CursorToolkit;
+import ho.core.gui.HOMainFrame;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.module.specialEvents.filter.Filter;
 import ho.module.specialEvents.filter.FilterChangeEvent;
 import ho.module.specialEvents.filter.FilterChangeListener;
+import ho.module.specialEvents.filter.FilterHelper;
 import ho.module.specialEvents.table.ChanceTableCellRenderer;
 import ho.module.specialEvents.table.DateTableCellRenderer;
 import ho.module.specialEvents.table.DefaultSETableCellRenderer;
@@ -60,6 +63,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 
 	private void initialize() {
 		this.filter = new Filter();
+		FilterHelper.loadSettings(this.filter);
 		setLayout(new BorderLayout());
 
 		this.filter.addFilterChangeListener(new FilterChangeListener() {
@@ -67,6 +71,14 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 			@Override
 			public void filterChanged(FilterChangeEvent evt) {
 				setTableData();
+			}
+		});
+		
+		HOMainFrame.instance().addApplicationClosingListener(new ApplicationClosingListener() {
+			
+			@Override
+			public void applicationClosing() {
+				FilterHelper.saveSettings(filter);
 			}
 		});
 

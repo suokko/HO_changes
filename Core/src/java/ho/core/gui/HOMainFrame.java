@@ -71,44 +71,64 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 /**
  * The Main HO window
  */
-public final class HOMainFrame extends JFrame implements Refreshable,  ActionListener {
+public final class HOMainFrame extends JFrame implements Refreshable, ActionListener {
 
 	public static final int BUSY = 0;
 	public static final int READY = 1;
 	private static final long serialVersionUID = -6333275250973872365L;
-    private static HOMainFrame m_clHOMainFrame;
+	private static HOMainFrame m_clHOMainFrame;
 	private static int status = READY;
 	private InfoPanel m_jpInfoPanel;
 	private final JMenuBar m_jmMenuBar = new JMenuBar();
 	// Top level Menu
 	private final JMenu m_jmAbout = new JMenu(HOVerwaltung.instance().getLanguageString("About"));
 	private final JMenu m_jmDatei = new JMenu(HOVerwaltung.instance().getLanguageString("Datei"));
-	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString("Funktionen"));
-	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString("Module"));
+	private final JMenu m_jmVerschiedenes = new JMenu(HOVerwaltung.instance().getLanguageString(
+			"Funktionen"));
+	private final JMenu m_jmModuleMenu = new JMenu(HOVerwaltung.instance().getLanguageString(
+			"Module"));
 
 	// Menus
-	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString("Refresh"));
-	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Beenden"));
-	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Credits"));
-	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Download"));
-	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Forum"));
-	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Hattrick"));
-	private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Help"));
-	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("Homepage"));
-	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("FullScreen.toggle"));
+	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString(
+			"Refresh"));
+	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Beenden"));
+	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Credits"));
+	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Download"));
+	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Forum"));
+	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Hattrick"));
+	private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"Help"));
+	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Homepage"));
+	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("FullScreen.toggle"));
 
-	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
-	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString("Optionen"));
-	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen"));
-	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance().getLanguageString("SubskillsBerechnen")
-			+ " (7 " + HOVerwaltung.instance().getLanguageString("Wochen") + ")");
-	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString("Flaggen"));
+	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("HRFImportieren"));
+	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"Optionen"));
+	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"SubskillsBerechnen"));
+	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("SubskillsBerechnen")
+			+ " (7 "
+			+ HOVerwaltung.instance().getLanguageString("Wochen") + ")");
+	private final JMenuItem m_jmiFlags = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"Flaggen"));
 	private final JMenuItem m_jmiHO = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO"));
-	private final JMenuItem m_jmiHObeta = new JMenuItem(HOVerwaltung.instance().getLanguageString("HO") + " ("
-			+ HOVerwaltung.instance().getLanguageString("Beta") + ")");
-	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString("Ratings"));
+	private final JMenuItem m_jmiHObeta = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"HO")
+			+ " (" + HOVerwaltung.instance().getLanguageString("Beta") + ")");
+	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"Ratings"));
 
-	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance().getLanguageString("Sprachdatei"));
+	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Sprachdatei"));
 	// Components
 	private HOTabbedPane m_jtpTabbedPane;
 
@@ -127,13 +147,15 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private HOMainFrame() {
 
 		// Log HO! version
-		HOLogger.instance().info(getClass(), "This is HO! version " + getVersionString() + ", have fun!");
+		HOLogger.instance().info(getClass(),
+				"This is HO! version " + getVersionString() + ", have fun!");
 
 		// Log Operating System
 		HOLogger.instance().info(
 				getClass(),
 				"Operating system found: " + System.getProperty("os.name") + " on "
-						+ System.getProperty("os.arch") + " (" + System.getProperty("os.version") + ")");
+						+ System.getProperty("os.arch") + " (" + System.getProperty("os.version")
+						+ ")");
 
 		// Log Java version
 		HOLogger.instance().info(
@@ -170,10 +192,10 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	/**
 	 * This method creates a MacOS specific listener for the quit operation
 	 * ("Command-Q")
-	 *
+	 * 
 	 * We need to use reflections here, because the com.apple.eawt.* classes are
 	 * Apple specific
-	 *
+	 * 
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -207,23 +229,27 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addApplicationClosingListener(ApplicationClosingListener listener) {
 		if (!this.applicationClosingListener.contains(listener)) {
 			this.applicationClosingListener.add(listener);
 		}
 	}
-	
+
 	public void removeApplicationClosingListener(ApplicationClosingListener listener) {
 		this.applicationClosingListener.remove(listener);
 	}
 
 	private void fireApplicationClosing() {
 		for (int i = this.applicationClosingListener.size() - 1; i >= 0; i--) {
-			this.applicationClosingListener.get(i).applicationClosing();
+			try {
+				this.applicationClosingListener.get(i).applicationClosing();
+			} catch (Exception ex) {
+				ExceptionDialog dlg = new ExceptionDialog("Error", ex);
+			}
 		}
 	}
-	
+
 	public static String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
@@ -255,28 +281,27 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		getSpielerUebersichtPanel().setPlayer(spieler);
 	}
 
-
 	public LineupPanel getAufstellungsPanel() {
 		Container c = getTabbedPane().getModulePanel(IModule.LINEUP);
 		if (c instanceof LineupPanel) {
-			return (LineupPanel)c;
+			return (LineupPanel) c;
 		} else {
-			return ((LineupMasterView)c).getLineupPanel();
+			return ((LineupMasterView) c).getLineupPanel();
 		}
 	}
 
 	public InfoPanel getInfoPanel() {
-		if(m_jpInfoPanel == null)
+		if (m_jpInfoPanel == null)
 			m_jpInfoPanel = new InfoPanel();
 		return m_jpInfoPanel;
 	}
 
 	public PlayerAnalysisPanel getSpielerAnalyseMainPanel() {
-		return ((PlayerAnalysisPanel)getTabbedPane().getModulePanel(IModule.PLAYERANALYSIS));
+		return ((PlayerAnalysisPanel) getTabbedPane().getModulePanel(IModule.PLAYERANALYSIS));
 	}
 
 	public SpielerUebersichtsPanel getSpielerUebersichtPanel() {
-		return ((SpielerUebersichtsPanel)getTabbedPane().getModulePanel(IModule.PLAYEROVERVIEW));
+		return ((SpielerUebersichtsPanel) getTabbedPane().getModulePanel(IModule.PLAYEROVERVIEW));
 	}
 
 	public HOTabbedPane getTabbedPane() {
@@ -297,11 +322,11 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	 * Get the transfer scout panel.
 	 */
 	public TransfersPanel getTransferScoutPanel() {
-		return ((TransfersPanel)getTabbedPane().getModulePanel(IModule.TRANSFERS));
+		return ((TransfersPanel) getTabbedPane().getModulePanel(IModule.TRANSFERS));
 	}
 
-	public SpielePanel getMatchesPanel(){
-		return ((SpielePanel)getTabbedPane().getModulePanel(IModule.MATCHES));
+	public SpielePanel getMatchesPanel() {
+		return ((SpielePanel) getTabbedPane().getModulePanel(IModule.MATCHES));
 	}
 
 	/**
@@ -320,8 +345,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			new OptionenDialog(this).setVisible(true);
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
-					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"),
-					HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"),
+					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"), HOVerwaltung
+							.instance().getLanguageString("subskillRecalcHeader"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				HOVerwaltung.instance().recalcSubskills(true, null);
 			}
@@ -329,8 +354,12 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			Calendar cal = Calendar.getInstance();
 			cal.setLenient(true);
 			cal.add(Calendar.WEEK_OF_YEAR, -7); // half season
-			if (JOptionPane.showConfirmDialog(this,
-					HOVerwaltung.instance().getLanguageString("subskillRecalc7w",new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal.getTime())),
+			if (JOptionPane.showConfirmDialog(
+					this,
+					HOVerwaltung.instance().getLanguageString(
+							"subskillRecalc7w",
+							new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(cal
+									.getTime())),
 					HOVerwaltung.instance().getLanguageString("subskillRecalcHeader"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				Timestamp from = new Timestamp(cal.getTimeInMillis());
@@ -344,7 +373,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			FullScreen.instance().restoreNormalMode(this);
 			// Fire CloseEvent, so all Modules get informed
 			this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		}   else if (source.equals(m_jmCreditsItem)) {
+		} else if (source.equals(m_jmCreditsItem)) {
 			Credits.showCredits(HOMainFrame.instance());
 		} else if (source.equals(m_jmHomepageItem)) { // Homepage
 			openURL(MyConnector.getHOSite());
@@ -388,8 +417,9 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		CursorToolkit.startWaitCursor(getRootPane());
 		try {
 			fireApplicationClosing();
-			
-			// TODO instead of calling XY.instance().save() from here, those classes should register a ApplicationClosingListener 
+
+			// TODO instead of calling XY.instance().save() from here, those
+			// classes should register a ApplicationClosingListener
 			HOLogger.instance().debug(getClass(), "Shutting down HO!");
 			// aktuelle UserParameter speichern
 			saveUserParameter();
@@ -419,7 +449,6 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}
 	}
 
-
 	/**
 	 * Frame aufbauen
 	 */
@@ -433,7 +462,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 		IModule[] activeModules = ModuleManager.instance().getModules(true);
 		for (int i = 0; i < activeModules.length; i++) {
-			if(activeModules[i].hasMainTab() && activeModules[i].isStartup())
+			if (activeModules[i].hasMainTab() && activeModules[i].isStartup())
 				m_jtpTabbedPane.showTab(activeModules[i].getModuleId());
 		}
 
@@ -444,7 +473,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 		setLocation(UserParameter.instance().hoMainFrame_PositionX,
 				UserParameter.instance().hoMainFrame_PositionY);
-		setSize(UserParameter.instance().hoMainFrame_width, UserParameter.instance().hoMainFrame_height);
+		setSize(UserParameter.instance().hoMainFrame_width,
+				UserParameter.instance().hoMainFrame_height);
 	}
 
 	/**
@@ -452,8 +482,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	 */
 	public void initMenue() {
 		// Kein F10!
-		((InputMap) UIManager.get("Table.ancestorInputMap"))
-				.remove(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		((InputMap) UIManager.get("Table.ancestorInputMap")).remove(KeyStroke.getKeyStroke(
+				KeyEvent.VK_F2, 0));
 
 		m_jmDownloadItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
 		m_jmDownloadItem.addActionListener(this);
@@ -520,7 +550,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		// Verschiedenes
 		IModule[] activeModules = ModuleManager.instance().getModules(true);
 		for (int i = 0; i < activeModules.length; i++) {
-			if(activeModules[i].hasMainTab()){
+			if (activeModules[i].hasMainTab()) {
 				JMenuItem showTabMenuItem = new JMenuItem(activeModules[i].getDescription());
 				showTabMenuItem.setAccelerator(activeModules[i].getKeyStroke());
 				showTabMenuItem.putClientProperty("MODULE", activeModules[i]);
@@ -528,19 +558,18 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						JMenuItem item = (JMenuItem)e.getSource();
-						IModule module = (IModule)item.getClientProperty("MODULE");
+						JMenuItem item = (JMenuItem) e.getSource();
+						IModule module = (IModule) item.getClientProperty("MODULE");
 						getTabbedPane().showTab(module.getModuleId());
 
 					}
 				});
 				m_jmVerschiedenes.add(showTabMenuItem);
 			}
-			if(activeModules[i].hasMenu()){
+			if (activeModules[i].hasMenu()) {
 				m_jmModuleMenu.add(activeModules[i].getMenu());
 			}
 		}
-
 
 		// About
 		m_jmHomepageItem.addActionListener(this);
@@ -559,7 +588,6 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 		m_jmCreditsItem.addActionListener(this);
 		m_jmAbout.add(m_jmCreditsItem);
-
 
 		// add Top Level Menus
 		m_jmMenuBar.add(m_jmVerschiedenes);
@@ -625,7 +653,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	public void reInit() {
 		// Die Währung auf die aus dem HRF setzen
 		try {
-			float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate();
+			float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten()
+					.getCurrencyRate();
 
 			if (faktorgeld > -1) {
 				UserParameter.instance().faktorGeld = faktorgeld;
@@ -656,7 +685,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
-	 *
+	 * 
 	 * @param tabnumber
 	 *            number of the tab to show
 	 */
@@ -670,7 +699,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private void setDefaultFont(int size) {
 		try {
 			boolean succ = false;
-			if (UserParameter.instance().skin != null && UserParameter.instance().skin.startsWith("JGoodies")) {
+			if (UserParameter.instance().skin != null
+					&& UserParameter.instance().skin.startsWith("JGoodies")) {
 				succ = JGoodiesTheme.enableJGoodiesTheme(UserParameter.instance().skin, size);
 			} else if ("System".equalsIgnoreCase(UserParameter.instance().skin)) {
 				try {
@@ -700,11 +730,13 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			}
 			if (!succ) {
 				final MetalLookAndFeel laf = new MetalLookAndFeel();
-				MetalLookAndFeel.setCurrentTheme(new HOTheme(UserParameter.instance().schriftGroesse));
+				MetalLookAndFeel.setCurrentTheme(new HOTheme(
+						UserParameter.instance().schriftGroesse));
 
 				// Um die systemweite MenuBar von Mac OS X zu verwenden
 				// http://www.pushing-pixels.org/?p=366
-				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH).startsWith("mac")) {
+				if (System.getProperty("os.name").toLowerCase(java.util.Locale.ENGLISH)
+						.startsWith("mac")) {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					Object mbUI = UIManager.get("MenuBarUI");
 					Object mUI = UIManager.get("MenuUI");
@@ -735,12 +767,15 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private void saveUserParameter() {
 		UserParameter parameter = UserParameter.instance();
 
-		parameter.hoMainFrame_PositionX =  Math.max(getLocation().x, 0);
+		parameter.hoMainFrame_PositionX = Math.max(getLocation().x, 0);
 		parameter.hoMainFrame_PositionY = Math.max(getLocation().y, 0);
-		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width - parameter.hoMainFrame_PositionX);
-		parameter.hoMainFrame_height = Math.min(getSize().height, getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
+		parameter.hoMainFrame_width = Math.min(getSize().width, getToolkit().getScreenSize().width
+				- parameter.hoMainFrame_PositionX);
+		parameter.hoMainFrame_height = Math.min(getSize().height,
+				getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
 
-		final IAufstellungsAssistentPanel aap = getAufstellungsPanel().getAufstellungsAssitentPanel();
+		final IAufstellungsAssistentPanel aap = getAufstellungsPanel()
+				.getAufstellungsAssitentPanel();
 
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
@@ -756,7 +791,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		parameter.aufstellungsAssistentPanel_notLast = aap.isExcludeLastMatch();
 
 		// SpielerÜbersichtsPanel
-		if(getTabbedPane().isModuleTabVisible(IModule.PLAYEROVERVIEW)){
+		if (getTabbedPane().isModuleTabVisible(IModule.PLAYEROVERVIEW)) {
 			final int[] sup = getSpielerUebersichtPanel().getDividerLocations();
 			parameter.spielerUebersichtsPanel_horizontalLeftSplitPane = sup[0];
 			parameter.spielerUebersichtsPanel_horizontalRightSplitPane = sup[1];
@@ -765,7 +800,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}
 
 		// AufstellungsPanel
-		if(getTabbedPane().isModuleTabVisible(IModule.LINEUP)){
+		if (getTabbedPane().isModuleTabVisible(IModule.LINEUP)) {
 			final int[] ap = getAufstellungsPanel().getDividerLocations();
 			parameter.aufstellungsPanel_verticalSplitPaneLow = ap[0];
 			parameter.aufstellungsPanel_horizontalLeftSplitPane = ap[1];
@@ -775,7 +810,7 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}
 
 		// SpielePanel
-		if(getTabbedPane().isModuleTabVisible(IModule.MATCHES)){
+		if (getTabbedPane().isModuleTabVisible(IModule.MATCHES)) {
 			final int[] sp = getMatchesPanel().getDividerLocations();
 			parameter.spielePanel_horizontalLeftSplitPane = sp[0];
 			parameter.spielePanel_verticalSplitPane = sp[1];
@@ -783,14 +818,14 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 		}
 
 		// SpielerAnalyse
-		if(getTabbedPane().isModuleTabVisible(IModule.PLAYERANALYSIS)){
+		if (getTabbedPane().isModuleTabVisible(IModule.PLAYERANALYSIS)) {
 			final int spa = getSpielerAnalyseMainPanel().getDividerLocation();
 			parameter.spielerAnalysePanel_horizontalSplitPane = spa;
 			getSpielerAnalyseMainPanel().saveColumnOrder();
 		}
 
 		// TransferScoutPanel
-		if(getTabbedPane().isModuleTabVisible(IModule.TRANSFERS)){
+		if (getTabbedPane().isModuleTabVisible(IModule.TRANSFERS)) {
 			final int tsp = getTransferScoutPanel().getScoutPanel().getDividerLocation();
 			parameter.transferScoutPanel_horizontalSplitPane = tsp;
 		}
@@ -809,11 +844,12 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private void addListeners() {
 		addWindowListener(new WindowAdapter() {
 			/**
-			 * Finally shutting down the application when the main window is closed.
-			 * This is initiated through the call to dispose(). System.exit is called
-			 * only in the case when @see beenden() is called in advance. This event is
-			 * called when switching into full screen mode, too.
-			 *
+			 * Finally shutting down the application when the main window is
+			 * closed. This is initiated through the call to dispose().
+			 * System.exit is called only in the case when @see beenden() is
+			 * called in advance. This event is called when switching into full
+			 * screen mode, too.
+			 * 
 			 * @param windowEvent
 			 *            is ignored
 			 */

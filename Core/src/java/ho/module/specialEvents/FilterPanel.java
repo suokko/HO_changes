@@ -65,19 +65,10 @@ public class FilterPanel extends JPanel {
 	}
 
 	private void initFromFilter() {
-		SeasonFilterValue period = this.filter.getSeasonFilterValue();
-		CBItem itemToSelect = null;
-		if (period != null) {
-			ComboBoxModel comboModel = this.seasonComboBox.getModel();
-			for (int i = 0; i < comboModel.getSize(); i++) {
-				CBItem item = (CBItem) comboModel.getElementAt(i);
-				if (item.getId() == period.getId()) {
-					itemToSelect = item;
-					break;
-				}
-			}
+		if (this.filter.getSeasonFilterValue() != null) {
+			restoreComboBoxSelection(this.filter.getSeasonFilterValue().getId(),
+					this.seasonComboBox);
 		}
-		this.seasonComboBox.setSelectedItem(itemToSelect);
 
 		this.onlySEMatchesCheckBox.setSelected(this.filter.isShowMatchesWithSEOnly());
 		this.friendliesCheckBox.setSelected(this.filter.isShowFriendlies());
@@ -96,7 +87,9 @@ public class FilterPanel extends JPanel {
 
 		this.currentPlayersCheckBox.setSelected(this.filter.isShowCurrentPlayersOnly());
 		updatePlayerComboBoxData(this.filter.isShowCurrentPlayersOnly());
-		this.playerComboBox.setSelectedItem(null);
+		if (this.filter.getPlayerId() != null) {
+			restoreComboBoxSelection(this.filter.getPlayerId(), this.playerComboBox);
+		}
 		this.ownPlayersInvolvedCheckBox.setSelected(this.filter.isShowOwnPlayersOnly());
 	}
 
@@ -417,22 +410,22 @@ public class FilterPanel extends JPanel {
 		this.playerComboBox.setModel(new DefaultComboBoxModel(playerItems.toArray()));
 
 		if (oldItem != null) {
-			restorePlayerComboSelection(oldItem.getId());
+			restoreComboBoxSelection(oldItem.getId(), this.playerComboBox);
 		} else {
 			this.playerComboBox.setSelectedItem(null);
 		}
 	}
 
-	private void restorePlayerComboSelection(int playerId) {
-		ComboBoxModel model = this.playerComboBox.getModel();
+	private void restoreComboBoxSelection(int id, JComboBox comboBox) {
+		ComboBoxModel model = comboBox.getModel();
 		CBItem item = null;
 		for (int i = 0; i < model.getSize(); i++) {
-			if (((CBItem) model.getElementAt(i)).getId() == playerId) {
+			if (((CBItem) model.getElementAt(i)).getId() == id) {
 				item = (CBItem) model.getElementAt(i);
 				break;
 			}
 		}
-		this.playerComboBox.setSelectedItem(item);
+		comboBox.setSelectedItem(item);
 	}
 
 	private class ComboBoxRenderer extends JLabel implements ListCellRenderer {
