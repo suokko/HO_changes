@@ -4,6 +4,7 @@ import ho.core.datatype.CBItem;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
 import ho.core.model.player.Spieler;
 import ho.module.specialEvents.filter.Filter;
 
@@ -36,6 +37,7 @@ public class FilterPanel extends JPanel {
 	// matches
 	private JCheckBox onlySEMatchesCheckBox;
 	private JComboBox seasonComboBox;
+	private JComboBox tacticComboBox;
 	// match types
 	private JCheckBox friendliesCheckBox;
 	private JCheckBox leagueCheckBox;
@@ -68,6 +70,10 @@ public class FilterPanel extends JPanel {
 		if (this.filter.getSeasonFilterValue() != null) {
 			restoreComboBoxSelection(this.filter.getSeasonFilterValue().getId(),
 					this.seasonComboBox);
+		}
+
+		if (this.filter.getTactic() != null) {
+			restoreComboBoxSelection(this.filter.getTactic(), this.tacticComboBox);
 		}
 
 		this.onlySEMatchesCheckBox.setSelected(this.filter.isShowMatchesWithSEOnly());
@@ -121,6 +127,19 @@ public class FilterPanel extends JPanel {
 				} else {
 					filter.setSeasonFilterValue(SeasonFilterValue.getById(item.getId()));
 				}
+			}
+		});
+		
+		this.tacticComboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CBItem item = (CBItem) tacticComboBox.getSelectedItem();
+				if (item == null || item.getId() == -1) {
+					filter.setTactic(null);
+				} else {
+					filter.setTactic(item.getId());
+				}							
 			}
 		});
 
@@ -210,7 +229,7 @@ public class FilterPanel extends JPanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(4, 4, 4, 4);
+		gbc.insets = new Insets(3, 3, 3, 3);
 
 		this.specialitySECheckBox = new JCheckBox();
 		this.specialitySECheckBox.setText(getLangStr("SPECIALTYSE"));
@@ -261,12 +280,19 @@ public class FilterPanel extends JPanel {
 				.createTitledBorder(getLangStr("specialEvents.filter.matches.title")));
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(4, 4, 4, 4);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(3, 3, 3, 3);
+		gbc.gridwidth = 2;
 
 		this.onlySEMatchesCheckBox = new JCheckBox();
 		this.onlySEMatchesCheckBox.setText(getLangStr("SpieleMitSEs"));
 		panel.add(this.onlySEMatchesCheckBox, gbc);
+
+		JLabel matchesLabel = new JLabel("Matches:");
+		matchesLabel.setText(getLangStr("specialEvents.filter.matches.matches"));
+		gbc.gridwidth = 1;
+		gbc.gridy = 1;
+		panel.add(matchesLabel, gbc);
 
 		CBItem[] comboItems = new CBItem[3];
 		comboItems[0] = new CBItem(getLangStr("AktSaison"),
@@ -275,12 +301,49 @@ public class FilterPanel extends JPanel {
 				SeasonFilterValue.LAST_TWO_SEASONS.getId());
 		comboItems[2] = new CBItem(getLangStr("AllSeasons"), SeasonFilterValue.ALL_SEASONS.getId());
 		this.seasonComboBox = new JComboBox(comboItems);
-		gbc.gridy = 1;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
+		gbc.gridx = 1;
 		panel.add(this.seasonComboBox, gbc);
 
+		JLabel tacticsLabel = new JLabel();
+		tacticsLabel.setText(getLangStr("specialEvents.filter.matches.tactic"));
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		panel.add(tacticsLabel, gbc);
+
+		this.tacticComboBox = new JComboBox(getTactics().toArray());
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.gridx = 1;
+		panel.add(this.tacticComboBox, gbc);
 		return panel;
+	}
+
+	private List<CBItem> getTactics() {
+		List<CBItem> list = new ArrayList<CBItem>();
+
+		list.add(new CBItem(getLangStr("specialEvents.tactic.pressing"),
+				IMatchDetails.TAKTIK_PRESSING));
+		list.add(new CBItem(getLangStr("specialEvents.tactic.counterattack"),
+				IMatchDetails.TAKTIK_KONTER));
+		list.add(new CBItem(getLangStr("specialEvents.tactic.middle"), IMatchDetails.TAKTIK_MIDDLE));
+		list.add(new CBItem(getLangStr("specialEvents.tactic.wings"), IMatchDetails.TAKTIK_WINGS));
+		list.add(new CBItem(getLangStr("specialEvents.tactic.creative"),
+				IMatchDetails.TAKTIK_CREATIVE));
+		list.add(new CBItem(getLangStr("specialEvents.tactic.longshots"),
+				IMatchDetails.TAKTIK_LONGSHOTS));
+
+		Collections.sort(list, new Comparator<CBItem>() {
+
+			@Override
+			public int compare(CBItem o1, CBItem o2) {
+				return o1.getText().compareTo(o2.getText());
+			}
+		});
+
+		list.add(0,
+				new CBItem(getLangStr("specialEvents.tactic.none"), IMatchDetails.TAKTIK_NORMAL));
+		list.add(0, new CBItem("", -1));
+		return list;
 	}
 
 	private JPanel createMatchTypeFilterPanel() {
@@ -290,7 +353,7 @@ public class FilterPanel extends JPanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(4, 4, 4, 4);
+		gbc.insets = new Insets(3, 3, 3, 3);
 
 		this.friendliesCheckBox = new JCheckBox();
 		this.friendliesCheckBox.setText(getLangStr("specialEvents.filter.matchTypes.friendly"));
@@ -334,7 +397,7 @@ public class FilterPanel extends JPanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(4, 4, 4, 4);
+		gbc.insets = new Insets(3, 3, 3, 3);
 
 		JLabel playerLabel = new JLabel();
 		playerLabel.setText(getLangStr("specialEvents.filter.players.player"));

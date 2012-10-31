@@ -7,7 +7,10 @@ import java.util.List;
 
 public class Filter {
 
+	// matches
 	private boolean showMatchesWithSEOnly = true;
+	private SeasonFilterValue seasonFilterValue = SeasonFilterValue.CURRENT_SEASON;
+	private Integer tactic;
 	// the single matchtypes
 	private boolean showFriendlies = true;
 	private boolean showLeague = true;
@@ -23,13 +26,24 @@ public class Filter {
 	private boolean showFreeKickIndirect = true;
 	private boolean showPenalty = true;
 	private boolean showLongShot = true;
-	// season
-	private SeasonFilterValue seasonFilterValue = SeasonFilterValue.CURRENT_SEASON;
-	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
 	// player
 	private Integer playerId;
 	private boolean showCurrentPlayersOnly;
 	private boolean showOwnPlayersOnly;
+	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
+	
+	public Integer getTactic() {
+		return tactic;
+	}
+
+	public void setTactic(Integer tactic) {
+		if ((this.tactic != null && tactic == null)
+				|| (this.tactic == null && tactic != null)
+				|| (this.tactic != null && tactic != null && this.tactic.compareTo(tactic) != 0)) {
+			this.tactic = tactic;
+			fireFilterChanged();
+		}
+	}
 
 	public boolean isShowMatchesWithSEOnly() {
 		return showMatchesWithSEOnly;
@@ -72,7 +86,7 @@ public class Filter {
 	public void setShowRelegation(boolean showRelegation) {
 		if (this.showRelegation != showRelegation) {
 			this.showRelegation = showRelegation;
-			fireFilterChanged();			
+			fireFilterChanged();
 		}
 	}
 

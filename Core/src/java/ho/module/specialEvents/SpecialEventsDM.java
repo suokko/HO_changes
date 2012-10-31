@@ -49,18 +49,32 @@ public class SpecialEventsDM {
 		if (matches != null) {
 			int matchCount = 1;
 			for (MatchKurzInfo matchKurzInfo : matches) {
-				List<MatchRow> rows = getMatchRows(matchKurzInfo, filter);
-				if (rows != null && !rows.isEmpty()) {
-					for (MatchRow row : rows) {
-						row.setMatchCount(matchCount);
+				Matchdetails details = DBManager.instance().getMatchDetails(
+						matchKurzInfo.getMatchID());
+				if (!filterOutByTactic(details, filter)) {
+					List<MatchRow> rows = getMatchRows(matchKurzInfo, details, filter);
+					if (rows != null && !rows.isEmpty()) {
+						for (MatchRow row : rows) {
+							row.setMatchCount(matchCount);
+						}
+						matchRows.addAll(rows);
+						matchCount++;
 					}
-					matchRows.addAll(rows);
-					matchCount++;
 				}
 			}
 		}
 
 		return matchRows;
+	}
+
+	private boolean filterOutByTactic(Matchdetails details, Filter filter) {
+		if (filter.getTactic() != null) {
+			int id = filter.getTactic().intValue();
+			if (details.getHomeTacticType() != id && details.getGuestTacticType() != id) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	MatchKurzInfo[] getMatches(Filter filter) {
@@ -118,9 +132,8 @@ public class SpecialEventsDM {
 		return DBManager.instance().getMatchesKurzInfo(whereClause.toString());
 	}
 
-	private List<MatchRow> getMatchRows(MatchKurzInfo kurzInfos, Filter filter) {
+	private List<MatchRow> getMatchRows(MatchKurzInfo kurzInfos, Matchdetails details, Filter filter) {
 		List<MatchRow> matchLines = new ArrayList<MatchRow>();
-		Matchdetails details = DBManager.instance().getMatchDetails(kurzInfos.getMatchID());
 		List<MatchHighlight> highlights = getMatchHighlights(details, filter);
 
 		if (!highlights.isEmpty() || !filter.isShowMatchesWithSEOnly()) {

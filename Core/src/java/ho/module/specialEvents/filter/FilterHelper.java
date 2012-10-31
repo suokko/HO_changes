@@ -43,6 +43,7 @@ public class FilterHelper {
 				SeasonFilterValue.LAST_TWO_SEASONS.getId());
 		filter.setSeasonFilterValue(SeasonFilterValue.getById(sfId));
 		filter.setPlayerId(ModuleConfig.instance().getInteger("SpecialEvents_PlayerId"));
+		filter.setTactic(ModuleConfig.instance().getInteger("SpecialEvents_tactic"));
 	}
 
 	public static void saveSettings(Filter filter) {
@@ -71,24 +72,32 @@ public class FilterHelper {
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowTournament",
 				filter.isShowTournament());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowWeatherSE", filter.isShowWeatherSE());
-		if (filter.getSeasonFilterValue() != null) {
-			ModuleConfig.instance().setInteger("SpecialEvents_SeasonFilterValue",
-					filter.getSeasonFilterValue().getId());
-		} else {
-			try {
+		try {
+			if (filter.getSeasonFilterValue() != null) {
+				ModuleConfig.instance().setInteger("SpecialEvents_SeasonFilterValue",
+						filter.getSeasonFilterValue().getId());
+			} else {
 				ModuleConfig.instance().removeKey("SpecialEvents_SeasonFilterValue");
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
 			}
-		}
-		if (filter.getPlayerId() != null) {
-			ModuleConfig.instance().setInteger("SpecialEvents_PlayerId", filter.getPlayerId());
-		} else {
-			try {
+			if (filter.getPlayerId() != null) {
+				ModuleConfig.instance().setInteger("SpecialEvents_PlayerId", filter.getPlayerId());
+			} else {
+
 				ModuleConfig.instance().removeKey("SpecialEvents_PlayerId");
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
 			}
+			if (filter.getPlayerId() != null) {
+				ModuleConfig.instance().setInteger("SpecialEvents_PlayerId", filter.getPlayerId());
+			} else {
+				ModuleConfig.instance().removeKey("SpecialEvents_PlayerId");
+			}
+			if (filter.getTactic() != null) {
+				ModuleConfig.instance().setInteger("SpecialEvents_tactic", filter.getTactic());
+			} else {
+				ModuleConfig.instance().removeKey("SpecialEvents_tactic");
+			}
+		} catch (SQLException e) {
+			// the removeKey can throw an SQLException
+			throw new RuntimeException(e);
 		}
 	}
 
