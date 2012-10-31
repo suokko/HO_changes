@@ -159,7 +159,7 @@ public enum MatchType {
 
 	         //Error?
 	         default:
-	             return "";
+	             return "unknown";
 
 		 }
 	}
