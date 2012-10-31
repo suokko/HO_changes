@@ -49,7 +49,9 @@ import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -113,8 +115,8 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 	private Vector<String> m_vOptionPanelNames = new Vector<String>();
 	private Vector<JPanel> m_vOptionPanels = new Vector<JPanel>();
 
-	private boolean isAppTerminated = false; // /< set when HO should be
-												// terminated
+	private boolean isAppTerminated = false; // set when HO should be terminated
+	private List<ApplicationClosingListener> applicationClosingListener = new ArrayList<ApplicationClosingListener>();
 
 	// ~ Constructors
 	// -------------------------------------------------------------------------------
@@ -205,7 +207,23 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 			e.printStackTrace();
 		}
 	}
+	
+	public void addApplicationClosingListener(ApplicationClosingListener listener) {
+		if (!this.applicationClosingListener.contains(listener)) {
+			this.applicationClosingListener.add(listener);
+		}
+	}
+	
+	public void removeApplicationClosingListener(ApplicationClosingListener listener) {
+		this.applicationClosingListener.remove(listener);
+	}
 
+	private void fireApplicationClosing() {
+		for (int i = this.applicationClosingListener.size() - 1; i >= 0; i--) {
+			this.applicationClosingListener.get(i).applicationClosing();
+		}
+	}
+	
 	public static String getVersionString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.US);
 		nf.setMinimumFractionDigits(3);
@@ -369,6 +387,9 @@ public final class HOMainFrame extends JFrame implements Refreshable,  ActionLis
 
 		CursorToolkit.startWaitCursor(getRootPane());
 		try {
+			fireApplicationClosing();
+			
+			// TODO instead of calling XY.instance().save() from here, those classes should register a ApplicationClosingListener 
 			HOLogger.instance().debug(getClass(), "Shutting down HO!");
 			// aktuelle UserParameter speichern
 			saveUserParameter();
