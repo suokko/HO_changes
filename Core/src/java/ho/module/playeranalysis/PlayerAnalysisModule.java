@@ -44,6 +44,7 @@ public final class PlayerAnalysisModule extends DefaultModule {
 		return new PlayerAnalysisPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);
 	}

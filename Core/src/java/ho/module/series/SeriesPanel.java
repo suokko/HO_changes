@@ -48,7 +48,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 	private SeriesHistoryPanel seriesHistoryPanel;
 	private Model model = new Model();
 	private boolean initialized = false;
-	private boolean needsRefresh = true;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new LigaTabellePanel object.
@@ -65,10 +65,9 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 						} finally {
 							CursorToolkit.stopWaitCursor(SeriesPanel.this);
 						}
-					} else {
-						if (needsRefresh) {
-							update();
-						}
+					}
+					if (needsRefresh) {
+						update();
 					}
 				}
 
@@ -83,7 +82,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 		addListeners();
 		this.initialized = true;
 	}
-	
+
 	private void print() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -186,7 +185,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 	@Override
 	public void refresh() {
 	}
-	
+
 	private void update() {
 		fillSaisonCB();
 		this.needsRefresh = false;

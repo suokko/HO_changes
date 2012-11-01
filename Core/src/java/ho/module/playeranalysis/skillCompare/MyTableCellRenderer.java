@@ -55,6 +55,7 @@ class MyTableCellRenderer  implements TableCellRenderer{
 		dunkelblau = ThemeManager.getColor(HOColorName.PLAYER_POS_BG);
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table,
 			Object value,
 			boolean isSelected,

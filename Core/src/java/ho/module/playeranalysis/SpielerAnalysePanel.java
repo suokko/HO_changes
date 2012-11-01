@@ -17,12 +17,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -31,335 +37,257 @@ import javax.swing.JSplitPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-
 /**
  * Bietet Übersicht über alle Spieler
  */
-public class SpielerAnalysePanel extends ImagePanel implements Refreshable, ItemListener,
-                                                               ActionListener
-{
+public class SpielerAnalysePanel extends ImagePanel implements Refreshable {
 	private static final long serialVersionUID = 7705544952029589545L;
-	
-    //~ Instance fields ----------------------------------------------------------------------------
+	private JButton printButton;
+	private JComboBox playerComboBox;
+	private JSplitPane horizontalSplitPane;
+	private SpielerMatchesTable m_jtSpielerMatchesTable;
+	private SpielerPositionTable m_jtSpielerPositionTable;
+	private int columnModelInstance;
+	private boolean needsRefresh = false;
 
-    private final JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JComboBox m_jcbSpieler;
-    private JSplitPane horizontalSplitPane;
-    private SpielerMatchesTable m_jtSpielerMatchesTable;
-    private SpielerPositionTable m_jtSpielerPositionTable;
-    private int columnModelInstance;
+	/**
+	 * Creates a new SpielerAnalysePanel object.
+	 */
+	public SpielerAnalysePanel(int instance) {
+		columnModelInstance = instance;
+		initComponents();
+		addListeners();
 
-    //~ Constructors -------------------------------------------------------------------------------
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if (isShowing()) {
+					if (needsRefresh) {
+						update();
+					}
+				}
+			}
+		});
+	}
 
-    /**
-     * Creates a new SpielerAnalysePanel object.
-     */
-    public SpielerAnalysePanel(int instance) {
-        RefreshManager.instance().registerRefreshable(this);
-        columnModelInstance = instance;
-        initComponents();
-    }
+	public final void setAktuelleSpieler(int spielerid) {
+		ComboBoxModel model = playerComboBox.getModel();
+		for (int i = 0; i < model.getSize(); ++i) {
+			if (model.getElementAt(i) instanceof SpielerCBItem) {
+				if (((SpielerCBItem) model.getElementAt(i)).getSpieler().getSpielerID() == spielerid) {
+					// Spieler gefunden -> Auswählen und fertig
+					playerComboBox.setSelectedIndex(i);
+					return;
+				}
+			}
+		}
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	public void saveColumnOrder() {
+		m_jtSpielerMatchesTable.saveColumnOrder();
+	}
 
-    //----------------------------------------------------    
+	@Override
+	public final void reInit() {
+		if (isShowing()) {
+			fillSpielerCB();
+			showSelectedPlayer();
+		} else {
+			this.needsRefresh = true;
+		}
+	}
 
-    /**
-     * Vielleicht mal, wenn das Match zu dem Tabelleneintrag angezeigt werden soll ... private void
-     * chooseSelectionInform() { int row  = m_jtSpieleTable.getSelectedRow(); if ( row > -1 ) {
-     * //Selektiertes Spiel des Models holen und alle 3 Panel informieren  try {
-     * model.machtes.MatchKurzInfo info = ( (gui.model.SpieleTableModel)m_jtSpieleTable.getSorter
-     * ().getModel () ).getMatch ( (int)( (ColorLabelEntry)m_jtSpieleTable.getValueAt ( row, 5 )
-     * ).getZahl () ); m_jpStaerkenvergleichsPanel.refresh( info ); if ( info.getMatchStatus () ==
-     * model.machtes.MatchKurzInfo.FINISHED ) { m_jpAufstellungHeimPanel.refresh( info.getMatchID
-     * (), info.getHeimID () ); m_jpAufstellungGastPanel.refresh( info.getMatchID (),
-     * info.getGastID () ); } else { m_jpAufstellungHeimPanel.clearAll ();
-     * m_jpAufstellungGastPanel.clearAll (); }} catch ( Exception e ) {
-     * m_jpStaerkenvergleichsPanel.clear (); m_jpAufstellungHeimPanel.clearAll ();
-     * m_jpAufstellungGastPanel.clearAll (); HOLogger.instance().log(getClass(), "SpielePanel.newSelectionInform:
-     * Keine Match zum Eintrag in der Tabelle gefunden! "+e ); }} else { //Alle Panels
-     * zurücksetzen m_jpStaerkenvergleichsPanel.clear (); m_jpAufstellungHeimPanel.clearAll ();
-     * m_jpAufstellungGastPanel.clearAll (); }}
-     *
-     * @param spielerid TODO Missing Constructuor Parameter Documentation
-     */
-    public final void setAktuelleSpieler(int spielerid) {
-        final ComboBoxModel model = m_jcbSpieler.getModel();
+	@Override
+	public void refresh() {
+		// nix
+	}
 
-        for (int i = 0; i < model.getSize(); ++i) {
-            if (model.getElementAt(i) instanceof ho.core.gui.model.SpielerCBItem) {
-                if (((ho.core.gui.model.SpielerCBItem) model.getElementAt(i)).getSpieler()
-                     .getSpielerID() == spielerid) {
-                    //Spieler gefunden -> Auswählen und fertig
-                    m_jcbSpieler.setSelectedIndex(i);
-                    return;
-                }
-            }
-        }
-    }
+	private void update() {
+		fillSpielerCB();
+		showSelectedPlayer();
+		this.needsRefresh = false;
+	}
 
-    /**
-     * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden können
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final int getDividerLocations() {
-        return horizontalSplitPane.getDividerLocation();
-    }
+	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(this);
 
-    public void saveColumnOrder(){
-    	m_jtSpielerMatchesTable.saveColumnOrder();
-    }
-    
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-        drucken();
-    }
+		this.printButton.addActionListener(new ActionListener() {
 
-  
-    public final void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
-            showSelectedPlayer();
-        }
-    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				drucken();
+			}
+		});
 
-    /**
-     * ReInit
-     */
-    public final void reInit() {
-        fillSpielerCB();
+		this.playerComboBox.addItemListener(new ItemListener() {
 
-        showSelectedPlayer();
-    }
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+					showSelectedPlayer();
+				}
+			}
+		});
+	}
 
-    //----------------------Refresh--
+	/**
+	 * Drucken der SpielerAnalyse
+	 */
+	private void drucken() {
+		try {
+			final JPanel panel = new JPanel(new BorderLayout());
+			panel.setBackground(Color.WHITE);
 
-    /**
-     * Refresh
-     */
-    public void refresh() {
-        //nix
-    }
+			// Damit nur bestimmte Spalten gedruckt werden ist eine spezielle
+			// Tabelle notwendig.
+			// Das Scrollpane benötigt man, damit die Spaltenbeschriftung auch
+			// angezeigt wird.
+			final SpielerMatchesTable table = new SpielerMatchesTable(
+					((SpielerCBItem) playerComboBox.getSelectedItem()).getSpieler().getSpielerID(),
+					columnModelInstance);
+			JScrollPane scrollPane = new JScrollPane(table);
+			scrollPane.setPreferredSize(new Dimension(table.getPreferredSize().width + 10, table
+					.getPreferredSize().height + 70));
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			scrollPane.getViewport().setBackground(Color.WHITE);
 
-    /**
-     * Drucken der SpielerAnalyse
-     */
-    private void drucken() {
-        try {
-            final JPanel panel = new JPanel(new BorderLayout());
-            panel.setBackground(Color.WHITE);
+			panel.add(scrollPane, BorderLayout.NORTH);
 
-            //Damit nur bestimmte Spalten gedruckt werden ist eine spezielle Tabelle notwendig.
-            //Das Scrollpane benötigt man, damit die Spaltenbeschriftung auch angezeigt wird.
-            final SpielerMatchesTable table = new SpielerMatchesTable(((SpielerCBItem) m_jcbSpieler
-                                                                       .getSelectedItem()).getSpieler()
-                                                                       .getSpielerID(),columnModelInstance);
-            JScrollPane scrollPane = new JScrollPane(table);
-            scrollPane.setPreferredSize(new Dimension(table.getPreferredSize().width + 10,
-                                                      table.getPreferredSize().height + 70));
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-            scrollPane.getViewport().setBackground(Color.WHITE);
+			final SpielerPositionTable table2 = new SpielerPositionTable(
+					((SpielerCBItem) playerComboBox.getSelectedItem()).getSpieler().getSpielerID());
+			scrollPane = new JScrollPane(table2);
+			scrollPane.setPreferredSize(new Dimension(table2.getPreferredSize().width + 10, table2
+					.getPreferredSize().height + 70));
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			scrollPane.getViewport().setBackground(Color.WHITE);
 
-            panel.add(scrollPane, BorderLayout.NORTH);
+			panel.add(scrollPane, BorderLayout.SOUTH);
 
-            final SpielerPositionTable table2 = new SpielerPositionTable(((SpielerCBItem) m_jcbSpieler
-                                                                          .getSelectedItem()).getSpieler()
-                                                                          .getSpielerID());
-            scrollPane = new JScrollPane(table2);
-            scrollPane.setPreferredSize(new Dimension(table2.getPreferredSize().width + 10,
-                                                      table2.getPreferredSize().height + 70));
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-            scrollPane.getViewport().setBackground(Color.WHITE);
+			final ho.core.gui.print.PrintController printController = ho.core.gui.print.PrintController
+					.getInstance();
 
-            panel.add(scrollPane, BorderLayout.SOUTH);
+			final java.util.Calendar calendar = java.util.Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
 
-            final ho.core.gui.print.PrintController printController = ho.core.gui.print.PrintController
-                                                                                   .getInstance();
+			final String titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse")
+					+ " - " + HOVerwaltung.instance().getModel().getBasics().getTeamName() + " - "
+					+ java.text.DateFormat.getDateTimeInstance().format(calendar.getTime());
+			printController.add(new ho.core.gui.print.ComponentPrintObject(printController.getPf(),
+					titel, panel, ho.core.gui.print.ComponentPrintObject.NICHTSICHTBAR));
 
-            final java.util.Calendar calendar = java.util.Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
+			printController.print();
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), e);
+		}
+	}
 
-            final String titel = HOVerwaltung.instance().getLanguageString("SpielerAnalyse")
-                                 + " - "
-                                 + HOVerwaltung.instance().getModel().getBasics().getTeamName()
-                                 + " - "
-                                 + java.text.DateFormat.getDateTimeInstance().format(calendar
-                                                                                     .getTime());
-            printController.add(new ho.core.gui.print.ComponentPrintObject(printController
-                                                                                        .getPf(),
-                                                                                        titel,
-                                                                                        panel,
-                                                                                        ho.core.gui.print.ComponentPrintObject.NICHTSICHTBAR));
+	private void fillSpielerCB() {
+		List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+		List<SpielerCBItem> spielerCBItems = new ArrayList<SpielerCBItem>(players.size());
 
-            printController.print();
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),e);
-        }
-    }
+		for (Spieler player : players) {
+			spielerCBItems.add(new SpielerCBItem(player.getName(), 0f, player));
+		}
+		Collections.sort(spielerCBItems);
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    private void fillSpielerCB() {
-        final Vector<Spieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
-        final SpielerCBItem[] spielerCBItems = new SpielerCBItem[spieler.size()];
+		// Alte Spieler
+		List<Spieler> oldPlayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
+		List<SpielerCBItem> spielerOldCBItems = new ArrayList<SpielerCBItem>(oldPlayers.size());
 
-        for (int i = 0; i < spieler.size(); i++) {
-            spielerCBItems[i] = new SpielerCBItem((spieler.get(i)).getName(),0f,spieler.get(i));
-        }
+		for (Spieler player : oldPlayers) {
+			spielerOldCBItems.add(new SpielerCBItem(player.getName(), 0f, player));
+		}
+		Collections.sort(spielerOldCBItems);
 
-        java.util.Arrays.sort(spielerCBItems);
+		// Zusammenfügen
+		List<SpielerCBItem> cbItems = new ArrayList<SpielerCBItem>(spielerCBItems.size()
+				+ spielerOldCBItems.size() + 1);
 
-        //Alte Spieler
-        final Vector<Spieler> allSpieler = HOVerwaltung.instance().getModel().getAllOldSpieler();
-        final SpielerCBItem[] spielerAllCBItems = new SpielerCBItem[allSpieler
-                                                                                                                                  .size()];
+		cbItems.addAll(spielerCBItems);
+		// Fur die Leerzeile;
+		cbItems.add(null);
+		cbItems.addAll(spielerOldCBItems);
+		DefaultComboBoxModel cbModel = new DefaultComboBoxModel(cbItems.toArray());
+		playerComboBox.setModel(cbModel);
 
-        for (int i = 0; i < allSpieler.size(); i++) {
-            spielerAllCBItems[i] = new SpielerCBItem((allSpieler.get(i)).getName(), 0f,allSpieler.get(i));
-        }
+		// Kein Spieler selektiert
+		playerComboBox.setSelectedItem(null);
+	}
 
-        java.util.Arrays.sort(spielerAllCBItems);
+	private void initComponents() {
+		setLayout(new BorderLayout());
+		add(initSpielerCB(), BorderLayout.NORTH);
 
-        //Zusammenfügen
-        final SpielerCBItem[] cbItems = new SpielerCBItem[spielerCBItems.length
-                                                                       + spielerAllCBItems.length
-                                                                       + 1];
-        int i = 0;
+		int spielerid = -1;
+		if (playerComboBox.getSelectedItem() != null) {
+			spielerid = ((SpielerCBItem) playerComboBox.getSelectedItem()).getSpieler()
+					.getSpielerID();
+		}
 
-        for (; i < spielerCBItems.length; i++) {
-            cbItems[i] = spielerCBItems[i];
-        }
+		horizontalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
+				initSpielerMatchesTabelle(spielerid), initSpielerPositionTabelle(spielerid));
 
-        //Fur die Leerzeile;
-        i++;
+		horizontalSplitPane
+				.setDividerLocation((ho.core.model.UserParameter.instance().hoMainFrame_height * 1) / 3);
+		add(horizontalSplitPane, BorderLayout.CENTER);
+	}
 
-        for (int j = 0; j < spielerAllCBItems.length; j++) {
-            cbItems[i + j] = spielerAllCBItems[j];
-        }
+	private Component initSpielerCB() {
+		final ImagePanel panel = new ImagePanel(null);
 
-        final javax.swing.DefaultComboBoxModel cbModel = new javax.swing.DefaultComboBoxModel(cbItems);
+		playerComboBox = new JComboBox();
+		playerComboBox.setRenderer(new SpielerCBItemRenderer());
+		playerComboBox.setMaximumRowCount(25);
+		playerComboBox.setMaximumSize(new Dimension(200, 25));
+		playerComboBox.setSize(200, 25);
+		playerComboBox.setLocation(10, 5);
+		playerComboBox.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 
-        m_jcbSpieler.setModel(cbModel);
-        m_jcbSpieler.removeItemListener(this);
+		panel.add(playerComboBox);
 
-        //Kein Spieler selektiert
-        m_jcbSpieler.setSelectedItem(null);
-        m_jcbSpieler.addItemListener(this);
-    }
+		printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+		printButton.setSize(25, 25);
+		printButton.setLocation(220, 5);
 
-    //----------init-----------------------------------------------
-    private void initComponents() {
-        setLayout(new BorderLayout());
+		panel.add(printButton);
 
-        add(initSpielerCB(), BorderLayout.NORTH);
+		panel.setPreferredSize(new Dimension(220, 35));
 
-        int spielerid = -1;
+		fillSpielerCB();
 
-        if (m_jcbSpieler.getSelectedItem() != null) {
-            spielerid = ((SpielerCBItem) m_jcbSpieler.getSelectedItem()).getSpieler().getSpielerID();
-        }
+		return panel;
+	}
 
-        horizontalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
-                                             initSpielerMatchesTabelle(spielerid),
-                                             initSpielerPositionTabelle(spielerid));
+	private Component initSpielerMatchesTabelle(int spielerid) {
+		m_jtSpielerMatchesTable = new SpielerMatchesTable(spielerid, columnModelInstance);
+		JScrollPane scrollpane = new JScrollPane(m_jtSpielerMatchesTable);
+		scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+		return scrollpane;
+	}
 
-        //horizontalSplitPane.setDividerLocation( gui.UserParameter.instance ().spielerAnalysePanel_horizontalSplitPane );
-        //1/4 Höhe des Frames
-        horizontalSplitPane.setDividerLocation((ho.core.model.UserParameter.instance().hoMainFrame_height * 1) / 3);
+	private Component initSpielerPositionTabelle(int spielerid) {
+		m_jtSpielerPositionTable = new SpielerPositionTable(spielerid);
+		JScrollPane scrollpane = new JScrollPane(m_jtSpielerPositionTable);
+		scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
+		return scrollpane;
+	}
 
-        add(horizontalSplitPane, BorderLayout.CENTER);
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private Component initSpielerCB() {
-        final ImagePanel panel = new ImagePanel(null);
-
-        m_jcbSpieler = new JComboBox();
-        m_jcbSpieler.setRenderer(new SpielerCBItemRenderer());
-        m_jcbSpieler.setMaximumRowCount(25);
-        m_jcbSpieler.addItemListener(this);
-        m_jcbSpieler.setMaximumSize(new Dimension(200, 25));
-        m_jcbSpieler.setSize(200, 25);
-        m_jcbSpieler.setLocation(10, 5);
-        m_jcbSpieler.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
-
-        panel.add(m_jcbSpieler);
-
-        m_jbDrucken.setSize(25, 25);
-        m_jbDrucken.setLocation(220, 5);
-        m_jbDrucken.addActionListener(this);
-
-        panel.add(m_jbDrucken);
-
-        panel.setPreferredSize(new Dimension(220, 35));
-
-        fillSpielerCB();
-
-        return panel;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spielerid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private Component initSpielerMatchesTabelle(int spielerid) {
-        m_jtSpielerMatchesTable = new SpielerMatchesTable(spielerid,columnModelInstance);
-
-        //m_jtSpielerMatchesTable.addMouseListener( this );
-        //m_jtSpielerMatchesTable.addKeyListener( this );
-        final JScrollPane scrollpane = new JScrollPane(m_jtSpielerMatchesTable);
-        scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-
-        return scrollpane;
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spielerid TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private Component initSpielerPositionTabelle(int spielerid) {
-        m_jtSpielerPositionTable = new SpielerPositionTable(spielerid);
-
-        //m_jtSpielerPositionsTable.addMouseListener( this );
-        //m_jtSpielerPositionsTable.addKeyListener( this );
-        final JScrollPane scrollpane = new JScrollPane(m_jtSpielerPositionTable);
-        scrollpane.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);
-
-        return scrollpane;
-    }
-
-    /**
-     * Aktualisiert die beiden Tabellen mit den Werten des ausgewählten Spielers
-     */
-    private void showSelectedPlayer() {
-        if (m_jcbSpieler.getSelectedIndex() > -1) {
-            //Tabelle updaten
-            m_jtSpielerMatchesTable.refresh(((SpielerCBItem) m_jcbSpieler.getSelectedItem()).getSpieler()
-                                             .getSpielerID());
-            m_jtSpielerPositionTable.refresh(((SpielerCBItem) m_jcbSpieler.getSelectedItem()).getSpieler()
-                                              .getSpielerID());
-        } else {
-            //Tabelle leeren
-            m_jtSpielerMatchesTable.refresh(-1);
-            m_jtSpielerPositionTable.refresh(-1);
-        }
-    }
+	/**
+	 * Aktualisiert die beiden Tabellen mit den Werten des ausgewählten Spielers
+	 */
+	private void showSelectedPlayer() {
+		if (playerComboBox.getSelectedIndex() > -1) {
+			// Tabelle updaten
+			m_jtSpielerMatchesTable.refresh(((SpielerCBItem) playerComboBox.getSelectedItem())
+					.getSpieler().getSpielerID());
+			m_jtSpielerPositionTable.refresh(((SpielerCBItem) playerComboBox.getSelectedItem())
+					.getSpieler().getSpielerID());
+		} else {
+			// Tabelle leeren
+			m_jtSpielerMatchesTable.refresh(-1);
+			m_jtSpielerPositionTable.refresh(-1);
+		}
+	}
 }

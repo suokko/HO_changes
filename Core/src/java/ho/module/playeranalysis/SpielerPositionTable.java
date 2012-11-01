@@ -13,11 +13,6 @@ import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-/**
- * TODO Missing Class Documentation
- * 
- * @author TODO Author Name
- */
 final class SpielerPositionTable extends JTable {
 
 	private static final long serialVersionUID = 6625601251606134493L;
@@ -25,16 +20,13 @@ final class SpielerPositionTable extends JTable {
 	private TableSorter m_clTableSorter;
 	private int m_iSpielerId = -1;
 
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
-
 	/**
 	 * Creates a new SpielerPositionTable object.
 	 * 
 	 * @param spielerid
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
-	protected SpielerPositionTable(int spielerid) {
+	SpielerPositionTable(int spielerid) {
 		super();
 		m_iSpielerId = spielerid;
 		initModel();
@@ -42,20 +34,7 @@ final class SpielerPositionTable extends JTable {
 		setSelectionBackground(HODefaultTableCellRenderer.SELECTION_BG);
 	}
 
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
-	public TableSorter getSorter() {
-		return m_clTableSorter;
-	}
-
-	// ----------------Listener-------------------------------------------
-	public void refresh(int spielerid) {
+	void refresh(int spielerid) {
 		m_iSpielerId = spielerid;
 		initModel();
 		repaint();

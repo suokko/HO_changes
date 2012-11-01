@@ -811,13 +811,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			getAufstellungsPanel().saveColumnOrder();
 		}
 
-		// SpielerAnalyse
-		if (getTabbedPane().isModuleTabVisible(IModule.PLAYERANALYSIS)) {
-			final int spa = getSpielerAnalyseMainPanel().getDividerLocation();
-			parameter.spielerAnalysePanel_horizontalSplitPane = spa;
-			getSpielerAnalyseMainPanel().saveColumnOrder();
-		}
-
 		// TransferScoutPanel
 		if (getTabbedPane().isModuleTabVisible(IModule.TRANSFERS)) {
 			final int tsp = getTransferScoutPanel().getScoutPanel().getDividerLocation();

@@ -10,8 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -35,77 +33,74 @@ class Spielertabelle extends JTable {
 	private static final long serialVersionUID = 3117625304079832033L;
 
 	public static final String spaltennamen[] = { "Spieler", "ls.player.age",
-		"ls.player.experience", "seit", "Bonus", "SchaetzungMin",
-		"SchaetzungWahrscheinlich", "SchaetzungMax", "WochenBisAufwertung",
-		"ls.match.matchtype.internationalfriendly_cup", "ls.match.matchtype.internationalfriendly_normal", "ls.match.matchtype.hattrickmasters", "ls.match.matchtype.internationalcompetition_normal",
-		"ls.match.matchtype.nationalteamscompetition_cup", "ls.match.matchtype.nationalteamscompetition_normal", "ls.match.matchtype.league", "ls.match.matchtype.cup",
-		"ls.match.matchtype.qualification", "ls.match.matchtype.nationalteamsfriendly", "ls.match.matchtype.friendly_cup", "ls.match.matchtype.friendly_normal",
-		"Notizen" };
-public static final int spaltenweite[] = { 120, 60, 60, 60, 40, 40, 80, 40,
-		80, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 240 };
-private SpielertabellenSpalte cm;
-private SpielerSortierung spielerSortierung[];
-private Vector<Spieler> spieler;
-private boolean sortierrichtung[];
-private int sortierspalte;
-private AbstractTableModel tm;
-private MouseListener mouseListener;
-protected static String experienceViewerVerzeichnis;
-protected static String spracheVerzeichnis;
+			"ls.player.experience", "seit", "Bonus", "SchaetzungMin", "SchaetzungWahrscheinlich",
+			"SchaetzungMax", "WochenBisAufwertung", "ls.match.matchtype.internationalfriendly_cup",
+			"ls.match.matchtype.internationalfriendly_normal",
+			"ls.match.matchtype.hattrickmasters",
+			"ls.match.matchtype.internationalcompetition_normal",
+			"ls.match.matchtype.nationalteamscompetition_cup",
+			"ls.match.matchtype.nationalteamscompetition_normal", "ls.match.matchtype.league",
+			"ls.match.matchtype.cup", "ls.match.matchtype.qualification",
+			"ls.match.matchtype.nationalteamsfriendly", "ls.match.matchtype.friendly_cup",
+			"ls.match.matchtype.friendly_normal", "Notizen" };
+	public static final int spaltenweite[] = { 120, 60, 60, 60, 40, 40, 80, 40, 80, 40, 40, 40, 40,
+			40, 40, 40, 40, 40, 40, 40, 40, 240 };
+	private SpielertabellenSpalte cm;
+	private SpielerSortierung spielerSortierung[];
+	private Vector<Spieler> spieler;
+	private boolean sortierrichtung[];
+	private int sortierspalte;
+	private AbstractTableModel tm;
+	private MouseListener mouseListener;
+	protected static String experienceViewerVerzeichnis;
+	protected static String spracheVerzeichnis;
 
-Spielertabelle() {
-	cm = null;
-	spielerSortierung = null;
-	spieler = null;
-	sortierrichtung = null;
-	sortierspalte = 0;
-	tm = null;
-	mouseListener = null;
-	aktualisieren();
-	cm = new SpielertabellenSpalte();
-	Spaltenkonfiguration spaltenkonfiguration[] = null;//KonfigurationLaden();
-	if (spaltenkonfiguration == null) {
-		int n = spaltennamen.length;
-		for (int i = 0; i < n; i++)
-			cm.SpalteHinzufuegen(i, spaltennamen[i], spaltenweite[i]);
+	Spielertabelle() {
+		cm = null;
+		spielerSortierung = null;
+		spieler = null;
+		sortierrichtung = null;
+		sortierspalte = 0;
+		tm = null;
+		mouseListener = null;
+		aktualisieren();
+		cm = new SpielertabellenSpalte();
+		Spaltenkonfiguration spaltenkonfiguration[] = null;
+		if (spaltenkonfiguration == null) {
+			int n = spaltennamen.length;
+			for (int i = 0; i < n; i++)
+				cm.SpalteHinzufuegen(i, spaltennamen[i], spaltenweite[i]);
 
-	} else {
-		int n = spaltenkonfiguration.length;
-		for (int i = 0; i < n; i++) {
-			int index = spaltenkonfiguration[i].index;
-			int weite = spaltenkonfiguration[i].weite;
-			cm.SpalteHinzufuegen(index, spaltennamen[index], weite);
 		}
-
+		sortierrichtung = new boolean[cm.getColumnCount()];
+		tm = new SpielertabellenModell();
+		setSize(1200, 500);
+		setModel(tm);
+		setColumnModel(cm);
+		setAutoResizeMode(0);
+		setDefaultRenderer(java.lang.Object.class, new ColoredTableCellRenderer());
+		JTableHeader header = getTableHeader();
+		if (header != null) {
+			mouseListener = new MouseHandler();
+			header.addMouseListener(mouseListener);
+			header.addMouseMotionListener(cm.getColumnHeaderToolTips());
+		}
 	}
-	sortierrichtung = new boolean[cm.getColumnCount()];
-	tm = new SpielertabellenModell();
-	setSize(1200, 500);
-	setModel(tm);
-	setColumnModel(cm);
-	setAutoResizeMode(0);
-	setDefaultRenderer(java.lang.Object.class,
-			new ColoredTableCellRenderer());
-	JTableHeader header = getTableHeader();
-	if (header != null) {
-		mouseListener = new MouseHandler();
-		header.addMouseListener(mouseListener);
-		header.addMouseMotionListener(cm.getColumnHeaderToolTips());
-	}
-}
-
 
 	private class SpielertabellenModell extends AbstractTableModel {
 		private static final long serialVersionUID = -3365452097304380041L;
 
+		@Override
 		public int getRowCount() {
 			return HOVerwaltung.instance().getModel().getAllSpieler().size();
 		}
 
+		@Override
 		public int getColumnCount() {
 			return cm.getColumnCount();
 		}
 
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 			DecimalFormat percentFormat = new DecimalFormat("##0%");
@@ -151,8 +146,7 @@ Spielertabelle() {
 				ret = "";
 				int anzahlWochen = s.getAnzahlWochen();
 				if (anzahlWochen > 0)
-					ret = ret + anzahlWochen + " \261 "
-							+ s.getAnzahlWochenFehler();
+					ret = ret + anzahlWochen + " \261 " + s.getAnzahlWochenFehler();
 				break;
 
 			case 9: // '\t'
@@ -231,7 +225,8 @@ Spielertabelle() {
 			String t = HOVerwaltung.instance().getLanguageString(text);
 			String tipp;
 			if (index > 8 && index < 21) {
-				String zusatz = HOVerwaltung.instance().getLanguageString("EINSATZSPALTENERKLAERUNG");
+				String zusatz = HOVerwaltung.instance().getLanguageString(
+						"EINSATZSPALTENERKLAERUNG");
 				tipp = "<html>" + t + "<br>" + zusatz + "</html>";
 			} else {
 				tipp = t;
@@ -251,6 +246,7 @@ Spielertabelle() {
 
 		private int index;
 
+		@Override
 		public int compareTo(Object o) {
 			int o1 = index;
 			int o2 = ((SpielerSortierung) o).index;
@@ -302,9 +298,7 @@ Spielertabelle() {
 			case 6: // '\006'
 			{
 				Double d1 = new Double(s1.getErfahrungWahrscheinlich());
-				return r
-						* d1.compareTo(new Double(s2
-								.getErfahrungWahrscheinlich()));
+				return r * d1.compareTo(new Double(s2.getErfahrungWahrscheinlich()));
 			}
 
 			case 7: // '\007'
@@ -413,7 +407,7 @@ Spielertabelle() {
 	class ColumnHeaderToolTips extends MouseMotionAdapter {
 
 		TableColumn curCol;
-		Map<TableColumn,String> tips;
+		Map<TableColumn, String> tips;
 
 		public void setToolTip(TableColumn col, String tooltip) {
 			if (tooltip == null)
@@ -438,7 +432,7 @@ Spielertabelle() {
 		}
 
 		public ColumnHeaderToolTips() {
-			tips = new HashMap<TableColumn,String>();
+			tips = new HashMap<TableColumn, String>();
 		}
 	}
 
@@ -449,16 +443,15 @@ Spielertabelle() {
 		private Color hellgruen = ThemeManager.getColor(HOColorName.PLAYER_SKILL_SPECIAL_BG);
 		private JLabel label;
 
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
 			if (label == null)
 				label = new JLabel((String) value);
 			else
 				label.setText((String) value);
 			label.setOpaque(true);
-			javax.swing.border.Border b = BorderFactory.createEmptyBorder(1, 1,
-					1, 1);
+			javax.swing.border.Border b = BorderFactory.createEmptyBorder(1, 1, 1, 1);
 			label.setBorder(b);
 			label.setFont(table.getFont());
 			label.setForeground(table.getForeground());
@@ -520,29 +513,16 @@ Spielertabelle() {
 
 		public int index;
 		public int weite;
-
-		Spaltenkonfiguration() {
-		}
 	}
-
-	class WindowClosingAdapter extends WindowAdapter {
-
-		@Override
-		public void windowClosing(WindowEvent event) {
-			//KonfigurationSpeichern();
-		}
-
-		public WindowClosingAdapter() {
-		}
-	}
-
 
 	void aktualisieren() {
-		Vector<ho.core.model.player.Spieler> alleSpieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		Vector<ho.core.model.player.Spieler> alleSpieler = HOVerwaltung.instance().getModel()
+				.getAllSpieler();
 		spielerSortierung = new SpielerSortierung[alleSpieler.size()];
 		spieler = new Vector<Spieler>(alleSpieler.size());
 		int pos = 0;
-		for (Enumeration<ho.core.model.player.Spieler> el = alleSpieler.elements(); el.hasMoreElements();) {
+		for (Enumeration<ho.core.model.player.Spieler> el = alleSpieler.elements(); el
+				.hasMoreElements();) {
 			spieler.add(new Spieler(el.nextElement()));
 			spielerSortierung[pos] = new SpielerSortierung(pos);
 			pos++;
@@ -556,15 +536,11 @@ Spielertabelle() {
 		ret = i1.compareTo(new Integer(s2.getEinsaetze(spieltyp)));
 		if (ret == 0) {
 			i1 = new Integer(s1.getEinsaetzeNachAufwertung(spieltyp));
-			ret = i1.compareTo(new Integer(s2
-					.getEinsaetzeNachAufwertung(spieltyp)));
+			ret = i1.compareTo(new Integer(s2.getEinsaetzeNachAufwertung(spieltyp)));
 			if (ret == 0) {
-				i1 = new Integer(s1
-						.getEinsaetzeMitAktualisierungNachAufwertung(spieltyp));
-				ret = i1
-						.compareTo(new Integer(
-								s2
-										.getEinsaetzeMitAktualisierungNachAufwertung(spieltyp)));
+				i1 = new Integer(s1.getEinsaetzeMitAktualisierungNachAufwertung(spieltyp));
+				ret = i1.compareTo(new Integer(s2
+						.getEinsaetzeMitAktualisierungNachAufwertung(spieltyp)));
 			}
 		}
 		return ret;
@@ -575,8 +551,7 @@ Spielertabelle() {
 	}
 
 	private boolean istAufwaertsSortiert(int column) {
-		if (sortierrichtung != null && column > -1
-				&& column < cm.getColumnCount())
+		if (sortierrichtung != null && column > -1 && column < cm.getColumnCount())
 			return sortierrichtung[column];
 		else
 			return false;
@@ -594,95 +569,6 @@ Spielertabelle() {
 	}
 
 	private String gibKonfigurationsdateiname() {
-		return experienceViewerVerzeichnis + File.separator
-				+ "ExperienceViewer.cfg";
+		return experienceViewerVerzeichnis + File.separator + "ExperienceViewer.cfg";
 	}
-
-//	Spaltenkonfiguration[] KonfigurationLaden() {
-//		Spaltenkonfiguration ret[] = null;
-//		try {
-//			int index[] = new int[spaltennamen.length];
-//			int weite[] = new int[spaltennamen.length];
-//			int n = 0;
-//			StreamTokenizer st = new StreamTokenizer(new FileReader(
-//					gibKonfigurationsdateiname()));
-//			st.slashSlashComments(true);
-//			st.parseNumbers();
-//			st.eolIsSignificant(true);
-//			boolean istIndex = true;
-//			int tval;
-//			while ((tval = st.nextToken()) != -1) {
-//				if (n >= spaltennamen.length)
-//					break;
-//				if (tval == -2) {
-//					if (istIndex) {
-//						index[n] = (int) st.nval;
-//						istIndex = false;
-//					} else {
-//						istIndex = true;
-//						int w = (int) st.nval;
-//						weite[n] = Math.max(0, Math.min(400, w));
-//					}
-//					continue;
-//				}
-//				if (tval != 10)
-//					continue;
-//				if (!istIndex)
-//					break;
-//				n++;
-//			}
-//			if (n == spaltennamen.length) {
-//				int i;
-//				for (i = 0; i < n; i++) {
-//					int j;
-//					for (j = 0; j < n; j++)
-//						if (index[j] == i)
-//							break;
-//
-//					if (j == n)
-//						break;
-//				}
-//
-//				if (i == n) {
-//					ret = new Spaltenkonfiguration[n];
-//					for (i = 0; i < n; i++) {
-//						ret[i] = new Spaltenkonfiguration();
-//						ret[i].index = index[i];
-//						ret[i].weite = weite[i];
-//					}
-//
-//				}
-//			}
-//		} catch (Exception e) {
-//			HOLogger.instance().error(this.getClass(), e);
-//		}
-//		return ret;
-//	}
-//
-//	void KonfigurationSpeichern() {
-//		try {
-//			TableColumnModel tcm = getColumnModel();
-//			FileWriter fileWriter = new FileWriter(
-//					gibKonfigurationsdateiname(), false);
-//			int n = tcm.getColumnCount();
-//			for (int i = 0; i < n; i++) {
-//				TableColumn p = tcm.getColumn(i);
-//				String out = p.getModelIndex() + " " + p.getWidth() + "\r\n";
-//				fileWriter.write(out);
-//			}
-//
-//			fileWriter.flush();
-//			fileWriter.close();
-//		} catch (Exception e) {
-//			HOLogger.instance().error(this.getClass(), e);
-//		}
-//	}
-//
-//	static {
-//		experienceViewerVerzeichnis = System.getProperty("user.dir")
-//				+ File.separator + "hoplugins" + File.separator
-//				+ "experienceViewer";
-//		spracheVerzeichnis = experienceViewerVerzeichnis + File.separator
-//				+ "Sprache";
-//	}
 }

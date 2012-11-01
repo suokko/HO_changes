@@ -112,7 +112,7 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	/** TODO Missing Parameter Documentation */
 	public static final int ALLE_SPIELE = 0;
 	private boolean initialized = false;
-	private boolean needsRefresh = true;
+	private boolean needsRefresh = false;
 
 	public SpielePanel() {
 		addComponentListener(new ComponentAdapter() {
@@ -126,13 +126,11 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 						} finally {
 							CursorToolkit.stopWaitCursor(SpielePanel.this);
 						}
-					} else {
-						if (needsRefresh) {
-							doReInit();
-						}
+					}
+					if (needsRefresh) {
+						doReInit();
 					}
 				}
-
 			}
 		});
 	}

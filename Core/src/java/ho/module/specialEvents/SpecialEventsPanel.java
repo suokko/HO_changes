@@ -49,7 +49,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 	private static SpecialEventsTable specialEventsTable;
 	private Filter filter;
 	private boolean initialized = false;
-	private boolean needsRefresh = true;
+	private boolean needsRefresh = false;
 
 	SpecialEventsPanel() {
 		addComponentListener(new ComponentAdapter() {
@@ -63,10 +63,9 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 						} finally {
 							CursorToolkit.stopWaitCursor(SpecialEventsPanel.this);
 						}
-					} else {
-						if (needsRefresh) {
-							setTableData();
-						}
+					}
+					if (needsRefresh) {
+						setTableData();
 					}
 				}
 
@@ -173,7 +172,7 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		add(splitPane, BorderLayout.CENTER);
 		RefreshManager.instance().registerRefreshable(this);
 
-		initialized = true;
+		this.initialized = true;
 	}
 
 	@Override

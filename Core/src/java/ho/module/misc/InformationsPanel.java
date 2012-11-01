@@ -29,7 +29,7 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
 	private MiscPanel m_jpSonstiges;
 	private StaffPanel m_jpTrainerStab;
 	private boolean initialized = false;
-	private boolean needsRefresh = true;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new InformationsPanel object.
@@ -46,10 +46,9 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
 						} finally {
 							CursorToolkit.stopWaitCursor(InformationsPanel.this);
 						}
-					} else {
-						if (needsRefresh) {
-							update();
-						}
+					}
+					if (needsRefresh) {
+						update();
 					}
 				}
 

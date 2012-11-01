@@ -15,101 +15,82 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
-
 class SettingPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
+
 	public static ModuleConfig config = ModuleConfig.instance();
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = -5721035453587068724L;
-	//private JCheckBox gamesCheckbox = new JCheckBox();
-    private JCheckBox skillsCheckbox = new JCheckBox();
-    private JCheckBox experienceCheckbox = new JCheckBox();
+	private JCheckBox skillsCheckbox = new JCheckBox();
+	private JCheckBox experienceCheckbox = new JCheckBox();
 
+	SettingPanel() {
+		super();
+		skillsCheckbox.setSelected(config.getBoolean(PlayerAnalysisModule.SHOW_PLAYERCOMPARE));
+		skillsCheckbox.setOpaque(false);
+		experienceCheckbox.setSelected(config.getBoolean(PlayerAnalysisModule.SHOW_EXPERIENCE));
+		experienceCheckbox.setOpaque(false);
+		jbInit();
+	}
 
-    SettingPanel() {
-        super();
-        skillsCheckbox.setSelected(config.getBoolean(PlayerAnalysisModule.SHOW_PLAYERCOMPARE));
-        skillsCheckbox.setOpaque(false);
-        experienceCheckbox.setSelected(config.getBoolean(PlayerAnalysisModule.SHOW_EXPERIENCE));
-        experienceCheckbox.setOpaque(false);
-//        gamesCheckbox.setSelected(config.getBoolean(PlayerAnalysisModule.SHOW_GAMEANALYSIS));
-//        gamesCheckbox.setOpaque(false);
-        jbInit();
-    }
+	/**
+	 * Create a new Panel
+	 * 
+	 * @param string
+	 *            Label text
+	 * @param checkBox
+	 *            CheckBox
+	 * 
+	 * @return a panel
+	 */
+	private JPanel createPanel(String string, JComponent checkBox) {
+		JPanel panel = new ImagePanel();
+		panel.setLayout(new BorderLayout());
+		panel.setOpaque(false);
 
-    //~ Methods ------------------------------------------------------------------------------------
+		JPanel innerPanel = new ImagePanel();
+		innerPanel.add(checkBox);
+		innerPanel.add(new JLabel(string, SwingConstants.LEFT));
+		innerPanel.setOpaque(false);
+		panel.add(innerPanel, BorderLayout.WEST);
 
-    /**
-     * Create a new Panel
-     *
-     * @param string Label text
-     * @param checkBox CheckBox
-     *
-     * @return a panel
-     */
-    private JPanel createPanel(String string, JComponent checkBox) {
-        JPanel panel = new ImagePanel();
+		return panel;
+	}
 
-        panel.setLayout(new BorderLayout());
-        panel.setOpaque(false);
+	/**
+	 * Initialize listeners
+	 */
+	private void initListeners() {
+		skillsCheckbox.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				config.setBoolean(PlayerAnalysisModule.SHOW_PLAYERCOMPARE,
+						skillsCheckbox.isSelected());
+			}
+		});
 
-        JPanel innerPanel = new ImagePanel();
+		experienceCheckbox.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				config.setBoolean(PlayerAnalysisModule.SHOW_EXPERIENCE,
+						experienceCheckbox.isSelected());
+			}
+		});
 
-        //innerPanel.setLayout(new BorderLayout());
-        innerPanel.add(checkBox);
-        innerPanel.add(new JLabel(string, SwingConstants.LEFT));
-        innerPanel.setOpaque(false);
-        panel.add(innerPanel, BorderLayout.WEST);
+	}
 
-        return panel;
-    }
-
-    /**
-     * Initialize listeners
-     */
-    private void initListeners() {
-        skillsCheckbox.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    	config.setBoolean(PlayerAnalysisModule.SHOW_PLAYERCOMPARE,skillsCheckbox.isSelected());
-                }
-            });
-
-//        gamesCheckbox.addActionListener(new java.awt.event.ActionListener() {
-//                public void actionPerformed(ActionEvent e) {
-//                	config.setBoolean(PlayerAnalysisModule.SHOW_GAMEANALYSIS,gamesCheckbox.isSelected());
-//                }
-//            });
-
-
-        experienceCheckbox.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	config.setBoolean(PlayerAnalysisModule.SHOW_EXPERIENCE,experienceCheckbox.isSelected());
-                }
-            });
-
-    }
-
-    /**
-     * Initializes the state of this instance.
-     */
-    private void jbInit() {
-        initListeners();
-
-        JPanel mainPanel = new ImagePanel();
-
-        mainPanel.setLayout(new GridLayout(12, 1));
-        mainPanel.setOpaque(false);
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("PlayerCompare"),
-                                  skillsCheckbox));
-        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ExperienceViewer"),
-        		experienceCheckbox));
-//        mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("Spiele"), gamesCheckbox));
-
-        setLayout(new BorderLayout());
-        setOpaque(false);
-        add(mainPanel, BorderLayout.CENTER);
-    }
+	/**
+	 * Initializes the state of this instance.
+	 */
+	private void jbInit() {
+		initListeners();
+		JPanel mainPanel = new ImagePanel();
+		mainPanel.setLayout(new GridLayout(12, 1));
+		mainPanel.setOpaque(false);
+		mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("PlayerCompare"),
+				skillsCheckbox));
+		mainPanel.add(createPanel(HOVerwaltung.instance().getLanguageString("ExperienceViewer"),
+				experienceCheckbox));
+		setLayout(new BorderLayout());
+		setOpaque(false);
+		add(mainPanel, BorderLayout.CENTER);
+	}
 }
