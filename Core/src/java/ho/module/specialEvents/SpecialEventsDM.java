@@ -264,7 +264,6 @@ public class SpecialEventsDM {
 			}
 		}
 
-		boolean found = false;
 		if (filter.isShowCurrentPlayersOnly()) {
 			List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
 			for (Spieler player : oldplayers) {
