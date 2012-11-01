@@ -64,12 +64,11 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	private static final long serialVersionUID = -6337569355347545083L;
 	private AufstellungsSternePanel m_jpAufstellungGastPanel;
 	private AufstellungsSternePanel m_jpAufstellungHeimPanel;
-	private JButton adoptLineupButton = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
-	private JButton printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-	private JButton deleteButton = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
-	private JButton reloadMatchButton = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
-	private JButton simulateMatchButton = new JButton(
-			ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
+	private JButton adoptLineupButton;
+	private JButton printButton;
+	private JButton deleteButton;
+	private JButton reloadMatchButton;
+	private JButton simulateMatchButton;
 	private JComboBox m_jcbSpieleFilter;
 	private JPanel linupPanel;
 	private JSplitPane horizontalLeftSplitPane;
@@ -85,24 +84,6 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	private MatchesOverviewCommonPanel matchesOverviewCommonPanel;
 	private MatchesHighlightsTable matchesHighlightsTable;
 	private StaerkenvergleichPanel teamsComparePanel;
-
-	private CBItem[] SPIELEFILTER = {
-			new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),
-					SpielePanel.ALLE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
-					SpielePanel.NUR_EIGENE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
-					SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
-					SpielePanel.NUR_EIGENE_POKALSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
-					SpielePanel.NUR_EIGENE_LIGASPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"),
-					SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneTournamentsspiele"),
-					SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"),
-					SpielePanel.NUR_FREMDE_SPIELE) };
 
 	/** Only played Matches of suplied team (unsupported for now) */
 	public static final int NUR_GESPIELTEN_SPIELE = 10;
@@ -541,14 +522,12 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 				horizontalLeftSplitPane, new JScrollPane(linupPanel));
 
 		horizontalLeftSplitPane
-				.setDividerLocation(ho.core.model.UserParameter.instance().spielePanel_horizontalLeftSplitPane);
+				.setDividerLocation(UserParameter.instance().spielePanel_horizontalLeftSplitPane);
 
 		verticalSplitPane
-				.setDividerLocation(ho.core.model.UserParameter.instance().spielePanel_verticalSplitPane);
+				.setDividerLocation(UserParameter.instance().spielePanel_verticalSplitPane);
 
 		add(verticalSplitPane, BorderLayout.CENTER);
-
-		deleteButton.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
 	}
 
 	/**
@@ -587,28 +566,34 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 		final JPanel buttonPanel = new ImagePanel(new FlowLayout(FlowLayout.LEFT));
 
 		// Reloadbutton
+		reloadMatchButton = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
 		reloadMatchButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
 				"tt_Spiel_reload"));
 		reloadMatchButton.setPreferredSize(new Dimension(24, 24));
 		reloadMatchButton.setEnabled(false);
 		buttonPanel.add(reloadMatchButton);
 
+		deleteButton = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
+		deleteButton.setBackground(ThemeManager.getColor(HOColorName.BUTTON_BG));
 		deleteButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
 		deleteButton.setPreferredSize(new Dimension(24, 24));
 		deleteButton.setEnabled(false);
 		buttonPanel.add(deleteButton);
 
+		printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 		printButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
 		printButton.setPreferredSize(new Dimension(24, 24));
 		printButton.setEnabled(false);
 		buttonPanel.add(printButton);
 
+		adoptLineupButton = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
 		adoptLineupButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
 				"tt_Spiel_aufstellunguebernehmen"));
 		adoptLineupButton.setPreferredSize(new Dimension(24, 24));
 		adoptLineupButton.setEnabled(false);
 		buttonPanel.add(adoptLineupButton);
 
+		simulateMatchButton = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
 		simulateMatchButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Simulate"));
 		simulateMatchButton.setPreferredSize(new Dimension(24, 24));
 		simulateMatchButton.setEnabled(false);
@@ -624,7 +609,26 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	private Component initSpieleTabelle() {
 		final ImagePanel panel = new ImagePanel(new BorderLayout());
 
-		m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
+		CBItem[] matchesFilter = {
+				new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),
+						SpielePanel.ALLE_SPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
+						SpielePanel.NUR_EIGENE_SPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
+						SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
+						SpielePanel.NUR_EIGENE_POKALSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
+						SpielePanel.NUR_EIGENE_LIGASPIELE),
+				new CBItem(HOVerwaltung.instance()
+						.getLanguageString("NurEigeneFreundschaftsspiele"),
+						SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneTournamentsspiele"),
+						SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurFremdeSpiele"),
+						SpielePanel.NUR_FREMDE_SPIELE) };
+
+		m_jcbSpieleFilter = new JComboBox(matchesFilter);
 		Helper.markierenComboBox(m_jcbSpieleFilter, UserParameter.instance().spieleFilter);
 		m_jcbSpieleFilter.addItemListener(new ItemListener() {
 
