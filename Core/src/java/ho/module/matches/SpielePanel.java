@@ -444,16 +444,21 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 	private void doReInit() {
 		if (m_jcbSpieleFilter.getSelectedIndex() > -1) {
-			// Tabelle updaten
-			int id = ((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId();
-			matchesTable.refresh(id);
-			matchesOverviewTable.refresh(id);
-			matchesOverviewCommonPanel.refresh(id);
-			matchesHighlightsTable.refresh(id);
-			UserParameter.instance().spieleFilter = id;
+			CursorToolkit.startWaitCursor(this);
+			try {
+				// Tabelle updaten
+				int id = ((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId();
+				matchesTable.refresh(id);
+				matchesOverviewTable.refresh(id);
+				matchesOverviewCommonPanel.refresh(id);
+				matchesHighlightsTable.refresh(id);
+				UserParameter.instance().spieleFilter = id;
 
-			// Dann alle anderen Panels
-			newSelectionInform();
+				// Dann alle anderen Panels
+				newSelectionInform();
+			} finally {
+				CursorToolkit.stopWaitCursor(this);
+			}
 			this.needsRefresh = false;
 		}
 	}
