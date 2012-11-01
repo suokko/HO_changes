@@ -1,6 +1,19 @@
 package ho.module.specialEvents;
 
-import static ho.module.specialEvents.SpecialEventsTableModel.*;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTEAMCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.CHANCECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.EVENTTYPCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMEEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMETACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMETEAMCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHDATECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHIDCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHTYPECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
 import ho.core.gui.ApplicationClosingListener;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
@@ -73,9 +86,9 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 				setTableData();
 			}
 		});
-		
+
 		HOMainFrame.instance().addApplicationClosingListener(new ApplicationClosingListener() {
-			
+
 			@Override
 			public void applicationClosing() {
 				FilterHelper.saveSettings(filter);
@@ -97,12 +110,12 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		matchDateColumn.setCellRenderer(new DateTableCellRenderer());
 
 		columnModel.getColumn(MATCHIDCOLUMN).setPreferredWidth(66);
-		
+
 		TableColumn matchTypeColumn = columnModel.getColumn(MATCHTYPECOLUMN);
 		matchTypeColumn.setMaxWidth(25);
 		matchTypeColumn.setPreferredWidth(25);
 		matchTypeColumn.setCellRenderer(new MatchTypeTableCellRenderer());
-		
+
 		columnModel.getColumn(HOMETACTICCOLUMN).setPreferredWidth(37);
 
 		TableColumn homeTacticColumn = columnModel.getColumn(HOMETACTICCOLUMN);
@@ -176,7 +189,6 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		CursorToolkit.startWaitCursor(this);
 		try {
 			SpecialEventsDM specialEventsDM = new SpecialEventsDM();
-			specialEventsTable.setHighlightTexte(specialEventsDM.getHighlightText());
 			((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
 					.getRows(this.filter));
 			this.needsRefresh = false;

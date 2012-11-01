@@ -2,7 +2,6 @@ package ho.module.specialEvents;
 
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.match.MatchKurzInfo;
@@ -10,7 +9,6 @@ import ho.core.model.match.MatchType;
 import ho.core.model.match.Matchdetails;
 import ho.core.model.match.Weather;
 import ho.core.model.player.Spieler;
-import ho.core.util.HOLogger;
 import ho.module.specialEvents.filter.Filter;
 
 import java.sql.Timestamp;
@@ -20,27 +18,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Vector;
 
 public class SpecialEventsDM {
-	private int teamId;
-	private Vector<String> highlightText;
 
-	public static final int SPECIALTYSE = 0;
-	public static final int WEATHERSE = 1;
-	public static final int COUNTER = 2;
-	public static final int IFK = 3;
-	public static final int LONGSHOT = 4;
-	public static final int FREEKICK = 5;
-	public static final int PENALTY = 6;
-	private static final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM,
-			Locale.getDefault());
 	private final DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	public SpecialEventsDM() {
-		teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-	}
 
 	List<MatchRow> getRows(Filter filter) {
 		List<MatchRow> matchRows = new ArrayList<MatchRow>();
@@ -77,7 +58,7 @@ public class SpecialEventsDM {
 		return false;
 	}
 
-	MatchKurzInfo[] getMatches(Filter filter) {
+	private MatchKurzInfo[] getMatches(Filter filter) {
 		List<MatchRow> matchRows = new ArrayList<MatchRow>();
 		StringBuilder whereClause = new StringBuilder(" WHERE ");
 
@@ -185,10 +166,6 @@ public class SpecialEventsDM {
 		return filteredHighlights;
 	}
 
-	private String getDateAsString(Timestamp date) {
-		return DF.format(date);
-	}
-
 	public static boolean isNegativeSE(MatchHighlight highlight) {
 		if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
 				|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
@@ -205,9 +182,9 @@ public class SpecialEventsDM {
 		return false;
 	}
 
-	public static int getEventType(MatchHighlight highlight) {
+	public static EventType getEventType(MatchHighlight highlight) {
 		if (isWeatherSE(highlight)) {
-			return WEATHERSE;
+			return EventType.WEATHERSE;
 		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
 				|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
 			switch (highlight.getHighlightSubTyp()) {
@@ -226,13 +203,13 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-				return SPECIALTYSE;
+				return EventType.SPECIALTYSE;
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-				return COUNTER;
+				return EventType.COUNTER;
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -241,7 +218,7 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-				return FREEKICK;
+				return EventType.FREEKICK;
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -250,34 +227,34 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-				return PENALTY;
+				return EventType.PENALTY;
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-				return IFK;
+				return EventType.IFK;
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-				return LONGSHOT;
+				return EventType.LONGSHOT;
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	private boolean checkForSE(MatchHighlight highlight, Filter filter) {
-		int eventType = getEventType(highlight);
-		if (eventType < 0) {
+		EventType eventType = getEventType(highlight);
+		if (eventType == null) {
 			return false;
-		} else if (!filter.isShowSpecialitySE() && eventType == SPECIALTYSE) {
+		} else if (!filter.isShowSpecialitySE() && eventType == EventType.SPECIALTYSE) {
 			return false;
-		} else if (!filter.isShowWeatherSE() && eventType == WEATHERSE) {
+		} else if (!filter.isShowWeatherSE() && eventType == EventType.WEATHERSE) {
 			return false;
-		} else if (!filter.isShowCounterAttack() && eventType == COUNTER) {
+		} else if (!filter.isShowCounterAttack() && eventType == EventType.COUNTER) {
 			return false;
-		} else if (!filter.isShowFreeKick() && eventType == FREEKICK) {
+		} else if (!filter.isShowFreeKick() && eventType == EventType.FREEKICK) {
 			return false;
-		} else if (!filter.isShowPenalty() && eventType == PENALTY) {
+		} else if (!filter.isShowPenalty() && eventType == EventType.PENALTY) {
 			return false;
-		} else if (!filter.isShowFreeKickIndirect() && eventType == IFK) {
+		} else if (!filter.isShowFreeKickIndirect() && eventType == EventType.IFK) {
 			return false;
-		} else if (!filter.isShowLongShot() && eventType == LONGSHOT) {
+		} else if (!filter.isShowLongShot() && eventType == EventType.LONGSHOT) {
 			return false;
 		}
 
@@ -290,12 +267,10 @@ public class SpecialEventsDM {
 		boolean found = false;
 		if (filter.isShowCurrentPlayersOnly()) {
 			List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
-			if (filter.isShowCurrentPlayersOnly()) {
-				for (Spieler player : oldplayers) {
-					if (isInvolved(player.getSpielerID(), highlight)) {
-						// player is in "old" players -> do not show
-						return false;
-					}
+			for (Spieler player : oldplayers) {
+				if (isInvolved(player.getSpielerID(), highlight)) {
+					// player is in "old" players -> do not show
+					return false;
 				}
 			}
 		}
@@ -353,91 +328,65 @@ public class SpecialEventsDM {
 		return false;
 	}
 
-	private String format_Highlights(MatchHighlight highlight, Filter filter) {
-		String rString = "";
-		if (checkForSE(highlight, filter)) {
-			rString = getSEText(highlight);
-		}
-		return rString;
-	}
-
 	public static String getSEText(MatchHighlight highlight) {
 
 		if (isWeatherSE(highlight)) {
 			switch (highlight.getHighlightSubTyp()) {
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_RAINY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_TECHNICAL_RAINY");
+				return getLangStr("WEATHER_TECHNICAL_RAINY");
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_RAINY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_POWERFUL_RAINY");
+				return getLangStr("WEATHER_POWERFUL_RAINY");
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_TECHNICAL_SUNNY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_TECHNICAL_SUNNY");
+				return getLangStr("WEATHER_TECHNICAL_SUNNY");
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_POWERFUL_SUNNY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_POWERFUL_SUNNY");
+				return getLangStr("WEATHER_POWERFUL_SUNNY");
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_RAINY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_QUICK_RAINY");
+				return getLangStr("WEATHER_QUICK_RAINY");
 			case IMatchHighlight.HIGHLIGHT_SUB_PLAYER_QUICK_SUNNY:
-				return HOVerwaltung.instance().getLanguageString("WEATHER_QUICK_SUNNY");
+				return getLangStr("WEATHER_QUICK_SUNNY");
 			}
 		} else if (highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_ERFOLGREICH
 				|| highlight.getHighlightTyp() == IMatchHighlight.HIGHLIGHT_FEHLGESCHLAGEN) {
 			// Non-weather SE
 			switch (highlight.getHighlightSubTyp()) {
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
-				return HOVerwaltung.instance().getLanguageString("UNVORHERSEHBAR_PASS_VORLAGE_TOR");
-
+				return getLangStr("UNVORHERSEHBAR_PASS_VORLAGE_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-				return HOVerwaltung.instance().getLanguageString(
-						"UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR");
-
+				return getLangStr("UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
-				return HOVerwaltung.instance().getLanguageString("WEITSCHUSS_TOR");
-
+				return getLangStr("WEITSCHUSS_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
-				return HOVerwaltung.instance().getLanguageString(
-						"UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
-
+				return getLangStr("UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
-				return HOVerwaltung.instance().getLanguageString("UNVORHERSEHBAR_BALLVERLUST_TOR");
-
+				return getLangStr("UNVORHERSEHBAR_BALLVERLUST_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
-				return HOVerwaltung.instance().getLanguageString("SCHNELLER_ANGREIFER_TOR");
-
+				return getLangStr("SCHNELLER_ANGREIFER_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
-				return HOVerwaltung.instance().getLanguageString("SCHNELLER_ANGREIFER_PASS_TOR");
-
+				return getLangStr("SCHNELLER_ANGREIFER_PASS_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHLECHTE_KONDITION_BALLVERLUST_TOR:
-				return HOVerwaltung.instance().getLanguageString(
-						"SCHLECHTE_KONDITION_BALLVERLUST_TOR");
-
+				return getLangStr("SCHLECHTE_KONDITION_BALLVERLUST_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-				return HOVerwaltung.instance().getLanguageString("ECKBALL_TOR");
-
+				return getLangStr("ECKBALL_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
-				return HOVerwaltung.instance().getLanguageString("ECKBALL_KOPFTOR");
-
+				return getLangStr("ECKBALL_KOPFTOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
-				return HOVerwaltung.instance().getLanguageString("ERFAHRENER_ANGREIFER_TOR");
-
+				return getLangStr("ERFAHRENER_ANGREIFER_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_UNERFAHREN_TOR:
-				return HOVerwaltung.instance().getLanguageString("UNERFAHREN_TOR");
-
+				return getLangStr("UNERFAHREN_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-				return HOVerwaltung.instance().getLanguageString("QUERPASS_TOR");
-
+				return getLangStr("QUERPASS_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
-				return HOVerwaltung.instance().getLanguageString("AUSSERGEWOEHNLICHER_PASS_TOR");
-
+				return getLangStr("AUSSERGEWOEHNLICHER_PASS_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-				return HOVerwaltung.instance().getLanguageString("TECHNIKER_ANGREIFER_TOR");
+				return getLangStr("TECHNIKER_ANGREIFER_TOR");
 			case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
-				return HOVerwaltung.instance().getLanguageString("QUICK_RUSH_STOPPED_BY_DEF");
+				return getLangStr("QUICK_RUSH_STOPPED_BY_DEF");
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-				return HOVerwaltung.instance().getLanguageString("ls.match.event.counter-attack");
-
+				return getLangStr("ls.match.event.counter-attack");
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -446,8 +395,7 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-				return HOVerwaltung.instance().getLanguageString("highlight_freekick");
-
+				return getLangStr("highlight_freekick");
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -456,48 +404,16 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-				return HOVerwaltung.instance().getLanguageString("highlight_penalty");
-
+				return getLangStr("highlight_penalty");
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-				return HOVerwaltung.instance().getLanguageString("highlight_freekick") + " "
-						+ HOVerwaltung.instance().getLanguageString("indirect");
-
+				return getLangStr("highlight_freekick") + " " + getLangStr("indirect");
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
-				return HOVerwaltung.instance().getLanguageString("ls.match.event.longshot");
+				return getLangStr("ls.match.event.longshot");
 			}
 
 		}
-		// return HOVerwaltung.instance().getLanguageString("Unbekannt");
 		return "unknown";
-	}
-
-	private String getTaktik(int typ) {
-		switch (typ) {
-		case IMatchDetails.TAKTIK_NORMAL:
-			return " ";
-
-		case IMatchDetails.TAKTIK_PRESSING:
-			return "PR";
-
-		case IMatchDetails.TAKTIK_KONTER:
-			return "CA";
-
-		case IMatchDetails.TAKTIK_MIDDLE:
-			return "AIM";
-
-		case IMatchDetails.TAKTIK_WINGS:
-			return "AOW";
-
-		case IMatchDetails.TAKTIK_CREATIVE:
-			return "PC";
-
-		case IMatchDetails.TAKTIK_LONGSHOTS:
-			return "LS";
-
-		default:
-			return " ? " + (new Integer(typ)).toString();
-		}
 	}
 
 	private boolean isInvolved(int playerId, MatchHighlight highlight) {
@@ -510,7 +426,6 @@ public class SpecialEventsDM {
 				return (playerId == highlight.getGehilfeID() || playerId == highlight
 						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
@@ -519,30 +434,22 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
 				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
-				return (playerId == highlight.getGehilfeID() || playerId == highlight
-						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-				return (playerId == highlight.getGehilfeID() || playerId == highlight
-						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
 				return (playerId == highlight.getGehilfeID() || playerId == highlight
 						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
 				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-				return (playerId == highlight.getGehilfeID() || playerId == highlight
-						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
 				return (playerId == highlight.getGehilfeID() || playerId == highlight
 						.getSpielerID());
 			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -551,7 +458,6 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -560,10 +466,8 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-				return playerId == highlight.getSpielerID();
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
 				return playerId == highlight.getSpielerID();
 			}
@@ -580,7 +484,6 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
 				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
@@ -588,25 +491,20 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
 				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_PASS_TOR:
-				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_TOR:
-				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_ECKBALL_KOPFTOR:
 				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_ERFAHRENER_ANGREIFER_TOR:
 				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_QUERPASS_TOR:
-				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_AUSSERGEWOEHNLICHER_PASS_TOR:
 				return highlight.getGehilfeName() + " - " + highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_TECHNIKER_ANGREIFER_TOR:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_EINS:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_ZWEI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_DREI:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_VIER:
 			case IMatchHighlight.HIGHLIGHT_SUB_KONTERANGRIFF_FUENF:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_3:
@@ -615,7 +513,6 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_FREISTOSS_8:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_2:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_3:
@@ -624,10 +521,8 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_6:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_7:
 			case IMatchHighlight.HIGHLIGHT_SUB_ELFMETER_8:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_1:
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
-				return highlight.getSpielerName();
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
 				return highlight.getSpielerName();
 			}
@@ -665,14 +560,6 @@ public class SpecialEventsDM {
 		return name;
 	}
 
-	private void showDebug(String s) {
-		HOLogger.instance().log(this.getClass(), s);
-	}
-
-	public Vector<String> getHighlightText() {
-		return highlightText;
-	}
-
 	private static Timestamp getDatumAb(SeasonFilterValue period) {
 		Date date = null;
 		if (period.getId() == 1) {
@@ -693,5 +580,16 @@ public class SpecialEventsDM {
 		}
 		date = cal.getTime();
 		return new Timestamp(date.getTime());
+	}
+
+	/**
+	 * Convenience method for getLangStr(key)
+	 * 
+	 * @param key
+	 *            the key for the language string
+	 * @return the string for the current language
+	 */
+	private static String getLangStr(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
 	}
 }

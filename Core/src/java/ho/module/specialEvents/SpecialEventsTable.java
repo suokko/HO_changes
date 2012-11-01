@@ -1,13 +1,19 @@
 package ho.module.specialEvents;
 
-import static ho.module.specialEvents.SpecialEventsTableModel.*;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.AWAYTACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.EVENTTYPCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMEEVENTCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.HOMETACTICCOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.MATCHTYPECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
+import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.util.HOLogger;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
@@ -15,7 +21,6 @@ import javax.swing.table.JTableHeader;
 public class SpecialEventsTable extends JTable {
 
 	private static final long serialVersionUID = 8656004206333977669L;
-	private List<String> highlightTexte;
 
 	@Override
 	protected JTableHeader createDefaultTableHeader() {
@@ -39,10 +44,6 @@ public class SpecialEventsTable extends JTable {
 			}
 
 		};
-	}
-
-	public void setHighlightTexte(List<String> highlightTexte) {
-		this.highlightTexte = highlightTexte;
 	}
 
 	@Override
