@@ -135,7 +135,7 @@ public class FilterPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CBItem item = (CBItem) tacticComboBox.getSelectedItem();
-				if (item == null || item.getId() == -1) {
+				if (item == null) {
 					filter.setTactic(null);
 				} else {
 					filter.setTactic(item.getId());
@@ -209,10 +209,7 @@ public class FilterPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CBItem item = (CBItem) playerComboBox.getSelectedItem();
-				if (item == null || item.getId() == -1 || item.getId() == -2) {
-					filter.setPlayerId(null);
-				} else if (item.getId() == -2) {
-					playerComboBox.setSelectedItem(null);
+				if (item == null) {
 					filter.setPlayerId(null);
 				} else {
 					filter.setPlayerId(Integer.valueOf(item.getId()));
@@ -340,9 +337,8 @@ public class FilterPanel extends JPanel {
 			}
 		});
 
-		list.add(0,
-				new CBItem(getLangStr("ls.team.tactic.normal"), IMatchDetails.TAKTIK_NORMAL));
-		list.add(0, new CBItem("", -1));
+		list.add(0, new CBItem(getLangStr("ls.team.tactic.normal"), IMatchDetails.TAKTIK_NORMAL));
+		list.add(0, null);
 		return list;
 	}
 
@@ -429,7 +425,7 @@ public class FilterPanel extends JPanel {
 
 	/**
 	 * Convenience method.
-	 *
+	 * 
 	 * @param key
 	 * @return
 	 */
@@ -461,7 +457,7 @@ public class FilterPanel extends JPanel {
 			players = new ArrayList<Spieler>(HOVerwaltung.instance().getModel().getAllOldSpieler());
 			Collections.sort(players, comparator);
 			if (!players.isEmpty()) {
-				playerItems.add(new PlayerCBItem("--------------------", -2, -1));
+				playerItems.add(null);
 			}
 			for (Spieler player : players) {
 				playerItems.add(new PlayerCBItem(player.getName(), player.getSpielerID(), player
@@ -469,7 +465,6 @@ public class FilterPanel extends JPanel {
 			}
 		}
 
-		playerItems.add(0, new PlayerCBItem("", -1, -1));
 		this.playerComboBox.setModel(new DefaultComboBoxModel(playerItems.toArray()));
 
 		if (oldItem != null) {
@@ -483,7 +478,7 @@ public class FilterPanel extends JPanel {
 		ComboBoxModel model = comboBox.getModel();
 		CBItem item = null;
 		for (int i = 0; i < model.getSize(); i++) {
-			if (((CBItem) model.getElementAt(i)).getId() == id) {
+			if (model.getElementAt(i) != null && ((CBItem) model.getElementAt(i)).getId() == id) {
 				item = (CBItem) model.getElementAt(i);
 				break;
 			}
