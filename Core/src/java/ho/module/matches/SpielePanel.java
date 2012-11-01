@@ -454,6 +454,7 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 			// Dann alle anderen Panels
 			newSelectionInform();
+			this.needsRefresh = false;
 		}
 	}
 
