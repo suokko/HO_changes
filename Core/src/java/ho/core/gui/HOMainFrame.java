@@ -90,24 +90,23 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 
 	// Menus
 	private final JMenu m_jmUpdating = new JMenu(HOVerwaltung.instance().getLanguageString(
-	"ls.button.update"));
-private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("Beenden"));
-private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("Credits"));
-private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("ls.button.download"));
-private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("Forum"));
-private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("Hattrick"));
-private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString(
-	"Help"));
-private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("Homepage"));
-private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
-	.getLanguageString("FullScreen.toggle"));
-
+			"ls.button.update"));
+	private final JMenuItem m_jmBeendenItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Beenden"));
+	private final JMenuItem m_jmCreditsItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Credits"));
+	private final JMenuItem m_jmDownloadItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("ls.button.download"));
+	private final JMenuItem m_jmForumItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Forum"));
+	private final JMenuItem m_jmHattrickItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Hattrick"));
+	private final JMenuItem m_jmWikiItem = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"Help"));
+	private final JMenuItem m_jmHomepageItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("Homepage"));
+	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
+			.getLanguageString("FullScreen.toggle"));
 
 	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance()
 			.getLanguageString("HRFImportieren"));
@@ -324,10 +323,6 @@ private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance
 	 */
 	public TransfersPanel getTransferScoutPanel() {
 		return ((TransfersPanel) getTabbedPane().getModulePanel(IModule.TRANSFERS));
-	}
-
-	public SpielePanel getMatchesPanel() {
-		return ((SpielePanel) getTabbedPane().getModulePanel(IModule.MATCHES));
 	}
 
 	/**
@@ -676,10 +671,16 @@ private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance
 	}
 
 	// --------------------------------------------------------------
-	public void showMatch(int matchid) {
+	public void showMatch(final int matchid) {
 		m_jtpTabbedPane.showTab(IModule.MATCHES);
+		final SpielePanel matchesPanel = (SpielePanel) getTabbedPane().getModulePanel(IModule.MATCHES);
+		SwingUtilities.invokeLater(new Runnable() {
 
-		getMatchesPanel().showMatch(matchid);
+			@Override
+			public void run() {
+				matchesPanel.showMatch(matchid);
+			}
+		});
 	}
 
 	// ----------------Hilfsmethoden---------------------------------
@@ -808,14 +809,6 @@ private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance
 			parameter.aufstellungsPanel_horizontalRightSplitPane = ap[2];
 			parameter.aufstellungsPanel_verticalSplitPane = ap[3];
 			getAufstellungsPanel().saveColumnOrder();
-		}
-
-		// SpielePanel
-		if (getTabbedPane().isModuleTabVisible(IModule.MATCHES)) {
-			final int[] sp = getMatchesPanel().getDividerLocations();
-			parameter.spielePanel_horizontalLeftSplitPane = sp[0];
-			parameter.spielePanel_verticalSplitPane = sp[1];
-			getMatchesPanel().saveColumnOrder();
 		}
 
 		// SpielerAnalyse

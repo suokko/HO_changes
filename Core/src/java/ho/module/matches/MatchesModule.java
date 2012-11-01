@@ -30,6 +30,7 @@ public final class MatchesModule extends DefaultModule {
 		return new SpielePanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0);
 	}

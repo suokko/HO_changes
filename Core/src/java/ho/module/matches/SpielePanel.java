@@ -3,6 +3,8 @@ package ho.module.matches;
 
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
+import ho.core.gui.ApplicationClosingListener;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.Refreshable;
@@ -42,11 +44,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.util.Vector;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -56,17 +60,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-public final class SpielePanel extends ImagePanel implements MouseListener, KeyListener,
-		Refreshable, ActionListener {
+public final class SpielePanel extends ImagePanel implements Refreshable {
 	private static final long serialVersionUID = -6337569355347545083L;
 	private AufstellungsSternePanel m_jpAufstellungGastPanel;
 	private AufstellungsSternePanel m_jpAufstellungHeimPanel;
-	private JButton m_jbAufstellungUebernehmen = new JButton(
-			ThemeManager.getIcon(HOIconName.GETLINEUP));
+	private JButton adoptLineupButton = new JButton(ThemeManager.getIcon(HOIconName.GETLINEUP));
 	private JButton printButton = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
 	private JButton deleteButton = new JButton(ThemeManager.getIcon(HOIconName.REMOVE));
-	private JButton m_jbReloadMatch = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
-	private JButton m_jbSimMatch = new JButton(ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
+	private JButton reloadMatchButton = new JButton(ThemeManager.getIcon(HOIconName.RELOAD));
+	private JButton simulateMatchButton = new JButton(
+			ThemeManager.getIcon(HOIconName.SIMULATEMATCH));
 	private JComboBox m_jcbSpieleFilter;
 	private JPanel linupPanel;
 	private JSplitPane horizontalLeftSplitPane;
@@ -127,93 +130,149 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 
 	/** TODO Missing Parameter Documentation */
 	public static final int ALLE_SPIELE = 0;
+	private boolean initialized = false;
+	private boolean needsRefresh = true;
 
 	public SpielePanel() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				if (isShowing()) {
+					if (!initialized) {
+						CursorToolkit.startWaitCursor(SpielePanel.this);
+						try {
+							initialize();
+						} finally {
+							CursorToolkit.stopWaitCursor(SpielePanel.this);
+						}
+					} else {
+						if (needsRefresh) {
+							doReInit();
+						}
+					}
+				}
+
+			}
+		});
+	}
+
+	private void initialize() {
 		RefreshManager.instance().registerRefreshable(this);
-
 		initComponents();
+		addListeners();
+		this.initialized = true;
 	}
 
-	/**
-	 * Gibt die aktuellen DividerLocations zurück, damit sie gespeichert werden
-	 * können
-	 */
-	public int[] getDividerLocations() {
-		final int[] locations = new int[2];
-		locations[0] = horizontalLeftSplitPane.getDividerLocation();
-		locations[1] = verticalSplitPane.getDividerLocation();
-		return locations;
-	}
-
-	public void saveColumnOrder() {
+	private void saveColumnOrder() {
 		matchesTable.saveColumnOrder();
 		matchesOverviewTable.saveColumnOrder();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == m_jbReloadMatch) {
-			final int matchid = matchShortInfo.getMatchID();
-			OnlineWorker.downloadMatchData(matchShortInfo.getMatchID(),
-					matchShortInfo.getMatchTyp(), true);
-			RefreshManager.instance().doReInit();
-			showMatch(matchid);
-		} else if (e.getSource() == deleteButton) {
-			final int[] rows = matchesTable.getSelectedRows();
-			final MatchKurzInfo[] infos = new MatchKurzInfo[rows.length];
+	private void addListeners() {
+		this.reloadMatchButton.addActionListener(new ActionListener() {
 
-			for (int i = 0; i < rows.length; i++) {
-				infos[i] = ((MatchesColumnModel) matchesTable.getSorter().getModel())
-						.getMatch((int) ((ColorLabelEntry) matchesTable.getSorter().getValueAt(
-								rows[i], 5)).getZahl());
-			}
-
-			final StringBuilder text = new StringBuilder(100);
-			text.append(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
-			if (infos.length > 1) {
-				text.append(" (" + infos.length + " ");
-				text.append(HOVerwaltung.instance().getLanguageString("Spiele"));
-				text.append(")");
-			}
-			text.append(":");
-
-			for (int i = 0; (i < infos.length) && (i < 11); i++) {
-				text.append("\n" + infos[i].getHeimName() + " - " + infos[i].getGastName());
-				if (i == 10) {
-					text.append("\n ... ");
-				}
-			}
-
-			final int value = JOptionPane.showConfirmDialog(this, text, HOVerwaltung.instance()
-					.getLanguageString("ls.button.delete"), JOptionPane.YES_NO_OPTION);
-
-			if (value == JOptionPane.YES_OPTION) {
-				for (int i = 0; i < infos.length; i++) {
-					DBManager.instance().deleteMatch(infos[i].getMatchID());
-				}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int matchid = matchShortInfo.getMatchID();
+				OnlineWorker.downloadMatchData(matchShortInfo.getMatchID(),
+						matchShortInfo.getMatchTyp(), true);
 				RefreshManager.instance().doReInit();
+				showMatch(matchid);
 			}
-		} else if (e.getSource() == printButton) {
-			if (matchShortInfo != null) {
-				final SpielePrintDialog printDialog = new SpielePrintDialog(matchShortInfo);
-				printDialog.doPrint(matchShortInfo.getHeimName() + " : "
-						+ matchShortInfo.getGastName() + " - " + matchShortInfo.getMatchDate());
-				printDialog.setVisible(false);
-				printDialog.dispose();
+		});
+
+		this.deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteSelectedMatches();
 			}
-		} else if (e.getSource() == m_jbAufstellungUebernehmen) {
-			if ((matchShortInfo != null)
-					&& (matchShortInfo.getMatchStatus() == MatchKurzInfo.FINISHED)) {
-				final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				final Vector<MatchLineupPlayer> vteamspieler = DBManager.instance()
-						.getMatchLineupPlayers(matchShortInfo.getMatchID(), teamid);
-				final Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
+		});
 
-				aufstellung.clearLineup(); // To make sure the old one is gone.
+		this.printButton.addActionListener(new ActionListener() {
 
-				for (int i = 0; (vteamspieler != null) && (i < vteamspieler.size()); i++) {
-					final MatchLineupPlayer player = (MatchLineupPlayer) vteamspieler.get(i);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (matchShortInfo != null) {
+					final SpielePrintDialog printDialog = new SpielePrintDialog(matchShortInfo);
+					printDialog.doPrint(matchShortInfo.getHeimName() + " : "
+							+ matchShortInfo.getGastName() + " - " + matchShortInfo.getMatchDate());
+					printDialog.setVisible(false);
+					printDialog.dispose();
+				}
+			}
+		});
 
+		this.adoptLineupButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				adoptLineup();
+			}
+		});
+
+		this.simulateMatchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				simulateMatch();
+			}
+		});
+
+		this.matchesTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
+				newSelectionInform();
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
+				newSelectionInform();
+			}
+		});
+
+		this.matchesTable.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(java.awt.event.KeyEvent keyEvent) {
+				newSelectionInform();
+			}
+
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent keyEvent) {
+				newSelectionInform();
+			}
+		});
+
+		HOMainFrame.instance().addApplicationClosingListener(new ApplicationClosingListener() {
+
+			@Override
+			public void applicationClosing() {
+				saveSettings();
+			}
+		});
+	}
+
+	private void saveSettings() {
+		matchesTable.saveColumnOrder();
+		matchesOverviewTable.saveColumnOrder();
+		UserParameter parameter = UserParameter.instance();
+		parameter.spielePanel_horizontalLeftSplitPane = horizontalLeftSplitPane
+				.getDividerLocation();
+		parameter.spielePanel_verticalSplitPane = verticalSplitPane.getDividerLocation();
+	}
+
+	private void adoptLineup() {
+		if ((matchShortInfo != null) && (matchShortInfo.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+			int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+			List<MatchLineupPlayer> teamspieler = DBManager.instance().getMatchLineupPlayers(
+					matchShortInfo.getMatchID(), teamid);
+			Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
+
+			aufstellung.clearLineup(); // To make sure the old one is
+										// gone.
+
+			if (teamspieler != null) {
+				for (MatchLineupPlayer player : teamspieler) {
 					if (player.getId() == ISpielerPosition.setPieces) {
 						aufstellung.setKicker(player.getSpielerId());
 					} else if (player.getId() == ISpielerPosition.captain) {
@@ -223,72 +282,105 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 								player.getTaktik());
 					}
 				}
-
-				// Alles Updaten
-				HOMainFrame.instance().getAufstellungsPanel().update();
-
-				// Aufstellung zeigen
-				HOMainFrame.instance().showTab(IModule.LINEUP);
 			}
-		} else if (e.getSource() == m_jbSimMatch) {
-			if (matchShortInfo != null) {
-				final Matchdetails details = DBManager.instance().getMatchDetails(
-						matchShortInfo.getMatchID());
-				final MatchPredictionManager manager = MatchPredictionManager.instance();
-				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-				boolean homeMatch = false;
-				if (teamId == matchShortInfo.getHeimID()) {
-					homeMatch = true;
-				}
+			// Alles Updaten
+			HOMainFrame.instance().getAufstellungsPanel().update();
+			// Aufstellung zeigen
+			HOMainFrame.instance().showTab(IModule.LINEUP);
+		}
+	}
 
-				TeamRatings homeTeamRatings = manager.generateTeamRatings(
-						details != null ? getRatingValue(details.getHomeMidfield()) : 1,
-						details != null ? getRatingValue(details.getHomeLeftDef()) : 1,
-						details != null ? getRatingValue(details.getHomeMidDef()) : 1,
-						details != null ? getRatingValue(details.getHomeRightDef()) : 1,
-						details != null ? getRatingValue(details.getHomeLeftAtt()) : 1,
-						details != null ? getRatingValue(details.getHomeMidAtt()) : 1,
-						details != null ? getRatingValue(details.getHomeRightAtt()) : 1);
+	private void deleteSelectedMatches() {
+		int[] rows = matchesTable.getSelectedRows();
+		MatchKurzInfo[] infos = new MatchKurzInfo[rows.length];
 
-				final TeamData homeTeamValues;
-				if (homeMatch && !ratingsAreKnown(homeTeamRatings)) {
-					homeTeamValues = getOwnLineupRatings(manager);
-				} else {
-					homeTeamValues = manager.generateTeamData(matchShortInfo.getHeimName(),
-							homeTeamRatings, details != null ? details.getHomeTacticType()
-									: IMatchDetails.TAKTIK_NORMAL,
-							details != null ? getRatingValue(details.getHomeTacticSkill() - 1) : 1);
-				}
+		for (int i = 0; i < rows.length; i++) {
+			infos[i] = ((MatchesColumnModel) matchesTable.getSorter().getModel())
+					.getMatch((int) ((ColorLabelEntry) matchesTable.getSorter().getValueAt(rows[i],
+							5)).getZahl());
+		}
 
-				TeamRatings awayTeamRatings = manager.generateTeamRatings(
-						details != null ? getRatingValue(details.getGuestMidfield()) : 1,
-						details != null ? getRatingValue(details.getGuestLeftDef()) : 1,
-						details != null ? getRatingValue(details.getGuestMidDef()) : 1,
-						details != null ? getRatingValue(details.getGuestRightDef()) : 1,
-						details != null ? getRatingValue(details.getGuestLeftAtt()) : 1,
-						details != null ? getRatingValue(details.getGuestMidAtt()) : 1,
-						details != null ? getRatingValue(details.getGuestRightAtt()) : 1);
+		StringBuilder text = new StringBuilder(100);
+		text.append(HOVerwaltung.instance().getLanguageString("ls.button.delete"));
+		if (infos.length > 1) {
+			text.append(" (" + infos.length + " ");
+			text.append(HOVerwaltung.instance().getLanguageString("Spiele"));
+			text.append(")");
+		}
+		text.append(":");
 
-				final TeamData awayTeamValues;
-				if (!homeMatch && !ratingsAreKnown(awayTeamRatings)) {
-					awayTeamValues = getOwnLineupRatings(manager);
-				} else {
-					awayTeamValues = manager
-							.generateTeamData(
-									matchShortInfo.getGastName(),
-									awayTeamRatings,
-									details != null ? details.getGuestTacticType()
-											: IMatchDetails.TAKTIK_NORMAL,
-									details != null ? getRatingValue(details.getGuestTacticSkill() - 1)
-											: 1);
-				}
-
-				String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
-				MatchEnginePanel matchPredictionPanel = new MatchEnginePanel(homeTeamValues,
-						awayTeamValues);
-
-				MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel, match);
+		for (int i = 0; (i < infos.length) && (i < 11); i++) {
+			text.append("\n" + infos[i].getHeimName() + " - " + infos[i].getGastName());
+			if (i == 10) {
+				text.append("\n ... ");
 			}
+		}
+
+		int value = JOptionPane.showConfirmDialog(SpielePanel.this, text, HOVerwaltung.instance()
+				.getLanguageString("ls.button.delete"), JOptionPane.YES_NO_OPTION);
+
+		if (value == JOptionPane.YES_OPTION) {
+			for (int i = 0; i < infos.length; i++) {
+				DBManager.instance().deleteMatch(infos[i].getMatchID());
+			}
+			RefreshManager.instance().doReInit();
+		}
+	}
+
+	private void simulateMatch() {
+		if (matchShortInfo != null) {
+			Matchdetails details = DBManager.instance()
+					.getMatchDetails(matchShortInfo.getMatchID());
+			MatchPredictionManager manager = MatchPredictionManager.instance();
+			int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+			boolean homeMatch = false;
+			if (teamId == matchShortInfo.getHeimID()) {
+				homeMatch = true;
+			}
+
+			TeamRatings homeTeamRatings = manager.generateTeamRatings(
+					details != null ? getRatingValue(details.getHomeMidfield()) : 1,
+					details != null ? getRatingValue(details.getHomeLeftDef()) : 1,
+					details != null ? getRatingValue(details.getHomeMidDef()) : 1,
+					details != null ? getRatingValue(details.getHomeRightDef()) : 1,
+					details != null ? getRatingValue(details.getHomeLeftAtt()) : 1,
+					details != null ? getRatingValue(details.getHomeMidAtt()) : 1,
+					details != null ? getRatingValue(details.getHomeRightAtt()) : 1);
+
+			TeamData homeTeamValues;
+			if (homeMatch && !ratingsAreKnown(homeTeamRatings)) {
+				homeTeamValues = getOwnLineupRatings(manager);
+			} else {
+				homeTeamValues = manager.generateTeamData(matchShortInfo.getHeimName(),
+						homeTeamRatings, details != null ? details.getHomeTacticType()
+								: IMatchDetails.TAKTIK_NORMAL,
+						details != null ? getRatingValue(details.getHomeTacticSkill() - 1) : 1);
+			}
+
+			TeamRatings awayTeamRatings = manager.generateTeamRatings(
+					details != null ? getRatingValue(details.getGuestMidfield()) : 1,
+					details != null ? getRatingValue(details.getGuestLeftDef()) : 1,
+					details != null ? getRatingValue(details.getGuestMidDef()) : 1,
+					details != null ? getRatingValue(details.getGuestRightDef()) : 1,
+					details != null ? getRatingValue(details.getGuestLeftAtt()) : 1,
+					details != null ? getRatingValue(details.getGuestMidAtt()) : 1,
+					details != null ? getRatingValue(details.getGuestRightAtt()) : 1);
+
+			TeamData awayTeamValues;
+			if (!homeMatch && !ratingsAreKnown(awayTeamRatings)) {
+				awayTeamValues = getOwnLineupRatings(manager);
+			} else {
+				awayTeamValues = manager.generateTeamData(matchShortInfo.getGastName(),
+						awayTeamRatings, details != null ? details.getGuestTacticType()
+								: IMatchDetails.TAKTIK_NORMAL,
+						details != null ? getRatingValue(details.getGuestTacticSkill() - 1) : 1);
+			}
+
+			String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
+			MatchEnginePanel matchPredictionPanel = new MatchEnginePanel(homeTeamValues,
+					awayTeamValues);
+
+			MatchPredictionDialog d = new MatchPredictionDialog(matchPredictionPanel, match);
 		}
 	}
 
@@ -358,82 +450,18 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	}
 
 	/**
-	 * React on key pressed events.
-	 */
-	@Override
-	public void keyPressed(java.awt.event.KeyEvent keyEvent) {
-		if (keyEvent.getSource().equals(matchesTable)) {
-			// manageSelectionRow ( );
-			newSelectionInform();
-		}
-	}
-
-	/**
-	 * React on key released events.
-	 */
-	@Override
-	public void keyReleased(java.awt.event.KeyEvent keyEvent) {
-		if (keyEvent.getSource().equals(matchesTable)) {
-			// manageSelectionRow ( );
-			newSelectionInform();
-		}
-	}
-
-	/**
-	 * React on key typed events.
-	 */
-	@Override
-	public void keyTyped(java.awt.event.KeyEvent keyEvent) {
-	}
-
-	/**
-	 * React on mouse klicked events.
-	 */
-	@Override
-	public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-		if (mouseEvent.getSource().equals(matchesTable)) {
-			// manageSelectionRow ( );
-			newSelectionInform();
-		}
-	}
-
-	/**
-	 * React on mouse entered events.
-	 */
-	@Override
-	public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	/**
-	 * React on mouse exited events.
-	 */
-	@Override
-	public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	/**
-	 * React on mouse pressed events.
-	 */
-	@Override
-	public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
-	}
-
-	/**
-	 * React on mouse released events.
-	 */
-	@Override
-	public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
-		if (mouseEvent.getSource().equals(matchesTable)) {
-			// manageSelectionRow ( );
-			newSelectionInform();
-		}
-	}
-
-	/**
 	 * ReInit
 	 */
 	@Override
 	public void reInit() {
+		if (isShowing()) {
+			doReInit();
+		} else {
+			this.needsRefresh = true;
+		}
+	}
+
+	private void doReInit() {
 		if (m_jcbSpieleFilter.getSelectedIndex() > -1) {
 			// Tabelle updaten
 			int id = ((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId();
@@ -477,11 +505,11 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	 * Disable all buttons.
 	 */
 	private void clear() {
-		m_jbReloadMatch.setEnabled(false);
+		reloadMatchButton.setEnabled(false);
 		deleteButton.setEnabled(false);
 		printButton.setEnabled(false);
-		m_jbAufstellungUebernehmen.setEnabled(false);
-		m_jbSimMatch.setEnabled(false);
+		adoptLineupButton.setEnabled(false);
+		simulateMatchButton.setEnabled(false);
 	}
 
 	/**
@@ -559,37 +587,32 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 		final JPanel buttonPanel = new ImagePanel(new FlowLayout(FlowLayout.LEFT));
 
 		// Reloadbutton
-		m_jbReloadMatch
-				.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_reload"));
-		m_jbReloadMatch.addActionListener(this);
-		m_jbReloadMatch.setPreferredSize(new Dimension(24, 24));
-		m_jbReloadMatch.setEnabled(false);
-		buttonPanel.add(m_jbReloadMatch);
+		reloadMatchButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+				"tt_Spiel_reload"));
+		reloadMatchButton.setPreferredSize(new Dimension(24, 24));
+		reloadMatchButton.setEnabled(false);
+		buttonPanel.add(reloadMatchButton);
 
 		deleteButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_loeschen"));
-		deleteButton.addActionListener(this);
 		deleteButton.setPreferredSize(new Dimension(24, 24));
 		deleteButton.setEnabled(false);
 		buttonPanel.add(deleteButton);
 
 		printButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Spiel_drucken"));
-		printButton.addActionListener(this);
 		printButton.setPreferredSize(new Dimension(24, 24));
 		printButton.setEnabled(false);
 		buttonPanel.add(printButton);
 
-		m_jbAufstellungUebernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString(
+		adoptLineupButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
 				"tt_Spiel_aufstellunguebernehmen"));
-		m_jbAufstellungUebernehmen.addActionListener(this);
-		m_jbAufstellungUebernehmen.setPreferredSize(new Dimension(24, 24));
-		m_jbAufstellungUebernehmen.setEnabled(false);
-		buttonPanel.add(m_jbAufstellungUebernehmen);
+		adoptLineupButton.setPreferredSize(new Dimension(24, 24));
+		adoptLineupButton.setEnabled(false);
+		buttonPanel.add(adoptLineupButton);
 
-		m_jbSimMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("Simulate"));
-		m_jbSimMatch.addActionListener(this);
-		m_jbSimMatch.setPreferredSize(new Dimension(24, 24));
-		m_jbSimMatch.setEnabled(false);
-		buttonPanel.add(m_jbSimMatch);
+		simulateMatchButton.setToolTipText(HOVerwaltung.instance().getLanguageString("Simulate"));
+		simulateMatchButton.setPreferredSize(new Dimension(24, 24));
+		simulateMatchButton.setEnabled(false);
+		buttonPanel.add(simulateMatchButton);
 
 		mainpanel.add(buttonPanel, BorderLayout.SOUTH);
 		return mainpanel;
@@ -616,20 +639,17 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 		panel.add(m_jcbSpieleFilter, BorderLayout.NORTH);
 
 		matchesTable = new MatchesTable(UserParameter.instance().spieleFilter);
-		matchesTable.addMouseListener(this);
-		matchesTable.addKeyListener(this);
-
-		final JScrollPane scrollpane = new JScrollPane(matchesTable);
+		JScrollPane scrollpane = new JScrollPane(matchesTable);
 
 		matchesOverviewTable = new MatchesOverviewTable(UserParameter.instance().spieleFilter);
-		final JScrollPane scrollpane1 = new JScrollPane(matchesOverviewTable);
+		JScrollPane scrollpane1 = new JScrollPane(matchesOverviewTable);
 
 		matchesOverviewCommonPanel = new MatchesOverviewCommonPanel(
 				UserParameter.instance().spieleFilter);
-		final JScrollPane scrollpane2 = new JScrollPane(matchesOverviewCommonPanel);
+		JScrollPane scrollpane2 = new JScrollPane(matchesOverviewCommonPanel);
 
 		matchesHighlightsTable = new MatchesHighlightsTable(UserParameter.instance().spieleFilter);
-		final JScrollPane scrollpane3 = new JScrollPane(matchesHighlightsTable);
+		JScrollPane scrollpane3 = new JScrollPane(matchesHighlightsTable);
 
 		JTabbedPane pane = new JTabbedPane();
 		HOVerwaltung hov = HOVerwaltung.instance();
@@ -713,19 +733,19 @@ public final class SpielePanel extends ImagePanel implements MouseListener, KeyL
 	private void refresh(MatchKurzInfo info) {
 		matchShortInfo = info;
 		deleteButton.setEnabled(true);
-		m_jbSimMatch.setEnabled(true);
+		simulateMatchButton.setEnabled(true);
 		if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-			m_jbReloadMatch.setEnabled(true);
+			reloadMatchButton.setEnabled(true);
 			final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 			if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
-				m_jbAufstellungUebernehmen.setEnabled(true);
+				adoptLineupButton.setEnabled(true);
 			} else {
-				m_jbAufstellungUebernehmen.setEnabled(false);
+				adoptLineupButton.setEnabled(false);
 			}
 			printButton.setEnabled(true);
 		} else {
-			m_jbReloadMatch.setEnabled(false);
-			m_jbAufstellungUebernehmen.setEnabled(false);
+			reloadMatchButton.setEnabled(false);
+			adoptLineupButton.setEnabled(false);
 			printButton.setEnabled(false);
 		}
 	}
