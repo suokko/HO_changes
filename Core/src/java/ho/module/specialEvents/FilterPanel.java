@@ -55,8 +55,7 @@ public class FilterPanel extends JPanel {
 	private JCheckBox longshotSECheckBox;
 	// player
 	private JComboBox playerComboBox;
-	private JCheckBox currentPlayersCheckBox;
-	private JCheckBox ownPlayersInvolvedCheckBox;
+	private JCheckBox currentOwnPlayersCheckBox;
 	private final Filter filter;
 
 	public FilterPanel(Filter filter) {
@@ -91,12 +90,11 @@ public class FilterPanel extends JPanel {
 		this.penaltySECheckBox.setSelected(this.filter.isShowPenalty());
 		this.longshotSECheckBox.setSelected(this.filter.isShowLongShot());
 
-		this.currentPlayersCheckBox.setSelected(this.filter.isShowCurrentPlayersOnly());
-		updatePlayerComboBoxData(this.filter.isShowCurrentPlayersOnly());
+		this.currentOwnPlayersCheckBox.setSelected(this.filter.isShowCurrentOwnPlayersOnly());
+		updatePlayerComboBoxData(this.filter.isShowCurrentOwnPlayersOnly());
 		if (this.filter.getPlayerId() != null) {
 			restoreComboBoxSelection(this.filter.getPlayerId(), this.playerComboBox);
 		}
-		this.ownPlayersInvolvedCheckBox.setSelected(this.filter.isShowOwnPlayersOnly());
 	}
 
 	private void initComponents() {
@@ -178,10 +176,8 @@ public class FilterPanel extends JPanel {
 					filter.setShowPenalty(selected);
 				} else if (source == longshotSECheckBox) {
 					filter.setShowLongShot(selected);
-				} else if (source == ownPlayersInvolvedCheckBox) {
-					filter.setShowOwnPlayersOnly(selected);
-				} else if (source == currentPlayersCheckBox) {
-					filter.setShowCurrentPlayersOnly(selected);
+				} else if (source == currentOwnPlayersCheckBox) {
+					filter.setShowCurrentOwnPlayersOnly(selected);
 					updatePlayerComboBoxData(selected);
 				}
 			}
@@ -201,8 +197,7 @@ public class FilterPanel extends JPanel {
 		this.freeKickIndirectSECheckBox.addItemListener(checkBoxListener);
 		this.penaltySECheckBox.addItemListener(checkBoxListener);
 		this.longshotSECheckBox.addItemListener(checkBoxListener);
-		this.ownPlayersInvolvedCheckBox.addItemListener(checkBoxListener);
-		this.currentPlayersCheckBox.addItemListener(checkBoxListener);
+		this.currentOwnPlayersCheckBox.addItemListener(checkBoxListener);
 
 		this.playerComboBox.addActionListener(new ActionListener() {
 
@@ -404,21 +399,16 @@ public class FilterPanel extends JPanel {
 		gbc.gridx = 1;
 		panel.add(this.playerComboBox, gbc);
 
-		this.currentPlayersCheckBox = new JCheckBox("current players");
-		this.currentPlayersCheckBox
-				.setText(getLangStr("specialEvents.filter.players.currentPlayers"));
+		this.currentOwnPlayersCheckBox = new JCheckBox("current players");
+		this.currentOwnPlayersCheckBox
+				.setText(getLangStr("specialEvents.filter.players.currentOwnPlayers"));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 2;
-		panel.add(this.currentPlayersCheckBox, gbc);
-
-		this.ownPlayersInvolvedCheckBox = new JCheckBox();
-		this.ownPlayersInvolvedCheckBox
-				.setText(getLangStr("specialEvents.filter.players.ownPlayers"));
-		gbc.gridy = 2;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
-		panel.add(this.ownPlayersInvolvedCheckBox, gbc);
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		panel.add(this.currentOwnPlayersCheckBox, gbc);
 
 		return panel;
 	}
@@ -465,6 +455,7 @@ public class FilterPanel extends JPanel {
 			}
 		}
 
+		playerItems.add(0, null);
 		this.playerComboBox.setModel(new DefaultComboBoxModel(playerItems.toArray()));
 
 		if (oldItem != null) {

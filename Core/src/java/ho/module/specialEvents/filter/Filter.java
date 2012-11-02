@@ -28,8 +28,8 @@ public class Filter {
 	private boolean showLongShot = true;
 	// player
 	private Integer playerId;
-	private boolean showCurrentPlayersOnly;
-	private boolean showOwnPlayersOnly;
+	private boolean showCurrentOwnPlayersOnly;
+	
 	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
 	
 	public Integer getTactic() {
@@ -224,24 +224,13 @@ public class Filter {
 		}
 	}
 
-	public boolean isShowCurrentPlayersOnly() {
-		return showCurrentPlayersOnly;
+	public boolean isShowCurrentOwnPlayersOnly() {
+		return showCurrentOwnPlayersOnly;
 	}
 
-	public void setShowCurrentPlayersOnly(boolean showCurrentPlayersOnly) {
-		if (this.showCurrentPlayersOnly != showCurrentPlayersOnly) {
-			this.showCurrentPlayersOnly = showCurrentPlayersOnly;
-			fireFilterChanged();
-		}
-	}
-
-	public boolean isShowOwnPlayersOnly() {
-		return showOwnPlayersOnly;
-	}
-
-	public void setShowOwnPlayersOnly(boolean showOwnPlayersOnly) {
-		if (this.showOwnPlayersOnly != showOwnPlayersOnly) {
-			this.showOwnPlayersOnly = showOwnPlayersOnly;
+	public void setShowCurrentOwnPlayersOnly(boolean showCurrentOwnPlayersOnly) {
+		if (this.showCurrentOwnPlayersOnly != showCurrentOwnPlayersOnly) {
+			this.showCurrentOwnPlayersOnly = showCurrentOwnPlayersOnly;
 			fireFilterChanged();
 		}
 	}

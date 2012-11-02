@@ -11,8 +11,8 @@ public class FilterHelper {
 		filter.setShowCounterAttack(ModuleConfig.instance().getBoolean(
 				"SpecialEvents_ShowCounterAttack", Boolean.TRUE));
 		filter.setShowCup(ModuleConfig.instance().getBoolean("SpecialEvents_ShowCup", Boolean.TRUE));
-		filter.setShowCurrentPlayersOnly(ModuleConfig.instance().getBoolean(
-				"SpecialEvents_ShowCurrentPlayersOnly", Boolean.FALSE));
+		filter.setShowCurrentOwnPlayersOnly(ModuleConfig.instance().getBoolean(
+				"SpecialEvents_ShowCurrentOwnPlayersOnly", Boolean.FALSE));
 		filter.setShowFreeKick(ModuleConfig.instance().getBoolean("SpecialEvents_ShowFreeKick",
 				Boolean.TRUE));
 		filter.setShowFreeKickIndirect(ModuleConfig.instance().getBoolean(
@@ -27,8 +27,6 @@ public class FilterHelper {
 				Boolean.TRUE));
 		filter.setShowMatchesWithSEOnly(ModuleConfig.instance().getBoolean(
 				"SpecialEvents_ShowMatchesWithSEOnly", Boolean.TRUE));
-		filter.setShowOwnPlayersOnly(ModuleConfig.instance().getBoolean(
-				"SpecialEvents_ShowOwnPlayersOnly", Boolean.FALSE));
 		filter.setShowPenalty(ModuleConfig.instance().getBoolean("SpecialEvents_ShowPenalty",
 				Boolean.TRUE));
 		filter.setShowRelegation(ModuleConfig.instance().getBoolean("SpecialEvents_ShowRelegation",
@@ -50,8 +48,8 @@ public class FilterHelper {
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowCounterAttack",
 				filter.isShowCounterAttack());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowCup", filter.isShowCup());
-		ModuleConfig.instance().setBoolean("SpecialEvents_ShowCurrentPlayersOnly",
-				filter.isShowCurrentPlayersOnly());
+		ModuleConfig.instance().setBoolean("SpecialEvents_ShowCurrentOwnPlayersOnly",
+				filter.isShowCurrentOwnPlayersOnly());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowFreeKick", filter.isShowFreeKick());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowFreeKickIndirect",
 				filter.isShowFreeKickIndirect());
@@ -62,8 +60,6 @@ public class FilterHelper {
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowMasters", filter.isShowMasters());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowMatchesWithSEOnly",
 				filter.isShowMatchesWithSEOnly());
-		ModuleConfig.instance().setBoolean("SpecialEvents_ShowOwnPlayersOnly",
-				filter.isShowOwnPlayersOnly());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowPenalty", filter.isShowPenalty());
 		ModuleConfig.instance().setBoolean("SpecialEvents_ShowRelegation",
 				filter.isShowRelegation());

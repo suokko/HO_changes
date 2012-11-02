@@ -264,35 +264,17 @@ public class SpecialEventsDM {
 			}
 		}
 
-		if (filter.isShowCurrentPlayersOnly()) {
-			List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
-			for (Spieler player : oldplayers) {
-				if (isInvolved(player.getSpielerID(), highlight)) {
-					// player is in "old" players -> do not show
-					return false;
-				}
-			}
-		}
-
-		if (filter.isShowOwnPlayersOnly()) {
+		if (filter.isShowCurrentOwnPlayersOnly()) {
 			List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
 			boolean playerFound = false;
 			for (Spieler player : players) {
 				if (isInvolved(player.getSpielerID(), highlight)) {
-					// player found in list of current players
+					// player found in list of current players					
 					playerFound = true;
+					break;
 				}
 			}
 
-			if (!playerFound && !filter.isShowCurrentPlayersOnly()) {
-				List<Spieler> oldplayers = HOVerwaltung.instance().getModel().getAllOldSpieler();
-				for (Spieler player : oldplayers) {
-					if (isInvolved(player.getSpielerID(), highlight)) {
-						// player found in list of old players
-						playerFound = true;
-					}
-				}
-			}
 			if (!playerFound) {
 				return false;
 			}
