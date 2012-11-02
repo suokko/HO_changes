@@ -1,149 +1,89 @@
 // %1280579671:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import ho.core.gui.RefreshManager;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-
 
 /**
  * TabbedPane mit Statistiken
  */
-public class StatistikMainPanel extends ImagePanel implements
-		javax.swing.event.ChangeListener, ho.core.gui.Refreshable {
+public class StatistikMainPanel extends ImagePanel {
 
 	private static final long serialVersionUID = -4248329201381491432L;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	private AlleSpielerStatistikPanel m_clAlleSpielerStatistikPanel = new AlleSpielerStatistikPanel();
-	private ArenaStatistikPanel m_clArenaStatistikPanel = new ArenaStatistikPanel();
-	private FinanzStatistikPanel m_clFinanzStatistikPanel = new FinanzStatistikPanel();
-	private JTabbedPane m_clTabbedPane;
-	private SpieleStatistikPanel m_clSpieleStatistikPanel = new SpieleStatistikPanel();
-	private SpielerStatistikPanel m_clSpielerStatistikPanel = new SpielerStatistikPanel();
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
+	private AlleSpielerStatistikPanel alleSpielerStatistikPanel;
+	private ArenaStatistikPanel arenaStatistikPanel;
+	private FinanzStatistikPanel finanzStatistikPanel;
+	private JTabbedPane tabbedPane;
+	private SpieleStatistikPanel spieleStatistikPanel;
+	private SpielerStatistikPanel spielerStatistikPanel;
+	private boolean initialized = false;
 
 	/**
 	 * Creates a new StatistikMainPanel object.
 	 */
 	public StatistikMainPanel() {
-		setLayout(new BorderLayout());
+		addHierarchyListener(new HierarchyListener() {
 
-		m_clTabbedPane = new JTabbedPane();
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+				}
+
+			}
+		});
+	}
+
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+
+	}
+
+	private void initComponents() {
+		setLayout(new BorderLayout());
+		tabbedPane = new JTabbedPane();
 
 		// Spielerstatistik
-		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
-				"Spieler"), m_clSpielerStatistikPanel);
-
-		// SpielerFinanzstatistik
-		// m_clTabbedPane.addTab (
-		// model.HOVerwaltung.instance().getLanguageString( "Spieler" ) +
-		// model.HOVerwaltung.instance().getLanguageString( "Finanzen" ), new
-		// SpielerFinanzenStatistikPanel() );
+		spielerStatistikPanel = new SpielerStatistikPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Spieler"),
+				spielerStatistikPanel);
 		// SpieleStatistik
-		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
-				"Spiele"), m_clSpieleStatistikPanel);
-
+		spieleStatistikPanel = new SpieleStatistikPanel();
+		tabbedPane
+				.addTab(HOVerwaltung.instance().getLanguageString("Spiele"), spieleStatistikPanel);
 		// DurchschnittlicheSpielerstatistik
-		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
-				"Verein"), m_clAlleSpielerStatistikPanel);
-
+		alleSpielerStatistikPanel = new AlleSpielerStatistikPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verein"),
+				alleSpielerStatistikPanel);
 		// Finanzstatistik
-		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
-				"Finanzen"), m_clFinanzStatistikPanel);
-
+		finanzStatistikPanel = new FinanzStatistikPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Finanzen"),
+				finanzStatistikPanel);
 		// Arenastatistik
-		m_clTabbedPane.addTab(HOVerwaltung.instance().getLanguageString(
-				"Stadion"), m_clArenaStatistikPanel);
-
-		add(m_clTabbedPane, java.awt.BorderLayout.CENTER);
-		m_clTabbedPane.addChangeListener(this);
-		RefreshManager.instance().registerRefreshable(this);
+		arenaStatistikPanel = new ArenaStatistikPanel();
+		tabbedPane
+				.addTab(HOVerwaltung.instance().getLanguageString("Stadion"), arenaStatistikPanel);
+		add(tabbedPane, java.awt.BorderLayout.CENTER);
 	}
 
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerid
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public final void setShowSpieler(int spielerid) {
-		m_clSpielerStatistikPanel.setAktuelleSpieler(spielerid);
-		m_clTabbedPane.setSelectedIndex(0);
+		spielerStatistikPanel.setAktuelleSpieler(spielerid);
+		tabbedPane.setSelectedIndex(0);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
-	public final void reInit() {
-		// Alle Panel auf veraltet setzen!
-		m_clSpielerStatistikPanel.setInitialisiert(false);
-		m_clSpieleStatistikPanel.setInitialisiert(false);
-		m_clAlleSpielerStatistikPanel.setInitialisiert(false);
-		m_clFinanzStatistikPanel.setInitialisiert(false);
-		m_clArenaStatistikPanel.setInitialisiert(false);
-
-		init();
-	}
-
-	/**
-	 * TODO Missing Method Documentation
-	 */
-	public void refresh() {
-	}
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param changeEvent
-	 *            TODO Missing Method Parameter Documentation
-	 */
-	public final void stateChanged(ChangeEvent changeEvent) {
-		init();
-	}
-
-	/**
-	 * TODO Missing Method Documentation
-	 */
-	private void init() {
-		// Initialisieren des aktuellen Panels, sonst nix
-		if (m_clTabbedPane.getSelectedComponent().equals(
-				m_clSpielerStatistikPanel)) {
-			if (!m_clSpielerStatistikPanel.isInitialisiert()) {
-				m_clSpielerStatistikPanel.doInitialisieren();
-			}
-		} else if (m_clTabbedPane.getSelectedComponent().equals(
-				m_clSpieleStatistikPanel)) {
-			if (!m_clSpieleStatistikPanel.isInitialisiert()) {
-				m_clSpieleStatistikPanel.doInitialisieren();
-			}
-		} else if (m_clTabbedPane.getSelectedComponent().equals(
-				m_clAlleSpielerStatistikPanel)) {
-			if (!m_clAlleSpielerStatistikPanel.isInitialisiert()) {
-				m_clAlleSpielerStatistikPanel.doInitialisieren();
-			}
-		} else if (m_clTabbedPane.getSelectedComponent().equals(
-				m_clFinanzStatistikPanel)) {
-			if (!m_clFinanzStatistikPanel.isInitialisiert()) {
-				m_clFinanzStatistikPanel.doInitialisieren();
-			}
-		} else if (m_clTabbedPane.getSelectedComponent().equals(
-				m_clArenaStatistikPanel)) {
-			if (!m_clArenaStatistikPanel.isInitialisiert()) {
-				m_clArenaStatistikPanel.doInitialisieren();
-			}
-		}
-	}
 }

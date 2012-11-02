@@ -30,6 +30,7 @@ public final class StatisticsModule extends DefaultModule {
 		return new StatistikMainPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0);
 	}

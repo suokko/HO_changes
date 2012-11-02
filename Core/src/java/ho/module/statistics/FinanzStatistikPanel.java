@@ -2,24 +2,31 @@
 package ho.module.statistics;
 
 import ho.core.db.DBManager;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -29,491 +36,515 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
-
 /**
  * Das StatistikPanel
  */
-public class FinanzStatistikPanel extends ImagePanel
-    implements ActionListener, FocusListener, ho.core.gui.Refreshable
-{
+public class FinanzStatistikPanel extends ImagePanel {
 	private static final long serialVersionUID = 5245162268414878290L;
 
-    //~ Static fields/initializers -----------------------------------------------------------------
+	private ImageCheckbox m_jchFans;
+	private ImageCheckbox m_jchGesamtausgaben;
+	private ImageCheckbox m_jchGesamteinnahmen;
+	private ImageCheckbox m_jchGewinnVerlust;
+	private ImageCheckbox m_jchJugend;
+	private ImageCheckbox m_jchKontostand;
+	private ImageCheckbox m_jchMarktwert;
+	private ImageCheckbox m_jchSonstigeAusgaben;
+	private ImageCheckbox m_jchSonstigeEinnahmen;
+	private ImageCheckbox m_jchSpielergehaelter;
+	private ImageCheckbox m_jchSponsoren;
+	private ImageCheckbox m_jchStadion;
+	private ImageCheckbox m_jchTrainerstab;
+	private ImageCheckbox m_jchZuschauer;
+	private JButton m_jbDrucken;
+	private JButton m_jbUbernehmen;
+	private JCheckBox m_jchBeschriftung;
+	private JCheckBox m_jchHilflinien;
+	private JTextField m_jtfAnzahlHRF;
+	private StatistikPanel m_clStatistikPanel;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
-	private Color cashColor 			= ThemeManager.getColor(HOColorName.STAT_CASH);
-    private Color winLostColor 			= ThemeManager.getColor(HOColorName.STAT_WINLOST);
-    private Color incomeSumColor 		= ThemeManager.getColor(HOColorName.STAT_INCOMESUM);
-    private Color costSumColor 			= ThemeManager.getColor(HOColorName.STAT_COSTSUM);
-    private Color incomeSpectatorsColor = ThemeManager.getColor(HOColorName.STAT_INCOMESPECTATORS);
-    private Color incomeSponsorsColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMESPONSORS);
-//    private Color incomeFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMEFINANCIAL);
-    private Color incomeTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_INCOMETEMPORARY);
-    private Color costArena 			= ThemeManager.getColor(HOColorName.STAT_COSTARENA);
-    private Color costsPlayersColor 	= ThemeManager.getColor(HOColorName.STAT_COSTSPLAYERS);
-//    private Color costFinancialColor 	= ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL);
-    private Color costTemporaryColor 	= ThemeManager.getColor(HOColorName.STAT_COSTTEMPORARY);
-    private Color costStaffColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSTAFF);
-    private Color costsYouthColor 		= ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH);
-    private Color fansColor 			= ThemeManager.getColor(HOColorName.STAT_FANS);
-    private Color marketValueColor 		= ThemeManager.getColor(HOColorName.STAT_MARKETVALUE);
+	/**
+	 * Creates a new FinanzStatistikPanel object.
+	 */
+	public FinanzStatistikPanel() {
+		addHierarchyListener(new HierarchyListener() {
 
-    //~ Instance fields ----------------------------------------------------------------------------
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						initStatistik();
+					}
+				}
+			}
+		});
+	}
 
-    private ImageCheckbox m_jchFans = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Fans"),
-    		fansColor, ho.core.model.UserParameter.instance().statistikFananzahl);
-    private ImageCheckbox m_jchGesamtausgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"),
-    		costSumColor,ho.core.model.UserParameter.instance().statistikGesamtAusgaben);
-    private ImageCheckbox m_jchGesamteinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"),
-    		incomeSumColor,ho.core.model.UserParameter.instance().statistikGesamtEinnahmen);
-    private ImageCheckbox m_jchGewinnVerlust = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("GewinnVerlust"),
-    		winLostColor,ho.core.model.UserParameter.instance().statistikGewinnVerlust);
-    private ImageCheckbox m_jchJugend = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Jugend"),
-    		costsYouthColor,ho.core.model.UserParameter.instance().statistikJugend);
-    private ImageCheckbox m_jchKontostand = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Kontostand"),
-    		cashColor,ho.core.model.UserParameter.instance().statistikKontostand);
-    private ImageCheckbox m_jchMarktwert = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("TotalTSI"),
-    		marketValueColor,ho.core.model.UserParameter.instance().statistikMarktwert);
-    private ImageCheckbox m_jchSonstigeAusgaben = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
-    		costTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeAusgaben);
-    private ImageCheckbox m_jchSonstigeEinnahmen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sonstiges"),
-    		incomeTemporaryColor,ho.core.model.UserParameter.instance().statistikSonstigeEinnahmen);
-    private ImageCheckbox m_jchSpielergehaelter = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Spielergehaelter"),
-    		costsPlayersColor,ho.core.model.UserParameter.instance().statistikSpielergehaelter);
-    private ImageCheckbox m_jchSponsoren = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Sponsoren"),
-    		incomeSponsorsColor,ho.core.model.UserParameter.instance().statistikSponsoren);
-    private ImageCheckbox m_jchStadion = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Stadion"),
-    		costArena,ho.core.model.UserParameter.instance().statistikStadion);
-    private ImageCheckbox m_jchTrainerstab = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Trainerstab"),
-    		costStaffColor,ho.core.model.UserParameter.instance().statistikTrainerstab);
-//    private ImageCheckbox m_jchZinsaufwendungen = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"),
-//    costFinancialColor,gui.UserParameter.instance().statistikZinsaufwendungen);
-//    private ImageCheckbox m_jchZinsertraege = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zinsertraege"),
-//    incomeFinancialColor,gui.UserParameter.instance().statistikZinsertraege);
-    private ImageCheckbox m_jchZuschauer = new ImageCheckbox(HOVerwaltung.instance().getLanguageString("Zuschauer"),
-    		incomeSpectatorsColor,ho.core.model.UserParameter.instance().statistikZuschauer);
-    private JButton m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
-    private JButton m_jbUbernehmen = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.apply"));
-    private JCheckBox m_jchBeschriftung = new JCheckBox(HOVerwaltung.instance().getLanguageString("Beschriftung"),
-    		ho.core.model.UserParameter.instance().statistikFinanzenBeschriftung);
-    private JCheckBox m_jchHilflinien = new JCheckBox(HOVerwaltung.instance().getLanguageString("Hilflinien"),
-    		ho.core.model.UserParameter.instance().statistikFinanzenHilfslinien);
-    private JTextField m_jtfAnzahlHRF = new JTextField(ho.core.model.UserParameter.instance().statistikFinanzenAnzahlHRF + "");
-    private StatistikPanel m_clStatistikPanel;
-    private boolean m_bInitialisiert;
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			initStatistik();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}		
+	}
 
-    //~ Constructors -------------------------------------------------------------------------------
+	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(new Refreshable() {
 
-    /**
-     * Creates a new FinanzStatistikPanel object.
-     */
-    public FinanzStatistikPanel() {
-        ho.core.gui.RefreshManager.instance().registerRefreshable(this);
+			@Override
+			public void refresh() {
+			}
 
-        initComponents();
+			@Override
+			public void reInit() {
+				if (isShowing()) {
+					initStatistik();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
 
-        //initStatistik();
-    }
+		ActionListener checkBoxActionListener = new ActionListener() {
 
-    public final void setInitialisiert(boolean init) {
-        m_bInitialisiert = init;
-    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == m_jchHilflinien) {
+					m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
+					UserParameter.instance().statistikFinanzenHilfslinien = m_jchHilflinien
+							.isSelected();
+				} else if (e.getSource() == m_jchBeschriftung) {
+					m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
+					UserParameter.instance().statistikFinanzenBeschriftung = m_jchBeschriftung
+							.isSelected();
+				} else if (e.getSource() == m_jchKontostand.getCheckbox()) {
+					m_clStatistikPanel.setShow("Kontostand", m_jchKontostand.isSelected());
+					UserParameter.instance().statistikKontostand = m_jchKontostand.isSelected();
+				} else if (e.getSource() == m_jchGewinnVerlust.getCheckbox()) {
+					m_clStatistikPanel.setShow("GewinnVerlust", m_jchGewinnVerlust.isSelected());
+					UserParameter.instance().statistikGewinnVerlust = m_jchGewinnVerlust
+							.isSelected();
+				} else if (e.getSource() == m_jchGesamteinnahmen.getCheckbox()) {
+					m_clStatistikPanel
+							.setShow("Gesamteinnahmen", m_jchGesamteinnahmen.isSelected());
+					UserParameter.instance().statistikGesamtEinnahmen = m_jchGesamteinnahmen
+							.isSelected();
+				} else if (e.getSource() == m_jchGesamtausgaben.getCheckbox()) {
+					m_clStatistikPanel.setShow("Gesamtausgaben", m_jchGesamtausgaben.isSelected());
+					UserParameter.instance().statistikGesamtAusgaben = m_jchGesamtausgaben
+							.isSelected();
+				} else if (e.getSource() == m_jchZuschauer.getCheckbox()) {
+					m_clStatistikPanel.setShow("Zuschauer", m_jchZuschauer.isSelected());
+					UserParameter.instance().statistikZuschauer = m_jchZuschauer.isSelected();
+				} else if (e.getSource() == m_jchSponsoren.getCheckbox()) {
+					m_clStatistikPanel.setShow("Sponsoren", m_jchSponsoren.isSelected());
+					UserParameter.instance().statistikSponsoren = m_jchSponsoren.isSelected();
+				} else if (e.getSource() == m_jchSonstigeEinnahmen.getCheckbox()) {
+					m_clStatistikPanel.setShow("SonstigeEinnahmen",
+							m_jchSonstigeEinnahmen.isSelected());
+					UserParameter.instance().statistikSonstigeEinnahmen = m_jchSonstigeEinnahmen
+							.isSelected();
+				} else if (e.getSource() == m_jchStadion.getCheckbox()) {
+					m_clStatistikPanel.setShow("Stadion", m_jchStadion.isSelected());
+					UserParameter.instance().statistikStadion = m_jchStadion.isSelected();
+				} else if (e.getSource() == m_jchSpielergehaelter.getCheckbox()) {
+					m_clStatistikPanel.setShow("Spielergehaelter",
+							m_jchSpielergehaelter.isSelected());
+					UserParameter.instance().statistikSpielergehaelter = m_jchSpielergehaelter
+							.isSelected();
+				} else if (e.getSource() == m_jchSonstigeAusgaben.getCheckbox()) {
+					m_clStatistikPanel.setShow("SonstigeAusgaben",
+							m_jchSonstigeAusgaben.isSelected());
+					UserParameter.instance().statistikSonstigeAusgaben = m_jchSonstigeAusgaben
+							.isSelected();
+				} else if (e.getSource() == m_jchTrainerstab.getCheckbox()) {
+					m_clStatistikPanel.setShow("Trainerstab", m_jchTrainerstab.isSelected());
+					UserParameter.instance().statistikTrainerstab = m_jchTrainerstab.isSelected();
+				} else if (e.getSource() == m_jchJugend.getCheckbox()) {
+					m_clStatistikPanel.setShow("Jugend", m_jchJugend.isSelected());
+					UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
+				} else if (e.getSource() == m_jchMarktwert.getCheckbox()) {
+					m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
+					UserParameter.instance().statistikMarktwert = m_jchMarktwert.isSelected();
+				} else if (e.getSource() == m_jchFans.getCheckbox()) {
+					m_clStatistikPanel.setShow("Fans", m_jchFans.isSelected());
+					UserParameter.instance().statistikFananzahl = m_jchFans.isSelected();
+				}
+			}
+		};
+		m_jchHilflinien.addActionListener(checkBoxActionListener);
+		m_jchBeschriftung.addActionListener(checkBoxActionListener);
+		m_jchKontostand.addActionListener(checkBoxActionListener);
+		m_jchGewinnVerlust.addActionListener(checkBoxActionListener);
+		m_jchGesamteinnahmen.addActionListener(checkBoxActionListener);
+		m_jchGesamtausgaben.addActionListener(checkBoxActionListener);
+		m_jchZuschauer.addActionListener(checkBoxActionListener);
+		m_jchSponsoren.addActionListener(checkBoxActionListener);
+		m_jchSonstigeEinnahmen.addActionListener(checkBoxActionListener);
+		m_jchStadion.addActionListener(checkBoxActionListener);
+		m_jchSpielergehaelter.addActionListener(checkBoxActionListener);
+		m_jchSonstigeAusgaben.addActionListener(checkBoxActionListener);
+		m_jchTrainerstab.addActionListener(checkBoxActionListener);
+		m_jchJugend.addActionListener(checkBoxActionListener);
+		m_jchMarktwert.addActionListener(checkBoxActionListener);
+		m_jchFans.addActionListener(checkBoxActionListener);
 
-    public final boolean isInitialisiert() {
-        return m_bInitialisiert;
-    }
+		m_jbDrucken.addActionListener(new ActionListener() {
 
-    //--------Listener-------------------------------
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(m_jbUbernehmen)) {
-            initStatistik();
-        } else if (actionEvent.getSource().equals(m_jbDrucken)) {
-            m_clStatistikPanel.doPrint(HOVerwaltung.instance().getLanguageString("Finanzen"));
-        } else if (actionEvent.getSource().equals(m_jchHilflinien)) {
-            m_clStatistikPanel.setHilfslinien(m_jchHilflinien.isSelected());
-            ho.core.model.UserParameter.instance().statistikFinanzenHilfslinien = m_jchHilflinien.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchBeschriftung)) {
-            m_clStatistikPanel.setBeschriftung(m_jchBeschriftung.isSelected());
-            ho.core.model.UserParameter.instance().statistikFinanzenBeschriftung = m_jchBeschriftung
-                                                                         .isSelected();
-        } else if (actionEvent.getSource().equals(m_jchKontostand.getCheckbox())) {
-            m_clStatistikPanel.setShow("Kontostand", m_jchKontostand.isSelected());
-            ho.core.model.UserParameter.instance().statistikKontostand = m_jchKontostand.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchGewinnVerlust.getCheckbox())) {
-            m_clStatistikPanel.setShow("GewinnVerlust", m_jchGewinnVerlust.isSelected());
-            ho.core.model.UserParameter.instance().statistikGewinnVerlust = m_jchGewinnVerlust.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchGesamteinnahmen.getCheckbox())) {
-            m_clStatistikPanel.setShow("Gesamteinnahmen", m_jchGesamteinnahmen.isSelected());
-            ho.core.model.UserParameter.instance().statistikGesamtEinnahmen = m_jchGesamteinnahmen.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchGesamtausgaben.getCheckbox())) {
-            m_clStatistikPanel.setShow("Gesamtausgaben", m_jchGesamtausgaben.isSelected());
-            ho.core.model.UserParameter.instance().statistikGesamtAusgaben = m_jchGesamtausgaben.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchZuschauer.getCheckbox())) {
-            m_clStatistikPanel.setShow("Zuschauer", m_jchZuschauer.isSelected());
-            ho.core.model.UserParameter.instance().statistikZuschauer = m_jchZuschauer.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchSponsoren.getCheckbox())) {
-            m_clStatistikPanel.setShow("Sponsoren", m_jchSponsoren.isSelected());
-            ho.core.model.UserParameter.instance().statistikSponsoren = m_jchSponsoren.isSelected();
-//        } else if (actionEvent.getSource().equals(m_jchZinsertraege.getCheckbox())) {
-//            m_clStatistikPanel.setShow("Zinsertraege", m_jchZinsertraege.isSelected());
-//            gui.UserParameter.instance().statistikZinsertraege = m_jchZinsertraege.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchSonstigeEinnahmen.getCheckbox())) {
-            m_clStatistikPanel.setShow("SonstigeEinnahmen", m_jchSonstigeEinnahmen.isSelected());
-            ho.core.model.UserParameter.instance().statistikSonstigeEinnahmen = m_jchSonstigeEinnahmen
-                                                                      .isSelected();
-        } else if (actionEvent.getSource().equals(m_jchStadion.getCheckbox())) {
-            m_clStatistikPanel.setShow("Stadion", m_jchStadion.isSelected());
-            ho.core.model.UserParameter.instance().statistikStadion = m_jchStadion.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchSpielergehaelter.getCheckbox())) {
-            m_clStatistikPanel.setShow("Spielergehaelter", m_jchSpielergehaelter.isSelected());
-            ho.core.model.UserParameter.instance().statistikSpielergehaelter = m_jchSpielergehaelter
-                                                                     .isSelected();
-//        } else if (actionEvent.getSource().equals(m_jchZinsaufwendungen.getCheckbox())) {
-//            m_clStatistikPanel.setShow("Zinsaufwendungen", m_jchZinsaufwendungen.isSelected());
-//            gui.UserParameter.instance().statistikZinsaufwendungen = m_jchZinsaufwendungen
-//                                                                     .isSelected();
-        } else if (actionEvent.getSource().equals(m_jchSonstigeAusgaben.getCheckbox())) {
-            m_clStatistikPanel.setShow("SonstigeAusgaben", m_jchSonstigeAusgaben.isSelected());
-            ho.core.model.UserParameter.instance().statistikSonstigeAusgaben = m_jchSonstigeAusgaben
-                                                                     .isSelected();
-        } else if (actionEvent.getSource().equals(m_jchTrainerstab.getCheckbox())) {
-            m_clStatistikPanel.setShow("Trainerstab", m_jchTrainerstab.isSelected());
-            ho.core.model.UserParameter.instance().statistikTrainerstab = m_jchTrainerstab.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchJugend.getCheckbox())) {
-            m_clStatistikPanel.setShow("Jugend", m_jchJugend.isSelected());
-            ho.core.model.UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchMarktwert.getCheckbox())) {
-            m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
-            ho.core.model.UserParameter.instance().statistikMarktwert = m_jchMarktwert.isSelected();
-        } else if (actionEvent.getSource().equals(m_jchFans.getCheckbox())) {
-            m_clStatistikPanel.setShow("Fans", m_jchFans.isSelected());
-            ho.core.model.UserParameter.instance().statistikFananzahl = m_jchFans.isSelected();
-        }
-    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				m_clStatistikPanel.doPrint(getLangStr("Finanzen"));
+			}
+		});
 
+		m_jbUbernehmen.addActionListener(new ActionListener() {
 
-    public final void doInitialisieren() {
-        initStatistik();
-        m_bInitialisiert = true;
-    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				initStatistik();
+			}
+		});
 
-    public void focusGained(java.awt.event.FocusEvent focusEvent) {
-    }
+		m_jtfAnzahlHRF.addFocusListener(new FocusAdapter() {
+			@Override
+			public final void focusLost(java.awt.event.FocusEvent focusEvent) {
+				Helper.parseInt(HOMainFrame.instance(), m_jtfAnzahlHRF, false);
+			}
+		});
+	}
 
+	private void initComponents() {
+		JLabel label;
 
-    public final void focusLost(java.awt.event.FocusEvent focusEvent) {
-        Helper.parseInt(HOMainFrame.instance(),((JTextField) focusEvent.getSource()), false);
-    }
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
+		constraints.insets = new Insets(2, 0, 2, 0);
 
-    //-------Refresh---------------------------------
-    public final void reInit() {
-        m_bInitialisiert = false;
+		setLayout(layout);
 
-        //initStatistik();
-    }
+		JPanel panel2 = new ImagePanel();
+		GridBagLayout layout2 = new GridBagLayout();
+		GridBagConstraints constraints2 = new GridBagConstraints();
+		constraints2.fill = GridBagConstraints.HORIZONTAL;
+		constraints2.weightx = 0.0;
+		constraints2.weighty = 0.0;
+		constraints2.insets = new Insets(2, 2, 2, 2);
 
+		panel2.setLayout(layout2);
 
-    public void refresh() {
-    }
+		constraints2.gridx = 0;
+		constraints2.gridy = 0;
+		constraints2.gridwidth = 2;
+		constraints2.fill = GridBagConstraints.NONE;
+		constraints2.anchor = GridBagConstraints.WEST;
+		m_jbDrucken = new JButton(ThemeManager.getIcon(HOIconName.PRINTER));
+		m_jbDrucken.setToolTipText(getLangStr("tt_Statistik_drucken"));
+		m_jbDrucken.setPreferredSize(new Dimension(25, 25));
+		layout2.setConstraints(m_jbDrucken, constraints2);
+		panel2.add(m_jbDrucken);
 
+		label = new JLabel(getLangStr("Wochen"));
+		constraints2.fill = GridBagConstraints.HORIZONTAL;
+		constraints2.anchor = GridBagConstraints.WEST;
+		constraints2.gridx = 0;
+		constraints2.gridy = 1;
+		constraints2.gridwidth = 1;
+		layout2.setConstraints(label, constraints2);
+		panel2.add(label);
+		m_jtfAnzahlHRF = new JTextField(
+				String.valueOf(UserParameter.instance().statistikFinanzenAnzahlHRF));
+		m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
+		constraints2.gridx = 1;
+		constraints2.gridy = 1;
+		layout2.setConstraints(m_jtfAnzahlHRF, constraints2);
+		panel2.add(m_jtfAnzahlHRF);
 
-    private void initComponents() {
-        JLabel label;
+		constraints2.gridx = 0;
+		constraints2.gridy = 4;
+		constraints2.gridwidth = 2;
+		m_jbUbernehmen = new JButton(getLangStr("ls.button.apply"));
+		m_jbUbernehmen.setToolTipText(getLangStr("tt_Statistik_HRFAnzahluebernehmen"));
+		layout2.setConstraints(m_jbUbernehmen, constraints2);
+		panel2.add(m_jbUbernehmen);
 
-        final GridBagLayout layout = new GridBagLayout();
-        final GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.0;
-        constraints.weighty = 0.0;
-        constraints.insets = new Insets(2, 0, 2, 0);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 5;
+		m_jchHilflinien = new JCheckBox(getLangStr("Hilflinien"),
+				UserParameter.instance().statistikFinanzenHilfslinien);
+		m_jchHilflinien.setOpaque(false);
+		layout2.setConstraints(m_jchHilflinien, constraints2);
+		panel2.add(m_jchHilflinien);
 
-        setLayout(layout);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 6;
+		m_jchBeschriftung = new JCheckBox(getLangStr("Beschriftung"),
+				UserParameter.instance().statistikFinanzenBeschriftung);
+		m_jchBeschriftung.setOpaque(false);
+		layout2.setConstraints(m_jchBeschriftung, constraints2);
+		panel2.add(m_jchBeschriftung);
 
-        final JPanel panel2 = new ImagePanel();
-        final GridBagLayout layout2 = new GridBagLayout();
-        final GridBagConstraints constraints2 = new GridBagConstraints();
-        constraints2.fill = GridBagConstraints.HORIZONTAL;
-        constraints2.weightx = 0.0;
-        constraints2.weighty = 0.0;
-        constraints2.insets = new Insets(2, 2, 2, 2);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 5;
+		m_jchKontostand = new ImageCheckbox(getLangStr("Kontostand"),
+				ThemeManager.getColor(HOColorName.STAT_CASH),
+				UserParameter.instance().statistikKontostand);
+		m_jchKontostand.setOpaque(false);
+		layout2.setConstraints(m_jchKontostand, constraints2);
+		panel2.add(m_jchKontostand);
 
-        panel2.setLayout(layout2);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 6;
+		m_jchGewinnVerlust = new ImageCheckbox(getLangStr("GewinnVerlust"),
+				ThemeManager.getColor(HOColorName.STAT_WINLOST),
+				UserParameter.instance().statistikGewinnVerlust);
+		m_jchGewinnVerlust.setOpaque(false);
+		layout2.setConstraints(m_jchGewinnVerlust, constraints2);
+		panel2.add(m_jchGewinnVerlust);
 
-        constraints2.gridx = 0;
-        constraints2.gridy = 0;
-        constraints2.gridwidth = 2;
-        constraints2.fill = GridBagConstraints.NONE;
-        constraints2.anchor = GridBagConstraints.WEST;
-        m_jbDrucken.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString("tt_Statistik_drucken"));
-        m_jbDrucken.setPreferredSize(new Dimension(25, 25));
-        m_jbDrucken.addActionListener(this);
-        layout2.setConstraints(m_jbDrucken, constraints2);
-        panel2.add(m_jbDrucken);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 7;
+		m_jchGesamteinnahmen = new ImageCheckbox(getLangStr("Gesamteinnahmen"),
+				ThemeManager.getColor(HOColorName.STAT_INCOMESUM),
+				UserParameter.instance().statistikGesamtEinnahmen);
+		m_jchGesamteinnahmen.setOpaque(false);
+		layout2.setConstraints(m_jchGesamteinnahmen, constraints2);
+		panel2.add(m_jchGesamteinnahmen);
 
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Wochen"));
-        constraints2.fill = GridBagConstraints.HORIZONTAL;
-        constraints2.anchor = GridBagConstraints.WEST;
-        constraints2.gridx = 0;
-        constraints2.gridy = 1;
-        constraints2.gridwidth = 1;
-        layout2.setConstraints(label, constraints2);
-        panel2.add(label);
-        m_jtfAnzahlHRF.setHorizontalAlignment(SwingConstants.RIGHT);
-        m_jtfAnzahlHRF.addFocusListener(this);
-        constraints2.gridx = 1;
-        constraints2.gridy = 1;
-        layout2.setConstraints(m_jtfAnzahlHRF, constraints2);
-        panel2.add(m_jtfAnzahlHRF);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 7;
+		m_jchGesamtausgaben = new ImageCheckbox(getLangStr("Gesamtausgaben"),
+				ThemeManager.getColor(HOColorName.STAT_COSTSUM),
+				UserParameter.instance().statistikGesamtAusgaben);
+		m_jchGesamtausgaben.setOpaque(false);
+		layout2.setConstraints(m_jchGesamtausgaben, constraints2);
+		panel2.add(m_jchGesamtausgaben);
 
-        constraints2.gridx = 0;
-        constraints2.gridy = 4;
-        constraints2.gridwidth = 2;
-        m_jbUbernehmen.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Statistik_HRFAnzahluebernehmen"));
-        layout2.setConstraints(m_jbUbernehmen, constraints2);
-        m_jbUbernehmen.addActionListener(this);
-        panel2.add(m_jbUbernehmen);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 8;
+		m_jchZuschauer = new ImageCheckbox(getLangStr("Zuschauer"),
+				ThemeManager.getColor(HOColorName.STAT_INCOMESPECTATORS),
+				UserParameter.instance().statistikZuschauer);
+		m_jchZuschauer.setOpaque(false);
+		layout2.setConstraints(m_jchZuschauer, constraints2);
+		panel2.add(m_jchZuschauer);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 5;
-        m_jchHilflinien.setOpaque(false);
-        m_jchHilflinien.addActionListener(this);
-        layout2.setConstraints(m_jchHilflinien, constraints2);
-        panel2.add(m_jchHilflinien);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 9;
+		m_jchSponsoren = new ImageCheckbox(getLangStr("Sponsoren"),
+				ThemeManager.getColor(HOColorName.STAT_INCOMESPONSORS),
+				UserParameter.instance().statistikSponsoren);
+		m_jchStadion = new ImageCheckbox(getLangStr("Stadion"),
+				ThemeManager.getColor(HOColorName.STAT_COSTARENA),
+				UserParameter.instance().statistikStadion);
+		m_jchSponsoren.setOpaque(false);
+		layout2.setConstraints(m_jchSponsoren, constraints2);
+		panel2.add(m_jchSponsoren);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 6;
-        m_jchBeschriftung.setOpaque(false);
-        m_jchBeschriftung.addActionListener(this);
-        layout2.setConstraints(m_jchBeschriftung, constraints2);
-        panel2.add(m_jchBeschriftung);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 10;
+		m_jchSonstigeEinnahmen = new ImageCheckbox(getLangStr("Sonstiges"),
+				ThemeManager.getColor(HOColorName.STAT_INCOMETEMPORARY),
+				UserParameter.instance().statistikSonstigeEinnahmen);
+		m_jchSonstigeEinnahmen.setOpaque(false);
+		layout2.setConstraints(m_jchSonstigeEinnahmen, constraints2);
+		panel2.add(m_jchSonstigeEinnahmen);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 5;
-        m_jchKontostand.setOpaque(false);
-        m_jchKontostand.addActionListener(this);
-        layout2.setConstraints(m_jchKontostand, constraints2);
-        panel2.add(m_jchKontostand);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 8;
+		m_jchStadion.setOpaque(false);
+		layout2.setConstraints(m_jchStadion, constraints2);
+		panel2.add(m_jchStadion);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 6;
-        m_jchGewinnVerlust.setOpaque(false);
-        m_jchGewinnVerlust.addActionListener(this);
-        layout2.setConstraints(m_jchGewinnVerlust, constraints2);
-        panel2.add(m_jchGewinnVerlust);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 9;
+		m_jchSpielergehaelter = new ImageCheckbox(getLangStr("Spielergehaelter"),
+				ThemeManager.getColor(HOColorName.STAT_COSTSPLAYERS),
+				UserParameter.instance().statistikSpielergehaelter);
+		m_jchSpielergehaelter.setOpaque(false);
+		layout2.setConstraints(m_jchSpielergehaelter, constraints2);
+		panel2.add(m_jchSpielergehaelter);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 7;
-        m_jchGesamteinnahmen.setOpaque(false);
-        m_jchGesamteinnahmen.addActionListener(this);
-        layout2.setConstraints(m_jchGesamteinnahmen, constraints2);
-        panel2.add(m_jchGesamteinnahmen);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 10;
+		m_jchSonstigeAusgaben = new ImageCheckbox(getLangStr("Sonstiges"),
+				ThemeManager.getColor(HOColorName.STAT_COSTTEMPORARY),
+				UserParameter.instance().statistikSonstigeAusgaben);
+		m_jchSonstigeAusgaben.setOpaque(false);
+		layout2.setConstraints(m_jchSonstigeAusgaben, constraints2);
+		panel2.add(m_jchSonstigeAusgaben);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 7;
-        m_jchGesamtausgaben.setOpaque(false);
-        m_jchGesamtausgaben.addActionListener(this);
-        layout2.setConstraints(m_jchGesamtausgaben, constraints2);
-        panel2.add(m_jchGesamtausgaben);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 12;
+		m_jchTrainerstab = new ImageCheckbox(getLangStr("Trainerstab"),
+				ThemeManager.getColor(HOColorName.STAT_COSTSTAFF),
+				UserParameter.instance().statistikTrainerstab);
+		m_jchTrainerstab.setOpaque(false);
+		layout2.setConstraints(m_jchTrainerstab, constraints2);
+		panel2.add(m_jchTrainerstab);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 8;
-        m_jchZuschauer.setOpaque(false);
-        m_jchZuschauer.addActionListener(this);
-        layout2.setConstraints(m_jchZuschauer, constraints2);
-        panel2.add(m_jchZuschauer);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 13;
+		m_jchJugend = new ImageCheckbox(getLangStr("Jugend"),
+				ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH),
+				UserParameter.instance().statistikJugend);
+		m_jchJugend.setOpaque(false);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 9;
-        m_jchSponsoren.setOpaque(false);
-        m_jchSponsoren.addActionListener(this);
-        layout2.setConstraints(m_jchSponsoren, constraints2);
-        panel2.add(m_jchSponsoren);
+		layout2.setConstraints(m_jchJugend, constraints2);
+		panel2.add(m_jchJugend);
 
-//        constraints2.gridwidth = 1;
-//        constraints2.gridx = 0;
-//        constraints2.gridy = 10;
-//        m_jchZinsertraege.setOpaque(false);
-//        m_jchZinsertraege.addActionListener(this);
-//        layout2.setConstraints(m_jchZinsertraege, constraints2);
-//        panel2.add(m_jchZinsertraege);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 12;
+		m_jchMarktwert = new ImageCheckbox(getLangStr("TotalTSI"),
+				ThemeManager.getColor(HOColorName.STAT_MARKETVALUE),
+				UserParameter.instance().statistikMarktwert);
+		m_jchMarktwert.setOpaque(false);
+		layout2.setConstraints(m_jchMarktwert, constraints2);
+		panel2.add(m_jchMarktwert);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 10;
-        m_jchSonstigeEinnahmen.setOpaque(false);
-        m_jchSonstigeEinnahmen.addActionListener(this);
-        layout2.setConstraints(m_jchSonstigeEinnahmen, constraints2);
-        panel2.add(m_jchSonstigeEinnahmen);
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 0;
+		constraints2.gridy = 13;
+		m_jchFans = new ImageCheckbox(getLangStr("Fans"),
+				ThemeManager.getColor(HOColorName.STAT_FANS),
+				UserParameter.instance().statistikFananzahl);
+		m_jchFans.setOpaque(false);
+		layout2.setConstraints(m_jchFans, constraints2);
+		panel2.add(m_jchFans);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 8;
-        m_jchStadion.setOpaque(false);
-        m_jchStadion.addActionListener(this);
-        layout2.setConstraints(m_jchStadion, constraints2);
-        panel2.add(m_jchStadion);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.gridwidth = 1;
+		constraints.weightx = 0.01;
+		constraints.weighty = 0.001;
+		constraints.anchor = GridBagConstraints.NORTH;
+		layout.setConstraints(panel2, constraints);
+		add(panel2);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 9;
-        m_jchSpielergehaelter.setOpaque(false);
-        m_jchSpielergehaelter.addActionListener(this);
-        layout2.setConstraints(m_jchSpielergehaelter, constraints2);
-        panel2.add(m_jchSpielergehaelter);
+		// Table
+		JPanel panel = new ImagePanel();
+		panel.setLayout(new BorderLayout());
 
-//        constraints2.gridwidth = 1;
-//        constraints2.gridx = 1;
-//        constraints2.gridy = 10;
-//        m_jchZinsaufwendungen.setOpaque(false);
-//        m_jchZinsaufwendungen.addActionListener(this);
-//        layout2.setConstraints(m_jchZinsaufwendungen, constraints2);
-//        panel2.add(m_jchZinsaufwendungen);
+		m_clStatistikPanel = new StatistikPanel(true);
+		panel.add(m_clStatistikPanel);
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 10;
-        m_jchSonstigeAusgaben.setOpaque(false);
-        m_jchSonstigeAusgaben.addActionListener(this);
-        layout2.setConstraints(m_jchSonstigeAusgaben, constraints2);
-        panel2.add(m_jchSonstigeAusgaben);
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.gridwidth = 1;
+		constraints.weighty = 1.0;
+		constraints.weightx = 1.0;
+		constraints.anchor = GridBagConstraints.NORTH;
+		panel.setBorder(BorderFactory.createLineBorder(ThemeManager
+				.getColor(HOColorName.PANEL_BORDER)));
+		layout.setConstraints(panel, constraints);
+		add(panel);
+	}
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 12;
-        m_jchTrainerstab.setOpaque(false);
-        m_jchTrainerstab.addActionListener(this);
-        layout2.setConstraints(m_jchTrainerstab, constraints2);
-        panel2.add(m_jchTrainerstab);
+	private void initStatistik() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
+			if (anzahlHRF <= 0) {
+				anzahlHRF = 1;
+			}
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 1;
-        constraints2.gridy = 13;
-        m_jchJugend.setOpaque(false);
-        m_jchJugend.addActionListener(this);
-        layout2.setConstraints(m_jchJugend, constraints2);
-        panel2.add(m_jchJugend);
+			UserParameter.instance().statistikFinanzenAnzahlHRF = anzahlHRF;
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 12;
-        m_jchMarktwert.setOpaque(false);
-        m_jchMarktwert.addActionListener(this);
-        layout2.setConstraints(m_jchMarktwert, constraints2);
-        panel2.add(m_jchMarktwert);
+			NumberFormat format = NumberFormat.getCurrencyInstance();
+			NumberFormat format2 = NumberFormat.getInstance();
 
-        constraints2.gridwidth = 1;
-        constraints2.gridx = 0;
-        constraints2.gridy = 13;
-        m_jchFans.setOpaque(false);
-        m_jchFans.addActionListener(this);
-        layout2.setConstraints(m_jchFans, constraints2);
-        panel2.add(m_jchFans);
+			double[][] statistikWerte = DBManager.instance().getFinanzen4Statistik(anzahlHRF);
+			StatistikModel[] models = null;
+			models = new StatistikModel[14];
 
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        constraints.weightx = 0.01;
-        constraints.weighty = 0.001;
-        constraints.anchor = GridBagConstraints.NORTH;
-        layout.setConstraints(panel2, constraints);
-        add(panel2);
+			if (statistikWerte.length > 0) {
+				models[0] = new StatistikModel(statistikWerte[0], "Kontostand",
+						m_jchKontostand.isSelected(), ThemeManager.getColor(HOColorName.STAT_CASH),
+						format);
+				models[1] = new StatistikModel(statistikWerte[1], "GewinnVerlust",
+						m_jchGewinnVerlust.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_WINLOST), format);
+				models[2] = new StatistikModel(statistikWerte[2], "Gesamteinnahmen",
+						m_jchGesamteinnahmen.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_INCOMESUM), format);
+				models[3] = new StatistikModel(statistikWerte[3], "Gesamtausgaben",
+						m_jchGesamtausgaben.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTSUM), format);
+				models[4] = new StatistikModel(statistikWerte[4], "Zuschauer",
+						m_jchZuschauer.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_INCOMESPECTATORS), format);
+				models[5] = new StatistikModel(statistikWerte[5], "Sponsoren",
+						m_jchSponsoren.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_INCOMESPONSORS), format);
+				models[6] = new StatistikModel(statistikWerte[7], "SonstigeEinnahmen",
+						m_jchSonstigeEinnahmen.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_INCOMETEMPORARY), format);
+				models[7] = new StatistikModel(statistikWerte[8], "Stadion",
+						m_jchStadion.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTARENA), format);
+				models[8] = new StatistikModel(statistikWerte[9], "Spielergehaelter",
+						m_jchSpielergehaelter.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTSPLAYERS), format);
+				models[9] = new StatistikModel(statistikWerte[11], "SonstigeAusgaben",
+						m_jchSonstigeAusgaben.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTTEMPORARY), format);
+				models[10] = new StatistikModel(statistikWerte[12], "Trainerstab",
+						m_jchTrainerstab.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTSTAFF), format);
+				models[11] = new StatistikModel(statistikWerte[13], "Jugend",
+						m_jchJugend.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH), format);
+				models[12] = new StatistikModel(statistikWerte[14], "Fans", m_jchFans.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_FANS), format2, 100);
+				models[13] = new StatistikModel(statistikWerte[15], "Marktwert",
+						m_jchMarktwert.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_MARKETVALUE), format2, 10);
+			}
 
-        //Table
-        final JPanel panel = new ImagePanel();
-        panel.setLayout(new BorderLayout());
+			String[] yBezeichnungen = ho.core.util.Helper
+					.convertTimeMillisToFormatString(statistikWerte[16]);
 
-        m_clStatistikPanel = new StatistikPanel(true);
-        panel.add(m_clStatistikPanel);
+			m_clStatistikPanel.setAllValues(models, yBezeichnungen, format, HOVerwaltung.instance()
+					.getLanguageString("Wochen"), "", m_jchBeschriftung.isSelected(),
+					m_jchHilflinien.isSelected());
 
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        constraints.weighty = 1.0;
-        constraints.weightx = 1.0;
-        constraints.anchor = GridBagConstraints.NORTH;
-        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getColor(HOColorName.PANEL_BORDER)));
-        layout.setConstraints(panel, constraints);
-        add(panel);
-    }
+			this.needsRefresh = false;
+		} catch (Exception e) {
+			HOLogger.instance().log(getClass(), e);
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
 
-    private void initStatistik() {
-        try {
-            int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
-
-            if (anzahlHRF <= 0) {
-                anzahlHRF = 1;
-            }
-
-            ho.core.model.UserParameter.instance().statistikFinanzenAnzahlHRF = anzahlHRF;
-
-            final java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance();
-            final java.text.NumberFormat format2 = java.text.NumberFormat.getInstance();
-
-            final double[][] statistikWerte = DBManager.instance().getFinanzen4Statistik(anzahlHRF);
-            StatistikModel[] models = null;
-            models = new StatistikModel[14];
-
-            if (statistikWerte.length > 0) {
-                models[0] = new StatistikModel(statistikWerte[0], "Kontostand",
-                                               m_jchKontostand.isSelected(), cashColor, format);
-                models[1] = new StatistikModel(statistikWerte[1], "GewinnVerlust",
-                                               m_jchGewinnVerlust.isSelected(), winLostColor,
-                                               format);
-                models[2] = new StatistikModel(statistikWerte[2], "Gesamteinnahmen",
-                                               m_jchGesamteinnahmen.isSelected(), incomeSumColor,
-                                               format);
-                models[3] = new StatistikModel(statistikWerte[3], "Gesamtausgaben",
-                                               m_jchGesamtausgaben.isSelected(), costSumColor,
-                                               format);
-                models[4] = new StatistikModel(statistikWerte[4], "Zuschauer",
-                                               m_jchZuschauer.isSelected(), incomeSpectatorsColor, format);
-                models[5] = new StatistikModel(statistikWerte[5], "Sponsoren",
-                                               m_jchSponsoren.isSelected(), incomeSponsorsColor, format);
-//                models[6] = new StatistikModel(statistikWerte[6], "Zinsertraege",
-//                                               m_jchZinsertraege.isSelected(), incomeFinancialColor, format);
-                models[6] = new StatistikModel(statistikWerte[7], "SonstigeEinnahmen",
-                                               m_jchSonstigeEinnahmen.isSelected(),
-                                               incomeTemporaryColor, format);
-                models[7] = new StatistikModel(statistikWerte[8], "Stadion",
-                                               m_jchStadion.isSelected(), costArena, format);
-                models[8] = new StatistikModel(statistikWerte[9], "Spielergehaelter",
-                                               m_jchSpielergehaelter.isSelected(),
-                                               costsPlayersColor, format);
-//                models[10] = new StatistikModel(statistikWerte[10], "Zinsaufwendungen",
-//                                                m_jchZinsaufwendungen.isSelected(),
-//                                                costFinancialColor, format);
-                models[9] = new StatistikModel(statistikWerte[11], "SonstigeAusgaben",
-                                                m_jchSonstigeAusgaben.isSelected(),
-                                                costTemporaryColor, format);
-                models[10] = new StatistikModel(statistikWerte[12], "Trainerstab",
-                                                m_jchTrainerstab.isSelected(), costStaffColor, format);
-                models[11] = new StatistikModel(statistikWerte[13], "Jugend",
-                                                m_jchJugend.isSelected(), costsYouthColor, format);
-                models[12] = new StatistikModel(statistikWerte[14], "Fans", m_jchFans.isSelected(),
-                                                fansColor, format2, 100);
-                models[13] = new StatistikModel(statistikWerte[15], "Marktwert",
-                                                m_jchMarktwert.isSelected(), marketValueColor, format2, 10);
-            }
-
-            final String[] yBezeichnungen = ho.core.util.Helper
-                                            .convertTimeMillisToFormatString(statistikWerte[16]);
-
-            m_clStatistikPanel.setAllValues(models, yBezeichnungen, format,
-                                            HOVerwaltung.instance().getLanguageString("Wochen"),
-                                            "", m_jchBeschriftung.isSelected(),
-                                            m_jchHilflinien.isSelected());
-        } catch (Exception e) {
-            HOLogger.instance().log(getClass(),"FinanzStatisikPanel.initStatistik : " + e);
-        }
-    }
+	private String getLangStr(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
+	}
 }

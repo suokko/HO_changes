@@ -2,6 +2,9 @@
 package ho.module.statistics;
 
 import ho.core.datatype.CBItem;
+import ho.core.gui.CursorToolkit;
+import ho.core.gui.RefreshManager;
+import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -10,209 +13,126 @@ import ho.module.matches.SpielePanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
-public class ArenaStatistikPanel extends ImagePanel implements MouseListener, KeyListener, ItemListener {
+public class ArenaStatistikPanel extends ImagePanel {
 	private static final long serialVersionUID = 2679088584924124183L;
+	private ArenaStatistikTable arenaStatistikTable;
+	private JComboBox matchFilterComboBox;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
-    //~ Instance fields ----------------------------------------------------------------------------
-
-	final private ArenaStatistikTable m_jtArenaStatistikTable;
-	final private JComboBox m_jcbSpieleFilter;
-	final private CBItem[] SPIELEFILTER = {
-    		new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"), SpielePanel.NUR_EIGENE_SPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"), SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"), SpielePanel.NUR_EIGENE_POKALSPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"), SpielePanel.NUR_EIGENE_LIGASPIELE),
-			new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneFreundschaftsspiele"), SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE)
-    };
-	private boolean m_bInitialisiert;
-
-    // ~ Constructors
-	// -------------------------------------------------------------------------------
-
-    /**
+	/**
 	 * Creates a new ArenaStatistikPanel object.
 	 */
-    public ArenaStatistikPanel() {
-        setLayout(new BorderLayout());
+	public ArenaStatistikPanel() {
+		addHierarchyListener(new HierarchyListener() {
 
-        final ImagePanel panel = new ImagePanel(null);
-        m_jcbSpieleFilter = new JComboBox(SPIELEFILTER);
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						update();
+					}
+				}
+			}
+		});
+	}
 
-        m_jcbSpieleFilter.addItemListener(this);
-        m_jcbSpieleFilter.setFont(m_jcbSpieleFilter.getFont().deriveFont(Font.BOLD));
-        m_jcbSpieleFilter.setSize(200, 25);
-        m_jcbSpieleFilter.setLocation(10, 5);
-        panel.setPreferredSize(new Dimension(240, 35));
-        panel.add(m_jcbSpieleFilter);
-        add(panel, BorderLayout.NORTH);
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
 
-        m_jtArenaStatistikTable = new ArenaStatistikTable(UserParameter.instance().spieleFilter);
-        m_jtArenaStatistikTable.addMouseListener(this);
-        m_jtArenaStatistikTable.addKeyListener(this);
+	private void initComponents() {
+		setLayout(new BorderLayout());
+		ImagePanel panel = new ImagePanel(null);
 
-        final JScrollPane scrollpane = new JScrollPane(m_jtArenaStatistikTable);
+		matchFilterComboBox = new JComboBox(getMatchFilterItems());
+		matchFilterComboBox.setFont(matchFilterComboBox.getFont().deriveFont(Font.BOLD));
+		matchFilterComboBox.setSize(200, 25);
+		matchFilterComboBox.setLocation(10, 5);
+		panel.setPreferredSize(new Dimension(240, 35));
+		panel.add(matchFilterComboBox);
+		add(panel, BorderLayout.NORTH);
 
-        add(scrollpane, BorderLayout.CENTER);
-        
-        // Nur Pflichtspiele ist default
-        m_jcbSpieleFilter.setSelectedIndex(1);
-    }
+		arenaStatistikTable = new ArenaStatistikTable(UserParameter.instance().spieleFilter);
+		add(new JScrollPane(arenaStatistikTable), BorderLayout.CENTER);
 
-    //~ Methods ------------------------------------------------------------------------------------
+		// Nur Pflichtspiele ist default
+		matchFilterComboBox.setSelectedIndex(1);
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
-    public final void setInitialisiert(boolean init) {
-        m_bInitialisiert = init;
-    }
+	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(new Refreshable() {
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final boolean isInitialisiert() {
-        return m_bInitialisiert;
-    }
+			@Override
+			public final void reInit() {
+				if (isShowing()) {
+					update();
+				} else {
+					needsRefresh = true;
+				}
+			}
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void doInitialisieren() {
-        initStatistik();
-        m_bInitialisiert = true;
-    }
+			@Override
+			public void refresh() {
+			}
+		});
 
-    /**
-     * TODO Missing Method Documentation
-     */
-    public final void initStatistik() {
-       // m_jtArenaStatistikTable.refresh(((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId());
-    }
+		this.matchFilterComboBox.addItemListener(new ItemListener() {
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
-    public final void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-            //Änderung der Tabelle -> Anderer Filter!
-            reInit();
-        }
-    }
+			@Override
+			public final void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					// Änderung der Tabelle -> Anderer Filter!
+					update();
+				}
+			}
+		});
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
-    public final void keyPressed(java.awt.event.KeyEvent keyEvent) {
-        if (keyEvent.getSource().equals(m_jtArenaStatistikTable)) {
-            manageSelectionRow();
-        }
-    }
+	private CBItem[] getMatchFilterItems() {
+		CBItem[] matchFilterItems = {
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneSpiele"),
+						SpielePanel.NUR_EIGENE_SPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePflichtspiele"),
+						SpielePanel.NUR_EIGENE_PFLICHTSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigenePokalspiele"),
+						SpielePanel.NUR_EIGENE_POKALSPIELE),
+				new CBItem(HOVerwaltung.instance().getLanguageString("NurEigeneLigaspiele"),
+						SpielePanel.NUR_EIGENE_LIGASPIELE),
+				new CBItem(HOVerwaltung.instance()
+						.getLanguageString("NurEigeneFreundschaftsspiele"),
+						SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE) };
+		return matchFilterItems;
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
-    public final void keyReleased(java.awt.event.KeyEvent keyEvent) {
-        if (keyEvent.getSource().equals(m_jtArenaStatistikTable)) {
-            manageSelectionRow();
-        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
-    public void keyTyped(java.awt.event.KeyEvent keyEvent) {
-    }
-
-    //----------------------Listener
-    public final void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-        if (mouseEvent.getSource().equals(m_jtArenaStatistikTable)) {
-            manageSelectionRow();
-        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
-    public void mouseEntered(java.awt.event.MouseEvent mouseEvent) {
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
-    public void mouseExited(java.awt.event.MouseEvent mouseEvent) {
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
-    public void mousePressed(java.awt.event.MouseEvent mouseEvent) {
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
-    public final void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
-        if (mouseEvent.getSource().equals(m_jtArenaStatistikTable)) {
-            manageSelectionRow();
-        }
-    }
-
-    /**
-     * ReInit
-     */
-    public final void reInit() {
-        if (m_jcbSpieleFilter.getSelectedIndex() > -1) {
-            //Tabelle updaten
-            m_jtArenaStatistikTable.refresh(((CBItem) m_jcbSpieleFilter.getSelectedItem()).getId());
-
-            //UserParameter.instance().spieleFilter   =   ( (CBItem)m_jcbSpieleFilter.getSelectedItem () ).getId ();
-        }
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     */
-    private void manageSelectionRow() {
-        final int row = m_jtArenaStatistikTable.getSelectedRow();
-
-        if (row > -1) {
-            m_jtArenaStatistikTable.setRowSelectionInterval(row, row);
-        } else {
-            m_jtArenaStatistikTable.clearSelection();
-        }
-    }
+	private void update() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			if (matchFilterComboBox.getSelectedIndex() > -1) {
+				arenaStatistikTable.refresh(((CBItem) matchFilterComboBox.getSelectedItem())
+						.getId());
+			}
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+		this.needsRefresh = false;
+	}
 }
