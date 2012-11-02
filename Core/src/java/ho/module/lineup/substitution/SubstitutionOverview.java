@@ -47,6 +47,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -59,6 +61,7 @@ public class SubstitutionOverview extends JPanel {
 	private DetailsView detailsView;
 	private EditAction editAction;
 	private RemoveAction removeAction;
+	private RemoveAllAction removeAllAction;
 	private BehaviorAction behaviorAction;
 	private PositionSwapAction positionSwapAction;
 	private SubstitutionAction substitutionAction;
@@ -84,6 +87,8 @@ public class SubstitutionOverview extends JPanel {
 		this.editAction.setEnabled(false);
 		this.removeAction = new RemoveAction();
 		this.removeAction.setEnabled(false);
+		this.removeAllAction = new RemoveAllAction();
+		this.removeAllAction.setEnabled(false);
 		this.behaviorAction = new BehaviorAction();
 		this.positionSwapAction = new PositionSwapAction();
 		this.substitutionAction = new SubstitutionAction();
@@ -125,6 +130,14 @@ public class SubstitutionOverview extends JPanel {
 				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 					editSelectedSubstitution();
 				}
+			}
+		});
+
+		this.substitutionTable.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				removeAllAction.setEnabled(substitutionTable.getRowCount() > 0);
 			}
 		});
 
@@ -200,7 +213,7 @@ public class SubstitutionOverview extends JPanel {
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane.add(new JScrollPane(this.substitutionTable), 0);
 		splitPane.add(lowerPanel, 1);
-		splitPane.setDividerLocation(160);
+		splitPane.setDividerLocation(200);
 
 		add(splitPane, BorderLayout.CENTER);
 		add(getButtonPanel(), BorderLayout.EAST);
@@ -220,9 +233,15 @@ public class SubstitutionOverview extends JPanel {
 
 		JButton removeButton = new JButton();
 		gbc.gridy++;
-		gbc.insets = new Insets(2, 10, 10, 10);
+		gbc.insets = new Insets(2, 10, 2, 10);
 		removeButton.setAction(this.removeAction);
 		buttonPanel.add(removeButton, gbc);
+
+		JButton removeAllButton = new JButton();
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 10, 10, 10);
+		removeAllButton.setAction(this.removeAllAction);
+		buttonPanel.add(removeAllButton, gbc);
 
 		JButton substitutionButton = new JButton();
 		gbc.gridy++;
@@ -243,7 +262,7 @@ public class SubstitutionOverview extends JPanel {
 		buttonPanel.add(positionSwapButton, gbc);
 		positionSwapButton.setAction(this.positionSwapAction);
 
-		GUIUtils.equalizeComponentSizes(editButton, removeButton, substitutionButton,
+		GUIUtils.equalizeComponentSizes(editButton, removeButton, removeAllButton, substitutionButton,
 				behaviorButton, positionSwapButton);
 
 		return buttonPanel;
@@ -346,7 +365,7 @@ public class SubstitutionOverview extends JPanel {
 	/**
 	 * TableModel for the overview table where existing substitutions are
 	 * listed.
-	 *
+	 * 
 	 */
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
@@ -559,6 +578,22 @@ public class SubstitutionOverview extends JPanel {
 			TableRow row = model.getRow(substitutionTable.getSelectedRow());
 			lineup.getSubstitutionList().remove(row.getSubstitution());
 			updateOrderIDs();
+			refresh();
+		}
+	}
+
+	private class RemoveAllAction extends AbstractAction {
+
+		private static final long serialVersionUID = 715531467617L;
+
+		public RemoveAllAction() {
+			super(HOVerwaltung.instance().getLanguageString("ls.button.deleteAll"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			List<Substitution> subs = new ArrayList<Substitution>(lineup.getSubstitutionList());
+			lineup.getSubstitutionList().removeAll(subs);
 			refresh();
 		}
 	}
