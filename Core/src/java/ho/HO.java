@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Main HO starter class.
- *
+ * 
  * @author thomas.werth
  */
 public class HO {
@@ -81,7 +81,7 @@ public class HO {
 
 	/**
 	 * Main method to start a HOMainFrame.
-	 *
+	 * 
 	 * @param args
 	 *            the command line arguments
 	 */
@@ -109,9 +109,8 @@ public class HO {
 		try {
 			if (!User.getCurrentUser().isSingleUser()) {
 				JComboBox comboBox = new JComboBox(User.getAllUser().toArray());
-				int choice = JOptionPane.showConfirmDialog(null, comboBox,
-						"Login", JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(null, comboBox, "Login",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (choice == JOptionPane.OK_OPTION) {
 					User.INDEX = comboBox.getSelectedIndex();
@@ -130,8 +129,7 @@ public class HO {
 			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
 				JOptionPane.showMessageDialog(null,
 						"Your HO version is very old!\nPlease download a new version at "
-								+ MyConnector.getHOSite(),
-						"Update strongly recommended",
+								+ MyConnector.getHOSite(), "Update strongly recommended",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}
@@ -151,14 +149,11 @@ public class HO {
 
 		// init Theme
 		try {
-			ThemeManager.instance().setCurrentTheme(
-					UserParameter.instance().theme);
+			ThemeManager.instance().setCurrentTheme(UserParameter.instance().theme);
 		} catch (Exception e) {
-			HOLogger.instance().log(HO.class,
-					"Can´t load Theme:" + UserParameter.instance().theme);
-			JOptionPane.showMessageDialog(null, e.getMessage(),
-					"Can´t load Theme: " + UserParameter.instance().theme,
-					JOptionPane.WARNING_MESSAGE);
+			HOLogger.instance().log(HO.class, "Can´t load Theme:" + UserParameter.instance().theme);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Can´t load Theme: "
+					+ UserParameter.instance().theme, JOptionPane.WARNING_MESSAGE);
 		}
 		// Init!
 		interuptionsWindow.setInfoText(3, "Initialize Data-Administration");
@@ -167,18 +162,22 @@ public class HO {
 		if (DBManager.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			new ho.core.option.InitOptionsDialog();
-			JOptionPane.showMessageDialog(null,"Select File > Download in the main menu to load your team data into HO.",
-					"Get team data into HO",
-							JOptionPane.INFORMATION_MESSAGE);
 			interuptionsWindow.setVisible(true);
 		}
 
 		// Check -> Sprachdatei in Ordnung?
 		interuptionsWindow.setInfoText(4, "Check Languagefiles");
 		HOVerwaltung.checkLanguageFile(UserParameter.instance().sprachDatei);
+		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
 
-		HOVerwaltung.instance().setResource(
-				UserParameter.instance().sprachDatei);
+		if (DBManager.instance().isFirstStart()) {
+			interuptionsWindow.setVisible(false);
+			JOptionPane.showMessageDialog(null,
+					"Select File > Download in the main menu to load your team data into HO.",
+					"Get team data into HO", JOptionPane.INFORMATION_MESSAGE);
+			interuptionsWindow.setVisible(true);
+		}
+
 		interuptionsWindow.setInfoText(5, "Load latest Data");
 		HOVerwaltung.instance().loadLatestHoModel();
 		interuptionsWindow.setInfoText(6, "Load  XtraDaten");
@@ -187,8 +186,8 @@ public class HO {
 		UserColumnController.instance().load();
 
 		// Die Währung auf die aus dem HRF setzen
-		float faktorgeld = (float) HOVerwaltung.instance().getModel()
-				.getXtraDaten().getCurrencyRate();
+		float faktorgeld = (float) HOVerwaltung.instance().getModel().getXtraDaten()
+				.getCurrencyRate();
 
 		if (faktorgeld > -1) {
 			UserParameter.instance().faktorGeld = faktorgeld;
@@ -212,8 +211,7 @@ public class HO {
 				interuptionsWindow.setVisible(false);
 				interuptionsWindow.dispose();
 
-				HOLogger.instance().log(HO.class,
-						"Zeit:" + (System.currentTimeMillis() - start));
+				HOLogger.instance().log(HO.class, "Zeit:" + (System.currentTimeMillis() - start));
 			}
 		});
 	}
@@ -232,12 +230,10 @@ public class HO {
 						revision = Integer.parseInt(line.trim());
 					}
 				} else {
-					HOLogger.instance().debug(HO.class,
-							"revision.num not found");
+					HOLogger.instance().debug(HO.class, "revision.num not found");
 				}
 			} catch (Exception e) {
-				HOLogger.instance().warning(HO.class,
-						"getRevisionNumber failed: " + e);
+				HOLogger.instance().warning(HO.class, "getRevisionNumber failed: " + e);
 			} finally {
 				IOUtils.closeQuietly(br);
 				IOUtils.closeQuietly(is);
