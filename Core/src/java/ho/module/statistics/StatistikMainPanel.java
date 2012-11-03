@@ -10,6 +10,7 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 /**
  * TabbedPane mit Statistiken
@@ -81,9 +82,15 @@ public class StatistikMainPanel extends ImagePanel {
 		add(tabbedPane, java.awt.BorderLayout.CENTER);
 	}
 
-	public final void setShowSpieler(int spielerid) {
-		spielerStatistikPanel.setAktuelleSpieler(spielerid);
+	public final void setShowSpieler(final int spielerid) {
 		tabbedPane.setSelectedIndex(0);
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				spielerStatistikPanel.setAktuelleSpieler(spielerid);
+			}
+		});
 	}
 
 }
