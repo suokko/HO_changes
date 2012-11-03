@@ -264,12 +264,17 @@ public class SpecialEventsDM {
 			}
 		}
 
-		if (filter.isShowCurrentOwnPlayersOnly()) {
-			List<Spieler> players = HOVerwaltung.instance().getModel().getAllSpieler();
+		if (filter.isShowOwnPlayersOnly()) {
+			List<Spieler> players = new ArrayList<Spieler>();
+			players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
+			if (!filter.isShowCurrentOwnPlayersOnly()) {
+				players.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
+			}
+
 			boolean playerFound = false;
 			for (Spieler player : players) {
 				if (isInvolved(player.getSpielerID(), highlight)) {
-					// player found in list of current players					
+					// player found in list of current players
 					playerFound = true;
 					break;
 				}

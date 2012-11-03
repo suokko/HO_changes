@@ -14,8 +14,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,6 +54,7 @@ public class FilterPanel extends JPanel {
 	// player
 	private JComboBox playerComboBox;
 	private JCheckBox currentOwnPlayersCheckBox;
+	private JCheckBox ownPlayersCheckBox;
 	private final Filter filter;
 
 	public FilterPanel(Filter filter) {
@@ -90,7 +89,13 @@ public class FilterPanel extends JPanel {
 		this.penaltySECheckBox.setSelected(this.filter.isShowPenalty());
 		this.longshotSECheckBox.setSelected(this.filter.isShowLongShot());
 
-		this.currentOwnPlayersCheckBox.setSelected(this.filter.isShowCurrentOwnPlayersOnly());
+		this.ownPlayersCheckBox.setSelected(this.filter.isShowOwnPlayersOnly());
+		if (this.filter.isShowCurrentOwnPlayersOnly()) {
+			this.currentOwnPlayersCheckBox.setSelected(true);
+			this.ownPlayersCheckBox.setSelected(true);
+			this.filter.setShowOwnPlayersOnly(true);
+			this.ownPlayersCheckBox.setEnabled(false);
+		}
 		updatePlayerComboBoxData(this.filter.isShowCurrentOwnPlayersOnly());
 		if (this.filter.getPlayerId() != null) {
 			restoreComboBoxSelection(this.filter.getPlayerId(), this.playerComboBox);
@@ -141,12 +146,12 @@ public class FilterPanel extends JPanel {
 			}
 		});
 
-		ItemListener checkBoxListener = new ItemListener() {
+		ActionListener checkBoxListener = new ActionListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				Object source = e.getSource();
-				boolean selected = e.getStateChange() == ItemEvent.SELECTED;
+				boolean selected = ((JCheckBox) e.getSource()).isSelected();
 
 				if (source == onlySEMatchesCheckBox) {
 					filter.setShowMatchesWithSEOnly(selected);
@@ -177,27 +182,34 @@ public class FilterPanel extends JPanel {
 				} else if (source == longshotSECheckBox) {
 					filter.setShowLongShot(selected);
 				} else if (source == currentOwnPlayersCheckBox) {
+					if (selected) {
+						ownPlayersCheckBox.setSelected(true);
+					}
+					ownPlayersCheckBox.setEnabled(!selected);
 					filter.setShowCurrentOwnPlayersOnly(selected);
 					updatePlayerComboBoxData(selected);
+				} else if (source == ownPlayersCheckBox) {
+					filter.setShowOwnPlayersOnly(selected);
 				}
 			}
 		};
 
-		this.onlySEMatchesCheckBox.addItemListener(checkBoxListener);
-		this.friendliesCheckBox.addItemListener(checkBoxListener);
-		this.leagueCheckBox.addItemListener(checkBoxListener);
-		this.relegationCheckBox.addItemListener(checkBoxListener);
-		this.tournamentCheckBox.addItemListener(checkBoxListener);
-		this.cupCheckBox.addItemListener(checkBoxListener);
-		this.mastersCheckBox.addItemListener(checkBoxListener);
-		this.specialitySECheckBox.addItemListener(checkBoxListener);
-		this.weatherSECheckBox.addItemListener(checkBoxListener);
-		this.counterAttackSECheckBox.addItemListener(checkBoxListener);
-		this.freeKickSECheckBox.addItemListener(checkBoxListener);
-		this.freeKickIndirectSECheckBox.addItemListener(checkBoxListener);
-		this.penaltySECheckBox.addItemListener(checkBoxListener);
-		this.longshotSECheckBox.addItemListener(checkBoxListener);
-		this.currentOwnPlayersCheckBox.addItemListener(checkBoxListener);
+		this.onlySEMatchesCheckBox.addActionListener(checkBoxListener);
+		this.friendliesCheckBox.addActionListener(checkBoxListener);
+		this.leagueCheckBox.addActionListener(checkBoxListener);
+		this.relegationCheckBox.addActionListener(checkBoxListener);
+		this.tournamentCheckBox.addActionListener(checkBoxListener);
+		this.cupCheckBox.addActionListener(checkBoxListener);
+		this.mastersCheckBox.addActionListener(checkBoxListener);
+		this.specialitySECheckBox.addActionListener(checkBoxListener);
+		this.weatherSECheckBox.addActionListener(checkBoxListener);
+		this.counterAttackSECheckBox.addActionListener(checkBoxListener);
+		this.freeKickSECheckBox.addActionListener(checkBoxListener);
+		this.freeKickIndirectSECheckBox.addActionListener(checkBoxListener);
+		this.penaltySECheckBox.addActionListener(checkBoxListener);
+		this.longshotSECheckBox.addActionListener(checkBoxListener);
+		this.currentOwnPlayersCheckBox.addActionListener(checkBoxListener);
+		this.ownPlayersCheckBox.addActionListener(checkBoxListener);
 
 		this.playerComboBox.addActionListener(new ActionListener() {
 
@@ -399,16 +411,22 @@ public class FilterPanel extends JPanel {
 		gbc.gridx = 1;
 		panel.add(this.playerComboBox, gbc);
 
-		this.currentOwnPlayersCheckBox = new JCheckBox("current players");
+		this.currentOwnPlayersCheckBox = new JCheckBox();
 		this.currentOwnPlayersCheckBox
 				.setText(getLangStr("specialEvents.filter.players.currentOwnPlayers"));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 2;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		panel.add(this.currentOwnPlayersCheckBox, gbc);
+
+		this.ownPlayersCheckBox = new JCheckBox();
+		this.ownPlayersCheckBox.setText(getLangStr("specialEvents.filter.players.ownPlayers"));
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		panel.add(this.ownPlayersCheckBox, gbc);
 
 		return panel;
 	}

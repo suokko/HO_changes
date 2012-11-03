@@ -29,6 +29,7 @@ public class Filter {
 	// player
 	private Integer playerId;
 	private boolean showCurrentOwnPlayersOnly;
+	private boolean showOwnPlayersOnly;
 	
 	private final List<FilterChangeListener> listeners = new ArrayList<FilterChangeListener>();
 	
@@ -230,11 +231,26 @@ public class Filter {
 
 	public void setShowCurrentOwnPlayersOnly(boolean showCurrentOwnPlayersOnly) {
 		if (this.showCurrentOwnPlayersOnly != showCurrentOwnPlayersOnly) {
+			if (showCurrentOwnPlayersOnly) {
+				// bypass the setter to avoid firing an extra event
+				this.showOwnPlayersOnly = true;
+			}
 			this.showCurrentOwnPlayersOnly = showCurrentOwnPlayersOnly;
 			fireFilterChanged();
 		}
 	}
 
+	public boolean isShowOwnPlayersOnly() {
+		return showOwnPlayersOnly;
+	}
+
+	public void setShowOwnPlayersOnly(boolean showOwnPlayersOnly) {
+		if (this.showOwnPlayersOnly != showOwnPlayersOnly) {
+			this.showOwnPlayersOnly = showOwnPlayersOnly;
+			fireFilterChanged();
+		}
+	}
+	
 	public void addFilterChangeListener(FilterChangeListener listener) {
 		if (!this.listeners.contains(listener)) {
 			this.listeners.add(listener);
