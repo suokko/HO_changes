@@ -20,8 +20,6 @@ import javax.swing.JSplitPane;
 public class TrainingPanel extends JPanel {
 
 	private static final long serialVersionUID = -1313192105835561643L;
-	/** Class that keep track of the past skillup */
-	private static OldTrainingManager manager;
 	/** Main table panel */
 	private static MainPanel tabbedPanel;
 	/** Prevision table */
@@ -39,9 +37,9 @@ public class TrainingPanel extends JPanel {
 	}
 
 	private void initialize() {
-		initComponents();
-		addListeners();
 		model = new TrainingModel();
+		initComponents();
+		addListeners();		
 	}
 
 	private void addListeners() {
@@ -57,7 +55,7 @@ public class TrainingPanel extends JPanel {
 	private void initComponents() {
 
 		setLayout(new BorderLayout());
-		skillupPanel = new SkillupPanel();
+		skillupPanel = new SkillupPanel(this.model);
 		playerDetailPanel = new PlayerDetailPanel();
 		trainPanel = new ho.module.training.ui.TrainingPanel();
 		staffPanel = new StaffPanel();
@@ -91,15 +89,6 @@ public class TrainingPanel extends JPanel {
 
 		mainPanel.setOpaque(false);
 		add(mainPanel, BorderLayout.CENTER);
-	}
-
-	/**
-	 * Returns the SkillupManager
-	 * 
-	 * @return
-	 */
-	public static OldTrainingManager getSkillupManager() {
-		return manager;
 	}
 
 	/**
@@ -174,9 +163,6 @@ public class TrainingPanel extends JPanel {
 	 */
 	public static void selectPlayer(Spieler player) {
 		model.setActivePlayer(player);
-
-		// regenerate the past skillup using the manager
-		manager = new OldTrainingManager(player);
 
 		// reload the past skillups
 		skillupPanel.reload(model.getActivePlayer());

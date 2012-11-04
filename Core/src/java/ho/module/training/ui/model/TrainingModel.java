@@ -1,6 +1,7 @@
 package ho.module.training.ui.model;
 
 import ho.core.model.player.Spieler;
+import ho.module.training.OldTrainingManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ public class TrainingModel {
 
 	/** The currently selected player */
 	private Spieler activePlayer;
+	private OldTrainingManager skillupManager;
 	private final List<ModelChangeListener> listeners = new ArrayList<ModelChangeListener>();
 
 	public Spieler getActivePlayer() {
@@ -21,8 +23,16 @@ public class TrainingModel {
 				|| (this.activePlayer != null && player != null && this.activePlayer.getSpielerID() != player
 						.getSpielerID())) {
 			this.activePlayer = player;
+			this.skillupManager = null;
 			fireActivePlayerChanged();
 		}
+	}
+
+	public OldTrainingManager getSkillupManager() {
+		if (this.skillupManager == null) {
+			this.skillupManager = new OldTrainingManager(this.activePlayer);
+		}
+		return this.skillupManager;
 	}
 
 	public void addModelChangeListener(ModelChangeListener listener) {

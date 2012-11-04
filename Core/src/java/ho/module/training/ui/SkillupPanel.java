@@ -8,11 +8,11 @@ import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
+import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
 import java.awt.BorderLayout;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -32,11 +32,13 @@ public class SkillupPanel extends JPanel {
 	private String[] columns = { HOVerwaltung.instance().getLanguageString("ls.team.trainingtype"),
 			HOVerwaltung.instance().getLanguageString("Week"),
 			HOVerwaltung.instance().getLanguageString("Season"), "", "", "" };
+	private TrainingModel model;
 
 	/**
 	 * Creates a new SkillupPanel object.
 	 */
-	public SkillupPanel() {
+	public SkillupPanel(TrainingModel model) {
+		this.model = model;
 		jbInit();
 	}
 
@@ -76,10 +78,9 @@ public class SkillupPanel extends JPanel {
 		}
 
 		// gets calculated past skillups
-		for (Iterator<ISkillup> iter = ho.module.training.TrainingPanel.getSkillupManager()
-				.getTrainedSkillups().iterator(); iter.hasNext();) {
+		for (ISkillup skillup : this.model.getSkillupManager().getTrainedSkillups()) {
 			// add it to the table
-			addRow(iter.next());
+			addRow(skillup);
 		}
 
 		setColumnWidth(1, 50);
