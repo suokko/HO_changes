@@ -30,6 +30,7 @@ public final class TrainingModule extends DefaultModule {
 		return new TrainingPanel();
 	}
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0);
 	}
