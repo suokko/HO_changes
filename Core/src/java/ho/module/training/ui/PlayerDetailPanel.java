@@ -7,7 +7,6 @@ import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
-import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
@@ -18,7 +17,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -71,12 +69,6 @@ public class PlayerDetailPanel extends ImagePanel {
 		// instantiate a future train manager to calculate the previsions */
 		FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
 				sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
-
-		// Add future skillups
-		for (Iterator<ISkillup> iter = ftm.getFutureSkillups().iterator(); iter.hasNext();) {
-			ISkillup element = iter.next();
-			ho.module.training.TrainingPanel.getSkillupPanel().addRow(element);
-		}
 
 		for (int i = 0; i < 8; i++) {
 			int skillIndex = Skills.getSkillAtPosition(i);
