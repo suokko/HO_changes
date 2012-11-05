@@ -1,21 +1,22 @@
 // %1303949933:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.constants.player.PlayerAbility;
-import ho.core.constants.player.PlayerSkill;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
-import ho.core.model.player.Spieler;
 import ho.module.training.ui.model.ModelChange;
 import ho.module.training.ui.model.ModelChangeListener;
+import ho.module.training.ui.model.SkillupTableModel;
 import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
 import java.awt.BorderLayout;
-import java.util.Arrays;
-import java.util.Vector;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,20 +30,42 @@ import javax.swing.SwingConstants;
 public class SkillupPanel extends JPanel {
 
 	private static final long serialVersionUID = 57377377617909870L;
-	private BaseTableModel tableModel;
 	private SkillupTable table;
-	private String[] columns = { HOVerwaltung.instance().getLanguageString("ls.team.trainingtype"),
-			HOVerwaltung.instance().getLanguageString("Week"),
-			HOVerwaltung.instance().getLanguageString("Season"), "", "", "" };
 	private TrainingModel model;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new SkillupPanel object.
 	 */
 	public SkillupPanel(TrainingModel model) {
 		this.model = model;
-		jbInit();
-		addListeners();
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						loadFromModel();
+					}
+				}
+			}
+		});
+	}
+
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			loadFromModel();
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+		this.initialized = true;
 	}
 
 	private void addListeners() {
@@ -50,28 +73,13 @@ public class SkillupPanel extends JPanel {
 
 			@Override
 			public void modelChanged(ModelChange change) {
-				reload(model.getActivePlayer());
+				if (isShowing()) {
+					loadFromModel();
+				} else {
+					needsRefresh = true;
+				}
 			}
 		});
-	}
-
-	/**
-	 * Add a row to the table
-	 * 
-	 * @param skillup
-	 *            The skillup object to be added
-	 */
-	private void addRow(ISkillup skillup) {
-		Vector<Object> v = new Vector<Object>();
-
-		v.add(PlayerSkill.toString(skillup.getType()) + ": "
-				+ PlayerAbility.getNameForSkill(skillup.getValue(), true));
-		v.add("" + skillup.getHtWeek());
-		v.add("" + skillup.getHtSeason());
-		v.add("" + skillup.getTrainType());
-		v.add("" + skillup.getDate());
-		v.add("" + skillup.getType());
-		tableModel.insertRow(0, v);
 	}
 
 	/**
@@ -80,35 +88,20 @@ public class SkillupPanel extends JPanel {
 	 * @param player
 	 *            the selected training situation
 	 */
-	public void reload(Spieler player) {
-		// empty the table
-		tableModel = new BaseTableModel(new Vector<Object>(), new Vector<String>(
-				Arrays.asList(columns)));
-		table.setModel(tableModel);
-
-		if (player == null) {
-			return;
+	private void loadFromModel() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			List<ISkillup> skillups = new ArrayList<ISkillup>();
+			if (this.model.getActivePlayer() != null) {
+				skillups.addAll(this.model.getSkillupManager().getTrainedSkillups());
+				skillups.addAll(this.model.getFutureTrainingManager().getFutureSkillups());
+				Collections.reverse(skillups);
+			}
+			((SkillupTableModel) this.table.getModel()).setData(skillups);
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
 		}
-
-		// gets calculated past skillups
-		for (ISkillup skillup : this.model.getSkillupManager().getTrainedSkillups()) {
-			// add it to the table
-			addRow(skillup);
-		}
-
-		// Add future skillups
-		for (ISkillup skillup : this.model.getFutureTrainingManager().getFutureSkillups()) {
-			addRow(skillup);
-		}
-
-		setColumnWidth(1, 50);
-		setColumnWidth(2, 50);
-		setColumnWidth(3, 0);
-		setColumnWidth(4, 0);
-		setColumnWidth(5, 0);
-		table.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
-		table.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
-		table.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
 	}
 
 	/**
@@ -129,29 +122,18 @@ public class SkillupPanel extends JPanel {
 	/**
 	 * Initialize the object layout
 	 */
-	private void jbInit() {
-		Vector<Object> data = new Vector<Object>();
-
-		tableModel = new BaseTableModel(data, new Vector<String>(Arrays.asList(columns)));
-		table = new SkillupTable(tableModel);
+	private void initComponents() {
+		table = new SkillupTable(new SkillupTableModel());
 		table.setDefaultRenderer(Object.class, new SkillupTableRenderer());
 
-		setColumnWidth(1, 30);
-		setColumnWidth(2, 30);
-		setColumnWidth(3, 0);
-		setColumnWidth(4, 0);
-		setColumnWidth(5, 0);
-		table.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
-		table.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
-		table.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+		setColumnWidth(1, 50);
+		setColumnWidth(2, 50);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		JPanel headerPanel = new ImagePanel();
-
 		headerPanel.setOpaque(false);
 
 		JLabel l = new JLabel(HOVerwaltung.instance().getLanguageString("TrainingHistory"),

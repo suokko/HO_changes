@@ -141,9 +141,6 @@ public class TrainingPanel extends JPanel {
 	 * the future training
 	 */
 	public static void refreshPlayerDetail() {
-		// reload the past skillups
-		skillupPanel.reload(model.getActivePlayer());
-
 		// recalculate and show the previsions
 		playerDetailPanel.reload(model.getActivePlayer());
 
