@@ -3,21 +3,25 @@ package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
-import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -32,17 +36,58 @@ import javax.swing.SwingConstants;
 public class PlayerDetailPanel extends ImagePanel {
 
 	private static final long serialVersionUID = -6606934473344186243L;
-	private JLabel playerLabel = new JLabel("", SwingConstants.CENTER);
-	private ColorBar[] levelBar = new ColorBar[8];
-	private JLabel[] skillLabel = new JLabel[8];
+	private JLabel playerLabel;
+	private ColorBar[] levelBar;
+	private JLabel[] skillLabel;
 	private final TrainingModel model;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates the panel and its components
 	 */
 	public PlayerDetailPanel(TrainingModel model) {
 		this.model = model;
-		initComponents();
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						loadFromModel();
+					}
+				}
+			}
+		});
+	}
+
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			loadFromModel();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
+
+	private void addListeners() {
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (isShowing()) {
+					loadFromModel();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
 	}
 
 	/**
@@ -51,38 +96,44 @@ public class PlayerDetailPanel extends ImagePanel {
 	 * @param spieler
 	 *            player
 	 */
-	public void reload(Spieler spieler) {
-		if (spieler == null) {
-			playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect"));
-			for (int i = 0; i < 8; i++) {
-				skillLabel[i].setText("");
-				levelBar[i].setLevel(0f);
+	private void loadFromModel() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			if (this.model.getActivePlayer() == null) {
+				playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect"));
+				for (int i = 0; i < 8; i++) {
+					skillLabel[i].setText("");
+					levelBar[i].setLevel(0f);
+				}
+				return;
 			}
-			return;
+
+			// sets player number
+			playerLabel.setText(this.model.getActivePlayer().getName());
+
+			// gets the list of user defined future trainings
+			List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel()
+					.getFutureTrainings();
+
+			// instantiate a future train manager to calculate the previsions */
+			FutureTrainingManager ftm = this.model.getFutureTrainingManager();
+
+			for (int i = 0; i < 8; i++) {
+				int skillIndex = Skills.getSkillAtPosition(i);
+				skillLabel[i].setText(PlayerAbility.getNameForSkill(
+						Skills.getSkillValue(this.model.getActivePlayer(), skillIndex), true));
+
+				FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
+				double finalValue = getSkillValue(fp, skillIndex);
+				levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
+			}
+
+			updateUI();
+
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
 		}
-
-		// sets player number
-		playerLabel.setText(spieler.getName());
-
-		// gets the list of user defined future trainings
-		List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel()
-				.getFutureTrainings();
-
-		// instantiate a future train manager to calculate the previsions */
-		FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
-				this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
-
-		for (int i = 0; i < 8; i++) {
-			int skillIndex = Skills.getSkillAtPosition(i);
-			skillLabel[i].setText(PlayerAbility.getNameForSkill(
-					Skills.getSkillValue(spieler, skillIndex), true));
-
-			FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
-			double finalValue = getSkillValue(fp, skillIndex);
-			levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
-		}
-
-		updateUI();
 	}
 
 	/**
@@ -140,6 +191,7 @@ public class PlayerDetailPanel extends ImagePanel {
 		GridBagConstraints maingbc = new GridBagConstraints();
 		maingbc.anchor = GridBagConstraints.NORTH;
 		maingbc.insets = new Insets(10, 10, 5, 10);
+		playerLabel = new JLabel("", SwingConstants.CENTER);
 		add(playerLabel, maingbc);
 
 		JPanel bottom = new JPanel(new GridBagLayout());
@@ -148,6 +200,9 @@ public class PlayerDetailPanel extends ImagePanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(2, 4, 2, 4);
+		levelBar = new ColorBar[8];
+		skillLabel = new JLabel[8];
+
 		for (int i = 0; i < 8; i++) {
 			gbc.gridy = i;
 			gbc.weightx = 0.0;

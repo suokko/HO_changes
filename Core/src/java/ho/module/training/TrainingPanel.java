@@ -141,9 +141,6 @@ public class TrainingPanel extends JPanel {
 	 * the future training
 	 */
 	public static void refreshPlayerDetail() {
-		// recalculate and show the previsions
-		playerDetailPanel.reload(model.getActivePlayer());
-
 		// update upper table!
 		tabbedPanel.getOutput().reload();
 		tabbedPanel.getRecap().reload();
@@ -157,9 +154,6 @@ public class TrainingPanel extends JPanel {
 	 */
 	public static void selectPlayer(Spieler player) {
 		model.setActivePlayer(player);
-
-		// recalculate and show the previsions
-		playerDetailPanel.reload(model.getActivePlayer());
 	}
 
 	/**
