@@ -21,10 +21,7 @@ public class SkillupTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		if (this.data != null) {
-			return this.data.size();
-		}
-		return 0;
+		return (this.data != null) ? data.size() : 0;
 	}
 
 	@Override

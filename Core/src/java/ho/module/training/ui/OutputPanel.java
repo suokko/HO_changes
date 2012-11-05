@@ -19,8 +19,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -29,6 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 /**
  * The Panel where the main training table is shown ("Training").
@@ -48,7 +53,9 @@ public class OutputPanel extends ImagePanel {
 
 	private static final long serialVersionUID = 7955126207696897546L;
 	private JTable outputTable;
-	private OutputTableSorter sorter;
+	private JButton importButton;
+	private JButton calculateButton;
+	private boolean initialized = false;
 	private final TrainingModel model;
 
 	/**
@@ -57,21 +64,40 @@ public class OutputPanel extends ImagePanel {
 	public OutputPanel(TrainingModel model) {
 		super();
 		this.model = model;
-		initComponents();
+
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+				}
+			}
+		});
 	}
 
 	/**
 	 * update the panel with the new value
 	 */
 	public void reload() {
-		OutputTableSorter otm = (OutputTableSorter) outputTable.getModel();
-		otm.fillWithData();
+		if (this.initialized) {
+			((OutputTableModel) outputTable.getModel()).fillWithData();
+		}
+	}
+
+	private void initialize() {
+		initComponents();
+		addListeners();
+		this.initialized = true;
+		reload();		
 	}
 
 	/**
 	 * Import a match from Hattrick
 	 */
-	private void import_matches() {
+	private void importMatches() {
 		String input = JOptionPane.showInputDialog(HOVerwaltung.instance().getLanguageString(
 				"GameID"));
 
@@ -99,17 +125,32 @@ public class OutputPanel extends ImagePanel {
 		}
 	}
 
+	private void addListeners() {
+		this.importButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				importMatches();
+			}
+		});
+
+		this.calculateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				TrainingManager.instance().recalcSubskills(true);
+				reload();
+				ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
+			}
+		});
+	}
+
 	/**
 	 * Initialize the object layout
 	 */
 	private void initComponents() {
 		setLayout(new BorderLayout());
-		OutputTableModel outputTableModel = new OutputTableModel(this.model);
 
-		sorter = new OutputTableSorter(outputTableModel);
-		outputTable = new OutputTable(sorter);
+		outputTable = new OutputTable(new OutputTableModel(this.model));
 		outputTable.getTableHeader().setReorderingAllowed(false);
-		sorter.setTableHeader(outputTable.getTableHeader());
 		outputTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		outputTable.setDefaultRenderer(Object.class, new OutputTableRenderer());
 		outputTable.getSelectionModel().addListSelectionListener(
@@ -140,38 +181,48 @@ public class OutputPanel extends ImagePanel {
 		playerIDCol.setMaxWidth(0);
 		outputTable.setAutoResizeMode(0);
 		outputTable.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		outputTable.setAutoCreateRowSorter(true);
+
 		add(new JScrollPane(outputTable), BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
-		JButton importButton = new JButton(HOVerwaltung.instance().getLanguageString("ImportMatch"));
-		importButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				import_matches();
-			}
-		});
+		this.importButton = new JButton(HOVerwaltung.instance().getLanguageString("ImportMatch"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(6, 8, 6, 4);
-		buttonPanel.add(importButton, gbc);
+		buttonPanel.add(this.importButton, gbc);
 
-		JButton calculateButton = new JButton(HOVerwaltung.instance()
-				.getLanguageString("Calculate"));
-		calculateButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				TrainingManager.instance().recalcSubskills(true);
-				reload();
-				ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
-			}
-		});
-
+		this.calculateButton = new JButton(HOVerwaltung.instance().getLanguageString("Calculate"));
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.insets = new Insets(6, 4, 6, 8);
-		buttonPanel.add(calculateButton, gbc);
+		buttonPanel.add(this.calculateButton, gbc);
 
 		add(buttonPanel, BorderLayout.NORTH);
+	}
+
+	private class OutputTable extends JTable {
+		private static final long serialVersionUID = 1089805262735794338L;
+
+		public OutputTable(TableModel dm) {
+			super(dm);
+		}
+
+		@Override
+		public String getToolTipText(MouseEvent e) {
+			OutputTableModel tableModel = (OutputTableModel) getModel();
+			Point p = e.getPoint();
+			int realColumnIndex = convertColumnIndexToModel(columnAtPoint(p));
+			int realRowIndex = convertRowIndexToModel(rowAtPoint(p));
+
+			if ((realColumnIndex > 2) && (realColumnIndex < 11)) {
+				Object obj = tableModel.getToolTipAt(realRowIndex, realColumnIndex);
+
+				return obj.toString();
+			}
+
+			return "";
+		}
 	}
 }

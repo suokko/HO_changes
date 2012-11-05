@@ -10,9 +10,9 @@ import ho.core.util.Helper;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.VerticalIndicator;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -23,24 +23,10 @@ import javax.swing.table.AbstractTableModel;
  *         für das HO Plugin
  */
 public class OutputTableModel extends AbstractTableModel {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
 
 	private static final long serialVersionUID = -1695207352334612268L;
-
-	/** TODO Missing Parameter Documentation */
-	private static final String DEFAULT_VALUE = "";
-
-	// private ITrainingsManager p_ITM_trainingsManager = null;
-	private Vector<String> p_V_columnNames = null;
-
-	// data enthält die berechneten Werte aller Spieler, wieviel Training sie
-	// schon hattenn
-	private Vector<Spieler> p_V_data = null;
+	private List<Spieler> data = new ArrayList<Spieler>();
 	private final TrainingModel model;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -49,28 +35,7 @@ public class OutputTableModel extends AbstractTableModel {
 	 */
 	public OutputTableModel(TrainingModel model) {
 		this.model = model;
-		HOVerwaltung hoV = HOVerwaltung.instance();
-		p_V_data = hoV.getModel().getAllSpieler();
-
-		p_V_columnNames = new Vector<String>();
-
-		// Spaltennamen festlegen
-		p_V_columnNames.add(hoV.getLanguageString("Spieler"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.age"));
-		p_V_columnNames.add(hoV.getLanguageString("BestePosition"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.keeper"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.defending"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.playmaking"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.passing"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.winger"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.scoring"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.setpieces"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.skill.stamina"));
-		p_V_columnNames.add(hoV.getLanguageString("ls.player.id"));
 	}
-
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
 
 	/*
 	 * (non-Javadoc)
@@ -78,12 +43,26 @@ public class OutputTableModel extends AbstractTableModel {
 	 * @see javax.swing.table.TableModel#getColumnClass(int)
 	 */
 	@Override
-	public Class<?> getColumnClass(int c) {
-		if ((c > 2) && (c < 11)) {
-			return JPanel.class;
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+		case 1:
+		case 2:
+		case 11:
+			return String.class;
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+			return VerticalIndicator.class;
+		default:
+			return super.getColumnClass(columnIndex);
 		}
 
-		return getValueAt(0, c).getClass();
 	}
 
 	/*
@@ -91,8 +70,9 @@ public class OutputTableModel extends AbstractTableModel {
 	 * 
 	 * @see javax.swing.table.TableModel#getColumnCount()
 	 */
+	@Override
 	public int getColumnCount() {
-		return p_V_columnNames.size();
+		return 12;
 	}
 
 	/*
@@ -101,8 +81,35 @@ public class OutputTableModel extends AbstractTableModel {
 	 * @see javax.swing.table.TableModel#getColumnName(int)
 	 */
 	@Override
-	public String getColumnName(int c) {
-		return p_V_columnNames.get(c);
+	public String getColumnName(int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return HOVerwaltung.instance().getLanguageString("Spieler");
+		case 1:
+			return HOVerwaltung.instance().getLanguageString("ls.player.age");
+		case 2:
+			return HOVerwaltung.instance().getLanguageString("BestePosition");
+		case 3:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.keeper");
+		case 4:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.defending");
+		case 5:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.playmaking");
+		case 6:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.passing");
+		case 7:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.winger");
+		case 8:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.scoring");
+		case 9:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces");
+		case 10:
+			return HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina");
+		case 11:
+			return HOVerwaltung.instance().getLanguageString("ls.player.id");
+		default:
+			return "";
+		}
 	}
 
 	/*
@@ -110,8 +117,9 @@ public class OutputTableModel extends AbstractTableModel {
 	 * 
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
+	@Override
 	public int getRowCount() {
-		return p_V_data.size();
+		return (this.data != null) ? data.size() : 0;
 	}
 
 	/**
@@ -124,9 +132,7 @@ public class OutputTableModel extends AbstractTableModel {
 	 * @return toolTip
 	 */
 	public Object getToolTipAt(int rowIndex, int columnIndex) {
-		VerticalIndicator vi = (VerticalIndicator) getValueAt(rowIndex, columnIndex);
-
-		return vi.getToolTipText();
+		return ((VerticalIndicator) getValueAt(rowIndex, columnIndex)).getToolTipText();
 	}
 
 	/*
@@ -134,54 +140,41 @@ public class OutputTableModel extends AbstractTableModel {
 	 * 
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		try {
-			Spieler spieler = p_V_data.get(rowIndex);
+		Spieler spieler = data.get(rowIndex);
 
-			switch (columnIndex) {
-			case 0:
-				return spieler.getName(); // Spielername
-
-			case 1:
-				return spieler.getAlterWithAgeDaysAsString(); // Spieleralter
-
-			case 2:
-				return SpielerPosition.getNameForPosition(spieler.getIdealPosition())
-						+ " (" + spieler.getIdealPosStaerke(true) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-
-				// Beste Postion
-			case 3:
-				return createIcon(spieler, PlayerSkill.KEEPER);
-
-			case 4:
-				return createIcon(spieler, PlayerSkill.DEFENDING);
-
-			case 5:
-				return createIcon(spieler, PlayerSkill.PLAYMAKING);
-
-			case 6:
-				return createIcon(spieler, PlayerSkill.PASSING);
-
-			case 7:
-				return createIcon(spieler, PlayerSkill.WINGER);
-
-			case 8:
-				return createIcon(spieler, PlayerSkill.SCORING);
-
-			case 9:
-				return createIcon(spieler, PlayerSkill.SET_PIECES);
-
-			case 10:
-				return createIcon(spieler, PlayerSkill.STAMINA);
-
-			case 11:
-				return Integer.toString(spieler.getSpielerID());
-
-			default:
-				return DEFAULT_VALUE;
-			}
-		} catch (Exception e) {
-			return DEFAULT_VALUE;
+		switch (columnIndex) {
+		case 0:
+			// Spielername
+			return spieler.getName();
+		case 1:
+			// Spieleralter
+			return spieler.getAlterWithAgeDaysAsString();
+		case 2:
+			// Beste Postion
+			return SpielerPosition.getNameForPosition(spieler.getIdealPosition()) + " ("
+					+ spieler.getIdealPosStaerke(true) + ")";
+		case 3:
+			return createIcon(spieler, PlayerSkill.KEEPER);
+		case 4:
+			return createIcon(spieler, PlayerSkill.DEFENDING);
+		case 5:
+			return createIcon(spieler, PlayerSkill.PLAYMAKING);
+		case 6:
+			return createIcon(spieler, PlayerSkill.PASSING);
+		case 7:
+			return createIcon(spieler, PlayerSkill.WINGER);
+		case 8:
+			return createIcon(spieler, PlayerSkill.SCORING);
+		case 9:
+			return createIcon(spieler, PlayerSkill.SET_PIECES);
+		case 10:
+			return createIcon(spieler, PlayerSkill.STAMINA);
+		case 11:
+			return Integer.toString(spieler.getSpielerID());
+		default:
+			return "";
 		}
 	}
 
@@ -189,7 +182,7 @@ public class OutputTableModel extends AbstractTableModel {
 	 * Refill the table with the new training based on the last changes
 	 */
 	public void fillWithData() {
-		p_V_data = HOVerwaltung.instance().getModel().getAllSpieler();
+		this.data = new ArrayList<Spieler>(HOVerwaltung.instance().getModel().getAllSpieler());
 		fireTableDataChanged();
 	}
 
@@ -249,5 +242,10 @@ public class OutputTableModel extends AbstractTableModel {
 				trainingLength, 1));
 
 		return vi;
+	}
+
+	private class Row {
+		Spieler spieler;
+		VerticalIndicator icon;
 	}
 }
