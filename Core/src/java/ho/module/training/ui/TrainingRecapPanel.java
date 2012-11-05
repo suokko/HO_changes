@@ -9,6 +9,7 @@ import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
+import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
@@ -17,8 +18,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -42,19 +41,17 @@ public class TrainingRecapPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 7240288702397251461L;
 	private static final int fixedColumns = 3;
-
 	private BaseTableModel tableModel;
-
-    //private HashMap playerRef;
     private TrainingRecapTable recapTable;
+    private final TrainingModel model;
 
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new TrainingRecapPanel object.
      */
-    public TrainingRecapPanel() {
-        super();
+    public TrainingRecapPanel(TrainingModel model) {
+    	this.model = model;
         reload();
     }
 
@@ -78,9 +75,8 @@ public class TrainingRecapPanel extends JPanel {
 
         for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
             Spieler player = iter.next();
-            StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
             FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
-            		sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
+            		this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
             List<ISkillup> su = ftm.getFutureSkillups();
 
             // Skip player!

@@ -2,6 +2,8 @@ package ho.module.training;
 
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
+import ho.core.model.HOModel;
+import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
 import ho.module.training.ui.MainPanel;
@@ -38,6 +40,7 @@ public class TrainingPanel extends JPanel {
 
 	private void initialize() {
 		model = new TrainingModel();
+		setStaffInTrainingModel(model);
 		initComponents();
 		addListeners();		
 	}
@@ -56,10 +59,10 @@ public class TrainingPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 		skillupPanel = new SkillupPanel(this.model);
-		playerDetailPanel = new PlayerDetailPanel();
+		playerDetailPanel = new PlayerDetailPanel(this.model);
 		trainPanel = new ho.module.training.ui.TrainingPanel();
-		staffPanel = new StaffPanel();
-		tabbedPanel = new MainPanel();
+		staffPanel = new StaffPanel(this.model);
+		tabbedPanel = new MainPanel(this.model);
 
 		JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, skillupPanel, staffPanel);
 
@@ -92,24 +95,6 @@ public class TrainingPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the Skillup Panel where the past skillup are shown
-	 * 
-	 * @return
-	 */
-	public static SkillupPanel getSkillupPanel() {
-		return skillupPanel;
-	}
-
-	/**
-	 * Returns the Staff Panel where the staff settings are shown
-	 * 
-	 * @return
-	 */
-	public static StaffPanel getStaffPanel() {
-		return staffPanel;
-	}
-
-	/**
 	 * Returns the Training Panel where the past and future training are shown
 	 * 
 	 * @return
@@ -129,7 +114,7 @@ public class TrainingPanel extends JPanel {
 		trainPanel.reload();
 
 		// reload the staff, could have changed
-		staffPanel.reload();
+		setStaffInTrainingModel(this.model);
 
 		// recalculate and update the main panel
 		tabbedPanel.reload();
@@ -138,6 +123,18 @@ public class TrainingPanel extends JPanel {
 		refreshPlayerDetail();
 	}
 
+	private void setStaffInTrainingModel(TrainingModel trainingModel) {
+		HOModel hoModel = HOVerwaltung.instance().getModel();
+		if (hoModel.getVerein() != null) {
+			trainingModel.setNumberOfCoTrainers(hoModel.getVerein().getCoTrainer());
+		}
+		if (hoModel.getTrainer() != null) {
+			trainingModel.setTrainerLevel(hoModel.getTrainer().getTrainer());
+		} else {
+			trainingModel.setTrainerLevel(4);
+		}
+	}
+	
 	/**
 	 * Refresh all the previsions, this is used when we haven't downloaded
 	 * anything from HT but the user has changed something in the staff or in

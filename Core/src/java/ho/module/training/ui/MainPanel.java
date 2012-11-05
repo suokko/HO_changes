@@ -2,6 +2,7 @@
 package ho.module.training.ui;
 
 import ho.core.model.HOVerwaltung;
+import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.BorderLayout;
 
@@ -32,10 +33,10 @@ public class MainPanel extends JPanel {
     /**
      * Creates a new OutputPanel object.
      */
-    public MainPanel() {
+    public MainPanel(TrainingModel model) {
         super();
-        output = new OutputPanel();
-        recap = new TrainingRecapPanel();
+        output = new OutputPanel(model);
+        recap = new TrainingRecapPanel(model);
         analyzer = new AnalyzerPanel();
         effect = new EffectPanel();
         jbInit();

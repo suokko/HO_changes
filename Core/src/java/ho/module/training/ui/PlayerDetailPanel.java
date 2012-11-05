@@ -12,6 +12,7 @@ import ho.core.training.FutureTrainingManager;
 import ho.core.training.TrainingPerWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
+import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -34,11 +35,13 @@ public class PlayerDetailPanel extends ImagePanel {
 	private JLabel playerLabel = new JLabel("", SwingConstants.CENTER);
 	private ColorBar[] levelBar = new ColorBar[8];
 	private JLabel[] skillLabel = new JLabel[8];
+	private final TrainingModel model;
 
 	/**
 	 * Creates the panel and its components
 	 */
-	public PlayerDetailPanel() {
+	public PlayerDetailPanel(TrainingModel model) {
+		this.model = model;
 		initComponents();
 	}
 
@@ -65,10 +68,9 @@ public class PlayerDetailPanel extends ImagePanel {
 		List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel()
 				.getFutureTrainings();
 
-		StaffPanel sp = ho.module.training.TrainingPanel.getStaffPanel();
 		// instantiate a future train manager to calculate the previsions */
 		FutureTrainingManager ftm = new FutureTrainingManager(spieler, trainings,
-				sp.getCoTrainerNumber(), sp.getTrainerLevelNumber());
+				this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
 
 		for (int i = 0; i < 8; i++) {
 			int skillIndex = Skills.getSkillAtPosition(i);

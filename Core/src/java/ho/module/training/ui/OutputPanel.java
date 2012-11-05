@@ -11,6 +11,7 @@ import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
 import ho.module.training.ui.model.OutputTableModel;
+import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.OutputTableRenderer;
 
 import java.awt.BorderLayout;
@@ -48,12 +49,14 @@ public class OutputPanel extends ImagePanel {
 	private static final long serialVersionUID = 7955126207696897546L;
 	private JTable outputTable;
 	private OutputTableSorter sorter;
+	private final TrainingModel model;
 
 	/**
 	 * Creates a new OutputPanel object.
 	 */
-	public OutputPanel() {
+	public OutputPanel(TrainingModel model) {
 		super();
+		this.model = model;
 		initComponents();
 	}
 
@@ -69,8 +72,8 @@ public class OutputPanel extends ImagePanel {
 	 * Import a match from Hattrick
 	 */
 	private void import_matches() {
-		String input = JOptionPane.showInputDialog(HOVerwaltung.instance()
-				.getLanguageString("GameID"));
+		String input = JOptionPane.showInputDialog(HOVerwaltung.instance().getLanguageString(
+				"GameID"));
 
 		try {
 			if (input != null) {
@@ -79,24 +82,19 @@ public class OutputPanel extends ImagePanel {
 			Integer matchID = new Integer(input);
 
 			if (HelperWrapper.instance().isUserMatch(input, MatchType.LEAGUE)) {
-				if (OnlineWorker.downloadMatchData(matchID.intValue(),
-						MatchType.LEAGUE, false)) {
-					Helper.showMessage(null, HOVerwaltung.instance()
-							.getLanguageString("MatchImported"), HOVerwaltung
-							.instance().getLanguageString("ImportOK"), 1);
+				if (OnlineWorker.downloadMatchData(matchID.intValue(), MatchType.LEAGUE, false)) {
+					Helper.showMessage(null,
+							HOVerwaltung.instance().getLanguageString("MatchImported"),
+							HOVerwaltung.instance().getLanguageString("ImportOK"), 1);
 					RefreshManager.instance().doRefresh();
 				}
 			} else {
-				Helper.showMessage(null, HOVerwaltung.instance()
-						.getLanguageString("NotUserMatch"), HOVerwaltung
-						.instance().getLanguageString("ImportError"), 1);
+				Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("NotUserMatch"),
+						HOVerwaltung.instance().getLanguageString("ImportError"), 1);
 			}
 		} catch (Exception e) {
-			Helper.showMessage(
-					null,
-					HOVerwaltung.instance().getLanguageString(
-							"MatchNotImported"), HOVerwaltung.instance()
-							.getLanguageString("ImportError"), 1);
+			Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchNotImported"),
+					HOVerwaltung.instance().getLanguageString("ImportError"), 1);
 			HOLogger.instance().log(OutputPanel.class, e);
 		}
 	}
@@ -106,7 +104,7 @@ public class OutputPanel extends ImagePanel {
 	 */
 	private void initComponents() {
 		setLayout(new BorderLayout());
-		OutputTableModel outputTableModel = new OutputTableModel();
+		OutputTableModel outputTableModel = new OutputTableModel(this.model);
 
 		sorter = new OutputTableSorter(outputTableModel);
 		outputTable = new OutputTable(sorter);
@@ -136,19 +134,17 @@ public class OutputPanel extends ImagePanel {
 		}
 
 		// Hide column 11 (playerId)
-		TableColumn playerIDCol = outputTable.getTableHeader().getColumnModel()
-				.getColumn(11);
+		TableColumn playerIDCol = outputTable.getTableHeader().getColumnModel().getColumn(11);
 		playerIDCol.setPreferredWidth(0);
 		playerIDCol.setMinWidth(0);
 		playerIDCol.setMaxWidth(0);
 		outputTable.setAutoResizeMode(0);
 		outputTable.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		add(new JScrollPane(outputTable), BorderLayout.CENTER);
-		
+
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
-		JButton importButton = new JButton(HOVerwaltung.instance()
-				.getLanguageString("ImportMatch"));
+		JButton importButton = new JButton(HOVerwaltung.instance().getLanguageString("ImportMatch"));
 		importButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -159,7 +155,7 @@ public class OutputPanel extends ImagePanel {
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.insets = new Insets(6, 8, 6, 4);
 		buttonPanel.add(importButton, gbc);
-		
+
 		JButton calculateButton = new JButton(HOVerwaltung.instance()
 				.getLanguageString("Calculate"));
 		calculateButton.addActionListener(new ActionListener() {
@@ -167,16 +163,15 @@ public class OutputPanel extends ImagePanel {
 			public void actionPerformed(ActionEvent arg0) {
 				TrainingManager.instance().recalcSubskills(true);
 				reload();
-				ho.module.training.TrainingPanel.getTabbedPanel().getRecap()
-						.reload();
+				ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
 			}
 		});
-		
+
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.insets = new Insets(6, 4, 6, 8);
 		buttonPanel.add(calculateButton, gbc);
-		
+
 		add(buttonPanel, BorderLayout.NORTH);
 	}
 }

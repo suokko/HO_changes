@@ -8,6 +8,7 @@ import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
+import ho.module.training.ui.model.ModelChange;
 import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
@@ -48,7 +49,7 @@ public class SkillupPanel extends JPanel {
 		this.model.addModelChangeListener(new ModelChangeListener() {
 
 			@Override
-			public void activePlayerChanged() {
+			public void modelChanged(ModelChange change) {
 				reload(model.getActivePlayer());
 			}
 		});
@@ -97,7 +98,7 @@ public class SkillupPanel extends JPanel {
 
 		// Add future skillups
 		for (ISkillup skillup : this.model.getFutureTrainingManager().getFutureSkillups()) {
-			ho.module.training.TrainingPanel.getSkillupPanel().addRow(skillup);
+			addRow(skillup);
 		}
 
 		setColumnWidth(1, 50);
