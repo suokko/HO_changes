@@ -1,17 +1,17 @@
 // %1126721451963:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.UserParameter;
 import ho.core.training.TrainingManager;
-import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
 import ho.module.training.ui.model.PastTrainingsTableModel;
 import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -34,10 +33,10 @@ public class TrainingPanel extends JPanel {
 
 	private static final long serialVersionUID = 5456485854278251422L;
 	/** Future trainings table model */
-	private FutureTrainingsTableModel futureModel;
+	private FutureTrainingsTableModel futureTrainingsTableModel;
 	/** Past trainings table model */
-	private PastTrainingsTableModel oldTableModel;
-	private JTable futureTable;
+	private PastTrainingsTableModel pastTrainingsTableModel;
+	private JTable futureTrainingsTable;
 	private JButton setAllButton;
 	private final TrainingModel model;
 
@@ -55,80 +54,83 @@ public class TrainingPanel extends JPanel {
 	 * Populate the table is called everytime a refresh command is issued
 	 */
 	public void reload() {
-		oldTableModel.populate(TrainingManager.instance().getTrainingWeekList());
-		futureModel.populate(this.model.getFutureTrainings());
-		updateUI();
+		pastTrainingsTableModel.populate(TrainingManager.instance().getTrainingWeekList());
+		futureTrainingsTableModel.populate(this.model.getFutureTrainings());
 	}
 
 	private void addListeners() {
 		this.setAllButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				TableCellEditor editor = futureTable.getCellEditor();
+				TableCellEditor editor = futureTrainingsTable.getCellEditor();
 
 				if (editor != null) {
 					editor.stopCellEditing();
 				}
 
 				JOptionPane.showMessageDialog((JFrame) getTopLevelAncestor(),
-						new FutureSettingPanel(model, futureModel), HOVerwaltung.instance()
-								.getLanguageString("SetAll"),
-						JOptionPane.PLAIN_MESSAGE);
+						new FutureSettingPanel(model, futureTrainingsTableModel), HOVerwaltung
+								.instance().getLanguageString("SetAll"), JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 	}
-	
+
 	/**
 	 * Initialize the object layout
 	 */
 	private void initComponents() {
+		JPanel pastTrainingsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints uGbc = new GridBagConstraints();
+		uGbc.anchor = GridBagConstraints.WEST;
+		uGbc.insets = new Insets(3, 3, 3, 3);
 
-		// create and populate the old training table
-		oldTableModel = new PastTrainingsTableModel();
-		JTable oldTable = new TrainingTable(oldTableModel);
-		oldTableModel.populate(TrainingManager.instance().getTrainingWeekList());
+		JLabel pastTrainingsLabel = new JLabel();
+		pastTrainingsLabel.setText(HOVerwaltung.instance().getLanguageString("PastTrainings"));
+		uGbc.gridx = 0;
+		uGbc.gridy = 0;
+		pastTrainingsPanel.add(pastTrainingsLabel, uGbc);
 
-		JScrollPane scrollPane = new JScrollPane(oldTable);
+		this.pastTrainingsTableModel = new PastTrainingsTableModel();
+		JTable pastTrainingsTable = new TrainingTable(this.pastTrainingsTableModel);
+		JScrollPane upperScrollPane = new JScrollPane(pastTrainingsTable);
+		upperScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		uGbc.gridy = 1;
+		uGbc.weightx = 1.0;
+		uGbc.weighty = 1.0;
+		uGbc.fill = GridBagConstraints.BOTH;
+		pastTrainingsPanel.add(upperScrollPane, uGbc);
 
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JPanel futureTrainingsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints lGbc = new GridBagConstraints();
+		lGbc.anchor = GridBagConstraints.WEST;
+		lGbc.insets = new Insets(3, 3, 3, 3);
 
-		// create and populate the future training table
-		futureModel = new FutureTrainingsTableModel(this.model);
-		futureTable = new TrainingTable(futureModel);
-		futureModel.populate(this.model.getFutureTrainings());
-
-		JScrollPane scrollPane2 = new JScrollPane(futureTable);
-
-		scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane2
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-		// Organize the panel layout
-		JPanel panel2 = new ImagePanel();
-		panel2.setLayout(new BorderLayout());
-		panel2.setOpaque(false);
-
-		JLabel l = new JLabel(
-				HOVerwaltung.instance().getLanguageString("FutureTrainings"), SwingConstants.CENTER);
-		l.setOpaque(false);
+		JLabel futureTrainingLabel = new JLabel();
+		futureTrainingLabel.setText(HOVerwaltung.instance().getLanguageString("FutureTrainings"));
+		lGbc.gridx = 0;
+		lGbc.gridy = 0;
+		futureTrainingsPanel.add(futureTrainingLabel, lGbc);
 
 		this.setAllButton = new JButton(HOVerwaltung.instance().getLanguageString("SetAll"));
-		panel2.add(this.setAllButton, BorderLayout.EAST);
-		panel2.add(l, BorderLayout.CENTER);
+		lGbc.gridx = 1;
+		lGbc.anchor = GridBagConstraints.EAST;
+		futureTrainingsPanel.add(this.setAllButton, lGbc);
 
-		JSplitPane pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel2, scrollPane2);
-		pane2.setDividerLocation(25);
-		pane2.setDividerSize(0);
+		this.futureTrainingsTableModel = new FutureTrainingsTableModel(this.model);
+		this.futureTrainingsTable = new TrainingTable(this.futureTrainingsTableModel);
+		JScrollPane lowerScrollPane = new JScrollPane(this.futureTrainingsTable);
+		lowerScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		lGbc.gridx = 0;
+		lGbc.gridy = 1;
+		lGbc.gridwidth = 2;
+		lGbc.weightx = 1.0;
+		lGbc.weighty = 1.0;
+		lGbc.fill = GridBagConstraints.BOTH;
+		futureTrainingsPanel.add(lowerScrollPane, lGbc);
 
-		JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, pane2);
-
-		pane.setDividerLocation(UserParameter.instance().training_splitPane);
-		pane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new DividerListener(
-				DividerListener.training_splitPane));
-		pane.setDividerSize(1);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pastTrainingsPanel,
+				futureTrainingsPanel);
 		setLayout(new BorderLayout());
-		setOpaque(false);
-		add(pane, BorderLayout.CENTER);
+		add(splitPane, BorderLayout.CENTER);
 	}
 }
