@@ -144,6 +144,10 @@ public class OutputPanel extends ImagePanel {
 	}
 
 	private void addListeners() {
+		this.outputTable.getSelectionModel().addListSelectionListener(
+				new PlayerSelectionListener(this.model, this.outputTable,
+						OutputTableModel.COL_PLAYER_ID));
+
 		this.importButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -210,9 +214,6 @@ public class OutputPanel extends ImagePanel {
 		outputTable.getTableHeader().setReorderingAllowed(false);
 		outputTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		outputTable.setDefaultRenderer(Object.class, new OutputTableRenderer());
-		outputTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(this.model, this.outputTable,
-						OutputTableModel.COL_PLAYER_ID));
 
 		for (int i = 0; i < outputTable.getColumnCount(); i++) {
 			TableColumn column = outputTable.getColumnModel().getColumn(i);

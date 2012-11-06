@@ -2,6 +2,9 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
+import ho.core.gui.CursorToolkit;
+import ho.core.gui.IRefreshable;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
@@ -24,6 +27,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,18 +56,21 @@ import javax.swing.table.TableColumn;
  * 
  * @author NetHyperon
  */
-public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListener {
+public class AnalyzerPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = -2152169077412317532L;
 	private static final String CMD_SELECT_ALL = "selectAll";
 	private static final String CMD_CLEAR_ALL = "clearAll";
 	private ButtonModel oldPlayers;
-	private JPanel filterPanel = new ImagePanel();
-	private JTable changesTable = new JTable();
+	private JPanel filterPanel;
+	private JTable changesTable;
+	private JCheckBox oldPlayersCheckBox;
 	private Map<Integer, ButtonModel> buttonModels = new HashMap<Integer, ButtonModel>();
 	private Map<Integer, List<SkillChange>> skillups;
 	private Map<Integer, List<SkillChange>> skillupsOld;
 	private final TrainingModel model;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new AnalyzerPanel object.
@@ -70,9 +78,20 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 	public AnalyzerPanel(TrainingModel model) {
 		super();
 		this.model = model;
-		initComponents();
-		addListeners();
-		reload();
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						reload();
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -91,25 +110,23 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 	/**
 	 * Reload the data and redraw the panel
 	 */
-	public void reload() {
-		this.skillups = getSkillups(HOVerwaltung.instance().getModel().getAllSpieler());
-		this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel().getAllOldSpieler());
-		updateFilterPanel();
-		updateTableModel();
-	}
-
-	/**
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-	 */
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		updateFilterPanel();
+	private void reload() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			this.skillups = getSkillups(HOVerwaltung.instance().getModel().getAllSpieler());
+			this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel().getAllOldSpieler());
+			updateFilterPanel();
+			updateTableModel();
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+		this.needsRefresh = false;
 	}
 
 	/**
 	 * Sets the model for skill changes table.
 	 */
-	public void updateTableModel() {
+	private void updateTableModel() {
 		List<SkillChange> values = new ArrayList<SkillChange>();
 
 		for (Iterator<Integer> iter = this.buttonModels.keySet().iterator(); iter.hasNext();) {
@@ -180,9 +197,33 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 				.setCellRenderer(new SkillupTypeTableCellRenderer());
 	}
 
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			reload();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
+
 	private void addListeners() {
-		this.model.addModelChangeListener(new ModelChangeListener() {
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
 			
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					reload();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
+		
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
 			@Override
 			public void modelChanged(ModelChange change) {
 				if (change == ModelChange.ACTIVE_PLAYER) {
@@ -190,8 +231,20 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 				}
 			}
 		});
+
+		this.oldPlayersCheckBox.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				updateFilterPanel();
+			}
+		});
+
+		this.changesTable.getSelectionModel().addListSelectionListener(
+				new PlayerSelectionListener(this.model, this.changesTable,
+						ChangesTableModel.COL_PLAYER_ID));
 	}
-	
+
 	private void setAllSelected(boolean selected) {
 		for (Iterator<ButtonModel> iter = this.buttonModels.values().iterator(); iter.hasNext();) {
 			ButtonModel bModel = iter.next();
@@ -293,29 +346,24 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 				.getLanguageString("TAB_SKILL")));
 
 		// Add selection listener.
-		changesTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(this.model, this.changesTable, ChangesTableModel.COL_PLAYER_ID));
+		this.changesTable = new JTable();
+		skillPanel.add(new JScrollPane(this.changesTable), BorderLayout.CENTER);
 
-		JScrollPane changesPane = new JScrollPane(changesTable);
-
-		skillPanel.add(changesPane, BorderLayout.CENTER);
-
-		JCheckBox cbOldPlayers = new JCheckBox();
-
-		cbOldPlayers.setOpaque(false);
-		cbOldPlayers.setText(HOVerwaltung.instance().getLanguageString("IncludeOld")); //$NON-NLS-1$
-		cbOldPlayers.setFocusable(false);
-		cbOldPlayers.setSelected(false);
-		cbOldPlayers.addChangeListener(this);
-		cbOldPlayers.addActionListener(this);
-		this.oldPlayers = cbOldPlayers.getModel();
-		skillPanel.add(cbOldPlayers, BorderLayout.SOUTH);
+		this.oldPlayersCheckBox = new JCheckBox();
+		this.oldPlayersCheckBox.setOpaque(false);
+		this.oldPlayersCheckBox.setText(HOVerwaltung.instance().getLanguageString("IncludeOld")); //$NON-NLS-1$
+		this.oldPlayersCheckBox.setFocusable(false);
+		this.oldPlayersCheckBox.setSelected(false);
+		this.oldPlayersCheckBox.addActionListener(this);
+		this.oldPlayers = this.oldPlayersCheckBox.getModel();
+		skillPanel.add(this.oldPlayersCheckBox, BorderLayout.SOUTH);
 
 		JPanel sidePanel = new ImagePanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(20, 8, 4, 8);
+		filterPanel = new ImagePanel();
 		sidePanel.add(filterPanel, gbc);
 
 		filterPanel.setLayout(new GridBagLayout());
@@ -381,7 +429,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 
 		filterPanel.revalidate();
 	}
-	
+
 	private void selectPlayerFromModel() {
 		this.changesTable.clearSelection();
 		Spieler player = this.model.getActivePlayer();
@@ -392,7 +440,8 @@ public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListe
 				int id = Integer.parseInt(val);
 				if (player.getSpielerID() == id) {
 					int viewIndex = this.changesTable.convertRowIndexToView(i);
-					this.changesTable.getSelectionModel().addSelectionInterval(viewIndex, viewIndex);
+					this.changesTable.getSelectionModel()
+							.addSelectionInterval(viewIndex, viewIndex);
 				}
 			}
 		}

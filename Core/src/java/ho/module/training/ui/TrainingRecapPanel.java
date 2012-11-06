@@ -1,6 +1,9 @@
 // %776182880:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.CursorToolkit;
+import ho.core.gui.IRefreshable;
+import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
@@ -14,6 +17,8 @@ import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,86 +45,117 @@ public class TrainingRecapPanel extends JPanel {
 	private BaseTableModel tableModel;
 	private TrainingRecapTable recapTable;
 	private final TrainingModel model;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new TrainingRecapPanel object.
 	 */
 	public TrainingRecapPanel(TrainingModel model) {
 		this.model = model;
-		reload();
-		addListeners();
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						reload();
+					}
+				}
+			}
+		});
+	}
+
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			reload();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
 	}
 
 	/**
 	 * Reload the panel
 	 */
-	public void reload() {
-		jbInit();
+	private void reload() {
+		CursorToolkit.stopWaitCursor(this);
+		try {
+			// empty the table
+			List<String> columns = getColumns();
+			List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 
-		// empty the table
-		Vector<String> columns = getColumns();
-		Vector<Spieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
+			List<Vector<String>> players = new ArrayList<Vector<String>>();
 
-		List<Vector<String>> players = new ArrayList<Vector<String>>();
+			for (Spieler player : list) {
+				FutureTrainingManager ftm = new FutureTrainingManager(player,
+						this.model.getFutureTrainings(), this.model.getNumberOfCoTrainers(),
+						this.model.getTrainerLevel());
+				List<ISkillup> su = ftm.getFutureSkillups();
 
-		for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
-			Spieler player = iter.next();
-			FutureTrainingManager ftm = new FutureTrainingManager(player,
-					this.model.getFutureTrainings(), this.model.getNumberOfCoTrainers(),
-					this.model.getTrainerLevel());
-			List<ISkillup> su = ftm.getFutureSkillups();
-
-			// Skip player!
-			if (su.size() == 0) {
-				continue;
-			}
-
-			HashMap<String, ISkillup> maps = new HashMap<String, ISkillup>();
-
-			for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
-				ISkillup skillup = iterator.next();
-
-				maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup); //$NON-NLS-1$
-			}
-
-			Vector<String> row = new Vector<String>();
-
-			row.add(player.getName());
-			row.add(player.getAlterWithAgeDaysAsString());
-			row.add(Integer.toString(ftm.getTrainingSpeed()));
-
-			for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-				ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
-
-				if (s == null) {
-					row.add(""); //$NON-NLS-1$
-				} else {
-					row.add(s.getType() + " " + s.getValue()); //$NON-NLS-1$
+				// Skip player!
+				if (su.size() == 0) {
+					continue;
 				}
+
+				HashMap<String, ISkillup> maps = new HashMap<String, ISkillup>();
+
+				for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
+					ISkillup skillup = iterator.next();
+					maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup);
+				}
+
+				Vector<String> row = new Vector<String>();
+				row.add(player.getName());
+				row.add(player.getAlterWithAgeDaysAsString());
+				row.add(Integer.toString(ftm.getTrainingSpeed()));
+
+				for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
+					ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
+
+					if (s == null) {
+						row.add("");
+					} else {
+						row.add(s.getType() + " " + s.getValue());
+					}
+				}
+
+				row.add(Integer.toString(player.getSpielerID()));
+				players.add(row);
 			}
 
-			row.add(Integer.toString(player.getSpielerID()));
+			// Sort the players
+			Collections.sort(players, new TrainingComparator(2, fixedColumns));
 
-			// playerRef.put(player.getName(), player.getSpielerID() + "");
-			players.add(row);
-
-			// count++;
-		}
-
-		// Sort the players
-		Collections.sort(players, new TrainingComparator(2, fixedColumns));
-
-		// and add them to the model
-		for (Iterator<Vector<String>> iter = players.iterator(); iter.hasNext();) {
-			Vector<String> row = iter.next();
-
-			tableModel.addRow(row);
-		}
-
-		updateUI();
+			// and add them to the model
+			for (Vector<String> row : players) {
+				tableModel.addRow(row);
+			}
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}		
 	}
 
 	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
+
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					reload();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
+
 		this.model.addModelChangeListener(new ModelChangeListener() {
 
 			@Override
@@ -179,33 +215,28 @@ public class TrainingRecapPanel extends JPanel {
 	/**
 	 * Initialize the GUI
 	 */
-	private void jbInit() {
-		removeAll();
+	private void initComponents() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
 		JPanel panel = new ImagePanel();
-
 		panel.setOpaque(false);
 		panel.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel(
-				HOVerwaltung.instance().getLanguageString("Recap"), SwingConstants.CENTER); //$NON-NLS-1$
+		JLabel title = new JLabel(HOVerwaltung.instance().getLanguageString("Recap"),
+				SwingConstants.CENTER);
 
 		title.setOpaque(false);
 		panel.add(title, BorderLayout.NORTH);
 
 		Vector<String> columns = getColumns();
-
 		tableModel = new BaseTableModel(new Vector<Object>(), columns);
 
 		JTable table = new JTable(tableModel);
-
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		recapTable = new TrainingRecapTable(table, fixedColumns);
-
 		recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
 
 		JTable scrollTable = recapTable.getScrollTable();
