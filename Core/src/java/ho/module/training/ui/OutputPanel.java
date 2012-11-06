@@ -1,6 +1,8 @@
 // %3839090226:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.CursorToolkit;
+import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
@@ -59,6 +61,7 @@ public class OutputPanel extends ImagePanel {
 	private JButton importButton;
 	private JButton calculateButton;
 	private boolean initialized = false;
+	private boolean needsRefresh = false;
 	private final TrainingModel model;
 
 	/**
@@ -76,6 +79,9 @@ public class OutputPanel extends ImagePanel {
 					if (!initialized) {
 						initialize();
 					}
+					if (needsRefresh) {
+						reload();
+					}
 				}
 			}
 		});
@@ -84,17 +90,26 @@ public class OutputPanel extends ImagePanel {
 	/**
 	 * update the panel with the new value
 	 */
-	public void reload() {
-		if (this.initialized) {
+	private void reload() {
+		CursorToolkit.startWaitCursor(this);
+		try {
 			((OutputTableModel) outputTable.getModel()).fillWithData();
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
 		}
+		this.needsRefresh = false;
 	}
 
 	private void initialize() {
-		initComponents();
-		addListeners();
-		this.initialized = true;
-		reload();
+		CursorToolkit.startWaitCursor(this);
+		try {
+			initComponents();
+			addListeners();
+			reload();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
 	}
 
 	/**
@@ -139,10 +154,9 @@ public class OutputPanel extends ImagePanel {
 		this.calculateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// recalcSubskills() causes UI update via RefreshManager, so no
+				// need to update UI ourself
 				TrainingManager.instance().recalcSubskills(true);
-				reload();
-				// TODO fire events to reload views
-				// ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
 			}
 		});
 
@@ -152,6 +166,18 @@ public class OutputPanel extends ImagePanel {
 			public void modelChanged(ModelChange change) {
 				if (change == ModelChange.ACTIVE_PLAYER) {
 					selectPlayerFromModel();
+				}
+			}
+		});
+
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
+
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					reload();
+				} else {
+					needsRefresh = true;
 				}
 			}
 		});
