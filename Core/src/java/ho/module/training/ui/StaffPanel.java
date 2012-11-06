@@ -4,7 +4,8 @@ package ho.module.training.ui;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HOLogger;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.BorderLayout;
@@ -40,70 +41,81 @@ public class StaffPanel extends JPanel {
 	 */
 	public StaffPanel(TrainingModel model) {
 		this.model = model;
-		jbInit();
+		initialize();
 	}
 
 	private void setCoTrainer(int value) {
 		if (value > 10) {
 			value = 10;
 		}
-
-		try {
-			coTrainerCombo.setSelectedIndex(value);
-		} catch (Exception e) {
-			HOLogger.instance().log(StaffPanel.class, e);
-		}
+		this.coTrainerCombo.setSelectedIndex(value);
 	}
 
 	private void setTrainer(int value) {
 		if (value > 10) {
 			value = 10;
 		}
-
-		try {
-			trainerLevelCombo.setSelectedIndex(value);
-		} catch (Exception e) {
-			HOLogger.instance().log(StaffPanel.class, e);
-		}
+		this.trainerLevelCombo.setSelectedIndex(value);
 	}
 
-	/**
-	 * Initialize the object layout
-	 */
-	private void jbInit() {
-		HOVerwaltung hoV = HOVerwaltung.instance();
-		JPanel main = new ImagePanel();
-		main.setLayout(new GridBagLayout());
-
-		// initiates the co trainer combo box with the actual number of co
-		// trainer
-		coTrainerCombo = new JComboBox();
-		for (int i = 0; i < 11; i++) {
-			coTrainerCombo.addItem(new Integer(i));
-		}
-
+	private void initialize() {
+		initComponents();
+		addListenders();
 		setCoTrainer(this.model.getNumberOfCoTrainers());
-		coTrainerCombo.addItemListener(new ItemListener() {
+		setTrainer(this.model.getTrainerLevel() - 1);
+	}
+	
+	private void addListenders() {
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				switch (change) {
+				case TRAINER_LEVEL:
+					setTrainer(model.getTrainerLevel());
+					break;
+				case NUMBER_OF_CO_TRAINERS:
+					setCoTrainer(model.getNumberOfCoTrainers());
+					break;
+				default:
+					// do nothing
+				}
+			}
+		});
+		
+		this.coTrainerCombo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				Integer n = (Integer) coTrainerCombo.getSelectedItem();
 				model.setNumberOfCoTrainers(n.intValue());
 			}
 		});
-
-		// initiates the coach combo box with the actual level of coach
-		trainerLevelCombo = new JComboBox();
-		for (int i = 1; i < 9; i++) {
-			trainerLevelCombo.addItem(PlayerAbility.getNameForSkill(i, false));
-		}
-
-		setTrainer(this.model.getTrainerLevel() - 1);
-		trainerLevelCombo.addItemListener(new ItemListener() {
+		
+		this.trainerLevelCombo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				model.setTrainerLevel(trainerLevelCombo.getSelectedIndex() + 1);
 			}
 		});
+	}
+
+	/**
+	 * Initialize the object layout
+	 */
+	private void initComponents() {
+		HOVerwaltung hoV = HOVerwaltung.instance();
+		JPanel main = new ImagePanel();
+		main.setLayout(new GridBagLayout());
+
+		this.coTrainerCombo = new JComboBox();
+		for (int i = 0; i < 11; i++) {
+			this.coTrainerCombo.addItem(new Integer(i));
+		}
+
+		this.trainerLevelCombo = new JComboBox();
+		for (int i = 1; i < 9; i++) {
+			this.trainerLevelCombo.addItem(PlayerAbility.getNameForSkill(i, false));
+		}
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
