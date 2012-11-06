@@ -8,7 +8,6 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
-import ho.core.training.TrainingPerWeek;
 import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
@@ -26,203 +25,190 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
-
 /**
- * Recap Panel when future preview of skillups is shown ("Prediction" tab, "Training Recap"
- * table").
- *
+ * Recap Panel when future preview of skillups is shown ("Prediction" tab,
+ * "Training Recap" table").
+ * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class TrainingRecapPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 7240288702397251461L;
 	private static final int fixedColumns = 3;
 	private BaseTableModel tableModel;
-    private TrainingRecapTable recapTable;
-    private final TrainingModel model;
+	private TrainingRecapTable recapTable;
+	private final TrainingModel model;
 
-    //~ Constructors -------------------------------------------------------------------------------
+	/**
+	 * Creates a new TrainingRecapPanel object.
+	 */
+	public TrainingRecapPanel(TrainingModel model) {
+		this.model = model;
+		reload();
+	}
 
-    /**
-     * Creates a new TrainingRecapPanel object.
-     */
-    public TrainingRecapPanel(TrainingModel model) {
-    	this.model = model;
-        reload();
-    }
+	/**
+	 * Reload the panel
+	 */
+	public void reload() {
+		jbInit();
 
-    //~ Methods ------------------------------------------------------------------------------------
+		// empty the table
+		Vector<String> columns = getColumns();
+		Vector<Spieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
 
-    /**
-     * Reload the panel
-     */
-    public void reload() {
-        jbInit();
+		List<Vector<String>> players = new ArrayList<Vector<String>>();
 
-        // empty the table
-        Vector<String> columns = getColumns();
+		for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
+			Spieler player = iter.next();
+			FutureTrainingManager ftm = new FutureTrainingManager(player, this.model.getFutureTrainings(),
+					this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
+			List<ISkillup> su = ftm.getFutureSkillups();
 
-        //playerRef = new HashMap();
-        List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel().getFutureTrainings();
+			// Skip player!
+			if (su.size() == 0) {
+				continue;
+			}
 
-        Vector<Spieler> v = HOVerwaltung.instance().getModel().getAllSpieler();
+			HashMap<String, ISkillup> maps = new HashMap<String, ISkillup>();
 
-        List<Vector<String>> players = new ArrayList<Vector<String>>();
+			for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
+				ISkillup skillup = iterator.next();
 
-        for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
-            Spieler player = iter.next();
-            FutureTrainingManager ftm = new FutureTrainingManager(player,trainings,
-            		this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
-            List<ISkillup> su = ftm.getFutureSkillups();
+				maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup); //$NON-NLS-1$
+			}
 
-            // Skip player!
-            if (su.size() == 0) {
-                continue;
-            }
+			Vector<String> row = new Vector<String>();
 
-            HashMap<String,ISkillup> maps = new HashMap<String,ISkillup>();
+			row.add(player.getName());
+			row.add(player.getAlterWithAgeDaysAsString());
+			row.add(Integer.toString(ftm.getTrainingSpeed()));
 
-            for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
-                ISkillup skillup = iterator.next();
+			for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
+				ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
 
-                maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup); //$NON-NLS-1$
-            }
+				if (s == null) {
+					row.add(""); //$NON-NLS-1$
+				} else {
+					row.add(s.getType() + " " + s.getValue()); //$NON-NLS-1$
+				}
+			}
 
-            Vector<String> row = new Vector<String>();
+			row.add(Integer.toString(player.getSpielerID()));
 
-            row.add(player.getName());
-            row.add(player.getAlterWithAgeDaysAsString());
-            row.add(Integer.toString(ftm.getTrainingSpeed()));
+			// playerRef.put(player.getName(), player.getSpielerID() + "");
+			players.add(row);
 
-            for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-                ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
+			// count++;
+		}
 
-                if (s == null) {
-                    row.add(""); //$NON-NLS-1$
-                } else {
-                    row.add(s.getType() + " " + s.getValue()); //$NON-NLS-1$
-                }
-            }
+		// Sort the players
+		Collections.sort(players, new TrainingComparator(2, fixedColumns));
 
-            row.add(Integer.toString(player.getSpielerID()));
+		// and add them to the model
+		for (Iterator<Vector<String>> iter = players.iterator(); iter.hasNext();) {
+			Vector<String> row = iter.next();
 
-            //playerRef.put(player.getName(), player.getSpielerID() + "");
-            players.add(row);
+			tableModel.addRow(row);
+		}
 
-            //count++;
-        }
+		updateUI();
+	}
 
-        // Sort the players
-        Collections.sort(players, new TrainingComparator(2, fixedColumns));
+	/**
+	 * Get Columns name
+	 * 
+	 * @return List of string
+	 */
+	private Vector<String> getColumns() {
+		Vector<String> columns = new Vector<String>();
 
-        // and add them to the model
-        for (Iterator<Vector<String>>  iter = players.iterator(); iter.hasNext();) {
-            Vector<String> row = iter.next();
+		columns.add(HOVerwaltung.instance().getLanguageString("Spieler")); //$NON-NLS-1$
+		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.age")); //$NON-NLS-1$
+		columns.add("Speed"); //$NON-NLS-1$
 
-            tableModel.addRow(row);
-        }
+		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
+		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
 
-        updateUI();
-    }
+		// We are in the middle where season has not been updated!
+		try {
+			if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate()
+					.after(HOVerwaltung.instance().getModel().getXtraDaten().getSeriesMatchDate())) {
+				actualWeek++;
 
-    /**
-     * Get Columns name
-     *
-     * @return List of string
-     */
-    private Vector<String> getColumns() {
-        Vector<String> columns = new Vector<String>();
+				if (actualWeek == 17) {
+					actualWeek = 1;
+					actualSeason++;
+				}
+			}
+		} catch (Exception e1) {
+			// Null when first time HO is launched
+		}
 
-        columns.add(HOVerwaltung.instance().getLanguageString("Spieler")); //$NON-NLS-1$
-        columns.add(HOVerwaltung.instance().getLanguageString("ls.player.age")); //$NON-NLS-1$
-        columns.add("Speed"); //$NON-NLS-1$
+		for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
+			// calculate the week and season of the future training
+			int week = (actualWeek + i) - 1;
+			int season = actualSeason + (week / 16);
 
-        int actualSeason =HOVerwaltung.instance().getModel().getBasics().getSeason();
-        int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
+			week = (week % 16) + 1;
 
-        // We are in the middle where season has not been updated!
-        try {
-            if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate().after(HOVerwaltung.instance().getModel()
-                                                                                 .getXtraDaten()
-                                                                                 .getSeriesMatchDate())) {
-                actualWeek++;
+			columns.add(season + " " + week); //$NON-NLS-1$
+		}
 
-                if (actualWeek == 17) {
-                    actualWeek = 1;
-                    actualSeason++;
-                }
-            }
-        } catch (Exception e1) {
-            // Null when first time HO is launched
-        }
+		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.id")); //$NON-NLS-1$
 
-        for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-            // calculate the week and season of the future training
-            int week = (actualWeek + i) - 1;
-            int season = actualSeason + (week / 16);
+		return columns;
+	}
 
-            week = (week % 16) + 1;
+	/**
+	 * Initialize the GUI
+	 */
+	private void jbInit() {
+		removeAll();
+		setOpaque(false);
+		setLayout(new BorderLayout());
 
-            columns.add(season + " " + week); //$NON-NLS-1$
-        }
+		JPanel panel = new ImagePanel();
 
-        columns.add(HOVerwaltung.instance().getLanguageString("ls.player.id")); //$NON-NLS-1$
+		panel.setOpaque(false);
+		panel.setLayout(new BorderLayout());
 
-        return columns;
-    }
+		JLabel title = new JLabel(
+				HOVerwaltung.instance().getLanguageString("Recap"), SwingConstants.CENTER); //$NON-NLS-1$
 
-    /**
-     * Initialize the GUI
-     */
-    private void jbInit() {
-        removeAll();
-        setOpaque(false);
-        setLayout(new BorderLayout());
+		title.setOpaque(false);
+		panel.add(title, BorderLayout.NORTH);
 
-        JPanel panel = new ImagePanel();
+		Vector<String> columns = getColumns();
 
-        panel.setOpaque(false);
-        panel.setLayout(new BorderLayout());
+		tableModel = new BaseTableModel(new Vector<Object>(), columns);
 
-        JLabel title = new JLabel(HOVerwaltung.instance().getLanguageString("Recap"), SwingConstants.CENTER); //$NON-NLS-1$
+		JTable table = new JTable(tableModel);
 
-        title.setOpaque(false);
-        panel.add(title, BorderLayout.NORTH);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        Vector<String> columns = getColumns();
+		recapTable = new TrainingRecapTable(table, fixedColumns);
 
-        tableModel = new BaseTableModel(new Vector<Object>(), columns);
+		recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
 
-        JTable table = new JTable(tableModel);
+		JTable scrollTable = recapTable.getScrollTable();
 
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// Hide the last column
+		int lastSTCol = scrollTable.getColumnCount() - 1;
 
-        recapTable = new TrainingRecapTable(table, fixedColumns);
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setPreferredWidth(0);
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMinWidth(0);
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMaxWidth(0);
 
-        recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
+		JTable lockedTable = recapTable.getLockedTable();
+		lockedTable.getSelectionModel().addListSelectionListener(
+				new PlayerSelectionListener(scrollTable, lastSTCol));
+		panel.add(recapTable, BorderLayout.CENTER);
+		recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
 
-        JTable scrollTable = recapTable.getScrollTable();
-
-        // Hide the last column
-        int lastSTCol = scrollTable.getColumnCount() - 1;
-
-        scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setPreferredWidth(0);
-        scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMinWidth(0);
-        scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMaxWidth(0);
-
-        JTable lockedTable = recapTable.getLockedTable();
-        lockedTable.getSelectionModel().addListSelectionListener(new PlayerSelectionListener(scrollTable,
-                                                                                             lastSTCol));
-        panel.add(recapTable, BorderLayout.CENTER);
-        recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
-
-        // Add legend panel.
-        panel.add(new TrainingLegendPanel(), BorderLayout.SOUTH);
-        add(panel, BorderLayout.CENTER);
-    }
+		// Add legend panel.
+		panel.add(new TrainingLegendPanel(), BorderLayout.SOUTH);
+		add(panel, BorderLayout.CENTER);
+	}
 }

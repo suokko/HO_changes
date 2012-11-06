@@ -60,7 +60,7 @@ public class TrainingPanel extends JPanel {
 		setLayout(new BorderLayout());
 		skillupPanel = new SkillupPanel(this.model);
 		playerDetailPanel = new PlayerDetailPanel(this.model);
-		trainPanel = new ho.module.training.ui.TrainingPanel();
+		trainPanel = new ho.module.training.ui.TrainingPanel(this.model);
 		staffPanel = new StaffPanel(this.model);
 		tabbedPanel = new MainPanel(this.model);
 

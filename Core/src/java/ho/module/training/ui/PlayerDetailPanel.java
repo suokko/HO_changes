@@ -9,7 +9,6 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
 import ho.core.training.FutureTrainingManager;
-import ho.core.training.TrainingPerWeek;
 import ho.module.training.Skills;
 import ho.module.training.ui.comp.ColorBar;
 import ho.module.training.ui.model.ModelChange;
@@ -22,7 +21,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -110,10 +108,6 @@ public class PlayerDetailPanel extends ImagePanel {
 
 			// sets player number
 			playerLabel.setText(this.model.getActivePlayer().getName());
-
-			// gets the list of user defined future trainings
-			List<TrainingPerWeek> trainings = ho.module.training.TrainingPanel.getTrainPanel()
-					.getFutureTrainings();
 
 			// instantiate a future train manager to calculate the previsions */
 			FutureTrainingManager ftm = this.model.getFutureTrainingManager();

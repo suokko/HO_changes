@@ -8,10 +8,11 @@ import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
 import ho.module.training.TrainingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
+import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -25,47 +26,41 @@ import javax.swing.JPanel;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class FutureSettingPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 4872598003436712955L;
 	private FutureTrainingsTableModel futureModel;
     private JComboBox intensity;
     private JComboBox staminaTrainingPart;
     private JComboBox training;
-
-    //~ Constructors -------------------------------------------------------------------------------
+    private final TrainingModel model;
 
     /**
      * Creates a new FutureSettingPanel object.
      *
      * @param fm The futureTraining table model, used to update it when needed
      */
-    public FutureSettingPanel(FutureTrainingsTableModel fm) {
+    public FutureSettingPanel(TrainingModel model, FutureTrainingsTableModel fm) {
         super();
+        this.model = model;
         futureModel = fm;
         jbInit();
     }
-
-    //~ Methods ------------------------------------------------------------------------------------
 
     /**
      * Populate the Future training table with the future training
      */
     protected void resetFutureTrainings() {
-        List<TrainingPerWeek> futureTrainings = DBManager.instance().getFutureTrainingsVector();
+        List<TrainingPerWeek> futureTrainingsToSave = new ArrayList<TrainingPerWeek>();
 
-        for (Iterator<TrainingPerWeek> iter = futureTrainings.iterator(); iter.hasNext();) {
-        	TrainingPerWeek train = iter.next();
+        for (TrainingPerWeek train: this.model.getFutureTrainings()) {
             train.setTrainingIntensity(intensity.getSelectedIndex());
             train.setStaminaPart(staminaTrainingPart.getSelectedIndex() + 5);
             train.setTrainingType(((CBItem)training.getSelectedItem()).getId());
-            DBManager.instance().saveFutureTraining(train);
+            futureTrainingsToSave.add(train);
         }
 
-        futureModel.populate();
+        this.model.saveFutureTrainings(futureTrainingsToSave);
+        futureModel.populate(this.model.getFutureTrainings());
         TrainingPanel.getTrainPanel().updateUI();
         TrainingPanel.refreshPlayerDetail();
     }

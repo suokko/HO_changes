@@ -14,21 +14,13 @@ import javax.swing.table.AbstractTableModel;
  * Basic training table model
  */
 public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
-    //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 5399479264645517270L;
-
+	protected List<TrainingPerWeek> trainings;
     /** Vector of ITrainingPerPlayer object */
     protected Vector<Object[]> p_V_data;
-
-    /** Vector of ITrainingPerWeek object */
-    protected List<TrainingPerWeek> p_V_trainingsVector;
     private String[] columnNames;
 
-    //~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Creates a new AbstractTrainingsTableModel object.
@@ -37,18 +29,19 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
      */
     public AbstractTrainingsTableModel() {
         p_V_data = new Vector<Object[]>();
-        p_V_trainingsVector = new Vector<TrainingPerWeek>();
         columnNames = new String[5];
         HOVerwaltung hoV = HOVerwaltung.instance();
-        columnNames[0] = hoV.getLanguageString("Week"); //$NON-NLS-1$
-        columnNames[1] = hoV.getLanguageString("Season"); //$NON-NLS-1$
-        columnNames[2] = hoV.getLanguageString("ls.team.trainingtype"); //$NON-NLS-1$
-        columnNames[3] = hoV.getLanguageString("Intensitaet"); //$NON-NLS-1$
-        columnNames[4] = hoV.getLanguageString("training.staminashare"); //$NON-NLS-1$
+        columnNames[0] = hoV.getLanguageString("Week");
+        columnNames[1] = hoV.getLanguageString("Season");
+        columnNames[2] = hoV.getLanguageString("ls.team.trainingtype");
+        columnNames[3] = hoV.getLanguageString("Intensitaet");
+        columnNames[4] = hoV.getLanguageString("training.staminashare");
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
-
+    public void setTrainings(List<TrainingPerWeek> trainings) {
+    	this.trainings = trainings;
+    }
+    
     /**
      * Method that returns if a cell is editable or not
      *
@@ -62,13 +55,6 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
         return (column == 2 || column == 3 || column == 4);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
     @Override
 	public Class<?> getColumnClass(int column) {
         return getValueAt(0, column).getClass();
@@ -107,15 +93,6 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     }
 
     /**
-     * Method that returns the Training vector
-     *
-     * @return actual training vector
-     */
-    public List<TrainingPerWeek> getTrainingsData() {
-        return p_V_trainingsVector;
-    }
-
-    /**
      * Returns the cell value
      *
      * @param row
@@ -133,5 +110,5 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
     /**
      * Method to be called to populate the table with the data from HO API
      */
-    public abstract void populate();
+    public abstract void populate(List<TrainingPerWeek> trainings);
 }
