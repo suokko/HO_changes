@@ -8,6 +8,8 @@ import ho.core.model.UserParameter;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.training.FutureTrainingManager;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
@@ -45,6 +47,7 @@ public class TrainingRecapPanel extends JPanel {
 	public TrainingRecapPanel(TrainingModel model) {
 		this.model = model;
 		reload();
+		addListeners();
 	}
 
 	/**
@@ -61,8 +64,9 @@ public class TrainingRecapPanel extends JPanel {
 
 		for (Iterator<Spieler> iter = v.iterator(); iter.hasNext();) {
 			Spieler player = iter.next();
-			FutureTrainingManager ftm = new FutureTrainingManager(player, this.model.getFutureTrainings(),
-					this.model.getNumberOfCoTrainers(), this.model.getTrainerLevel());
+			FutureTrainingManager ftm = new FutureTrainingManager(player,
+					this.model.getFutureTrainings(), this.model.getNumberOfCoTrainers(),
+					this.model.getTrainerLevel());
 			List<ISkillup> su = ftm.getFutureSkillups();
 
 			// Skip player!
@@ -113,6 +117,18 @@ public class TrainingRecapPanel extends JPanel {
 		}
 
 		updateUI();
+	}
+
+	private void addListeners() {
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (change == ModelChange.ACTIVE_PLAYER) {
+					selectPlayerFromModel();
+				}
+			}
+		});
 	}
 
 	/**
@@ -203,12 +219,27 @@ public class TrainingRecapPanel extends JPanel {
 
 		JTable lockedTable = recapTable.getLockedTable();
 		lockedTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(scrollTable, lastSTCol));
+				new PlayerSelectionListener(this.model, scrollTable, lastSTCol));
 		panel.add(recapTable, BorderLayout.CENTER);
 		recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
 
 		// Add legend panel.
 		panel.add(new TrainingLegendPanel(), BorderLayout.SOUTH);
 		add(panel, BorderLayout.CENTER);
+	}
+
+	private void selectPlayerFromModel() {
+		this.recapTable.getLockedTable().clearSelection();
+		Spieler player = this.model.getActivePlayer();
+		if (player != null) {
+			for (int i = 0; i < this.tableModel.getRowCount(); i++) {
+				String name = (String) this.tableModel.getValueAt(i, 0);
+				if (player.getName().equals(name)) {
+					int viewIndex = this.recapTable.getLockedTable().convertRowIndexToView(i);
+					this.recapTable.getLockedTable().setRowSelectionInterval(viewIndex, viewIndex);
+					break;
+				}
+			}
+		}
 	}
 }

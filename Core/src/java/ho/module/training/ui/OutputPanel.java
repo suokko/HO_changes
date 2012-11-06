@@ -5,11 +5,14 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
+import ho.core.model.player.Spieler;
 import ho.core.net.OnlineWorker;
 import ho.core.training.TrainingManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.OutputTableModel;
 import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.OutputTableRenderer;
@@ -91,7 +94,7 @@ public class OutputPanel extends ImagePanel {
 		initComponents();
 		addListeners();
 		this.initialized = true;
-		reload();		
+		reload();
 	}
 
 	/**
@@ -138,9 +141,37 @@ public class OutputPanel extends ImagePanel {
 			public void actionPerformed(ActionEvent arg0) {
 				TrainingManager.instance().recalcSubskills(true);
 				reload();
-				ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
+				// TODO fire events to reload views
+				// ho.module.training.TrainingPanel.getTabbedPanel().getRecap().reload();
 			}
 		});
+
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (change == ModelChange.ACTIVE_PLAYER) {
+					selectPlayerFromModel();
+				}
+			}
+		});
+	}
+
+	private void selectPlayerFromModel() {
+		this.outputTable.clearSelection();
+		Spieler player = this.model.getActivePlayer();
+		if (player != null) {
+			OutputTableModel tblModel = (OutputTableModel) this.outputTable.getModel();
+			for (int i = 0; i < tblModel.getRowCount(); i++) {
+				String val = (String) tblModel.getValueAt(i, OutputTableModel.COL_PLAYER_ID);
+				int id = Integer.parseInt(val);
+				if (player.getSpielerID() == id) {
+					int viewIndex = this.outputTable.convertRowIndexToView(i);
+					this.outputTable.setRowSelectionInterval(viewIndex, viewIndex);
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -154,7 +185,8 @@ public class OutputPanel extends ImagePanel {
 		outputTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		outputTable.setDefaultRenderer(Object.class, new OutputTableRenderer());
 		outputTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(outputTable, 11));
+				new PlayerSelectionListener(this.model, this.outputTable,
+						OutputTableModel.COL_PLAYER_ID));
 
 		for (int i = 0; i < outputTable.getColumnCount(); i++) {
 			TableColumn column = outputTable.getColumnModel().getColumn(i);

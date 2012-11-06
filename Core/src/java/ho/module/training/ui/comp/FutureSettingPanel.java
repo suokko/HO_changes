@@ -6,7 +6,6 @@ import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingPerWeek;
-import ho.module.training.TrainingPanel;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
 import ho.module.training.ui.model.TrainingModel;
 
@@ -61,8 +60,6 @@ public class FutureSettingPanel extends JPanel {
 
         this.model.saveFutureTrainings(futureTrainingsToSave);
         futureModel.populate(this.model.getFutureTrainings());
-        TrainingPanel.getTrainPanel().updateUI();
-        TrainingPanel.refreshPlayerDetail();
     }
 
     /**

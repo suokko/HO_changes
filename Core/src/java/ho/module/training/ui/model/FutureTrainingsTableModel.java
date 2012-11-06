@@ -5,7 +5,6 @@ import ho.core.constants.TrainingType;
 import ho.core.datatype.CBItem;
 import ho.core.db.DBManager;
 import ho.core.training.TrainingPerWeek;
-import ho.module.training.TrainingPanel;
 
 import java.util.List;
 import java.util.Vector;
@@ -56,7 +55,6 @@ public class FutureTrainingsTableModel extends AbstractTrainingsTableModel {
 		}
 		this.trainingModel.saveFutureTraining(train);
 		fireTableCellUpdated(row, col);
-		TrainingPanel.refreshPlayerDetail();
 	}
 
 	/**

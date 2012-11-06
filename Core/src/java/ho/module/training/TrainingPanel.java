@@ -6,10 +6,13 @@ import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
-import ho.module.training.ui.MainPanel;
+import ho.module.training.ui.AnalyzerPanel;
+import ho.module.training.ui.EffectPanel;
+import ho.module.training.ui.OutputPanel;
 import ho.module.training.ui.PlayerDetailPanel;
 import ho.module.training.ui.SkillupPanel;
 import ho.module.training.ui.StaffPanel;
+import ho.module.training.ui.TrainingRecapPanel;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.model.TrainingModel;
 
@@ -18,20 +21,11 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 public class TrainingPanel extends JPanel {
 
 	private static final long serialVersionUID = -1313192105835561643L;
-	/** Main table panel */
-	private static MainPanel tabbedPanel;
-	/** Prevision table */
-	private static PlayerDetailPanel playerDetailPanel;
-	/** Table of past skillups */
-	private static SkillupPanel skillupPanel;
-	/** Table of old past and future trainings */
-	private static ho.module.training.ui.TrainingPanel trainPanel;
-	/** Staff panel */
-	private static StaffPanel staffPanel;
 	private static TrainingModel model;
 
 	public TrainingPanel() {
@@ -42,65 +36,56 @@ public class TrainingPanel extends JPanel {
 		model = new TrainingModel();
 		setStaffInTrainingModel(model);
 		initComponents();
-		addListeners();		
+		addListeners();
 	}
 
 	private void addListeners() {
 		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-			
+
 			@Override
 			public void refresh() {
 				update();
 			}
 		});
 	}
-	
+
 	private void initComponents() {
-
 		setLayout(new BorderLayout());
-		skillupPanel = new SkillupPanel(this.model);
-		playerDetailPanel = new PlayerDetailPanel(this.model);
-		trainPanel = new ho.module.training.ui.TrainingPanel(this.model);
-		staffPanel = new StaffPanel(this.model);
-		tabbedPanel = new MainPanel(this.model);
 
-		JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, skillupPanel, staffPanel);
-
+		JSplitPane leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				new SkillupPanel(this.model), new StaffPanel(this.model));
 		leftPane.setResizeWeight(1);
-		leftPane.setDividerLocation(UserParameter.instance().training_lowerLeftSplitPane); //$NON-NLS-1$
+		leftPane.setDividerLocation(UserParameter.instance().training_lowerLeftSplitPane);
 		leftPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-				new DividerListener(DividerListener.training_lowerLeftSplitPane)); //$NON-NLS-1$
+				new DividerListener(DividerListener.training_lowerLeftSplitPane));
 
 		JSplitPane bottomPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane,
-				new JScrollPane(playerDetailPanel));
+				new JScrollPane(new PlayerDetailPanel(this.model)));
 
-		bottomPanel.setDividerLocation(UserParameter.instance().training_bottomSplitPane); //$NON-NLS-1$
+		bottomPanel.setDividerLocation(UserParameter.instance().training_bottomSplitPane);
 		bottomPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-				new DividerListener(DividerListener.training_bottomSplitPane)); //$NON-NLS-1$
+				new DividerListener(DividerListener.training_bottomSplitPane));
 
-		JSplitPane splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabbedPanel, bottomPanel);
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.addTab(getLangStr("Training"), new OutputPanel(model));
+		tabbedPane.addTab(getLangStr("MainPanel.Prediction"), new TrainingRecapPanel(model));
+		tabbedPane.addTab(getLangStr("MainPanel.Analyzer"), new AnalyzerPanel(model));
+		tabbedPane.addTab(getLangStr("MainPanel.Effect"), new EffectPanel());
+		JSplitPane splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabbedPane, bottomPanel);
 
-		splitPanel.setDividerLocation(UserParameter.instance().training_mainSplitPane); //$NON-NLS-1$
+		splitPanel.setDividerLocation(UserParameter.instance().training_mainSplitPane);
 		splitPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-				new DividerListener(DividerListener.training_mainSplitPane)); //$NON-NLS-1$
+				new DividerListener(DividerListener.training_mainSplitPane));
 
-		JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPanel, trainPanel);
+		JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPanel,
+				new ho.module.training.ui.TrainingPanel(this.model));
 
-		mainPanel.setDividerLocation(UserParameter.instance().training_rightSplitPane); //$NON-NLS-1$
+		mainPanel.setDividerLocation(UserParameter.instance().training_rightSplitPane);
 		mainPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-				new DividerListener(DividerListener.training_rightSplitPane)); //$NON-NLS-1$
+				new DividerListener(DividerListener.training_rightSplitPane));
 
 		mainPanel.setOpaque(false);
 		add(mainPanel, BorderLayout.CENTER);
-	}
-
-	/**
-	 * Returns the Training Panel where the past and future training are shown
-	 * 
-	 * @return
-	 */
-	public static ho.module.training.ui.TrainingPanel getTrainPanel() {
-		return trainPanel;
 	}
 
 	/**
@@ -110,17 +95,8 @@ public class TrainingPanel extends JPanel {
 		// reset the selected player
 		this.model.setActivePlayer(null);
 
-		// reload the trainingPanel
-		trainPanel.reload();
-
 		// reload the staff, could have changed
 		setStaffInTrainingModel(this.model);
-
-		// recalculate and update the main panel
-		tabbedPanel.reload();
-
-		// and finally recalculate the player previsions
-		refreshPlayerDetail();
 	}
 
 	private void setStaffInTrainingModel(TrainingModel trainingModel) {
@@ -134,17 +110,6 @@ public class TrainingPanel extends JPanel {
 			trainingModel.setTrainerLevel(4);
 		}
 	}
-	
-	/**
-	 * Refresh all the previsions, this is used when we haven't downloaded
-	 * anything from HT but the user has changed something in the staff or in
-	 * the future training
-	 */
-	public static void refreshPlayerDetail() {
-		// update upper table!
-		tabbedPanel.getOutput().reload();
-		tabbedPanel.getRecap().reload();
-	}
 
 	/**
 	 * Sets the new active player and recalculate everything
@@ -156,12 +121,7 @@ public class TrainingPanel extends JPanel {
 		model.setActivePlayer(player);
 	}
 
-	/**
-	 * Return the main tab panel
-	 * 
-	 * @return MainPanel
-	 */
-	public static MainPanel getTabbedPanel() {
-		return tabbedPanel;
+	private String getLangStr(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
 	}
 }

@@ -5,61 +5,39 @@
 package ho.module.training.ui;
 
 import ho.core.model.HOVerwaltung;
-import ho.core.util.HOLogger;
+import ho.module.training.ui.model.TrainingModel;
 
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author <a href="mailto:kenmooda@users.sourceforge.net">Tommi Rautava</a>
- */
 public class PlayerSelectionListener implements ListSelectionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+	private JTable table;
+	private int playerIdColumn = 0;
+	private TrainingModel model;
 
-    /** TODO Missing Parameter Documentation */
-    JTable table;
+	public PlayerSelectionListener(TrainingModel model, JTable table, int col) {
+		this.model = model;
+		this.table = table;
+		this.playerIdColumn = col;
+	}
 
-    /** TODO Missing Parameter Documentation */
-    int playerIdColumn = 0;
-
-    //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param table Table
-     * @param col player ID column
-     */
-    public PlayerSelectionListener(JTable table, int col) {
-        super();
-        this.table = table;
-        playerIdColumn = col;
-    }
-
-    //~ Methods ------------------------------------------------------------------------------------
-
-    /* (non-Javadoc)
-     * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
-     */
-    public void valueChanged(ListSelectionEvent e) {
-        try {
-            if (e.getValueIsAdjusting()) {
-                return;
-            }
-
-            int index = table.getSelectedRow();
-
-            if (index >= 0) {
-                String playerId = (String) table.getValueAt(index, playerIdColumn);
-                ho.module.training.TrainingPanel.selectPlayer(HOVerwaltung.instance().getModel().getSpieler(Integer.parseInt(playerId)));
-            }
-        } catch (Exception e2) {
-           HOLogger.instance().log(this.getClass(), e2);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event
+	 * .ListSelectionEvent)
+	 */
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting()) {
+			int index = table.getSelectedRow();
+			if (index >= 0) {
+				String playerId = (String) table.getValueAt(index, playerIdColumn);
+				model.setActivePlayer(HOVerwaltung.instance().getModel()
+						.getSpieler(Integer.parseInt(playerId)));
+			}
+		}
+	}
 }

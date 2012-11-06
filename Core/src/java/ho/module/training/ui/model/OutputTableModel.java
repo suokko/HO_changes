@@ -24,6 +24,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class OutputTableModel extends AbstractTableModel {
 
+	public final static int COL_PLAYER_ID = 11;
 	private static final long serialVersionUID = -1695207352334612268L;
 	private List<Spieler> data = new ArrayList<Spieler>();
 	private final TrainingModel model;
@@ -48,7 +49,7 @@ public class OutputTableModel extends AbstractTableModel {
 		case 0:
 		case 1:
 		case 2:
-		case 11:
+		case COL_PLAYER_ID:
 			return String.class;
 		case 3:
 		case 4:
@@ -105,7 +106,7 @@ public class OutputTableModel extends AbstractTableModel {
 			return HOVerwaltung.instance().getLanguageString("ls.player.skill.setpieces");
 		case 10:
 			return HOVerwaltung.instance().getLanguageString("ls.player.skill.stamina");
-		case 11:
+		case COL_PLAYER_ID:
 			return HOVerwaltung.instance().getLanguageString("ls.player.id");
 		default:
 			return "";
@@ -171,7 +172,7 @@ public class OutputTableModel extends AbstractTableModel {
 			return createIcon(spieler, PlayerSkill.SET_PIECES);
 		case 10:
 			return createIcon(spieler, PlayerSkill.STAMINA);
-		case 11:
+		case COL_PLAYER_ID:
 			return Integer.toString(spieler.getSpielerID());
 		default:
 			return "";
@@ -242,10 +243,5 @@ public class OutputTableModel extends AbstractTableModel {
 				trainingLength, 1));
 
 		return vi;
-	}
-
-	private class Row {
-		Spieler spieler;
-		VerticalIndicator icon;
 	}
 }

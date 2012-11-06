@@ -11,6 +11,9 @@ import ho.core.util.GUIUtils;
 import ho.module.training.OldTrainingManager;
 import ho.module.training.SkillChange;
 import ho.module.training.ui.model.ChangesTableModel;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
+import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.ChangeTableRenderer;
 import ho.module.training.ui.renderer.SkillupTypeTableCellRenderer;
 
@@ -48,8 +51,7 @@ import javax.swing.table.TableColumn;
  * 
  * @author NetHyperon
  */
-public class AnalyzerPanel extends JPanel implements ActionListener,
-		ChangeListener {
+public class AnalyzerPanel extends JPanel implements ActionListener, ChangeListener {
 
 	private static final long serialVersionUID = -2152169077412317532L;
 	private static final String CMD_SELECT_ALL = "selectAll";
@@ -60,13 +62,16 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 	private Map<Integer, ButtonModel> buttonModels = new HashMap<Integer, ButtonModel>();
 	private Map<Integer, List<SkillChange>> skillups;
 	private Map<Integer, List<SkillChange>> skillupsOld;
+	private final TrainingModel model;
 
 	/**
 	 * Creates a new AnalyzerPanel object.
 	 */
-	public AnalyzerPanel() {
+	public AnalyzerPanel(TrainingModel model) {
 		super();
+		this.model = model;
 		initComponents();
+		addListeners();
 		reload();
 	}
 
@@ -87,13 +92,10 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 	 * Reload the data and redraw the panel
 	 */
 	public void reload() {
-		this.skillups = getSkillups(HOVerwaltung.instance().getModel()
-				.getAllSpieler());
-		this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel()
-				.getAllOldSpieler());
+		this.skillups = getSkillups(HOVerwaltung.instance().getModel().getAllSpieler());
+		this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel().getAllOldSpieler());
 		updateFilterPanel();
 		updateTableModel();
-		updateUI();
 	}
 
 	/**
@@ -110,8 +112,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 	public void updateTableModel() {
 		List<SkillChange> values = new ArrayList<SkillChange>();
 
-		for (Iterator<Integer> iter = this.buttonModels.keySet().iterator(); iter
-				.hasNext();) {
+		for (Iterator<Integer> iter = this.buttonModels.keySet().iterator(); iter.hasNext();) {
 			Integer skillType = iter.next();
 			ButtonModel bModel = this.buttonModels.get(skillType);
 
@@ -128,32 +129,25 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		Collections.sort(values, new Comparator<SkillChange>() {
 			@Override
 			public int compare(SkillChange sc1, SkillChange sc2) {
-				if (sc1.getSkillup().getHtSeason() > sc2.getSkillup()
-						.getHtSeason()) {
+				if (sc1.getSkillup().getHtSeason() > sc2.getSkillup().getHtSeason()) {
 					return -1;
-				} else if (sc1.getSkillup().getHtSeason() < sc2.getSkillup()
-						.getHtSeason()) {
+				} else if (sc1.getSkillup().getHtSeason() < sc2.getSkillup().getHtSeason()) {
 					return 1;
 				} else {
-					if (sc1.getSkillup().getHtWeek() > sc2.getSkillup()
-							.getHtWeek()) {
+					if (sc1.getSkillup().getHtWeek() > sc2.getSkillup().getHtWeek()) {
 						return -1;
-					} else if (sc1.getSkillup().getHtWeek() < sc2.getSkillup()
-							.getHtWeek()) {
+					} else if (sc1.getSkillup().getHtWeek() < sc2.getSkillup().getHtWeek()) {
 						return 1;
 					} else {
 						if ((sc1.getPlayer().equals(sc2.getPlayer()))
-								&& (sc1.getSkillup().getType() == sc2
-										.getSkillup().getType())) {
-							if (sc1.getSkillup().getValue() > sc2.getSkillup()
-									.getValue()) {
+								&& (sc1.getSkillup().getType() == sc2.getSkillup().getType())) {
+							if (sc1.getSkillup().getValue() > sc2.getSkillup().getValue()) {
 								return -1;
 							} else {
 								return 1;
 							}
 						} else {
-							return sc1.getPlayer().getName()
-									.compareTo(sc2.getPlayer().getName());
+							return sc1.getPlayer().getName().compareTo(sc2.getPlayer().getName());
 						}
 					}
 				}
@@ -161,8 +155,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		});
 
 		changesTable.setModel(new ChangesTableModel(values));
-		changesTable
-				.setDefaultRenderer(Object.class, new ChangeTableRenderer());
+		changesTable.setDefaultRenderer(Object.class, new ChangeTableRenderer());
 		changesTable.getTableHeader().setReorderingAllowed(false);
 		changesTable.getColumnModel().getColumn(0).setPreferredWidth(50);
 		changesTable.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -171,8 +164,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		changesTable.getColumnModel().getColumn(4).setPreferredWidth(100);
 
 		// Hide column 5
-		TableColumn tblColumn = changesTable.getTableHeader().getColumnModel()
-				.getColumn(5);
+		TableColumn tblColumn = changesTable.getTableHeader().getColumnModel().getColumn(5);
 		tblColumn.setPreferredWidth(0);
 		tblColumn.setMinWidth(0);
 		tblColumn.setMaxWidth(0);
@@ -188,9 +180,20 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 				.setCellRenderer(new SkillupTypeTableCellRenderer());
 	}
 
+	private void addListeners() {
+		this.model.addModelChangeListener(new ModelChangeListener() {
+			
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (change == ModelChange.ACTIVE_PLAYER) {
+					selectPlayerFromModel();
+				}
+			}
+		});
+	}
+	
 	private void setAllSelected(boolean selected) {
-		for (Iterator<ButtonModel> iter = this.buttonModels.values().iterator(); iter
-				.hasNext();) {
+		for (Iterator<ButtonModel> iter = this.buttonModels.values().iterator(); iter.hasNext();) {
 			ButtonModel bModel = iter.next();
 			bModel.setSelected(selected);
 		}
@@ -246,8 +249,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 			change += (this.skillups.get(skillType)).size();
 		}
 
-		if (this.oldPlayers.isSelected()
-				&& this.skillupsOld.containsKey(skillType)) {
+		if (this.oldPlayers.isSelected() && this.skillupsOld.containsKey(skillType)) {
 			change += (this.skillupsOld.get(skillType)).size();
 		}
 
@@ -270,8 +272,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		cBox.addActionListener(this);
 
 		JPanel panel = new ImagePanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel(ImageUtilities.getWideImageIcon4Veraenderung(
-				change, true)));
+		panel.add(new JLabel(ImageUtilities.getWideImageIcon4Veraenderung(change, true)));
 		panel.add(cBox);
 
 		return panel;
@@ -288,12 +289,12 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		JPanel skillPanel = new ImagePanel();
 
 		skillPanel.setLayout(new BorderLayout());
-		skillPanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung
-				.instance().getLanguageString("TAB_SKILL")));
+		skillPanel.setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance()
+				.getLanguageString("TAB_SKILL")));
 
 		// Add selection listener.
 		changesTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(changesTable, 6));
+				new PlayerSelectionListener(this.model, this.changesTable, ChangesTableModel.COL_PLAYER_ID));
 
 		JScrollPane changesPane = new JScrollPane(changesTable);
 
@@ -302,8 +303,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		JCheckBox cbOldPlayers = new JCheckBox();
 
 		cbOldPlayers.setOpaque(false);
-		cbOldPlayers.setText(HOVerwaltung.instance().getLanguageString(
-				"IncludeOld")); //$NON-NLS-1$
+		cbOldPlayers.setText(HOVerwaltung.instance().getLanguageString("IncludeOld")); //$NON-NLS-1$
 		cbOldPlayers.setFocusable(false);
 		cbOldPlayers.setSelected(false);
 		cbOldPlayers.addChangeListener(this);
@@ -312,7 +312,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		skillPanel.add(cbOldPlayers, BorderLayout.SOUTH);
 
 		JPanel sidePanel = new ImagePanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();		
+		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(20, 8, 4, 8);
@@ -321,8 +321,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		filterPanel.setLayout(new GridBagLayout());
 
 		JButton btnShowAll = new JButton();
-		btnShowAll
-				.setText(HOVerwaltung.instance().getLanguageString("ShowAll"));
+		btnShowAll.setText(HOVerwaltung.instance().getLanguageString("ShowAll"));
 		btnShowAll.setFocusable(false);
 		btnShowAll.addActionListener(this);
 		btnShowAll.setActionCommand(CMD_SELECT_ALL);
@@ -331,8 +330,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		sidePanel.add(btnShowAll, gbc);
 
 		JButton btnClearAll = new JButton();
-		btnClearAll.setText(HOVerwaltung.instance().getLanguageString(
-				"ClearAll"));
+		btnClearAll.setText(HOVerwaltung.instance().getLanguageString("ClearAll"));
 		btnClearAll.setFocusable(false);
 		btnClearAll.addActionListener(this);
 		btnClearAll.setActionCommand(CMD_CLEAR_ALL);
@@ -382,5 +380,21 @@ public class AnalyzerPanel extends JPanel implements ActionListener,
 		filterPanel.add(createSkillSelector(PlayerSkill.EXPERIENCE), gbc);
 
 		filterPanel.revalidate();
+	}
+	
+	private void selectPlayerFromModel() {
+		this.changesTable.clearSelection();
+		Spieler player = this.model.getActivePlayer();
+		if (player != null) {
+			ChangesTableModel tblModel = (ChangesTableModel) this.changesTable.getModel();
+			for (int i = 0; i < tblModel.getRowCount(); i++) {
+				String val = (String) tblModel.getValueAt(i, ChangesTableModel.COL_PLAYER_ID);
+				int id = Integer.parseInt(val);
+				if (player.getSpielerID() == id) {
+					int viewIndex = this.changesTable.convertRowIndexToView(i);
+					this.changesTable.getSelectionModel().addSelectionInterval(viewIndex, viewIndex);
+				}
+			}
+		}
 	}
 }
