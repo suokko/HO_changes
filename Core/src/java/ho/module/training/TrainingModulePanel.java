@@ -5,13 +5,13 @@ import ho.core.gui.RefreshManager;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
-import ho.core.model.player.Spieler;
 import ho.module.training.ui.AnalyzerPanel;
 import ho.module.training.ui.EffectPanel;
 import ho.module.training.ui.OutputPanel;
 import ho.module.training.ui.PlayerDetailPanel;
 import ho.module.training.ui.SkillupPanel;
 import ho.module.training.ui.StaffPanel;
+import ho.module.training.ui.TrainingPanel;
 import ho.module.training.ui.TrainingRecapPanel;
 import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.model.TrainingModel;
@@ -23,17 +23,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-public class TrainingPanel extends JPanel {
+public class TrainingModulePanel extends JPanel {
 
 	private static final long serialVersionUID = -1313192105835561643L;
-	private static TrainingModel model;
+	private TrainingModel model;
 
-	public TrainingPanel() {
+	public TrainingModulePanel() {
 		initialize();
 	}
 
 	private void initialize() {
-		model = new TrainingModel();
+		this.model = new TrainingModel();
 		setStaffInTrainingModel(model);
 		initComponents();
 		addListeners();
@@ -78,7 +78,7 @@ public class TrainingPanel extends JPanel {
 				new DividerListener(DividerListener.training_mainSplitPane));
 
 		JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPanel,
-				new ho.module.training.ui.TrainingPanel(this.model));
+				new TrainingPanel(this.model));
 
 		mainPanel.setDividerLocation(UserParameter.instance().training_rightSplitPane);
 		mainPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
@@ -109,16 +109,6 @@ public class TrainingPanel extends JPanel {
 		} else {
 			trainingModel.setTrainerLevel(4);
 		}
-	}
-
-	/**
-	 * Sets the new active player and recalculate everything
-	 * 
-	 * @param player
-	 *            the new selected player
-	 */
-	public static void selectPlayer(Spieler player) {
-		model.setActivePlayer(player);
 	}
 
 	private String getLangStr(String key) {

@@ -27,7 +27,7 @@ public final class TrainingModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
-		return new TrainingPanel();
+		return new TrainingModulePanel();
 	}
 
 	@Override
