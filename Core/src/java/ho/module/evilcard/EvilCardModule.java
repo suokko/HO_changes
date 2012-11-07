@@ -11,6 +11,7 @@ import javax.swing.KeyStroke;
 
 public class EvilCardModule extends DefaultModule {
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_4, KeyEvent.CTRL_MASK);
 	}

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-
 class FilterPanel extends ImagePanel implements ActionListener {
 
 	private static final long serialVersionUID = 5993279445476499431L;
@@ -22,18 +21,21 @@ class FilterPanel extends ImagePanel implements ActionListener {
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.playersPanel = playersPanel;
 
-		JLabel choosePlayersLabel = new javax.swing.JLabel(HOVerwaltung.instance().getLanguageString("Spieler"));
+		JLabel choosePlayersLabel = new javax.swing.JLabel(HOVerwaltung.instance()
+				.getLanguageString("Spieler"));
 
 		this.add(choosePlayersLabel);
 
 		choosePlayersComboBox = new JComboBox();
-		choosePlayersComboBox.addItem(HOVerwaltung.instance().getLanguageString("label.CurrentPlayersOnly"));
+		choosePlayersComboBox.addItem(HOVerwaltung.instance().getLanguageString(
+				"label.CurrentPlayersOnly"));
 		choosePlayersComboBox.addItem(HOVerwaltung.instance().getLanguageString("alle"));
 		choosePlayersComboBox.addActionListener(this);
 		choosePlayersComboBox.setSelectedIndex(0);
 		this.add(choosePlayersComboBox);
 	}
 
+	@Override
 	public void actionPerformed(java.awt.event.ActionEvent e) {
 		// combobox for players
 		if (e.getSource().equals(choosePlayersComboBox)) {

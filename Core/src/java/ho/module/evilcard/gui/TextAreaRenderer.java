@@ -19,6 +19,7 @@ class TextAreaRenderer extends JEditorPane implements TableCellRenderer {
         this.setMargin(new Insets(0, 1, 0, 1));
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object object, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
         // Set text/html.

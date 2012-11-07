@@ -15,325 +15,331 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-
 class PlayersTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 146702588079846156L;
 
+	static final int COL_ID = 0;
+	static final int COL_NAME = 1;
+	static final int COL_AGREEABILITY = 2;
+	static final int COL_AGGRESSIVITY = 3;
+	static final int COL_HONESTY = 4;
+	static final int COL_CARDS = 5;
+	static final int COL_DIRECT_RED_CARDS = 6;
+	static final int COL_WARNINGS = 7;
+	static final int COL_WARNINGS_TYPE1 = 8;
+	static final int COL_WARNINGS_TYPE2 = 9;
+	static final int COL_WARNINGS_TYPE3 = 10;
+	static final int COL_WARNINGS_TYPE4 = 11;
+	static final int COL_RAW_AVERAGE = 12;
+	static final int COL_WEIGHTED_AVERAGE = 13;
+	static final int COL_MATCHES = 14;
+	static final int TYPE_CURRENT_PLAYERS = 1;
+	static final int TYPE_ALL_PLAYERS = 2;
+	static final int TYPE_ALL_MATCHES = 1;
+	static final int TYPE_FRIENDLIES = 2;
+	static final int TYPE_OFFICIAL_MATCHES = 3;
+	static final int cols = 15;
+	static final String PERCENT = " %";
+	static final String NO_AVERAGE = "-";
 
-    static final int COL_ID = 0;
-    static final int COL_NAME = 1;
-    static final int COL_AGREEABILITY = 2;
-    static final int COL_AGGRESSIVITY = 3;
-    static final int COL_HONESTY = 4;
-    static final int COL_CARDS = 5;
-    static final int COL_DIRECT_RED_CARDS = 6;
-    static final int COL_WARNINGS = 7;
-    static final int COL_WARNINGS_TYPE1 = 8;
-    static final int COL_WARNINGS_TYPE2 = 9;
-    static final int COL_WARNINGS_TYPE3 = 10;
-    static final int COL_WARNINGS_TYPE4 = 11;
-    static final int COL_RAW_AVERAGE = 12;
-    static final int COL_WEIGHTED_AVERAGE = 13;
-    static final int COL_MATCHES = 14;
-    static final int TYPE_CURRENT_PLAYERS = 1;
-    static final int TYPE_ALL_PLAYERS = 2;
-    static final int TYPE_ALL_MATCHES = 1;
-    static final int TYPE_FRIENDLIES = 2;
-    static final int TYPE_OFFICIAL_MATCHES = 3;
-    static final int cols = 15;
-    static final String PERCENT = " %";
-    static final String NO_AVERAGE = "-";
+	private String[] columnNames = null;
+	private Object[][] data = null;
+	private int m_typePlayer;
+	private int playersNumber;
 
-    private String[] columnNames = null;
-    private Object[][] data = null;
-    private int m_typePlayer;
-    private int playersNumber;
+	PlayersTableModel(int matchType, int beginSeason, int endSeason, int typePlayer) {
+		columnNames = new String[cols];
 
-    PlayersTableModel(int matchType, int beginSeason, int endSeason, int typePlayer) {
-        columnNames = new String[cols];
+		// Riempimento valori
+		columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ls.player.id");
+		columnNames[COL_NAME] = HOVerwaltung.instance().getLanguageString("Spieler");
+		columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString(
+				"ls.player.agreeability");
+		columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString(
+				"ls.player.aggressiveness");
+		columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("ls.player.honesty");
+		columnNames[COL_CARDS] = HOVerwaltung.instance().getLanguageString("Gesamt");
+		columnNames[COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString(
+				"column.RedCards");
+		columnNames[COL_WARNINGS] = HOVerwaltung.instance().getLanguageString("GelbeKarten");
+		columnNames[COL_WARNINGS_TYPE1] = HOVerwaltung.instance().getLanguageString(
+				"column.WarningType1");
+		columnNames[COL_WARNINGS_TYPE2] = HOVerwaltung.instance().getLanguageString(
+				"column.WarningType2");
+		columnNames[COL_WARNINGS_TYPE3] = HOVerwaltung.instance().getLanguageString(
+				"column.WarningType3");
+		columnNames[COL_WARNINGS_TYPE4] = HOVerwaltung.instance().getLanguageString(
+				"column.WarningType4");
+		columnNames[COL_RAW_AVERAGE] = HOVerwaltung.instance().getLanguageString(
+				"column.RawAverage");
+		columnNames[COL_WEIGHTED_AVERAGE] = HOVerwaltung.instance().getLanguageString(
+				"column.WeightedAverage");
+		columnNames[COL_MATCHES] = HOVerwaltung.instance().getLanguageString("Spiele_kurz");
 
-        // Riempimento valori
-        columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ls.player.id");
-        columnNames[COL_NAME] = HOVerwaltung.instance().getLanguageString("Spieler");
-        columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString("ls.player.agreeability");
-        columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString("ls.player.aggressiveness");
-        columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("ls.player.honesty");
-        columnNames[COL_CARDS] = HOVerwaltung.instance().getLanguageString("Gesamt");
-        columnNames[COL_DIRECT_RED_CARDS] = HOVerwaltung.instance().getLanguageString("column.RedCards");
-        columnNames[COL_WARNINGS] = HOVerwaltung.instance().getLanguageString("GelbeKarten");
-        columnNames[COL_WARNINGS_TYPE1] = HOVerwaltung.instance().getLanguageString("column.WarningType1");
-        columnNames[COL_WARNINGS_TYPE2] = HOVerwaltung.instance().getLanguageString("column.WarningType2");
-        columnNames[COL_WARNINGS_TYPE3] = HOVerwaltung.instance().getLanguageString("column.WarningType3");
-        columnNames[COL_WARNINGS_TYPE4] = HOVerwaltung.instance().getLanguageString("column.WarningType4");
-        columnNames[COL_RAW_AVERAGE] = HOVerwaltung.instance().getLanguageString("column.RawAverage");
-        columnNames[COL_WEIGHTED_AVERAGE] = HOVerwaltung.instance().getLanguageString("column.WeightedAverage");
-        columnNames[COL_MATCHES] = HOVerwaltung.instance().getLanguageString("Spiele_kurz");
+		refresh(typePlayer);
+	}
 
-        refresh(typePlayer);
-    }
-
-    @Override
+	@Override
 	public Class<?> getColumnClass(int c) {
-        return getValueAt(0, c).getClass();
+		return getValueAt(0, c).getClass();
+	}
 
-        // return Object.class;
-    }
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
 
-    public int getColumnCount() {
-        return columnNames.length;
-    }
-
-    @Override
+	@Override
 	public String getColumnName(int c) {
-        return columnNames[c];
-    }
+		return columnNames[c];
+	}
 
-    public int getRowCount() {
-        return data.length;
-    }
+	@Override
+	public int getRowCount() {
+		return data.length;
+	}
 
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return data[rowIndex][columnIndex];
-    }
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return data[rowIndex][columnIndex];
+	}
 
-    public void refresh(int filterMode) {
-        this.m_typePlayer = filterMode;
+	public void refresh(int filterMode) {
+		this.m_typePlayer = filterMode;
 
-        this.generateData2();
-        this.fireTableDataChanged();
-    }
+		this.generateData2();
+		this.fireTableDataChanged();
+	}
 
-    private void aggiornaMedie(int row) {
-        int matches = ((Integer) data[row][COL_MATCHES]).intValue();
+	private void aggiornaMedie(int row) {
+		int matches = ((Integer) data[row][COL_MATCHES]).intValue();
 
-        if (matches > 0) {
-            int warnings = ((Integer) data[row][COL_WARNINGS]).intValue();
-            int direct_reds = ((Integer) data[row][COL_DIRECT_RED_CARDS]).intValue();
-            int total = ((Integer) data[row][COL_CARDS]).intValue();
+		if (matches > 0) {
+			int warnings = ((Integer) data[row][COL_WARNINGS]).intValue();
+			int direct_reds = ((Integer) data[row][COL_DIRECT_RED_CARDS]).intValue();
+			int total = ((Integer) data[row][COL_CARDS]).intValue();
 
-            //data[row][COL_RAW_AVERAGE] = new Double(approssima((total * 100.0) / matches)) + PERCENT;
-            //data[row][COL_WEIGHTED_AVERAGE] = new Double(approssima(((warnings + (direct_reds * 2)) * 100.0) / (matches))) + PERCENT;
-            String fill = "";
-            double val = (approssima((total * 100.0) / matches));
-            if (val < 10) {
-            	fill = "  ";
-            } else if (val <100) {
-            	fill = " ";
-            }
+			String fill = "";
+			double val = (approssima((total * 100.0) / matches));
+			if (val < 10) {
+				fill = "  ";
+			} else if (val < 100) {
+				fill = " ";
+			}
 
-            data[row][COL_RAW_AVERAGE] = fill + new Double(val) + PERCENT;
+			data[row][COL_RAW_AVERAGE] = fill + new Double(val) + PERCENT;
 
-            val = approssima(((warnings + (direct_reds * 2)) * 100.0) / (matches));
-            fill = "";
-            if (val < 10) {
-            	fill = "  ";
-            } else if (val <100) {
-            	fill = " ";
-            }
-            data[row][COL_WEIGHTED_AVERAGE] = fill + new Double(val) + PERCENT;
-        } else {
-            data[row][COL_RAW_AVERAGE] = NO_AVERAGE;
-            data[row][COL_WEIGHTED_AVERAGE] = NO_AVERAGE;
-        }
-    }
+			val = approssima(((warnings + (direct_reds * 2)) * 100.0) / (matches));
+			fill = "";
+			if (val < 10) {
+				fill = "  ";
+			} else if (val < 100) {
+				fill = " ";
+			}
+			data[row][COL_WEIGHTED_AVERAGE] = fill + new Double(val) + PERCENT;
+		} else {
+			data[row][COL_RAW_AVERAGE] = NO_AVERAGE;
+			data[row][COL_WEIGHTED_AVERAGE] = NO_AVERAGE;
+		}
+	}
 
-    private double approssima(double valore) {
-        long approx = (new Double(valore * 10.0)).longValue();
-        return approx / 10.0;
-    }
+	private double approssima(double valore) {
+		long approx = (new Double(valore * 10.0)).longValue();
+		return approx / 10.0;
+	}
 
-    /**
-     * Helper class to sort and show aggressive information
-     *
-     */
-    private class Aggressive implements Comparable<Aggressive> {
-        private Spieler _player;
-        Aggressive(Spieler player) {
-            _player = player;
-        }
+	/**
+	 * Helper class to sort and show aggressive information
+	 * 
+	 */
+	private class Aggressive implements Comparable<Aggressive> {
+		private Spieler _player;
 
-        @Override
-        public String toString() {
-            return PlayerAggressiveness.toString(_player.getAgressivitaet())+" (" + _player.getAgressivitaet() + ")";
-        }
+		Aggressive(Spieler player) {
+			_player = player;
+		}
 
-        @Override
-        public int compareTo(Aggressive o2) {
-            Spieler p1 = _player;
-            Spieler p2 = o2._player;
+		@Override
+		public String toString() {
+			return PlayerAggressiveness.toString(_player.getAgressivitaet()) + " ("
+					+ _player.getAgressivitaet() + ")";
+		}
 
-            if (p1.getAgressivitaet() == p2.getAgressivitaet())
-                return 0;
-            return p1.getAgressivitaet() < p2.getAgressivitaet() ? -1 : 1;
-        }
-    }
+		@Override
+		public int compareTo(Aggressive o2) {
+			Spieler p1 = _player;
+			Spieler p2 = o2._player;
 
-    /**
-     * Helper class to sort and show agreeability information
-     *
-     */
-    private class Agreeability implements Comparable<Agreeability> {
-        private Spieler _player;
-        Agreeability(Spieler player) {
-            _player = player;
-        }
+			if (p1.getAgressivitaet() == p2.getAgressivitaet())
+				return 0;
+			return p1.getAgressivitaet() < p2.getAgressivitaet() ? -1 : 1;
+		}
+	}
 
-        @Override
-        public String toString() {
-            return PlayerAgreeability.toString(_player.getAnsehen())+" (" + _player.getAnsehen() + ")";
-        }
+	/**
+	 * Helper class to sort and show agreeability information
+	 * 
+	 */
+	private class Agreeability implements Comparable<Agreeability> {
+		private Spieler _player;
 
-        @Override
-        public int compareTo(Agreeability o2) {
-            Spieler p1 = _player;
-            Spieler p2 = o2._player;
+		Agreeability(Spieler player) {
+			_player = player;
+		}
 
-            if (p1.getAnsehen() == p2.getAnsehen())
-                return 0;
-            return p1.getAnsehen() < p2.getAnsehen() ? -1 : 1;
-        }
-    }
+		@Override
+		public String toString() {
+			return PlayerAgreeability.toString(_player.getAnsehen()) + " (" + _player.getAnsehen()
+					+ ")";
+		}
 
-    /**
-     * Helper class to sort and show honesty information
-     *
-     */
-    private class Honesty implements Comparable<Honesty> {
-        private Spieler _player;
-        Honesty(Spieler player) {
-            _player = player;
-        }
+		@Override
+		public int compareTo(Agreeability o2) {
+			Spieler p1 = _player;
+			Spieler p2 = o2._player;
 
-        @Override
-        public String toString() {
-            return PlayerHonesty.toString(_player.getCharakter())+" (" + _player.getCharakter() + ")";
-        }
+			if (p1.getAnsehen() == p2.getAnsehen())
+				return 0;
+			return p1.getAnsehen() < p2.getAnsehen() ? -1 : 1;
+		}
+	}
 
-        @Override
-        public int compareTo(Honesty o2) {
-            Spieler p1 = _player;
-            Spieler p2 = o2._player;
+	/**
+	 * Helper class to sort and show honesty information
+	 * 
+	 */
+	private class Honesty implements Comparable<Honesty> {
+		private Spieler _player;
 
-            if (p1.getCharakter() == p2.getCharakter())
-                return 0;
-            return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
-        }
-    }
+		Honesty(Spieler player) {
+			_player = player;
+		}
 
-    private void generateData2() {
-        // Get current players.
-        Vector<Spieler> players = new Vector<Spieler>();
-        		players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
+		@Override
+		public String toString() {
+			return PlayerHonesty.toString(_player.getCharakter()) + " (" + _player.getCharakter()
+					+ ")";
+		}
 
-        // Add old players, when requested.
-        if (m_typePlayer == TYPE_ALL_PLAYERS) {
-            players.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
-        }
+		@Override
+		public int compareTo(Honesty o2) {
+			Spieler p1 = _player;
+			Spieler p2 = o2._player;
 
-        playersNumber = players.size();
+			if (p1.getCharakter() == p2.getCharakter())
+				return 0;
+			return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
+		}
+	}
 
-        // Reset table data.
-        data = new Object[playersNumber][cols];
+	private void generateData2() {
+		// Get current players.
+		Vector<Spieler> players = new Vector<Spieler>();
+		players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
 
-        for (int row = 0; row < playersNumber; row++) {
-            // giocatore
-            Spieler player = (Spieler) players.get(row);
+		// Add old players, when requested.
+		if (m_typePlayer == TYPE_ALL_PLAYERS) {
+			players.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
+		}
 
-            int id = player.getSpielerID();
+		playersNumber = players.size();
 
-            data[row][COL_NAME] = player.getName();
-            data[row][COL_ID] = new Integer(id);
-            data[row][COL_AGGRESSIVITY] = new Aggressive(player);
-            data[row][COL_HONESTY] = new Honesty(player);
-            data[row][COL_AGREEABILITY] = new Agreeability(player);
+		// Reset table data.
+		data = new Object[playersNumber][cols];
 
-            for (int col = 5; col < cols; col++) {
-                data[row][col] = new Integer(0);
-            }
+		for (int row = 0; row < playersNumber; row++) {
+			// giocatore
+			Spieler player = (Spieler) players.get(row);
 
-            // GESTIONE CARTELLINI
-            //String sql = "SELECT TYP, SUBTYP, MATCHID FROM MATCHHIGHLIGHTS WHERE TYP = "                      + IMatchHighlight.HIGHLIGHT_KARTEN + " AND SPIELERID = " + id;
-            Vector<MatchHighlight> highlights = DBManager.instance().getMatchHighlightsByTypIdAndPlayerId(IMatchHighlight.HIGHLIGHT_KARTEN, id);
-            // String filter = " AND MATCHID IN (SELECT MATCHID FROM PAARUNG
-            // WHERE SAISON = 25)";
-            // sql += filter;
-            //ResultSet res = DBManager.instance().getAdapter().executeQuery(sql);
+			int id = player.getSpielerID();
 
-             int matchid = 0;
-             int cartellino = 0;
+			data[row][COL_NAME] = player.getName();
+			data[row][COL_ID] = new Integer(id);
+			data[row][COL_AGGRESSIVITY] = new Aggressive(player);
+			data[row][COL_HONESTY] = new Honesty(player);
+			data[row][COL_AGREEABILITY] = new Agreeability(player);
 
-             for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
-					MatchHighlight matchHighlight = iterator.next();
-                    //int typeHighlight = res.getInt("TYP");
-                    int subtypeHighlight = matchHighlight.getHighlightSubTyp();//res.getInt("SUBTYP");
-                    int matchidlast = matchHighlight.getMatchId();//res.getInt("MATCHID");
+			for (int col = 5; col < cols; col++) {
+				data[row][col] = new Integer(0);
+			}
 
-                    if (matchid != matchidlast) {
-                        cartellino = 0;
-                        matchid = matchidlast;
-                    }
+			Vector<MatchHighlight> highlights = DBManager.instance()
+					.getMatchHighlightsByTypIdAndPlayerId(IMatchHighlight.HIGHLIGHT_KARTEN, id);
 
-                    incrementaValoreColonna(row, COL_CARDS);
+			int matchid = 0;
+			int cartellino = 0;
 
-                    switch (subtypeHighlight) {
-                        // prima ammonizione : fallaccio
-                        case IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ:
-                            incrementaValoreColonna(row, COL_WARNINGS_TYPE1);
-                            incrementaValoreColonna(row, COL_WARNINGS);
-                            cartellino++;
-                            break;
+			for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
+				MatchHighlight matchHighlight = iterator.next();
+				int subtypeHighlight = matchHighlight.getHighlightSubTyp();
+				int matchidlast = matchHighlight.getMatchId();
 
-                        // seconda ammonizione : fallaccio
-                        case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ:
-                            incrementaValoreColonna(row, COL_WARNINGS_TYPE2);
-                            incrementaValoreColonna(row, COL_WARNINGS);
-                            incrementaValoreColonna(row, COL_MATCHES);
-                            cartellino++;
-                            break;
+				if (matchid != matchidlast) {
+					cartellino = 0;
+					matchid = matchidlast;
+				}
 
-                        // prima ammonizione : scorretto
-                        case IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR:
-                            incrementaValoreColonna(row, COL_WARNINGS_TYPE3);
-                            incrementaValoreColonna(row, COL_WARNINGS);
-                            cartellino++;
-                            break;
+				incrementaValoreColonna(row, COL_CARDS);
 
-                        // seconda ammonizione : scorretto
-                        case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR:
-                            incrementaValoreColonna(row, COL_WARNINGS_TYPE4);
-                            incrementaValoreColonna(row, COL_WARNINGS);
-                            incrementaValoreColonna(row, COL_MATCHES);
-                            cartellino++;
-                            break;
+				switch (subtypeHighlight) {
+				// prima ammonizione : fallaccio
+				case IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ:
+					incrementaValoreColonna(row, COL_WARNINGS_TYPE1);
+					incrementaValoreColonna(row, COL_WARNINGS);
+					cartellino++;
+					break;
 
-                        // esplusione diretta
-                        case IMatchHighlight.HIGHLIGHT_SUB_ROT:
-                            incrementaValoreColonna(row, COL_DIRECT_RED_CARDS);
-                            incrementaValoreColonna(row, COL_MATCHES);
-                            break;
+				// seconda ammonizione : fallaccio
+				case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ:
+					incrementaValoreColonna(row, COL_WARNINGS_TYPE2);
+					incrementaValoreColonna(row, COL_WARNINGS);
+					incrementaValoreColonna(row, COL_MATCHES);
+					cartellino++;
+					break;
 
-                        // infortunio
-                        case IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER:
-                            incrementaValoreColonna(row, COL_MATCHES);
-                            break;
-                    }
-                }
+				// prima ammonizione : scorretto
+				case IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR:
+					incrementaValoreColonna(row, COL_WARNINGS_TYPE3);
+					incrementaValoreColonna(row, COL_WARNINGS);
+					cartellino++;
+					break;
 
-             Vector<SpielerMatchCBItem> matches = DBManager.instance().getSpieler4Matches(id);
-             data[row][COL_MATCHES] = matches.size();
+				// seconda ammonizione : scorretto
+				case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR:
+					incrementaValoreColonna(row, COL_WARNINGS_TYPE4);
+					incrementaValoreColonna(row, COL_WARNINGS);
+					incrementaValoreColonna(row, COL_MATCHES);
+					cartellino++;
+					break;
 
-            // GESITONE MEDIE
-            aggiornaMedie(row);
-        }
+				// esplusione diretta
+				case IMatchHighlight.HIGHLIGHT_SUB_ROT:
+					incrementaValoreColonna(row, COL_DIRECT_RED_CARDS);
+					incrementaValoreColonna(row, COL_MATCHES);
+					break;
 
-        // for (per tutti i giocatori)
-    }
+				// infortunio
+				case IMatchHighlight.HIGHLIGHT_SUB_VERLETZT_SCHWER:
+					incrementaValoreColonna(row, COL_MATCHES);
+					break;
+				}
+			}
 
-    private void incrementaValoreColonna(int rowFind, int colonna) {
-        // solo se presenti
-        if (rowFind != -1) {
-            data[rowFind][colonna] = new Integer(((Integer) data[rowFind][colonna]).intValue() + 1);
-        }
-    }
+			Vector<SpielerMatchCBItem> matches = DBManager.instance().getSpieler4Matches(id);
+			data[row][COL_MATCHES] = matches.size();
+
+			// GESITONE MEDIE
+			aggiornaMedie(row);
+		}
+
+		// for (per tutti i giocatori)
+	}
+
+	private void incrementaValoreColonna(int rowFind, int colonna) {
+		// solo se presenti
+		if (rowFind != -1) {
+			data[rowFind][colonna] = new Integer(((Integer) data[rowFind][colonna]).intValue() + 1);
+		}
+	}
 }

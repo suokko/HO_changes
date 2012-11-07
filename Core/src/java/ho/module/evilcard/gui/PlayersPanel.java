@@ -7,53 +7,45 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-
 class PlayersPanel extends JPanel implements ListSelectionListener {
 
 	private static final long serialVersionUID = 5173473921072367115L;
 	private DetailsTable detailsTable = null;
-    private PlayersTable playersTable = null;
+	private PlayersTable playersTable = null;
 
-    PlayersPanel(DetailsTable detailsTable) {
-        super();
+	PlayersPanel(DetailsTable detailsTable) {
+		super();
+		this.detailsTable = detailsTable;
+		this.setLayout(new BorderLayout());
+		playersTable = new PlayersTable();
+		this.add(new JScrollPane(playersTable));
 
-        this.detailsTable = detailsTable;
+		playersTable.getSelectionModel().addListSelectionListener(this);
+		playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setMinWidth(0);
+		playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setMaxWidth(0);
+		playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setWidth(0);
+	}
 
-        this.setLayout(new BorderLayout());
+	void setFilter(int filterMode) {
+		playersTable.setFilter(filterMode);
+	}
 
-        playersTable = new PlayersTable();
+	protected int getSelectedPlayer() {
+		int row = this.playersTable.getSelectedRow();
 
-        this.add(new JScrollPane(playersTable));
+		if (row >= 0) {
+			Integer playerId = (Integer) playersTable.getValueAt(row, PlayersTableModel.COL_ID);
 
-        playersTable.getSelectionModel().addListSelectionListener(this);
+			return playerId.intValue();
+		}
 
-        // sorter.setSortingStatus(4, TableSorter.ASCENDING);
-        playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setMinWidth(0);
-        playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setMaxWidth(0);
-        playersTable.getColumnModel().getColumn(PlayersTableModel.COL_ID).setWidth(0);
-    }
+		return 0;
+	}
 
-
-    void setFilter(int filterMode) {
-        playersTable.setFilter(filterMode);
-    }
-
-    protected int getSelectedPlayer() {
-        int row = this.playersTable.getSelectedRow();
-
-        if (row >= 0) {
-            Integer playerId = (Integer) playersTable.getValueAt(row, PlayersTableModel.COL_ID);
-
-            return playerId.intValue();
-        }
-
-        return 0;
-    }
-
-    public void valueChanged(ListSelectionEvent e) {
-            if (!e.getValueIsAdjusting()) {
-            	detailsTable.refresh(getSelectedPlayer());
-            }
-    }
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting()) {
+			detailsTable.refresh(getSelectedPlayer());
+		}
+	}
 }
