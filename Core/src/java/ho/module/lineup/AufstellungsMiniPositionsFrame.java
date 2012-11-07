@@ -44,11 +44,8 @@ import javax.swing.border.LineBorder;
  */
 public class AufstellungsMiniPositionsFrame extends JFrame implements WindowListener, Refreshable,
 		Updateable, ActionListener {
+
 	private static final long serialVersionUID = 7505316315597313881L;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
 	private LineupPanel m_clAufstellungsPanel;
 	private JButton m_jbMaxFrame = new JButton(ThemeManager.getIcon(HOIconName.MAXLINEUP));
 	private PlayerPositionPanel m_clMiddleCentralDefender;
@@ -75,19 +72,6 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 	private boolean m_bMinimize;
 	private boolean m_bPrint;
 
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
-
-	/**
-	 * Creates a new AufstellungsMiniPositionsFrame object.
-	 *
-	 * @param aufstellungsPanel
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param print
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param minimized
-	 *            TODO Missing Constructuor Parameter Documentation
-	 */
 	public AufstellungsMiniPositionsFrame(LineupPanel aufstellungsPanel, boolean print,
 			boolean minimized) {
 		super("Mini" + ho.core.model.HOVerwaltung.instance().getLanguageString("Aufstellung"));
@@ -105,12 +89,9 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		this.addWindowListener(this);
 	}
 
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-
 	/**
 	 * Position des MiniScouts speichern
-	 *
+	 * 
 	 */
 	@Override
 	public final void setVisible(boolean sichtbar) {
@@ -123,6 +104,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		}
 	}
 
+	@Override
 	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
 		setVisible(false);
 		ho.core.gui.HOMainFrame.instance().setVisible(true);
@@ -153,10 +135,12 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		setVisible(false);
 	}
 
+	@Override
 	public final void reInit() {
 		refresh();
 	}
 
+	@Override
 	public final void refresh() {
 		final boolean gruppenfilter = m_clAufstellungsPanel.getAufstellungsAssitentPanel()
 				.isGroupFilter();
@@ -262,32 +246,40 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		aufstellung.checkAufgestellteSpieler();
 	}
 
+	@Override
 	public final void update() {
 		m_clAufstellungsPanel.update();
 		refresh();
 	}
 
+	@Override
 	public void windowActivated(java.awt.event.WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowClosed(java.awt.event.WindowEvent windowEvent) {
 	}
 
+	@Override
 	public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		setVisible(false);
 		HOMainFrame.instance().setVisible(true);
 		dispose();
 	}
 
+	@Override
 	public void windowDeactivated(java.awt.event.WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowDeiconified(java.awt.event.WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowIconified(java.awt.event.WindowEvent windowEvent) {
 	}
 
+	@Override
 	public void windowOpened(java.awt.event.WindowEvent windowEvent) {
 	}
 
@@ -470,7 +462,8 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		liste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		final DefaultListModel listmodel = new DefaultListModel();
-		List<SpielerPosition> shooters = HOVerwaltung.instance().getModel().getAufstellung().getPenaltyTakers();
+		List<SpielerPosition> shooters = HOVerwaltung.instance().getModel().getAufstellung()
+				.getPenaltyTakers();
 		for (SpielerPosition pos : shooters) {
 			listmodel.addElement(createSpielerLabel(pos.getSpielerId()));
 		}
@@ -506,7 +499,7 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 	 * A private, very specific extension to the PlayerPositionPanel that takes
 	 * care of adding and removing the player panel depending on the presence of
 	 * a player in that position.
-	 *
+	 * 
 	 */
 	private class MiniPosPlayer extends PlayerPositionPanel {
 
@@ -521,18 +514,6 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 		}
 
-		/**
-		 * Creates a new SpielerPositionsPanel object.
-		 *
-		 * @param updater
-		 *            TODO Missing Constructuor Parameter Documentation
-		 * @param positionsID
-		 *            TODO Missing Constructuor Parameter Documentation
-		 * @param print
-		 *            TODO Missing Constructuor Parameter Documentation
-		 * @param minimize
-		 *            TODO Missing Constructuor Parameter Documentation
-		 */
 		protected MiniPosPlayer(Updateable updater, JPanel parent, int positionsID, boolean print,
 				boolean minimize, int x, int y) {
 
@@ -561,11 +542,8 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 		private static final long serialVersionUID = 8546453871916507058L;
 
 		@Override
-		public void refresh(Vector<Spieler> spieler) {
+		public void refresh(List<Spieler> spieler) {
 			super.refresh(spieler);
-			// HOLogger.instance().debug(getClass(), "Keeper: " +
-			// ((SpielerCBItem)m_clKeeper.getPlayerComboBox().getSelectedItem()).getSpieler());
-
 			/*
 			 * If this Panel is present and contains no player, remove it. If
 			 * this Panel is not present and contains a player, add it. If the

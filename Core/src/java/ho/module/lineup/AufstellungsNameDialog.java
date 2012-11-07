@@ -6,159 +6,169 @@ import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOVerwaltung;
+import ho.core.util.GUIUtils;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-
 /**
- * Erfragt einen Namen für die zu Speichernde Aufstellung und fügt sie in die Datenbank ein, wenn
- * gewünscht
+ * Erfragt einen Namen für die zu Speichernde Aufstellung und fügt sie in die
+ * Datenbank ein, wenn gewünscht
  */
 final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 7318780000118008882L;
+	private Lineup lineup;
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextField nameTextField;
 
-    //~ Instance fields ----------------------------------------------------------------------------
-	private Lineup m_clAufstellung;
-    private JButton m_jbAbbrechen;
-    private JButton m_jbOK;
-    private JTextField m_jtfAufstellungsName;
+	protected AufstellungsNameDialog(JFrame owner, String aufstellungsName, Lineup aufstellung,
+			int x, int y) {
+		super(owner, true);
+		this.lineup = aufstellung;
+		initComponents(aufstellungsName);
+		pack();
+		GUIUtils.setLocationCenteredToComponent(this, owner);
+	}
 
-    //~ Constructors -------------------------------------------------------------------------------
+	private void initComponents(String aufstellungsName) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setTitle(HOVerwaltung.instance().getLanguageString("AufstellungSpeichern"));
 
-    /**
-     * Creates a new AufstellungsNameDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param aufstellungsName TODO Missing Constructuor Parameter Documentation
-     * @param aufstellung TODO Missing Constructuor Parameter Documentation
-     * @param x TODO Missing Constructuor Parameter Documentation
-     * @param y TODO Missing Constructuor Parameter Documentation
-     */
-    protected AufstellungsNameDialog(JFrame owner, String aufstellungsName,
-                                     Lineup aufstellung, int x, int y) {
-        super(owner, true);
+		JPanel contentPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(8, 8, 8, 2);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.weighty = 1.0;
 
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        m_clAufstellung = aufstellung;
+		JLabel nameLabel = new JLabel(HOVerwaltung.instance().getLanguageString("Name"));
+		contentPanel.add(nameLabel, gbc);
 
-        m_jtfAufstellungsName = new JTextField("");
+		this.nameTextField = new JTextField();
+		Dimension size = new Dimension(200, (int) this.nameTextField.getPreferredSize().getHeight());
+		this.nameTextField.setMinimumSize(size);
+		this.nameTextField.setPreferredSize(size);
+		gbc.insets = new Insets(8, 2, 8, 8);
+		gbc.gridx = 1;
+		contentPanel.add(this.nameTextField, gbc);
 
-        if (checkName(aufstellungsName, false)) {
-            m_jtfAufstellungsName.setText(aufstellungsName);
-        }
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(2, 8, 8, 2);
+		gbc.anchor = GridBagConstraints.NORTHEAST;
+		this.okButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
+		gbc.weightx = 1.0;
+		buttonPanel.add(this.okButton, gbc);
 
-        setTitle(ho.core.model.HOVerwaltung.instance().getLanguageString("AufstellungSpeichern"));
-        m_jbOK = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.save"));
-        m_jbAbbrechen = new JButton(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
+		gbc.gridx = 1;
+		gbc.weightx = 0.0;
+		gbc.insets = new Insets(2, 2, 8, 8);
+		this.cancelButton = new JButton(HOVerwaltung.instance().getLanguageString(
+				"ls.button.cancel"));
+		buttonPanel.add(this.cancelButton, gbc);
 
-        setContentPane(new ho.core.gui.comp.panel.ImagePanel());
-        getContentPane().setLayout(new GridLayout(2, 2, 4, 4));
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        getContentPane().add(new JLabel(ho.core.model.HOVerwaltung.instance().getLanguageString("Name")));
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
 
-        getContentPane().add(m_jtfAufstellungsName);
+		if (checkName(aufstellungsName, false)) {
+			this.nameTextField.setText(aufstellungsName);
+		}
+	}
 
-        m_jbOK.addActionListener(this);
-        getContentPane().add(m_jbOK);
+	@Override
+	public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+		if (actionEvent.getSource().equals(okButton)) {
+			if (!checkName(nameTextField.getText(), false)) {
+				// Name nicht erlaubt / Keine Meldung
+				return;
+			}
 
-        m_jbAbbrechen.addActionListener(this);
-        getContentPane().add(m_jbAbbrechen);
+			if (checkName(nameTextField.getText(), true)) {
+				lineup.save(nameTextField.getText());
+				ho.core.gui.HOMainFrame
+						.instance()
+						.getInfoPanel()
+						.setLangInfoText(
+								HOVerwaltung.instance().getLanguageString("Aufstellung") + " "
+										+ nameTextField.getText() + " "
+										+ HOVerwaltung.instance().getLanguageString("gespeichert"));
+				AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(
+						nameTextField.getText(), lineup.duplicate()));
+				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
+						.exportOldLineup(nameTextField.getText());
+				FileExtensionManager.extractLineup(nameTextField.getText());
+				setVisible(false);
 
-        setSize(300, 80);
-        setLocation(x - 350, y - 150);
-    }
+			} else {
+				final int value = JOptionPane.showConfirmDialog(this, HOVerwaltung.instance()
+						.getLanguageString("Aufstellung_NameSchonVorhanden"), "",
+						JOptionPane.YES_NO_OPTION);
 
-    //~ Methods ------------------------------------------------------------------------------------
+				if (value == JOptionPane.YES_OPTION) {
+					lineup.save(nameTextField.getText());
+					HOMainFrame
+							.instance()
+							.getInfoPanel()
+							.setLangInfoText(
+									HOVerwaltung.instance().getLanguageString("Aufstellung")
+											+ " "
+											+ nameTextField.getText()
+											+ " "
+											+ HOVerwaltung.instance().getLanguageString(
+													"gespeichert"));
+					AufstellungsVergleichHistoryPanel
+							.setAngezeigteAufstellung(new AufstellungCBItem(
+									nameTextField.getText(), lineup.duplicate()));
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
-    public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(m_jbOK)) {
-            if (!checkName(m_jtfAufstellungsName.getText(), false)) {
-                //Name nicht erlaubt / Keine Meldung
-                return;
-            }
+					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
+							.exportOldLineup(nameTextField.getText());
+					FileExtensionManager.extractLineup(nameTextField.getText());
 
-            if (checkName(m_jtfAufstellungsName.getText(), true)) {
-                m_clAufstellung.save(m_jtfAufstellungsName.getText());
-                ho.core.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(ho.core.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
-                                                                                               + " "
-                                                                                               + m_jtfAufstellungsName
-                                                                                                 .getText()
-                                                                                               + " "
-                                                                                               + ho.core.model.HOVerwaltung.instance().getLanguageString("gespeichert"));
-
-                //gui.RefreshManager.instance ().doReInit ();
-                AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(m_jtfAufstellungsName
-                                                                                                 .getText(),
-                                                                                                 m_clAufstellung
-                                                                                                 .duplicate()));
-				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup(m_jtfAufstellungsName.getText());
-				FileExtensionManager.extractLineup(m_jtfAufstellungsName.getText());
-                setVisible(false);
-
-            } else {
-                final int value = JOptionPane.showConfirmDialog(this,
-                                                                ho.core.model.HOVerwaltung.instance().getLanguageString("Aufstellung_NameSchonVorhanden")
-                                                                , "", JOptionPane.YES_NO_OPTION);
-
-                if (value == JOptionPane.YES_OPTION) {
-                    m_clAufstellung.save(m_jtfAufstellungsName.getText());
-                    ho.core.gui.HOMainFrame.instance().getInfoPanel().setLangInfoText(ho.core.model.HOVerwaltung.instance().getLanguageString("Aufstellung")
-                                                                                                   + " "
-                                                                                                   + m_jtfAufstellungsName
-                                                                                                     .getText()
-                                                                                                   + " "
-                                                                                                   + ho.core.model.HOVerwaltung.instance().getLanguageString("gespeichert"));
-
-                    //gui.RefreshManager.instance ().doReInit ();
-                    AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(m_jtfAufstellungsName
-                                                                                                     .getText(),
-                                                                                                     m_clAufstellung
-                                                                                                     .duplicate()));
-
-					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup(m_jtfAufstellungsName.getText());
-					FileExtensionManager.extractLineup(m_jtfAufstellungsName.getText());
-
-					HOMainFrame.instance().getAufstellungsPanel().update(); // Should prepare it for the new lineup
+					// Should prepare it for the new lineup
+					HOMainFrame.instance().getAufstellungsPanel().update();
 					setVisible(false);
-                }
-            }
-        } else if (actionEvent.getSource().equals(m_jbAbbrechen)) {
-            setVisible(false);
-        }
-    }
+				}
+			}
+		} else if (actionEvent.getSource().equals(cancelButton)) {
+			setVisible(false);
+		}
+	}
 
-    //Name noch nicht in DB oder Aktuelle Aufstellung
-    private boolean checkName(String name, boolean dbcheck) {
-        Vector<String> aufstellungsNamen = new Vector<String>();
+	// Name noch nicht in DB oder Aktuelle Aufstellung
+	private boolean checkName(String name, boolean dbcheck) {
+		List<String> aufstellungsNamen = new ArrayList<String>();
 
-        //nicht schon vorhanden
-        if (dbcheck) {
-            aufstellungsNamen = DBManager.instance().getAufstellungsListe(Lineup.NO_HRF_VERBINDUNG);
-        }
+		// nicht schon vorhanden
+		if (dbcheck) {
+			aufstellungsNamen = DBManager.instance().getAufstellungsListe(Lineup.NO_HRF_VERBINDUNG);
+		}
 
-        //nicht Aktuelle Aufstellung
-        aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"));
-        aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
+		// nicht Aktuelle Aufstellung
+		aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"));
+		aufstellungsNamen.add(HOVerwaltung.instance().getLanguageString("LetzteAufstellung"));
 
-        //nicht HO!
-        aufstellungsNamen.add(Lineup.DEFAULT_NAME);
+		// nicht HO!
+		aufstellungsNamen.add(Lineup.DEFAULT_NAME);
 
-        return (!(aufstellungsNamen.contains(name)));
-    }
+		return (!(aufstellungsNamen.contains(name)));
+	}
 }

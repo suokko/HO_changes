@@ -30,6 +30,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -340,7 +341,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      *
      * @param spieler TODO Missing Constructuor Parameter Documentation
      */
-    public void refresh(Vector<Spieler> spieler) {
+    public void refresh(List<Spieler> spieler) {
         Spieler aktuellerSpieler = null;
 		playerId = -1;
         if (m_iPositionID == ISpielerPosition.setPieces) {
@@ -417,7 +418,7 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
      * @param spielerListe TODO Missing Constructuor Parameter Documentation
      * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
-    protected void setSpielerListe(Vector<Spieler> spielerListe, Spieler aktuellerSpieler) {
+    protected void setSpielerListe(List<Spieler> spielerListe, Spieler aktuellerSpieler) {
         //Listener entfernen
         m_jcbPlayer.removeItemListener(this);
 

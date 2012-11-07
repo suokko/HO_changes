@@ -4,87 +4,75 @@ package ho.core.gui.model;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 import ho.module.lineup.Lineup;
 
-
 /**
  * Named Lineup item.
  */
 public class AufstellungCBItem {
-    //~ Instance fields ----------------------------------------------------------------------------
+	private Lineup m_clAufstellung;
+	private String m_sText;
 
-    private Lineup m_clAufstellung;
-    private String m_sText;
+	/**
+	 * Creates a new AufstellungCBItem object.
+	 */
+	public AufstellungCBItem(String text, Lineup aufstellung) {
+		m_sText = text;
+		m_clAufstellung = aufstellung;
+	}
 
-    //~ Constructors -------------------------------------------------------------------------------
+	/**
+	 * Check, if displayed.
+	 */
+	public final boolean isAngezeigt() {
+		return AufstellungsVergleichHistoryPanel.isAngezeigt(this);
+	}
 
-    /**
-     * Creates a new AufstellungCBItem object.
-     */
-    public AufstellungCBItem(String text, Lineup aufstellung) {
-        m_sText = text;
-        m_clAufstellung = aufstellung;
-    }
+	/**
+	 * Set the Lineup.
+	 */
+	public final void setAufstellung(Lineup aufstellung) {
+		m_clAufstellung = aufstellung;
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	public final Lineup getAufstellung() {
+		return m_clAufstellung;
+	}
 
-    /**
-     * Check, if displayed.
-     */
-    public final boolean isAngezeigt() {
-        return AufstellungsVergleichHistoryPanel.isAngezeigt(this);
-    }
+	/**
+	 * Set a name.
+	 */
+	public final void setText(String text) {
+		m_sText = text;
+	}
 
-    /**
-     * Set the Lineup.
-     */
-    public final void setAufstellung(Lineup aufstellung) {
-        m_clAufstellung = aufstellung;
-    }
+	/**
+	 * Get the name.
+	 */
+	public final String getText() {
+		return m_sText;
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public final Lineup getAufstellung() {
-        return m_clAufstellung;
-    }
+	/**
+	 * Duplicate a AufstellungCBItem.
+	 */
+	public final AufstellungCBItem duplicate() {
+		return new AufstellungCBItem(this.getText(), this.getAufstellung().duplicate());
+	}
 
-    /**
-     * Set a name.
-     */
-    public final void setText(String text) {
-        m_sText = text;
-    }
-
-    /**
-     * Get the name.
-     */
-    public final String getText() {
-        return m_sText;
-    }
-
-    /**
-     * Duplicate a AufstellungCBItem.
-     */
-    public final AufstellungCBItem duplicate() {
-        return new AufstellungCBItem(this.getText(), this.getAufstellung().duplicate());
-    }
-
-    @Override
+	@Override
 	public final boolean equals(Object obj) {
-        if (obj instanceof AufstellungCBItem) {
-            final AufstellungCBItem temp = (AufstellungCBItem) obj;
+		if (obj instanceof AufstellungCBItem) {
+			AufstellungCBItem temp = (AufstellungCBItem) obj;
 
-            if ((temp.getText() != null) && temp.getText().equals(getText())) {
-                return true;
-            }
-        }
+			if ((temp.getText() != null) && temp.getText().equals(getText())) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
+	@Override
 	public final String toString() {
-        return m_sText;
-    }
+		return m_sText;
+	}
 }
