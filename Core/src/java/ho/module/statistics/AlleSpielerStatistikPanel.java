@@ -67,7 +67,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel {
 	private JComboBox m_jcbGruppe;
 	private JTextField m_jtfNumberOfHRF;
 	private StatistikPanel m_clStatistikPanel;
-	final JPanel panel2 = new ImagePanel();
+	private JPanel panel2;
 	private boolean initialized = false;
 	private boolean needsRefresh = false;
 
@@ -248,6 +248,7 @@ public class AlleSpielerStatistikPanel extends ImagePanel {
 		constraints2.insets = new Insets(2, 2, 2, 2);
 
 		GridBagLayout layout2 = new GridBagLayout();
+		panel2 = new ImagePanel();
 		panel2.setLayout(layout2);
 
 		constraints2.gridx = 0;

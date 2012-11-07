@@ -1,5 +1,6 @@
 package ho.module.teamAnalyzer.ui;
 
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -14,138 +15,165 @@ import ho.module.teamAnalyzer.vo.TeamLineup;
 import ho.module.training.ui.comp.DividerListener;
 
 import java.awt.BorderLayout;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+public class TeamAnalyzerPanel extends JPanel {
 
-public class TeamAnalyzerPanel extends JPanel implements IRefreshable{
-
-    /** The filters */
-    public static Filter filter = new Filter();
-
+	/** The filters */
+	public static Filter filter = new Filter();
 	private static final long serialVersionUID = 1L;
-	private JButton simButton = new JButton(HOVerwaltung.instance().getLanguageString("Simulate"));
+	private JButton simButton;
 	private RecapPanel recapPanel;
 	private MainPanel mainPanel;
-    private FilterPanel filterPanel;
-    private RatingPanel ratingPanel;
-	
+	private FilterPanel filterPanel;
+	private RatingPanel ratingPanel;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
+
 	public TeamAnalyzerPanel() {
-		SystemManager.initialize(this);
-		initialize();
-		simButton.addActionListener(new SimButtonListener(mainPanel.getMyTeamLineupPanel(),
-        		mainPanel.getOpponentTeamLineupPanel(), recapPanel));
-        SystemManager.refreshData();
-        RefreshManager.instance().registerRefreshable(this);
- 	}
+		addHierarchyListener(new HierarchyListener() {
 
-	private void initialize() {
-        filterPanel = new FilterPanel();
-        recapPanel = new RecapPanel();
-        mainPanel = new MainPanel();
-        ratingPanel = new RatingPanel();
-        setLayout(new BorderLayout());
-
-        JPanel buttonPanel = new ImagePanel();
-
-        buttonPanel.setLayout(new BorderLayout());
-        simButton.setText(HOVerwaltung.instance().getLanguageString("Simulate"));
-        buttonPanel.add(simButton, BorderLayout.CENTER);
-
-        JSplitPane panel = new JSplitPane(0, ratingPanel, buttonPanel);
-
-        panel.setDividerSize(1);
-        panel.setResizeWeight(1);
-        panel.setDividerLocation(UserParameter.instance().teamAnalyzer_LowerLefSplitPane);
-        panel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                        new DividerListener(DividerListener.teamAnalyzer_LowerLefSplitPane));
-
-        //JScrollPane teamScrollPanel = new JScrollPane(mainPanel);
-        JSplitPane leftPanel = new JSplitPane(0, filterPanel, panel);
-
-        leftPanel.setDividerLocation(UserParameter.instance().teamAnalyzer_UpperLeftSplitPane);
-        leftPanel.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                            new DividerListener(DividerListener.teamAnalyzer_UpperLeftSplitPane));
-
-        JSplitPane mainPanel2 = new JSplitPane(1, leftPanel, mainPanel);
-
-        mainPanel2.setDividerLocation(UserParameter.instance().teamAnalyzer_MainSplitPane);
-        mainPanel2.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                             new DividerListener(DividerListener.teamAnalyzer_MainSplitPane));
-
-        JSplitPane m_splitPane = new JSplitPane(0, mainPanel2, recapPanel);
-
-        m_splitPane.setDividerLocation(UserParameter.instance().teamAnalyzer_BottomSplitPane);
-        m_splitPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                                              new DividerListener(DividerListener.teamAnalyzer_BottomSplitPane));
-        add(m_splitPane, BorderLayout.CENTER);
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						refresh();
+					}
+				}
+			}
+		});
 	}
 
+	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			SystemManager.initialize(this);
+			initComponents();
+			addListeners();
+			SystemManager.refreshData();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
+
+	private void addListeners() {
+		simButton.addActionListener(new SimButtonListener(mainPanel.getMyTeamLineupPanel(),
+				mainPanel.getOpponentTeamLineupPanel(), recapPanel));
+
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
+
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					refresh();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
+	}
+
+	private void refresh() {
+		CursorToolkit.startWaitCursor(this);
+		try {
+			SystemManager.refreshData();
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
+
+	private void initComponents() {
+		filterPanel = new FilterPanel();
+		recapPanel = new RecapPanel();
+		mainPanel = new MainPanel();
+		ratingPanel = new RatingPanel();
+		setLayout(new BorderLayout());
+
+		JPanel buttonPanel = new ImagePanel(new BorderLayout());
+		simButton = new JButton(HOVerwaltung.instance().getLanguageString("Simulate"));
+		buttonPanel.add(simButton, BorderLayout.CENTER);
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, ratingPanel, buttonPanel);
+		splitPane.setDividerSize(1);
+		splitPane.setResizeWeight(1);
+		splitPane.setDividerLocation(UserParameter.instance().teamAnalyzer_LowerLefSplitPane);
+		splitPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
+				new DividerListener(DividerListener.teamAnalyzer_LowerLefSplitPane));
+
+		JSplitPane splitPaneLeft = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel, splitPane);
+		splitPaneLeft.setDividerLocation(UserParameter.instance().teamAnalyzer_UpperLeftSplitPane);
+		splitPaneLeft.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
+				new DividerListener(DividerListener.teamAnalyzer_UpperLeftSplitPane));
+
+		JSplitPane splitPaneUpper = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPaneLeft,
+				mainPanel);
+		splitPaneUpper.setDividerLocation(UserParameter.instance().teamAnalyzer_MainSplitPane);
+		splitPaneUpper.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
+				new DividerListener(DividerListener.teamAnalyzer_MainSplitPane));
+
+		JSplitPane splitPaneMain = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneUpper,
+				recapPanel);
+		splitPaneMain.setDividerLocation(UserParameter.instance().teamAnalyzer_BottomSplitPane);
+		splitPaneMain.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
+				new DividerListener(DividerListener.teamAnalyzer_BottomSplitPane));
+		add(splitPaneMain, BorderLayout.CENTER);
+	}
 
 	public MainPanel getMainPanel() {
 		return mainPanel;
 	}
 
-	   /**
-     * Returns the Filter Panel
-     *
-     * @return
-     */
-    public FilterPanel getFilterPanel() {
-        return filterPanel;
-    }
-    
-    /**
-     * Returns the rating panel
-     *
-     * @return
-     */
-    public RatingPanel getRatingPanel() {
-        return ratingPanel;
-    }
-
-    /**
-     * Returns the recap panel
-     *
-     * @return
-     */
-    RecapPanel getRecapPanel() {
-        return recapPanel;
-    }
-
-    /**
-     * Returns the Simulate Button reference
-     *
-     * @return
-     */
-    JButton getSimButton() {
-        return simButton;
-    }
-    
-  
-	@Override
-	public void refresh() {
-		SystemManager.refreshData();
-		
+	/**
+	 * Returns the Filter Panel
+	 * 
+	 * @return
+	 */
+	public FilterPanel getFilterPanel() {
+		return filterPanel;
 	}
-	
-	
+
+	/**
+	 * Returns the rating panel
+	 * 
+	 * @return
+	 */
+	public RatingPanel getRatingPanel() {
+		return ratingPanel;
+	}
+
+	/**
+	 * Returns the recap panel
+	 * 
+	 * @return
+	 */
+	RecapPanel getRecapPanel() {
+		return recapPanel;
+	}
+
 	public void reload() {
-        TeamLineup lineup = ReportManager.getLineup();
+		TeamLineup lineup = ReportManager.getLineup();
 
-        getFilterPanel().reload();
+		getFilterPanel().reload();
 
-        getMainPanel().reload(lineup, 0, 0);
-        getRecapPanel().reload(lineup);
-        getRatingPanel().reload(lineup);
+		getMainPanel().reload(lineup, 0, 0);
+		getRecapPanel().reload(lineup);
+		getRatingPanel().reload(lineup);
 
-        if (ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP)) {
-            getSimButton().setVisible(true);
-        } else {
-            getSimButton().setVisible(false);
-        }
-    }
-	
+		if (ModuleConfig.instance().getBoolean(SystemManager.ISLINEUP)) {
+			this.simButton.setVisible(true);
+		} else {
+			this.simButton.setVisible(false);
+		}
+	}
+
 }
