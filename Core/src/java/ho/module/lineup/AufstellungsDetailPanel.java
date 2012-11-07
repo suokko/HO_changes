@@ -271,15 +271,12 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			m_jcbPullBackMinute.setEnabled(!aufstellung.isPullBackOverride());
 			setPullBackOverride(aufstellung.isPullBackOverride());
 
-//			m_jpPredictionType.setText(RatingPredictionConfig.getInstancePredictionName());
-
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setText(PlayerAbility.getNameForSkill(avXp));
             m_jpDurchschnittErfahrung.setToolTipText(
             		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
 
             m_jpAktuellesSystem.setText(Lineup.getNameForSystem(aufstellung.ermittelSystem()));
-            //m_jpAktuellesSystem.setText(Aufstellung.getNameForSystem(aufstellung.ermittelSystem()));
             m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
                                                         .getTeamErfahrung4AktuellesSystem() + "");
             m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
@@ -401,7 +398,8 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      *
      * @param event the event
      */
-    public void itemStateChanged(ItemEvent event) {
+    @Override
+	public void itemStateChanged(ItemEvent event) {
 
     	if (event.getStateChange() == ItemEvent.DESELECTED) {
     		if (event.getSource().equals(m_jchPullBackOverride)) {
@@ -458,14 +456,16 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
     /**
      * Reinit the GUI:
      */
-    public void reInit() {
+    @Override
+	public void reInit() {
         setLabels();
     }
 
     /**
      * Refresh the GUI.
      */
-    public void refresh() {
+    @Override
+	public void refresh() {
     	removeItemListeners();
         setLabels();
         addItemListeners();

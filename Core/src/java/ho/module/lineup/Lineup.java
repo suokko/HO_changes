@@ -1331,7 +1331,7 @@ public class Lineup {
 		final int forwards = getAnzSturm();
 		if (defenders == 2) {
 			// 253
-			if (midfielders == 5) {
+			if (midfielders == 5 && forwards == 3) {
 				return SYS_253;
 			}
 			// MURKS
@@ -1340,10 +1340,10 @@ public class Lineup {
 			}
 		} else if (defenders == 3) {
 			// 343
-			if (midfielders == 4) {
+			if (midfielders == 4 && forwards == 3) {
 				return SYS_343;
 			} // 352
-			else if (midfielders == 5) {
+			else if (midfielders == 5 && forwards == 2) {
 				return SYS_352;
 			}
 			// MURKS
@@ -1352,13 +1352,13 @@ public class Lineup {
 			}
 		} else if (defenders == 4) {
 			// 433
-			if (midfielders == 3) {
+			if (midfielders == 3 && forwards == 3) {
 				return SYS_433;
 			} // 442
-			else if (midfielders == 4) {
+			else if (midfielders == 4 && forwards == 2) {
 				return SYS_442;
 			} // 451
-			else if (midfielders == 5) {
+			else if (midfielders == 5 && forwards == 1) {
 				return SYS_451;
 			}
 			// MURKS
@@ -1367,16 +1367,16 @@ public class Lineup {
 			}
 		} else if (defenders == 5) {
 			// 532
-			if (midfielders == 3) {
+			if (midfielders == 3 && forwards == 2) {
 				return SYS_532;
 			} // 541
-			else if (midfielders == 4) {
+			else if (midfielders == 4 && forwards == 1) {
 				return SYS_541;
 			} // 523
-			else if (midfielders == 2) {
+			else if (midfielders == 2 && forwards == 3) {
 				return SYS_523;
 			} // 550
-			else if (midfielders == 5) {
+			else if (midfielders == 5 && forwards == 0) {
 				return SYS_550;
 			}
 			// MURKS
