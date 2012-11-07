@@ -101,7 +101,7 @@ public class SimButtonListener implements ActionListener {
         MatchEnginePanel matchPredictionPanel;
         String match = "";
 
-        if (HOVerwaltung.instance().getModel().getAufstellung().getHeimspiel() == 1) {
+        if (HOVerwaltung.instance().getModel().getAufstellung().getLocation() == 1) {
             matchPredictionPanel = new MatchEnginePanel(myTeamValues, opponentTeamValues);
             match = myTeamValues.getTeamName() + " - " + opponentTeamValues.getTeamName();
         } else {

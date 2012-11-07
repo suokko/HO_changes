@@ -84,7 +84,7 @@ public class Lineup {
 	private int pullBackMinute = 90; // no pull back
 
 	/** Home/Away/AwayDerby */
-	private short m_sLocation = -1;
+	private short m_sLocation = IMatchDetails.LOCATION_HOME;
 
 	private boolean pullBackOverride;
 
@@ -208,8 +208,8 @@ public class Lineup {
 			// Add the penalty takers
 
 			for (int i = 0; i < 11; i++) {
-				penaltyTakers.add(new SpielerPosition(i + ISpielerPosition.penaltyTaker1,
-						Integer.parseInt(properties.getProperty("penalty" + i, "0")), (byte) 0));
+				penaltyTakers.add(new SpielerPosition(i + ISpielerPosition.penaltyTaker1, Integer
+						.parseInt(properties.getProperty("penalty" + i, "0")), (byte) 0));
 			}
 
 		} catch (Exception e) {
@@ -350,7 +350,7 @@ public class Lineup {
 		Vector<ISpielerPosition> noKeeper = new Vector<ISpielerPosition>(m_vPositionen);
 
 		for (ISpielerPosition pos : noKeeper) {
-			SpielerPosition p = (SpielerPosition)pos;
+			SpielerPosition p = (SpielerPosition) pos;
 			if (p.getId() == ISpielerPosition.keeper) {
 				noKeeper.remove(pos);
 				break;
@@ -360,7 +360,7 @@ public class Lineup {
 		if (players != null) {
 			for (Spieler player : players) {
 				if (m_clAssi.isSpielerInAnfangsElf(player.getSpielerID(), noKeeper)) {
-					double sp = (double)player.getStandards()
+					double sp = (double) player.getStandards()
 							+ player.getSubskill4Pos(PlayerSkill.SET_PIECES)
 							+ RatingPredictionManager.getLoyaltyHomegrownBonus(player);
 					if (sp > maxStandard) {
@@ -728,17 +728,16 @@ public class Lineup {
 	 * @param m_sHeimspiel
 	 *            New value of property m_sHeimspiel.
 	 */
-	public final void setHeimspiel(short location) {
+	public final void setLocation(short location) {
 		this.m_sLocation = location;
 	}
 
 	/**
-	 * Get the location constant for the match (home/away/awayderby) TODO:
-	 * determine away derby (aik) !!!
+	 * Get the location constant for the match (home/away/awayderby)
 	 * 
 	 * @return the location constant for the match
 	 */
-	public final short getHeimspiel() {
+	public final short getLocation() {
 		if (m_sLocation < 0) {
 			try {
 				final int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -1057,11 +1056,11 @@ public class Lineup {
 			this.substitutions = new ArrayList<Substitution>(subs);
 		}
 	}
-	
+
 	public List<SpielerPosition> getPenaltyTakers() {
 		return this.penaltyTakers;
 	}
-	
+
 	/**
 	 * Get the system name.
 	 */
@@ -1313,7 +1312,7 @@ public class Lineup {
 			}
 
 			clone = new Lineup(properties);
-			clone.setHeimspiel(getHeimspiel());
+			clone.setLocation(getLocation());
 			clone.setPullBackMinute(getPullBackMinute());
 			clone.setPullBackOverride(isPullBackOverride());
 		} catch (Exception e) {
@@ -1474,9 +1473,9 @@ public class Lineup {
 		}
 		m_clAssi.resetPositionsbesetzungen(vReserve);
 	}
-	
+
 	/**
-	 * Resets the orders for all positions to normal 
+	 * Resets the orders for all positions to normal
 	 */
 	public final void resetPositionOrders() {
 		m_clAssi.resetPositionOrders(m_vPositionen);
@@ -1723,8 +1722,7 @@ public class Lineup {
 		m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, 0, (byte) 0));
 
 		for (int i = 0; i < 10; i++) {
-			penaltyTakers.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, 0,
-					(byte) 0));
+			penaltyTakers.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, 0, (byte) 0));
 		}
 	}
 

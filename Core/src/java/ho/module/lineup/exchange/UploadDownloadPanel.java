@@ -7,6 +7,7 @@ import ho.core.gui.comp.renderer.DateTimeTableCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchType;
 import ho.core.net.OnlineWorker;
@@ -228,11 +229,11 @@ public class UploadDownloadPanel extends JPanel {
 	private void download() {
 		Lineup lineup;
 		CursorToolkit.startWaitCursor(this);
-		try {
-			MatchKurzInfo match = getSelectedMatch();
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo match = getSelectedMatch();
+		try {			
 			lineup = OnlineWorker.getLineupbyMatchId(match.getMatchID(), match.getMatchTyp());
-			MatchKurzInfo refreshed = OnlineWorker.updateMatch(HOVerwaltung.instance().getModel()
-					.getBasics().getTeamId(), match);
+			MatchKurzInfo refreshed = OnlineWorker.updateMatch(teamId, match);
 			if (refreshed != null) {
 				match.merge(refreshed);
 				((MatchesTableModel) this.matchesTable.getModel()).fireTableDataChanged();
@@ -243,6 +244,11 @@ public class UploadDownloadPanel extends JPanel {
 		}
 		if (lineup != null) {
 			int messageType = JOptionPane.PLAIN_MESSAGE;
+			if (match.getHeimID() == teamId) {
+				lineup.setLocation(IMatchDetails.LOCATION_HOME);
+			} else {
+				lineup.setLocation(IMatchDetails.LOCATION_AWAY);
+			}
 			String message = HOVerwaltung.instance().getLanguageString("lineup.download.success");
 			JOptionPane.showMessageDialog(HOMainFrame.instance(), message, HOVerwaltung.instance()
 					.getLanguageString("lineup.download.title"), messageType);

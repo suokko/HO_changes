@@ -127,11 +127,11 @@ public class RatingOptimizer {
 		Matchdetails det = matchData.getDetails();
 		if (HOVerwaltung.instance().getModel().getBasics().getTeamId() == matchData.getInfo().getHeimID()) {
 			lineup.setAttitude(det.getHomeEinstellung());
-			lineup.setHeimspiel((short) 1);
+			lineup.setLocation((short) 1);
 			lineup.setTacticType(det.getHomeTacticType());
 		} else {
 			lineup.setAttitude(det.getGuestEinstellung());
-			lineup.setHeimspiel((short) 0);
+			lineup.setLocation((short) 0);
 			lineup.setTacticType(det.getGuestTacticType());
 		}
 

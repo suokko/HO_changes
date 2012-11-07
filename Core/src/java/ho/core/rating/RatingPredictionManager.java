@@ -908,7 +908,7 @@ public class RatingPredictionManager {
         {
             this.trainerType = trainerType;
             this.attitude = (short)lineup.getAttitude();
-            this.heimspiel = lineup.getHeimspiel();
+            this.heimspiel = lineup.getLocation();
             this.taktikType = (short)lineup.getTacticType();
             this.stimmung = (short)team.getStimmungAsInt();
             this.substimmung = (short)team.getSubStimmung();

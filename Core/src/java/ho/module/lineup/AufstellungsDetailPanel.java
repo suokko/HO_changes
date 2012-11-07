@@ -184,7 +184,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
      *
      * @param location the constant for the location
      */
-    public void setLocation(int location) {
+    private void setLocation(int location) {
 		Helper.markierenComboBox(m_jcbLocation, location);
     }
 
@@ -266,7 +266,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             m_jpTaktikStaerke.setText(getTaktikString());
 
             setEinstellung(aufstellung.getAttitude());
-            setLocation(aufstellung.getHeimspiel());
+            setLocation(aufstellung.getLocation());
 			setPullBackMinute(aufstellung.getPullBackMinute());
 			m_jcbPullBackMinute.setEnabled(!aufstellung.isPullBackOverride());
 			setPullBackOverride(aufstellung.isPullBackOverride());
@@ -447,7 +447,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             } else if (event.getSource().equals(m_jcbLocation)) {
             	// location changed
             	HOVerwaltung.instance().getModel().getAufstellung().
-            			setHeimspiel((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
+            			setLocation((short)((CBItem)m_jcbLocation.getSelectedItem()).getId());
             }
             refresh();
         }

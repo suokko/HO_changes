@@ -199,7 +199,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 		final Lineup new1 = m_clAngezeigteAufstellung.getAufstellung().duplicate();
 		if (old != null) { // else we lose the location (home / away / derby)
 							// here
-			new1.setHeimspiel(old.getHeimspiel());
+			new1.setLocation(old.getLocation());
 		}
 		HOVerwaltung.instance().getModel().setAufstellung(new1);
 		HOMainFrame.instance().getAufstellungsPanel().update();
@@ -285,7 +285,7 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 			m_clVergleichsAufstellung = aufstellungCB.duplicate();
 			final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
 			if (old != null) { // keep the same location (home / away / derby)
-				m_clVergleichsAufstellung.getAufstellung().setHeimspiel(old.getHeimspiel());
+				m_clVergleichsAufstellung.getAufstellung().setLocation(old.getLocation());
 			}
 		} else { // Keine Vergleich!
 			m_jbAufstellungAnzeigen.setEnabled(false);
