@@ -1,6 +1,7 @@
 package ho.module.tsforecast;
 
 import ho.core.db.DBManager;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -10,7 +11,6 @@ import ho.core.model.match.MatchKurzInfo;
 import ho.core.model.match.MatchType;
 import ho.core.module.config.ModuleConfig;
 import ho.core.util.HOLogger;
-import ho.module.matches.SpielePanel;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,6 +19,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
@@ -30,8 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class TSForecast extends ImagePanel implements IRefreshable,
-		ActionListener, ItemListener {
+public class TSForecast extends ImagePanel implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	final static String TS_SHOWCUPMATCHES = "TS_ShowCupMatches";
@@ -42,80 +43,103 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	final static String TS_CONFIDENCE = "TS_Confidence";
 	final static String TS_GENERALSPIRIT = "TS_GeneralSpirit";
 
-	private JPanel m_jpSettingsPanel = null;
-	private JPanel m_jpGamesPanel = null;
-
-	private JCheckBox m_jtCupMatches = null;
-	private JCheckBox m_jtRelegationMatch = null;
-
-	private CheckBox m_jtHistory = null;
-	private CheckBox m_jtLoepiHist = null;
-	private CheckBox m_jtLoepiFore = null;
-	private CheckBox m_jtConfidence = null;
-
-	private TSPanel m_jpGraphics = null;
-
-	private HistoryCurve m_History = null;
-	private LoepiCurve m_LoepiForecast = null;
-	private LoepiCurve m_LoepiHist = null;
-	private TrainerCurve m_Trainer = null;
-	private ConfidenceCurve m_Confidence = null;
+	private JPanel m_jpSettingsPanel;
+	private JPanel m_jpGamesPanel;
+	private JCheckBox m_jtCupMatches;
+	private JCheckBox m_jtRelegationMatch;
+	private CheckBox m_jtHistory;
+	private CheckBox m_jtLoepiHist;
+	private CheckBox m_jtLoepiFore;
+	private CheckBox m_jtConfidence;
+	private TSPanel m_jpGraphics;
+	private HistoryCurve m_History;
+	private LoepiCurve m_LoepiForecast;
+	private LoepiCurve m_LoepiHist;
+	private TrainerCurve m_Trainer;
+	private ConfidenceCurve m_Confidence;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
 
 	public TSForecast() {
-		initializeConfig();
-		initialize();
+		addHierarchyListener(new HierarchyListener() {
+
+			@Override
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						initialize();
+					}
+					if (needsRefresh) {
+						refresh();
+					}
+				}
+			}
+		});
 	}
 
-	/**
-	 * Is called by HO! to start the plugin
-	 */
-
 	private void initialize() {
+		CursorToolkit.startWaitCursor(this);
 		try {
+			initializeConfig();
+			initComponents();
+			addListeners();
+			this.initialized = true;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
+	}
 
-			GridBagLayout gridbaglayout = new GridBagLayout();
-			setLayout(gridbaglayout);
+	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
 
-			GridBagConstraints gridbagconstraints = new GridBagConstraints();
-			gridbagconstraints.fill = GridBagConstraints.NONE;
-			gridbagconstraints.insets = new Insets(5, 5, 5, 5);
-
-			m_jpSettingsPanel = new JPanel();
-			m_jpSettingsPanel.setOpaque(false);
-			m_jpSettingsPanel.setLayout(new BoxLayout(m_jpSettingsPanel,
-					BoxLayout.Y_AXIS));
-
-			createSettingsPanel(m_jpSettingsPanel);
-			createCurvesPanel(m_jpSettingsPanel);
-			createGamesPanel(m_jpSettingsPanel);
-
-			gridbagconstraints.gridx = 0;
-			gridbagconstraints.gridheight = 2;
-			gridbagconstraints.anchor = 18;
-			add(m_jpSettingsPanel, gridbagconstraints);
-			m_jpGraphics = new TSPanel();
-			gridbagconstraints.gridx = 1;
-			gridbagconstraints.gridy = 0;
-			gridbagconstraints.fill = 1;
-			gridbagconstraints.anchor = 11;
-			gridbagconstraints.weightx = 1.0D;
-			gridbagconstraints.weighty = 1.0D;
-			gridbagconstraints.gridheight = -1;
-			add(m_jpGraphics, gridbagconstraints);
-
-			initCurves();
-			// createTeamData(1);
-			double d = ModuleConfig.instance().getBigDecimal(TS_GENERALSPIRIT)
-					.doubleValue();
-			try {
-				m_LoepiForecast.setGeneralSpirit(d);
-				m_LoepiHist.setGeneralSpirit(d);
-			} catch (Exception ex) {
-				HOLogger.instance().error(this.getClass(), ex);
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					refresh();
+				} else {
+					needsRefresh = true;
+				}
 			}
-			RefreshManager.instance().registerRefreshable(this);
-		} catch (Exception exception) {
-			HOLogger.instance().error(this.getClass(), exception);
+		});
+	}
+
+	private void initComponents() {
+		GridBagLayout gridbaglayout = new GridBagLayout();
+		setLayout(gridbaglayout);
+
+		GridBagConstraints gridbagconstraints = new GridBagConstraints();
+		gridbagconstraints.fill = GridBagConstraints.NONE;
+		gridbagconstraints.insets = new Insets(5, 5, 5, 5);
+
+		m_jpSettingsPanel = new JPanel();
+		m_jpSettingsPanel.setOpaque(false);
+		m_jpSettingsPanel.setLayout(new BoxLayout(m_jpSettingsPanel, BoxLayout.Y_AXIS));
+
+		createSettingsPanel(m_jpSettingsPanel);
+		createCurvesPanel(m_jpSettingsPanel);
+		createGamesPanel(m_jpSettingsPanel);
+
+		gridbagconstraints.gridx = 0;
+		gridbagconstraints.gridheight = 2;
+		gridbagconstraints.anchor = 18;
+		add(m_jpSettingsPanel, gridbagconstraints);
+		m_jpGraphics = new TSPanel();
+		gridbagconstraints.gridx = 1;
+		gridbagconstraints.gridy = 0;
+		gridbagconstraints.fill = 1;
+		gridbagconstraints.anchor = 11;
+		gridbagconstraints.weightx = 1.0D;
+		gridbagconstraints.weighty = 1.0D;
+		gridbagconstraints.gridheight = -1;
+		add(m_jpGraphics, gridbagconstraints);
+
+		initCurves();
+		double d = ModuleConfig.instance().getBigDecimal(TS_GENERALSPIRIT).doubleValue();
+		try {
+			m_LoepiForecast.setGeneralSpirit(d);
+			m_LoepiHist.setGeneralSpirit(d);
+		} catch (Exception e) {
+			throw new RuntimeException();
 		}
 	}
 
@@ -125,10 +149,9 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	private boolean isInCup() {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
-				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" +
-				" AND MatchTyp = " + MatchType.CUP.getId() +
-				" AND Status <> " + MatchKurzInfo.FINISHED +
-				" LIMIT 1");
+				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" + " AND MatchTyp = "
+						+ MatchType.CUP.getId() + " AND Status <> " + MatchKurzInfo.FINISHED
+						+ " LIMIT 1");
 		return matches.length != 0;
 	}
 
@@ -138,10 +161,9 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	private boolean hasQualificationMatch() {
 		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		MatchKurzInfo[] matches = DBManager.instance().getMatchesKurzInfo(
-				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" +
-				" AND MatchTyp = " + MatchType.QUALIFICATION.getId() +
-				" AND Status <> " + MatchKurzInfo.FINISHED +
-				" LIMIT 1");
+				" WHERE ( GastID = " + teamId + " OR HeimID = " + teamId + ")" + " AND MatchTyp = "
+						+ MatchType.QUALIFICATION.getId() + " AND Status <> "
+						+ MatchKurzInfo.FINISHED + " LIMIT 1");
 		return matches.length != 0;
 	}
 
@@ -161,21 +183,25 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
 	}
 
-	@Override
-	public void refresh() {
-		// ErrorLog.writeln("refresh");
-		ModuleConfig config = ModuleConfig.instance();
-		config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
-		if (hasQualificationMatch())
-			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
-
+	private void refresh() {
+		CursorToolkit.startWaitCursor(this);
 		try {
-			createCurves();
-		} catch (Exception ex) {
-			HOLogger.instance().error(this.getClass(), ex);
+			ModuleConfig config = ModuleConfig.instance();
+			config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
+			if (hasQualificationMatch())
+				config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
+
+			try {
+				createCurves();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+			createGamesPanel(m_jpSettingsPanel);
+			m_jpGraphics.repaint();
+			this.needsRefresh = false;
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
 		}
-		createGamesPanel(m_jpSettingsPanel);
-		m_jpGraphics.repaint();
 	}
 
 	@Override
@@ -184,23 +210,19 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		setCursor(Cursor.getPredefinedCursor(3));
 		try {
 			if (actionevent.getSource() instanceof JRadioButton) {
-				int iButton = Integer.parseInt(actionevent.getActionCommand()
-						.substring(1));
+				int iButton = Integer.parseInt(actionevent.getActionCommand().substring(1));
 
 				switch (actionevent.getActionCommand().charAt(0)) {
 				case 80: // 'P'
-					m_LoepiForecast.setAttitude(iButton,
-							IMatchDetails.EINSTELLUNG_PIC);
+					m_LoepiForecast.setAttitude(iButton, IMatchDetails.EINSTELLUNG_PIC);
 					break;
 				case 77: // 'M'
-					m_LoepiForecast.setAttitude(iButton,
-							IMatchDetails.EINSTELLUNG_MOTS);
+					m_LoepiForecast.setAttitude(iButton, IMatchDetails.EINSTELLUNG_MOTS);
 					break;
 				case 78: // 'N'
 				case 79: // 'O'
 				default:
-					m_LoepiForecast.setAttitude(iButton,
-							IMatchDetails.EINSTELLUNG_NORMAL);
+					m_LoepiForecast.setAttitude(iButton, IMatchDetails.EINSTELLUNG_NORMAL);
 					break;
 				}
 				m_jpGraphics.repaint();
@@ -214,56 +236,50 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 	@Override
 	public void itemStateChanged(ItemEvent itemevent) {
 		ModuleConfig config = ModuleConfig.instance();
-		try {
-			boolean selected = itemevent.getStateChange() == ItemEvent.SELECTED;
-			if (itemevent.getSource() == m_jtCupMatches) {
-				config.setBoolean(TS_SHOWCUPMATCHES, selected);
-				createGamesPanel(m_jpSettingsPanel);
-			} else if (itemevent.getSource() == m_jtRelegationMatch) {
-				config.setBoolean(TS_SHOWQUALIFICATIONMATCH, selected);
-				createGamesPanel(m_jpSettingsPanel);
-			} else if (itemevent.getSource() == m_jtHistory.getCheckBox()) {
-				config.setBoolean(TS_HISTORY, selected);
-				if (selected) {
-					m_jpGraphics.addCurve(m_History, true);
-					m_jpGraphics.addCurve(m_Trainer);
-				} else {
-					m_jpGraphics.removeCurve(m_History);
-					m_jpGraphics.removeCurve(m_Trainer);
-				}
-			} else if (itemevent.getSource() == m_jtLoepiFore.getCheckBox()) {
-				config.setBoolean(TS_LOEPIFORECAST, selected);
-				if (selected) {
-					m_jpGraphics.addCurve(m_LoepiForecast);
-				} else {
-					m_jpGraphics.removeCurve(m_LoepiForecast);
-				}
-			} else if (itemevent.getSource() == m_jtLoepiHist.getCheckBox()) {
-				config.setBoolean(TS_LOEPIHISTORY, selected);
-				if (selected) {
-					m_jpGraphics.addCurve(m_LoepiHist);
-				} else {
-					m_jpGraphics.removeCurve(m_LoepiHist);
-				}
-			} else if (itemevent.getSource() == m_jtConfidence.getCheckBox()) {
-				config.setBoolean(TS_CONFIDENCE, selected);
-				if (selected) {
-					m_jpGraphics.addCurve(m_Confidence);
-				} else {
-					m_jpGraphics.removeCurve(m_Confidence);
-				}
+		boolean selected = itemevent.getStateChange() == ItemEvent.SELECTED;
+		if (itemevent.getSource() == m_jtCupMatches) {
+			config.setBoolean(TS_SHOWCUPMATCHES, selected);
+			createGamesPanel(m_jpSettingsPanel);
+		} else if (itemevent.getSource() == m_jtRelegationMatch) {
+			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, selected);
+			createGamesPanel(m_jpSettingsPanel);
+		} else if (itemevent.getSource() == m_jtHistory.getCheckBox()) {
+			config.setBoolean(TS_HISTORY, selected);
+			if (selected) {
+				m_jpGraphics.addCurve(m_History, true);
+				m_jpGraphics.addCurve(m_Trainer);
+			} else {
+				m_jpGraphics.removeCurve(m_History);
+				m_jpGraphics.removeCurve(m_Trainer);
 			}
-			ModuleConfig.instance().save();
-		} catch (Exception exception) {
-			HOLogger.instance().error(this.getClass(), exception);
+		} else if (itemevent.getSource() == m_jtLoepiFore.getCheckBox()) {
+			config.setBoolean(TS_LOEPIFORECAST, selected);
+			if (selected) {
+				m_jpGraphics.addCurve(m_LoepiForecast);
+			} else {
+				m_jpGraphics.removeCurve(m_LoepiForecast);
+			}
+		} else if (itemevent.getSource() == m_jtLoepiHist.getCheckBox()) {
+			config.setBoolean(TS_LOEPIHISTORY, selected);
+			if (selected) {
+				m_jpGraphics.addCurve(m_LoepiHist);
+			} else {
+				m_jpGraphics.removeCurve(m_LoepiHist);
+			}
+		} else if (itemevent.getSource() == m_jtConfidence.getCheckBox()) {
+			config.setBoolean(TS_CONFIDENCE, selected);
+			if (selected) {
+				m_jpGraphics.addCurve(m_Confidence);
+			} else {
+				m_jpGraphics.removeCurve(m_Confidence);
+			}
 		}
+		ModuleConfig.instance().save();
 
 		m_jpGraphics.showConfidenceScale(config.getBoolean(TS_CONFIDENCE));
 
 		// check whether it is necessary to draw teamspirit scale
-
-		if (!config.getBoolean(TS_LOEPIHISTORY)
-				&& !config.getBoolean(TS_LOEPIFORECAST)
+		if (!config.getBoolean(TS_LOEPIHISTORY) && !config.getBoolean(TS_LOEPIFORECAST)
 				&& !config.getBoolean(TS_HISTORY)) {
 			m_jpGraphics.showTeamspiritScale(false);
 		} else {
@@ -273,162 +289,51 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		m_jpGraphics.repaint();
 	}
 
-	// public void hyperlinkUpdate(javax.swing.event.HyperlinkEvent e) {
-	// if (e.getEventType() ==
-	// javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
-	// try {
-	// String os = System.getProperty("os.name");
-	// if ( os != null && os.startsWith("Windows"))
-	// Runtime.getRuntime().exec(
-	// "rundll32 url.dll,FileProtocolHandler "+e.getURL());
-	// else //UNIX Mac
-	// Runtime.getRuntime().exec( "netscape "+e.getURL());
-	// } catch (Exception exc) {
-	// HOLogger.instance().error(this.getClass(), exc);
-	// }
-	// }
-	// }
-
-	// - private
-	// -------------------------------------------------------------------------
-
-	// private int createTeamData(int gridy) throws SQLException {
-	// IJDBCAdapter ijdbcadapter = DBManager.instance().getAdapter();
-	//
-	// GridBagConstraints gridbagconstraints = new GridBagConstraints();
-	// gridbagconstraints.anchor = GridBagConstraints.WEST;
-	// gridbagconstraints.insets = new Insets(0, 5, 5, 5);
-	// gridbagconstraints.gridy = gridy;
-	// gridbagconstraints.gridx = 1;
-	//
-	// String strLabel = new String();
-	//
-	// ResultSet resultset =
-	// ijdbcadapter.executeQuery("select FUEHRUNG from SPIELER where TRAINER > 0 order by DATUM desc");
-	// if( resultset != null && resultset.first()) {
-	// strLabel += HOVerwaltung.instance().getLanguageString( "FQTrainer")
-	// + PlayerHelper.getNameForSkill( resultset.getInt("FUEHRUNG"), true)
-	// + ". ";
-	// }
-	//
-	// resultset = ijdbcadapter.executeQuery(
-	// "select max(FUEHRUNG) as MAXF, max(DATUM) as MAXD from SPIELER where TRAINER=0");
-	// resultset.first();
-	// resultset = ijdbcadapter.executeQuery(
-	// "select count(SPIELERID) as COUNTF from SPIELER where FUEHRUNG = "
-	// + resultset.getInt("MAXF") + " and DATUM = '"
-	// + resultset.getTimestamp("MAXD") + "' and TRAINER=0");
-	// resultset.first();
-	// if( resultset.getInt("COUNTF") > 1) {
-	// strLabel += HOVerwaltung.instance().getLanguageString("no_teamleader");
-	// } else {
-	// strLabel += HOVerwaltung.instance().getLanguageString("teamleader") +
-	// " ";
-	// resultset =
-	// ijdbcadapter.executeQuery("select ICHARAKTER from SPIELER order by FUEHRUNG desc, DATUM desc");
-	//
-	// if(resultset != null && resultset.first()) {
-	// switch(resultset.getInt("ICHARAKTER")) {
-	// case 5:
-	// strLabel
-	// +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.belovedteammember") +
-	// ". ";
-	// break;
-	// case 4:
-	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.popularguypopular") + ". ";
-	// break;
-	// case 3:
-	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.sympatheticguy") +
-	// ". ";
-	// break;
-	// case 2:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.pleasantguy") + ". ";
-	// break;
-	// case 1:
-	// strLabel +=HOVerwaltung.instance().getLanguageString("ls.player.agreeability.controversialperson") +
-	// ". ";
-	// break;
-	// case 0:
-	// strLabel += HOVerwaltung.instance().getLanguageString("ls.player.agreeability.nastyfellow") + ". ";
-	// break;
-	// default:
-	// strLabel += "free of character. ";
-	// break;
-	// }
-	// }
-	// }
-	//
-	// resultset =
-	// ijdbcadapter.executeQuery("select PSCHYOLOGEN from VEREIN order by HRF_ID desc");
-	// if(resultset != null && resultset.first()) {
-	// strLabel += HOVerwaltung.instance().getLanguageString("Staff")
-	// + resultset.getInt("PSCHYOLOGEN") + " "
-	// + HOVerwaltung.instance().getLanguageString("ls.club.staff.sportpsychologists")
-	// + ". ";
-	// }
-	// resultset =
-	// ijdbcadapter.executeQuery("select TRAININGSINTENSITAET from TEAM order by HRF_ID desc");
-	// if(resultset != null && resultset.first()) {
-	// strLabel +=
-	// HOVerwaltung.instance().getLanguageString("Trainingsintensity")
-	// + resultset.getInt("TRAININGSINTENSITAET")
-	// + "% . ";
-	// }
-	// JLabel jlabel = new JLabel(strLabel, 2);
-	// jlabel.setOpaque(true);
-	// add(jlabel, gridbagconstraints);
-	// return gridbagconstraints.gridy;
-	// }
-
 	private void createSettingsPanel(JPanel jpanel) {
 		ModuleConfig config = ModuleConfig.instance();
-		m_jtCupMatches = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("CupMatches"),
+		m_jtCupMatches = new JCheckBox(HOVerwaltung.instance().getLanguageString("CupMatches"),
 				config.getBoolean(TS_SHOWCUPMATCHES));
-		m_jtCupMatches.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("ShowCupMatches"));
+		m_jtCupMatches.setToolTipText(HOVerwaltung.instance().getLanguageString("ShowCupMatches"));
 		m_jtCupMatches.setAlignmentX(0.0F);
 		m_jtCupMatches.addItemListener(this);
 		jpanel.add(m_jtCupMatches);
 
-		m_jtRelegationMatch = new JCheckBox(HOVerwaltung.instance()
-				.getLanguageString("ls.match.matchtype.qualification"),
-				config.getBoolean(TS_SHOWQUALIFICATIONMATCH));
-		m_jtRelegationMatch.setToolTipText(HOVerwaltung.instance()
-				.getLanguageString("ShowQMatch"));
+		m_jtRelegationMatch = new JCheckBox(HOVerwaltung.instance().getLanguageString(
+				"ls.match.matchtype.qualification"), config.getBoolean(TS_SHOWQUALIFICATIONMATCH));
+		m_jtRelegationMatch.setToolTipText(HOVerwaltung.instance().getLanguageString("ShowQMatch"));
 		m_jtRelegationMatch.setAlignmentX(0.0F);
 		m_jtRelegationMatch.addItemListener(this);
 		jpanel.add(m_jtRelegationMatch);
 	}
 
-	private void createCurvesPanel(JPanel jpanel) throws Exception {
+	private void createCurvesPanel(JPanel jpanel) {
 		ModuleConfig config = ModuleConfig.instance();
-		createCurves();
+		try {
+			createCurves();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		m_jtHistory = new CheckBox(HOVerwaltung.instance().getLanguageString("ls.team.teamspirit"),
-				m_History.getColor(),
-				config.getBoolean(TS_HISTORY));
+				m_History.getColor(), config.getBoolean(TS_HISTORY));
 		m_jtHistory.setAlignmentX(0.0F);
 		m_jtHistory.addItemListener(this);
 		jpanel.add(m_jtHistory);
 
-		m_jtConfidence = new CheckBox(HOVerwaltung.instance().getLanguageString("ls.team.confidence"),
-				m_Confidence.getColor(),
-				config.getBoolean(TS_CONFIDENCE));
+		m_jtConfidence = new CheckBox(HOVerwaltung.instance().getLanguageString(
+				"ls.team.confidence"), m_Confidence.getColor(), config.getBoolean(TS_CONFIDENCE));
 		m_jtConfidence.setAlignmentX(0.0F);
 		m_jtConfidence.addItemListener(this);
 		jpanel.add(m_jtConfidence);
 
 		m_jtLoepiHist = new CheckBox(HOVerwaltung.instance().getLanguageString("LoepiCurve"),
-				m_LoepiHist.getColor(),
-				config.getBoolean(TS_LOEPIHISTORY));
+				m_LoepiHist.getColor(), config.getBoolean(TS_LOEPIHISTORY));
 		m_jtLoepiHist.setAlignmentX(0.0F);
 		m_jtLoepiHist.addItemListener(this);
 		jpanel.add(m_jtLoepiHist);
 
 		m_jtLoepiFore = new CheckBox(HOVerwaltung.instance().getLanguageString("TSForecast"),
-				m_LoepiForecast.getColor(),
-				config.getBoolean(TS_LOEPIFORECAST));
+				m_LoepiForecast.getColor(), config.getBoolean(TS_LOEPIFORECAST));
 		m_jtLoepiFore.setAlignmentX(0.0F);
 		m_jtLoepiFore.addItemListener(this);
 		jpanel.add(m_jtLoepiFore);
@@ -454,10 +359,8 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		m_jpGamesPanel.add(jlabel, gridbagconstraints);
 		gridbagconstraints.insets = new Insets(0, 0, 0, 0);
 
-		boolean bshowCupMatches = ModuleConfig.instance().getBoolean(
-				TS_SHOWCUPMATCHES);
-		boolean bshowQualMatches = ModuleConfig.instance().getBoolean(
-				TS_SHOWQUALIFICATIONMATCH);
+		boolean bshowCupMatches = ModuleConfig.instance().getBoolean(TS_SHOWCUPMATCHES);
+		boolean bshowQualMatches = ModuleConfig.instance().getBoolean(TS_SHOWQUALIFICATIONMATCH);
 
 		for (boolean flag = m_LoepiForecast.first() && m_LoepiForecast.next(); flag;) {
 			if (m_LoepiForecast.getAttitude() != IMatchDetails.EINSTELLUNG_UNBEKANNT) {
@@ -465,29 +368,21 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 						|| (m_LoepiForecast.getMatchType() == MatchType.CUP && bshowCupMatches)
 						|| (m_LoepiForecast.getMatchType() == MatchType.QUALIFICATION && bshowQualMatches)) {
 
-					FutureMatchBox futurematchbox = new FutureMatchBox(
-							DateFormat.getDateInstance(3).format(
-									m_LoepiForecast.getDate()),
-							m_LoepiForecast.getTooltip(), iCmdID,
-							m_LoepiForecast.getAttitude(),
+					FutureMatchBox futurematchbox = new FutureMatchBox(DateFormat
+							.getDateInstance(3).format(m_LoepiForecast.getDate()),
+							m_LoepiForecast.getTooltip(), iCmdID, m_LoepiForecast.getAttitude(),
 							m_LoepiForecast.getMatchType());
 					futurematchbox.addActionListener(this);
 					gridbagconstraints.gridy++;
 					m_jpGamesPanel.add(futurematchbox, gridbagconstraints);
 				}
-				if (m_LoepiForecast.getMatchType() == MatchType.QUALIFICATION) { // indicate
-																					// end
-																					// of
-																					// season
+				// indicate end of season
+				if (m_LoepiForecast.getMatchType() == MatchType.QUALIFICATION) {
 					gridbagconstraints.gridy++;
 					m_jpGamesPanel.add(
 							new JLabel("  "
-									+ HOVerwaltung.instance()
-											.getLanguageString("EndOFSeason")),
+									+ HOVerwaltung.instance().getLanguageString("EndOFSeason")),
 							gridbagconstraints);
-					// JToolBar.Separator s = new JToolBar.Separator( new
-					// Dimension(40,40));
-					// m_jpGamesPanel.add( s, gridbagconstraints);
 				}
 			}
 			flag = m_LoepiForecast.next();
@@ -534,19 +429,16 @@ public class TSForecast extends ImagePanel implements IRefreshable,
 		m_LoepiHist.setSpirit(0, m_History.getSpirit());
 		m_LoepiHist.setColor(Color.orange);
 
-		if (m_LoepiForecast != null
-				&& m_jpGraphics.removeCurve(m_LoepiForecast)) {
+		if (m_LoepiForecast != null && m_jpGraphics.removeCurve(m_LoepiForecast)) {
 			m_LoepiForecast = new LoepiCurve(m_Trainer, true);
 			m_jpGraphics.addCurve(m_LoepiForecast);
 		} else {
 			m_LoepiForecast = new LoepiCurve(m_Trainer, true);
 		}
 		m_LoepiForecast.setStartPoint(m_History.getLastPoint());
-		// m_LoepiForecast.setAttitudes( m_Configuration);
 		m_LoepiForecast.forecast(0);
 		m_LoepiForecast.setColor(Color.red);
 	}
-
 
 	private void initCurves() {
 
