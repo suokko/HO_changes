@@ -12,6 +12,7 @@ import ho.module.teamOfTheWeek.gui.TeamOfTheWeekPanel;
 
 public class TeamOfTheWeekModule extends DefaultModule {
 
+	@Override
 	public KeyStroke getKeyStroke() {
 		return KeyStroke.getKeyStroke(KeyEvent.VK_3, KeyEvent.CTRL_MASK);
 	}
