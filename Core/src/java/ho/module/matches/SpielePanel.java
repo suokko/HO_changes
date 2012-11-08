@@ -48,8 +48,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.MouseAdapter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -59,6 +57,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public final class SpielePanel extends ImagePanel implements Refreshable {
 	private static final long serialVersionUID = -6337569355347545083L;
@@ -198,30 +199,16 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 			}
 		});
 
-		this.matchesTable.addMouseListener(new MouseAdapter() {
+		this.matchesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-				newSelectionInform();
-			}
-
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent mouseEvent) {
-				newSelectionInform();
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					newSelectionInform();	
+				}
 			}
 		});
-
-		this.matchesTable.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(java.awt.event.KeyEvent keyEvent) {
-				newSelectionInform();
-			}
-
-			@Override
-			public void keyReleased(java.awt.event.KeyEvent keyEvent) {
-				newSelectionInform();
-			}
-		});
-
+		
 		HOMainFrame.instance().addApplicationClosingListener(new ApplicationClosingListener() {
 
 			@Override
@@ -647,6 +634,7 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 		panel.add(m_jcbSpieleFilter, BorderLayout.NORTH);
 
 		matchesTable = new MatchesTable(UserParameter.instance().spieleFilter);
+		matchesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollpane = new JScrollPane(matchesTable);
 
 		matchesOverviewTable = new MatchesOverviewTable(UserParameter.instance().spieleFilter);
