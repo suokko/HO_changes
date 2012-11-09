@@ -1,64 +1,42 @@
 package ho.module.evilcard.gui;
 
-import ho.core.gui.CursorToolkit;
+import ho.core.gui.comp.panel.LazyPanel;
+import ho.module.evilcard.Model;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-public class EvilCardPanel extends JPanel  {
+public class EvilCardPanel extends LazyPanel {
 
 	private static final long serialVersionUID = 1L;
-	private DetailsTable detailsTable;
-    private PlayersPanel playersPanel;
-	private JPanel mainPanel;
 	private boolean initialized = false;
-    
-	public EvilCardPanel(){
-		addHierarchyListener(new HierarchyListener() {
+	private Model model;
 
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		this.model.update();
 	}
-	
+
 	private void initComponents() {
-        	setLayout(new BorderLayout());
-        	detailsTable = new DetailsTable();
-	        playersPanel = new PlayersPanel(detailsTable);
-            add(new FilterPanel(playersPanel),BorderLayout.NORTH);
-            add(getMainPanel(),BorderLayout.CENTER);
-    }
-	
-	
-	private JPanel getMainPanel(){
-		if(mainPanel == null){
-			mainPanel = new JPanel();
-			mainPanel.setLayout(new BorderLayout());
-	        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, playersPanel, new JScrollPane(detailsTable));
-	        splitPane.setResizeWeight(0.5d);
-	        mainPanel.add(splitPane);
-		}
-		return mainPanel;
+		this.model = new Model();
+
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		PlayersPanel playersPanel = new PlayersPanel(this.model);
+		DetailsPanel detailsPanel = new DetailsPanel(this.model);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, playersPanel, detailsPanel);
+		splitPane.setResizeWeight(0.5d);
+		mainPanel.add(splitPane);
+
+		setLayout(new BorderLayout());
+		add(new FilterPanel(this.model), BorderLayout.NORTH);
+		add(mainPanel, BorderLayout.CENTER);
 	}
 }

@@ -33,30 +33,9 @@ class DetailsTableModel extends AbstractTableModel {
 	private Object[][] data = null;
 	private int playerId = 0;
 
-	DetailsTableModel(int playerId) {
-		this.playerId = playerId;
-
+	DetailsTableModel() {
 		data = new Object[0][cols];
-
-		vColumnNames = new Vector<String>(Arrays.asList(new String[cols]));
-
-		// Riempimento valori
-		vColumnNames.set(COL_DIRECT_RED_CARDS,
-				HOVerwaltung.instance().getLanguageString("column.RedCards"));
-		vColumnNames.set(COL_WARNINGS_TYPE1,
-				HOVerwaltung.instance().getLanguageString("column.WarningType1"));
-		vColumnNames.set(COL_WARNINGS_TYPE2,
-				HOVerwaltung.instance().getLanguageString("column.WarningType2"));
-		vColumnNames.set(COL_WARNINGS_TYPE3,
-				HOVerwaltung.instance().getLanguageString("column.WarningType3"));
-		vColumnNames.set(COL_WARNINGS_TYPE4,
-				HOVerwaltung.instance().getLanguageString("column.WarningType4"));
-		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ID"));
-		vColumnNames.set(COL_MATCH_HOME, HOVerwaltung.instance().getLanguageString("Heim"));
-		vColumnNames.set(COL_MATCH_GUEST, HOVerwaltung.instance().getLanguageString("Gast"));
-		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("Ergebnis"));
-		vColumnNames.set(COL_EVENT, HOVerwaltung.instance().getLanguageString("column.Event"));
-
+		initColumnNames();
 		// dimensione campi
 		generateData();
 	}
@@ -65,7 +44,7 @@ class DetailsTableModel extends AbstractTableModel {
 	public Class<?> getColumnClass(int c) {
 		return Object.class;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return vColumnNames.size();
@@ -89,7 +68,27 @@ class DetailsTableModel extends AbstractTableModel {
 	public void refresh(int playerId) {
 		this.playerId = playerId;
 		generateData();
-		this.fireTableDataChanged();
+	}
+
+	private void initColumnNames() {
+		vColumnNames = new Vector<String>(Arrays.asList(new String[cols]));
+
+		// Riempimento valori
+		vColumnNames.set(COL_DIRECT_RED_CARDS,
+				HOVerwaltung.instance().getLanguageString("column.RedCards"));
+		vColumnNames.set(COL_WARNINGS_TYPE1,
+				HOVerwaltung.instance().getLanguageString("column.WarningType1"));
+		vColumnNames.set(COL_WARNINGS_TYPE2,
+				HOVerwaltung.instance().getLanguageString("column.WarningType2"));
+		vColumnNames.set(COL_WARNINGS_TYPE3,
+				HOVerwaltung.instance().getLanguageString("column.WarningType3"));
+		vColumnNames.set(COL_WARNINGS_TYPE4,
+				HOVerwaltung.instance().getLanguageString("column.WarningType4"));
+		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ID"));
+		vColumnNames.set(COL_MATCH_HOME, HOVerwaltung.instance().getLanguageString("Heim"));
+		vColumnNames.set(COL_MATCH_GUEST, HOVerwaltung.instance().getLanguageString("Gast"));
+		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("Ergebnis"));
+		vColumnNames.set(COL_EVENT, HOVerwaltung.instance().getLanguageString("column.Event"));
 	}
 
 	private void generateData() {
@@ -100,7 +99,6 @@ class DetailsTableModel extends AbstractTableModel {
 							playerId);
 
 			int i = 0;
-
 			int rows = highlights.size();
 
 			if (rows <= 0) {
@@ -157,6 +155,10 @@ class DetailsTableModel extends AbstractTableModel {
 				data[i][COL_MATCH_RESULT] = matchDetail.getHomeGoals() + " - "
 						+ matchDetail.getGuestGoals();
 			}
+		} else {
+			data = new Object[0][cols];
 		}
+
+		fireTableDataChanged();
 	}
 }

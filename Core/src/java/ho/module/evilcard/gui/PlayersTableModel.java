@@ -9,6 +9,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
 import ho.core.model.player.Spieler;
+import ho.module.evilcard.Model;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -34,21 +35,16 @@ class PlayersTableModel extends AbstractTableModel {
 	static final int COL_RAW_AVERAGE = 12;
 	static final int COL_WEIGHTED_AVERAGE = 13;
 	static final int COL_MATCHES = 14;
-	static final int TYPE_CURRENT_PLAYERS = 1;
-	static final int TYPE_ALL_PLAYERS = 2;
-	static final int TYPE_ALL_MATCHES = 1;
-	static final int TYPE_FRIENDLIES = 2;
-	static final int TYPE_OFFICIAL_MATCHES = 3;
 	static final int cols = 15;
 	static final String PERCENT = " %";
 	static final String NO_AVERAGE = "-";
 
-	private String[] columnNames = null;
-	private Object[][] data = null;
+	private String[] columnNames;
+	private Object[][] data = {};
 	private int m_typePlayer;
 	private int playersNumber;
 
-	PlayersTableModel(int matchType, int beginSeason, int endSeason, int typePlayer) {
+	PlayersTableModel() {
 		columnNames = new String[cols];
 
 		// Riempimento valori
@@ -76,13 +72,26 @@ class PlayersTableModel extends AbstractTableModel {
 		columnNames[COL_WEIGHTED_AVERAGE] = HOVerwaltung.instance().getLanguageString(
 				"column.WeightedAverage");
 		columnNames[COL_MATCHES] = HOVerwaltung.instance().getLanguageString("Spiele_kurz");
-
-		refresh(typePlayer);
 	}
 
 	@Override
-	public Class<?> getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+		case COL_NAME:
+			return String.class;
+		case COL_ID:
+			return Integer.class;
+		case COL_AGGRESSIVITY:
+			return Aggressive.class;
+		case COL_HONESTY:
+			return Honesty.class;
+		case COL_AGREEABILITY:
+			return Agreeability.class;
+		case COL_MATCHES:
+			return Integer.class;
+		default:
+			return super.getColumnClass(columnIndex);
+		}
 	}
 
 	@Override
@@ -107,9 +116,8 @@ class PlayersTableModel extends AbstractTableModel {
 
 	public void refresh(int filterMode) {
 		this.m_typePlayer = filterMode;
-
-		this.generateData2();
-		this.fireTableDataChanged();
+		generateData();
+		fireTableDataChanged();
 	}
 
 	private void aggiornaMedie(int row) {
@@ -233,13 +241,13 @@ class PlayersTableModel extends AbstractTableModel {
 		}
 	}
 
-	private void generateData2() {
+	private void generateData() {
 		// Get current players.
 		Vector<Spieler> players = new Vector<Spieler>();
 		players.addAll(HOVerwaltung.instance().getModel().getAllSpieler());
 
 		// Add old players, when requested.
-		if (m_typePlayer == TYPE_ALL_PLAYERS) {
+		if (m_typePlayer == Model.TYPE_ALL_PLAYERS) {
 			players.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
 		}
 
