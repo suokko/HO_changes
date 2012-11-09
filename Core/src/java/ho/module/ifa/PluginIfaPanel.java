@@ -1,6 +1,6 @@
 package ho.module.ifa;
 
-import ho.core.gui.CursorToolkit;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.ifa.config.Config;
@@ -14,8 +14,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
@@ -33,38 +31,22 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class PluginIfaPanel extends JPanel {
+public class PluginIfaPanel extends LazyPanel {
 
 	private static final long serialVersionUID = 3806181337290704445L;
 	private JSplitPane splitPane;
 	private IfaModel model;
-	private boolean initialized = false;
 
-	public PluginIfaPanel() {
-
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(PluginIfaPanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(PluginIfaPanel.this);
-						}
-					}
-				}
-			}
-		});
-	}
-
-	private void initialize() {
+	@Override
+	protected void initialize() {
 		this.model = new IfaModel();
 		initComponents();
 		addListeners();
-		this.initialized = true;
+	}
+
+	@Override
+	protected void update() {
+		// do nothing. Ifa module has his own update button to update explicit
 	}
 
 	private void addListeners() {
