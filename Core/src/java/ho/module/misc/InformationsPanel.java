@@ -1,18 +1,14 @@
 // %1451261274:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +16,7 @@ import javax.swing.JScrollPane;
 /**
  * Zeigt die allgemeinen Informationen
  */
-public class InformationsPanel extends ImagePanel implements Refreshable {
+public class InformationsPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 1218148161116371590L;
 	private TeamPanel m_jpBasics;
@@ -31,74 +27,25 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
 	private boolean initialized = false;
 	private boolean needsRefresh = false;
 
-	/**
-	 * Creates a new InformationsPanel object.
-	 */
-	public InformationsPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(InformationsPanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(InformationsPanel.this);
-						}
-					}
-					if (needsRefresh) {
-						update();
-					}
-				}
-
-			}
-		});
-	}
-
 	@Override
-	public final void reInit() {
-		if (isShowing()) {
-			update();
-		} else {
-			this.needsRefresh = true;
-		}
-	}
-
-	@Override
-	public final void refresh() {
-		if (isShowing()) {
-			update();
-		} else {
-			this.needsRefresh = true;
-		}
-	}
-
-	private void initialize() {
+	protected void initialize() {
+		registerRefreshable(true);
 		initComponents();
-		RefreshManager.instance().registerRefreshable(this);
-		update();
-		this.initialized = true;
+		setNeedsRefresh(true);
 	}
 
-	private void update() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			m_jpBasics.setLabels();
-			m_jpAktuelleFinanzen.setLabels();
-			m_jpVorwochenFinanzen.setLabels();
-			m_jpSonstiges.setLabels();
-			m_jpTrainerStab.setLabels();
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-		this.needsRefresh = false;
+	@Override
+	protected void update() {
+		m_jpBasics.setLabels();
+		m_jpAktuelleFinanzen.setLabels();
+		m_jpVorwochenFinanzen.setLabels();
+		m_jpSonstiges.setLabels();
+		m_jpTrainerStab.setLabels();
 	}
 
 	private void initComponents() {
-		final GridBagLayout layout = new GridBagLayout();
-		final GridBagConstraints constraints = new GridBagConstraints();
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.NORTH;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0.0;
@@ -154,9 +101,7 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
 		panel.add(m_jpVorwochenFinanzen);
 
 		mainPanel.add(panel);
-
-		final JScrollPane scrollpane = new JScrollPane(mainPanel);
-		add(scrollpane);
+		add(new JScrollPane(mainPanel));
 
 	}
 
