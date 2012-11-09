@@ -113,13 +113,17 @@ public abstract class LazyPanel extends JPanel {
 	/**
 	 * This method has to be overwritten by subclasses to do the initialization
 	 * (create components, etc). This method is only called ones when the panel
-	 * gets shown the first time.
+	 * gets shown the first time. During execution time of this method, an
+	 * WaitCursor is shown and the UI is blocked for key and mouse events (if
+	 * the method was called by this class).
 	 */
 	protected abstract void initialize();
 
 	/**
 	 * This method has to be overwritten by subclasses to update the view when
-	 * the model changes.
+	 * the model changes. During execution time of this method, an
+	 * WaitCursor is shown and the UI is blocked for key and mouse events (if
+	 * the method was called by this class).
 	 */
 	protected abstract void update();
 
