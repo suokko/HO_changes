@@ -7,9 +7,9 @@ import ho.core.gui.ApplicationClosingListener;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.MatchesColumnModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
@@ -28,7 +28,6 @@ import ho.core.prediction.MatchPredictionDialog;
 import ho.core.prediction.engine.MatchPredictionManager;
 import ho.core.prediction.engine.TeamData;
 import ho.core.prediction.engine.TeamRatings;
-import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.Lineup;
 import ho.module.matches.statistics.MatchesHighlightsTable;
@@ -44,8 +43,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
@@ -61,10 +58,28 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public final class SpielePanel extends ImagePanel implements Refreshable {
+public final class SpielePanel extends LazyImagePanel {
+
+	/** Only played Matches of suplied team (unsupported for now) */
+	public static final int NUR_GESPIELTEN_SPIELE = 10;
+	/** Only tournament matches of supplied team */
+	public static final int NUR_EIGENE_TOURNAMENTSPIELE = 7;
+	/** Only Matches without suplied team */
+	public static final int NUR_FREMDE_SPIELE = 6;
+	/** Only friendly Matches of suplied team */
+	public static final int NUR_EIGENE_FREUNDSCHAFTSSPIELE = 5;
+	/** Only league Matches of suplied team */
+	public static final int NUR_EIGENE_LIGASPIELE = 4;
+	/** Only cup Matches of suplied team */
+	public static final int NUR_EIGENE_POKALSPIELE = 3;
+	/** Only cup +league + quali Matches of suplied team */
+	public static final int NUR_EIGENE_PFLICHTSPIELE = 2;
+	/** Only Matches of suplied team */
+	public static final int NUR_EIGENE_SPIELE = 1;
+	public static final int ALLE_SPIELE = 0;
 	private static final long serialVersionUID = -6337569355347545083L;
-	private AufstellungsSternePanel m_jpAufstellungGastPanel;
-	private AufstellungsSternePanel m_jpAufstellungHeimPanel;
+	private AufstellungsSternePanel aufstellungGastPanel;
+	private AufstellungsSternePanel aufstellungHeimPanel;
 	private JButton adoptLineupButton;
 	private JButton printButton;
 	private JButton deleteButton;
@@ -77,7 +92,6 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	private JTabbedPane matchDetailsTabbedPane;
 	private ManschaftsBewertungsPanel m_jpManschaftsBewertungsPanel;
 	private ManschaftsBewertungs2Panel m_jpManschaftsBewertungs2Panel;
-	private MatchKurzInfo matchShortInfo;
 	private MatchberichtPanel matchReportPanel;
 	private SpielHighlightPanel matchHighlightPanel;
 	private MatchesTable matchesTable;
@@ -85,62 +99,21 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	private MatchesOverviewCommonPanel matchesOverviewCommonPanel;
 	private MatchesHighlightsTable matchesHighlightsTable;
 	private StaerkenvergleichPanel teamsComparePanel;
-
-	/** Only played Matches of suplied team (unsupported for now) */
-	public static final int NUR_GESPIELTEN_SPIELE = 10;
-
-	/** Only tournament matches of supplied team */
-	public static final int NUR_EIGENE_TOURNAMENTSPIELE = 7;
-
-	/** Only Matches without suplied team */
-	public static final int NUR_FREMDE_SPIELE = 6;
-
-	/** Only friendly Matches of suplied team */
-	public static final int NUR_EIGENE_FREUNDSCHAFTSSPIELE = 5;
-
-	/** Only league Matches of suplied team */
-	public static final int NUR_EIGENE_LIGASPIELE = 4;
-
-	/** Only cup Matches of suplied team */
-	public static final int NUR_EIGENE_POKALSPIELE = 3;
-
-	/** Only cup +league + quali Matches of suplied team */
-	public static final int NUR_EIGENE_PFLICHTSPIELE = 2;
-
-	/** Only Matches of suplied team */
-	public static final int NUR_EIGENE_SPIELE = 1;
-
-	/** TODO Missing Parameter Documentation */
-	public static final int ALLE_SPIELE = 0;
+	private MatchesModel matchesModel;
 	private boolean initialized = false;
 	private boolean needsRefresh = false;
 
-	public SpielePanel() {
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing()) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(SpielePanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(SpielePanel.this);
-						}
-					}
-					if (needsRefresh) {
-						doReInit();
-					}
-				}
-			}
-		});
-	}
-
-	private void initialize() {
-		RefreshManager.instance().registerRefreshable(this);
+	@Override
+	protected void initialize() {
 		initComponents();
 		addListeners();
-		this.initialized = true;
+		registerRefreshable(true);
+		setNeedsRefresh(true);
+	}
+
+	@Override
+	protected void update() {
+		doReInit();
 	}
 
 	private void saveColumnOrder() {
@@ -153,9 +126,9 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int matchid = matchShortInfo.getMatchID();
-				OnlineWorker.downloadMatchData(matchShortInfo.getMatchID(),
-						matchShortInfo.getMatchTyp(), true);
+				int matchid = matchesModel.getMatch().getMatchID();
+				OnlineWorker.downloadMatchData(matchesModel.getMatch().getMatchID(), matchesModel
+						.getMatch().getMatchTyp(), true);
 				RefreshManager.instance().doReInit();
 				showMatch(matchid);
 			}
@@ -173,10 +146,11 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (matchShortInfo != null) {
-					final SpielePrintDialog printDialog = new SpielePrintDialog(matchShortInfo);
-					printDialog.doPrint(matchShortInfo.getHeimName() + " : "
-							+ matchShortInfo.getGastName() + " - " + matchShortInfo.getMatchDate());
+				if (matchesModel.getMatch() != null) {
+					final SpielePrintDialog printDialog = new SpielePrintDialog(matchesModel);
+					printDialog.doPrint(matchesModel.getMatch().getHeimName() + " : "
+							+ matchesModel.getMatch().getGastName() + " - "
+							+ matchesModel.getMatch().getMatchDate());
 					printDialog.setVisible(false);
 					printDialog.dispose();
 				}
@@ -200,20 +174,30 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 		});
 
 		this.matchesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
-					newSelectionInform();	
+					newSelectionInform();
 				}
 			}
 		});
-		
+
 		HOMainFrame.instance().addApplicationClosingListener(new ApplicationClosingListener() {
 
 			@Override
 			public void applicationClosing() {
 				saveSettings();
+			}
+		});
+		
+		m_jcbSpieleFilter.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+					doReInit();
+				}
 			}
 		});
 	}
@@ -228,10 +212,11 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	}
 
 	private void adoptLineup() {
-		if ((matchShortInfo != null) && (matchShortInfo.getMatchStatus() == MatchKurzInfo.FINISHED)) {
+		if ((matchesModel.getMatch() != null)
+				&& (matchesModel.getMatch().getMatchStatus() == MatchKurzInfo.FINISHED)) {
 			int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 			List<MatchLineupPlayer> teamspieler = DBManager.instance().getMatchLineupPlayers(
-					matchShortInfo.getMatchID(), teamid);
+					matchesModel.getMatch().getMatchID(), teamid);
 			Lineup aufstellung = HOVerwaltung.instance().getModel().getAufstellung();
 
 			aufstellung.clearLineup(); // To make sure the old one is
@@ -294,13 +279,13 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	}
 
 	private void simulateMatch() {
-		if (matchShortInfo != null) {
-			Matchdetails details = DBManager.instance()
-					.getMatchDetails(matchShortInfo.getMatchID());
+		if (matchesModel.getMatch() != null) {
+			Matchdetails details = DBManager.instance().getMatchDetails(
+					matchesModel.getMatch().getMatchID());
 			MatchPredictionManager manager = MatchPredictionManager.instance();
 			int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
 			boolean homeMatch = false;
-			if (teamId == matchShortInfo.getHeimID()) {
+			if (teamId == matchesModel.getMatch().getHeimID()) {
 				homeMatch = true;
 			}
 
@@ -317,7 +302,7 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 			if (homeMatch && !ratingsAreKnown(homeTeamRatings)) {
 				homeTeamValues = getOwnLineupRatings(manager);
 			} else {
-				homeTeamValues = manager.generateTeamData(matchShortInfo.getHeimName(),
+				homeTeamValues = manager.generateTeamData(matchesModel.getMatch().getHeimName(),
 						homeTeamRatings, details != null ? details.getHomeTacticType()
 								: IMatchDetails.TAKTIK_NORMAL,
 						details != null ? getRatingValue(details.getHomeTacticSkill() - 1) : 1);
@@ -336,13 +321,14 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 			if (!homeMatch && !ratingsAreKnown(awayTeamRatings)) {
 				awayTeamValues = getOwnLineupRatings(manager);
 			} else {
-				awayTeamValues = manager.generateTeamData(matchShortInfo.getGastName(),
+				awayTeamValues = manager.generateTeamData(matchesModel.getMatch().getGastName(),
 						awayTeamRatings, details != null ? details.getGuestTacticType()
 								: IMatchDetails.TAKTIK_NORMAL,
 						details != null ? getRatingValue(details.getGuestTacticSkill() - 1) : 1);
 			}
 
-			String match = matchShortInfo.getHeimName() + " - " + matchShortInfo.getGastName();
+			String match = matchesModel.getMatch().getHeimName() + " - "
+					+ matchesModel.getMatch().getGastName();
 			MatchEnginePanel matchPredictionPanel = new MatchEnginePanel(homeTeamValues,
 					awayTeamValues);
 
@@ -415,18 +401,6 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 		return (int) Math.max(tacticLevel, 0);
 	}
 
-	/**
-	 * ReInit
-	 */
-	@Override
-	public void reInit() {
-		if (isShowing()) {
-			doReInit();
-		} else {
-			this.needsRefresh = true;
-		}
-	}
-
 	private void doReInit() {
 		if (m_jcbSpieleFilter.getSelectedIndex() > -1) {
 			CursorToolkit.startWaitCursor(this);
@@ -449,14 +423,6 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	}
 
 	/**
-	 * Refresh
-	 */
-	@Override
-	public void refresh() {
-		// nix
-	}
-
-	/**
 	 * Zeigt das Match mit der ID an.
 	 */
 	public void showMatch(int matchid) {
@@ -473,42 +439,18 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 		newSelectionInform();
 	}
 
-	/**
-	 * Disable all buttons.
-	 */
-	private void clear() {
-		reloadMatchButton.setEnabled(false);
-		deleteButton.setEnabled(false);
-		printButton.setEnabled(false);
-		adoptLineupButton.setEnabled(false);
-		simulateMatchButton.setEnabled(false);
-	}
-
-	/**
-	 * Initialise and get the visitor lineup panel.
-	 */
-	private Component initAufstellungGast() {
-		m_jpAufstellungGastPanel = new AufstellungsSternePanel(false);
-		return m_jpAufstellungGastPanel;
-	}
-
-	/**
-	 * Initialise and get the home teams lineup panel.
-	 */
-	private Component initAufstellungHeim() {
-		m_jpAufstellungHeimPanel = new AufstellungsSternePanel(true);
-		return m_jpAufstellungHeimPanel;
-	}
-
 	private void initComponents() {
+		this.matchesModel = new MatchesModel();
 		setLayout(new BorderLayout());
 
 		horizontalLeftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false,
 				initSpieleTabelle(), initSpieldetails());
 
 		linupPanel = new JPanel(new GridLayout(2, 1));
-		linupPanel.add(initAufstellungHeim());
-		linupPanel.add(initAufstellungGast());
+		aufstellungHeimPanel = new AufstellungsSternePanel(true);
+		linupPanel.add(aufstellungHeimPanel);
+		aufstellungGastPanel = new AufstellungsSternePanel(false);
+		linupPanel.add(aufstellungGastPanel);
 		verticalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false,
 				horizontalLeftSplitPane, new JScrollPane(linupPanel));
 
@@ -525,30 +467,31 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	 * Initialise player details GUI components.
 	 */
 	private Component initSpieldetails() {
-		final JPanel mainpanel = new ImagePanel(new BorderLayout());
+		JPanel mainpanel = new ImagePanel(new BorderLayout());
 		matchDetailsTabbedPane = new JTabbedPane();
 
 		// Allgemein
-		teamsComparePanel = new StaerkenvergleichPanel();
+		teamsComparePanel = new StaerkenvergleichPanel(this.matchesModel);
 		matchDetailsTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Allgemein"),
 				new JScrollPane(teamsComparePanel));
 
 		// Bewertung
-		m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel();
+		m_jpManschaftsBewertungsPanel = new ManschaftsBewertungsPanel(this.matchesModel);
 		matchDetailsTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Rating"),
 				new JScrollPane(m_jpManschaftsBewertungsPanel));
+
 		// //Bewertung2
-		m_jpManschaftsBewertungs2Panel = new ManschaftsBewertungs2Panel();
+		m_jpManschaftsBewertungs2Panel = new ManschaftsBewertungs2Panel(this.matchesModel);
 		matchDetailsTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Rating") + " 2",
 				new JScrollPane(m_jpManschaftsBewertungs2Panel));
 
 		// Highlights
-		matchHighlightPanel = new SpielHighlightPanel();
+		matchHighlightPanel = new SpielHighlightPanel(this.matchesModel);
 		matchDetailsTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Highlights"),
 				new JScrollPane(matchHighlightPanel));
 
 		// Matchbericht
-		matchReportPanel = new MatchberichtPanel(true);
+		matchReportPanel = new MatchberichtPanel(true, this.matchesModel);
 		matchDetailsTabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Matchbericht"),
 				matchReportPanel);
 
@@ -598,7 +541,7 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 	 * Initialise matches panel.
 	 */
 	private Component initSpieleTabelle() {
-		final ImagePanel panel = new ImagePanel(new BorderLayout());
+		ImagePanel panel = new ImagePanel(new BorderLayout());
 
 		CBItem[] matchesFilter = {
 				new CBItem(HOVerwaltung.instance().getLanguageString("AlleSpiele"),
@@ -621,15 +564,6 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 		m_jcbSpieleFilter = new JComboBox(matchesFilter);
 		Helper.markierenComboBox(m_jcbSpieleFilter, UserParameter.instance().spieleFilter);
-		m_jcbSpieleFilter.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-					reInit();
-				}
-			}
-		});
 		m_jcbSpieleFilter.setFont(m_jcbSpieleFilter.getFont().deriveFont(Font.BOLD));
 		panel.add(m_jcbSpieleFilter, BorderLayout.NORTH);
 
@@ -669,71 +603,46 @@ public final class SpielePanel extends ImagePanel implements Refreshable {
 
 		if (row > -1) {
 			// Selektiertes Spiel des Models holen und alle 3 Panel informieren
-			try {
-				final MatchKurzInfo info = ((MatchesColumnModel) matchesTable.getSorter()
-						.getModel()).getMatch((int) ((ColorLabelEntry) matchesTable.getSorter()
-						.getValueAt(row, 5)).getZahl());
-				refresh(info);
-				final Matchdetails details = DBManager.instance()
-						.getMatchDetails(info.getMatchID());
-				if (details != null && details.getMatchID() > 0) {
-					teamsComparePanel.refresh(info, details);
-					m_jpManschaftsBewertungsPanel.refresh(info, details);
-					m_jpManschaftsBewertungs2Panel.refresh(info, details);
-					matchHighlightPanel.refresh(info, details);
-					matchReportPanel.refresh(info, details);
-				} else {
-					teamsComparePanel.clear();
-					m_jpManschaftsBewertungsPanel.clear();
-					m_jpManschaftsBewertungs2Panel.clear();
-					matchHighlightPanel.clear();
-					matchReportPanel.clear();
-					m_jpAufstellungHeimPanel.clearAll();
-					m_jpAufstellungGastPanel.clearAll();
-				}
-				if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-					m_jpAufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
-					m_jpAufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
-				} else {
-					m_jpAufstellungHeimPanel.clearAll();
-					m_jpAufstellungGastPanel.clearAll();
-				}
-			} catch (Exception e) {
-				clear();
-				teamsComparePanel.clear();
-				m_jpManschaftsBewertungsPanel.clear();
-				m_jpManschaftsBewertungs2Panel.clear();
-				matchHighlightPanel.clear();
-				matchReportPanel.clear();
-				m_jpAufstellungHeimPanel.clearAll();
-				m_jpAufstellungGastPanel.clearAll();
-				HOLogger.instance().log(getClass(),
-						"SpielePanel.newSelectionInform: No match for found for table entry! " + e);
+			MatchKurzInfo info = ((MatchesColumnModel) matchesTable.getSorter().getModel())
+					.getMatch((int) ((ColorLabelEntry) matchesTable.getSorter().getValueAt(row, 5))
+							.getZahl());
+			this.matchesModel.setMatch(info);
+
+			updateButtons();
+			Matchdetails details = this.matchesModel.getDetails();
+			if (details == null || details.getMatchID() < 0
+					|| info.getMatchStatus() != MatchKurzInfo.FINISHED) {
+				aufstellungHeimPanel.clearAll();
+				aufstellungGastPanel.clearAll();
+			} else {
+				aufstellungHeimPanel.refresh(info.getMatchID(), info.getHeimID());
+				aufstellungGastPanel.refresh(info.getMatchID(), info.getGastID());
 			}
 		} else {
+			this.matchesModel.setMatch(null);
 			// Alle Panels zurücksetzen
-			clear();
-			teamsComparePanel.clear();
-			m_jpManschaftsBewertungsPanel.clear();
-			m_jpManschaftsBewertungs2Panel.clear();
-			matchHighlightPanel.clear();
-			matchReportPanel.clear();
-			m_jpAufstellungHeimPanel.clearAll();
-			m_jpAufstellungGastPanel.clearAll();
+			reloadMatchButton.setEnabled(false);
+			deleteButton.setEnabled(false);
+			printButton.setEnabled(false);
+			adoptLineupButton.setEnabled(false);
+			simulateMatchButton.setEnabled(false);
+
+			aufstellungHeimPanel.clearAll();
+			aufstellungGastPanel.clearAll();
 		}
 	}
 
 	/**
 	 * Refresh button states.
 	 */
-	private void refresh(MatchKurzInfo info) {
-		matchShortInfo = info;
+	private void updateButtons() {
 		deleteButton.setEnabled(true);
 		simulateMatchButton.setEnabled(true);
-		if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
+		if (matchesModel.getMatch().getMatchStatus() == MatchKurzInfo.FINISHED) {
 			reloadMatchButton.setEnabled(true);
 			final int teamid = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-			if ((info.getHeimID() == teamid) || (info.getGastID() == teamid)) {
+			if ((matchesModel.getMatch().getHeimID() == teamid)
+					|| (matchesModel.getMatch().getGastID() == teamid)) {
 				adoptLineupButton.setEnabled(true);
 			} else {
 				adoptLineupButton.setEnabled(false);

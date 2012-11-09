@@ -11,8 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,10 +35,11 @@ public class InformationsPanel extends ImagePanel implements Refreshable {
 	 * Creates a new InformationsPanel object.
 	 */
 	public InformationsPanel() {
-		addComponentListener(new ComponentAdapter() {
+		addHierarchyListener(new HierarchyListener() {
+
 			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing()) {
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
 					if (!initialized) {
 						CursorToolkit.startWaitCursor(InformationsPanel.this);
 						try {

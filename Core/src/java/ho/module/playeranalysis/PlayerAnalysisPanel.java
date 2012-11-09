@@ -8,8 +8,8 @@ import ho.module.playeranalysis.experience.ExperienceViewer;
 import ho.module.playeranalysis.skillCompare.PlayerComparePanel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.JTabbedPane;
 
@@ -23,10 +23,11 @@ public class PlayerAnalysisPanel extends ImagePanel {
 	private boolean initialized = false;
 
 	public PlayerAnalysisPanel() {
-		addComponentListener(new ComponentAdapter() {
+		addHierarchyListener(new HierarchyListener() {
+
 			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing()) {
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
 					if (!initialized) {
 						CursorToolkit.startWaitCursor(PlayerAnalysisPanel.this);
 						try {

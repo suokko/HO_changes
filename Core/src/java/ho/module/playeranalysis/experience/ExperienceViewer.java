@@ -6,8 +6,8 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -21,10 +21,11 @@ public class ExperienceViewer extends ImagePanel implements IRefreshable {
 	private boolean needsRefresh = false;
 
 	public ExperienceViewer() {
-		addComponentListener(new ComponentAdapter() {
+		addHierarchyListener(new HierarchyListener() {
+
 			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing()) {
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
 					if (!initialized) {
 						CursorToolkit.startWaitCursor(ExperienceViewer.this);
 						try {

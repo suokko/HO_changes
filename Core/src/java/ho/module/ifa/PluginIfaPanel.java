@@ -14,8 +14,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
@@ -42,15 +42,18 @@ public class PluginIfaPanel extends JPanel {
 
 	public PluginIfaPanel() {
 
-		addComponentListener(new ComponentAdapter() {
+		addHierarchyListener(new HierarchyListener() {
+
 			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing() && !initialized) {
-					CursorToolkit.startWaitCursor(PluginIfaPanel.this);
-					try {
-						initialize();
-					} finally {
-						CursorToolkit.stopWaitCursor(PluginIfaPanel.this);
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
+					if (!initialized) {
+						CursorToolkit.startWaitCursor(PluginIfaPanel.this);
+						try {
+							initialize();
+						} finally {
+							CursorToolkit.stopWaitCursor(PluginIfaPanel.this);
+						}
 					}
 				}
 			}
@@ -108,11 +111,11 @@ public class PluginIfaPanel extends JPanel {
 		add(new RightPanel(this.model), gbc);
 
 		validate();
-		
+
 		double dividerLocation = ModuleConfig
 				.instance()
 				.getBigDecimal(Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
-						BigDecimal.valueOf(0.5)).doubleValue();		
+						BigDecimal.valueOf(0.5)).doubleValue();
 		this.splitPane.setDividerLocation(dividerLocation);
 	}
 

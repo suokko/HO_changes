@@ -109,7 +109,6 @@ public class MatchesOverviewTable extends JTable {
         } else {
         	initModel(matchtypen);
         }
-        repaint();
     }
  
 }

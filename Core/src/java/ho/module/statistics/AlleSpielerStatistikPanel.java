@@ -1,7 +1,22 @@
 // %3661143817:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import static ho.core.gui.theme.HOColorName.*;
+import static ho.core.gui.theme.HOColorName.PANEL_BORDER;
+import static ho.core.gui.theme.HOColorName.STAT_DEFENDING;
+import static ho.core.gui.theme.HOColorName.STAT_EXPERIENCE;
+import static ho.core.gui.theme.HOColorName.STAT_FORM;
+import static ho.core.gui.theme.HOColorName.STAT_KEEPER;
+import static ho.core.gui.theme.HOColorName.STAT_LEADERSHIP;
+import static ho.core.gui.theme.HOColorName.STAT_LOYALTY;
+import static ho.core.gui.theme.HOColorName.STAT_MARKETVALUE;
+import static ho.core.gui.theme.HOColorName.STAT_PASSING;
+import static ho.core.gui.theme.HOColorName.STAT_PLAYMAKING;
+import static ho.core.gui.theme.HOColorName.STAT_SCORING;
+import static ho.core.gui.theme.HOColorName.STAT_SET_PIECES;
+import static ho.core.gui.theme.HOColorName.STAT_STAMINA;
+import static ho.core.gui.theme.HOColorName.STAT_WAGE;
+import static ho.core.gui.theme.HOColorName.STAT_WINGER;
+import static ho.core.gui.theme.HOColorName.TABLEENTRY_BG;
 import ho.core.db.DBManager;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;

@@ -4,7 +4,7 @@ import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.match.IMatchHighlight;
 import ho.core.model.match.MatchHighlight;
-import ho.module.matches.SpielHighlightPanel;
+import ho.module.matches.MatchesHelper;
 import ho.module.specialEvents.SpecialEventsDM;
 
 import java.awt.Component;
@@ -97,7 +97,7 @@ public class EventTypeTableCellRenderer extends DefaultTableCellRenderer {
 			case IMatchHighlight.HIGHLIGHT_SUB_QUICK_RUSH_STOPPED_BY_DEF:
 				// Always return the icon for "SUCCESS" because we only want the
 				// chance type icon
-				return SpielHighlightPanel.getImageIcon4SpielHighlight(
+				return MatchesHelper.getImageIcon4SpielHighlight(
 						IMatchHighlight.HIGHLIGHT_ERFOLGREICH, highlight.getHighlightSubTyp());
 			}
 		}

@@ -34,8 +34,8 @@ import ho.module.specialEvents.table.SETypeTableCellRenderer;
 import ho.module.specialEvents.table.TacticsTableCellRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -52,10 +52,11 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 	private boolean needsRefresh = false;
 
 	SpecialEventsPanel() {
-		addComponentListener(new ComponentAdapter() {
+		addHierarchyListener(new HierarchyListener() {
+
 			@Override
-			public void componentShown(ComponentEvent e) {
-				if (isShowing()) {
+			public void hierarchyChanged(HierarchyEvent e) {
+				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
 					if (!initialized) {
 						CursorToolkit.startWaitCursor(SpecialEventsPanel.this);
 						try {

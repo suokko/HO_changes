@@ -9,15 +9,10 @@ public final class MatchesOverviewColumnModel extends HOTableModel {
 		
 	private static final long serialVersionUID = 1L;
 	private MatchesOverviewRow[] rows;
+	
 	public MatchesOverviewColumnModel(int id){
 		super(id,"MatchesStatistics");
-		initialize();
-	}
-	
-	
-	private void initialize() {
 		columns = createMatchesStatisticsArray();
-	
 	}
 	
 	private MatchesOverviewColumn[] createMatchesStatisticsArray(){
@@ -33,7 +28,6 @@ public final class MatchesOverviewColumnModel extends HOTableModel {
 	
 	@Override
 	protected void initData() {
-//		UserColumn [] tmpDisplayedColumns = getDisplayedColumns();
 		m_clData = new Object[rows.length][columns.length];
 		for (int i = 0; i < rows.length; i++) {
 			boolean title = rows[i].getType() == -1;
@@ -44,7 +38,7 @@ public final class MatchesOverviewColumnModel extends HOTableModel {
 			m_clData[i][4] = title?"":Integer.valueOf(rows[i].getLoss());
 			m_clData[i][5] = title?"":String.valueOf(StringUtils.getResultString(rows[i].getHomeGoals(),rows[i].getAwayGoals()));
 		}
-										
+		fireTableDataChanged();						
 	}
 
     public final void setValues(MatchesOverviewRow[] rows) {

@@ -3,105 +3,115 @@ package ho.module.matches;
 
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.match.MatchKurzInfo;
-import ho.core.model.match.Matchdetails;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
+class MatchberichtPanel extends LazyImagePanel {
 
-
-class MatchberichtPanel extends ImagePanel implements ActionListener {
-	
 	private static final long serialVersionUID = -9014579382145462648L;
+	private JButton maxButton;
+	private MatchberichtEditorPanel matchberichtEditorPanel;
+	private boolean initialized = false;
+	private boolean needsRefresh = false;
+	private boolean withButton;
+	private final MatchesModel matchesModel;
 
-    private JButton maxButton = new JButton(ThemeManager.getIcon(HOIconName.MAXLINEUP));
-    private MatchKurzInfo matchKurzInfo;
-    private MatchberichtEditorPanel m_clMatchbericht = new MatchberichtEditorPanel();
-    private String matchText = "";
+	MatchberichtPanel(boolean withButton, MatchesModel matchesModel) {
+		this.matchesModel = matchesModel;
+		this.withButton = withButton;
+	}
 
-    MatchberichtPanel(boolean withButton) {
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		setNeedsRefresh(true);
+	}
 
-        setLayout(new BorderLayout());
+	@Override
+	protected void update() {
+		if (this.matchesModel.getMatch() != null
+				&& this.matchesModel.getMatch().getMatchDateAsTimestamp()
+						.before(new Timestamp(System.currentTimeMillis()))) {
+			this.matchberichtEditorPanel.setText(this.matchesModel.getDetails().getMatchreport());
+			this.maxButton.setEnabled(true);
+		} else {
+			this.maxButton.setEnabled(false);
+			this.matchberichtEditorPanel.clear();
+		}
+	}
 
-        add(m_clMatchbericht, BorderLayout.CENTER);
+	private void addListeners() {
+		this.matchesModel.addMatchModelChangeListener(new MatchModelChangeListener() {
 
-        if (withButton) {
-            final GridBagLayout layout = new GridBagLayout();
-            final GridBagConstraints constraints = new GridBagConstraints();
-            constraints.anchor = GridBagConstraints.SOUTHEAST;
-            constraints.fill = GridBagConstraints.NONE;
-            constraints.weighty = 1.0;
-            constraints.weightx = 1.0;
-            constraints.insets = new Insets(4, 6, 4, 6);
+			@Override
+			public void matchChanged() {
+				setNeedsRefresh(true);
+			}
+		});
 
-            final ImagePanel buttonPanel = new ImagePanel(layout);
+		this.maxButton.addActionListener(new ActionListener() {
 
-            maxButton.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Matchbericht_Maximieren"));
-            maxButton.setEnabled(false);
-            maxButton.setPreferredSize(new Dimension(25, 25));
-            maxButton.addActionListener(this);
-            layout.setConstraints(maxButton, constraints);
-            buttonPanel.add(maxButton);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showInDialog();
+			}
+		});
+	}
 
-            add(buttonPanel, BorderLayout.SOUTH);
-        }
-    }
+	private void initComponents() {
+		setLayout(new BorderLayout());
 
-    public final void setText(String text) {
-        matchText = text;
-        m_clMatchbericht.setText(text);
-    }
+		this.matchberichtEditorPanel = new MatchberichtEditorPanel();
+		add(this.matchberichtEditorPanel, BorderLayout.CENTER);
 
-    public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-        //Dialog mit Matchbericht erzeugen
-        final String titel = matchKurzInfo.getHeimName() + " - " + matchKurzInfo.getGastName()
-                             + " ( " + matchKurzInfo.getHeimTore() + " : "
-                             + matchKurzInfo.getGastTore() + " )";
-        final JDialog matchdialog = new JDialog(HOMainFrame.instance(),titel);
-        matchdialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        matchdialog.getContentPane().setLayout(new BorderLayout());
+		if (this.withButton) {
+			GridBagLayout layout = new GridBagLayout();
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.anchor = GridBagConstraints.SOUTHEAST;
+			constraints.fill = GridBagConstraints.NONE;
+			constraints.weighty = 1.0;
+			constraints.weightx = 1.0;
+			constraints.insets = new Insets(4, 6, 4, 6);
 
-        final MatchberichtPanel berichtpanel = new MatchberichtPanel(false);
-        berichtpanel.setText(matchText);
-        matchdialog.getContentPane().add(berichtpanel, BorderLayout.CENTER);
+			ImagePanel buttonPanel = new ImagePanel(layout);
+			this.maxButton = new JButton(ThemeManager.getIcon(HOIconName.MAXLINEUP));
+			this.maxButton.setToolTipText(HOVerwaltung.instance().getLanguageString(
+					"tt_Matchbericht_Maximieren"));
+			this.maxButton.setEnabled(false);
+			this.maxButton.setPreferredSize(new Dimension(25, 25));
+			layout.setConstraints(this.maxButton, constraints);
+			buttonPanel.add(this.maxButton);
+			add(buttonPanel, BorderLayout.SOUTH);
+		}
+	}
 
-        matchdialog.setLocation(50, 50);
-        matchdialog.setSize(600, HOMainFrame.instance().getHeight() - 100);
-        matchdialog.setVisible(true);
-    }
-
-    public final void clear() {
-        matchKurzInfo = null;
-        matchText = "";
-        m_clMatchbericht.clear();
-        maxButton.setEnabled(false);
-    }
-
-
-    public final void refresh(MatchKurzInfo info,Matchdetails details) {
-        matchKurzInfo = info;
-
-        if ((info != null)
-            && info.getMatchDateAsTimestamp().before(new Timestamp(System.currentTimeMillis()))) {
-            matchText = details.getMatchreport();
-            maxButton.setEnabled(true);
-        } else {
-            maxButton.setEnabled(false);
-            matchText = "";
-        }
-
-        m_clMatchbericht.setText(matchText);
-    }
+	private void showInDialog() {
+		// Dialog mit Matchbericht erzeugen
+		String titel = this.matchesModel.getMatch().getHeimName() + " - "
+				+ this.matchesModel.getMatch().getGastName() + " ( "
+				+ this.matchesModel.getMatch().getHeimTore() + " : "
+				+ this.matchesModel.getMatch().getGastTore() + " )";
+		JDialog matchdialog = new JDialog(HOMainFrame.instance(), titel);
+		matchdialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		matchdialog.getContentPane().setLayout(new BorderLayout());
+		matchdialog.getContentPane().add(MatchberichtPanel.this, BorderLayout.CENTER);
+		matchdialog.setLocation(50, 50);
+		matchdialog.setSize(600, HOMainFrame.instance().getHeight() - 100);
+		matchdialog.setVisible(true);
+	}
 }
