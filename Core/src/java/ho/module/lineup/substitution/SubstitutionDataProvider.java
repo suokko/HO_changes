@@ -56,12 +56,12 @@ public class SubstitutionDataProvider {
 			}
 		}
 		return playerItems;
-	}	
+	}
 
 	/**
 	 * Returns an {@link CBItem} array with all standings which can be chosen
 	 * for a substitution.
-	 * 
+	 *
 	 * @return an array with standing items
 	 */
 	public static CBItem[] getStandingItems() {
@@ -82,7 +82,7 @@ public class SubstitutionDataProvider {
 	/**
 	 * Returns an {@link CBItem} array with all red card events which can be
 	 * chosen for a substitution.
-	 * 
+	 *
 	 * @return an array with red card items
 	 */
 	public static CBItem[] getRedCardItems() {
@@ -106,7 +106,7 @@ public class SubstitutionDataProvider {
 	/**
 	 * Returns an {@link CBItem} array with all behaviours which can be chosen
 	 * for a substitution.
-	 * 
+	 *
 	 * @return an array with behaviour items
 	 */
 	public static List<CBItem> getBehaviourItems(boolean withInheritItem) {
@@ -115,11 +115,11 @@ public class SubstitutionDataProvider {
 		if (withInheritItem) {
 			behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehNoChange"), -1));
 		}
-		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehNormal"), 0));
-		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehOffensive"), 1));
-		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehDefensive"), 2));
-		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehToMid"), 3));
-		behaviourValues.add(new CBItem(hov.getLanguageString("subs.BehToWi"), 4));
+		behaviourValues.add(new CBItem(hov.getLanguageString("ls.player.behaviour.normal"), 0));
+		behaviourValues.add(new CBItem(hov.getLanguageString("ls.player.behaviour.offensive"), 1));
+		behaviourValues.add(new CBItem(hov.getLanguageString("ls.player.behaviour.defensive"), 2));
+		behaviourValues.add(new CBItem(hov.getLanguageString("ls.player.behaviour.towardsmiddle"), 3));
+		behaviourValues.add(new CBItem(hov.getLanguageString("ls.player.behaviour.towardswing"), 4));
 		return behaviourValues;
 	}
 }

@@ -108,7 +108,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 	private void initComponents() {
 		setLayout(new GridBagLayout());
 
-		JLabel weatherLabel = new JLabel("Wetter");
+		JLabel weatherLabel = new JLabel("ls.match.weather");
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -216,7 +216,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	/**
 	 * Component to show/choose the weather via some toggle buttons.
-	 * 
+	 *
 	 */
 	private class WeatherChooser extends JPanel {
 

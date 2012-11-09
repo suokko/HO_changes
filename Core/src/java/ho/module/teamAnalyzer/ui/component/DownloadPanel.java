@@ -68,7 +68,7 @@ public class DownloadPanel extends JPanel {
      * Initializes the state of this instance.
      */
     private void jbInit() {
-        jLabel1.setText(HOVerwaltung.instance().getLanguageString("GameID"));
+        jLabel1.setText(HOVerwaltung.instance().getLanguageString("ls.match.id"));
         setLayout(new GridBagLayout());
 
         final GridBagConstraints constraints = new GridBagConstraints();

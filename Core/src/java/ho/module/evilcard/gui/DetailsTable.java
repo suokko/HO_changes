@@ -24,7 +24,7 @@ class DetailsTable extends JTable {
 
 		columnToolTips = new String[DetailsTableModel.cols];
 		columnToolTips[DetailsTableModel.COL_MATCH_ID] = HOVerwaltung.instance().getLanguageString(
-				"ID");
+				"ls.match.id");
 		columnToolTips[DetailsTableModel.COL_MATCH_HOME] = HOVerwaltung.instance()
 				.getLanguageString("Heim");
 		columnToolTips[DetailsTableModel.COL_MATCH_GUEST] = HOVerwaltung.instance()
@@ -46,7 +46,7 @@ class DetailsTable extends JTable {
 
 		this.tableModelListener = new TableModelListener() {
 
-			@Override
+        @Override
 			public void tableChanged(TableModelEvent e) {
 				updateRowHeights();
 			}

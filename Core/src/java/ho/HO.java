@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Main HO starter class.
- * 
+ *
  * @author thomas.werth
  */
 public class HO {
@@ -81,7 +81,7 @@ public class HO {
 
 	/**
 	 * Main method to start a HOMainFrame.
-	 * 
+	 *
 	 * @param args
 	 *            the command line arguments
 	 */
@@ -173,8 +173,8 @@ public class HO {
 		if (DBManager.instance().isFirstStart()) {
 			interuptionsWindow.setVisible(false);
 			JOptionPane.showMessageDialog(null,
-					"Select File > Download in the main menu to load your team data into HO.",
-					"Get team data into HO", JOptionPane.INFORMATION_MESSAGE);
+					HOVerwaltung.instance().getLanguageString("firststartup.infowinmessage"),
+					HOVerwaltung.instance().getLanguageString("firststartup.infowinmessage.title"), JOptionPane.INFORMATION_MESSAGE);
 			interuptionsWindow.setVisible(true);
 		}
 

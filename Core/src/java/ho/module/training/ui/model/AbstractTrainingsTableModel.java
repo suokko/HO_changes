@@ -34,8 +34,8 @@ public abstract class AbstractTrainingsTableModel extends AbstractTableModel {
         columnNames[0] = hoV.getLanguageString("Week");
         columnNames[1] = hoV.getLanguageString("Season");
         columnNames[2] = hoV.getLanguageString("ls.team.trainingtype");
-        columnNames[3] = hoV.getLanguageString("Intensitaet");
-        columnNames[4] = hoV.getLanguageString("training.staminashare");
+        columnNames[3] = hoV.getLanguageString("ls.team.trainingintensity");
+        columnNames[4] = hoV.getLanguageString("ls.team.staminatrainingshare");
     }
 
     public void setTrainings(List<TrainingPerWeek> trainings) {

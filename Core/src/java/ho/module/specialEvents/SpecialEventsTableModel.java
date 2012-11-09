@@ -123,7 +123,7 @@ public class SpecialEventsTableModel extends AbstractTableModel {
 		case MATCHDATECOLUMN:
 			return HOVerwaltung.instance().getLanguageString("Datum");
 		case MATCHIDCOLUMN:
-			return HOVerwaltung.instance().getLanguageString("GameID");
+			return HOVerwaltung.instance().getLanguageString("ls.match.id");
 		case HOMETACTICCOLUMN:
 			return HOVerwaltung.instance().getLanguageString("ls.team.tactic");
 		case HOMETEAMCOLUMN:

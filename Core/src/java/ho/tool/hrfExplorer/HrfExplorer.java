@@ -345,8 +345,8 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
         m_Ar_Detail_Label_fix[1] = hoV.getLanguageString("Season") + " / " +hoV.getLanguageString("Spieltag");
         m_Ar_Detail_Label_fix[2] = hoV.getLanguageString("Punkte") + " / " + hoV.getLanguageString("Tore");
         m_Ar_Detail_Label_fix[3] =hoV.getLanguageString("Platzierung");
-        m_Ar_Detail_Label_fix[4] = hoV.getLanguageString("Training");
-        m_Ar_Detail_Label_fix[5] = hoV.getLanguageString("Intensitaet");
+        m_Ar_Detail_Label_fix[4] = hoV.getLanguageString("ls.team.trainingtype");
+        m_Ar_Detail_Label_fix[5] = hoV.getLanguageString("ls.team.trainingintensity");
         m_Ar_Detail_Label_fix[6] = hoV.getLanguageString("ls.club.staff.assistantcoaches");
         m_Ar_Detail_Label_fix[7] = hoV.getLanguageString("ls.team.confidence");
         m_Ar_Detail_Label_fix[8] = hoV.getLanguageString("AnzahlSpieler");
@@ -876,7 +876,6 @@ public class HrfExplorer extends ImagePanel implements ActionListener,ItemListen
 	    			" " + selectedObject.getTrArt(),
 	    			" " + selectedObject.getTrInt() + "%",
 	    			" " + selectedObject.getAnzCoTrainer(),
-	    			" " + selectedObject.getAnzTwTrainer(),
 	    			" " + selectedObject.getSelbstvertrauen(),
 	    			" " + selectedObject.getAnzSpieler(),
 	    			" " + selectedObject.getStimmung(),

@@ -42,16 +42,16 @@ import javax.swing.table.TableModel;
 
 /**
  * The Panel where the main training table is shown ("Training").
- * 
+ *
  * <p>
  * TODO Costomize to show only players that received training?
  * </p>
- * 
+ *
  * <p>
  * TODO Maybe i want to test for players that haven't received trainings to
  * preview effect of change of training.
  * </p>
- * 
+ *
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class OutputPanel extends ImagePanel {
@@ -117,8 +117,7 @@ public class OutputPanel extends ImagePanel {
 	 */
 	private void importMatches() {
 		String input = JOptionPane.showInputDialog(HOVerwaltung.instance().getLanguageString(
-				"GameID"));
-
+				"ls.match.id"));
 		try {
 			if (input != null) {
 				input = input.trim();

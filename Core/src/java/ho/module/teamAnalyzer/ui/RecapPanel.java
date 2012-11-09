@@ -72,8 +72,8 @@ public class RecapPanel extends JPanel {
     		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.smartsquad"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"), //$NON-NLS-1$
     HOVerwaltung.instance().getLanguageString("ls.team.tactic"), //$NON-NLS-1$
-    HOVerwaltung.instance().getLanguageString("Taktikstaerke"), //$NON-NLS-1$
-    HOVerwaltung.instance().getLanguageString("RecapPanel.Formation"), //$NON-NLS-1$
+    HOVerwaltung.instance().getLanguageString("ls.team.tacticalskill"), //$NON-NLS-1$
+    HOVerwaltung.instance().getLanguageString("ls.team.formation"), //$NON-NLS-1$
     "", //$NON-NLS-1$
     "" //$NON-NLS-1$
     };

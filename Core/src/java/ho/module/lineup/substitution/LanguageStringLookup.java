@@ -24,20 +24,17 @@ public class LanguageStringLookup {
 	public static String getBehaviour(byte id) {
 		switch (id) {
 		case (-1):
-			return HOVerwaltung.instance()
-					.getLanguageString("subs.BehNoChange");
+			return HOVerwaltung.instance().getLanguageString("subs.BehNoChange");
 		case ISpielerPosition.NORMAL:
-			return HOVerwaltung.instance().getLanguageString("subs.BehNormal");
+			return HOVerwaltung.instance().getLanguageString("ls.player.behaviour.normal");
 		case ISpielerPosition.OFFENSIVE:
-			return HOVerwaltung.instance().getLanguageString(
-					"subs.BehOffensive");
+			return HOVerwaltung.instance().getLanguageString("ls.player.behaviour.offensive");
 		case ISpielerPosition.DEFENSIVE:
-			return HOVerwaltung.instance().getLanguageString(
-					"subs.BehDefensive");
+			return HOVerwaltung.instance().getLanguageString("ls.player.behaviour.defensive");
 		case ISpielerPosition.TOWARDS_MIDDLE:
-			return HOVerwaltung.instance().getLanguageString("subs.BehToMid");
+			return HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardsmiddle");
 		case ISpielerPosition.TOWARDS_WING:
-			return HOVerwaltung.instance().getLanguageString("subs.BehToWi");
+			return HOVerwaltung.instance().getLanguageString("ls.player.behaviour.towardswing");
 		default:
 			return "UNKNOWN_BEHAVIOUR";
 		}

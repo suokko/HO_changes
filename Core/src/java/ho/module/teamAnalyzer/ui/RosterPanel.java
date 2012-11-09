@@ -43,7 +43,7 @@ public class RosterPanel extends JPanel {
     		HOVerwaltung.instance().getLanguageString("Role"),
     		HOVerwaltung.instance().getLanguageString("Position"),
     		HOVerwaltung.instance().getLanguageString("Secondary"),
-    		HOVerwaltung.instance().getLanguageString("GameID"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.id"),
     		HOVerwaltung.instance().getLanguageString("ls.player.age"),
     		HOVerwaltung.instance().getLanguageString("ls.player.form"),
     		HOVerwaltung.instance().getLanguageString("ls.player.short_experience"),

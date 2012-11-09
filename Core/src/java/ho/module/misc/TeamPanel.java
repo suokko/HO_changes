@@ -23,9 +23,9 @@ import javax.swing.JPanel;
  * Display basics
  */
 class TeamPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 358240701613667104L;
-	
+
 	//~ Instance fields ----------------------------------------------------------------------------
 
     private final ColorLabelEntry leagueLabel 	= new ColorLabelEntry("");
@@ -41,7 +41,7 @@ class TeamPanel extends JPanel {
 
     final GridBagLayout layout = new GridBagLayout();
     final GridBagConstraints constraints = new GridBagConstraints();
- 
+
     /**
      * Creates a new BasicsPanel object.
      */
@@ -71,7 +71,7 @@ class TeamPanel extends JPanel {
 
     private void initComponents() {
         JLabel label;
-        
+
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -81,10 +81,10 @@ class TeamPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder(HOVerwaltung.instance().getLanguageString("Allgemein")));
         setLayout(layout);
         HOVerwaltung hoV = HOVerwaltung.instance();
-        
-        label = new JLabel(hoV.getLanguageString("ID"));
+
+        label = new JLabel(hoV.getLanguageString("ls.team.id"));
         add(label,teamIdLabel.getComponent(false),1);
-        
+
         label = new JLabel(hoV.getLanguageString("Verein"));
         add(label,teamLabel.getComponent(false),2);
 
@@ -113,7 +113,7 @@ class TeamPanel extends JPanel {
         add(label,goalsLabel.getComponent(false),10);
 
     }
-    
+
     private void add(JLabel label,Component comp, int y){
     	constraints.anchor = GridBagConstraints.WEST;
     	constraints.gridx = 0;
@@ -128,5 +128,5 @@ class TeamPanel extends JPanel {
     	layout.setConstraints(comp, constraints);
     	add(comp);
     }
-    
+
 }

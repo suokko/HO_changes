@@ -120,7 +120,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         		WeeklyTrainingType.BASE_AGE_FACTOR, UserParameter.temp().TRAINING_OFFSET_AGE, this);
         add(m_tapAgeFactor);
 
-        m_jtapCoachFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorTrainerfertigkeit"),
+        m_jtapCoachFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.coachingskill"),
         		WeeklyTrainingType.BASE_COACH_FACTOR, UserParameter.temp().TrainerFaktor, this);
         add(m_jtapCoachFactor);
 
@@ -128,7 +128,7 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         		WeeklyTrainingType.BASE_ASSISTANT_COACH_FACTOR, UserParameter.temp().TRAINING_OFFSET_ASSISTANTS, this);
         add(m_jtapAssisstantFactor);
 
-        m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("FaktorIntensitaet"),
+        m_jtapIntensityFactor = new TrainingAdjustmentPanel(HOVerwaltung.instance().getLanguageString("ls.team.trainingintensity"),
         		WeeklyTrainingType.BASE_INTENSITY_FACTOR, UserParameter.temp().TRAINING_OFFSET_INTENSITY, this);
         add(m_jtapIntensityFactor);
 

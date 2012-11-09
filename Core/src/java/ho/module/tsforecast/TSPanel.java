@@ -256,7 +256,7 @@ ErrorLog.writeln("Day1 " + x + " = " + HRFDate.get( Calendar.DAY_OF_YEAR)  + " +
             graphics2d.drawImage(  m_startImage.getImage(),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1,
                                    m_startImage.getImageObserver());
-            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("Trainerlevel"),
+            graphics2d.drawString( HOVerwaltung.instance().getLanguageString("ls.team.coachingskill"),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), (m_iMaxY + 10) - 2 - i1 - 2);
             graphics2d.drawString( PlayerAbility.getNameForSkill((int)curve.getSpirit(), true),
                                    (int)((double)l * m_dFactor + (double)m_iCoordX0), ((m_iMaxY + 10) - 2 - i1) + 24);

@@ -365,7 +365,7 @@ public class SubstitutionOverview extends JPanel {
 	/**
 	 * TableModel for the overview table where existing substitutions are
 	 * listed.
-	 * 
+	 *
 	 */
 	private class SubstitutionsTableModel extends AbstractTableModel {
 
@@ -587,7 +587,7 @@ public class SubstitutionOverview extends JPanel {
 		private static final long serialVersionUID = 715531467617L;
 
 		public RemoveAllAction() {
-			super(HOVerwaltung.instance().getLanguageString("ls.button.deleteAll"));
+			super(HOVerwaltung.instance().getLanguageString("ls.button.deleteall"));
 		}
 
 		@Override

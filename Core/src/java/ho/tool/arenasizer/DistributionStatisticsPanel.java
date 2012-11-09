@@ -55,7 +55,7 @@ class DistributionStatisticsPanel extends JPanel {
 	protected TableModel getModel() {
 		HOVerwaltung hoV = HOVerwaltung.instance();
 		// DATUM SpielerRenderer
-		String[] columnNames = {hoV.getLanguageString("ID"),hoV.getLanguageString("Wetter"),hoV.getLanguageString("Zuschauer"),hoV.getLanguageString("ls.club.arena.terraces")+" ( %)",
+		String[] columnNames = {hoV.getLanguageString("ls.match.id"),hoV.getLanguageString("ls.match.weather"),hoV.getLanguageString("Zuschauer"),hoV.getLanguageString("ls.club.arena.terraces")+" ( %)",
 					hoV.getLanguageString("ls.club.arena.basicseating")+" ( %)",hoV.getLanguageString("ls.club.arena.seatsunderroof")+" ( %)",hoV.getLanguageString("ls.club.arena.seatsinvipboxes")+" ( %)",
 					hoV.getLanguageString("Fans")+" ( )"};
 

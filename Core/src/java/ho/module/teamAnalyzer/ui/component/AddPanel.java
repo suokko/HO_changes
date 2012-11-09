@@ -40,7 +40,7 @@ public class AddPanel extends JPanel {
     JButton addButton = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.add"));
 
     /** The ID-Label */
-    JLabel idlabel = new JLabel(HOVerwaltung.instance().getLanguageString("ID")+": ");
+    JLabel idlabel = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.id") + ": ");
 
     /** A status label */
     JLabel status = new JLabel();

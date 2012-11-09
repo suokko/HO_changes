@@ -120,7 +120,7 @@ public class StaffPanel extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(6, 6, 4, 2);
-		main.add(new JLabel(hoV.getLanguageString("Trainerlevel")), gbc);
+		main.add(new JLabel(hoV.getLanguageString("ls.team.coachingskill")), gbc);
 		gbc.gridx = 1;
 		gbc.insets = new Insets(6, 2, 2, 6);
 		main.add(trainerLevelCombo, gbc);

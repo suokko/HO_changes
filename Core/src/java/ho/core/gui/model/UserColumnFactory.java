@@ -126,7 +126,7 @@ final public class UserColumnFactory {
 	 */
 	public static MatchDetailsColumn[] createMatchDetailsColumnsArray(){
 		final MatchDetailsColumn[] matchDetailsColumnsArray = new MatchDetailsColumn[4];
-		matchDetailsColumnsArray[0] = new MatchDetailsColumn(550,"Wetter",30){
+		matchDetailsColumnsArray[0] = new MatchDetailsColumn(550,"ls.match.weather",30){
 			@Override
 			public IHOTableEntry getTableEntry(Matchdetails matchdetails){
 				return new ColorLabelEntry(ThemeManager.getIcon(HOIconName.WEATHER[matchdetails.getWetterId()]),
@@ -155,7 +155,7 @@ final public class UserColumnFactory {
                         ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 			}
 		};
-		matchDetailsColumnsArray[3] = new MatchDetailsColumn(580,"Taktikstaerke"){
+		matchDetailsColumnsArray[3] = new MatchDetailsColumn(580,"ls.team.tacticalskill"){
 			@Override
 			public IHOTableEntry getTableEntry(Matchdetails matchdetails){
 				final int teamid = HOVerwaltung.instance().getModel()
@@ -444,7 +444,7 @@ final public class UserColumnFactory {
 
 		};
 
-		matchesArray[5] = new MatchKurzInfoColumn(500,"ID",55){
+		matchesArray[5] = new MatchKurzInfoColumn(500,"ls.match.id",55){
 
 			@Override
 			public IHOTableEntry getTableEntry(MatchKurzInfo match){

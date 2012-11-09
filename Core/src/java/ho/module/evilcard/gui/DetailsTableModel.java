@@ -84,7 +84,7 @@ class DetailsTableModel extends AbstractTableModel {
 				HOVerwaltung.instance().getLanguageString("column.WarningType3"));
 		vColumnNames.set(COL_WARNINGS_TYPE4,
 				HOVerwaltung.instance().getLanguageString("column.WarningType4"));
-		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ID"));
+		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ls.match.id"));
 		vColumnNames.set(COL_MATCH_HOME, HOVerwaltung.instance().getLanguageString("Heim"));
 		vColumnNames.set(COL_MATCH_GUEST, HOVerwaltung.instance().getLanguageString("Gast"));
 		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("Ergebnis"));

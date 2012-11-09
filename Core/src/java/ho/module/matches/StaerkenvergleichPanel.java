@@ -306,7 +306,7 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 		layout.setConstraints(zuschauerLabel, constraints);
 		panel.add(zuschauerLabel);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Wetter"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.weather"));
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weightx = 0.0;
@@ -501,7 +501,7 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 		add(panel, gastTaktikLabel, layout, constraints, 4, 9);
 
 		// Taktikskill
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.tacticalskill"));
 		add(panel, label, layout, constraints, 0, 10);
 		heimTaktikskillLabel = new JLabel();
 		add(panel, heimTaktikskillLabel, layout, constraints, 1, 10);

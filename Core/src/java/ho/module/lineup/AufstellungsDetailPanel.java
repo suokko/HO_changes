@@ -48,9 +48,9 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private AufstellungsRatingPanel m_jpRating = new AufstellungsRatingPanel();
 
 	private ColorLabelEntry m_jpAktuellesSystem = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
 	private ColorLabelEntry m_jpDurchschnittErfahrung = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
 	private ColorLabelEntry m_jpErfahrung343 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
 	private ColorLabelEntry m_jpErfahrung352 = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
@@ -80,7 +80,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private ColorLabelEntry m_jpLoddarstat = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
 			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
 	private ColorLabelEntry m_jpTaktikStaerke = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
-			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.LEFT);
+			ColorLabelEntry.BG_SPIELERSUBPOSITONSWERTE, SwingConstants.CENTER);
 	private RatingTableEntry m_jpGesamtStaerke = new RatingTableEntry();
 	private CBItem[] EINSTELLUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.playitcool"), IMatchDetails.EINSTELLUNG_PIC),
 			new CBItem(HOVerwaltung.instance().getLanguageString("ls.team.teamattitude.normal"), IMatchDetails.EINSTELLUNG_NORMAL),
@@ -274,21 +274,20 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
             float avXp = homodel.getAufstellung().getAverageExperience();
             m_jpDurchschnittErfahrung.setText(PlayerAbility.getNameForSkill(avXp));
             m_jpDurchschnittErfahrung.setToolTipText(
-            		(avXp < 0 ? "Need to set team captain!" : "TeamXP formula by kopsterkespits")); // TODO L10N
+            		(avXp < 0 ? (HOVerwaltung.instance().getLanguageString("lineup.upload.check.captainNotSet")) : "")); // TODO L10N
 
             m_jpAktuellesSystem.setText(Lineup.getNameForSystem(aufstellung.ermittelSystem()));
-            m_jpErfahrungAktuellesSystem.setText(homodel.getAufstellung()
-                                                        .getTeamErfahrung4AktuellesSystem() + "");
-            m_jpErfahrung550.setText(homodel.getTeam().getFormationExperience550() + "");
-            m_jpErfahrung541.setText(homodel.getTeam().getFormationExperience541() + "");
-            m_jpErfahrung532.setText(homodel.getTeam().getFormationExperience532() + "");
-            m_jpErfahrung523.setText(homodel.getTeam().getFormationExperience523() + "");
-            m_jpErfahrung451.setText(homodel.getTeam().getFormationExperience451() + "");
-            m_jpErfahrung442.setText(homodel.getTeam().getFormationExperience442() + "");
-            m_jpErfahrung433.setText(homodel.getTeam().getFormationExperience433() + "");
-            m_jpErfahrung352.setText(homodel.getTeam().getFormationExperience352() + "");
-            m_jpErfahrung343.setText(homodel.getTeam().getFormationExperience343() + "");
-            m_jpErfahrung253.setText(homodel.getTeam().getFormationExperience253() + "");
+            m_jpErfahrungAktuellesSystem.setText(PlayerAbility.getNameForSkill(homodel.getAufstellung().getTeamErfahrung4AktuellesSystem()));
+            m_jpErfahrung550.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience550()));
+            m_jpErfahrung541.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience541()));
+            m_jpErfahrung532.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience532()));
+            m_jpErfahrung523.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience523()));
+            m_jpErfahrung451.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience451()));
+            m_jpErfahrung442.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience442()));
+            m_jpErfahrung433.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience433()));
+            m_jpErfahrung352.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience352()));
+            m_jpErfahrung343.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience343()));
+            m_jpErfahrung253.setText(PlayerAbility.getNameForSkill(homodel.getTeam().getFormationExperience253()));
             m_jpErfahrungAktuellesSystem.setFGColor(new Color(Math.min(Math.max(
             		((8 - homodel.getAufstellung().getTeamErfahrung4AktuellesSystem()) * 32) - 1, 0), 255), 0, 0));
             m_jpErfahrung550.setFGColor(new Color(Math.min(Math.max(
@@ -602,7 +601,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         constraints.gridx = 1;
         constraints.gridy = yPos;
         constraints.gridwidth = 1;
-        label = new JLabel(HOVerwaltung.instance().getLanguageString("Taktikstaerke"));
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.tacticalskill"));
         layout.setConstraints(label, constraints);
         add(label);
         constraints.gridx = 2;
@@ -683,84 +682,84 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
         add(m_jpDurchschnittErfahrung.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("AktuellesSystem")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formation")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpAktuellesSystem.getComponent(false), constraints);
         add(m_jpAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ErfahrungAktuellesSys")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience")), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrungAktuellesSystem.getComponent(false), constraints);
         add(m_jpErfahrungAktuellesSystem.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp550")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 5-5-0"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung550.getComponent(false), constraints);
         add(m_jpErfahrung550.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung541")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 5-4-1"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung541.getComponent(false), constraints);
         add(m_jpErfahrung541.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung532")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 5-3-2"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung532.getComponent(false), constraints);
         add(m_jpErfahrung532.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp523")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 5-2-3"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung523.getComponent(false), constraints);
         add(m_jpErfahrung523.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung451")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 4-5-1"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung451.getComponent(false), constraints);
         add(m_jpErfahrung451.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung442")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 4-4-2"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung442.getComponent(false), constraints);
         add(m_jpErfahrung442.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung433")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 4-3-3"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung433.getComponent(false), constraints);
         add(m_jpErfahrung433.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung352")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 3-5-2"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung352.getComponent(false), constraints);
         add(m_jpErfahrung352.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Erfahrung343")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 3-4-3"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung343.getComponent(false), constraints);
         add(m_jpErfahrung343.getComponent(false));
 
         yPos++;
-        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("Lineup.FormationXp253")), yPos);
+        initLabel(constraints,layout,new JLabel(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience") + " 2-5-3"), yPos);
         constraints.gridx = 2;
         constraints.gridy = yPos;
         layout.setConstraints(m_jpErfahrung253.getComponent(false), constraints);

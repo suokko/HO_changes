@@ -58,7 +58,7 @@ class ResultPanel extends JPanel {
         id = 0;
         average = 0;
         set.setEnabled(false);
-        result.setText("ls.player.skill");
+        result.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.player.skill"));
         set.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("Disabled"));
     }
 
@@ -79,7 +79,7 @@ class ResultPanel extends JPanel {
 
         final KeeperTool kt = new KeeperTool(form, tsi);
         id = playerId;
-        result.setText("Skill: " + df.format(kt.getMin()) + "-" + df.format(kt.getMax()));
+        result.setText(ho.core.model.HOVerwaltung.instance().getLanguageString("ls.player.skill") + ": " + df.format(kt.getMin()) + " - " + df.format(kt.getMax()));
         average = kt.getAvg();
 
         if (playerId > 0) {

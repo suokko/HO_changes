@@ -385,14 +385,14 @@ public class UploadDownloadPanel extends JPanel {
 		private void initColumnNames() {
 			this.columns = new String[6];
 			this.columns[0] = HOVerwaltung.instance().getLanguageString(
-					"lineup.upload.colheadline.date");
+					"Datum");
 			this.columns[1] = "";
 			this.columns[2] = HOVerwaltung.instance().getLanguageString(
 					"lineup.upload.colheadline.hometeam");
 			this.columns[3] = HOVerwaltung.instance().getLanguageString(
 					"lineup.upload.colheadline.awayteam");
 			this.columns[4] = HOVerwaltung.instance().getLanguageString(
-					"lineup.upload.colheadline.matchid");
+					"ls.match.id");
 			this.columns[5] = "";
 		}
 	}
