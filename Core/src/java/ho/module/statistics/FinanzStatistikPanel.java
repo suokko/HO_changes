@@ -175,7 +175,7 @@ public class FinanzStatistikPanel extends ImagePanel {
 					UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
 				} else if (e.getSource() == m_jchZinsaufwendungen.getCheckbox()) {
 					m_clStatistikPanel.setShow("Zinsaufwendungen", m_jchZinsaufwendungen.isSelected());
-					UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
+					UserParameter.instance().statistikZinsaufwendungen = m_jchJugend.isSelected();
 				} else if (e.getSource() == m_jchMarktwert.getCheckbox()) {
 					m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
 					UserParameter.instance().statistikMarktwert = m_jchMarktwert.isSelected();
