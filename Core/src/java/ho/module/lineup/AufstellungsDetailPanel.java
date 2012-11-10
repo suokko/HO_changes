@@ -281,8 +281,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 			float avXp = homodel.getAufstellung().getAverageExperience();
 			m_jpDurchschnittErfahrung.setText(PlayerAbility.getNameForSkill(avXp));
 			m_jpDurchschnittErfahrung.setToolTipText((avXp < 0 ? (HOVerwaltung.instance()
-					.getLanguageString("lineup.upload.check.captainNotSet")) : "")); // TODO
-																						// L10N
+					.getLanguageString("lineup.upload.check.captainNotSet")) : ""));
 
 			String formationExperienceTooltip = getFormationExperienceTooltip();
 			m_jpAktuellesSystem.setText(Lineup.getNameForSystem(aufstellung.ermittelSystem()));

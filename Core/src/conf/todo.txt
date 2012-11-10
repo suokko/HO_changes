@@ -40,7 +40,6 @@ P D Bug description
     	Removing old matches and giving HO more heap memory 'solves' this issue
 4 ? Add string and icon for regainer
 4 A Sorting by matchday in TA matchlist is buggy (1, 10, 11, 2, 3, ..)
-5 ? L10N: Some strings in the options window ("Future Weeks"...)
 5 ? Remove/hide unneccessary doubled columns from PlayerOverview/Lineup (name & shirtnumber are shown 2 times)
 5 F Adding a prediction offset for a certain skill can lead to a lower(!) star value
 	Reason: Skills<=7 with subskill==offset==0 will be calculated with subskill=0.5...

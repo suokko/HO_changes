@@ -47,6 +47,7 @@ public class FinanzStatistikPanel extends ImagePanel {
 	private ImageCheckbox m_jchGesamteinnahmen;
 	private ImageCheckbox m_jchGewinnVerlust;
 	private ImageCheckbox m_jchJugend;
+	private ImageCheckbox m_jchZinsaufwendungen;
 	private ImageCheckbox m_jchKontostand;
 	private ImageCheckbox m_jchMarktwert;
 	private ImageCheckbox m_jchSonstigeAusgaben;
@@ -94,7 +95,7 @@ public class FinanzStatistikPanel extends ImagePanel {
 			this.initialized = true;
 		} finally {
 			CursorToolkit.stopWaitCursor(this);
-		}		
+		}
 	}
 
 	private void addListeners() {
@@ -172,6 +173,9 @@ public class FinanzStatistikPanel extends ImagePanel {
 				} else if (e.getSource() == m_jchJugend.getCheckbox()) {
 					m_clStatistikPanel.setShow("Jugend", m_jchJugend.isSelected());
 					UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
+				} else if (e.getSource() == m_jchZinsaufwendungen.getCheckbox()) {
+					m_clStatistikPanel.setShow("Zinsaufwendungen", m_jchZinsaufwendungen.isSelected());
+					UserParameter.instance().statistikJugend = m_jchJugend.isSelected();
 				} else if (e.getSource() == m_jchMarktwert.getCheckbox()) {
 					m_clStatistikPanel.setShow("Marktwert", m_jchMarktwert.isSelected());
 					UserParameter.instance().statistikMarktwert = m_jchMarktwert.isSelected();
@@ -195,6 +199,7 @@ public class FinanzStatistikPanel extends ImagePanel {
 		m_jchSonstigeAusgaben.addActionListener(checkBoxActionListener);
 		m_jchTrainerstab.addActionListener(checkBoxActionListener);
 		m_jchJugend.addActionListener(checkBoxActionListener);
+		m_jchZinsaufwendungen.addActionListener(checkBoxActionListener);
 		m_jchMarktwert.addActionListener(checkBoxActionListener);
 		m_jchFans.addActionListener(checkBoxActionListener);
 
@@ -414,9 +419,18 @@ public class FinanzStatistikPanel extends ImagePanel {
 				ThemeManager.getColor(HOColorName.STAT_COSTSYOUTH),
 				UserParameter.instance().statistikJugend);
 		m_jchJugend.setOpaque(false);
-
 		layout2.setConstraints(m_jchJugend, constraints2);
 		panel2.add(m_jchJugend);
+
+		constraints2.gridwidth = 1;
+		constraints2.gridx = 1;
+		constraints2.gridy = 14;
+		m_jchZinsaufwendungen = new ImageCheckbox(getLangStr("Zinsaufwendungen"),
+				ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL),
+				UserParameter.instance().statistikZinsaufwendungen);
+		m_jchZinsaufwendungen.setOpaque(false);
+		layout2.setConstraints(m_jchZinsaufwendungen, constraints2);
+		panel2.add(m_jchZinsaufwendungen);
 
 		constraints2.gridwidth = 1;
 		constraints2.gridx = 0;
@@ -483,7 +497,7 @@ public class FinanzStatistikPanel extends ImagePanel {
 
 			double[][] statistikWerte = DBManager.instance().getFinanzen4Statistik(anzahlHRF);
 			StatistikModel[] models = null;
-			models = new StatistikModel[14];
+			models = new StatistikModel[15];
 
 			if (statistikWerte.length > 0) {
 				models[0] = new StatistikModel(statistikWerte[0], "Kontostand",
@@ -527,6 +541,9 @@ public class FinanzStatistikPanel extends ImagePanel {
 				models[13] = new StatistikModel(statistikWerte[15], "Marktwert",
 						m_jchMarktwert.isSelected(),
 						ThemeManager.getColor(HOColorName.STAT_MARKETVALUE), format2, 10);
+				models[14] = new StatistikModel(statistikWerte[10], "Zinsaufwendungen",
+						m_jchZinsaufwendungen.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_COSTFINANCIAL), format);
 			}
 
 			String[] yBezeichnungen = ho.core.util.Helper

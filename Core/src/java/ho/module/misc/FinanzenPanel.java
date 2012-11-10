@@ -24,9 +24,9 @@ import javax.swing.SwingConstants;
  * Zeigt die Finanzen für die aktuelle oder die vorherige Woche an
  */
 final class FinanzenPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 5220006612961140628L;
-	
+
     //~ Instance fields ----------------------------------------------------------------------------
 	private final ColorLabelEntry m_jpAGehaelter 		= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpAGesamt 			= new ColorLabelEntry("");
@@ -34,6 +34,7 @@ final class FinanzenPanel extends JPanel {
     private final ColorLabelEntry m_jpASonstiges 		= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpAStadion 			= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpATrainerstab 		= new ColorLabelEntry("");
+    private final ColorLabelEntry m_jpAZinsaufwendungen = new ColorLabelEntry("");
     private final ColorLabelEntry m_jpEGesamt 			= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpESonstiges 		= new ColorLabelEntry("");
     private final ColorLabelEntry m_jpESponsoren 		= new ColorLabelEntry("");
@@ -71,6 +72,7 @@ final class FinanzenPanel extends JPanel {
             m_jpASonstiges.setSpezialNumber(-finanzen.getKostenSonstige() / faktor, true);
             m_jpATrainerstab.setSpezialNumber(-finanzen.getKostenTrainerstab() / faktor, true);
             m_jpAJugend.setSpezialNumber(-finanzen.getKostenJugend() / faktor, true);
+            m_jpAZinsaufwendungen.setSpezialNumber(-finanzen.getKostenZinsen() / faktor, true);
             m_jpEGesamt.setSpezialNumber(finanzen.getEinnahmenGesamt() / faktor, true);
             m_jpAGesamt.setSpezialNumber(-finanzen.getKostenGesamt() / faktor, true);
             m_jpGesamt.setSpezialNumber(finanzen.getGewinnVerlust() / faktor, true);
@@ -84,6 +86,7 @@ final class FinanzenPanel extends JPanel {
             m_jpASonstiges.setSpezialNumber(-finanzen.getLetzteKostenSonstige() / faktor, true);
             m_jpATrainerstab.setSpezialNumber(-finanzen.getLetzteKostenTrainerstab() / faktor, true);
             m_jpAJugend.setSpezialNumber(-finanzen.getLetzteKostenJugend() / faktor, true);
+            m_jpAZinsaufwendungen.setSpezialNumber(-finanzen.getLetzteKostenZinsen() / faktor, true);
             m_jpEGesamt.setSpezialNumber(finanzen.getLetzteEinnahmenGesamt() / faktor, true);
             m_jpAGesamt.setSpezialNumber(-finanzen.getLetzteKostenGesamt() / faktor, true);
             m_jpGesamt.setSpezialNumber(finanzen.getLetzteGewinnVerlust() / faktor, true);
@@ -91,7 +94,7 @@ final class FinanzenPanel extends JPanel {
     }
 
     private void initComponents() {
-        
+
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -134,13 +137,13 @@ final class FinanzenPanel extends JPanel {
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Stadion"));
         add(label,m_jpAStadion.getComponent(false),2,2);
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sponsoren"));
         add(label,m_jpESponsoren.getComponent(false),0,3);
-        
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Spielergehaelter"));
         add(label,m_jpAGehaelter.getComponent(false),2,3);
- 
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Sonstiges"));
         add(label,m_jpESonstiges.getComponent(false),0,4);
 
@@ -153,11 +156,14 @@ final class FinanzenPanel extends JPanel {
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Jugend"));
         add(label,m_jpAJugend.getComponent(false),2,6);
 
+        label = new JLabel(HOVerwaltung.instance().getLanguageString("Zinsaufwendungen"));
+        add(label,m_jpAZinsaufwendungen.getComponent(false),2,7);
+
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamteinnahmen"));
-        add(label,m_jpEGesamt.getComponent(false),0,7);
+        add(label,m_jpEGesamt.getComponent(false),0,8);
 
         label = new JLabel(HOVerwaltung.instance().getLanguageString("Gesamtausgaben"));
-        add(label,m_jpAGesamt.getComponent(false),2,7);
+        add(label,m_jpAGesamt.getComponent(false),2,8);
 
         if (m_bAktuelleFinanzen) {
             label = new JLabel(HOVerwaltung.instance().getLanguageString("ErwarteterGewinnVerlust"));
@@ -167,19 +173,19 @@ final class FinanzenPanel extends JPanel {
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 8;
+        constraints.gridy = 9;
         constraints.gridwidth = 3;
         layout.setConstraints(label, constraints);
         add(label);
 
         constraints.anchor = GridBagConstraints.EAST;
         constraints.gridx = 3;
-        constraints.gridy = 8;
+        constraints.gridy = 9;
         constraints.gridwidth = 1;
         layout.setConstraints(m_jpGesamt.getComponent(false), constraints);
         add(m_jpGesamt.getComponent(false));
     }
-    
+
     private void add(JLabel label,Component comp, int x, int y){
     	constraints.anchor = GridBagConstraints.WEST;
     	constraints.gridx = x;

@@ -20,9 +20,9 @@ import javax.swing.JWindow;
 
 /**
  * CsvPlayerExport
- * 
+ *
  * Export all players as CSV file
- * 
+ *
  * @author flattermann <HO@flattermann.net>
  */
 public class CsvPlayerExport {
@@ -39,7 +39,7 @@ public class CsvPlayerExport {
 
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-		fileChooser.setDialogTitle(NAME); // TODO L10N
+		fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("CSVExporter"));
 
 		ExampleFileFilter filter = new ExampleFileFilter();
 		filter.addExtension("csv");
@@ -52,11 +52,11 @@ public class CsvPlayerExport {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			file = fileChooser.getSelectedFile();
 			if (file.exists() && JOptionPane.showConfirmDialog(
-					HOMainFrame.instance(), 
+					HOMainFrame.instance(),
 					HOVerwaltung.instance().getLanguageString("overwrite"), NAME,
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				// Cancel
-				return;		
+				return;
             }
 
 			waitDialog = new LoginWaitDialog(HOMainFrame.instance());
