@@ -236,6 +236,7 @@ public final class UserParameter extends Configuration {
     public int training_rightSplitPane =700;
     public int training_mainSplitPane =300;
     public int training_lowerLeftSplitPane =200;
+    public int training_pastFutureTrainingsSplitPane =200;
     
     public int teamAnalyzer_LowerLefSplitPane = 100;
     public int teamAnalyzer_UpperLeftSplitPane = 350;
@@ -585,8 +586,7 @@ public final class UserParameter extends Configuration {
 		map.put("teamAnalyzer_UpperLeftSplitPane", String.valueOf(teamAnalyzer_UpperLeftSplitPane));
 		map.put("teamAnalyzer_MainSplitPane", String.valueOf(teamAnalyzer_MainSplitPane));
 		map.put("teamAnalyzer_BottomSplitPane", String.valueOf(teamAnalyzer_BottomSplitPane));
-		
-		
+		map.put("training_pastFutureTrainingsSplitPane", String.valueOf(training_pastFutureTrainingsSplitPane));	
 		
 		return map;
 	}
@@ -801,6 +801,7 @@ public final class UserParameter extends Configuration {
 		teamAnalyzer_UpperLeftSplitPane= getIntValue(values, "teamAnalyzer_UpperLeftSplitPane");
 		teamAnalyzer_MainSplitPane= getIntValue(values, "teamAnalyzer_MainSplitPane");
 		teamAnalyzer_BottomSplitPane= getIntValue(values, "teamAnalyzer_BottomSplitPane");
+		training_pastFutureTrainingsSplitPane= getIntValue(values, "training_pastFutureTrainingsSplitPane");
 	}
 
 }

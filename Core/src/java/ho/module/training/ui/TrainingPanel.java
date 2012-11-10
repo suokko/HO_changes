@@ -2,7 +2,9 @@
 package ho.module.training.ui;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.training.TrainingManager;
+import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.comp.IntensityComboBox;
 import ho.module.training.ui.comp.TrainingComboBox;
@@ -44,6 +46,7 @@ public class TrainingPanel extends JPanel {
 	private PastTrainingsTableModel pastTrainingsTableModel;
 	private JTable futureTrainingsTable;
 	private JButton setAllButton;
+	private JSplitPane splitPane;
 	private final TrainingModel model;
 
 	/**
@@ -80,6 +83,9 @@ public class TrainingPanel extends JPanel {
 								.instance().getLanguageString("SetAll"), JOptionPane.PLAIN_MESSAGE);
 			}
 		});
+
+		this.splitPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
+				new DividerListener(DividerListener.training_pastFutureTrainingsSplitPane));
 	}
 
 	/**
@@ -135,8 +141,11 @@ public class TrainingPanel extends JPanel {
 		lGbc.fill = GridBagConstraints.BOTH;
 		futureTrainingsPanel.add(lowerScrollPane, lGbc);
 
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pastTrainingsPanel,
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pastTrainingsPanel,
 				futureTrainingsPanel);
+		splitPane
+				.setDividerLocation(UserParameter.instance().training_pastFutureTrainingsSplitPane);
+		System.out.println("####- " + UserParameter.instance().training_pastFutureTrainingsSplitPane);
 		setLayout(new BorderLayout());
 		add(splitPane, BorderLayout.CENTER);
 	}
