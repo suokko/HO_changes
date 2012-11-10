@@ -156,7 +156,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the constant for Pic/Mots/Normal.
-	 * 
+	 *
 	 * @param einstellung
 	 *            the constant for Pic/Mots/Normal
 	 */
@@ -166,7 +166,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Get the constant for Pic/Mots/Normal.
-	 * 
+	 *
 	 * @return the constant for Pic/Mots/Normal
 	 */
 	public int getEinstellung() {
@@ -175,7 +175,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the match location (home/away/awayderby).
-	 * 
+	 *
 	 * @param location
 	 *            the constant for the location
 	 */
@@ -297,38 +297,37 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 	private String getFormationExperienceTooltip() {
 		Team team = HOVerwaltung.instance().getModel().getTeam();
 		StringBuilder builder = new StringBuilder();
-		String expStr = HOVerwaltung.instance().getLanguageString("ls.team.formationexperience")
-				+ " ";
 		int exp = team.getFormationExperience550();
 		builder.append("<html>");
-		builder.append(expStr).append("5-5-0").append("  ");
+		builder.append("<b>").append(HOVerwaltung.instance().getLanguageString("ls.team.formationexperience")).append("</b><br><br>");
+		builder.append("5-5-0&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience541();
-		builder.append(expStr).append("5-4-1").append("  ");
+		builder.append("5-4-1&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience532();
-		builder.append(expStr).append("5-3-2").append("  ");
+		builder.append("5-3-2&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience523();
-		builder.append(expStr).append("5-2-3").append("  ");
+		builder.append("5-2-3&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience451();
-		builder.append(expStr).append("4-5-1").append("  ");
+		builder.append("4-5-1&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience442();
-		builder.append(expStr).append("4-4-2").append("  ");
+		builder.append("4-4-2&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience433();
-		builder.append(expStr).append("4-3-3").append("  ");
+		builder.append("4-3-3&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience352();
-		builder.append(expStr).append("3-5-2").append("  ");
+		builder.append("3-5-2&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience343();
-		builder.append(expStr).append("3-4-3").append("  ");
+		builder.append("3-4-3&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		exp = team.getFormationExperience253();
-		builder.append(expStr).append("2-5-3").append("  ");
+		builder.append("2-5-3&#160&#160&#160");
 		builder.append(PlayerAbility.toString(exp)).append(" (").append(exp).append(")<br>");
 		builder.append("</html>");
 		return builder.toString();
@@ -336,7 +335,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the team confidence.
-	 * 
+	 *
 	 * @param selbstvertrauen
 	 *            the confidence value
 	 */
@@ -346,7 +345,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the team spirit values.
-	 * 
+	 *
 	 * @param stimmung
 	 *            team spirit
 	 * @param subStimmung
@@ -373,7 +372,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the tactic using it's constant.
-	 * 
+	 *
 	 * @param taktik
 	 *            the tactic constant
 	 */
@@ -383,7 +382,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Get the tactic constant.
-	 * 
+	 *
 	 * @return get the tactic constant
 	 */
 	public int getTaktik() {
@@ -392,7 +391,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Set the pullback minute
-	 * 
+	 *
 	 * @param minute
 	 */
 	public void setPullBackMinute(int minute) {
@@ -401,7 +400,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Get the pullback minute
-	 * 
+	 *
 	 * @return get the pullback minute
 	 */
 	public int getPullBackMinute() {
@@ -410,7 +409,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Sets the pullback override flag.
-	 * 
+	 *
 	 * @param pullBackOverride
 	 */
 	private void setPullBackOverride(boolean pullBackOverride) {
@@ -419,7 +418,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * React on state changed events
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 */
@@ -505,7 +504,7 @@ final class AufstellungsDetailPanel extends ImagePanel implements Refreshable, I
 
 	/**
 	 * Get the i18n'ed name of the tactic together with it's strength.
-	 * 
+	 *
 	 * @return the name of the tactic incl. strength
 	 */
 	private String getTaktikString() {
