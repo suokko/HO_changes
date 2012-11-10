@@ -23,7 +23,7 @@ public class DoubleTableCellRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 			boolean hasFocus, int row, int column) {
 
-		String numberString = this.format.format((Double) value);
+		String numberString = this.format.format((Number) value);
 		return super.getTableCellRendererComponent(table, numberString, isSelected, hasFocus, row,
 				column);
 	}

@@ -1,5 +1,6 @@
 package ho.module.ifa;
 
+import ho.core.gui.comp.renderer.DoubleTableCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
@@ -62,6 +63,12 @@ public class IfaOverviewDialog extends JDialog {
 		TableColumn hostedColumn = table.getColumnModel().getColumn(MyTableModel.COL_HOSTED);
 		hostedColumn.setCellRenderer(booleanRenderer);
 		hostedColumn.setPreferredWidth(35);
+
+		table.getColumnModel().getColumn(MyTableModel.COL_COOLNESS)
+				.setCellRenderer(new DoubleTableCellRenderer(2));
+
+		table.getColumnModel().getColumn(MyTableModel.COL_ACTIVE_USERS)
+				.setCellRenderer(new DoubleTableCellRenderer(0));
 
 		TableRowSorter<MyTableModel> sorter = new TableRowSorter<MyTableModel>(tblModel);
 		sorter.setComparator(MyTableModel.COL_COUNTRY, new Comparator<Country>() {
