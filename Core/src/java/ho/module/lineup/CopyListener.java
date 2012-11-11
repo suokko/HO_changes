@@ -70,13 +70,13 @@ public class CopyListener implements ActionListener {
 	private String getRatingsAsText() {
 		StringBuilder sb = new StringBuilder("");
 		if (lineup != null) {
-			sb.append(HOVerwaltung.instance().getLanguageString("MatchMittelfeld") + ": " + lineup.getMidfieldRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite") + ": " + lineup.getRightDefenseRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("Abwehrzentrum") + ": " + lineup.getCentralDefenseRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite") + ": " + lineup.getLeftDefenseRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite") + ": " + lineup.getRightAttackRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("Angriffszentrum") + ": " + lineup.getCentralAttackRating() + LF);
-			sb.append(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite") + ": " + lineup.getLeftAttackRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield") + ": " + lineup.getMidfieldRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence") + ": " + lineup.getRightDefenseRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence") + ": " + lineup.getCentralDefenseRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence") + ": " + lineup.getLeftDefenseRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack") + ": " + lineup.getRightAttackRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack") + ": " + lineup.getCentralAttackRating() + LF);
+			sb.append(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack") + ": " + lineup.getLeftAttackRating() + LF);
 		}
 		return sb.toString();
 	}
@@ -96,7 +96,7 @@ public class CopyListener implements ActionListener {
 			sb.append("[/td][td align=center]"+lineup.getCentralDefenseRating());
 			sb.append("[/td][td align=center]"+lineup.getLeftDefenseRating());
 			sb.append("[/td][/tr]" + LF);
-			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
 			sb.append("[/th][td colspan=3 align=center]");
 			sb.append(lineup.getMidfieldRating()+"[/td][/tr]" + LF);
 			sb.append("[tr][th]"+HOVerwaltung.instance().getLanguageString("Attack"));

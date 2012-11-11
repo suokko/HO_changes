@@ -68,19 +68,19 @@ public class RatingPanel extends JPanel {
         TeamLineupData opponentTeam = SystemManager.getPlugin().getMainPanel()
                                                    .getOpponentTeamLineupPanel();
 
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"),
                                  myTeam.getMidfield(), opponentTeam.getMidfield()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"),
                                  myTeam.getRightDefence(), opponentTeam.getLeftAttack()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"),
                                  myTeam.getMiddleDefence(), opponentTeam.getMiddleAttack()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"),
                                  myTeam.getLeftDefence(), opponentTeam.getRightAttack()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"),
                                  myTeam.getRightAttack(), opponentTeam.getLeftDefence()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("Angriffszentrum"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"),
                                  myTeam.getMiddleAttack(), opponentTeam.getMiddleDefence()));
-        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"),
+        tableModel.addRow(getRow(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"),
                                  myTeam.getLeftAttack(), opponentTeam.getRightDefence()));
 
         table.getTableHeader().getColumnModel().getColumn(0).setWidth(130);

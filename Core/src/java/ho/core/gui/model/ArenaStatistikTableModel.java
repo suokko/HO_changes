@@ -41,11 +41,8 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Spielart"),
 			// Gast
 			HOVerwaltung.instance().getLanguageString("Gast"),
-			// Ergebnis
 			HOVerwaltung.instance().getLanguageString("Ergebnis"),
-			// Wetter
 			HOVerwaltung.instance().getLanguageString("ls.match.weather"),
-			// MatchId
 			HOVerwaltung.instance().getLanguageString("ls.match.id"),
 			// Stadiongroesse
 			HOVerwaltung.instance().getLanguageString("Aktuell"),
@@ -76,9 +73,9 @@ public class ArenaStatistikTableModel extends AbstractTableModel {
 			HOVerwaltung.instance().getLanguageString("Datum"),
 			"", // Spielart
 			HOVerwaltung.instance().getLanguageString("Gast"), // Gast
-			HOVerwaltung.instance().getLanguageString("Ergebnis"), // Ergebnis
-			HOVerwaltung.instance().getLanguageString("ls.match.weather"), // Wetter
-			HOVerwaltung.instance().getLanguageString("ls.match.id"), // MatchId
+			HOVerwaltung.instance().getLanguageString("Ergebnis"),
+			HOVerwaltung.instance().getLanguageString("ls.match.weather"),
+			HOVerwaltung.instance().getLanguageString("ls.match.id"),
 			HOVerwaltung.instance().getLanguageString("Aktuell"), // Stadiongroesse
 			HOVerwaltung.instance().getLanguageString("Zuschauer"), // Zuschauer
 			"%", // Auslastung

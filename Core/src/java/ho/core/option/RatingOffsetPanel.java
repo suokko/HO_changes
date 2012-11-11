@@ -72,13 +72,13 @@ public final class RatingOffsetPanel
 	 * TODO Missing Method Documentation
 +	 */
 	private void initComponents() {
-		slider[0] = createSlider(UserParameter.temp().rightDefenceOffset,"rechteAbwehrseite");
-        slider[1] = createSlider(UserParameter.temp().middleDefenceOffset,"Abwehrzentrum");
-		slider[2] = createSlider(UserParameter.temp().leftDefenceOffset,"linkeAbwehrseite");
-        slider[3] = createSlider(UserParameter.temp().midfieldOffset,"MatchMittelfeld");
-		slider[4] = createSlider(UserParameter.temp().rightAttackOffset,"rechteAngriffsseite");
-        slider[5] = createSlider(UserParameter.temp().middleAttackOffset,"Angriffszentrum");
-		slider[6] = createSlider(UserParameter.temp().leftAttackOffset,"linkeAngriffsseite");
+		slider[0] = createSlider(UserParameter.temp().rightDefenceOffset,"ls.match.ratingsector.rightdefence");
+        slider[1] = createSlider(UserParameter.temp().middleDefenceOffset,"ls.match.ratingsector.centraldefence");
+		slider[2] = createSlider(UserParameter.temp().leftDefenceOffset,"ls.match.ratingsector.leftdefence");
+        slider[3] = createSlider(UserParameter.temp().midfieldOffset,"ls.match.ratingsector.midfield");
+		slider[4] = createSlider(UserParameter.temp().rightAttackOffset,"ls.match.ratingsector.rightattack");
+        slider[5] = createSlider(UserParameter.temp().middleAttackOffset,"ls.match.ratingsector.centralattack");
+		slider[6] = createSlider(UserParameter.temp().leftAttackOffset,"ls.match.ratingsector.leftattack");
 
 
         err[0] = new JLabel();

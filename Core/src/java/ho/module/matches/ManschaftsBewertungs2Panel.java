@@ -248,13 +248,13 @@ class ManschaftsBewertungs2Panel extends LazyImagePanel {
 		label = new JLabel(" ");
 		add(panel, label, layout, constraints, 0, 7);
 
-		initRow(panel, "MatchMittelfeld", "MatchMittelfeld", 1, 8);
-		initRow(panel, "rechteAbwehrseite", "linkeAngriffsseite", 2, 9);
-		initRow(panel, "Abwehrzentrum", "Angriffszentrum", 3, 10);
-		initRow(panel, "linkeAbwehrseite", "rechteAngriffsseite", 4, 11);
-		initRow(panel, "rechteAngriffsseite", "linkeAbwehrseite", 5, 12);
-		initRow(panel, "Angriffszentrum", "Abwehrzentrum", 6, 13);
-		initRow(panel, "linkeAngriffsseite", "rechteAbwehrseite", 7, 14);
+		initRow(panel, "ls.match.ratingsector.midfield", "ls.match.ratingsector.midfield", 1, 8);
+		initRow(panel, "ls.match.ratingsector.rightdefence", "ls.match.ratingsector.leftattack", 2, 9);
+		initRow(panel, "ls.match.ratingsector.centraldefence", "ls.match.ratingsector.centralattack", 3, 10);
+		initRow(panel, "ls.match.ratingsector.leftdefence", "ls.match.ratingsector.rightattack", 4, 11);
+		initRow(panel, "ls.match.ratingsector.rightattack", "ls.match.ratingsector.leftdefence", 5, 12);
+		initRow(panel, "ls.match.ratingsector.centralattack", "ls.match.ratingsector.centraldefence", 6, 13);
+		initRow(panel, "ls.match.ratingsector.leftattack", "ls.match.ratingsector.rightdefence", 7, 14);
 
 		mainconstraints.gridx = 0;
 		mainconstraints.gridy = 0;

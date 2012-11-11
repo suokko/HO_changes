@@ -39,9 +39,9 @@ import javax.swing.SwingConstants;
  * @author Pirania
  */
 final class AufstellungsRatingPanel extends RasenPanel {
-	
+
 	private static final long serialVersionUID = -8938268226990652913L;
-	
+
     //~ Static fields/initializers -----------------------------------------------------------------
     public static final boolean REIHENFOLGE_STURM2VERTEIDIGUNG = false;
     public static final boolean REIHENFOLGE_VERTEIDIGUNG2STURM = true;
@@ -55,7 +55,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
     double topcenter;
     double topleft;
     double topright;
-    
+
     private ColorLabelEntry m_clBottomCenterCompare = new ColorLabelEntry("",
 			Color.BLACK, Color.WHITE, SwingConstants.CENTER);
 	private ColorLabelEntry m_clBottomCenterMain = new ColorLabelEntry("",
@@ -758,7 +758,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         subconstraints.gridx = 5;
         subconstraints.gridy = 7;
         subconstraints.gridwidth = 1;
-        
+
         //--- copy ratings button start
         temppanel = new JPanel(new BorderLayout());
         temppanel.setOpaque(false);
@@ -780,7 +780,7 @@ final class AufstellungsRatingPanel extends RasenPanel {
         layout.setConstraints(subpanel, constraints);
         add(subpanel);
 
-		
+
         ////////////////////////////////////////////////////////////////////////
         initToolTips();
 
@@ -799,52 +799,52 @@ final class AufstellungsRatingPanel extends RasenPanel {
      */
     private void initToolTips() {
         if (m_bReihenfolge == REIHENFOLGE_STURM2VERTEIDIGUNG) {
-            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
+            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
+            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
+            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
+            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
+            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
         } else {
-            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
-            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
-            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
-            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
-            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
-            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
-            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
-            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+            m_clTopLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
+            m_clTopLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
+            m_clTopLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
+            m_clTopCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clTopCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clTopCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
+            m_clTopRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clTopRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clTopRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
+            m_clMiddleText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clMiddleMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clMiddleCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
+            m_clBottomLeftText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clBottomLeftMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clBottomLeftCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
+            m_clBottomCenterText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clBottomCenterMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clBottomCenterCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
+            m_clBottomRightText.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
+            m_clBottomRightMain.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
+            m_clBottomRightCompare.setToolTipText(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
         }
     }
-    
+
     String getMidfieldRating() {
     	return m_clFormat.format(middle);
     }
@@ -891,5 +891,5 @@ final class AufstellungsRatingPanel extends RasenPanel {
         	return m_clFormat.format(topright);
         }
     }
-    
+
 }

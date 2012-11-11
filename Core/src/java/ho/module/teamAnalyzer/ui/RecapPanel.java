@@ -59,21 +59,21 @@ public class RecapPanel extends JPanel {
     		HOVerwaltung.instance().getLanguageString("Ergebnis"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("Week"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("Season"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("MatchMittelfeld"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("Abwehrzentrum"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("Angriffszentrum"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"),
     		HOVerwaltung.instance().getLanguageString("RecapPanel.Stars"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.squad"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.smartsquad"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"), //$NON-NLS-1$
-    HOVerwaltung.instance().getLanguageString("ls.team.tactic"), //$NON-NLS-1$
-    HOVerwaltung.instance().getLanguageString("ls.team.tacticalskill"), //$NON-NLS-1$
-    HOVerwaltung.instance().getLanguageString("ls.team.formation"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.hatstats"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.squad"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.smartsquad"),
+    		HOVerwaltung.instance().getLanguageString("ls.match.ratingtype.loddarstats"),
+    HOVerwaltung.instance().getLanguageString("ls.team.tactic"),
+    HOVerwaltung.instance().getLanguageString("ls.team.tacticalskill"),
+    HOVerwaltung.instance().getLanguageString("ls.team.formation"),
     "", //$NON-NLS-1$
     "" //$NON-NLS-1$
     };

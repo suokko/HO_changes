@@ -194,7 +194,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, label, layout, constraints, 0, 7);
 
 		// Mittelfeld
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("MatchMittelfeld"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"));
 		add(panel, label, layout, constraints, 0, 8);
 		heimMidfieldLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimMidfieldLabel, layout, constraints, 1, 8);
@@ -202,7 +202,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastMidfieldLabel, layout, constraints, 4, 8);
 
 		// rechte Abwehrseite
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAbwehrseite"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightdefence"));
 		add(panel, label, layout, constraints, 0, 9);
 		heimRightDefLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimRightDefLabel, layout, constraints, 1, 9);
@@ -210,7 +210,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastRightDefLabel, layout, constraints, 4, 9);
 
 		// Abwehrzentrum
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Abwehrzentrum"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centraldefence"));
 		add(panel, label, layout, constraints, 0, 10);
 		heimCenterDefLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimCenterDefLabel, layout, constraints, 1, 10);
@@ -218,7 +218,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastCenterDefLabel, layout, constraints, 4, 10);
 
 		// Linke Abwehrseite
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAbwehrseite"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftdefence"));
 		add(panel, label, layout, constraints, 0, 11);
 		heimLeftDefLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimLeftDefLabel, layout, constraints, 1, 11);
@@ -226,7 +226,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastLeftDefLabel, layout, constraints, 4, 11);
 
 		// Rechte Angriffsseite
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("rechteAngriffsseite"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.rightattack"));
 		add(panel, label, layout, constraints, 0, 12);
 		heimRightAttLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimRightAttLabel, layout, constraints, 1, 12);
@@ -234,7 +234,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastRightAttLabel, layout, constraints, 4, 12);
 
 		// Angriffszentrum
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Angriffszentrum"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.centralattack"));
 		add(panel, label, layout, constraints, 0, 13);
 		heimCenterAttLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimCenterAttLabel, layout, constraints, 1, 13);
@@ -242,7 +242,7 @@ class ManschaftsBewertungsPanel extends LazyImagePanel {
 		add(panel, gastCenterAttLabel, layout, constraints, 4, 13);
 
 		// Linke Angriffsseite
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("linkeAngriffsseite"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.leftattack"));
 		add(panel, label, layout, constraints, 0, 14);
 		heimLeftAttLabel = new JLabel("", SwingConstants.LEFT);
 		add(panel, heimLeftAttLabel, layout, constraints, 1, 14);

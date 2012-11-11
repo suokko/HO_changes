@@ -126,54 +126,54 @@ public class SpieleStatistikPanel extends ImagePanel {
 							.isSelected();
 				} else if (e.getSource() == m_jchBewertung.getCheckbox()) {
 					m_clStatistikPanel.setShow("Bewertung", m_jchBewertung.isSelected());
-					UserParameter.instance().statistikSpieleBewertung = m_jchBewertung.isSelected();
+					UserParameter.instance().statistikSpieleBewertung = m_jchBewertung
+							.isSelected();
 				} else if (e.getSource() == m_jchGesamt.getCheckbox()) {
 					m_clStatistikPanel.setShow("Gesamtstaerke", m_jchGesamt.isSelected());
-					UserParameter.instance().statistikSpieleGesamt = m_jchGesamt.isSelected();
+					UserParameter.instance().statistikSpieleGesamt = m_jchGesamt
+							.isSelected();
 				} else if (e.getSource() == m_jchMittelfeld.getCheckbox()) {
-					m_clStatistikPanel.setShow("MatchMittelfeld", m_jchMittelfeld.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.midfield", m_jchMittelfeld.isSelected());
 					UserParameter.instance().statistikSpieleMittelfeld = m_jchMittelfeld
 							.isSelected();
 				} else if (e.getSource() == m_jchRechteAbwehr.getCheckbox()) {
-					m_clStatistikPanel.setShow("RechteAbwehr", m_jchRechteAbwehr.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.rightdefence", m_jchRechteAbwehr.isSelected());
 					UserParameter.instance().statistikSpieleRechteAbwehr = m_jchRechteAbwehr
 							.isSelected();
 				} else if (e.getSource() == m_jchAbwehrzentrum.getCheckbox()) {
-					m_clStatistikPanel.setShow("Abwehrzentrum", m_jchAbwehrzentrum.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.centraldefence", m_jchAbwehrzentrum.isSelected());
 					UserParameter.instance().statistikSpieleAbwehrzentrum = m_jchAbwehrzentrum
 							.isSelected();
 				} else if (e.getSource() == m_jchLinkeAbwehr.getCheckbox()) {
-					m_clStatistikPanel.setShow("LinkeAbwehr", m_jchLinkeAbwehr.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.leftdefence", m_jchLinkeAbwehr.isSelected());
 					UserParameter.instance().statistikSpieleLinkeAbwehr = m_jchLinkeAbwehr
 							.isSelected();
 				} else if (e.getSource() == m_jchRechterAngriff.getCheckbox()) {
-					m_clStatistikPanel.setShow("RechterAngriff", m_jchRechterAngriff.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.rightattack", m_jchRechterAngriff.isSelected());
 					UserParameter.instance().statistikSpieleRechterAngriff = m_jchRechterAngriff
 							.isSelected();
 				} else if (e.getSource() == m_jchAngriffszentrum.getCheckbox()) {
-					m_clStatistikPanel
-							.setShow("Angriffszentrum", m_jchAngriffszentrum.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.centralattack", m_jchAngriffszentrum.isSelected());
 					UserParameter.instance().statistikSpieleAngriffszentrum = m_jchAngriffszentrum
 							.isSelected();
 				} else if (e.getSource() == m_jchLinkerAngriff.getCheckbox()) {
-					m_clStatistikPanel.setShow("LinkerAngriff", m_jchLinkerAngriff.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingsector.leftattack", m_jchLinkerAngriff.isSelected());
 					UserParameter.instance().statistikSpieleLinkerAngriff = m_jchLinkerAngriff
 							.isSelected();
 				} else if (e.getSource() == m_jchStimmung.getCheckbox()) {
 					m_clStatistikPanel.setShow("ls.team.teamspirit", m_jchStimmung.isSelected());
-					UserParameter.instance().statistikSpieleStimmung = m_jchStimmung.isSelected();
+					UserParameter.instance().statistikSpieleStimmung = m_jchStimmung
+							.isSelected();
 				} else if (e.getSource() == m_jchHatStats.getCheckbox()) {
-					m_clStatistikPanel.setShow("ls.match.ratingtype.hatstats",
-							m_jchHatStats.isSelected());
-					UserParameter.instance().statistikSpieleHatStats = m_jchHatStats.isSelected();
+					m_clStatistikPanel.setShow("ls.match.ratingtype.hatstats",m_jchHatStats.isSelected());
+					UserParameter.instance().statistikSpieleHatStats = m_jchHatStats
+							.isSelected();
 				} else if (e.getSource() == m_jchLoddarStats.getCheckbox()) {
-					m_clStatistikPanel.setShow("ls.match.ratingtype.loddarstats",
-							m_jchLoddarStats.isSelected());
+					m_clStatistikPanel.setShow("ls.match.ratingtype.loddarstats",m_jchLoddarStats.isSelected());
 					UserParameter.instance().statistikSpieleLoddarStats = m_jchLoddarStats
 							.isSelected();
 				} else if (e.getSource() == m_jchSelbstvertrauen.getCheckbox()) {
-					m_clStatistikPanel.setShow("ls.team.confidence",
-							m_jchSelbstvertrauen.isSelected());
+					m_clStatistikPanel.setShow("ls.team.confidence",m_jchSelbstvertrauen.isSelected());
 					UserParameter.instance().statistikSpieleSelbstvertrauen = m_jchSelbstvertrauen
 							.isSelected();
 				}
@@ -377,7 +377,7 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 11;
-		m_jchMittelfeld = new ImageCheckbox(getLangStr("MatchMittelfeld"),
+		m_jchMittelfeld = new ImageCheckbox(getLangStr("ls.match.ratingsector.midfield"),
 				ThemeManager.getColor(HOColorName.SHIRT_MIDFIELD),
 				UserParameter.instance().statistikSpieleMittelfeld);
 		m_jchMittelfeld.setOpaque(false);
@@ -387,8 +387,8 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 12;
-		m_jchRechteAbwehr = new ImageCheckbox(getLangStr("rechteAbwehrseite"), ThemeManager
-				.getColor(HOColorName.SHIRT_WINGBACK).darker(),
+		m_jchRechteAbwehr = new ImageCheckbox(getLangStr("ls.match.ratingsector.rightdefence"),
+				ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).darker(),
 				UserParameter.instance().statistikSpieleRechteAbwehr);
 		m_jchRechteAbwehr.setOpaque(false);
 		layout2.setConstraints(m_jchRechteAbwehr, constraints2);
@@ -397,7 +397,7 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 13;
-		m_jchAbwehrzentrum = new ImageCheckbox(getLangStr("Abwehrzentrum"),
+		m_jchAbwehrzentrum = new ImageCheckbox(getLangStr("ls.match.ratingsector.centraldefence"),
 				ThemeManager.getColor(HOColorName.SHIRT_CENTRALDEFENCE),
 				UserParameter.instance().statistikSpieleAbwehrzentrum);
 		m_jchAbwehrzentrum.setOpaque(false);
@@ -407,8 +407,8 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 14;
-		m_jchLinkeAbwehr = new ImageCheckbox(getLangStr("linkeAbwehrseite"), ThemeManager.getColor(
-				HOColorName.SHIRT_WINGBACK).brighter(),
+		m_jchLinkeAbwehr = new ImageCheckbox(getLangStr("ls.match.ratingsector.leftdefence"),
+				ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).brighter(),
 				UserParameter.instance().statistikSpieleLinkeAbwehr);
 		m_jchLinkeAbwehr.setOpaque(false);
 		layout2.setConstraints(m_jchLinkeAbwehr, constraints2);
@@ -417,8 +417,8 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 15;
-		m_jchRechterAngriff = new ImageCheckbox(getLangStr("rechteAngriffsseite"), ThemeManager
-				.getColor(HOColorName.SHIRT_WING).darker(),
+		m_jchRechterAngriff = new ImageCheckbox(getLangStr("ls.match.ratingsector.rightattack"),
+				ThemeManager.getColor(HOColorName.SHIRT_WING).darker(),
 				UserParameter.instance().statistikSpieleRechterAngriff);
 		m_jchRechterAngriff.setOpaque(false);
 		layout2.setConstraints(m_jchRechterAngriff, constraints2);
@@ -427,7 +427,7 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 16;
-		m_jchAngriffszentrum = new ImageCheckbox(getLangStr("Angriffszentrum"),
+		m_jchAngriffszentrum = new ImageCheckbox(getLangStr("ls.match.ratingsector.centralattack"),
 				ThemeManager.getColor(HOColorName.SHIRT_FORWARD),
 				UserParameter.instance().statistikSpieleAngriffszentrum);
 		m_jchAngriffszentrum.setOpaque(false);
@@ -437,8 +437,8 @@ public class SpieleStatistikPanel extends ImagePanel {
 		constraints2.gridwidth = 2;
 		constraints2.gridx = 0;
 		constraints2.gridy = 17;
-		m_jchLinkerAngriff = new ImageCheckbox(getLangStr("linkeAngriffsseite"), ThemeManager
-				.getColor(HOColorName.SHIRT_WING).brighter(),
+		m_jchLinkerAngriff = new ImageCheckbox(getLangStr("ls.match.ratingsector.leftattack"),
+				ThemeManager.getColor(HOColorName.SHIRT_WING).brighter(),
 				UserParameter.instance().statistikSpieleLinkerAngriff);
 		m_jchLinkerAngriff.setOpaque(false);
 		layout2.setConstraints(m_jchLinkerAngriff, constraints2);
@@ -659,47 +659,54 @@ public class SpieleStatistikPanel extends ImagePanel {
 						m_jchBewertung.isSelected(),
 						ThemeManager.getColor(HOColorName.STAT_RATING2),
 						Helper.DEFAULTDEZIMALFORMAT, faktor);
-				models[1] = new StatistikModel(statistikWerte[1], "MatchMittelfeld",
+				models[1] = new StatistikModel(statistikWerte[1], "ls.match.ratingsector.midfield",
 						m_jchMittelfeld.isSelected(),
 						ThemeManager.getColor(HOColorName.SHIRT_MIDFIELD),
 						Helper.DEFAULTDEZIMALFORMAT);
-				models[2] = new StatistikModel(statistikWerte[2], "RechteAbwehr",
-						m_jchRechteAbwehr.isSelected(), ThemeManager.getColor(
-								HOColorName.SHIRT_WINGBACK).darker(), Helper.DEFAULTDEZIMALFORMAT);
-				models[3] = new StatistikModel(statistikWerte[3], "Abwehrzentrum",
+				models[2] = new StatistikModel(statistikWerte[2], "ls.match.ratingsector.rightdefence",
+						m_jchRechteAbwehr.isSelected(),
+						ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).darker(),
+						Helper.DEFAULTDEZIMALFORMAT);
+				models[3] = new StatistikModel(statistikWerte[3], "ls.match.ratingsector.centraldefence",
 						m_jchAbwehrzentrum.isSelected(),
 						ThemeManager.getColor(HOColorName.SHIRT_CENTRALDEFENCE),
 						Helper.DEFAULTDEZIMALFORMAT);
-				models[4] = new StatistikModel(statistikWerte[4], "LinkeAbwehr",
-						m_jchRechteAbwehr.isSelected(), ThemeManager.getColor(
-								HOColorName.SHIRT_WINGBACK).brighter(), Helper.DEFAULTDEZIMALFORMAT);
-				models[5] = new StatistikModel(statistikWerte[5], "RechterAngriff",
-						m_jchRechterAngriff.isSelected(), ThemeManager.getColor(
-								HOColorName.SHIRT_WING).darker(), Helper.DEFAULTDEZIMALFORMAT);
-				models[6] = new StatistikModel(statistikWerte[6], "Angriffszentrum",
+				models[4] = new StatistikModel(statistikWerte[4], "ls.match.ratingsector.leftdefence",
+						m_jchRechteAbwehr.isSelected(),
+						ThemeManager.getColor(HOColorName.SHIRT_WINGBACK).brighter(),
+						Helper.DEFAULTDEZIMALFORMAT);
+				models[5] = new StatistikModel(statistikWerte[5], "ls.match.ratingsector.rightattack",
+						m_jchRechterAngriff.isSelected(),
+						ThemeManager.getColor(HOColorName.SHIRT_WING).darker(),
+						Helper.DEFAULTDEZIMALFORMAT);
+				models[6] = new StatistikModel(statistikWerte[6], "ls.match.ratingsector.centralattack",
 						m_jchAngriffszentrum.isSelected(),
 						ThemeManager.getColor(HOColorName.SHIRT_FORWARD),
 						Helper.DEFAULTDEZIMALFORMAT);
-				models[7] = new StatistikModel(statistikWerte[7], "LinkerAngriff",
-						m_jchLinkerAngriff.isSelected(), ThemeManager.getColor(
-								HOColorName.SHIRT_WING).brighter(), Helper.DEFAULTDEZIMALFORMAT);
+				models[7] = new StatistikModel(statistikWerte[7], "ls.match.ratingsector.leftattack",
+						m_jchLinkerAngriff.isSelected(),
+						ThemeManager.getColor(HOColorName.SHIRT_WING).brighter(),
+						Helper.DEFAULTDEZIMALFORMAT);
 				models[8] = new StatistikModel(statistikWerte[8], "Gesamtstaerke",
-						m_jchGesamt.isSelected(), ThemeManager.getColor(HOColorName.STAT_TOTAL),
+						m_jchGesamt.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_TOTAL),
 						Helper.DEZIMALFORMAT_2STELLEN);
 				models[9] = new StatistikModel(statistikWerte[9], "ls.team.teamspirit",
-						m_jchStimmung.isSelected(), ThemeManager.getColor(HOColorName.STAT_MOOD),
+						m_jchStimmung.isSelected(),
+						ThemeManager.getColor(HOColorName.STAT_MOOD),
 						Helper.INTEGERFORMAT);
 				models[10] = new StatistikModel(statistikWerte[10], "ls.team.confidence",
 						m_jchSelbstvertrauen.isSelected(),
-						ThemeManager.getColor(HOColorName.STAT_CONFIDENCE), Helper.INTEGERFORMAT);
+						ThemeManager.getColor(HOColorName.STAT_CONFIDENCE),
+						Helper.INTEGERFORMAT);
 				faktor = 20 / Helper.getMaxValue(statistikWerte[11]);
 				models[11] = new StatistikModel(statistikWerte[11], "ls.match.ratingtype.hatstats",
 						m_jchHatStats.isSelected(),
-						ThemeManager.getColor(HOColorName.STAT_HATSTATS), Helper.INTEGERFORMAT,
-						faktor);
+						ThemeManager.getColor(HOColorName.STAT_HATSTATS),
+						Helper.INTEGERFORMAT, faktor);
 				faktor = 20 / Helper.getMaxValue(statistikWerte[12]);
-				models[12] = new StatistikModel(statistikWerte[12],
-						"ls.match.ratingtype.loddarstats", m_jchLoddarStats.isSelected(),
+				models[12] = new StatistikModel(statistikWerte[12], "ls.match.ratingtype.loddarstats",
+						m_jchLoddarStats.isSelected(),
 						ThemeManager.getColor(HOColorName.STAT_LODDAR),
 						Helper.DEZIMALFORMAT_2STELLEN, faktor);
 			}
@@ -709,7 +716,7 @@ public class SpieleStatistikPanel extends ImagePanel {
 			m_clStatistikPanel.setAllValues(models, yBezeichnungen, Helper.DEFAULTDEZIMALFORMAT,
 					HOVerwaltung.instance().getLanguageString("Spiele"), "",
 					m_jchBeschriftung.isSelected(), m_jchHilflinien.isSelected());
-			
+
 			this.needsRefresh = false;
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(), e);

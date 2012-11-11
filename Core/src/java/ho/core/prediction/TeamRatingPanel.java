@@ -53,13 +53,13 @@ class TeamRatingPanel extends JPanel implements ItemListener {
         final TeamRatings tr = (TeamRatings) team.getRatings();
         final ho.core.model.HOVerwaltung verwaltung = ho.core.model.HOVerwaltung
                                                                    .instance();
-        addLine(tr.getMidfield(), verwaltung.getLanguageString("MatchMittelfeld"));
-        addLine(tr.getRightDef(), verwaltung.getLanguageString("rechteAbwehrseite"));
-        addLine(tr.getMiddleDef(), verwaltung.getLanguageString("Abwehrzentrum"));
-        addLine(tr.getLeftDef(), verwaltung.getLanguageString("linkeAbwehrseite"));
-        addLine(tr.getRightAttack(), verwaltung.getLanguageString("rechteAngriffsseite"));
-        addLine(tr.getMiddleAttack(), verwaltung.getLanguageString("Angriffszentrum"));
-        addLine(tr.getLeftAttack(), verwaltung.getLanguageString("linkeAngriffsseite"));
+        addLine(tr.getMidfield(), verwaltung.getLanguageString("ls.match.ratingsector.midfield"));
+        addLine(tr.getRightDef(), verwaltung.getLanguageString("ls.match.ratingsector.rightdefence"));
+        addLine(tr.getMiddleDef(), verwaltung.getLanguageString("ls.match.ratingsector.centraldefence"));
+        addLine(tr.getLeftDef(), verwaltung.getLanguageString("ls.match.ratingsector.leftdefence"));
+        addLine(tr.getRightAttack(), verwaltung.getLanguageString("ls.match.ratingsector.rightattack"));
+        addLine(tr.getMiddleAttack(), verwaltung.getLanguageString("ls.match.ratingsector.centralattack"));
+        addLine(tr.getLeftAttack(), verwaltung.getLanguageString("ls.match.ratingsector.leftattack"));
 
         m_clConstraints.gridx = 0;
         m_clConstraints.gridy = row;
