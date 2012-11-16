@@ -423,7 +423,7 @@ final public class UserColumnFactory {
 			}
 		};
 
-		matchesArray[4] = new MatchKurzInfoColumn(490,"Ergebnis",45){
+		matchesArray[4] = new MatchKurzInfoColumn(490,"ls.match.result",45){
 			@Override
 			public IHOTableEntry getTableEntry(MatchKurzInfo match){
 				final Color background = MatchesColumnModel.getColor4Matchtyp(match.getMatchTyp());

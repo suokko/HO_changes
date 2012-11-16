@@ -30,7 +30,7 @@ class DetailsTable extends JTable {
 		columnToolTips[DetailsTableModel.COL_MATCH_GUEST] = HOVerwaltung.instance()
 				.getLanguageString("Gast");
 		columnToolTips[DetailsTableModel.COL_MATCH_RESULT] = HOVerwaltung.instance()
-				.getLanguageString("Ergebnis");
+				.getLanguageString("ls.match.result");
 		columnToolTips[DetailsTableModel.COL_EVENT] = HOVerwaltung.instance().getLanguageString(
 				"tooltip.Event");
 		columnToolTips[DetailsTableModel.COL_WARNINGS_TYPE1] = HOVerwaltung.instance()

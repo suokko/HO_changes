@@ -22,13 +22,13 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -2114489862284776054L;
 	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
-			HOVerwaltung.instance().getLanguageString("Ergebnis"),
+			HOVerwaltung.instance().getLanguageString("ls.match.result"),
 			HOVerwaltung.instance().getLanguageString("frequency")};
 
 	//~ Constructors -------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 		if (number == 0.0) {
 			number = 1.0;
 		}
-		
+
 		int[] result = new int[9];
 		for (int i = 0; i < 25; i++) {
 			int n = matchResult.getResultDetail()[i];
@@ -63,13 +63,13 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 			int diff = home - away;
 			result[diff + 4] += n;
 		}
-				
+
 		String homeWin = HOVerwaltung.instance().getLanguageString("Winby");
 		String awayWin = HOVerwaltung.instance().getLanguageString("Lostby");
 		if (!isHomeMatch()) {
 			awayWin = HOVerwaltung.instance().getLanguageString("Winby");
 			homeWin  = HOVerwaltung.instance().getLanguageString("Lostby");
-			
+
 		}
 		for (int i = 8; i > 4; i--) {
 

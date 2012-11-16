@@ -87,7 +87,7 @@ class DetailsTableModel extends AbstractTableModel {
 		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ls.match.id"));
 		vColumnNames.set(COL_MATCH_HOME, HOVerwaltung.instance().getLanguageString("Heim"));
 		vColumnNames.set(COL_MATCH_GUEST, HOVerwaltung.instance().getLanguageString("Gast"));
-		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("Ergebnis"));
+		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("ls.match.result"));
 		vColumnNames.set(COL_EVENT, HOVerwaltung.instance().getLanguageString("column.Event"));
 	}
 

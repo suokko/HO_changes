@@ -56,7 +56,7 @@ public class RecapPanel extends JPanel {
     private String[] columns = {
     		HOVerwaltung.instance().getLanguageString("RecapPanel.Game"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("Type"), //$NON-NLS-1$
-    		HOVerwaltung.instance().getLanguageString("Ergebnis"), //$NON-NLS-1$
+    		HOVerwaltung.instance().getLanguageString("ls.match.result"),
     		HOVerwaltung.instance().getLanguageString("Week"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("Season"), //$NON-NLS-1$
     		HOVerwaltung.instance().getLanguageString("ls.match.ratingsector.midfield"),

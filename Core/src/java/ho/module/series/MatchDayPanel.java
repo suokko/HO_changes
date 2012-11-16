@@ -298,7 +298,7 @@ final class MatchDayPanel extends JPanel implements ActionListener {
 		layout.setConstraints(label, constraints);
 		add(label);
 
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Ergebnis"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.result"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		setConstraintsValues(constraints, GridBagConstraints.NONE, 0.5, 3, 0, 3);

@@ -35,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 /**
- * 
+ *
  * @author Draghetto
  */
 public class ManualFilterPanel extends JPanel {
@@ -43,10 +43,10 @@ public class ManualFilterPanel extends JPanel {
 	private static final long serialVersionUID = -9029680013941604647L;
 
 	private static final Vector<String> COLUMN_NAMES = new Vector<String>(Arrays.asList(new String[] { "",
-			HOVerwaltung.instance().getLanguageString("RecapPanel.Game"), //
-			HOVerwaltung.instance().getLanguageString("Type"), //
-			HOVerwaltung.instance().getLanguageString("Ergebnis"), //
-			HOVerwaltung.instance().getLanguageString("Week"), // 
+			HOVerwaltung.instance().getLanguageString("RecapPanel.Game"),
+			HOVerwaltung.instance().getLanguageString("Type"),
+			HOVerwaltung.instance().getLanguageString("ls.match.result"),
+			HOVerwaltung.instance().getLanguageString("Week"),
 			HOVerwaltung.instance().getLanguageString("Season"), "", "" }));
 
 	List<Match> availableMatches = new ArrayList<Match>();

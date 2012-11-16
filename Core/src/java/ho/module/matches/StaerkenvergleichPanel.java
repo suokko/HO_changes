@@ -364,7 +364,7 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 		panel.add(label);
 
 		// Teams mit Ergebnis
-		label = new JLabel(HOVerwaltung.instance().getLanguageString("Ergebnis"));
+		label = new JLabel(HOVerwaltung.instance().getLanguageString("ls.match.result"));
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weightx = 0.0;

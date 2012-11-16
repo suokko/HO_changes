@@ -26,12 +26,12 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5568369952809628251L;
 	/** TODO Missing Parameter Documentation */
 	public final static String[] columnNames = {
-		HOVerwaltung.instance().getLanguageString("Ergebnis"), 
+		HOVerwaltung.instance().getLanguageString("ls.match.result"),
 		HOVerwaltung.instance().getLanguageString("frequency"),
 		"" };
 
@@ -70,7 +70,7 @@ public class MatchResultTableModel extends AbstractMatchTableModel {
 				m_clData[(home * 5) + away][0] = new ColorLabelEntry("" + home + " - " + away, ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
 				//Ergebnis
-				m_clData[(home * 5) + away][1] = getProgressBar(res / number * 1.0d);				
+				m_clData[(home * 5) + away][1] = getProgressBar(res / number * 1.0d);
 
 				m_clData[(home * 5) + away][2] = new ColorLabelEntry(1, "", ColorLabelEntry.FG_STANDARD, ColorLabelEntry.BG_STANDARD, SwingConstants.LEFT);
 
