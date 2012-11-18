@@ -18,11 +18,9 @@ import static ho.core.gui.theme.HOColorName.STAT_WAGE;
 import static ho.core.gui.theme.HOColorName.STAT_WINGER;
 import static ho.core.gui.theme.HOColorName.TABLEENTRY_BG;
 import ho.core.db.DBManager;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -40,8 +38,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
@@ -59,7 +55,7 @@ import javax.swing.SwingConstants;
 /**
  * The Team statistics panel
  */
-public class AlleSpielerStatistikPanel extends ImagePanel {
+public class AlleSpielerStatistikPanel extends LazyImagePanel {
 	private static final long serialVersionUID = -6588840565958987842L;
 	private ImageCheckbox m_jchExperience;
 	private ImageCheckbox m_jchWinger;
@@ -83,58 +79,22 @@ public class AlleSpielerStatistikPanel extends ImagePanel {
 	private JTextField m_jtfNumberOfHRF;
 	private StatistikPanel m_clStatistikPanel;
 	private JPanel panel2;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	/**
-	 * Creates a new AlleSpielerStatistikPanel object.
-	 */
-	public AlleSpielerStatistikPanel() {
-		addHierarchyListener(new HierarchyListener() {
 
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						initStatistik();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		setNeedsRefresh(true);
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			initStatistik();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		initStatistik();		
 	}
-
+	
 	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new Refreshable() {
-
-			@Override
-			public void reInit() {
-				if (isShowing()) {
-					initStatistik();
-				} else {
-					needsRefresh = true;
-				}
-			}
-
-			@Override
-			public void refresh() {
-			}
-		});
-
 		m_jtfNumberOfHRF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent focusEvent) {
@@ -424,7 +384,6 @@ public class AlleSpielerStatistikPanel extends ImagePanel {
 	}
 
 	private void initStatistik() {
-		CursorToolkit.startWaitCursor(this);
 		try {
 			int anzahlHRF = Integer.parseInt(m_jtfNumberOfHRF.getText());
 			if (anzahlHRF <= 0) {
@@ -482,12 +441,8 @@ public class AlleSpielerStatistikPanel extends ImagePanel {
 			m_clStatistikPanel.setAllValues(models, yBezeichnungen, format, HOVerwaltung.instance()
 					.getLanguageString("Wochen"), "", m_jchInscription.isSelected(), m_jchHelpLines
 					.isSelected());
-
-			this.needsRefresh = false;
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(), e);
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+		} 
 	}
 }

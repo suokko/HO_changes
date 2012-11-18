@@ -1,13 +1,8 @@
 package ho.module.statistics;
 
-import ho.core.datatype.CBItem;
-import ho.core.model.HOVerwaltung;
-import ho.module.matches.SpielePanel;
-
 public class Helper {
 
 	private Helper() {
-
 	}
 
 	public static double getMaxValue(double[] werte) {

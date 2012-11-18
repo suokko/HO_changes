@@ -2,11 +2,9 @@
 package ho.module.statistics;
 
 import ho.core.db.DBManager;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.StatistikModel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
@@ -24,8 +22,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -39,7 +35,7 @@ import javax.swing.SwingConstants;
 /**
  * Das StatistikPanel
  */
-public class FinanzStatistikPanel extends ImagePanel {
+public class FinanzStatistikPanel extends LazyImagePanel {
 	private static final long serialVersionUID = 5245162268414878290L;
 
 	private ImageCheckbox m_jchFans;
@@ -63,58 +59,22 @@ public class FinanzStatistikPanel extends ImagePanel {
 	private JCheckBox m_jchHilflinien;
 	private JTextField m_jtfAnzahlHRF;
 	private StatistikPanel m_clStatistikPanel;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	/**
-	 * Creates a new FinanzStatistikPanel object.
-	 */
-	public FinanzStatistikPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						initStatistik();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		setNeedsRefresh(true);
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			initStatistik();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		initStatistik();		
 	}
+
 
 	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new Refreshable() {
-
-			@Override
-			public void refresh() {
-			}
-
-			@Override
-			public void reInit() {
-				if (isShowing()) {
-					initStatistik();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
-
 		ActionListener checkBoxActionListener = new ActionListener() {
 
 			@Override
@@ -483,7 +443,6 @@ public class FinanzStatistikPanel extends ImagePanel {
 	}
 
 	private void initStatistik() {
-		CursorToolkit.startWaitCursor(this);
 		try {
 			int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
 			if (anzahlHRF <= 0) {
@@ -552,12 +511,8 @@ public class FinanzStatistikPanel extends ImagePanel {
 			m_clStatistikPanel.setAllValues(models, yBezeichnungen, format, HOVerwaltung.instance()
 					.getLanguageString("Wochen"), "", m_jchBeschriftung.isSelected(),
 					m_jchHilflinien.isSelected());
-
-			this.needsRefresh = false;
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(), e);
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
 		}
 	}
 

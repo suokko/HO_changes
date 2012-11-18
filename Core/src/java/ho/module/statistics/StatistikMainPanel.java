@@ -1,13 +1,10 @@
 // %1280579671:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -15,7 +12,7 @@ import javax.swing.SwingUtilities;
 /**
  * TabbedPane mit Statistiken
  */
-public class StatistikMainPanel extends ImagePanel {
+public class StatistikMainPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = -4248329201381491432L;
 	private AlleSpielerStatistikPanel alleSpielerStatistikPanel;
@@ -26,33 +23,14 @@ public class StatistikMainPanel extends ImagePanel {
 	private SpielerStatistikPanel spielerStatistikPanel;
 	private boolean initialized = false;
 
-	/**
-	 * Creates a new StatistikMainPanel object.
-	 */
-	public StatistikMainPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-				}
-
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-
+	@Override
+	protected void update() {
+		// do nothing, handled in sub-panels
 	}
 
 	private void initComponents() {
@@ -92,5 +70,4 @@ public class StatistikMainPanel extends ImagePanel {
 			}
 		});
 	}
-
 }

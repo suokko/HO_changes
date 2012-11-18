@@ -2,12 +2,10 @@
 package ho.module.statistics;
 
 import ho.core.db.DBManager;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.model.SpielerCBItemRenderer;
 import ho.core.gui.model.StatistikModel;
@@ -30,8 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
@@ -40,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -53,7 +48,7 @@ import javax.swing.SwingConstants;
 /**
  * Das StatistikPanel
  */
-class SpielerStatistikPanel extends ImagePanel {
+class SpielerStatistikPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = -5003282359250534295L;
 	private ImageCheckbox m_jchBewertung;
@@ -79,79 +74,28 @@ class SpielerStatistikPanel extends ImagePanel {
 	private JTextField m_jtfAnzahlHRF;
 	private StatistikPanel m_clStatistikPanel;
 	private boolean m_bInitialisiert;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
-
-	/**
-	 * Creates a new SpielerStatistikPanel object.
-	 */
-	SpielerStatistikPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						update();
-					}
-				}
-
-			}
-		});
-	}
 
 	public final void setAktuelleSpieler(int spielerid) {
-		final ComboBoxModel model = m_jcbSpieler.getModel();
-
-		for (int i = 0; i < model.getSize(); ++i) {
-			if (model.getElementAt(i) instanceof SpielerCBItem) {
-				if (((SpielerCBItem) model.getElementAt(i)).getSpieler().getSpielerID() == spielerid) {
-					// Spieler gefunden -> Auswählen und fertig
-					m_jcbSpieler.setSelectedIndex(i);
-					return;
-				}
-			}
-		}
+		Helper.markierenComboBox(m_jcbSpieler, spielerid);
 	}
 
-	private void update() {
+	@Override
+	protected void update() {
 		initSpielerCB();
 		initStatistik();
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			initSpielerCB();
-			addListeners();
-			initStatistik();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void initialize() {
+		initComponents();
+		initSpielerCB();
+		addListeners();
+		initStatistik();
+		setNeedsRefresh(false);
+		registerRefreshable(true);
 	}
 
 	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new Refreshable() {
-
-			@Override
-			public final void reInit() {
-				if (isShowing()) {
-					update();
-				} else {
-					needsRefresh = true;
-				}
-			}
-
-			@Override
-			public void refresh() {
-			}
-		});
-
 		this.m_jtfAnzahlHRF.addFocusListener(new FocusAdapter() {
 			@Override
 			public final void focusLost(FocusEvent focusEvent) {
@@ -579,7 +523,6 @@ class SpielerStatistikPanel extends ImagePanel {
 	}
 
 	private void initStatistik() {
-		CursorToolkit.startWaitCursor(this);
 		try {
 			int anzahlHRF = Integer.parseInt(m_jtfAnzahlHRF.getText());
 
@@ -661,11 +604,8 @@ class SpielerStatistikPanel extends ImagePanel {
 						m_jchBeschriftung.isSelected(), m_jchHilflinien.isSelected());
 			}
 
-			this.needsRefresh = false;
 		} catch (Exception e) {
 			HOLogger.instance().log(getClass(), e);
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
 		}
 	}
 

@@ -2,10 +2,8 @@
 package ho.module.statistics;
 
 import ho.core.datatype.CBItem;
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.module.matches.SpielePanel;
@@ -13,52 +11,32 @@ import ho.module.matches.SpielePanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
-public class ArenaStatistikPanel extends ImagePanel {
+public class ArenaStatistikPanel extends LazyImagePanel {
 	private static final long serialVersionUID = 2679088584924124183L;
 	private ArenaStatistikTable arenaStatistikTable;
 	private JComboBox matchFilterComboBox;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	/**
-	 * Creates a new ArenaStatistikPanel object.
-	 */
-	public ArenaStatistikPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						update();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		setNeedsRefresh(false);
+		addListeners();
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
+	@Override
+	protected void update() {
+		if (matchFilterComboBox.getSelectedIndex() > -1) {
+			arenaStatistikTable.refresh(((CBItem) matchFilterComboBox.getSelectedItem()).getId());
 		}
 	}
-
+	
 	private void initComponents() {
 		setLayout(new BorderLayout());
 		ImagePanel panel = new ImagePanel(null);
@@ -79,22 +57,6 @@ public class ArenaStatistikPanel extends ImagePanel {
 	}
 
 	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new Refreshable() {
-
-			@Override
-			public final void reInit() {
-				if (isShowing()) {
-					update();
-				} else {
-					needsRefresh = true;
-				}
-			}
-
-			@Override
-			public void refresh() {
-			}
-		});
-
 		this.matchFilterComboBox.addItemListener(new ItemListener() {
 
 			@Override
@@ -121,18 +83,5 @@ public class ArenaStatistikPanel extends ImagePanel {
 						.getLanguageString("NurEigeneFreundschaftsspiele"),
 						SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE) };
 		return matchFilterItems;
-	}
-
-	private void update() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			if (matchFilterComboBox.getSelectedIndex() > -1) {
-				arenaStatistikTable.refresh(((CBItem) matchFilterComboBox.getSelectedItem())
-						.getId());
-			}
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-		this.needsRefresh = false;
 	}
 }
