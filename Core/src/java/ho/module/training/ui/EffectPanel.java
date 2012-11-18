@@ -1,10 +1,8 @@
 // %3525181034:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.model.HOVerwaltung;
 import ho.module.training.EffectDAO;
 import ho.module.training.TrainWeekEffect;
@@ -12,8 +10,6 @@ import ho.module.training.ui.model.EffectTableModel;
 import ho.module.training.ui.renderer.SkillupsTableCellRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -27,72 +23,23 @@ import javax.swing.SwingConstants;
  * 
  * @author NetHyperon
  */
-public class EffectPanel extends JPanel {
+public class EffectPanel extends LazyPanel {
 
 	private static final long serialVersionUID = 6139712209582341384L;
 	private JTable effectTable;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	/**
-	 * Creates a new AnalyzerPanel object.
-	 */
-	public EffectPanel() {
-		super();
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						reload();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		registerRefreshable(true);
+		update();
+		setNeedsRefresh(false);
 	}
 
-	/**
-	 * Reload data and redraw panel.
-	 */
-	private void reload() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			EffectDAO.reload();
-			setEffectModel(EffectDAO.getTrainEffect());
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-	}
-
-	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					reload();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
-	}
-
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			reload();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		EffectDAO.reload();
+		setEffectModel(EffectDAO.getTrainEffect());
 	}
 
 	/**
@@ -127,8 +74,8 @@ public class EffectPanel extends JPanel {
 		p.setOpaque(false);
 		p.setLayout(new BorderLayout());
 
-		JLabel label = new JLabel(
-				HOVerwaltung.instance().getLanguageString("TAB_EFFECT"), SwingConstants.CENTER);
+		JLabel label = new JLabel(HOVerwaltung.instance().getLanguageString("TAB_EFFECT"),
+				SwingConstants.CENTER);
 
 		label.setOpaque(false);
 		p.add(label, BorderLayout.NORTH);

@@ -1,10 +1,8 @@
 // %3839090226:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
 import ho.core.model.player.Spieler;
@@ -27,8 +25,6 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
@@ -42,26 +38,24 @@ import javax.swing.table.TableModel;
 
 /**
  * The Panel where the main training table is shown ("Training").
- *
+ * 
  * <p>
  * TODO Costomize to show only players that received training?
  * </p>
- *
+ * 
  * <p>
  * TODO Maybe i want to test for players that haven't received trainings to
  * preview effect of change of training.
  * </p>
- *
+ * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class OutputPanel extends ImagePanel {
+public class OutputPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 7955126207696897546L;
 	private JTable outputTable;
 	private JButton importButton;
 	private JButton calculateButton;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 	private final TrainingModel model;
 
 	/**
@@ -70,46 +64,21 @@ public class OutputPanel extends ImagePanel {
 	public OutputPanel(TrainingModel model) {
 		super();
 		this.model = model;
-
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						reload();
-					}
-				}
-			}
-		});
 	}
 
-	/**
-	 * update the panel with the new value
-	 */
-	private void reload() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			((OutputTableModel) outputTable.getModel()).fillWithData();
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-		this.needsRefresh = false;
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		registerRefreshable(true);
+		update();
+		setNeedsRefresh(false);
+
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			reload();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		((OutputTableModel) outputTable.getModel()).fillWithData();
 	}
 
 	/**
@@ -169,18 +138,6 @@ public class OutputPanel extends ImagePanel {
 			public void modelChanged(ModelChange change) {
 				if (change == ModelChange.ACTIVE_PLAYER) {
 					selectPlayerFromModel();
-				}
-			}
-		});
-
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					reload();
-				} else {
-					needsRefresh = true;
 				}
 			}
 		});

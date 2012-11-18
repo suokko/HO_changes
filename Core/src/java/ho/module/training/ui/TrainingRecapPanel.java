@@ -1,10 +1,10 @@
 // %776182880:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -17,8 +17,6 @@ import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.TrainingRecapRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,7 +36,7 @@ import javax.swing.SwingConstants;
  * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class TrainingRecapPanel extends JPanel {
+public class TrainingRecapPanel extends LazyPanel {
 
 	private static final long serialVersionUID = 7240288702397251461L;
 	private static final int fixedColumns = 3;
@@ -53,94 +51,74 @@ public class TrainingRecapPanel extends JPanel {
 	 */
 	public TrainingRecapPanel(TrainingModel model) {
 		this.model = model;
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						reload();
-					}
-				}
-			}
-		});
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			reload();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		setNeedsRefresh(true);
+	}
+
+	@Override
+	protected void update() {
+		reload();
 	}
 
 	/**
 	 * Reload the panel
 	 */
 	private void reload() {
-		CursorToolkit.stopWaitCursor(this);
-		try {
-			// empty the table
-			List<String> columns = getColumns();
-			List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
+		// empty the table
+		List<String> columns = getColumns();
+		List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 
-			List<Vector<String>> players = new ArrayList<Vector<String>>();
+		List<Vector<String>> players = new ArrayList<Vector<String>>();
 
-			for (Spieler player : list) {
-				FutureTrainingManager ftm = new FutureTrainingManager(player,
-						this.model.getFutureTrainings(), this.model.getNumberOfCoTrainers(),
-						this.model.getTrainerLevel());
-				List<ISkillup> su = ftm.getFutureSkillups();
+		for (Spieler player : list) {
+			FutureTrainingManager ftm = new FutureTrainingManager(player,
+					this.model.getFutureTrainings(), this.model.getNumberOfCoTrainers(),
+					this.model.getTrainerLevel());
+			List<ISkillup> su = ftm.getFutureSkillups();
 
-				// Skip player!
-				if (su.size() == 0) {
-					continue;
-				}
-
-				HashMap<String, ISkillup> maps = new HashMap<String, ISkillup>();
-
-				for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
-					ISkillup skillup = iterator.next();
-					maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup);
-				}
-
-				Vector<String> row = new Vector<String>();
-				row.add(player.getName());
-				row.add(player.getAlterWithAgeDaysAsString());
-				row.add(Integer.toString(ftm.getTrainingSpeed()));
-
-				for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-					ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
-
-					if (s == null) {
-						row.add("");
-					} else {
-						row.add(s.getType() + " " + s.getValue());
-					}
-				}
-
-				row.add(Integer.toString(player.getSpielerID()));
-				players.add(row);
+			// Skip player!
+			if (su.size() == 0) {
+				continue;
 			}
 
-			// Sort the players
-			Collections.sort(players, new TrainingComparator(2, fixedColumns));
+			HashMap<String, ISkillup> maps = new HashMap<String, ISkillup>();
 
-			// and add them to the model
-			for (Vector<String> row : players) {
-				tableModel.addRow(row);
+			for (Iterator<ISkillup> iterator = su.iterator(); iterator.hasNext();) {
+				ISkillup skillup = iterator.next();
+				maps.put(skillup.getHtSeason() + " " + skillup.getHtWeek(), skillup);
 			}
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}		
+
+			Vector<String> row = new Vector<String>();
+			row.add(player.getName());
+			row.add(player.getAlterWithAgeDaysAsString());
+			row.add(Integer.toString(ftm.getTrainingSpeed()));
+
+			for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
+				ISkillup s = (ISkillup) maps.get(columns.get(i + fixedColumns));
+
+				if (s == null) {
+					row.add("");
+				} else {
+					row.add(s.getType() + " " + s.getValue());
+				}
+			}
+
+			row.add(Integer.toString(player.getSpielerID()));
+			players.add(row);
+		}
+
+		// Sort the players
+		Collections.sort(players, new TrainingComparator(2, fixedColumns));
+
+		// and add them to the model
+		for (Vector<String> row : players) {
+			tableModel.addRow(row);
+		}
 	}
 
 	private void addListeners() {

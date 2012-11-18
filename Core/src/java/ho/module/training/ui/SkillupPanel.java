@@ -1,8 +1,8 @@
 // %1303949933:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
 import ho.module.training.ui.model.ModelChange;
@@ -12,8 +12,6 @@ import ho.module.training.ui.model.TrainingModel;
 import ho.module.training.ui.renderer.SkillupTableRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,45 +25,30 @@ import javax.swing.SwingConstants;
 /**
  * Panel of past skillups table ("Training History")
  */
-public class SkillupPanel extends JPanel {
+public class SkillupPanel extends LazyPanel {
 
 	private static final long serialVersionUID = 57377377617909870L;
 	private SkillupTable table;
 	private TrainingModel model;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new SkillupPanel object.
 	 */
 	public SkillupPanel(TrainingModel model) {
 		this.model = model;
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						loadFromModel();
-					}
-				}
-			}
-		});
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			loadFromModel();
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-		this.initialized = true;
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		// will load data if showing
+		setNeedsRefresh(true);
+	}
+
+	@Override
+	protected void update() {
+		loadFromModel();
 	}
 
 	private void addListeners() {
@@ -73,11 +56,7 @@ public class SkillupPanel extends JPanel {
 
 			@Override
 			public void modelChanged(ModelChange change) {
-				if (isShowing()) {
-					loadFromModel();
-				} else {
-					needsRefresh = true;
-				}
+				setNeedsRefresh(true);
 			}
 		});
 	}
@@ -89,19 +68,13 @@ public class SkillupPanel extends JPanel {
 	 *            the selected training situation
 	 */
 	private void loadFromModel() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			List<ISkillup> skillups = new ArrayList<ISkillup>();
-			if (this.model.getActivePlayer() != null) {
-				skillups.addAll(this.model.getSkillupManager().getTrainedSkillups());
-				skillups.addAll(this.model.getFutureTrainingManager().getFutureSkillups());
-				Collections.reverse(skillups);
-			}
-			((SkillupTableModel) this.table.getModel()).setData(skillups);
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
+		List<ISkillup> skillups = new ArrayList<ISkillup>();
+		if (this.model.getActivePlayer() != null) {
+			skillups.addAll(this.model.getSkillupManager().getTrainedSkillups());
+			skillups.addAll(this.model.getFutureTrainingManager().getFutureSkillups());
+			Collections.reverse(skillups);
 		}
+		((SkillupTableModel) this.table.getModel()).setData(skillups);
 	}
 
 	/**

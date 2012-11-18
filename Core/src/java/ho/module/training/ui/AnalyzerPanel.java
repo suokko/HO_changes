@@ -2,10 +2,8 @@
 package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerSkill;
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISkillup;
@@ -27,8 +25,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,7 +52,7 @@ import javax.swing.table.TableColumn;
  * 
  * @author NetHyperon
  */
-public class AnalyzerPanel extends JPanel implements ActionListener {
+public class AnalyzerPanel extends LazyPanel implements ActionListener {
 
 	private static final long serialVersionUID = -2152169077412317532L;
 	private static final String CMD_SELECT_ALL = "selectAll";
@@ -69,8 +65,6 @@ public class AnalyzerPanel extends JPanel implements ActionListener {
 	private Map<Integer, List<SkillChange>> skillups;
 	private Map<Integer, List<SkillChange>> skillupsOld;
 	private final TrainingModel model;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new AnalyzerPanel object.
@@ -78,20 +72,6 @@ public class AnalyzerPanel extends JPanel implements ActionListener {
 	public AnalyzerPanel(TrainingModel model) {
 		super();
 		this.model = model;
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						reload();
-					}
-				}
-			}
-		});
 	}
 
 	/**
@@ -107,22 +87,23 @@ public class AnalyzerPanel extends JPanel implements ActionListener {
 		updateTableModel();
 	}
 
-	/**
-	 * Reload the data and redraw the panel
-	 */
-	private void reload() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			this.skillups = getSkillups(HOVerwaltung.instance().getModel().getAllSpieler());
-			this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel().getAllOldSpieler());
-			updateFilterPanel();
-			updateTableModel();
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-		this.needsRefresh = false;
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		update();
+		registerRefreshable(true);
+		setNeedsRefresh(false);
 	}
 
+	@Override
+	protected void update() {
+		this.skillups = getSkillups(HOVerwaltung.instance().getModel().getAllSpieler());
+		this.skillupsOld = getSkillups(HOVerwaltung.instance().getModel().getAllOldSpieler());
+		updateFilterPanel();
+		updateTableModel();		
+	}
+	
 	/**
 	 * Sets the model for skill changes table.
 	 */
@@ -197,31 +178,7 @@ public class AnalyzerPanel extends JPanel implements ActionListener {
 				.setCellRenderer(new SkillupTypeTableCellRenderer());
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			reload();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
-	}
-
-	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-			
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					reload();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
-		
+	private void addListeners() {	
 		this.model.addModelChangeListener(new ModelChangeListener() {
 
 			@Override

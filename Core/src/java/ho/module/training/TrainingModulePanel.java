@@ -1,8 +1,6 @@
 package ho.module.training;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -19,63 +17,39 @@ import ho.module.training.ui.comp.DividerListener;
 import ho.module.training.ui.model.TrainingModel;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-public class TrainingModulePanel extends JPanel {
+public class TrainingModulePanel extends LazyPanel {
 
 	private static final long serialVersionUID = -1313192105835561643L;
 	private TrainingModel model;
 	private boolean initialized = false;
 	private boolean needsRefresh = false;
 
-	public TrainingModulePanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						update();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		this.model = new TrainingModel();
+		setStaffInTrainingModel(this.model);
+		initComponents();
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			this.model = new TrainingModel();
-			setStaffInTrainingModel(this.model);
-			initComponents();
-			addListeners();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
+	@Override
+	protected void update() {
+		Spieler oldPlayer = this.model.getActivePlayer();
+		// reset the selected player
+		this.model.setActivePlayer(null);
+		// reload the staff, could have changed
+		setStaffInTrainingModel(this.model);
+
+		if (oldPlayer != null) {
+			Spieler player = HOVerwaltung.instance().getModel()
+					.getSpieler(oldPlayer.getSpielerID());
+			this.model.setActivePlayer(player);
 		}
-	}
-
-	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					update();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
 	}
 
 	private void initComponents() {
@@ -113,29 +87,6 @@ public class TrainingModulePanel extends JPanel {
 
 		mainPanel.setOpaque(false);
 		add(mainPanel, BorderLayout.CENTER);
-	}
-
-	/**
-	 * When called by HO reload everything!
-	 */
-	private void update() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			Spieler oldPlayer = this.model.getActivePlayer();			
-			// reset the selected player
-			this.model.setActivePlayer(null);
-			// reload the staff, could have changed
-			setStaffInTrainingModel(this.model);
-			
-			if (oldPlayer != null) {
-				Spieler player = HOVerwaltung.instance().getModel().getSpieler(oldPlayer.getSpielerID());
-				this.model.setActivePlayer(player);
-			}
-			
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
 	}
 
 	private void setStaffInTrainingModel(TrainingModel trainingModel) {

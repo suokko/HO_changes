@@ -3,8 +3,7 @@ package ho.module.training.ui;
 
 import ho.core.constants.player.PlayerAbility;
 import ho.core.constants.player.PlayerSkill;
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.FuturePlayer;
@@ -19,8 +18,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,47 +28,32 @@ import javax.swing.SwingConstants;
  * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class PlayerDetailPanel extends ImagePanel {
+public class PlayerDetailPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = -6606934473344186243L;
 	private JLabel playerLabel;
 	private ColorBar[] levelBar;
 	private JLabel[] skillLabel;
 	private final TrainingModel model;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
 	/**
 	 * Creates the panel and its components
 	 */
 	public PlayerDetailPanel(TrainingModel model) {
 		this.model = model;
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						loadFromModel();
-					}
-				}
-			}
-		});
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			addListeners();
-			loadFromModel();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		loadFromModel();
+		setNeedsRefresh(false);
+	}
+
+	@Override
+	protected void update() {
+		loadFromModel();
 	}
 
 	private void addListeners() {
@@ -79,11 +61,7 @@ public class PlayerDetailPanel extends ImagePanel {
 
 			@Override
 			public void modelChanged(ModelChange change) {
-				if (isShowing()) {
-					loadFromModel();
-				} else {
-					needsRefresh = true;
-				}
+				setNeedsRefresh(true);
 			}
 		});
 	}
@@ -95,38 +73,29 @@ public class PlayerDetailPanel extends ImagePanel {
 	 *            player
 	 */
 	private void loadFromModel() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			if (this.model.getActivePlayer() == null) {
-				playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect"));
-				for (int i = 0; i < 8; i++) {
-					skillLabel[i].setText("");
-					levelBar[i].setLevel(0f);
-				}
-				return;
-			}
-
-			// sets player number
-			playerLabel.setText(this.model.getActivePlayer().getName());
-
-			// instantiate a future train manager to calculate the previsions */
-			FutureTrainingManager ftm = this.model.getFutureTrainingManager();
-
+		if (this.model.getActivePlayer() == null) {
+			playerLabel.setText(HOVerwaltung.instance().getLanguageString("PlayerSelect"));
 			for (int i = 0; i < 8; i++) {
-				int skillIndex = Skills.getSkillAtPosition(i);
-				skillLabel[i].setText(PlayerAbility.getNameForSkill(
-						Skills.getSkillValue(this.model.getActivePlayer(), skillIndex), true));
-
-				FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
-				double finalValue = getSkillValue(fp, skillIndex);
-				levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
+				skillLabel[i].setText("");
+				levelBar[i].setLevel(0f);
 			}
+			return;
+		}
 
-			updateUI();
+		// sets player number
+		playerLabel.setText(this.model.getActivePlayer().getName());
 
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
+		// instantiate a future train manager to calculate the previsions */
+		FutureTrainingManager ftm = this.model.getFutureTrainingManager();
+
+		for (int i = 0; i < 8; i++) {
+			int skillIndex = Skills.getSkillAtPosition(i);
+			skillLabel[i].setText(PlayerAbility.getNameForSkill(
+					Skills.getSkillValue(this.model.getActivePlayer(), skillIndex), true));
+
+			FuturePlayer fp = ftm.previewPlayer(UserParameter.instance().futureWeeks);
+			double finalValue = getSkillValue(fp, skillIndex);
+			levelBar[i].setLevel((float) finalValue / getSkillMaxValue(i));
 		}
 	}
 
