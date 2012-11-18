@@ -1,9 +1,7 @@
 package ho.module.teamAnalyzer.ui;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.module.config.ModuleConfig;
@@ -15,14 +13,12 @@ import ho.module.teamAnalyzer.vo.TeamLineup;
 import ho.module.training.ui.comp.DividerListener;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-public class TeamAnalyzerPanel extends JPanel {
+public class TeamAnalyzerPanel extends LazyPanel {
 
 	/** The filters */
 	public static Filter filter = new Filter();
@@ -32,64 +28,25 @@ public class TeamAnalyzerPanel extends JPanel {
 	private MainPanel mainPanel;
 	private FilterPanel filterPanel;
 	private RatingPanel ratingPanel;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	public TeamAnalyzerPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						refresh();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		SystemManager.initialize(this);
+		initComponents();
+		addListeners();
+		registerRefreshable(true);
+		SystemManager.refreshData();
+		setNeedsRefresh(false);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			SystemManager.initialize(this);
-			initComponents();
-			addListeners();
-			SystemManager.refreshData();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		SystemManager.refreshData();
 	}
 
 	private void addListeners() {
 		simButton.addActionListener(new SimButtonListener(mainPanel.getMyTeamLineupPanel(),
 				mainPanel.getOpponentTeamLineupPanel(), recapPanel));
-
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					refresh();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
-	}
-
-	private void refresh() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			SystemManager.refreshData();
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
 	}
 
 	private void initComponents() {
@@ -162,7 +119,6 @@ public class TeamAnalyzerPanel extends JPanel {
 
 	public void reload() {
 		TeamLineup lineup = ReportManager.getLineup();
-
 		getFilterPanel().reload();
 
 		getMainPanel().reload(lineup, 0, 0);
@@ -175,5 +131,4 @@ public class TeamAnalyzerPanel extends JPanel {
 			this.simButton.setVisible(false);
 		}
 	}
-
 }
