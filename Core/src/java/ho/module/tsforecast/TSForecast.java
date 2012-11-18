@@ -1,10 +1,7 @@
 package ho.module.tsforecast;
 
 import ho.core.db.DBManager;
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.IMatchDetails;
 import ho.core.model.match.MatchKurzInfo;
@@ -19,8 +16,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
@@ -32,7 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class TSForecast extends ImagePanel implements ActionListener, ItemListener {
+public class TSForecast extends LazyImagePanel implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	final static String TS_SHOWCUPMATCHES = "TS_ShowCupMatches";
@@ -57,50 +52,28 @@ public class TSForecast extends ImagePanel implements ActionListener, ItemListen
 	private LoepiCurve m_LoepiHist;
 	private TrainerCurve m_Trainer;
 	private ConfidenceCurve m_Confidence;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	public TSForecast() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-					if (needsRefresh) {
-						refresh();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initializeConfig();
+		initComponents();
+		registerRefreshable(true);
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
+	@Override
+	protected void update() {
+		ModuleConfig config = ModuleConfig.instance();
+		config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
+		if (hasQualificationMatch())
+			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
+
 		try {
-			initializeConfig();
-			initComponents();
-			addListeners();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
+			createCurves();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
 		}
-	}
-
-	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					refresh();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
+		createGamesPanel(m_jpSettingsPanel);
+		m_jpGraphics.repaint();
 	}
 
 	private void initComponents() {
@@ -181,27 +154,6 @@ public class TSForecast extends ImagePanel implements ActionListener, ItemListen
 		config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
 		if (hasQualificationMatch())
 			config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
-	}
-
-	private void refresh() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			ModuleConfig config = ModuleConfig.instance();
-			config.setBoolean(TS_SHOWCUPMATCHES, isInCup());
-			if (hasQualificationMatch())
-				config.setBoolean(TS_SHOWQUALIFICATIONMATCH, true);
-
-			try {
-				createCurves();
-			} catch (Exception ex) {
-				throw new RuntimeException(ex);
-			}
-			createGamesPanel(m_jpSettingsPanel);
-			m_jpGraphics.repaint();
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
 	}
 
 	@Override
@@ -462,5 +414,4 @@ public class TSForecast extends ImagePanel implements ActionListener, ItemListen
 
 		}
 	}
-
 }
