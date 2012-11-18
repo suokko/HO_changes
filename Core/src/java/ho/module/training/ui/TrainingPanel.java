@@ -145,7 +145,6 @@ public class TrainingPanel extends JPanel {
 				futureTrainingsPanel);
 		splitPane
 				.setDividerLocation(UserParameter.instance().training_pastFutureTrainingsSplitPane);
-		System.out.println("####- " + UserParameter.instance().training_pastFutureTrainingsSplitPane);
 		setLayout(new BorderLayout());
 		add(splitPane, BorderLayout.CENTER);
 	}

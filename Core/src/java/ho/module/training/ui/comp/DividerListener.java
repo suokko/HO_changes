@@ -79,7 +79,6 @@ public class DividerListener implements PropertyChangeListener {
 			break;
 		case training_pastFutureTrainingsSplitPane:
 			UserParameter.instance().training_pastFutureTrainingsSplitPane = newDivLoc;
-			System.out.println("####- 2" + UserParameter.instance().training_pastFutureTrainingsSplitPane);
 			break;			
 		}
 
