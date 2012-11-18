@@ -15,11 +15,8 @@ import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
 import ho.core.gui.ApplicationClosingListener;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.module.specialEvents.filter.Filter;
 import ho.module.specialEvents.filter.FilterChangeEvent;
 import ho.module.specialEvents.filter.FilterChangeListener;
@@ -34,8 +31,6 @@ import ho.module.specialEvents.table.SETypeTableCellRenderer;
 import ho.module.specialEvents.table.TacticsTableCellRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,38 +38,25 @@ import javax.swing.JSplitPane;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
+public class SpecialEventsPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 1L;
 	private static SpecialEventsTable specialEventsTable;
 	private Filter filter;
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	SpecialEventsPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(SpecialEventsPanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(SpecialEventsPanel.this);
-						}
-					}
-					if (needsRefresh) {
-						setTableData();
-					}
-				}
-
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
+		registerRefreshable(true);
+		setNeedsRefresh(true);
 	}
 
-	private void initialize() {
+	@Override
+	protected void update() {
+		setTableData();
+	}
+
+	private void initComponents() {
 		this.filter = new Filter();
 		FilterHelper.loadSettings(this.filter);
 		setLayout(new BorderLayout());
@@ -164,36 +146,17 @@ public class SpecialEventsPanel extends ImagePanel implements IRefreshable {
 		nameColumn.setPreferredWidth(200);
 		nameColumn.setCellRenderer(new PlayerNameTableCellRenderer());
 		specialEventsTable.setRowHeight(20);
-		setTableData();
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filterPanel,
 				new JScrollPane(specialEventsTable));
 		splitPane.setDividerSize(5);
 		splitPane.setContinuousLayout(true);
 		add(splitPane, BorderLayout.CENTER);
-		RefreshManager.instance().registerRefreshable(this);
-
-		this.initialized = true;
-	}
-
-	@Override
-	public void refresh() {
-		if (isShowing()) {
-			setTableData();
-		} else {
-			this.needsRefresh = true;
-		}
 	}
 
 	private void setTableData() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			SpecialEventsDM specialEventsDM = new SpecialEventsDM();
-			((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
-					.getRows(this.filter));
-			this.needsRefresh = false;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
+		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
+				.getRows(this.filter));
 	}
 }
