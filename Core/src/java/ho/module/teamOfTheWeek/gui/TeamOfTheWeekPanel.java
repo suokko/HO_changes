@@ -3,8 +3,8 @@ package ho.module.teamOfTheWeek.gui;
 
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.gui.comp.panel.RasenPanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
@@ -17,8 +17,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +34,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class TeamOfTheWeekPanel extends JPanel implements ChangeListener, ActionListener {
+public class TeamOfTheWeekPanel extends LazyPanel implements ChangeListener, ActionListener {
 
 	private static final long serialVersionUID = 7990572479100871307L;
 	private LineupPanel bestOfWeek;
@@ -45,35 +43,17 @@ public class TeamOfTheWeekPanel extends JPanel implements ChangeListener, Action
 	private LineupPanel worstOfYear;
 	private JComboBox seasonCombo;
 	private JSpinner weekSpinner;
-	private boolean initialized = false;
 
-	/**
-	 * Creates a new PotwUI object.
-	 */
-	public TeamOfTheWeekPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						initialize();
-					}
-				}
-			}
-		});
+	@Override
+	protected void initialize() {
+		initComponents();
 	}
 
-	private void initialize() {
-		CursorToolkit.startWaitCursor(this);
-		try {
-			initComponents();
-			this.initialized = true;
-		} finally {
-			CursorToolkit.stopWaitCursor(this);
-		}
+	@Override
+	protected void update() {
+		// do nothing
 	}
-
+	
 	private void reloadData(boolean isSeason) {
 		int week = ((Number) weekSpinner.getValue()).intValue();
 		MatchLineupPlayer[] sl = calcBestLineup(week, true);
