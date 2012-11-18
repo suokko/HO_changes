@@ -41,7 +41,7 @@ public final class PlayerAnalysisModule extends DefaultModule {
 
 	@Override
 	public JPanel createTabPanel() {
-		return new PlayerAnalysisPanel();
+		return new PlayerAnalysisModulePanel();
 	}
 
 	@Override

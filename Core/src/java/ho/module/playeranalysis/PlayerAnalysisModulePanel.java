@@ -1,19 +1,16 @@
 package ho.module.playeranalysis;
 
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.module.config.ModuleConfig;
 import ho.module.playeranalysis.experience.ExperienceViewer;
 import ho.module.playeranalysis.skillCompare.PlayerComparePanel;
 
 import java.awt.BorderLayout;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 
 import javax.swing.JTabbedPane;
 
-public class PlayerAnalysisPanel extends ImagePanel {
+public class PlayerAnalysisModulePanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane tabbedPane;
@@ -22,31 +19,25 @@ public class PlayerAnalysisPanel extends ImagePanel {
 	private ExperienceViewer experienceViewer;
 	private boolean initialized = false;
 
-	public PlayerAnalysisPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(PlayerAnalysisPanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(PlayerAnalysisPanel.this);
-						}
-					}
-				}
-			}
-		});
+	public final void setSpieler4Bottom(int spielerid) {
+		getSpielerAnalyseMainPanel().setSpieler4Bottom(spielerid);
 	}
 
-	private void initialize() {
+	public final void setSpieler4Top(int spielerid) {
+		getSpielerAnalyseMainPanel().setSpieler4Top(spielerid);
+	}
+	
+	@Override
+	protected void initialize() {
 		setLayout(new BorderLayout());
 		add(getTabbedPane(), BorderLayout.CENTER);
-		this.initialized = true;
 	}
 
+	@Override
+	protected void update() {
+		// nothing to do here, data is updated in the tabs
+	}
+	
 	private JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane();
@@ -78,13 +69,5 @@ public class PlayerAnalysisPanel extends ImagePanel {
 		if (experienceViewer == null)
 			experienceViewer = new ExperienceViewer();
 		return experienceViewer;
-	}
-
-	public final void setSpieler4Bottom(int spielerid) {
-		getSpielerAnalyseMainPanel().setSpieler4Bottom(spielerid);
-	}
-
-	public final void setSpieler4Top(int spielerid) {
-		getSpielerAnalyseMainPanel().setSpieler4Top(spielerid);
 	}
 }

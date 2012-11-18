@@ -4,12 +4,14 @@ package ho.module.playeranalysis;
 import ho.core.gui.ApplicationClosingListener;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.UserParameter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
@@ -17,39 +19,35 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListener {
+public class SpielerAnalyseMainPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 5384638406362299060L;
-	private JButton m_jbDrehen;
-	private JSplitPane m_jspSpielerAnalyseSplitPane;
-	private SpielerAnalysePanel m_jpSpielerAnalysePanel1;
-	private SpielerAnalysePanel m_jpSpielerAnalysePanel2;
+	private JButton arrangeButton;
+	private JSplitPane splitPane;
+	private SpielerAnalysePanel playersPanel1;
+	private SpielerAnalysePanel playersPanel2;
 
-	/**
-	 * Creates a new SpielerAnalyseMainPanel object.
-	 */
-	public SpielerAnalyseMainPanel() {
+	public final void setSpieler4Bottom(int spielerid) {
+		if (this.playersPanel2 != null) {
+			playersPanel2.setAktuelleSpieler(spielerid);
+		}
+	}
+
+	public final void setSpieler4Top(int spielerid) {
+		if (this.playersPanel1 != null) {
+			playersPanel1.setAktuelleSpieler(spielerid);
+		}
+	}
+
+	@Override
+	protected void initialize() {
 		initComponents();
 		addListeners();
 	}
 
-	public final void setSpieler4Bottom(int spielerid) {
-		m_jpSpielerAnalysePanel2.setAktuelleSpieler(spielerid);
-	}
-
-	public final void setSpieler4Top(int spielerid) {
-		m_jpSpielerAnalysePanel1.setAktuelleSpieler(spielerid);
-	}
-
 	@Override
-	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-		if (m_jspSpielerAnalyseSplitPane.getOrientation() == JSplitPane.VERTICAL_SPLIT) {
-			m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		} else {
-			m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		}
-
-		UserParameter.instance().spieleranalyseVertikal = !UserParameter.instance().spieleranalyseVertikal;
+	protected void update() {
+		// nothing to do here
 	}
 
 	private void addListeners() {
@@ -60,43 +58,54 @@ public class SpielerAnalyseMainPanel extends ImagePanel implements ActionListene
 				saveSettings();
 			}
 		});
+
+		arrangeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (splitPane.getOrientation() == JSplitPane.VERTICAL_SPLIT) {
+					splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+				} else {
+					splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+				}
+
+				UserParameter.instance().spieleranalyseVertikal = !UserParameter.instance().spieleranalyseVertikal;
+			}
+		});
 	}
 
 	private void saveSettings() {
 		UserParameter parameter = UserParameter.instance();
-		parameter.spielerAnalysePanel_horizontalSplitPane = m_jspSpielerAnalyseSplitPane
-				.getDividerLocation();
-		m_jpSpielerAnalysePanel1.saveColumnOrder();
-		m_jpSpielerAnalysePanel2.saveColumnOrder();
+		parameter.spielerAnalysePanel_horizontalSplitPane = splitPane.getDividerLocation();
+		playersPanel1.saveColumnOrder();
+		playersPanel2.saveColumnOrder();
 	}
 
 	private void initComponents() {
 		setLayout(new BorderLayout());
 
-		final JPanel panel = new ImagePanel(new BorderLayout());
+		JPanel panel = new ImagePanel(new BorderLayout());
 
-		m_jbDrehen = new JButton(ThemeManager.getIcon(HOIconName.TURN));
-		m_jbDrehen.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString(
+		arrangeButton = new JButton(ThemeManager.getIcon(HOIconName.TURN));
+		arrangeButton.setToolTipText(ho.core.model.HOVerwaltung.instance().getLanguageString(
 				"tt_SpielerAnalyse_drehen"));
-		m_jbDrehen.setPreferredSize(new Dimension(24, 24));
-		m_jbDrehen.addActionListener(this);
-		panel.add(m_jbDrehen, BorderLayout.WEST);
+		arrangeButton.setPreferredSize(new Dimension(24, 24));
+		panel.add(arrangeButton, BorderLayout.WEST);
 		panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
 		add(panel, BorderLayout.NORTH);
 
-		m_jpSpielerAnalysePanel1 = new SpielerAnalysePanel(1);
-		m_jpSpielerAnalysePanel2 = new SpielerAnalysePanel(2);
-		m_jspSpielerAnalyseSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				m_jpSpielerAnalysePanel1, m_jpSpielerAnalysePanel2);
-		m_jspSpielerAnalyseSplitPane
+		playersPanel1 = new SpielerAnalysePanel(1);
+		playersPanel2 = new SpielerAnalysePanel(2);
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, playersPanel1, playersPanel2);
+		splitPane
 				.setDividerLocation(UserParameter.instance().spielerAnalysePanel_horizontalSplitPane);
-		add(m_jspSpielerAnalyseSplitPane, BorderLayout.CENTER);
+		add(splitPane, BorderLayout.CENTER);
 
 		if (!UserParameter.instance().spieleranalyseVertikal) {
-			m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+			splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		} else {
-			m_jspSpielerAnalyseSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+			splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		}
 	}
 }

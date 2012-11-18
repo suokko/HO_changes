@@ -1,9 +1,8 @@
 // %4061149036:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
-import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.SpielerCBItem;
 import ho.core.gui.model.SpielerCBItemRenderer;
 import ho.core.gui.theme.HOColorName;
@@ -12,6 +11,7 @@ import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
+import ho.core.util.Helper;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,15 +19,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -40,7 +37,7 @@ import javax.swing.ScrollPaneConstants;
 /**
  * Bietet Übersicht über alle Spieler
  */
-public class SpielerAnalysePanel extends ImagePanel implements Refreshable {
+public class SpielerAnalysePanel extends LazyImagePanel {
 	private static final long serialVersionUID = 7705544952029589545L;
 	private JButton printButton;
 	private JComboBox playerComboBox;
@@ -48,40 +45,16 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable {
 	private SpielerMatchesTable m_jtSpielerMatchesTable;
 	private SpielerPositionTable m_jtSpielerPositionTable;
 	private int columnModelInstance;
-	private boolean needsRefresh = false;
 
 	/**
 	 * Creates a new SpielerAnalysePanel object.
 	 */
 	public SpielerAnalysePanel(int instance) {
 		columnModelInstance = instance;
-		initComponents();
-		addListeners();
-
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (needsRefresh) {
-						update();
-					}
-				}
-			}
-		});
 	}
 
 	public final void setAktuelleSpieler(int spielerid) {
-		ComboBoxModel model = playerComboBox.getModel();
-		for (int i = 0; i < model.getSize(); ++i) {
-			if (model.getElementAt(i) instanceof SpielerCBItem) {
-				if (((SpielerCBItem) model.getElementAt(i)).getSpieler().getSpielerID() == spielerid) {
-					// Spieler gefunden -> Auswählen und fertig
-					playerComboBox.setSelectedIndex(i);
-					return;
-				}
-			}
-		}
+		Helper.markierenComboBox(playerComboBox, spielerid);
 	}
 
 	public void saveColumnOrder() {
@@ -89,29 +62,20 @@ public class SpielerAnalysePanel extends ImagePanel implements Refreshable {
 	}
 
 	@Override
-	public final void reInit() {
-		if (isShowing()) {
-			fillSpielerCB();
-			showSelectedPlayer();
-		} else {
-			this.needsRefresh = true;
-		}
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		registerRefreshable(true);
+		setNeedsRefresh(true);
 	}
 
 	@Override
-	public void refresh() {
-		// nix
-	}
-
-	private void update() {
+	protected void update() {
 		fillSpielerCB();
 		showSelectedPlayer();
-		this.needsRefresh = false;
 	}
 
 	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(this);
-
 		this.printButton.addActionListener(new ActionListener() {
 
 			@Override

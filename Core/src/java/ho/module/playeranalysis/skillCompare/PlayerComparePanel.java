@@ -5,10 +5,7 @@ package ho.module.playeranalysis.skillCompare;
 
 import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
-import ho.core.gui.CursorToolkit;
-import ho.core.gui.IRefreshable;
-import ho.core.gui.RefreshManager;
-import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
@@ -24,12 +21,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -43,19 +38,17 @@ import javax.swing.JTable;
 /**
  * @author KickMuck
  */
-public class PlayerComparePanel extends ImagePanel implements MouseListener, ActionListener,
-		ItemListener, IRefreshable, FocusListener {
+public class PlayerComparePanel extends LazyImagePanel implements ItemListener, FocusListener {
 
 	private static final long serialVersionUID = -1629490436656226196L;
 	// Members for Tables
-	private PlayerTable m_jTableTop = null; // Table for all players
-	private JTable m_jTableBottom = null; // Table for all compared players
-	private JTable m_jTableDetail = null; // Table for player details
+	private PlayerTable m_jTableTop; // Table for all players
+	private JTable m_jTableBottom; // Table for all compared players
+	private JTable m_jTableDetail; // Table for player details
 	// Members for Buttons
 	private JButton m_btCompare; // Button -> Compare
 	private JButton m_btReset; // Button -> Reset
-	private JPanel p_PlayerDetail = null;
-
+	private JPanel p_PlayerDetail;
 	private JScrollPane m_scrollPaneTableTop;
 	private JScrollPane m_scrollPaneTableBottom;
 	private JScrollPane m_scrollPanePlayer;
@@ -76,7 +69,6 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 	private JComboBox m_CB_SetPieces;
 	private JComboBox m_CB_Loyalty;
 	private JComboBox m_CB_Homegrown;
-
 	private JComboBox m_CB_Nr_Experience;
 	private JComboBox m_CB_Nr_Form;
 	private JComboBox m_CB_Nr_Stamina;
@@ -88,63 +80,73 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 	private JComboBox m_CB_Nr_Scoring;
 	private JComboBox m_CB_Nr_SetPieces;
 	private JComboBox m_CB_Nr_Loyalty;
-
 	private Vector<Player> m_V_setPlayers;
 	private Vector<Spieler> m_V_allPlayers;
 	private Player[] m_ar_allPlayers;
 	private Player[] m_ar_setPlayers;
-
 	private CBItem[] m_rating = PlayerAbility.ITEMS;
-
 	private static int m_selectedRow;
 	private int m_i_ptmTopCount;
 	private int m_numberOfPlayers;
-
 	private static int[] newRating;
 	private static int[] changedRating;
-
 	private boolean m_b_refresh = true;
-
 	private Color lightblue = new Color(235, 235, 255);
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
 
-	public PlayerComparePanel() {
-		addHierarchyListener(new HierarchyListener() {
+	@Override
+	protected void initialize() {
+		initComponents();
+		addListeners();
+		registerRefreshable(true);
+		setNeedsRefresh(true);
+	}
+
+	@Override
+	protected void update() {
+		// only refresh if no button was pressed so that m_b_refresh doesn't
+		// get set
+		if (m_b_refresh) {
+			m_scrollPaneTableTop.setViewportView(null);
+			// Get players
+			getAllPlayers();
+			m_playerTableModelTop = new PlayerTableModel(m_ar_allPlayers, 1);
+			TableSorter sorter = new TableSorter(m_playerTableModelTop);
+			m_jTableTop = new PlayerTable(sorter, m_playerTableModelTop);
+			sorter.setTableHeader(m_jTableTop.getTableHeader());
+			m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
+			m_scrollPaneTableTop.setViewportView(m_jTableTop);
+		}
+		// If a button was pressed, m_b_refresh is set to true,
+		// so that the next update causes a refresh
+		else {
+			m_b_refresh = true;
+		}
+	}
+
+	private void addListeners() {
+		m_btCompare.addActionListener(new ActionListener() {
 
 			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(PlayerComparePanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(PlayerComparePanel.this);
-						}
-					}
-					if (needsRefresh) {
-						refresh();
-					}
-				}
+			public void actionPerformed(ActionEvent e) {
+				comparePlayer();
+			}
+		});
 
+		m_btReset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reset();
 			}
 		});
 	}
 
-	
-	
-	/**
-	 * Is called by HO! to start the plugin
-	 */
-	private void initialize() {
+	private void initComponents() {
 		// get all players ans save them in an array
 		getAllPlayers();
 
 		setLayout(new BorderLayout());
 		addFocusListener(this);
-		// Register tab for refresh
-		RefreshManager.instance().registerRefreshable(this);
 
 		// Default values for skill selection
 		newRating = new int[] { 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0 };
@@ -185,11 +187,9 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 		m_topButtonPanel.setLayout(gbl);
 
 		m_btCompare = new JButton(hoV.getLanguageString("Vergleichen"));
-		m_btCompare.addActionListener(this);
 		m_btCompare.setToolTipText(hoV.getLanguageString("ttCompare"));
 
 		m_btReset = new JButton(hoV.getLanguageString("ls.button.reset"));
-		m_btReset.addActionListener(this);
 
 		JLabel m_L_GroupBy = new JLabel(hoV.getLanguageString("vergleichen_alle"));
 		JLabel m_L_Header = new JLabel(hoV.getLanguageString("setze_alle"));
@@ -457,8 +457,6 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 		m_splitPaneBottom.setDividerLocation(devLocationBottom);
 
 		add(m_splitPane, BorderLayout.CENTER);
-		
-		this.initialized = true;
 	}
 
 	private JComboBox createComboBox() {
@@ -477,32 +475,6 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 	private void fillComboBox(JComboBox jcb) {
 		for (int i = 0; i < 7; i++)
 			jcb.addItem(" +" + i);
-	}
-
-	@Override
-	public void refresh() {
-		if (isShowing()) {
-			// only refresh if no button was pressed so that m_b_refresh doesn't
-			// get set
-			if (m_b_refresh == true) {
-				m_scrollPaneTableTop.setViewportView(null);
-				// Get players
-				getAllPlayers();
-				m_playerTableModelTop = new PlayerTableModel(m_ar_allPlayers, 1);
-				TableSorter sorter = new TableSorter(m_playerTableModelTop);
-				m_jTableTop = new PlayerTable(sorter, m_playerTableModelTop);
-				sorter.setTableHeader(m_jTableTop.getTableHeader());
-				m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
-				m_scrollPaneTableTop.setViewportView(m_jTableTop);
-			}
-			// If a button was pressed, m_b_refresh is set to true,
-			// so that the next update causes a refresh
-			else {
-				m_b_refresh = true;
-			}
-		} else {
-			this.needsRefresh = true;
-		}
 	}
 
 	@Override
@@ -650,7 +622,7 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 		}
 		m_playerTableModelTop.fireTableDataChanged();
 		if (counter > 0) {
-			actionPerformed(new ActionEvent(m_btCompare, 0, ""));
+			comparePlayer();
 		}
 	}
 
@@ -658,284 +630,44 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 	public void focusLost(FocusEvent fe) {
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	private void reset() {
+		m_b_refresh = false;
+		setNewRating(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		m_CB_Experience.setSelectedIndex(0);
+		m_CB_Form.setSelectedIndex(6);
+		m_CB_Stamina.setSelectedIndex(0);
+		m_CB_Keeping.setSelectedIndex(0);
+		m_CB_Defending.setSelectedIndex(0);
+		m_CB_Playmaking.setSelectedIndex(0);
+		m_CB_Passing.setSelectedIndex(0);
+		m_CB_Winger.setSelectedIndex(0);
+		m_CB_Scoring.setSelectedIndex(0);
+		m_CB_SetPieces.setSelectedIndex(0);
+		m_CB_Loyalty.setSelectedIndex(10);
+		m_CB_Homegrown.setSelectedIndex(0);
+		m_CB_type.setSelectedIndex(0);
+
+		setChangeRatingBy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		m_CB_Nr_Experience.setSelectedIndex(0);
+		m_CB_Nr_Form.setSelectedIndex(0);
+		m_CB_Nr_Stamina.setSelectedIndex(0);
+		m_CB_Nr_Keeping.setSelectedIndex(0);
+		m_CB_Nr_Defending.setSelectedIndex(0);
+		m_CB_Nr_Playmaking.setSelectedIndex(0);
+		m_CB_Nr_Passing.setSelectedIndex(0);
+		m_CB_Nr_Winger.setSelectedIndex(0);
+		m_CB_Nr_Scoring.setSelectedIndex(0);
+		m_CB_Nr_SetPieces.setSelectedIndex(0);
+		m_CB_Nr_Loyalty.setSelectedIndex(0);
+		m_scrollPaneTableBottom.setViewportView(null);
+
+		for (int i = 0; i < m_i_ptmTopCount; i++) {
+			if (((Boolean) m_playerTableModelTop.getValueAt(i, 0)).booleanValue() == true) {
+				m_playerTableModelTop.setValueAt(Boolean.FALSE, i, 0);
+			}
+		}
 		resetPlayer();
 		setDummyPlayerDetails();
-		m_b_refresh = false;
-		if (e.getSource().equals(m_btCompare)) {
-			m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
-			setNewRating(m_CB_Experience.getSelectedIndex(), m_CB_Form.getSelectedIndex(),
-					m_CB_Stamina.getSelectedIndex(), m_CB_Keeping.getSelectedIndex(),
-					m_CB_Defending.getSelectedIndex(), m_CB_Playmaking.getSelectedIndex(),
-					m_CB_Passing.getSelectedIndex(), m_CB_Winger.getSelectedIndex(),
-					m_CB_Scoring.getSelectedIndex(), m_CB_SetPieces.getSelectedIndex(),
-					m_CB_Loyalty.getSelectedIndex(), m_CB_Homegrown.getSelectedIndex());
-
-			setChangeRatingBy(m_CB_Nr_Experience.getSelectedIndex(),
-					m_CB_Nr_Form.getSelectedIndex(), m_CB_Nr_Stamina.getSelectedIndex(),
-					m_CB_Nr_Keeping.getSelectedIndex(), m_CB_Nr_Defending.getSelectedIndex(),
-					m_CB_Nr_Playmaking.getSelectedIndex(), m_CB_Nr_Passing.getSelectedIndex(),
-					m_CB_Nr_Winger.getSelectedIndex(), m_CB_Nr_Scoring.getSelectedIndex(),
-					m_CB_Nr_SetPieces.getSelectedIndex(), m_CB_Loyalty.getSelectedIndex(), 0);
-
-			int selectedType = m_CB_type.getSelectedIndex();
-			m_V_setPlayers = new Vector<Player>();
-			switch (selectedType) {
-			case 0:
-				for (int i = 0; i < m_i_ptmTopCount; i++)
-					if (((Boolean) m_playerTableModelTop.getValueAt(i, 0)).booleanValue() == true)
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-				break;
-			case 1:
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					byte tmpPos = 0;
-
-					try {
-						tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
-					} catch (Exception ex) {
-					}
-					if (tmpPos == 0 && m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (tmpPos == 0
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-			case 2:
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					byte tmpPos = 0;
-
-					try {
-						tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
-					} catch (Exception ex) {
-					}
-
-					if ((tmpPos > 0 && tmpPos < 8)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if ((tmpPos > 0 && tmpPos < 8)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-			case 3:
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					byte tmpPos = 0;
-
-					try {
-						tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
-					} catch (Exception ex) {
-					}
-					if ((tmpPos > 7 && tmpPos < 12)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if ((tmpPos > 7 && tmpPos < 12)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-			case 4:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					byte tmpPos = 0;
-
-					try {
-						tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
-					} catch (Exception ex) {
-					}
-					if ((tmpPos > 11 && tmpPos < 16)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if ((tmpPos > 11 && tmpPos < 16)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 5:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					byte tmpPos = 0;
-
-					try {
-						tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
-					} catch (Exception ex) {
-					}
-					if ((tmpPos > 15 && tmpPos < 18)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if ((tmpPos > 15 && tmpPos < 18)
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 6:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					String gruppe = "";
-
-					gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
-					if (gruppe.equals("A-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (gruppe.equals("A-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 7:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					String gruppe = "";
-
-					gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
-					if (gruppe.equals("B-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (gruppe.equals("B-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 8:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					String gruppe = "";
-
-					gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
-					if (gruppe.equals("C-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (gruppe.equals("C-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 9:
-
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					String gruppe = "";
-
-					gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
-					if (gruppe.equals("D-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (gruppe.equals("D-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 10:
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					String gruppe = "";
-
-					gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
-					if (gruppe.equals("E-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
-						fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-								m_playerTableModelTop.getColumnCount() - 1)).intValue());
-					} else if (gruppe.equals("E-Team.png")
-							&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
-						m_CB_type.setSelectedIndex(0);
-					}
-				}
-				break;
-
-			case 11:
-				for (int i = 0; i < m_i_ptmTopCount; i++) {
-					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
-							m_playerTableModelTop.getColumnCount() - 1)).intValue());
-				}
-			}
-
-			// Create array from a tablemodel vector
-			m_ar_setPlayers = new Player[m_V_setPlayers.size()];
-			for (int counter = 0; counter < m_ar_setPlayers.length; counter++) {
-				m_ar_setPlayers[counter] = m_V_setPlayers.elementAt(counter);
-			}
-
-			m_playerTableModelBottom = new PlayerTableModel(m_ar_setPlayers, 2);
-			TableSorter sorter2 = new TableSorter(m_playerTableModelBottom); // ADDED
-																				// THIS
-			m_jTableBottom = new PlayerTable(sorter2, m_playerTableModelBottom);
-			m_jTableBottom.setRowSelectionAllowed(true);
-			m_jTableBottom.addMouseListener(this);
-
-			sorter2.setTableHeader(m_jTableBottom.getTableHeader()); // ADDED
-																		// THIS
-
-			m_scrollPaneTableBottom.setViewportView(m_jTableBottom);
-			m_scrollPaneTableBottom
-					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			m_scrollPaneTableBottom
-					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		}
-
-		if (e.getSource().equals(m_btReset)) {
-			setNewRating(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			m_CB_Experience.setSelectedIndex(0);
-			m_CB_Form.setSelectedIndex(6);
-			m_CB_Stamina.setSelectedIndex(0);
-			m_CB_Keeping.setSelectedIndex(0);
-			m_CB_Defending.setSelectedIndex(0);
-			m_CB_Playmaking.setSelectedIndex(0);
-			m_CB_Passing.setSelectedIndex(0);
-			m_CB_Winger.setSelectedIndex(0);
-			m_CB_Scoring.setSelectedIndex(0);
-			m_CB_SetPieces.setSelectedIndex(0);
-			m_CB_Loyalty.setSelectedIndex(10);
-			m_CB_Homegrown.setSelectedIndex(0);
-			m_CB_type.setSelectedIndex(0);
-
-			setChangeRatingBy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			m_CB_Nr_Experience.setSelectedIndex(0);
-			m_CB_Nr_Form.setSelectedIndex(0);
-			m_CB_Nr_Stamina.setSelectedIndex(0);
-			m_CB_Nr_Keeping.setSelectedIndex(0);
-			m_CB_Nr_Defending.setSelectedIndex(0);
-			m_CB_Nr_Playmaking.setSelectedIndex(0);
-			m_CB_Nr_Passing.setSelectedIndex(0);
-			m_CB_Nr_Winger.setSelectedIndex(0);
-			m_CB_Nr_Scoring.setSelectedIndex(0);
-			m_CB_Nr_SetPieces.setSelectedIndex(0);
-			m_CB_Nr_Loyalty.setSelectedIndex(0);
-			m_scrollPaneTableBottom.setViewportView(null);
-
-			for (int i = 0; i < m_i_ptmTopCount; i++) {
-				if (((Boolean) m_playerTableModelTop.getValueAt(i, 0)).booleanValue() == true) {
-					m_playerTableModelTop.setValueAt(Boolean.FALSE, i, 0);
-				}
-			}
-			resetPlayer();
-			setDummyPlayerDetails();
-			RefreshManager.instance().doReInit();
-		}
 	}
 
 	/**
@@ -950,6 +682,238 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 		for (int counter = 0; counter < m_numberOfPlayers; counter++) {
 			m_ar_allPlayers[counter] = new Player(m_V_allPlayers.elementAt(counter));
 		}
+	}
+
+	private void comparePlayer() {
+		resetPlayer();
+		setDummyPlayerDetails();
+		m_b_refresh = false;
+		m_i_ptmTopCount = m_playerTableModelTop.getRowCount();
+		setNewRating(m_CB_Experience.getSelectedIndex(), m_CB_Form.getSelectedIndex(),
+				m_CB_Stamina.getSelectedIndex(), m_CB_Keeping.getSelectedIndex(),
+				m_CB_Defending.getSelectedIndex(), m_CB_Playmaking.getSelectedIndex(),
+				m_CB_Passing.getSelectedIndex(), m_CB_Winger.getSelectedIndex(),
+				m_CB_Scoring.getSelectedIndex(), m_CB_SetPieces.getSelectedIndex(),
+				m_CB_Loyalty.getSelectedIndex(), m_CB_Homegrown.getSelectedIndex());
+
+		setChangeRatingBy(m_CB_Nr_Experience.getSelectedIndex(), m_CB_Nr_Form.getSelectedIndex(),
+				m_CB_Nr_Stamina.getSelectedIndex(), m_CB_Nr_Keeping.getSelectedIndex(),
+				m_CB_Nr_Defending.getSelectedIndex(), m_CB_Nr_Playmaking.getSelectedIndex(),
+				m_CB_Nr_Passing.getSelectedIndex(), m_CB_Nr_Winger.getSelectedIndex(),
+				m_CB_Nr_Scoring.getSelectedIndex(), m_CB_Nr_SetPieces.getSelectedIndex(),
+				m_CB_Loyalty.getSelectedIndex(), 0);
+
+		int selectedType = m_CB_type.getSelectedIndex();
+		m_V_setPlayers = new Vector<Player>();
+		switch (selectedType) {
+		case 0:
+			for (int i = 0; i < m_i_ptmTopCount; i++)
+				if (((Boolean) m_playerTableModelTop.getValueAt(i, 0)).booleanValue() == true)
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+			break;
+		case 1:
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				byte tmpPos = 0;
+
+				try {
+					tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
+				} catch (Exception ex) {
+				}
+				if (tmpPos == 0 && m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (tmpPos == 0 && m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+		case 2:
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				byte tmpPos = 0;
+
+				try {
+					tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
+				} catch (Exception ex) {
+				}
+
+				if ((tmpPos > 0 && tmpPos < 8)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if ((tmpPos > 0 && tmpPos < 8)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+		case 3:
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				byte tmpPos = 0;
+
+				try {
+					tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
+				} catch (Exception ex) {
+				}
+				if ((tmpPos > 7 && tmpPos < 12)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if ((tmpPos > 7 && tmpPos < 12)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+		case 4:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				byte tmpPos = 0;
+
+				try {
+					tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
+				} catch (Exception ex) {
+				}
+				if ((tmpPos > 11 && tmpPos < 16)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if ((tmpPos > 11 && tmpPos < 16)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 5:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				byte tmpPos = 0;
+
+				try {
+					tmpPos = ((Float) m_playerTableModelTop.getValueAt(i, 4)).byteValue();
+				} catch (Exception ex) {
+				}
+				if ((tmpPos > 15 && tmpPos < 18)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if ((tmpPos > 15 && tmpPos < 18)
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 6:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				String gruppe = "";
+
+				gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
+				if (gruppe.equals("A-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (gruppe.equals("A-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 7:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				String gruppe = "";
+
+				gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
+				if (gruppe.equals("B-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (gruppe.equals("B-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 8:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				String gruppe = "";
+
+				gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
+				if (gruppe.equals("C-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (gruppe.equals("C-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 9:
+
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				String gruppe = "";
+
+				gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
+				if (gruppe.equals("D-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (gruppe.equals("D-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 10:
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				String gruppe = "";
+
+				gruppe = m_playerTableModelTop.getValueAt(i, 5).toString();
+				if (gruppe.equals("E-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.TRUE) {
+					fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+							m_playerTableModelTop.getColumnCount() - 1)).intValue());
+				} else if (gruppe.equals("E-Team.png")
+						&& m_playerTableModelTop.getValueAt(i, 0) == Boolean.FALSE) {
+					m_CB_type.setSelectedIndex(0);
+				}
+			}
+			break;
+
+		case 11:
+			for (int i = 0; i < m_i_ptmTopCount; i++) {
+				fetchPlayer(((Integer) m_playerTableModelTop.getValueAt(i,
+						m_playerTableModelTop.getColumnCount() - 1)).intValue());
+			}
+		}
+
+		// Create array from a tablemodel vector
+		m_ar_setPlayers = new Player[m_V_setPlayers.size()];
+		for (int counter = 0; counter < m_ar_setPlayers.length; counter++) {
+			m_ar_setPlayers[counter] = m_V_setPlayers.elementAt(counter);
+		}
+
+		m_playerTableModelBottom = new PlayerTableModel(m_ar_setPlayers, 2);
+		TableSorter sorter2 = new TableSorter(m_playerTableModelBottom);
+		m_jTableBottom = new PlayerTable(sorter2, m_playerTableModelBottom);
+		m_jTableBottom.setRowSelectionAllowed(true);
+		m_jTableBottom.addMouseListener(new TableBottomMouseListener());
+
+		sorter2.setTableHeader(m_jTableBottom.getTableHeader());
+		m_scrollPaneTableBottom.setViewportView(m_jTableBottom);
+		m_scrollPaneTableBottom
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		m_scrollPaneTableBottom
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	}
 
 	/**
@@ -1052,63 +1016,44 @@ public class PlayerComparePanel extends ImagePanel implements MouseListener, Act
 	private int getSelectedRow() {
 		return m_selectedRow;
 	}
-
-	// ********** Begin Mouse Events ******************
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		JLabel l_SpielerName = new JLabel();
-		JLabel platzhalter = new JLabel("  ");
-		JPanel p_SpielerName = new JPanel(new BorderLayout());
-		l_SpielerName.setPreferredSize(new Dimension(100, 30));
-		p_PlayerDetail.removeAll();
-		p_PlayerDetail.setPreferredSize(new Dimension(150, 30));
-		p_PlayerDetail.setBackground(lightblue);
-		Player tmpPlayer = null;
-		m_playerTableModelDetail = null;
-		m_scrollPanePlayer.setViewportView(null);
-		m_scrollPanePlayer.validate();
-		m_selectedRow = m_jTableBottom.getSelectedRow();
-		int row = getSelectedRow();
-		String id = "" + m_jTableBottom.getValueAt(row, m_jTableBottom.getColumnCount() - 1);
-		int tmpAnzahl = m_V_setPlayers.size();
-		for (int u = 0; u < tmpAnzahl; u++) {
-			tmpPlayer = m_V_setPlayers.elementAt(u);
-			if (("" + tmpPlayer.getId()).compareTo(id) == 0) {
-				l_SpielerName.setText("" + tmpPlayer.getName());
-				break;
+	
+	private class TableBottomMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel l_SpielerName = new JLabel();
+			JLabel platzhalter = new JLabel("  ");
+			JPanel p_SpielerName = new JPanel(new BorderLayout());
+			l_SpielerName.setPreferredSize(new Dimension(100, 30));
+			p_PlayerDetail.removeAll();
+			p_PlayerDetail.setPreferredSize(new Dimension(150, 30));
+			p_PlayerDetail.setBackground(lightblue);
+			Player tmpPlayer = null;
+			m_playerTableModelDetail = null;
+			m_scrollPanePlayer.setViewportView(null);
+			m_scrollPanePlayer.validate();
+			m_selectedRow = m_jTableBottom.getSelectedRow();
+			int row = getSelectedRow();
+			String id = ""
+					+ m_jTableBottom.getValueAt(row, m_jTableBottom.getColumnCount() - 1);
+			int tmpAnzahl = m_V_setPlayers.size();
+			for (int u = 0; u < tmpAnzahl; u++) {
+				tmpPlayer = m_V_setPlayers.elementAt(u);
+				if (("" + tmpPlayer.getId()).compareTo(id) == 0) {
+					l_SpielerName.setText("" + tmpPlayer.getName());
+					break;
+				}
 			}
+			p_SpielerName.add(platzhalter, BorderLayout.WEST);
+			p_SpielerName.add(l_SpielerName);
+			p_PlayerDetail.add(p_SpielerName, BorderLayout.NORTH);
+			m_playerTableModelDetail = new PlayerTableModel(tmpPlayer);
+
+			TableSorter sorter3 = new TableSorter(m_playerTableModelDetail);
+			m_jTableDetail = new PlayerTable(sorter3);
+			sorter3.setTableHeader(m_jTableDetail.getTableHeader());
+			m_scrollPanePlayer.setViewportView(m_jTableDetail);
+			p_PlayerDetail.add(m_scrollPanePlayer);
+			p_PlayerDetail.validate();
 		}
-		p_SpielerName.add(platzhalter, BorderLayout.WEST);
-		p_SpielerName.add(l_SpielerName);
-		p_PlayerDetail.add(p_SpielerName, BorderLayout.NORTH);
-		m_playerTableModelDetail = new PlayerTableModel(tmpPlayer);
-
-		TableSorter sorter3 = new TableSorter(m_playerTableModelDetail); // ADDED
-																			// THIS
-		m_jTableDetail = new PlayerTable(sorter3);
-		sorter3.setTableHeader(m_jTableDetail.getTableHeader());
-		m_scrollPanePlayer.setViewportView(m_jTableDetail);
-		p_PlayerDetail.add(m_scrollPanePlayer);
-		p_PlayerDetail.validate();
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-
 	}
 }
