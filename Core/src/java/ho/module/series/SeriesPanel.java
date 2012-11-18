@@ -2,10 +2,9 @@
 package ho.module.series;
 
 import ho.core.db.DBManager;
-import ho.core.gui.CursorToolkit;
 import ho.core.gui.RefreshManager;
-import ho.core.gui.Refreshable;
 import ho.core.gui.comp.panel.ImagePanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -19,8 +18,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -37,7 +34,7 @@ import javax.swing.event.ListSelectionListener;
 /**
  * Panel, das die Ligatabelle sowie das letzte und das nächste Spiel enthält
  */
-public class SeriesPanel extends ImagePanel implements Refreshable {
+public class SeriesPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = -5179683183917344230L;
 	private JButton printButton;
@@ -46,44 +43,21 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 	private SeriesTablePanel seriesTable;
 	private MatchDayPanel[] matchDayPanels;
 	private SeriesHistoryPanel seriesHistoryPanel;
-	private Model model = new Model();
-	private boolean initialized = false;
-	private boolean needsRefresh = false;
+	private Model model;
 
-	/**
-	 * Creates a new LigaTabellePanel object.
-	 */
-	public SeriesPanel() {
-		addHierarchyListener(new HierarchyListener() {
-
-			@Override
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ((HierarchyEvent.SHOWING_CHANGED == (e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) && isShowing())) {
-					if (!initialized) {
-						CursorToolkit.startWaitCursor(SeriesPanel.this);
-						try {
-							initialize();
-						} finally {
-							CursorToolkit.stopWaitCursor(SeriesPanel.this);
-						}
-					}
-					if (needsRefresh) {
-						update();
-					}
-				}
-
-			}
-		});
-	}
-
-	private void initialize() {
-		RefreshManager.instance().registerRefreshable(this);
+	@Override
+	protected void initialize() {
 		initComponents();
 		fillSaisonCB();
 		addListeners();
-		this.initialized = true;
+		registerRefreshable(true);
 	}
 
+	@Override
+	protected void update() {
+		fillSaisonCB();
+	}
+	
 	private void print() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -174,24 +148,6 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 		}
 	}
 
-	@Override
-	public final void reInit() {
-		if (isShowing()) {
-			update();
-		} else {
-			this.needsRefresh = true;
-		}
-	}
-
-	@Override
-	public void refresh() {
-	}
-
-	private void update() {
-		fillSaisonCB();
-		this.needsRefresh = false;
-	}
-
 	private void fillSaisonCB() {
 		// Die Spielpläne als Objekte mit den Paarungen holen
 		final Spielplan[] spielplaene = DBManager.instance().getAllSpielplaene(true);
@@ -230,6 +186,7 @@ public class SeriesPanel extends ImagePanel implements Refreshable {
 	}
 
 	private void initComponents() {
+		this.model = new Model();
 		setLayout(new BorderLayout());
 
 		// ComboBox für Saisonauswahl
