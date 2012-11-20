@@ -182,7 +182,7 @@
 			<format property="curDate" pattern="yyyyMMdd" />
 		</tstamp>
 
-		<property name="buildinfo" value="${dev}${svninfo.url}${svninfo.rev}_${curDate}${private}" />
+		<property name="buildinfo" value="${dev}${svninfo.rev}_${curDate}${private}" />
 
 		<!-- For dev and private builds, include more informations in ${hofullversion} -->
 		<if>
