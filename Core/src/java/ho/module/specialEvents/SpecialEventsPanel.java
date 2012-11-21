@@ -15,6 +15,7 @@ import static ho.module.specialEvents.SpecialEventsTableModel.MINUTECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.NAMECOLUMN;
 import static ho.module.specialEvents.SpecialEventsTableModel.SETEXTCOLUMN;
 import ho.core.gui.ApplicationClosingListener;
+import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.module.specialEvents.filter.Filter;
@@ -155,8 +156,13 @@ public class SpecialEventsPanel extends LazyImagePanel {
 	}
 
 	private void setTableData() {
-		SpecialEventsDM specialEventsDM = new SpecialEventsDM();
-		((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
-				.getRows(this.filter));
+		CursorToolkit.startWaitCursor(this);
+		try {
+			SpecialEventsDM specialEventsDM = new SpecialEventsDM();
+			((SpecialEventsTableModel) specialEventsTable.getModel()).setData(specialEventsDM
+					.getRows(this.filter));
+		} finally {
+			CursorToolkit.stopWaitCursor(this);
+		}
 	}
 }
