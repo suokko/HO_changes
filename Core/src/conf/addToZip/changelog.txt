@@ -35,6 +35,16 @@ Changelist HO! 1.432
 		. Penalty takers - a place to view and set the penalty shooter list.
 		. Upload/Download - a place to upload and download orders to and from specific matches.
 
+- Special Events
+	. got a lot of improvments (esp. the filter)
+
+- Lazy initialization/refresh 
+	. The content of each tab is now loaded not before the tab is opened for the first time. Analogous, 
+	  if the content of a tab needs to be refreshed, it is only refreshed if the tab is currently showing. 
+	  If it's not showing, it will be refreshed as soon as it gets shown. This works (at the moment) for 
+	  all tabs except lineup, players, transfers. Lazy initialization/refresh will noticeable (depending 
+	  on the number of modules you are using) decrease startup time and reduce the memory footprint of the application.
+
 - Added Tournament matches.
 - New icon and startup screen.
 - Moved intern help texts and from external files to our wiki page (https://sourceforge.net/apps/trac/ho1/wiki/Manual) and link to it in the menu.
@@ -53,6 +63,7 @@ Changelist HO! 1.432
 - Fixed IFA module not to download matches before the user got the team.
 - Removed Shirt number 100 for players without a shirt number.
 - Included Loyalty and mother club into csv player export
+- ArenaStats initial view corrected (filter setting was "competition matches", while what was displayed was "all matches").
 
 Language updates:
 -----------------
