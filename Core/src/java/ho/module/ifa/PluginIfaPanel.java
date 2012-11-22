@@ -28,6 +28,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -94,11 +95,19 @@ public class PluginIfaPanel extends LazyPanel {
 
 		validate();
 
-		double dividerLocation = ModuleConfig
+		final double dividerLocation = ModuleConfig
 				.instance()
 				.getBigDecimal(Config.STATS_TABLES_DIVIDER_LOCATION.toString(),
 						BigDecimal.valueOf(0.5)).doubleValue();
-		this.splitPane.setDividerLocation(dividerLocation);
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				splitPane.setDividerLocation(dividerLocation);
+
+			}
+		});
 	}
 
 	private JPanel createTablePanel(boolean away) {
