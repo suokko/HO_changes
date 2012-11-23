@@ -190,7 +190,6 @@ public class SpecialEventsDM {
 			switch (highlight.getHighlightSubTyp()) {
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_VORLAGE_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_PASS_ABGEFANGEN_TOR:
-			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALL_ERKAEMPFT_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_UNVORHERSEHBAR_BALLVERLUST_TOR:
 			case IMatchHighlight.HIGHLIGHT_SUB_SCHNELLER_ANGREIFER_TOR:
@@ -232,6 +231,7 @@ public class SpecialEventsDM {
 			case IMatchHighlight.HIGHLIGHT_SUB_INDIRECT_FREEKICK_2:
 				return EventType.IFK;
 			case IMatchHighlight.HIGHLIGHT_SUB_LONGHSHOT_1:
+			case IMatchHighlight.HIGHLIGHT_SUB_WEITSCHUSS_TOR:
 				return EventType.LONGSHOT;
 			}
 		}
