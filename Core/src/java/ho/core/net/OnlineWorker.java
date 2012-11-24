@@ -8,16 +8,15 @@ package ho.core.net;
 
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.file.hrf.HRFStringParser;
 import ho.core.file.xml.ConvertXml2Hrf;
 import ho.core.file.xml.XMLArenaParser;
 import ho.core.file.xml.XMLMatchArchivParser;
 import ho.core.file.xml.XMLMatchLineupParser;
 import ho.core.file.xml.XMLMatchOrderParser;
+import ho.core.file.xml.XMLMatchdetailsParser;
 import ho.core.file.xml.XMLMatchesParser;
 import ho.core.file.xml.XMLSpielplanParser;
-import ho.core.file.xml.XMLMatchdetailsParser;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.InfoPanel;
 import ho.core.gui.model.AufstellungCBItem;
@@ -156,20 +155,6 @@ public class OnlineWorker {
 													.getAufstellung()));
 							homf.getAufstellungsPanel().getAufstellungsPositionsPanel()
 									.exportOldLineup("Actual");
-							FileExtensionManager.extractLineup("Actual");
-
-							// If training update happened, regenerate HOE Files
-							if (homodel.getXtraDaten().getTrainingDate().after(lastTrainingDate)) {
-								HOLogger.instance().log(OnlineWorker.class,
-										"Regenerate HOE Training Files");
-								FileExtensionManager.trainingUpdate();
-							}
-							// If economy update happened, regenerate HOE Files
-							if (homodel.getXtraDaten().getEconomyDate().after(lastEconomyDate)) {
-								HOLogger.instance().log(OnlineWorker.class,
-										"Regenerate HOE Economy Files");
-								FileExtensionManager.economyUpate();
-							}
 						}
 						// Info
 						setInfoMsg(getLangString("HRFErfolg"));

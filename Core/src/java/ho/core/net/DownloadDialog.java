@@ -2,8 +2,6 @@
 package ho.core.net;
 
 import ho.core.datatype.CBItem;
-import ho.core.file.extension.StadiumCreator;
-import ho.core.file.extension.StandingCreator;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -231,7 +229,6 @@ public class DownloadDialog extends JDialog implements ActionListener {
 			bOK = (OnlineWorker.getMatches(model.getBasics().getTeamId(), false, true, true) != null);
 			if (bOK) {
 				OnlineWorker.getAllLineups();
-				StadiumCreator.extractHistoric();
 			}
 		}
 		if (bOK && m_jchMatchArchive.isSelected()) {
@@ -244,10 +241,7 @@ public class DownloadDialog extends JDialog implements ActionListener {
 
 		if (bOK && m_jchFixtures.isSelected()) {
 			// Always get actual season and league
-			bOK = OnlineWorker.getSpielplan(-1, -1);
-			if (bOK){
-				StandingCreator.extractActual();
-			}
+			OnlineWorker.getSpielplan(-1, -1);
 		}
 
 		if (bOK && m_jchOldFixtures.isSelected()) {

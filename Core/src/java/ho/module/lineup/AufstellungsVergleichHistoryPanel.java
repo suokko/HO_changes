@@ -2,7 +2,6 @@
 package ho.module.lineup;
 
 import ho.core.db.DBManager;
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
@@ -187,7 +186,6 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 				+ HOVerwaltung.instance().getModel().getBasics().getManager() + "/"
 				+ aufstellungsname + ".dat");
 		f.delete();
-		FileExtensionManager.deleteLineup(aufstellungsname);
 		((DefaultListModel) m_jlAufstellungen.getModel()).removeElement(m_jlAufstellungen
 				.getSelectedValue());
 	}

@@ -2,7 +2,6 @@
 package ho.module.lineup;
 
 import ho.core.db.DBManager;
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOVerwaltung;
@@ -115,7 +114,6 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 						nameTextField.getText(), lineup.duplicate()));
 				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
 						.exportOldLineup(nameTextField.getText());
-				FileExtensionManager.extractLineup(nameTextField.getText());
 				setVisible(false);
 
 			} else {
@@ -141,7 +139,6 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
 					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
 							.exportOldLineup(nameTextField.getText());
-					FileExtensionManager.extractLineup(nameTextField.getText());
 
 					// Should prepare it for the new lineup
 					HOMainFrame.instance().getAufstellungsPanel().update();

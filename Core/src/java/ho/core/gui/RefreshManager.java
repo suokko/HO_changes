@@ -1,7 +1,6 @@
 // %1572960370:de.hattrickorganizer.gui%
 package ho.core.gui;
 
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.util.HOLogger;
 
 import java.util.Vector;
@@ -47,7 +46,6 @@ public class RefreshManager {
      * Informiert alle registrierten Objekte
      */
     public void doReInit() {
-    	FileExtensionManager.modelUpdate();
         for (int i = 0; i < m_clRefreshable.size(); i++) {
             try {
                 //no plugin
@@ -72,7 +70,6 @@ public class RefreshManager {
      * Informiert alle registrierten Objekte
      */
     public void doRefresh() {
-		FileExtensionManager.modelUpdate();
         for (int i = 0; i < m_clRefreshable.size(); i++) {
             try {
                 ((IRefreshable) m_clRefreshable.get(i)).refresh();

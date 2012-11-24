@@ -3,7 +3,6 @@ package ho.core.file.hrf;
 
 import ho.core.db.DBManager;
 import ho.core.file.ExampleFileFilter;
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.InfoPanel;
 import ho.core.gui.RefreshManager;
@@ -11,7 +10,6 @@ import ho.core.gui.model.AufstellungCBItem;
 import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.training.TrainingManager;
-import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 
@@ -150,11 +148,6 @@ public class HRFImport {
 
             HOVerwaltung.instance().loadLatestHoModel();
 
-			// Regenerate HOE Files
-			HOLogger.instance().log(getClass(),"Regenerate HOE Files");
-			FileExtensionManager.trainingUpdate();	
-			FileExtensionManager.economyUpate();
-
             final HOModel hom = HOVerwaltung.instance().getModel();
 
             //Aufstellung in liste als Aktuelle Aufstellungsetzen und als Angezeigte Aufstellung
@@ -166,24 +159,6 @@ public class HRFImport {
             		);
 
 			HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-			FileExtensionManager.extractLineup("Actual");
-            //            //nur Anzeige aktualisieren wenn neues model aktueller ist
-            //            if ( ( homodel != null ) && 
-            //            ( ( model.HOVerwaltung.instance ().getModel () == null ) ||
-            //            ( homodel.getBasics ().getDatum ().after ( model.HOVerwaltung.instance ().getModel ().getBasics ().getDatum () ) ) ) )
-            //            {
-            //                //Noch die alten Spieler hinzupacken
-            //                homodel.setAllOldSpieler ( database.DBZugriff.instance ().getAllSpieler () );
-            //                //Spielplan übernehmen!
-            //                homodel.setSpielplan ( model.HOVerwaltung.instance().getModel ().getSpielplan () );  
-            //                //Letzet Importierte Anzeigen
-            //                model.HOVerwaltung.instance().setModel( homodel );
-            //                //Subskills berechnen !
-            //                homodel.calcSubskills();
-            //                //Aufstellung in liste als Aktuelle Aufstellungsetzen und als Angezeigte Aufstellung
-            //                gui.aufstellung.AufstellungsVergleichHistoryPanel.setHRFAufstellung ( homodel.getAufstellung (), homodel.getLastAufstellung () );
-            //                gui.aufstellung.AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung ( new gui.model.AufstellungCBItem( model.HOVerwaltung.instance().getLanguageString("AktuelleAufstellung") , homodel.getAufstellung () ) );                
-            //            }
             //Refreshen aller Fenster
             RefreshManager.instance().doReInit();
         }

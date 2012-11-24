@@ -1,6 +1,5 @@
 package ho.module.lineup;
 
-import ho.core.file.extension.FileExtensionManager;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.Updateable;
 import ho.core.gui.theme.HOIconName;
@@ -140,7 +139,6 @@ public class LineupPanel extends ho.core.gui.comp.panel.ImagePanel {
 		ho.core.gui.HOMainFrame.instance().getSpielerUebersichtPanel().refresh();
 
 		aufstellungsPositionsPanel.exportOldLineup("Actual");
-		FileExtensionManager.extractLineup("Actual");
 		fireUpdate();
 	}
 
