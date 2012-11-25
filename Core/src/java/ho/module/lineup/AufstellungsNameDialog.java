@@ -102,8 +102,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 			}
 
 			if (checkName(nameTextField.getText(), true)) {
-				lineup.save(nameTextField.getText());
-				ho.core.gui.HOMainFrame
+				HOMainFrame
 						.instance()
 						.getInfoPanel()
 						.setLangInfoText(
@@ -112,8 +111,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 										+ HOVerwaltung.instance().getLanguageString("gespeichert"));
 				AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(
 						nameTextField.getText(), lineup.duplicate()));
-				HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
-						.exportOldLineup(nameTextField.getText());
+				saveLineup(lineup, nameTextField.getText());
 				setVisible(false);
 
 			} else {
@@ -122,7 +120,6 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 						JOptionPane.YES_NO_OPTION);
 
 				if (value == JOptionPane.YES_OPTION) {
-					lineup.save(nameTextField.getText());
 					HOMainFrame
 							.instance()
 							.getInfoPanel()
@@ -136,9 +133,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 					AufstellungsVergleichHistoryPanel
 							.setAngezeigteAufstellung(new AufstellungCBItem(
 									nameTextField.getText(), lineup.duplicate()));
-
-					HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
-							.exportOldLineup(nameTextField.getText());
+					saveLineup(lineup, nameTextField.getText());
 
 					// Should prepare it for the new lineup
 					HOMainFrame.instance().getAufstellungsPanel().update();
@@ -167,5 +162,11 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 		aufstellungsNamen.add(Lineup.DEFAULT_NAME);
 
 		return (!(aufstellungsNamen.contains(name)));
+	}
+
+	private void saveLineup(Lineup lineup, String name) {
+		lineup.save(nameTextField.getText());
+		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
+				.exportOldLineup(name);
 	}
 }

@@ -70,6 +70,8 @@ final class DBUpdater {
 					updateDBv14(DBVersion, version);
 				case 14:
 					updateDBv15(DBVersion, version);
+				case 15:
+					updateDBv16(DBVersion, version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -255,7 +257,7 @@ final class DBUpdater {
 		}
 	}
 
-	private void updateDBv13(int DBVersion, int version) {
+	private void updateDBv13(int DBVersion, int version) throws SQLException {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSteh");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSitz");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteDach");
@@ -358,6 +360,18 @@ final class DBUpdater {
 		// version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
 			dbZugriff.saveUserParameter("DBVersion", 15);
+		}
+	}
+
+	private void updateDBv16(int DBVersion, int version) throws SQLException {
+		dbZugriff.getTable(PenaltyTakersTable.TABLENAME).createTable();
+
+		// Follow this pattern in the future. Only set db version if not
+		// development, or if the current db is more than one version old. The
+		// last update should be made during first run of a non development
+		// version.
+		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
+			dbZugriff.saveUserParameter("DBVersion", 16);
 		}
 	}
 

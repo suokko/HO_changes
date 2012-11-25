@@ -63,7 +63,7 @@ public class DBManager {
 	// Datum der TSI Umstellung. Alle Marktwerte der Spieler müssen vor dem
 	// Datum durch 1000 geteilt werden (ohne Sprachfaktor)
 	/** database version */
-	private static final int DBVersion = 15;
+	private static final int DBVersion = 16;
 
 	/** 2004-06-14 11:00:00.0 */
 	public static Timestamp TSIDATE = new Timestamp(1087203600000L);
@@ -157,7 +157,11 @@ public class DBManager {
 
 			// Do we need to create the database from scratch?
 			if (!existsDB) {
-				tempInstance.createAllTables();
+				try {
+					tempInstance.createAllTables();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
 				UserConfigurationTable configTable = (UserConfigurationTable) tempInstance
 						.getTable(UserConfigurationTable.TABLENAME);
 				configTable.store(UserParameter.instance());
@@ -223,6 +227,7 @@ public class DBManager {
 		tables.put(TAPlayerTable.TABLENAME, new TAPlayerTable(adapter));
 		tables.put(WorldDetailsTable.TABLENAME, new WorldDetailsTable(adapter));
 		tables.put(IfaMatchTable.TABLENAME, new IfaMatchTable(adapter));
+		tables.put(PenaltyTakersTable.TABLENAME, new PenaltyTakersTable(adapter));
 
 	}
 
@@ -2011,7 +2016,7 @@ public class DBManager {
 		getTable(PositionenTable.TABLENAME).delete(whereS, whereV);
 	}
 
-	private void createAllTables() {
+	private void createAllTables() throws SQLException {
 		Object[] allTables = tables.values().toArray();
 		for (int i = 0; i < allTables.length; i++) {
 			AbstractTable table = (AbstractTable) allTables[i];

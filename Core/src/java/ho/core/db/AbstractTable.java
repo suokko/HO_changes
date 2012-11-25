@@ -4,6 +4,7 @@ package ho.core.db;
 import ho.core.util.HOLogger;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 
@@ -73,10 +74,8 @@ public abstract class AbstractTable {
 
 	
 }
-	public void createTable() {
-		ResultSet rs = adapter.executeQuery("SELECT * from "+getTableName());
-		
-		if( rs == null){
+	public void createTable() throws SQLException {
+		if(!tableExists(getTableName())){
 			ColumnDescriptor[] columns = getColumns();
 			StringBuffer sql = new StringBuffer(500);
 			sql.append("CREATE ").append(getTableType());
@@ -133,5 +132,11 @@ public abstract class AbstractTable {
 	 */
 	protected void truncateTable() {
 		adapter.executeQuery("DELETE FROM "+getTableName());
+	}
+	
+	private boolean tableExists(String tableName) throws SQLException {
+		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE TABLE_NAME = '" + tableName + "'";
+		ResultSet rs = this.adapter.executeQuery(sql);
+		return rs.next();
 	}
 }
