@@ -96,7 +96,10 @@ public class PenaltyTakersView extends JPanel {
 		List<PenaltyTaker> takers = new ArrayList<PenaltyTaker>();
 		for (SpielerPosition pos : positions) {
 			if (pos.getSpielerId() != 0) {
-				takers.add(getPenaltyTaker(pos.getSpielerId()));
+				PenaltyTaker taker = getPenaltyTaker(pos.getSpielerId());
+				if (taker != null) {
+					takers.add(taker);
+				}
 			}
 		}
 		getPlayersTableModel().removeAll(takers);
