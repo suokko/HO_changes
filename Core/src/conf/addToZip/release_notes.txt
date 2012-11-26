@@ -34,11 +34,11 @@ Changelist HO! 1.432
 - Special Events
 	. got a lot of improvments (esp. the filter)
 
-- Lazy initialization/refresh 
-	. The content of each tab is now loaded not before the tab is opened for the first time. Analogous, 
-	  if the content of a tab needs to be refreshed, it is only refreshed if the tab is currently showing. 
-	  If it's not showing, it will be refreshed as soon as it gets shown. This works (at the moment) for 
-	  all tabs except lineup, players, transfers. Lazy initialization/refresh will noticeable (depending 
+- Lazy initialization/refresh
+	. The content of each tab is now loaded not before the tab is opened for the first time. Analogous,
+	  if the content of a tab needs to be refreshed, it is only refreshed if the tab is currently showing.
+	  If it's not showing, it will be refreshed as soon as it gets shown. This works (at the moment) for
+	  all tabs except lineup, players, transfers. Lazy initialization/refresh will noticeable (depending
 	  on the number of modules you are using) decrease startup time and reduce the memory footprint of the application.
 
 - Added Tournament matches.
@@ -70,6 +70,7 @@ Language updates:
 - Updated Galego translations (thx GZ-grobas).
 - Updated German translations (thx Werder0405).
 - Updated Hangul (Korean) translations (thx SI-CH).
+- Updated Lithuanian translations (thx LA-MJ).
 - Updated Nederlands translations (thx BrammieG).
 - Updated Portugues translations (thx a_cardoso).
 - Updated Romanian translations (thx DragosE).
