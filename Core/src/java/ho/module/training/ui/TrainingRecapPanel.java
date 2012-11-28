@@ -70,6 +70,8 @@ public class TrainingRecapPanel extends LazyPanel {
 	 */
 	private void reload() {
 		// empty the table
+		this.tableModel.removeAllRows();
+		
 		List<String> columns = getColumns();
 		List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 
@@ -119,6 +121,7 @@ public class TrainingRecapPanel extends LazyPanel {
 		for (Vector<String> row : players) {
 			tableModel.addRow(row);
 		}
+		this.tableModel.fireTableDataChanged();
 	}
 
 	private void addListeners() {
@@ -140,6 +143,8 @@ public class TrainingRecapPanel extends LazyPanel {
 			public void modelChanged(ModelChange change) {
 				if (change == ModelChange.ACTIVE_PLAYER) {
 					selectPlayerFromModel();
+				} else {
+					reload();
 				}
 			}
 		});
