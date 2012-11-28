@@ -14,33 +14,15 @@ import java.util.Date;
  * @author Marco Senn
  */
 public class HOLogger {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 	private static HOLogger clLogger;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int DEBUG = 0;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int INFORMATION = 1;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int WARNING = 2;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int ERROR = 3;
-
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	/** TODO Missing Parameter Documentation */
-	FileWriter logWriter = null;
+	private FileWriter logWriter;
 	private int logLevel = WARNING;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 
 	/**
 	 * Creates a new instance of Logger
@@ -81,14 +63,6 @@ public class HOLogger {
 		}
 	}
 	
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public static HOLogger instance() {
 		if (clLogger == null) {
 			clLogger = new HOLogger();
@@ -97,33 +71,14 @@ public class HOLogger {
 		return clLogger;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param i
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void setLogLevel(int i) {
 		logLevel = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getLogLevel() {
 		return logLevel;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param caller
-	 *            TODO Missing Method Parameter Documentation
-	 * @param obj
-	 *            TODO Missing Constructuor Parameter Documentation
-	 */
 	public void log(Class<?> caller, Object obj) {
 		logMessage(caller, obj, DEBUG);
 	}
@@ -144,14 +99,6 @@ public class HOLogger {
 		logMessage(caller, obj, DEBUG);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param caller
-	 *            TODO Missing Method Parameter Documentation
-	 * @param e
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void log(Class<?> caller, Throwable e) {
 		logMessage(caller, e.toString(), ERROR);
 
@@ -161,16 +108,6 @@ public class HOLogger {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param caller
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param text
-	 *            TODO Missing Method Parameter Documentation
-	 * @param level
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	private void logMessage(Class<?> caller, Object obj, int level) {
 
 		String msg;
@@ -215,12 +152,6 @@ public class HOLogger {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @throws Throwable
-	 *             TODO Missing Method Exception Documentation
-	 */
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
