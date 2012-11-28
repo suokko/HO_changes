@@ -271,8 +271,7 @@ final class DBUpdater {
 				.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
 
 		// Transfers-plugin
-		ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TRANSFERS_TRANSFERS");
-		if (rs == null) {
+		if (!tableExists("TRANSFERS_TRANSFERS")) {
 			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
 			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
 		} else {
@@ -283,8 +282,7 @@ final class DBUpdater {
 		}
 
 		// TeamAnalyzer-plugin
-		rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_FAVORITES");
-		if (rs == null) {
+		if (!tableExists("TEAMANALYZER_FAVORITES")) {
 			dbZugriff.getTable(TAFavoriteTable.TABLENAME).createTable();
 			dbZugriff.getTable(TAPlayerTable.TABLENAME).createTable();
 		} else {
@@ -297,12 +295,13 @@ final class DBUpdater {
 		ModuleConfigTable mConfigTable = (ModuleConfigTable) dbZugriff
 				.getTable(ModuleConfigTable.TABLENAME);
 		mConfigTable.createTable();
-		rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
+		ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
 		HashMap<String, Object> tmp = new HashMap<String, Object>();
 		if (rs != null) {
 			try {
-				while (rs.next())
+				while (rs.next()) {
 					tmp.put("TA_" + rs.getString("NAME"), Boolean.valueOf(rs.getBoolean("VALUE")));
+				}
 				mConfigTable.saveConfig(tmp);
 			} catch (SQLException e) {
 				HOLogger.instance().warning(this.getClass(), e);
@@ -310,12 +309,13 @@ final class DBUpdater {
 		}
 		m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");
 		dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
-		rs = m_clJDBCAdapter.executeQuery("Select * from PLUGIN_IFA_MATCHES_2");
-		if (rs == null)
+		
+		if (!tableExists("PLUGIN_IFA_MATCHES_2")) {
 			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
-		else
+		} else {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "
 					+ IfaMatchTable.TABLENAME);
+		}
 
 		// Follow this pattern in the future. Only set db version if not
 		// development, or if the current db is more than one version old. The
@@ -561,6 +561,12 @@ final class DBUpdater {
 				+ "' AND COLUMN_NAME = '"
 				+ columnName.toUpperCase()
 				+ "'";
+		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
+		return rs.next();
+	}
+	
+	private boolean tableExists(String tableName) throws SQLException {
+		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE TABLE_NAME = '" + tableName + "'";
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
 	}
