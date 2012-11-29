@@ -365,12 +365,6 @@ final class DBUpdater {
 			m_clJDBCAdapter
 					.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
 		}
-		if (tableExists("IFA_MATCH")) {
-			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");
-		}
-		if (!tableExists(IfaMatchTable.TABLENAME)) {
-			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
-		}
 		
 		// Follow this pattern in the future. Only set db version if not
 		// development, or if the current db is more than one version old. The
@@ -382,7 +376,15 @@ final class DBUpdater {
 	}
 
 	private void updateDBv16(int DBVersion, int version) throws SQLException {
-		dbZugriff.getTable(PenaltyTakersTable.TABLENAME).createTable();
+		if (tableExists("IFA_MATCH")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");
+		}
+		if (!tableExists(IfaMatchTable.TABLENAME)) {
+			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
+		}
+		if (!tableExists(PenaltyTakersTable.TABLENAME)) {
+			dbZugriff.getTable(PenaltyTakersTable.TABLENAME).createTable();
+		}
 
 		// Follow this pattern in the future. Only set db version if not
 		// development, or if the current db is more than one version old. The
