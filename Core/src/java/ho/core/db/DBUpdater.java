@@ -240,7 +240,10 @@ final class DBUpdater {
 		m_clJDBCAdapter
 				.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartBehaviour = -1 WHERE StartBehaviour IS NULL");
 
-		dbZugriff.getTable(MatchSubstitutionTable.TABLENAME).createTable();
+		if (!tableExists(MatchSubstitutionTable.TABLENAME)) {
+			dbZugriff.getTable(MatchSubstitutionTable.TABLENAME).createTable();
+		}	
+
 		m_clJDBCAdapter
 				.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
 		m_clJDBCAdapter
@@ -271,30 +274,34 @@ final class DBUpdater {
 				.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
 
 		// Transfers-plugin
-		if (!tableExists("TRANSFERS_TRANSFERS")) {
-			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
-			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
-		} else {
+		if (tableExists("TRANSFERS_TRANSFERS")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TRANSFERS RENAME TO "
 					+ TransferTable.TABLENAME);
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TYPE RENAME TO "
 					+ TransferTypeTable.TABLENAME);
 		}
+		if (!tableExists(TransferTable.TABLENAME)) {
+			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
+			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
+		}
 
 		// TeamAnalyzer-plugin
-		if (!tableExists("TEAMANALYZER_FAVORITES")) {
-			dbZugriff.getTable(TAFavoriteTable.TABLENAME).createTable();
-			dbZugriff.getTable(TAPlayerTable.TABLENAME).createTable();
-		} else {
+		if (tableExists("TEAMANALYZER_FAVORITES")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_FAVORITES RENAME TO "
 					+ TAFavoriteTable.TABLENAME);
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_PLAYERDATA RENAME TO "
 					+ TAPlayerTable.TABLENAME);
 		}
+		if (!tableExists(TAFavoriteTable.TABLENAME)) {
+			dbZugriff.getTable(TAFavoriteTable.TABLENAME).createTable();
+			dbZugriff.getTable(TAPlayerTable.TABLENAME).createTable();
+		}
 
 		ModuleConfigTable mConfigTable = (ModuleConfigTable) dbZugriff
 				.getTable(ModuleConfigTable.TABLENAME);
-		mConfigTable.createTable();
+		if (!tableExists(ModuleConfigTable.TABLENAME)) {
+			mConfigTable.createTable();
+		}
 		ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
 		HashMap<String, Object> tmp = new HashMap<String, Object>();
 		if (rs != null) {
@@ -307,14 +314,23 @@ final class DBUpdater {
 				HOLogger.instance().warning(this.getClass(), e);
 			}
 		}
-		m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");
-		dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
 		
-		if (!tableExists("PLUGIN_IFA_MATCHES_2")) {
+		// IFA module
+		if (tableExists("PLUGIN_IFA_TEAM")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");	
+		}
+		if (tableExists("PLUGIN_IFA_MATCHES_2")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_MATCHES_2");	
+		}
+		if (tableExists("IFA_MATCH")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");	
+		}		
+		if (!tableExists(IfaMatchTable.TABLENAME)) {
 			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
-		} else {
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE PLUGIN_IFA_MATCHES_2 RENAME TO "
-					+ IfaMatchTable.TABLENAME);
+		}		
+		
+		if (!tableExists(WorldDetailsTable.TABLENAME)) {
+			dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
 		}
 
 		// Follow this pattern in the future. Only set db version if not
@@ -419,7 +435,6 @@ final class DBUpdater {
 		}
 
 		if (lastConfigUpdate < 1.429 || (HO.isDevelopment() && lastConfigUpdate == 1.429)) {
-
 			// Lets not reset poor user's custom training setting each time they
 			// start...
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.429...");
@@ -427,7 +442,6 @@ final class DBUpdater {
 		}
 
 		if (lastConfigUpdate < 1.431 || (HO.isDevelopment() && lastConfigUpdate == 1.431)) {
-
 			HOLogger.instance().log(getClass(), "Updating configuration to version 1.431...");
 			updateConfigTo1431(HO.isDevelopment() && lastConfigUpdate == 1.431);
 		}
@@ -564,9 +578,10 @@ final class DBUpdater {
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
 	}
-	
+
 	private boolean tableExists(String tableName) throws SQLException {
-		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE TABLE_NAME = '" + tableName + "'";
+		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE TABLE_NAME = '"
+				+ tableName + "'";
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
 	}

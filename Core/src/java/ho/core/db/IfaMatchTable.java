@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class IfaMatchTable extends AbstractTable {
 
-	public final static String TABLENAME = "IFA_MATCH";
+	public final static String TABLENAME = "IFA_MATCHES";
 
 	IfaMatchTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
