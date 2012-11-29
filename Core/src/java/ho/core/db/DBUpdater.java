@@ -207,47 +207,56 @@ final class DBUpdater {
 	 * Update database to version 12.
 	 */
 	private void updateDBv12(int DBVersion, int version) throws Exception {
-		m_clJDBCAdapter
-				.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE BASICS ADD COLUMN HasSupporter BOOLEAN");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE BASICS SET HasSupporter = 'false' WHERE HasSupporter IS NULL");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN Loyalty INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SPIELER SET Loyalty = 0 WHERE Loyalty IS NULL");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN HomeGrown BOOLEAN");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE SPIELER SET HomeGrown = 'false' WHERE HomeGrown IS NULL");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN Loyalty INTEGER");
-		m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET Loyalty = 0 WHERE Loyalty IS NULL");
-
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN MotherClub BOOLEAN");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE SCOUT SET MotherClub = 'false' WHERE MotherClub IS NULL");
-
-		m_clJDBCAdapter
-				.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartPosition INTEGER");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartPosition = -1 WHERE StartPosition IS NULL");
-
-		m_clJDBCAdapter
-				.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartBehaviour INTEGER");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartBehaviour = -1 WHERE StartBehaviour IS NULL");
-
+		if (!columnExistsInTable("RatingStarsEndOfMatch", "MATCHLINEUPPLAYER")) {
+			m_clJDBCAdapter
+					.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN RatingStarsEndOfMatch REAL");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE MATCHLINEUPPLAYER SET RatingStarsEndOfMatch = -1 WHERE RatingStarsEndOfMatch IS NULL");
+		}
+		if (!columnExistsInTable("HasSupporter", "BASICS")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE BASICS ADD COLUMN HasSupporter BOOLEAN");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE BASICS SET HasSupporter = 'false' WHERE HasSupporter IS NULL");
+		}
+		if (!columnExistsInTable("Loyalty", "SPIELER")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN Loyalty INTEGER");
+			m_clJDBCAdapter.executeUpdate("UPDATE SPIELER SET Loyalty = 0 WHERE Loyalty IS NULL");
+		}
+		if (!columnExistsInTable("HomeGrown", "SPIELER")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER ADD COLUMN HomeGrown BOOLEAN");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE SPIELER SET HomeGrown = 'false' WHERE HomeGrown IS NULL");
+		}
+		if (!columnExistsInTable("Loyalty", "SCOUT")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN Loyalty INTEGER");
+			m_clJDBCAdapter.executeUpdate("UPDATE SCOUT SET Loyalty = 0 WHERE Loyalty IS NULL");
+		}
+		if (!columnExistsInTable("MotherClub", "SCOUT")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE SCOUT ADD COLUMN MotherClub BOOLEAN");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE SCOUT SET MotherClub = 'false' WHERE MotherClub IS NULL");
+		}
+		if (!columnExistsInTable("StartPosition", "MATCHLINEUPPLAYER")) {
+			m_clJDBCAdapter
+					.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartPosition INTEGER");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartPosition = -1 WHERE StartPosition IS NULL");
+		}
+		if (!columnExistsInTable("StartBehaviour", "MATCHLINEUPPLAYER")) {
+			m_clJDBCAdapter
+					.executeUpdate("ALTER TABLE MATCHLINEUPPLAYER ADD COLUMN StartBehaviour INTEGER");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE MATCHLINEUPPLAYER SET StartBehaviour = -1 WHERE StartBehaviour IS NULL");
+		}
 		if (!tableExists(MatchSubstitutionTable.TABLENAME)) {
 			dbZugriff.getTable(MatchSubstitutionTable.TABLENAME).createTable();
-		}	
-
-		m_clJDBCAdapter
-				.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
-		m_clJDBCAdapter
-				.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
+		}
+		if (!columnExistsInTable("LineupName", "MATCHSUBSTITUTION")) {
+			m_clJDBCAdapter
+					.executeUpdate("ALTER TABLE MATCHSUBSTITUTION ADD COLUMN LineupName VARCHAR");
+			m_clJDBCAdapter
+					.executeUpdate("UPDATE MATCHSUBSTITUTION SET LineupName = 'D' WHERE LineupName IS NULL");
+		}
 
 		// Follow this pattern in the future. Only set db version if not
 		// development, or
@@ -314,21 +323,14 @@ final class DBUpdater {
 				HOLogger.instance().warning(this.getClass(), e);
 			}
 		}
-		
+
 		// IFA module
 		if (tableExists("PLUGIN_IFA_TEAM")) {
-			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");	
+			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_TEAM");
 		}
 		if (tableExists("PLUGIN_IFA_MATCHES_2")) {
-			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_MATCHES_2");	
+			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_MATCHES_2");
 		}
-		if (tableExists("IFA_MATCH")) {
-			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");	
-		}		
-		if (!tableExists(IfaMatchTable.TABLENAME)) {
-			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
-		}		
-		
 		if (!tableExists(WorldDetailsTable.TABLENAME)) {
 			dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
 		}
@@ -342,21 +344,16 @@ final class DBUpdater {
 		}
 	}
 
-	private void updateDBv14(int DBVersion, int version) {
+	private void updateDBv14(int DBVersion, int version) throws SQLException {
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sSpezialitaet");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sCharakter");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
 		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
 
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
-		/*
-		 * Make sure there is no old IFA_MATCH entries to avoid showing matches
-		 * from previous owners.
-		 */
-		m_clJDBCAdapter.executeUpdate("DELETE FROM IFA_MATCH");
+		if (!columnExistsInTable("ActivationDate", "basics")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+		}
 
-		// No more DB changes to version 14 because we delete all entries from
-		// IFA_MATCH
 		dbZugriff.saveUserParameter("DBVersion", 14);
 	}
 
@@ -364,12 +361,17 @@ final class DBUpdater {
 		if (hasPrimaryKey("ta_player")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE ta_player DROP PRIMARY KEY");
 		}
-		m_clJDBCAdapter
-				.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
-		if (!columnExistsInTable("ActivationDate", "basics")) {
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+		if (!indexExists("ITA_PLAYER_PLAYERID_WEEK", "ta_player")) {
+			m_clJDBCAdapter
+					.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
 		}
-
+		if (tableExists("IFA_MATCH")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");
+		}
+		if (!tableExists(IfaMatchTable.TABLENAME)) {
+			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
+		}
+		
 		// Follow this pattern in the future. Only set db version if not
 		// development, or if the current db is more than one version old. The
 		// last update should be made during first run of a non development
@@ -390,7 +392,7 @@ final class DBUpdater {
 			dbZugriff.saveUserParameter("DBVersion", 16);
 		}
 	}
-
+	
 	/**
 	 * Automatic update of User Configuration parameters
 	 * 
@@ -581,7 +583,14 @@ final class DBUpdater {
 
 	private boolean tableExists(String tableName) throws SQLException {
 		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES WHERE TABLE_NAME = '"
-				+ tableName + "'";
+				+ tableName.toUpperCase() + "'";
+		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
+		return rs.next();
+	}
+
+	private boolean indexExists(String indexName, String tableName) throws SQLException {
+		String sql = "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO WHERE INDEX_NAME = '"
+				+ indexName.toUpperCase() + "' AND TABLE_NAME = '" + tableName.toUpperCase() + "'";
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
 	}
