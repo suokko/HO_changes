@@ -3,6 +3,7 @@ package ho.module.lineup.exchange;
 import ho.core.db.DBManager;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
+import ho.core.gui.comp.panel.LazyPanel;
 import ho.core.gui.comp.renderer.DateTimeTableCellRenderer;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -46,7 +47,7 @@ import javax.swing.table.TableColumn;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class UploadDownloadPanel extends JPanel {
+public class UploadDownloadPanel extends LazyPanel {
 
 	private static final long serialVersionUID = -5314050322847463180L;
 	private JTable matchesTable;
@@ -55,12 +56,20 @@ public class UploadDownloadPanel extends JPanel {
 	private JButton refreshButton;
 	private boolean supporter;
 
-	public UploadDownloadPanel() {
+	@Override
+	protected void initialize() {
 		this.supporter = HOVerwaltung.instance().getModel().getBasics().isHasSupporter();
 		initComponents();
 		addListeners();
+		setNeedsRefresh(true);
+		registerRefreshable(true);
 	}
 
+	@Override
+	protected void update() {
+		((MatchesTableModel) this.matchesTable.getModel()).setData(getMatchesFromDB());
+	}
+	
 	private void initComponents() {
 		this.refreshButton = new JButton(HOVerwaltung.instance().getLanguageString(
 				"lineup.upload.btn.refresh"));
@@ -93,7 +102,7 @@ public class UploadDownloadPanel extends JPanel {
 
 		GUIUtils.equalizeComponentSizes(this.refreshButton, this.uploadButton, this.downloadButton);
 
-		MatchesTableModel model = new MatchesTableModel(getMatchesFromDB());
+		MatchesTableModel model = new MatchesTableModel();
 		this.matchesTable = new JTable();
 		this.matchesTable.setModel(model);
 		this.matchesTable.setAutoCreateRowSorter(true);
