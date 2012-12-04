@@ -33,7 +33,7 @@ public class TrainingModel {
 						.getSpielerID())) {
 			this.activePlayer = player;
 			this.skillupManager = null;
-			this.futureTrainingManager = null;
+			resetFutureTrainings_();
 			fireModelChanged(ModelChange.ACTIVE_PLAYER);
 		}
 	}
@@ -45,7 +45,7 @@ public class TrainingModel {
 	public void setNumberOfCoTrainers(int numberOfCoTrainers) {
 		if (this.numberOfCoTrainers != numberOfCoTrainers) {
 			this.numberOfCoTrainers = numberOfCoTrainers;
-			this.futureTrainingManager = null;
+			resetFutureTrainings_();
 			fireModelChanged(ModelChange.NUMBER_OF_CO_TRAINERS);
 		}
 	}
@@ -57,7 +57,7 @@ public class TrainingModel {
 	public void setTrainerLevel(int trainerLevel) {
 		if (this.trainerLevel != trainerLevel) {
 			this.trainerLevel = trainerLevel;
-			this.futureTrainingManager = null;
+			resetFutureTrainings_();
 			fireModelChanged(ModelChange.TRAINER_LEVEL);
 		}
 	}
@@ -148,6 +148,16 @@ public class TrainingModel {
 					this.numberOfCoTrainers, this.trainerLevel);
 		}
 		return this.futureTrainingManager;
+	}
+	
+	public void resetFutureTrainings() {
+		resetFutureTrainings_();
+		fireModelChanged(ModelChange.FUTURE_TRAINING);
+	}
+	
+	private void resetFutureTrainings_() {
+		this.futureTrainings = null;
+		this.futureTrainingManager = null;
 	}
 
 	private void fireModelChanged(ModelChange change) {

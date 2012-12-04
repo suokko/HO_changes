@@ -9,6 +9,8 @@ import ho.module.training.ui.comp.FutureSettingPanel;
 import ho.module.training.ui.comp.IntensityComboBox;
 import ho.module.training.ui.comp.TrainingComboBox;
 import ho.module.training.ui.model.FutureTrainingsTableModel;
+import ho.module.training.ui.model.ModelChange;
+import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.PastTrainingsTableModel;
 import ho.module.training.ui.model.TrainingModel;
 
@@ -86,6 +88,16 @@ public class TrainingPanel extends JPanel {
 
 		this.splitPane.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
 				new DividerListener(DividerListener.training_pastFutureTrainingsSplitPane));
+
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (change == ModelChange.FUTURE_TRAINING) {
+					reload();
+				}
+			}
+		});
 	}
 
 	/**

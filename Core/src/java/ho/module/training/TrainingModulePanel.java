@@ -42,6 +42,7 @@ public class TrainingModulePanel extends LazyPanel {
 		Spieler oldPlayer = this.model.getActivePlayer();
 		// reset the selected player
 		this.model.setActivePlayer(null);
+		this.model.resetFutureTrainings();
 		// reload the staff, could have changed
 		setStaffInTrainingModel(this.model);
 

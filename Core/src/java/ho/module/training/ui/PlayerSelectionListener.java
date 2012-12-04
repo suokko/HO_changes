@@ -5,6 +5,7 @@
 package ho.module.training.ui;
 
 import ho.core.model.HOVerwaltung;
+import ho.core.util.StringUtils;
 import ho.module.training.ui.model.TrainingModel;
 
 import javax.swing.JTable;
@@ -35,8 +36,12 @@ public class PlayerSelectionListener implements ListSelectionListener {
 			int index = table.getSelectedRow();
 			if (index >= 0) {
 				String playerId = (String) table.getValueAt(index, playerIdColumn);
-				model.setActivePlayer(HOVerwaltung.instance().getModel()
-						.getSpieler(Integer.parseInt(playerId)));
+				if (StringUtils.isNumeric(playerId)) {
+					model.setActivePlayer(HOVerwaltung.instance().getModel()
+							.getSpieler(Integer.parseInt(playerId)));
+				} else {
+					model.setActivePlayer(null);
+				}
 			}
 		}
 	}

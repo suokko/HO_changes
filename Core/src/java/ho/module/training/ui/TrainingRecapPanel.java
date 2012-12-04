@@ -3,8 +3,7 @@ package ho.module.training.ui;
 
 import ho.core.gui.IRefreshable;
 import ho.core.gui.RefreshManager;
-import ho.core.gui.comp.panel.ImagePanel;
-import ho.core.gui.comp.panel.LazyPanel;
+import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.gui.model.BaseTableModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
@@ -25,10 +24,10 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableModel;
 
 /**
  * Recap Panel when future preview of skillups is shown ("Prediction" tab,
@@ -36,11 +35,10 @@ import javax.swing.SwingConstants;
  * 
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
-public class TrainingRecapPanel extends LazyPanel {
+public class TrainingRecapPanel extends LazyImagePanel {
 
 	private static final long serialVersionUID = 7240288702397251461L;
 	private static final int fixedColumns = 3;
-	private BaseTableModel tableModel;
 	private TrainingRecapTable recapTable;
 	private final TrainingModel model;
 	private boolean initialized = false;
@@ -69,12 +67,142 @@ public class TrainingRecapPanel extends LazyPanel {
 	 * Reload the panel
 	 */
 	private void reload() {
-		// empty the table
-		this.tableModel.removeAllRows();
-		
-		List<String> columns = getColumns();
-		List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
+		reAddTable();
+	}
 
+	private void addListeners() {
+		RefreshManager.instance().registerRefreshable(new IRefreshable() {
+
+			@Override
+			public void refresh() {
+				if (isShowing()) {
+					reload();
+				} else {
+					needsRefresh = true;
+				}
+			}
+		});
+
+		this.model.addModelChangeListener(new ModelChangeListener() {
+
+			@Override
+			public void modelChanged(ModelChange change) {
+				if (change == ModelChange.ACTIVE_PLAYER) {
+					selectPlayerFromModel();
+				} else {
+					// reload();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Get Columns name
+	 * 
+	 * @return List of string
+	 */
+	private Vector<String> getColumns() {
+		Vector<String> columns = new Vector<String>();
+
+		columns.add(HOVerwaltung.instance().getLanguageString("Spieler"));
+		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.age"));
+		columns.add("Speed");
+
+		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
+		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
+
+		// We are in the middle where season has not been updated!
+		try {
+			if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate()
+					.after(HOVerwaltung.instance().getModel().getXtraDaten().getSeriesMatchDate())) {
+				actualWeek++;
+
+				if (actualWeek == 17) {
+					actualWeek = 1;
+					actualSeason++;
+				}
+			}
+		} catch (Exception e1) {
+			// Null when first time HO is launched
+		}
+
+		for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
+			// calculate the week and season of the future training
+			int week = (actualWeek + i) - 1;
+			int season = actualSeason + (week / 16);
+			week = (week % 16) + 1;
+			columns.add(season + " " + week);
+		}
+
+		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.id"));
+
+		return columns;
+	}
+
+	/**
+	 * Initialize the GUI
+	 */
+	private void initComponents() {
+		setOpaque(false);
+		setLayout(new BorderLayout());
+
+		setOpaque(false);
+
+		JLabel title = new JLabel(HOVerwaltung.instance().getLanguageString("Recap"),
+				SwingConstants.CENTER);
+
+		title.setOpaque(false);
+		add(title, BorderLayout.NORTH);
+
+		// Add legend panel.
+		add(new TrainingLegendPanel(), BorderLayout.SOUTH);
+	}
+
+	private void selectPlayerFromModel() {
+		this.recapTable.getLockedTable().clearSelection();
+		Spieler player = this.model.getActivePlayer();
+		if (player != null) {
+			for (int i = 0; i < this.recapTable.getLockedTable().getRowCount(); i++) {
+				String name = (String) this.recapTable.getLockedTable().getValueAt(i, 0);
+				if (player.getName().equals(name)) {
+					int viewIndex = this.recapTable.getLockedTable().convertRowIndexToView(i);
+					this.recapTable.getLockedTable().setRowSelectionInterval(viewIndex, viewIndex);
+					break;
+				}
+			}
+		}
+	}
+
+	private void reAddTable() {
+		if (recapTable != null) {
+			remove(recapTable);
+		}
+
+		JTable table = new JTable(createTableModel());
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		recapTable = new TrainingRecapTable(table, fixedColumns);
+		recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
+
+		// Hide the last column
+		JTable scrollTable = recapTable.getScrollTable();
+		int lastSTCol = scrollTable.getColumnCount() - 1;
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setPreferredWidth(0);
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMinWidth(0);
+		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMaxWidth(0);
+
+		JTable lockedTable = recapTable.getLockedTable();
+		lockedTable.getSelectionModel().addListSelectionListener(
+				new PlayerSelectionListener(this.model, scrollTable, lastSTCol));
+		recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
+		add(recapTable, BorderLayout.CENTER);
+	}
+
+	private TableModel createTableModel() {
+
+		Vector<String> columns = getColumns();
+		List<Spieler> list = HOVerwaltung.instance().getModel().getAllSpieler();
 		List<Vector<String>> players = new ArrayList<Vector<String>>();
 
 		for (Spieler player : list) {
@@ -117,143 +245,12 @@ public class TrainingRecapPanel extends LazyPanel {
 		// Sort the players
 		Collections.sort(players, new TrainingComparator(2, fixedColumns));
 
+		BaseTableModel tableModel = new BaseTableModel(new Vector<Object>(), columns);
 		// and add them to the model
 		for (Vector<String> row : players) {
 			tableModel.addRow(row);
 		}
-		this.tableModel.fireTableDataChanged();
-	}
 
-	private void addListeners() {
-		RefreshManager.instance().registerRefreshable(new IRefreshable() {
-
-			@Override
-			public void refresh() {
-				if (isShowing()) {
-					reload();
-				} else {
-					needsRefresh = true;
-				}
-			}
-		});
-
-		this.model.addModelChangeListener(new ModelChangeListener() {
-
-			@Override
-			public void modelChanged(ModelChange change) {
-				if (change == ModelChange.ACTIVE_PLAYER) {
-					selectPlayerFromModel();
-				} else {
-					reload();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Get Columns name
-	 * 
-	 * @return List of string
-	 */
-	private Vector<String> getColumns() {
-		Vector<String> columns = new Vector<String>();
-
-		columns.add(HOVerwaltung.instance().getLanguageString("Spieler")); //$NON-NLS-1$
-		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.age")); //$NON-NLS-1$
-		columns.add("Speed"); //$NON-NLS-1$
-
-		int actualSeason = HOVerwaltung.instance().getModel().getBasics().getSeason();
-		int actualWeek = HOVerwaltung.instance().getModel().getBasics().getSpieltag();
-
-		// We are in the middle where season has not been updated!
-		try {
-			if (HOVerwaltung.instance().getModel().getXtraDaten().getTrainingDate()
-					.after(HOVerwaltung.instance().getModel().getXtraDaten().getSeriesMatchDate())) {
-				actualWeek++;
-
-				if (actualWeek == 17) {
-					actualWeek = 1;
-					actualSeason++;
-				}
-			}
-		} catch (Exception e1) {
-			// Null when first time HO is launched
-		}
-
-		for (int i = 0; i < UserParameter.instance().futureWeeks; i++) {
-			// calculate the week and season of the future training
-			int week = (actualWeek + i) - 1;
-			int season = actualSeason + (week / 16);
-
-			week = (week % 16) + 1;
-
-			columns.add(season + " " + week); //$NON-NLS-1$
-		}
-
-		columns.add(HOVerwaltung.instance().getLanguageString("ls.player.id")); //$NON-NLS-1$
-
-		return columns;
-	}
-
-	/**
-	 * Initialize the GUI
-	 */
-	private void initComponents() {
-		setOpaque(false);
-		setLayout(new BorderLayout());
-
-		JPanel panel = new ImagePanel();
-		panel.setOpaque(false);
-		panel.setLayout(new BorderLayout());
-
-		JLabel title = new JLabel(HOVerwaltung.instance().getLanguageString("Recap"),
-				SwingConstants.CENTER);
-
-		title.setOpaque(false);
-		panel.add(title, BorderLayout.NORTH);
-
-		Vector<String> columns = getColumns();
-		tableModel = new BaseTableModel(new Vector<Object>(), columns);
-
-		JTable table = new JTable(tableModel);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		recapTable = new TrainingRecapTable(table, fixedColumns);
-		recapTable.getScrollTable().setDefaultRenderer(Object.class, new TrainingRecapRenderer());
-
-		JTable scrollTable = recapTable.getScrollTable();
-
-		// Hide the last column
-		int lastSTCol = scrollTable.getColumnCount() - 1;
-
-		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setPreferredWidth(0);
-		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMinWidth(0);
-		scrollTable.getTableHeader().getColumnModel().getColumn(lastSTCol).setMaxWidth(0);
-
-		JTable lockedTable = recapTable.getLockedTable();
-		lockedTable.getSelectionModel().addListSelectionListener(
-				new PlayerSelectionListener(this.model, scrollTable, lastSTCol));
-		panel.add(recapTable, BorderLayout.CENTER);
-		recapTable.getScrollTable().getTableHeader().setReorderingAllowed(false);
-
-		// Add legend panel.
-		panel.add(new TrainingLegendPanel(), BorderLayout.SOUTH);
-		add(panel, BorderLayout.CENTER);
-	}
-
-	private void selectPlayerFromModel() {
-		this.recapTable.getLockedTable().clearSelection();
-		Spieler player = this.model.getActivePlayer();
-		if (player != null) {
-			for (int i = 0; i < this.tableModel.getRowCount(); i++) {
-				String name = (String) this.tableModel.getValueAt(i, 0);
-				if (player.getName().equals(name)) {
-					int viewIndex = this.recapTable.getLockedTable().convertRowIndexToView(i);
-					this.recapTable.getLockedTable().setRowSelectionInterval(viewIndex, viewIndex);
-					break;
-				}
-			}
-		}
+		return tableModel;
 	}
 }

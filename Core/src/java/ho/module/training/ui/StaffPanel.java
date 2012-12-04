@@ -52,8 +52,8 @@ public class StaffPanel extends JPanel {
 	}
 
 	private void setTrainer(int value) {
-		if (value > 10) {
-			value = 10;
+		if (value > 7) {
+			value = 7;
 		}
 		this.trainerLevelCombo.setSelectedIndex(value);
 	}
