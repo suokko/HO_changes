@@ -65,13 +65,11 @@ final class DBUpdater {
 				case 11:
 					updateDBv12(DBVersion, version);
 				case 12:
-					updateDBv13(DBVersion, version);
 				case 13:
-					updateDBv14(DBVersion, version);
 				case 14:
-					updateDBv15(DBVersion, version);
 				case 15:
-					updateDBv16(DBVersion, version);
+				case 16:
+					updateDBTo1432(DBVersion, version);
 				}
 
 				HOLogger.instance().log(getClass(), "done.");
@@ -269,12 +267,27 @@ final class DBUpdater {
 		}
 	}
 
-	private void updateDBv13(int DBVersion, int version) throws SQLException {
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSteh");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteSitz");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteDach");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE STADION DROP VerkaufteLogen");
-		m_clJDBCAdapter.executeUpdate("DROP INDEX ISTADION_1");
+	/**
+	 * Updates the database to the 1.432 release. This method might be executed
+	 * multiple times (since there are beta releases) so make sure that every
+	 * statement added here CAN be exceuted multiple times.
+	 * 
+	 * @param DBVersion
+	 * @param version
+	 * @throws SQLException
+	 */
+	private void updateDBTo1432(int DBVersion, int version) throws SQLException {
+		// Stadion table
+		if (tableExists("STADION")) {
+			dropColumn("STADION", "VerkaufteSteh");
+			dropColumn("STADION", "VerkaufteSitz");
+			dropColumn("STADION", "VerkaufteDach");
+			dropColumn("STADION", "VerkaufteLogen");
+			if (indexExists("ISTADION_1", "STADION")) {
+				m_clJDBCAdapter.executeUpdate("DROP INDEX ISTADION_1");
+			}
+		}
+
 		m_clJDBCAdapter
 				.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='einzelnePositionenAnzeigen'");
 		m_clJDBCAdapter
@@ -282,15 +295,24 @@ final class DBUpdater {
 		m_clJDBCAdapter
 				.executeUpdate("DELETE FROM USERCONFIGURATION WHERE CONFIG_KEY='tempTabArenasizer'");
 
+		// MODULE_CONFIGURATION table
+		if (!tableExists(ModuleConfigTable.TABLENAME)) {
+			dbZugriff.getTable(ModuleConfigTable.TABLENAME).createTable();
+		}
+
 		// Transfers-plugin
 		if (tableExists("TRANSFERS_TRANSFERS")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TRANSFERS RENAME TO "
 					+ TransferTable.TABLENAME);
+		}
+		if (tableExists("TRANSFERS_TYPE")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TRANSFERS_TYPE RENAME TO "
 					+ TransferTypeTable.TABLENAME);
 		}
 		if (!tableExists(TransferTable.TABLENAME)) {
 			dbZugriff.getTable(TransferTable.TABLENAME).createTable();
+		}
+		if (!tableExists(TransferTypeTable.TABLENAME)) {
 			dbZugriff.getTable(TransferTypeTable.TABLENAME).createTable();
 		}
 
@@ -298,30 +320,44 @@ final class DBUpdater {
 		if (tableExists("TEAMANALYZER_FAVORITES")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_FAVORITES RENAME TO "
 					+ TAFavoriteTable.TABLENAME);
+		}
+		if (tableExists("TEAMANALYZER_PLAYERDATA")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE TEAMANALYZER_PLAYERDATA RENAME TO "
 					+ TAPlayerTable.TABLENAME);
 		}
 		if (!tableExists(TAFavoriteTable.TABLENAME)) {
 			dbZugriff.getTable(TAFavoriteTable.TABLENAME).createTable();
+		}
+		if (!tableExists(TAPlayerTable.TABLENAME)) {
 			dbZugriff.getTable(TAPlayerTable.TABLENAME).createTable();
 		}
 
-		ModuleConfigTable mConfigTable = (ModuleConfigTable) dbZugriff
-				.getTable(ModuleConfigTable.TABLENAME);
-		if (!tableExists(ModuleConfigTable.TABLENAME)) {
-			mConfigTable.createTable();
+		if (hasPrimaryKey(TAPlayerTable.TABLENAME)) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE " + TAPlayerTable.TABLENAME
+					+ " DROP PRIMARY KEY");
 		}
-		ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
-		HashMap<String, Object> tmp = new HashMap<String, Object>();
-		if (rs != null) {
-			try {
-				while (rs.next()) {
-					tmp.put("TA_" + rs.getString("NAME"), Boolean.valueOf(rs.getBoolean("VALUE")));
+		if (!indexExists("ITA_PLAYER_PLAYERID_WEEK", TAPlayerTable.TABLENAME)) {
+			m_clJDBCAdapter.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON "
+					+ TAPlayerTable.TABLENAME + " (playerid, week)");
+		}
+
+		if (tableExists("TEAMANALYZER_SETTINGS")) {
+			ModuleConfigTable mConfigTable = (ModuleConfigTable) dbZugriff
+					.getTable(ModuleConfigTable.TABLENAME);
+			ResultSet rs = m_clJDBCAdapter.executeQuery("Select * from TEAMANALYZER_SETTINGS");
+			if (rs != null) {
+				try {
+					HashMap<String, Object> tmp = new HashMap<String, Object>();
+					while (rs.next()) {
+						tmp.put("TA_" + rs.getString("NAME"),
+								Boolean.valueOf(rs.getBoolean("VALUE")));
+					}
+					mConfigTable.saveConfig(tmp);
+				} catch (SQLException e) {
+					HOLogger.instance().warning(this.getClass(), e);
 				}
-				mConfigTable.saveConfig(tmp);
-			} catch (SQLException e) {
-				HOLogger.instance().warning(this.getClass(), e);
 			}
+			m_clJDBCAdapter.executeUpdate("DROP TABLE TEAMANALYZER_SETTINGS");
 		}
 
 		// IFA module
@@ -331,57 +367,27 @@ final class DBUpdater {
 		if (tableExists("PLUGIN_IFA_MATCHES_2")) {
 			m_clJDBCAdapter.executeUpdate("DROP TABLE PLUGIN_IFA_MATCHES_2");
 		}
-		if (!tableExists(WorldDetailsTable.TABLENAME)) {
-			dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
-		}
-
-		// Follow this pattern in the future. Only set db version if not
-		// development, or if the current db is more than one version old. The
-		// last update should be made during first run of a non development
-		// version.
-		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
-			dbZugriff.saveUserParameter("DBVersion", 13);
-		}
-	}
-
-	private void updateDBv14(int DBVersion, int version) throws SQLException {
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sSpezialitaet");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sCharakter");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAnsehen");
-		m_clJDBCAdapter.executeUpdate("ALTER TABLE SPIELER DROP COLUMN  sAgressivitaet");
-
-		if (!columnExistsInTable("ActivationDate", "basics")) {
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
-		}
-
-		dbZugriff.saveUserParameter("DBVersion", 14);
-	}
-
-	private void updateDBv15(int DBVersion, int version) throws SQLException {
-		if (hasPrimaryKey("ta_player")) {
-			m_clJDBCAdapter.executeUpdate("ALTER TABLE ta_player DROP PRIMARY KEY");
-		}
-		if (!indexExists("ITA_PLAYER_PLAYERID_WEEK", "ta_player")) {
-			m_clJDBCAdapter
-					.executeUpdate("CREATE INDEX ITA_PLAYER_PLAYERID_WEEK ON ta_player (playerid, week)");
-		}
-		
-		// Follow this pattern in the future. Only set db version if not
-		// development, or if the current db is more than one version old. The
-		// last update should be made during first run of a non development
-		// version.
-		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
-			dbZugriff.saveUserParameter("DBVersion", 15);
-		}
-	}
-
-	private void updateDBv16(int DBVersion, int version) throws SQLException {
 		if (tableExists("IFA_MATCH")) {
 			m_clJDBCAdapter.executeUpdate("DROP TABLE IFA_MATCH");
 		}
 		if (!tableExists(IfaMatchTable.TABLENAME)) {
 			dbZugriff.getTable(IfaMatchTable.TABLENAME).createTable();
 		}
+
+		if (!tableExists(WorldDetailsTable.TABLENAME)) {
+			dbZugriff.getTable(WorldDetailsTable.TABLENAME).createTable();
+		}
+
+		// Spieler table
+		dropColumn("SPIELER", "sSpezialitaet");
+		dropColumn("SPIELER", "sCharakter");
+		dropColumn("SPIELER", "sAnsehen");
+		dropColumn("SPIELER", "sAgressivitaet");
+
+		if (!columnExistsInTable("ActivationDate", "basics")) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
+		}
+
 		if (!tableExists(PenaltyTakersTable.TABLENAME)) {
 			dbZugriff.getTable(PenaltyTakersTable.TABLENAME).createTable();
 		}
@@ -391,10 +397,10 @@ final class DBUpdater {
 		// last update should be made during first run of a non development
 		// version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
-			dbZugriff.saveUserParameter("DBVersion", 16);
+			dbZugriff.saveUserParameter("DBVersion", DBVersion);
 		}
 	}
-	
+
 	/**
 	 * Automatic update of User Configuration parameters
 	 * 
@@ -595,5 +601,11 @@ final class DBUpdater {
 				+ indexName.toUpperCase() + "' AND TABLE_NAME = '" + tableName.toUpperCase() + "'";
 		ResultSet rs = this.m_clJDBCAdapter.executeQuery(sql);
 		return rs.next();
+	}
+
+	private void dropColumn(String column, String table) throws SQLException {
+		if (columnExistsInTable(column, table)) {
+			m_clJDBCAdapter.executeUpdate("ALTER TABLE " + table + " DROP " + column);
+		}
 	}
 }
