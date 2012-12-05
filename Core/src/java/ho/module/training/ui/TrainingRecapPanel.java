@@ -90,7 +90,7 @@ public class TrainingRecapPanel extends LazyImagePanel {
 				if (change == ModelChange.ACTIVE_PLAYER) {
 					selectPlayerFromModel();
 				} else {
-					// reload();
+					reload();
 				}
 			}
 		});
