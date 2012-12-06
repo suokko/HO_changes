@@ -259,41 +259,44 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 	 */
 	@Override
 	public final void valueChanged(ListSelectionEvent listSelectionEvent) {
-		// Aufstellung markiert
-		if ((m_jlAufstellungen.getSelectedValue() != null)
-				&& m_jlAufstellungen.getSelectedValue() instanceof AufstellungCBItem) {
-			final AufstellungCBItem aufstellungCB = (AufstellungCBItem) m_jlAufstellungen
-					.getSelectedValue();
-			// "Aktuelle Aufstellung" nicht zu löschen!
-			if (aufstellungCB.getText().equals(
-					HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"))
-					|| aufstellungCB.getText().equals(
-							HOVerwaltung.instance().getLanguageString("LetzteAufstellung"))) {
-				m_jbAufstellungAnzeigen.setEnabled(true);
+		if (!listSelectionEvent.getValueIsAdjusting()) {
+			// Aufstellung markiert
+			if ((m_jlAufstellungen.getSelectedValue() != null)
+					&& m_jlAufstellungen.getSelectedValue() instanceof AufstellungCBItem) {
+				final AufstellungCBItem aufstellungCB = (AufstellungCBItem) m_jlAufstellungen
+						.getSelectedValue();
+				// "Aktuelle Aufstellung" nicht zu löschen!
+				if (aufstellungCB.getText().equals(
+						HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"))
+						|| aufstellungCB.getText().equals(
+								HOVerwaltung.instance().getLanguageString("LetzteAufstellung"))) {
+					m_jbAufstellungAnzeigen.setEnabled(true);
+					m_jbAufstellungLoeschen.setEnabled(false);
+					m_jbAufstellungSpeichern.setEnabled(true);
+				}
+				// Geladen
+				else {
+					m_jbAufstellungAnzeigen.setEnabled(true);
+					m_jbAufstellungSpeichern.setEnabled(true);
+					m_jbAufstellungLoeschen.setEnabled(true);
+				}
+				m_bVergleichAngestossen = true;
+				m_clVergleichsAufstellung = aufstellungCB.duplicate();
+				final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
+				if (old != null) { // keep the same location (home / away /
+									// derby)
+					m_clVergleichsAufstellung.getAufstellung().setLocation(old.getLocation());
+				}
+			} else { // Keine Vergleich!
+				m_jbAufstellungAnzeigen.setEnabled(false);
+				m_jbAufstellungSpeichern.setEnabled(true);
 				m_jbAufstellungLoeschen.setEnabled(false);
-				m_jbAufstellungSpeichern.setEnabled(true);
-			}
-			// Geladen
-			else {
-				m_jbAufstellungAnzeigen.setEnabled(true);
-				m_jbAufstellungSpeichern.setEnabled(true);
-				m_jbAufstellungLoeschen.setEnabled(true);
-			}
-			m_bVergleichAngestossen = true;
-			m_clVergleichsAufstellung = aufstellungCB.duplicate();
-			final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
-			if (old != null) { // keep the same location (home / away / derby)
-				m_clVergleichsAufstellung.getAufstellung().setLocation(old.getLocation());
-			}
-		} else { // Keine Vergleich!
-			m_jbAufstellungAnzeigen.setEnabled(false);
-			m_jbAufstellungSpeichern.setEnabled(true);
-			m_jbAufstellungLoeschen.setEnabled(false);
 
-			m_clVergleichsAufstellung = null;
+				m_clVergleichsAufstellung = null;
+			}
+			// gui.RefreshManager.instance ().doRefresh();
+			HOMainFrame.instance().getAufstellungsPanel().getAufstellungsDetailPanel().refresh();
 		}
-		// gui.RefreshManager.instance ().doRefresh();
-		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsDetailPanel().refresh();
 	}
 
 	/**
