@@ -26,224 +26,191 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class PlayerPanel extends JPanel {
-    //~ Instance fields ----------------------------------------------------------------------------
 
 	private static final long serialVersionUID = 1838357704496299083L;
-    protected JLabel appearanceField = new JLabel("", SwingConstants.RIGHT);
-    protected JLabel nameField = new JLabel("", SwingConstants.LEFT);
-    protected JLabel positionField = createLabel("", Color.BLACK, 0);
-    protected JLabel positionImage = new JLabel();
-    protected JLabel specialEventImage = new JLabel();
-    protected JPanel ratingPanel = new JPanel();
-    protected TacticPanel tacticPanel = new TacticPanel();
-    private JPanel mainPanel;
-    private PlayerInfoPanel infoPanel = new PlayerInfoPanel();
+	protected JLabel appearanceField = new JLabel("", SwingConstants.RIGHT);
+	protected JLabel nameField = new JLabel("", SwingConstants.LEFT);
+	protected JLabel positionField = createLabel("", Color.BLACK, 0);
+	protected JLabel positionImage = new JLabel();
+	protected JLabel specialEventImage = new JLabel();
+	protected JPanel ratingPanel = new JPanel();
+	protected TacticPanel tacticPanel = new TacticPanel();
+	private JPanel mainPanel;
+	private PlayerInfoPanel infoPanel = new PlayerInfoPanel();
 
-    protected boolean containsPlayer = false;
-    //~ Constructors -------------------------------------------------------------------------------
+	protected boolean containsPlayer = false;
 
-    /**
-     * Creates a new PlayerPanel object.
-     */
-    public PlayerPanel() {
-        setLayout(new BorderLayout());
+	/**
+	 * Creates a new PlayerPanel object.
+	 */
+	public PlayerPanel() {
+		setLayout(new BorderLayout());
 
-        Font nFont = new Font(nameField.getFont().getFontName(), Font.BOLD,
-                              nameField.getFont().getSize());
+		Font nFont = new Font(nameField.getFont().getFontName(), Font.BOLD, nameField.getFont()
+				.getSize());
 
-        nameField.setFont(nFont);
+		nameField.setFont(nFont);
 
-        JPanel details = new JPanel();
+		JPanel details = new JPanel();
 
-        details.setBorder(BorderFactory.createEtchedBorder());
-        details.setBackground(getBackGround());
-        details.setLayout(new BorderLayout());
+		details.setBorder(BorderFactory.createEtchedBorder());
+		details.setBackground(getBackGround());
+		details.setLayout(new BorderLayout());
 
-        JPanel images = new JPanel();
+		JPanel images = new JPanel();
 
-        images.setBackground(getBackGround());
-        images.setLayout(new BorderLayout());
-        images.add(positionImage, BorderLayout.WEST);
-        images.add(specialEventImage, BorderLayout.EAST);
-        details.add(images, BorderLayout.WEST);
-        details.add(nameField, BorderLayout.CENTER);
-        details.add(appearanceField, BorderLayout.EAST);
+		images.setBackground(getBackGround());
+		images.setLayout(new BorderLayout());
+		images.add(positionImage, BorderLayout.WEST);
+		images.add(specialEventImage, BorderLayout.EAST);
+		details.add(images, BorderLayout.WEST);
+		details.add(nameField, BorderLayout.CENTER);
+		details.add(appearanceField, BorderLayout.EAST);
 
-        JPanel centerPanel = new JPanel();
+		JPanel centerPanel = new JPanel();
 
-        centerPanel.setBorder(BorderFactory.createEtchedBorder());
-        centerPanel.setBackground(getBackGround());
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.add(details, BorderLayout.NORTH);
-        centerPanel.add(ratingPanel, BorderLayout.WEST);
+		centerPanel.setBorder(BorderFactory.createEtchedBorder());
+		centerPanel.setBackground(getBackGround());
+		centerPanel.setLayout(new BorderLayout());
+		centerPanel.add(details, BorderLayout.NORTH);
+		centerPanel.add(ratingPanel, BorderLayout.WEST);
 
-        if (!(this instanceof UserTeamPlayerPanel)) {
-            centerPanel.add(infoPanel, BorderLayout.SOUTH);
-        }
+		if (!(this instanceof UserTeamPlayerPanel)) {
+			centerPanel.add(infoPanel, BorderLayout.SOUTH);
+		}
 
-        mainPanel = new ImagePanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBorder(BorderFactory.createRaisedBevelBorder());
-        mainPanel.setPreferredSize(getDefaultSize());
-        mainPanel.add(positionField, BorderLayout.NORTH);
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-        mainPanel.add(tacticPanel, BorderLayout.SOUTH);
-        add(mainPanel, BorderLayout.CENTER);
-    }
+		mainPanel = new ImagePanel();
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+		mainPanel.setPreferredSize(getDefaultSize());
+		mainPanel.add(positionField, BorderLayout.NORTH);
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		mainPanel.add(tacticPanel, BorderLayout.SOUTH);
+		add(mainPanel, BorderLayout.CENTER);
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	protected Color getBackGround() {
+		return Color.WHITE;
+	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    protected Color getBackGround() {
-        return Color.WHITE;
-    }
+	public Dimension getDefaultSize() {
+		int height = 60;
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    public Dimension getDefaultSize() {
-        int height = 60;
+		if (!(this instanceof UserTeamPlayerPanel)) {
+			if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
+				height = height + 50;
+			}
+		}
 
-        if (!(this instanceof UserTeamPlayerPanel)) {
-            if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
-                height = height + 50;
-            }
-        }
+		if (ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL)) {
+			height = height + 50;
+		}
 
-        if (ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL)) {
-            height = height + 50;
-        }
-       
-        // return new Dimension(180, height); - Blaghaid
-        return new Dimension(150, height);
-    }
+		// return new Dimension(180, height); - Blaghaid
+		return new Dimension(150, height);
+	}
 
-    public boolean getContainsPlayer () {
-    	return containsPlayer;
-    }
-    
-    /**
-     * Reload and refresh data for a certain spot/player.
-     */
-    public void reload(SpotLineup lineup, int week, int season) {
-        tacticPanel.setVisible(ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL));
-        mainPanel.setPreferredSize(getDefaultSize());
+	public boolean getContainsPlayer() {
+		return containsPlayer;
+	}
 
-        if (lineup != null) {
-        	containsPlayer = true;
-        	
-            switch (lineup.getStatus()) {
-                case PlayerDataManager.INJURED:
-                    nameField.setForeground(Color.RED);
-                    break;
+	/**
+	 * Reload and refresh data for a certain spot/player.
+	 */
+	public void reload(SpotLineup lineup, int week, int season) {
+		tacticPanel.setVisible(ModuleConfig.instance().getBoolean(SystemManager.ISTACTICDETAIL));
+		mainPanel.setPreferredSize(getDefaultSize());
 
-                case PlayerDataManager.SUSPENDED:
-                    nameField.setForeground(Color.RED);
-                    break;
+		if (lineup != null) {
+			containsPlayer = true;			
 
-                case PlayerDataManager.SOLD:
-                    nameField.setForeground(Color.BLUE);
-                    break;
+			nameField.setText(getPlayerName(lineup.getName()));
+			setPlayerStatus(lineup.getStatus());
 
-                default:
-                    nameField.setForeground(Color.BLACK);
-                    break;
-            }
+			appearanceField.setText("" + lineup.getAppearance());
 
-            nameField.setText(getPlayerName(lineup.getName()));
+			if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
+				PlayerInfo pi = PlayerDataManager.getPlayerInfo(lineup.getPlayerId(), week, season);
 
-            appearanceField.setText("" + lineup.getAppearance());
+				if (pi.getAge() != 0) {
+					infoPanel.setValue(pi);
+				} else {
+					infoPanel.clearData();
+				}
 
-            if (ModuleConfig.instance().getBoolean(SystemManager.ISSHOWPLAYERINFO)) {
-                PlayerInfo pi = PlayerDataManager.getPlayerInfo(lineup.getPlayerId(), week, season);
+				infoPanel.setVisible(true);
+			}
 
-                if (pi.getAge() != 0) {
-                    infoPanel.setValue(pi);
-                } else {
-                    infoPanel.clearData();
-                }
+			int posCode = HelperWrapper.instance().getPosition(lineup.getPosition());
+			positionImage.setIcon(ImageUtilities.getImage4Position(posCode, (byte) 0, 0));
+			int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId())
+					.getSpecialEvent();
 
-                infoPanel.setVisible(true);
-            }
+			if (lineup.getPlayerId() == 0) {
+				specialEventImage.setIcon(null);
+			} else {
+				specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[specialEvent]));
+			}
 
-            int posCode =HelperWrapper.instance().getPosition(lineup.getPosition());
-            positionImage.setIcon(ImageUtilities.getImage4Position(posCode, (byte) 0,0));
-            int specialEvent = PlayerDataManager.getLatestPlayerInfo(lineup.getPlayerId()).getSpecialEvent();
+			positionField.setText(SpielerPosition.getNameForPosition((byte) lineup.getPosition()));
+			updateRatingPanel(lineup.getRating());
+			tacticPanel.reload(lineup.getTactics());
+		} else {
+			containsPlayer = false;
 
-            if (lineup.getPlayerId() == 0) {
-                specialEventImage.setIcon(null);
-            } else {
-                specialEventImage.setIcon(ThemeManager.getIcon(HOIconName.SPECIAL[specialEvent]));
-            }
+			nameField.setText(" ");
+			appearanceField.setText(" ");
+			positionField.setText(" ");
+			infoPanel.setVisible(false);
+			infoPanel.clearData();
+			updateRatingPanel(0);
+			positionImage.setIcon(ImageUtilities.getImage4Position(0, (byte) 0, 0));
+			specialEventImage.setIcon(null);
+			tacticPanel.reload(new ArrayList<TacticReport>());
+		}
+	}
 
-            positionField.setText(SpielerPosition.getNameForPosition((byte) lineup
-                                                                                    .getPosition()));
-            updateRatingPanel(lineup.getRating());
-            tacticPanel.reload(lineup.getTactics());
-        } else {
-        	containsPlayer = false;
-        	
-            nameField.setText(" ");
-            appearanceField.setText(" ");
-            positionField.setText(" ");
-            infoPanel.setVisible(false);
-            infoPanel.clearData();
-            updateRatingPanel(0);
-            positionImage.setIcon(ImageUtilities.getImage4Position(0, (byte) 0,0));
-            specialEventImage.setIcon(null);
-            tacticPanel.reload(new ArrayList<TacticReport>());
-        }
-    }
+	protected void setPlayerStatus(int status) {
+		switch (status) {
+		case PlayerDataManager.INJURED:
+			nameField.setForeground(Color.RED);
+			break;
+		case PlayerDataManager.SUSPENDED:
+			nameField.setForeground(Color.RED);
+			break;
+		case PlayerDataManager.SOLD:
+			nameField.setForeground(Color.BLUE);
+			break;
+		default:
+			nameField.setForeground(Color.BLACK);
+			break;
+		}
+	}
 
-    private String getPlayerName(String name) {
-        return " " + name.substring(0, 1) + "." +name.substring(name.indexOf(" ")+1);
-    }
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param rating TODO Missing Method Parameter Documentation
-     */
-    protected void updateRatingPanel(double rating) {
-        ratingPanel.removeAll();
-        ratingPanel.setLayout(new BorderLayout());
+	private String getPlayerName(String name) {
+		return " " + name.substring(0, 1) + "." + name.substring(name.indexOf(" ") + 1);
+	}
 
-        JPanel starPanel = (JPanel) new RatingTableEntry((int) Math.round(rating * 2),true).getComponent(false);
-        starPanel.setBackground(getBackGround());
-        ratingPanel.add(starPanel, BorderLayout.WEST);
-        ratingPanel.setOpaque(true);
-        ratingPanel.setBackground(getBackGround());
-    }
+	protected void updateRatingPanel(double rating) {
+		ratingPanel.removeAll();
+		ratingPanel.setLayout(new BorderLayout());
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     * @param farbe TODO Missing Method Parameter Documentation
-     * @param Bordertype TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
-    private JLabel createLabel(String text, Color farbe, int Bordertype) {
-        JLabel bla = new JLabel(text);
+		JPanel starPanel = (JPanel) new RatingTableEntry((int) Math.round(rating * 2), true)
+				.getComponent(false);
+		starPanel.setBackground(getBackGround());
+		ratingPanel.add(starPanel, BorderLayout.WEST);
+		ratingPanel.setOpaque(true);
+		ratingPanel.setBackground(getBackGround());
+	}
 
-        bla.setHorizontalAlignment(0);
-        bla.setForeground(farbe);
-        bla.setBorder(BorderFactory.createEtchedBorder(Bordertype));
+	private JLabel createLabel(String text, Color farbe, int Bordertype) {
+		JLabel bla = new JLabel(text);
 
-        return bla;
-    }
+		bla.setHorizontalAlignment(0);
+		bla.setForeground(farbe);
+		bla.setBorder(BorderFactory.createEtchedBorder(Bordertype));
+
+		return bla;
+	}
 }

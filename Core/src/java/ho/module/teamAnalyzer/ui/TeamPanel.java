@@ -8,6 +8,7 @@ import ho.core.model.player.Spieler;
 import ho.core.module.config.ModuleConfig;
 import ho.module.lineup.Lineup;
 import ho.module.teamAnalyzer.SystemManager;
+import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.report.TacticReport;
 import ho.module.teamAnalyzer.ui.lineup.FormationPanel;
 import ho.module.teamAnalyzer.vo.TeamLineup;
@@ -220,6 +221,11 @@ public class TeamPanel extends JPanel {
                 spotLineup.setPosition(lineup.getEffectivePos4PositionID(spot));
                 spotLineup.setRating(spieler.calcPosValue(lineup.getEffectivePos4PositionID(spot),
                                                           true));
+                if (spieler.getVerletzt() > 0) {
+                	spotLineup.setStatus(PlayerDataManager.INJURED);
+                } else if (spieler.isGesperrt()) {
+                	spotLineup.setStatus(PlayerDataManager.SUSPENDED);
+                }
                 spotLineup.setSpot(spot);
                 spotLineup.setTactics(new ArrayList<TacticReport>());
                 pp.reload(spotLineup);
