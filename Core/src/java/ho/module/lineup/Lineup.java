@@ -1061,6 +1061,10 @@ public class Lineup {
 		return this.penaltyTakers;
 	}
 
+	public void setPenaltyTakers(List<SpielerPosition> positions) {
+		this.penaltyTakers = new ArrayList<SpielerPosition>(positions);
+	}
+
 	/**
 	 * Get the system name.
 	 */
@@ -1312,6 +1316,7 @@ public class Lineup {
 			}
 
 			clone = new Lineup(properties);
+			clone.setPenaltyTakers(getPenaltyTakers());
 			clone.setLocation(getLocation());
 			clone.setPullBackMinute(getPullBackMinute());
 			clone.setPullBackOverride(isPullBackOverride());

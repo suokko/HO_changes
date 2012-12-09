@@ -4,6 +4,7 @@ import ho.core.gui.RefreshManager;
 import ho.core.gui.Refreshable;
 import ho.core.gui.Updateable;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.SpielerPosition;
 import ho.module.lineup.exchange.UploadDownloadPanel;
 import ho.module.lineup.penalties.PenaltyTaker;
@@ -11,6 +12,7 @@ import ho.module.lineup.penalties.PenaltyTakersView;
 import ho.module.lineup.substitution.SubstitutionOverview;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -102,16 +104,13 @@ public class LineupMasterView extends JPanel {
 	}
 	
 	private void updatePenaltyTakersInLineup() {
-		List<PenaltyTaker> list = this.penaltyTakersView.getPenaltyTakers();
-		List<SpielerPosition> takers = HOVerwaltung.instance().getModel().getAufstellung().getPenaltyTakers();
+		List<PenaltyTaker> takers = this.penaltyTakersView.getPenaltyTakers();
+		List<SpielerPosition>  list = new ArrayList<SpielerPosition>(takers.size());
+
 		for (int i = 0; i < takers.size(); i++) {
-			if (i < list.size()) {
-				takers.get(i).setSpielerId(
-						list.get(i).getPlayer().getSpielerID());
-			} else {
-				takers.get(i).setSpielerId(0);
-			}
+			list.add(new SpielerPosition(ISpielerPosition.penaltyTaker1 + i, takers.get(i).getPlayer().getSpielerID(), ISpielerPosition.NORMAL));
 		}
+		HOVerwaltung.instance().getModel().getAufstellung().setPenaltyTakers(list);
 	}
 	
 	private void refreshView() {

@@ -387,7 +387,10 @@ final class DBUpdater {
 		if (!columnExistsInTable("ActivationDate", "basics")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
 		}
-
+		
+		if (tableExists("PENALTYTAKERS")) {
+			m_clJDBCAdapter.executeUpdate("DROP TABLE PENALTYTAKERS");
+		}
 		if (!tableExists(PenaltyTakersTable.TABLENAME)) {
 			dbZugriff.getTable(PenaltyTakersTable.TABLENAME).createTable();
 		}

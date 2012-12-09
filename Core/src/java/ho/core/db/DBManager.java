@@ -28,6 +28,7 @@ import ho.core.model.misc.Finanzen;
 import ho.core.model.misc.Verein;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
+import ho.core.model.player.SpielerPosition;
 import ho.core.model.series.Liga;
 import ho.core.model.series.Paarung;
 import ho.core.training.TrainingPerWeek;
@@ -99,6 +100,7 @@ public class DBManager {
 	public static int getVersion() {
 		return DBVersion;
 	}
+
 	// //////////////////////////////////////////////////////////////////////////////
 	// INSTANCE
 	// //////////////////////////////////////////////////////////////////////////////
@@ -132,9 +134,8 @@ public class DBManager {
 					msg = "Fatal DB Error. Exiting HO!\nYou should restore db folder from backup or delete folder.";
 				}
 
-				javax.swing.JOptionPane
-						.showMessageDialog(null, msg, "Fatal DB Error",
-								javax.swing.JOptionPane.ERROR_MESSAGE);
+				javax.swing.JOptionPane.showMessageDialog(null, msg, "Fatal DB Error",
+						javax.swing.JOptionPane.ERROR_MESSAGE);
 
 				if (recover) {
 					BackupDialog dialog = new BackupDialog();
@@ -196,30 +197,21 @@ public class DBManager {
 		tables.put(FinanzenTable.TABLENAME, new FinanzenTable(adapter));
 		tables.put(ScoutTable.TABLENAME, new ScoutTable(adapter));
 		tables.put(UserColumnsTable.TABLENAME, new UserColumnsTable(adapter));
-		tables.put(SpielerNotizenTable.TABLENAME, new SpielerNotizenTable(
-				adapter));
+		tables.put(SpielerNotizenTable.TABLENAME, new SpielerNotizenTable(adapter));
 		tables.put(SpielplanTable.TABLENAME, new SpielplanTable(adapter));
 		tables.put(PaarungTable.TABLENAME, new PaarungTable(adapter));
-		tables.put(MatchLineupTeamTable.TABLENAME, new MatchLineupTeamTable(
-				adapter));
+		tables.put(MatchLineupTeamTable.TABLENAME, new MatchLineupTeamTable(adapter));
 		tables.put(MatchLineupTable.TABLENAME, new MatchLineupTable(adapter));
 		tables.put(XtraDataTable.TABLENAME, new XtraDataTable(adapter));
-		tables.put(MatchLineupPlayerTable.TABLENAME,
-				new MatchLineupPlayerTable(adapter));
-		tables.put(MatchesKurzInfoTable.TABLENAME, new MatchesKurzInfoTable(
-				adapter));
+		tables.put(MatchLineupPlayerTable.TABLENAME, new MatchLineupPlayerTable(adapter));
+		tables.put(MatchesKurzInfoTable.TABLENAME, new MatchesKurzInfoTable(adapter));
 		tables.put(MatchDetailsTable.TABLENAME, new MatchDetailsTable(adapter));
-		tables.put(MatchHighlightsTable.TABLENAME, new MatchHighlightsTable(
-				adapter));
+		tables.put(MatchHighlightsTable.TABLENAME, new MatchHighlightsTable(adapter));
 		tables.put(TrainingsTable.TABLENAME, new TrainingsTable(adapter));
-		tables.put(FutureTrainingTable.TABLENAME, new FutureTrainingTable(
-				adapter));
-		tables.put(UserConfigurationTable.TABLENAME,
-				new UserConfigurationTable(adapter));
-		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(
-				adapter));
-		tables.put(MatchSubstitutionTable.TABLENAME,
-				new MatchSubstitutionTable(adapter));
+		tables.put(FutureTrainingTable.TABLENAME, new FutureTrainingTable(adapter));
+		tables.put(UserConfigurationTable.TABLENAME, new UserConfigurationTable(adapter));
+		tables.put(SpielerSkillupTable.TABLENAME, new SpielerSkillupTable(adapter));
+		tables.put(MatchSubstitutionTable.TABLENAME, new MatchSubstitutionTable(adapter));
 		tables.put(TransferTable.TABLENAME, new TransferTable(adapter));
 		tables.put(TransferTypeTable.TABLENAME, new TransferTypeTable(adapter));
 		tables.put(ModuleConfigTable.TABLENAME, new ModuleConfigTable(adapter));
@@ -272,8 +264,7 @@ public class DBManager {
 	 */
 	protected void connect() throws Exception {
 		User user = User.getCurrentUser();
-		m_clJDBCAdapter.connect(user.getUrl(), user.getUser(), user.getPwd(),
-				user.getDriver());
+		m_clJDBCAdapter.connect(user.getUrl(), user.getUser(), user.getPwd(), user.getDriver());
 	}
 
 	/**
@@ -305,8 +296,8 @@ public class DBManager {
 	 *         gefunden
 	 */
 	public Object[] getLastLevelUp(int skill, int spielerId) {
-		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME))
-				.getLastLevelUp(skill, spielerId);
+		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).getLastLevelUp(
+				skill, spielerId);
 	}
 
 	/**
@@ -319,8 +310,8 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Object[]> getAllLevelUp(int skill, int m_iSpielerID) {
-		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME))
-				.getAllLevelUp(skill, m_iSpielerID);
+		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).getAllLevelUp(skill,
+				m_iSpielerID);
 	}
 
 	// public void saveSkillup(int hrfId, Timestamp datum, int m_iSpielerID, int
@@ -335,13 +326,11 @@ public class DBManager {
 	// }
 
 	public void reimportSkillup() {
-		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME))
-				.importFromSpieler();
+		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).importFromSpieler();
 	}
 
 	public void checkSkillup(HOModel homodel) {
-		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME))
-				.importNewSkillup(homodel);
+		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).importNewSkillup(homodel);
 	}
 
 	// ------------------------------- SpielerTable
@@ -353,8 +342,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Spieler> getAllSpieler() {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getAllSpieler();
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getAllSpieler();
 	}
 
 	/**
@@ -379,8 +367,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Spieler> getSpieler(int hrfID) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getSpieler(hrfID);
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpieler(hrfID);
 	}
 
 	/**
@@ -395,8 +382,7 @@ public class DBManager {
 	 * @return player
 	 */
 	public Spieler getSpielerFromHrf(int hrfID, int playerId) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getSpielerFromHrf(hrfID, playerId);
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerFromHrf(hrfID, playerId);
 	}
 
 	/**
@@ -410,8 +396,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spieler getSpielerAtDate(int spielerid, Timestamp time) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getSpielerAtDate(spielerid, time);
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerAtDate(spielerid, time);
 	}
 
 	// /**
@@ -436,8 +421,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spieler getSpielerFirstHRF(int spielerid) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getSpielerFirstHRF(spielerid);
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerFirstHRF(spielerid);
 	}
 
 	/**
@@ -461,8 +445,7 @@ public class DBManager {
 	 * @return
 	 */
 	public int getTrainerType(int hrfID) {
-		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
-				.getTrainerType(hrfID);
+		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getTrainerType(hrfID);
 	}
 
 	/**
@@ -476,8 +459,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
-		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId,
-				spieler, date);
+		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
 	}
 
 	/**
@@ -491,8 +473,7 @@ public class DBManager {
 	 *            date to save
 	 */
 	public void saveSpieler(int hrfId, Spieler player, Timestamp date) {
-		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId,
-				player, date);
+		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, player, date);
 	}
 
 	// ------------------------------- LigaTable
@@ -544,8 +525,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getLigaID4SaisonID(int seasonid) {
-		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME))
-				.getLigaID4SaisonID(seasonid);
+		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME)).getLigaID4SaisonID(seasonid);
 	}
 
 	/**
@@ -560,8 +540,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spielplan getSpielplan(int ligaId, int saison) {
-		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME))
-				.getSpielplan(ligaId, saison);
+		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME)).getSpielplan(ligaId, saison);
 	}
 
 	/**
@@ -571,8 +550,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void storeSpielplan(Spielplan plan) {
-		((SpielplanTable) getTable(SpielplanTable.TABLENAME))
-				.storeSpielplan(plan);
+		((SpielplanTable) getTable(SpielplanTable.TABLENAME)).storeSpielplan(plan);
 	}
 
 	/**
@@ -583,8 +561,7 @@ public class DBManager {
 	 * @param whereValues
 	 *            TODO Missing Method Parameter Documentation
 	 */
-	public void deleteSpielplanTabelle(String[] whereSpalten,
-			String[] whereValues) {
+	public void deleteSpielplanTabelle(String[] whereSpalten, String[] whereValues) {
 		getTable(SpielplanTable.TABLENAME).delete(whereSpalten, whereValues);
 	}
 
@@ -658,8 +635,7 @@ public class DBManager {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID,
-			int teamID) {
+	public Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		return ((MatchLineupPlayerTable) getTable(MatchLineupPlayerTable.TABLENAME))
 				.getMatchLineupPlayers(matchID, teamID);
 	}
@@ -738,8 +714,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<String> getUserAufstellungsListe() {
-		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME))
-				.getUserAufstellungsListe();
+		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME)).getUserAufstellungsListe();
 	}
 
 	/**
@@ -753,8 +728,12 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
-		((AufstellungTable) getTable(AufstellungTable.TABLENAME))
-				.saveAufstellung(hrfId, aufstellung, name);
+		try {
+			((AufstellungTable) getTable(AufstellungTable.TABLENAME)).saveAufstellung(hrfId,
+					aufstellung, name);
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	// ------------------------------- BasicsTable
@@ -782,8 +761,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
-		return ((BasicsTable) getTable(BasicsTable.TABLENAME))
-				.getCBItemHRFListe(datum);
+		return ((BasicsTable) getTable(BasicsTable.TABLENAME)).getCBItemHRFListe(datum);
 	}
 
 	/**
@@ -794,8 +772,7 @@ public class DBManager {
 	 * @return hrfId
 	 */
 	public int getHrfIDSameTraining(Timestamp matchTime) {
-		return ((BasicsTable) getTable(BasicsTable.TABLENAME))
-				.getHrfIDSameTraining(matchTime);
+		return ((BasicsTable) getTable(BasicsTable.TABLENAME)).getHrfIDSameTraining(matchTime);
 	}
 
 	/**
@@ -807,8 +784,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveBasics(int hrfId, ho.core.model.misc.Basics basics) {
-		((BasicsTable) getTable(BasicsTable.TABLENAME)).saveBasics(hrfId,
-				basics);
+		((BasicsTable) getTable(BasicsTable.TABLENAME)).saveBasics(hrfId, basics);
 	}
 
 	// ------------------------------- FaktorenTable
@@ -820,8 +796,7 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void setFaktorenFromDB(FactorObject fo) {
-		((FaktorenTable) getTable(FaktorenTable.TABLENAME))
-				.setFaktorenFromDB(fo);
+		((FaktorenTable) getTable(FaktorenTable.TABLENAME)).setFaktorenFromDB(fo);
 	}
 
 	/**
@@ -846,8 +821,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Finanzen getFinanzen(int hrfID) {
-		return ((FinanzenTable) getTable(FinanzenTable.TABLENAME))
-				.getFinanzen(hrfID);
+		return ((FinanzenTable) getTable(FinanzenTable.TABLENAME)).getFinanzen(hrfID);
 	}
 
 	/**
@@ -861,8 +835,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveFinanzen(int hrfId, Finanzen finanzen, Timestamp date) {
-		((FinanzenTable) getTable(FinanzenTable.TABLENAME)).saveFinanzen(hrfId,
-				finanzen, date);
+		((FinanzenTable) getTable(FinanzenTable.TABLENAME)).saveFinanzen(hrfId, finanzen, date);
 	}
 
 	// ------------------------------- HRFTable
@@ -881,8 +854,7 @@ public class DBManager {
 	 * @return all matching HRFs
 	 */
 	public HRF[] getAllHRFs(int minId, int maxId, boolean asc) {
-		return ((HRFTable) getTable(HRFTable.TABLENAME)).getAllHRFs(minId,
-				maxId, asc);
+		return ((HRFTable) getTable(HRFTable.TABLENAME)).getAllHRFs(minId, maxId, asc);
 	}
 
 	/**
@@ -907,8 +879,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getLatestHrfId() {
-		return ((HRFTable) getTable(HRFTable.TABLENAME)).getLatestHrf()
-				.getHrfId();
+		return ((HRFTable) getTable(HRFTable.TABLENAME)).getLatestHrf().getHrfId();
 	}
 
 	/**
@@ -1041,8 +1012,8 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void saveManuellerSmilie(int spielerId, String smilie) {
-		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
-				.saveManuellerSmilie(spielerId, smilie);
+		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveManuellerSmilie(
+				spielerId, smilie);
 	}
 
 	/**
@@ -1054,8 +1025,8 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void saveSpielerNotiz(int spielerId, String notiz) {
-		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
-				.saveSpielerNotiz(spielerId, notiz);
+		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerNotiz(spielerId,
+				notiz);
 	}
 
 	/**
@@ -1066,10 +1037,9 @@ public class DBManager {
 	 * @param spielberechtigt
 	 *            TODO Missing Method Parameter Documentation
 	 */
-	public void saveSpielerSpielberechtigt(int spielerId,
-			boolean spielberechtigt) {
-		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
-				.saveSpielerSpielberechtigt(spielerId, spielberechtigt);
+	public void saveSpielerSpielberechtigt(int spielerId, boolean spielberechtigt) {
+		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerSpielberechtigt(
+				spielerId, spielberechtigt);
 	}
 
 	/**
@@ -1081,8 +1051,8 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void saveSpielerUserPosFlag(int spielerId, byte flag) {
-		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
-				.saveSpielerUserPosFlag(spielerId, flag);
+		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerUserPosFlag(
+				spielerId, flag);
 	}
 
 	/**
@@ -1094,8 +1064,8 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void saveTeamInfoSmilie(int spielerId, String smilie) {
-		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
-				.saveTeamInfoSmilie(spielerId, smilie);
+		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveTeamInfoSmilie(
+				spielerId, smilie);
 	}
 
 	// ------------------------------- MatchLineupTable
@@ -1110,8 +1080,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public MatchLineup getMatchLineup(int matchID) {
-		return ((MatchLineupTable) getTable(MatchLineupTable.TABLENAME))
-				.getMatchLineup(matchID);
+		return ((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).getMatchLineup(matchID);
 	}
 
 	/**
@@ -1168,7 +1137,7 @@ public class DBManager {
 
 	/**
 	 * Get all matches for the given sql where claus.
-	 *
+	 * 
 	 * @param where
 	 *            The string containing sql where claus
 	 */
@@ -1184,8 +1153,7 @@ public class DBManager {
 	 * @param teamId
 	 *            the teamid or -1 for all matches
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId,
-			final int matchStatus) {
+	public MatchKurzInfo[] getMatchesKurzInfo(final int teamId, final int matchStatus) {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
 				.getMatchesKurzInfo(teamId, matchStatus);
 	}
@@ -1202,22 +1170,18 @@ public class DBManager {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp,
-			boolean asc) {
+	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
 				.getMatchesKurzInfo(teamId, matchtyp, asc);
 	}
 
-	public MatchKurzInfo getMatchesKurzInfo(int teamId, int matchtyp,
-			int statistic, boolean home) {
+	public MatchKurzInfo getMatchesKurzInfo(int teamId, int matchtyp, int statistic, boolean home) {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
 				.getMatchesKurzInfo(teamId, matchtyp, statistic, home);
 	}
 
-	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype,
-			int statistic) {
-		return MatchesOverviewQuery.getMatchesKurzInfoStatisticsCount(teamId,
-				matchtype, statistic);
+	public int getMatchesKurzInfoStatisticsCount(int teamId, int matchtype, int statistic) {
+		return MatchesOverviewQuery.getMatchesKurzInfoStatisticsCount(teamId, matchtype, statistic);
 	}
 
 	/**
@@ -1267,8 +1231,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Stadium getStadion(int hrfID) {
-		return ((StadionTable) getTable(StadionTable.TABLENAME))
-				.getStadion(hrfID);
+		return ((StadionTable) getTable(StadionTable.TABLENAME)).getStadion(hrfID);
 	}
 
 	/**
@@ -1280,8 +1243,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveStadion(int hrfId, ho.tool.arenasizer.Stadium stadion) {
-		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId,
-				stadion);
+		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId, stadion);
 	}
 
 	// ------------------------------- MatchSubstitutionTable
@@ -1296,8 +1258,7 @@ public class DBManager {
 	 *            The matchId for the match in question
 	 * 
 	 */
-	public List<Substitution> getMatchSubstitutionsByMatchTeam(int teamId,
-			int matchId) {
+	public List<Substitution> getMatchSubstitutionsByMatchTeam(int teamId, int matchId) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME))
 				.getMatchSubstitutionsByMatchTeam(teamId, matchId);
 	}
@@ -1311,12 +1272,19 @@ public class DBManager {
 	 *            The name of the lineup
 	 * 
 	 */
-	public List<Substitution> getMatchSubstitutionsByHrf(int hrfId,
-			String lineupName) {
+	public List<Substitution> getMatchSubstitutionsByHrf(int hrfId, String lineupName) {
 		return ((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME))
 				.getMatchSubstitutionsByHrf(hrfId, lineupName);
 	}
 
+	List<SpielerPosition> getPenaltyTakers(String lineupName) {
+		try {
+			return ((PenaltyTakersTable) getTable(PenaltyTakersTable.TABLENAME)).getPenaltyTakers(lineupName);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	// ------------------------------- TeamTable
 	// -------------------------------------------------
 
@@ -1330,8 +1298,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public String[] getStimmmungSelbstvertrauen(int hrfid) {
-		return ((TeamTable) getTable(TeamTable.TABLENAME))
-				.getStimmmungSelbstvertrauen(hrfid);
+		return ((TeamTable) getTable(TeamTable.TABLENAME)).getStimmmungSelbstvertrauen(hrfid);
 	}
 
 	/**
@@ -1344,8 +1311,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public int[] getStimmmungSelbstvertrauenValues(int hrfid) {
-		return ((TeamTable) getTable(TeamTable.TABLENAME))
-				.getStimmmungSelbstvertrauenValues(hrfid);
+		return ((TeamTable) getTable(TeamTable.TABLENAME)).getStimmmungSelbstvertrauenValues(hrfid);
 	}
 
 	/**
@@ -1385,10 +1351,9 @@ public class DBManager {
 	 * 
 	 * @return TODO Missing Return Method Documentation
 	 */
-	public Vector<ISpielerPosition> getSystemPositionen(int hrfID,
-			String sysName) {
-		return ((PositionenTable) getTable(PositionenTable.TABLENAME))
-				.getSystemPositionen(hrfID, sysName);
+	public Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
+		return ((PositionenTable) getTable(PositionenTable.TABLENAME)).getSystemPositionen(hrfID,
+				sysName);
 	}
 
 	/**
@@ -1401,10 +1366,9 @@ public class DBManager {
 	 * @param sysName
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
-	public void saveSystemPositionen(int hrfId,
-			Vector<ISpielerPosition> positionen, String sysName) {
-		((PositionenTable) getTable(PositionenTable.TABLENAME))
-				.saveSystemPositionen(hrfId, positionen, sysName);
+	public void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
+		((PositionenTable) getTable(PositionenTable.TABLENAME)).saveSystemPositionen(hrfId,
+				positionen, sysName);
 	}
 
 	/**
@@ -1432,8 +1396,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public List<TrainingPerWeek> getTrainingOverrides() {
-		return ((TrainingsTable) getTable(TrainingsTable.TABLENAME))
-				.getTrainingList();
+		return ((TrainingsTable) getTable(TrainingsTable.TABLENAME)).getTrainingList();
 	}
 
 	/**
@@ -1443,8 +1406,7 @@ public class DBManager {
 	 *            TODO Missing Method Parameter Documentation
 	 */
 	public void saveTraining(ho.core.training.TrainingPerWeek training) {
-		((TrainingsTable) getTable(TrainingsTable.TABLENAME))
-				.saveTraining(training);
+		((TrainingsTable) getTable(TrainingsTable.TABLENAME)).saveTraining(training);
 	}
 
 	// ------------------------------- FutureTrainingTable
@@ -1490,8 +1452,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveVerein(int hrfId, Verein verein) {
-		((VereinTable) getTable(VereinTable.TABLENAME)).saveVerein(hrfId,
-				verein);
+		((VereinTable) getTable(VereinTable.TABLENAME)).saveVerein(hrfId, verein);
 	}
 
 	// ------------------------------- XtraDataTable
@@ -1506,8 +1467,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public XtraData getXtraDaten(int hrfID) {
-		return ((XtraDataTable) getTable(XtraDataTable.TABLENAME))
-				.getXtraDaten(hrfID);
+		return ((XtraDataTable) getTable(XtraDataTable.TABLENAME)).getXtraDaten(hrfID);
 	}
 
 	/**
@@ -1519,8 +1479,7 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveXtraDaten(int hrfId, XtraData xtra) {
-		((XtraDataTable) getTable(XtraDataTable.TABLENAME)).saveXtraDaten(
-				hrfId, xtra);
+		((XtraDataTable) getTable(XtraDataTable.TABLENAME)).saveXtraDaten(hrfId, xtra);
 	}
 
 	// ------------------------------- MatchLineupTeamTable
@@ -1592,10 +1551,8 @@ public class DBManager {
 	 * @param saison
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
-	protected void storePaarung(Vector<Paarung> paarungen, int ligaId,
-			int saison) {
-		((PaarungTable) getTable(PaarungTable.TABLENAME)).storePaarung(
-				paarungen, ligaId, saison);
+	protected void storePaarung(Vector<Paarung> paarungen, int ligaId, int saison) {
+		((PaarungTable) getTable(PaarungTable.TABLENAME)).storePaarung(paarungen, ligaId, saison);
 	}
 
 	/**
@@ -1622,8 +1579,7 @@ public class DBManager {
 	 * @return TODO Missing Return Method Documentation
 	 */
 	public Matchdetails getMatchDetails(int matchId) {
-		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME))
-				.getMatchDetails(matchId);
+		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).getMatchDetails(matchId);
 	}
 
 	/**
@@ -1657,8 +1613,7 @@ public class DBManager {
 
 	}
 
-	public Vector<MatchHighlight> getMatchHighlightsByTypIdAndPlayerId(
-			int type, int playerId) {
+	public Vector<MatchHighlight> getMatchHighlightsByTypIdAndPlayerId(int type, int playerId) {
 		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME))
 				.getMatchHighlightsByTypIdAndPlayerId(type, playerId);
 	}
@@ -1666,29 +1621,25 @@ public class DBManager {
 	// Transfer
 
 	public List<PlayerTransfer> getTransfers(int playerid, boolean allTransfers) {
-		return ((TransferTable) getTable(TransferTable.TABLENAME))
-				.getTransfers(playerid, allTransfers);
+		return ((TransferTable) getTable(TransferTable.TABLENAME)).getTransfers(playerid,
+				allTransfers);
 	}
 
-	public List<PlayerTransfer> getTransfers(int season, boolean bought,
-			boolean sold) {
-		return ((TransferTable) getTable(TransferTable.TABLENAME))
-				.getTransfers(season, bought, sold);
+	public List<PlayerTransfer> getTransfers(int season, boolean bought, boolean sold) {
+		return ((TransferTable) getTable(TransferTable.TABLENAME)).getTransfers(season, bought,
+				sold);
 	}
 
 	public void updatePlayerTransfers(int playerId) {
-		((TransferTable) getTable(TransferTable.TABLENAME))
-				.updatePlayerTransfers(playerId);
+		((TransferTable) getTable(TransferTable.TABLENAME)).updatePlayerTransfers(playerId);
 	}
 
 	public void reloadTeamTransfers(int teamid) {
-		((TransferTable) getTable(TransferTable.TABLENAME))
-				.reloadTeamTransfers(teamid);
+		((TransferTable) getTable(TransferTable.TABLENAME)).reloadTeamTransfers(teamid);
 	}
 
 	public void updateTeamTransfers(int teamid) {
-		((TransferTable) getTable(TransferTable.TABLENAME))
-				.updateTeamTransfers(teamid);
+		((TransferTable) getTable(TransferTable.TABLENAME)).updateTeamTransfers(teamid);
 	}
 
 	public int getTransferType(int playerId) {
@@ -1697,8 +1648,7 @@ public class DBManager {
 	}
 
 	public void setTransferType(int playerId, int type) {
-		((TransferTypeTable) getTable(TransferTypeTable.TABLENAME))
-				.setTransferType(playerId, type);
+		((TransferTypeTable) getTable(TransferTypeTable.TABLENAME)).setTransferType(playerId, type);
 	}
 
 	// WorldDetail
@@ -1710,7 +1660,7 @@ public class DBManager {
 	public void saveWorldDetailLeagues(List<WorldDetailLeague> leagues) {
 		WorldDetailsTable table = (WorldDetailsTable) getTable(WorldDetailsTable.TABLENAME);
 		table.truncateTable();
-		for (WorldDetailLeague league: leagues) {
+		for (WorldDetailLeague league : leagues) {
 			table.insertWorldDetailsLeague(league);
 		}
 	}
@@ -1728,20 +1678,16 @@ public class DBManager {
 		return StatisticQuery.getFinanzen4Statistik(anzahlHRF);
 	}
 
-	public double[][] getSpielerFinanzDaten4Statistik(int spielerId,
-			int anzahlHRF) {
-		return StatisticQuery.getSpielerFinanzDaten4Statistik(spielerId,
-				anzahlHRF);
+	public double[][] getSpielerFinanzDaten4Statistik(int spielerId, int anzahlHRF) {
+		return StatisticQuery.getSpielerFinanzDaten4Statistik(spielerId, anzahlHRF);
 	}
 
 	public ArenaStatistikTableModel getArenaStatistikModel(int matchtyp) {
 		return StatisticQuery.getArenaStatistikModel(matchtyp);
 	}
 
-	public double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF,
-			String group) {
-		return StatisticQuery.getDurchschnittlicheSpielerDaten4Statistik(
-				anzahlHRF, group);
+	public double[][] getDurchschnittlicheSpielerDaten4Statistik(int anzahlHRF, String group) {
+		return StatisticQuery.getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, group);
 	}
 
 	// --------------------------------- TODO ---------------------------
@@ -1775,8 +1721,7 @@ public class DBManager {
 
 	public int getCountOfPlayedMatches(int playerId, boolean official) {
 		String sqlStmt = "select count(MATCHESKURZINFO.matchid) as MatchNumber FROM MATCHLINEUPPLAYER INNER JOIN MATCHESKURZINFO ON MATCHESKURZINFO.matchid = MATCHLINEUPPLAYER.matchid ";
-		sqlStmt = sqlStmt + "where spielerId = " + playerId
-				+ " and FIELDPOS>-1 ";
+		sqlStmt = sqlStmt + "where spielerId = " + playerId + " and FIELDPOS>-1 ";
 
 		if (official) {
 			sqlStmt = sqlStmt + "and matchtyp <8";
@@ -1825,14 +1770,12 @@ public class DBManager {
 
 			// Alle Daten zu dem Spieler holen
 			while (rs.next()) {
-				final SpielerMatchCBItem temp = new SpielerMatchCBItem(null,
-						rs.getInt("MatchID"), rs.getFloat("Rating") * 2,
-						rs.getInt("HoPosCode"), rs.getString("MatchDate"),
-						DBManager.deleteEscapeSequences(rs
+				final SpielerMatchCBItem temp = new SpielerMatchCBItem(null, rs.getInt("MatchID"),
+						rs.getFloat("Rating") * 2, rs.getInt("HoPosCode"),
+						rs.getString("MatchDate"), DBManager.deleteEscapeSequences(rs
 								.getString("HeimName")), rs.getInt("HeimID"),
-						DBManager.deleteEscapeSequences(rs
-								.getString("GastName")), rs.getInt("GastID"),
-						MatchType.getById(rs.getInt("MatchTyp")), null, "", "");
+						DBManager.deleteEscapeSequences(rs.getString("GastName")),
+						rs.getInt("GastID"), MatchType.getById(rs.getInt("MatchTyp")), null, "", "");
 				tempSpielerMatchCBItems.add(temp);
 			}
 
@@ -1860,20 +1803,17 @@ public class DBManager {
 				}
 
 				// Spieler
-				final ho.core.model.player.Spieler player = getSpielerAtDate(
-						spielerid, filter);
+				final ho.core.model.player.Spieler player = getSpielerAtDate(spielerid, filter);
 
 				// Matchdetails
-				final ho.core.model.match.Matchdetails details = getMatchDetails(item
-						.getMatchID());
+				final ho.core.model.match.Matchdetails details = getMatchDetails(item.getMatchID());
 
 				// Stimmung und Selbstvertrauen
 				final String[] stimmungSelbstvertrauen = getStimmmungSelbstvertrauen(getHRFID4Date(filter));
 
 				// Nur wenn Spielerdaten gefunden wurden diese in den
 				// RückgabeVector übergeben
-				if ((player != null) && (details != null)
-						&& (stimmungSelbstvertrauen != null)) {
+				if ((player != null) && (details != null) && (stimmungSelbstvertrauen != null)) {
 					item.setSpieler(player);
 					item.setMatchdetails(details);
 					item.setStimmung(stimmungSelbstvertrauen[0]);
@@ -1882,8 +1822,7 @@ public class DBManager {
 				}
 			}
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(),
-					"DatenbankZugriff.getSpieler4Matches : " + e);
+			HOLogger.instance().log(getClass(), "DatenbankZugriff.getSpieler4Matches : " + e);
 		}
 
 		return spielerMatchCBItems;
@@ -1929,15 +1868,11 @@ public class DBManager {
 		final String[] whereSpalten = { "MatchID" };
 		final String[] whereValues = { "" + matchid };
 		getTable(MatchDetailsTable.TABLENAME).delete(whereSpalten, whereValues);
-		getTable(MatchHighlightsTable.TABLENAME).delete(whereSpalten,
-				whereValues);
+		getTable(MatchHighlightsTable.TABLENAME).delete(whereSpalten, whereValues);
 		getTable(MatchLineupTable.TABLENAME).delete(whereSpalten, whereValues);
-		getTable(MatchLineupTeamTable.TABLENAME).delete(whereSpalten,
-				whereValues);
-		getTable(MatchLineupPlayerTable.TABLENAME).delete(whereSpalten,
-				whereValues);
-		getTable(MatchesKurzInfoTable.TABLENAME).delete(whereSpalten,
-				whereValues);
+		getTable(MatchLineupTeamTable.TABLENAME).delete(whereSpalten, whereValues);
+		getTable(MatchLineupPlayerTable.TABLENAME).delete(whereSpalten, whereValues);
+		getTable(MatchesKurzInfoTable.TABLENAME).delete(whereSpalten, whereValues);
 		((MatchSubstitutionTable) getTable(MatchSubstitutionTable.TABLENAME))
 				.deleteAllMatchSubstitutionsByMatchId(matchid);
 	}
@@ -1958,8 +1893,7 @@ public class DBManager {
 	 *            The MatchLineup for the match
 	 * @return true if the match is stored. False if not
 	 */
-	public boolean storeMatch(MatchKurzInfo info, Matchdetails details,
-			MatchLineup lineup) {
+	public boolean storeMatch(MatchKurzInfo info, Matchdetails details, MatchLineup lineup) {
 
 		if ((info == null) || (details == null) || (lineup == null)) {
 			return false;
@@ -1976,10 +1910,8 @@ public class DBManager {
 			((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
 					.storeMatchKurzInfos(matches);
 
-			((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME))
-					.storeMatchDetails(details);
-			((MatchLineupTable) getTable(MatchLineupTable.TABLENAME))
-					.storeMatchLineup(lineup);
+			((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).storeMatchDetails(details);
+			((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).storeMatchLineup(lineup);
 
 			return true;
 		}
@@ -1993,8 +1925,7 @@ public class DBManager {
 	 *            the match to update.
 	 */
 	public void updateMatchKurzInfo(MatchKurzInfo match) {
-		((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
-				.update(match);
+		((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME)).update(match);
 	}
 
 	/**
@@ -2006,14 +1937,19 @@ public class DBManager {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void deleteAufstellung(int hrfId, String name) {
-		final String[] whereS = { "HRF_ID", "Aufstellungsname" };
-		final String[] whereV = { "" + hrfId, "'" + name + "'" };
+		String[] whereS = { "HRF_ID", "Aufstellungsname" };
+		String[] whereV = { "" + hrfId, "'" + name + "'" };
 
 		// erst Vorhandene Aufstellung löschen
 		getTable(AufstellungTable.TABLENAME).delete(whereS, whereV);
 
 		// Standard sys resetten
 		getTable(PositionenTable.TABLENAME).delete(whereS, whereV);
+
+		whereS = new String[] { "LineupName" };
+		whereV = new String[] { "'" + name + "'" };
+		getTable(MatchSubstitutionTable.TABLENAME).delete(whereS, whereV);
+		getTable(PenaltyTakersTable.TABLENAME).delete(whereS, whereV);
 	}
 
 	private void createAllTables() throws SQLException {
@@ -2029,18 +1965,15 @@ public class DBManager {
 	}
 
 	public Map<String, Object> loadModuleConfigs() {
-		return ((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME))
-				.findAll();
+		return ((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME)).findAll();
 	}
 
 	public void saveModuleConfigs(Map<String, Object> values) {
-		((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME))
-				.saveConfig(values);
+		((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME)).saveConfig(values);
 	}
 
 	public void deleteModuleConfigsKey(String key) {
-		((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME))
-				.deleteConfig(key);
+		((ModuleConfigTable) getTable(ModuleConfigTable.TABLENAME)).deleteConfig(key);
 	}
 
 	/**
@@ -2076,23 +2009,20 @@ public class DBManager {
 	 *            the target value
 	 */
 	void saveUserParameter(String fieldName, String value) {
-		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME))
-				.update(fieldName, value);
+		((UserConfigurationTable) getTable(UserConfigurationTable.TABLENAME)).update(fieldName,
+				value);
 	}
 
 	public void saveHOColumnModel(HOTableModel model) {
-		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME))
-				.saveModel(model);
+		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME)).saveModel(model);
 	}
 
 	public void loadHOColumModel(HOTableModel model) {
-		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME))
-				.loadModel(model);
+		((UserColumnsTable) getTable(UserColumnsTable.TABLENAME)).loadModel(model);
 	}
 
 	public void removeTAFavoriteTeam(int teamId) {
-		((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME))
-				.removeTeam(teamId);
+		((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).removeTeam(teamId);
 	}
 
 	public void addTAFavoriteTeam(ho.module.teamAnalyzer.vo.Team team) {
@@ -2100,8 +2030,7 @@ public class DBManager {
 	}
 
 	public boolean isTAFavourite(int teamId) {
-		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME))
-				.isTAFavourite(teamId);
+		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).isTAFavourite(teamId);
 	}
 
 	/**
@@ -2110,23 +2039,20 @@ public class DBManager {
 	 * @return List of Teams Object
 	 */
 	public List<ho.module.teamAnalyzer.vo.Team> getTAFavoriteTeams() {
-		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME))
-				.getTAFavoriteTeams();
+		return ((TAFavoriteTable) getTable(TAFavoriteTable.TABLENAME)).getTAFavoriteTeams();
 	}
 
 	public PlayerInfo getTAPlayerInfo(int playerId, int week, int season) {
-		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME))
-				.getPlayerInfo(playerId, week, season);
+		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo(playerId, week,
+				season);
 	}
 
 	public PlayerInfo getTAPlayerInfo(int playerId) {
-		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME))
-				.getPlayerInfo(playerId);
+		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo(playerId);
 	}
 
 	public PlayerInfo getTAPreviousPlayerInfo(int playerId) {
-		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME))
-				.getPreviousPlayeInfo(playerId);
+		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPreviousPlayeInfo(playerId);
 	}
 
 	public void addTAPlayerInfo(PlayerInfo info) {
@@ -2142,23 +2068,20 @@ public class DBManager {
 	}
 
 	public boolean isIFALeagueIDinDB(int leagueID, boolean homeAway) {
-		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME))
-				.isLeagueIDinDB(leagueID, homeAway);
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isLeagueIDinDB(leagueID,
+				homeAway);
 	}
 
 	public boolean isIFAMatchinDB(int matchId) {
-		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME))
-				.isMatchinDB(matchId);
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).isMatchinDB(matchId);
 	}
 
 	public String getLastIFAMatchDate(String defaultValue) {
-		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME))
-				.getLastMatchDate(defaultValue);
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getLastMatchDate(defaultValue);
 	}
 
 	public IfaMatch[] getIFAMatches(boolean home) {
-		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME))
-				.getMatches(home);
+		return ((IfaMatchTable) getTable(IfaMatchTable.TABLENAME)).getMatches(home);
 	}
 
 	public void insertIFAMatch(IfaMatch match) {

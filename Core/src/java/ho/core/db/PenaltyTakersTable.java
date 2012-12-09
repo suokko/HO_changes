@@ -1,14 +1,17 @@
 package ho.core.db;
 
+import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.SpielerPosition;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PenaltyTakersTable extends AbstractTable {
 
-	public final static String TABLENAME = "PENALTYTAKERS";
+	public final static String TABLENAME = "MATCHLINEUPPENALTYTAKER";
 
 	protected PenaltyTakersTable(JDBCAdapter adapter) {
 		super(TABLENAME, adapter);
@@ -16,49 +19,50 @@ public class PenaltyTakersTable extends AbstractTable {
 
 	@Override
 	protected void initColumns() {
-		columns = new ColumnDescriptor[6];
-		columns[0] = new ColumnDescriptor("MatchID", Types.INTEGER, true);
-		columns[1] = new ColumnDescriptor("TeamID", Types.INTEGER, false);
-		columns[2] = new ColumnDescriptor("HrfID", Types.INTEGER, true);
-		columns[3] = new ColumnDescriptor("PlayerID", Types.INTEGER, false);
-		columns[4] = new ColumnDescriptor("Pos", Types.INTEGER, false);
-		columns[5] = new ColumnDescriptor("LineupName", Types.VARCHAR, false, 256);
+		columns = new ColumnDescriptor[3];
+		columns[0] = new ColumnDescriptor("PlayerID", Types.INTEGER, false);
+		columns[1] = new ColumnDescriptor("Pos", Types.INTEGER, false);
+		columns[2] = new ColumnDescriptor("LineupName", Types.VARCHAR, false, 256);
 	}
 
 	@Override
 	protected String[] getCreateIndizeStatements() {
-		return new String[] {
-				"CREATE INDEX PENALTYTAKERS_2 ON " + getTableName() + "("
-						+ columns[0].getColumnName() + "," + columns[1].getColumnName() + ")",
-				"CREATE INDEX PENALTYTAKERS_3 ON " + getTableName() + "("
-						+ columns[5].getColumnName() + ")" };
+		return new String[] { "CREATE INDEX PENALTYTAKERS_3 ON " + TABLENAME + "("
+				+ columns[2].getColumnName() + ")" };
 	}
 
-	void storePenaltyTakers(Integer teamId, List<SpielerPosition> penaltyTakers, String lineupName)
+	void storePenaltyTakers(String lineupName, List<SpielerPosition> penaltyTakers)
 			throws SQLException {
-		storePenaltyTakers(null, teamId, null, penaltyTakers, lineupName);
-	}
-
-	private void storePenaltyTakers(Integer matchId, Integer teamId, Integer hrfId,
-			List<SpielerPosition> penaltyTakers, String lineupName) throws SQLException {
 		String sql = null;
 
-		String[] where = { "MatchID", "TeamID", "HrfID", "LineupName" };
-		String[] values = { asString(matchId), asString(teamId), asString(hrfId),
-				"'" + lineupName + "'" };
+		String[] where = { "LineupName" };
+		String[] values = { "'" + lineupName + "'" };
 
 		delete(where, values);
 
-		for (int i = 0; i < penaltyTakers.size(); i++) {
-			SpielerPosition penaltyTaker = penaltyTakers.get(i);
-
-			sql = "INSERT INTO " + getTableName()
-					+ " (  MatchID, TeamID, HrfID, PlayerID, Pos, LineupName ) VALUES (";
-			sql += matchId + "," + teamId + "," + hrfId + "," + penaltyTaker.getSpielerId() + ","
-					+ i + "," + "'" + lineupName + "')";
-
-			adapter.executeUpdate_(sql);
+		if (penaltyTakers != null && !penaltyTakers.isEmpty()) {
+			for (int i = 0; i < penaltyTakers.size(); i++) {
+				SpielerPosition penaltyTaker = penaltyTakers.get(i);
+				if (penaltyTaker != null && penaltyTaker.getId() > 0) {
+					sql = "INSERT INTO " + TABLENAME + " ( LineupName, PlayerID, Pos ) VALUES (";
+					sql += "'" + lineupName + "'," + penaltyTaker.getSpielerId() + "," + penaltyTaker.getId()  + ")";
+					adapter.executeUpdate_(sql);
+				}
+			}
 		}
+	}
+
+	List<SpielerPosition> getPenaltyTakers(String lineupName) throws SQLException {
+		String sql = "SELECT * FROM " + TABLENAME + " WHERE LineupName='" + lineupName + "' ORDER BY Pos";
+		List<SpielerPosition> list = new ArrayList<SpielerPosition>();
+
+		ResultSet rs = adapter.executeQuery(sql);
+		int counter = 0;
+		while (rs.next()) {
+			list.add(new SpielerPosition(rs.getInt("Pos"), rs.getInt("PlayerID"), ISpielerPosition.NORMAL));
+			counter++;
+		}
+		return list;
 	}
 
 	private String asString(Object o) {

@@ -1,12 +1,15 @@
 package ho.core.db;
 
+import ho.core.model.player.SpielerPosition;
 import ho.core.util.HOLogger;
 import ho.module.lineup.Lineup;
 import ho.module.lineup.substitution.model.Substitution;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 final class AufstellungTable extends AbstractTable {
@@ -64,6 +67,8 @@ final class AufstellungTable extends AbstractTable {
 			auf.setPositionen(DBManager.instance().getSystemPositionen(hrfID, name));
 			auf.setSubstitionList(new ArrayList<Substitution>(DBManager.instance()
 					.getMatchSubstitutionsByHrf(hrfID, name)));
+			List<SpielerPosition> xxxx = DBManager.instance().getPenaltyTakers(name);
+			auf.setPenaltyTakers(DBManager.instance().getPenaltyTakers(name));
 		}
 
 		return auf;
@@ -137,8 +142,9 @@ final class AufstellungTable extends AbstractTable {
 	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param name
 	 *            TODO Missing Constructuor Parameter Documentation
+	 * @throws SQLException 
 	 */
-	void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
+	void saveAufstellung(int hrfId, Lineup aufstellung, String name) throws SQLException {
 		String statement = null;
 
 		if (aufstellung != null) {
@@ -160,7 +166,10 @@ final class AufstellungTable extends AbstractTable {
 			// Save Substitutions
 			((MatchSubstitutionTable)(DBManager.instance().getTable(MatchSubstitutionTable.TABLENAME)))
 					.storeMatchSubstitutionsByHrf(hrfId,aufstellung.getSubstitutionList(), name);
-
+			
+			// save penalty takers
+			((PenaltyTakersTable)(DBManager.instance().getTable(PenaltyTakersTable.TABLENAME)))
+				.storePenaltyTakers(name, aufstellung.getPenaltyTakers());
 		}
 	}
 }
