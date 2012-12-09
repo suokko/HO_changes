@@ -151,15 +151,15 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 			}
 
 			// Sterneanzahl
-			int heimSterne = getStars(DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
+			double heimSterne = getStars(DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
 					info.getHeimID()));
-			int gastSterne = getStars(DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
+			double gastSterne = getStars(DBManager.instance().getMatchLineupPlayers(info.getMatchID(),
 					info.getGastID()));
-			heimSterneLabel.setText(Helper.round(heimSterne, 2) + " ");
-			gastSterneLabel.setText(Helper.round(gastSterne, 2) + " ");
+			heimSterneLabel.setText(Helper.round(heimSterne, 1) + " ");
+			gastSterneLabel.setText(Helper.round(gastSterne, 1) + " ");
 
-			heimTeamRatingTableEntry.setRating(heimSterne * 2);
-			gastTeamRatingTableEntry.setRating(gastSterne * 2);
+			heimTeamRatingTableEntry.setRating((float)heimSterne * 2);
+			gastTeamRatingTableEntry.setRating((float)gastSterne * 2);
 
 			heimTeamHatstatsLabel.setText(String.valueOf(details.getHomeHatStats()));
 			gastTeamHatstatsLabel.setText(String.valueOf(details.getAwayHatStats()));
@@ -583,12 +583,12 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 		gastSelbstvertrauenLabel.setText("");
 	}
 
-	private int getStars(List<MatchLineupPlayer> players) {
-		int stars = 0;
+	private double getStars(List<MatchLineupPlayer> players) {
+		double stars = 0;
 		for (MatchLineupPlayer player : players) {
 			if ((player.getId() < ISpielerPosition.startReserves)
 					&& (player.getId() >= ISpielerPosition.startLineup)) {
-				int rating = (int) player.getRating();
+				double rating = (double) player.getRating();
 
 				if (rating > 0) {
 					stars += rating;
