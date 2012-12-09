@@ -36,8 +36,6 @@ class PlayersTableModel extends AbstractTableModel {
 	static final int COL_WEIGHTED_AVERAGE = 13;
 	static final int COL_MATCHES = 14;
 	static final int cols = 15;
-	static final String PERCENT = " %";
-	static final String NO_AVERAGE = "-";
 
 	private String[] columnNames;
 	private Object[][] data = {};
@@ -88,7 +86,18 @@ class PlayersTableModel extends AbstractTableModel {
 		case COL_AGREEABILITY:
 			return Agreeability.class;
 		case COL_MATCHES:
+		case COL_CARDS:
+		case COL_DIRECT_RED_CARDS:
+		case COL_WARNINGS:
+		case COL_WARNINGS_TYPE1:
+		case COL_WARNINGS_TYPE2:
+		case COL_WARNINGS_TYPE3:
+		case COL_WARNINGS_TYPE4:
 			return Integer.class;
+		case COL_RAW_AVERAGE:
+			return Double.class;
+		case COL_WEIGHTED_AVERAGE:
+			return Double.class;			
 		default:
 			return super.getColumnClass(columnIndex);
 		}
@@ -128,27 +137,14 @@ class PlayersTableModel extends AbstractTableModel {
 			int direct_reds = ((Integer) data[row][COL_DIRECT_RED_CARDS]).intValue();
 			int total = ((Integer) data[row][COL_CARDS]).intValue();
 
-			String fill = "";
 			double val = (approssima((total * 100.0) / matches));
-			if (val < 10) {
-				fill = "  ";
-			} else if (val < 100) {
-				fill = " ";
-			}
-
-			data[row][COL_RAW_AVERAGE] = fill + new Double(val) + PERCENT;
+			data[row][COL_RAW_AVERAGE] = new Double(val);
 
 			val = approssima(((warnings + (direct_reds * 2)) * 100.0) / (matches));
-			fill = "";
-			if (val < 10) {
-				fill = "  ";
-			} else if (val < 100) {
-				fill = " ";
-			}
-			data[row][COL_WEIGHTED_AVERAGE] = fill + new Double(val) + PERCENT;
+			data[row][COL_WEIGHTED_AVERAGE] = new Double(val);
 		} else {
-			data[row][COL_RAW_AVERAGE] = NO_AVERAGE;
-			data[row][COL_WEIGHTED_AVERAGE] = NO_AVERAGE;
+			data[row][COL_RAW_AVERAGE] = null;
+			data[row][COL_WEIGHTED_AVERAGE] = null;
 		}
 	}
 
