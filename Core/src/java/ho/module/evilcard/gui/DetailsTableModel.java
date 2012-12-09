@@ -87,7 +87,8 @@ class DetailsTableModel extends AbstractTableModel {
 		vColumnNames.set(COL_MATCH_ID, HOVerwaltung.instance().getLanguageString("ls.match.id"));
 		vColumnNames.set(COL_MATCH_HOME, HOVerwaltung.instance().getLanguageString("Heim"));
 		vColumnNames.set(COL_MATCH_GUEST, HOVerwaltung.instance().getLanguageString("Gast"));
-		vColumnNames.set(COL_MATCH_RESULT, HOVerwaltung.instance().getLanguageString("ls.match.result"));
+		vColumnNames.set(COL_MATCH_RESULT,
+				HOVerwaltung.instance().getLanguageString("ls.match.result"));
 		vColumnNames.set(COL_EVENT, HOVerwaltung.instance().getLanguageString("column.Event"));
 	}
 
@@ -101,59 +102,58 @@ class DetailsTableModel extends AbstractTableModel {
 			int i = 0;
 			int rows = highlights.size();
 
-			if (rows <= 0) {
-				data = new Object[0][cols];
-				return;
-			}
+			if (rows > 0) {
+				// inizializazione
+				data = new Object[rows][cols];
 
-			// inizializazione
-			data = new Object[rows][cols];
+				for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
+					MatchHighlight matchHighlight = iterator.next();
 
-			for (Iterator<MatchHighlight> iterator = highlights.iterator(); iterator.hasNext();) {
-				MatchHighlight matchHighlight = iterator.next();
+					data[i][COL_MATCH_ID] = Integer.valueOf(matchHighlight.getMatchId());
 
-				data[i][COL_MATCH_ID] = Integer.valueOf(matchHighlight.getMatchId());
+					data[i][COL_EVENT] = new String("<html>" + matchHighlight.getEventText());
 
-				data[i][COL_EVENT] = new String("<html>" + matchHighlight.getEventText());
+					// controllo ammonizioni
+					switch (matchHighlight.getHighlightSubTyp()) {
+					case IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ:
+						data[i][COL_WARNINGS_TYPE1] = CHECKED;
+						break;
 
-				// controllo ammonizioni
-				switch (matchHighlight.getHighlightSubTyp()) {
-				case IMatchHighlight.HIGHLIGHT_SUB_GELB_HARTER_EINSATZ:
-					data[i][COL_WARNINGS_TYPE1] = CHECKED;
-					break;
+					case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ:
+						data[i][COL_WARNINGS_TYPE2] = CHECKED;
+						break;
 
-				case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_HARTER_EINSATZ:
-					data[i][COL_WARNINGS_TYPE2] = CHECKED;
-					break;
+					case IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR:
+						data[i][COL_WARNINGS_TYPE3] = CHECKED;
+						break;
 
-				case IMatchHighlight.HIGHLIGHT_SUB_GELB_UNFAIR:
-					data[i][COL_WARNINGS_TYPE3] = CHECKED;
-					break;
+					case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR:
+						data[i][COL_WARNINGS_TYPE4] = CHECKED;
+						break;
 
-				case IMatchHighlight.HIGHLIGHT_SUB_GELB_ROT_UNFAIR:
-					data[i][COL_WARNINGS_TYPE4] = CHECKED;
-					break;
+					case IMatchHighlight.HIGHLIGHT_SUB_ROT:
+						data[i][COL_DIRECT_RED_CARDS] = CHECKED;
+						break;
+					}
 
-				case IMatchHighlight.HIGHLIGHT_SUB_ROT:
-					data[i][COL_DIRECT_RED_CARDS] = CHECKED;
-					break;
+					data[i][COL_MATCH_HOME] = UNDEFINED;
+					data[i][COL_MATCH_HOME] = UNDEFINED;
+					data[i][COL_MATCH_RESULT] = UNDEFINED;
+					i++;
 				}
 
-				data[i][COL_MATCH_HOME] = UNDEFINED;
-				data[i][COL_MATCH_HOME] = UNDEFINED;
-				data[i][COL_MATCH_RESULT] = UNDEFINED;
-				i++;
-			}
+				// MATCH
+				for (i = 0; i < rows; i++) {
+					Matchdetails matchDetail = DBManager.instance().getMatchDetails(
+							((Integer) data[i][COL_MATCH_ID]).intValue());
 
-			// MATCH
-			for (i = 0; i < rows; i++) {
-				Matchdetails matchDetail = DBManager.instance().getMatchDetails(
-						((Integer) data[i][COL_MATCH_ID]).intValue());
-
-				data[i][COL_MATCH_HOME] = matchDetail.getHeimName();
-				data[i][COL_MATCH_GUEST] = matchDetail.getGastName();
-				data[i][COL_MATCH_RESULT] = matchDetail.getHomeGoals() + " - "
-						+ matchDetail.getGuestGoals();
+					data[i][COL_MATCH_HOME] = matchDetail.getHeimName();
+					data[i][COL_MATCH_GUEST] = matchDetail.getGastName();
+					data[i][COL_MATCH_RESULT] = matchDetail.getHomeGoals() + " - "
+							+ matchDetail.getGuestGoals();
+				}
+			} else {
+				data = new Object[0][cols];
 			}
 		} else {
 			data = new Object[0][cols];
