@@ -84,7 +84,7 @@ public class Lineup {
 	private int pullBackMinute = 90; // no pull back
 
 	/** Home/Away/AwayDerby */
-	private short m_sLocation = IMatchDetails.LOCATION_HOME;
+	private short m_sLocation = -1;
 
 	private boolean pullBackOverride;
 
