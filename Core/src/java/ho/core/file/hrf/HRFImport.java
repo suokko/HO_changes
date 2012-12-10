@@ -14,10 +14,12 @@ import ho.core.training.TrainingManager;
 import ho.core.util.Helper;
 import ho.module.lineup.AufstellungsVergleichHistoryPanel;
 
+import java.awt.Component;
 import java.awt.Frame;
 import java.io.File;
 import java.sql.Timestamp;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -33,6 +35,7 @@ public class HRFImport {
 			Timestamp olderHrf = new Timestamp(System.currentTimeMillis());
 			HOModel homodel = null;
 
+			UserChoice choice = null;
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].getPath() != null) {
 					// Endung nicht hrf?
@@ -78,17 +81,17 @@ public class HRFImport {
 						// Datei schon importiert worden?
 						String oldHRFName = DBManager.instance().getHRFName4Date(
 								homodel.getBasics().getDatum());
-						int value = JOptionPane.OK_OPTION;
 
-						// Erneut importieren
-						if (oldHRFName != null) {
-							value = JOptionPane.showConfirmDialog(frame, HOVerwaltung.instance()
-									.getLanguageString("ErneutImportieren") + " " + oldHRFName,
-									getLangStr("Frage"), JOptionPane.YES_NO_OPTION);
+						if (choice == null || !choice.applyToAll ) {
+							choice = askForImportAgain(frame, oldHRFName);
+							if (choice.cancel) {
+								// chaneled -> bail out here
+								break;
+							}
 						}
-
+						
 						// Speichern
-						if (value == JOptionPane.OK_OPTION) {
+						if (choice.importHRF) {
 							// Saven
 							homodel.saveHRF();
 
@@ -159,5 +162,31 @@ public class HRFImport {
 
 	private String getLangStr(String key) {
 		return HOVerwaltung.instance().getLanguageString(key);
+	}
+	
+	private UserChoice askForImportAgain(Component parent, String oldHRFName) {
+		UserChoice choice = new UserChoice();
+		
+		JCheckBox applyToAllCheckBox = new JCheckBox(getLangStr("hrfImport.applyToAll"));
+		Object[] o = {getLangStr("ErneutImportieren") + " " + oldHRFName, applyToAllCheckBox};
+		int value = JOptionPane.showConfirmDialog(parent, 
+				o,
+				getLangStr("Frage"), JOptionPane.YES_NO_CANCEL_OPTION);
+		
+		if (value == JOptionPane.CANCEL_OPTION) {
+			choice.cancel = true;
+		} else {
+			choice.applyToAll = applyToAllCheckBox.isSelected();
+			if (value == JOptionPane.YES_OPTION) {
+				choice.importHRF = true;
+			}
+		}
+		return choice;
+	}
+	
+	private class UserChoice {
+		boolean importHRF;
+		boolean applyToAll;
+		boolean cancel;
 	}
 }
