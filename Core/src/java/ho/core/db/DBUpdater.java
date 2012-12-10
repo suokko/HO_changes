@@ -40,7 +40,6 @@ final class DBUpdater {
 				case 1:
 				case 2:
 				case 3:
-				case 4:
 					HOLogger.instance().log(getClass(), "DB version " + DBVersion + " is to old");
 					try {
 						JOptionPane.showMessageDialog(null,
@@ -64,6 +63,9 @@ final class DBUpdater {
 					updateDBv11();
 				case 11:
 					updateDBv12(DBVersion, version);
+				case 4:
+					// in Beta 1.432 Rev 1906, the DBVersion was set to '4' by mistake.
+					// to fix that, we just execute updateDBTo1432() in this case
 				case 12:
 				case 13:
 				case 14:
@@ -403,7 +405,7 @@ final class DBUpdater {
 			dbZugriff.saveUserParameter("DBVersion", DBVersion);
 		}
 	}
-
+	
 	/**
 	 * Automatic update of User Configuration parameters
 	 * 
