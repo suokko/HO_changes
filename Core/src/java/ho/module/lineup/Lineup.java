@@ -160,7 +160,13 @@ public class Lineup {
 			m_vPositionen.add(new SpielerPosition(ISpielerPosition.substForward, Integer
 					.parseInt(properties.getProperty("substforward", "0")), (byte) 0));
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
-			m_iAttitude = Integer.parseInt(properties.getProperty("installning", "0"));
+			// bugfix: i had a HRF with installning=null (the string null)
+			String installning = properties.getProperty("installning");
+			if (StringUtils.isNumeric(installning)) {
+				m_iAttitude = Integer.parseInt(installning);
+			} else {
+				m_iAttitude = IMatchDetails.EINSTELLUNG_NORMAL;
+			}
 
 			// and read the sub contents
 			for (int i = 0; i < 5; i++) {
