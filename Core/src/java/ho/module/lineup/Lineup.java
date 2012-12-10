@@ -20,6 +20,7 @@ import ho.core.rating.RatingPredictionConfig;
 import ho.core.rating.RatingPredictionManager;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
+import ho.core.util.StringUtils;
 import ho.module.lineup.substitution.model.GoalDiffCriteria;
 import ho.module.lineup.substitution.model.MatchOrderType;
 import ho.module.lineup.substitution.model.RedCardCriteria;
@@ -197,8 +198,15 @@ public class Lineup {
 							+ "behaviour")));
 					sub.setRedCardCriteria(RedCardCriteria.getById(Byte.parseByte(properties
 							.getProperty("subst" + i + "card"))));
-					sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(properties
-							.getProperty("subst" + i + "standing"))));
+					
+					// bugfix: i had a HRF where subst0standing was missing
+					String val = properties.getProperty("subst" + i + "standing");
+					if (StringUtils.isNumeric(val)) {
+						sub.setStanding(GoalDiffCriteria.getById(Byte.parseByte(val)));
+					} else {
+						sub.setStanding(GoalDiffCriteria.ANY_STANDING);
+					}
+					
 					this.substitutions.add(sub);
 				} else {
 					break;
