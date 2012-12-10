@@ -18,149 +18,150 @@ import java.sql.Timestamp;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-
-
 /**
  * Importiert eine angegebenen HRFDatei
  */
 public class HRFImport {
-    //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     * Creates a new HRFImport object.
-     *
-     * @param frame TODO Missing Constructuor Parameter Documentation
-     */
-    public HRFImport(HOMainFrame frame) {
-    	
-        //Filechooser
-        final JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setMultiSelectionEnabled(true);
-        fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-        fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
+	public HRFImport(HOMainFrame frame) {
 
-        final java.io.File pfad = new java.io.File(ho.core.model.UserParameter.instance().hrfImport_HRFPath);
+		// Filechooser
+		final JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setMultiSelectionEnabled(true);
+		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		fileChooser.setDialogTitle(HOVerwaltung.instance().getLanguageString("HRFImportieren"));
 
-        if (pfad.exists() && pfad.isDirectory()) {
-            fileChooser.setCurrentDirectory(new java.io.File(ho.core.model.UserParameter.instance().hrfImport_HRFPath));
-        }
+		final java.io.File pfad = new java.io.File(
+				ho.core.model.UserParameter.instance().hrfImport_HRFPath);
 
-        final ExampleFileFilter filter = new ExampleFileFilter();
-        filter.addExtension("hrf");
-        filter.setDescription("Hattrick Resource File");
-        fileChooser.setFileFilter(filter);
+		if (pfad.exists() && pfad.isDirectory()) {
+			fileChooser.setCurrentDirectory(new java.io.File(
+					ho.core.model.UserParameter.instance().hrfImport_HRFPath));
+		}
 
-        Timestamp olderHrf = new Timestamp(System.currentTimeMillis());
-		
-        final int returnVal = fileChooser.showOpenDialog(frame);
+		final ExampleFileFilter filter = new ExampleFileFilter();
+		filter.addExtension("hrf");
+		filter.setDescription("Hattrick Resource File");
+		fileChooser.setFileFilter(filter);
 
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-        	
-            final java.io.File[] files = fileChooser.getSelectedFiles();
-            HOModel homodel = null;
+		Timestamp olderHrf = new Timestamp(System.currentTimeMillis());
 
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].getPath() != null) {
-                    //Endung nicht hrf?
-                    if (!files[i].getPath().endsWith(".hrf")) {
-                        files[i] = new java.io.File(files[i].getAbsolutePath() + ".hrf");
-                    }
+		final int returnVal = fileChooser.showOpenDialog(frame);
 
-                    //Datei schon vorhanden?
-                    if (!files[i].exists()) {
-                        //Info
-                        frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
-                                                             InfoPanel.FEHLERFARBE);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-                        //Fehler
-                        Helper.showMessage(frame,HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
-                                                 HOVerwaltung.instance().getLanguageString("Fehler"),
-                                                 JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+			final java.io.File[] files = fileChooser.getSelectedFiles();
+			HOModel homodel = null;
 
-                    //Pfad speichern
-                    ho.core.model.UserParameter.instance().hrfImport_HRFPath = files[i].getParentFile()
-                                                                             .getAbsolutePath();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getPath() != null) {
+					// Endung nicht hrf?
+					if (!files[i].getPath().endsWith(".hrf")) {
+						files[i] = new java.io.File(files[i].getAbsolutePath() + ".hrf");
+					}
 
-                    //Info
-                    frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("StartParse"));
+					// Datei schon vorhanden?
+					if (!files[i].exists()) {
+						// Info
+						frame.getInfoPanel().setLangInfoText(
+								HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
+								InfoPanel.FEHLERFARBE);
 
-                    //HRFParser
-                    homodel = new HRFFileParser().parse(files[i]);
+						// Fehler
+						Helper.showMessage(frame,
+								HOVerwaltung.instance().getLanguageString("DateiNichtGefunden"),
+								HOVerwaltung.instance().getLanguageString("Fehler"),
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 
-                    if (homodel == null) {
-                        //Info
-                        frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Importfehler")
-                                                             + " : " + files[i].getName(),
-                                                             InfoPanel.FEHLERFARBE);
+					// Pfad speichern
+					ho.core.model.UserParameter.instance().hrfImport_HRFPath = files[i]
+							.getParentFile().getAbsolutePath();
 
-                        //Fehler
-                        Helper.showMessage(frame,HOVerwaltung.instance().getLanguageString("Importfehler"),
-                                                 HOVerwaltung.instance().getLanguageString("Fehler"),
-                                                 JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        //Info
-                        frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFSave"));
+					// Info
+					frame.getInfoPanel().setLangInfoText(
+							HOVerwaltung.instance().getLanguageString("StartParse"));
 
-                        //Datei schon importiert worden?
-                        final String oldHRFName = DBManager.instance()
-                                                                                         .getHRFName4Date(homodel.getBasics()
-                                                                                                                 .getDatum());
-                        int value = JOptionPane.OK_OPTION;
+					// HRFParser
+					homodel = new HRFFileParser().parse(files[i]);
 
-                        //Erneut importieren
-                        if (oldHRFName != null) {
-                            value = JOptionPane.showConfirmDialog(frame,
-                                                                  HOVerwaltung.instance().getLanguageString("ErneutImportieren")+ " " + oldHRFName,
-                                                                  HOVerwaltung.instance().getLanguageString("Frage"),
-                                                                  JOptionPane.YES_NO_OPTION);
-                        }
+					if (homodel == null) {
+						// Info
+						frame.getInfoPanel().setLangInfoText(
+								HOVerwaltung.instance().getLanguageString("Importfehler") + " : "
+										+ files[i].getName(), InfoPanel.FEHLERFARBE);
 
-                        //Speichern
-                        if (value == JOptionPane.OK_OPTION) {
-                            //Saven
-                            homodel.saveHRF();
+						// Fehler
+						Helper.showMessage(frame,
+								HOVerwaltung.instance().getLanguageString("Importfehler"),
+								HOVerwaltung.instance().getLanguageString("Fehler"),
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						// Info
+						frame.getInfoPanel().setLangInfoText(
+								HOVerwaltung.instance().getLanguageString("HRFSave"));
 
-                            if (homodel.getBasics().getDatum().before(olderHrf)) {
-                                olderHrf = new Timestamp(homodel.getBasics().getDatum().getTime());
-                            }
+						// Datei schon importiert worden?
+						final String oldHRFName = DBManager.instance().getHRFName4Date(
+								homodel.getBasics().getDatum());
+						int value = JOptionPane.OK_OPTION;
 
-                            //Info
-                            frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFErfolg"));
-                        }
-                        //Abbruch
-                        else {
-                            //Info
-                            frame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("HRFAbbruch"),
-                                                                 InfoPanel.FEHLERFARBE);
-                        }
-                    }
-                }
-            }
+						// Erneut importieren
+						if (oldHRFName != null) {
+							value = JOptionPane.showConfirmDialog(frame, HOVerwaltung.instance()
+									.getLanguageString("ErneutImportieren") + " " + oldHRFName,
+									HOVerwaltung.instance().getLanguageString("Frage"),
+									JOptionPane.YES_NO_OPTION);
+						}
+
+						// Speichern
+						if (value == JOptionPane.OK_OPTION) {
+							// Saven
+							homodel.saveHRF();
+
+							if (homodel.getBasics().getDatum().before(olderHrf)) {
+								olderHrf = new Timestamp(homodel.getBasics().getDatum().getTime());
+							}
+
+							// Info
+							frame.getInfoPanel().setLangInfoText(
+									HOVerwaltung.instance().getLanguageString("HRFErfolg"));
+						}
+						// Abbruch
+						else {
+							// Info
+							frame.getInfoPanel().setLangInfoText(
+									HOVerwaltung.instance().getLanguageString("HRFAbbruch"),
+									InfoPanel.FEHLERFARBE);
+						}
+					}
+				}
+			}
 
 			DBManager.instance().reimportSkillup();
-			
-            HOVerwaltung.instance().loadLatestHoModel();
 
-            TrainingManager.instance().refreshTrainingWeeks();
-            HOVerwaltung.instance().recalcSubskills(true, olderHrf);
+			HOVerwaltung.instance().loadLatestHoModel();
 
-            HOVerwaltung.instance().loadLatestHoModel();
+			TrainingManager.instance().refreshTrainingWeeks();
+			HOVerwaltung.instance().recalcSubskills(true, olderHrf);
 
-            final HOModel hom = HOVerwaltung.instance().getModel();
+			HOVerwaltung.instance().loadLatestHoModel();
 
-            //Aufstellung in liste als Aktuelle Aufstellungsetzen und als Angezeigte Aufstellung
-            AufstellungsVergleichHistoryPanel.setHRFAufstellung(hom.getAufstellung(),
-                                                                hom.getLastAufstellung());
-            AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(
-            		new AufstellungCBItem(HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"),
-                                          hom.getAufstellung())
-            		);
+			final HOModel hom = HOVerwaltung.instance().getModel();
 
-			HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().exportOldLineup("Actual");
-            //Refreshen aller Fenster
-            RefreshManager.instance().doReInit();
-        }
-    }
+			// Aufstellung in liste als Aktuelle Aufstellungsetzen und als
+			// Angezeigte Aufstellung
+			AufstellungsVergleichHistoryPanel.setHRFAufstellung(hom.getAufstellung(),
+					hom.getLastAufstellung());
+			AufstellungsVergleichHistoryPanel.setAngezeigteAufstellung(new AufstellungCBItem(
+					HOVerwaltung.instance().getLanguageString("AktuelleAufstellung"), hom
+							.getAufstellung()));
+
+			HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
+					.exportOldLineup("Actual");
+			// Refreshen aller Fenster
+			RefreshManager.instance().doReInit();
+		}
+	}
 }
