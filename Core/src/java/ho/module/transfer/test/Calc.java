@@ -20,7 +20,7 @@ public class Calc {
 
 			Date buyingDate = df.parse("25.05.2012 17:00:12");
 			Date sellingDate = df.parse("09.06.2012 10:30:45");
-			Time time = new Time(1, 0, 0, 0);
+			WeekDayTime time = new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
 
 			Date lastEconomyDateInPeriod = lastUpdateBefore(Calendar.SATURDAY, time, sellingDate);
 			System.out.println("buyingDate: " + buyingDate);
@@ -46,7 +46,7 @@ public class Calc {
 	 * @param economyUpdate
 	 */
 	private static Map<Integer, List<Date>> getWages(int age, Date buyingDate, Date sellingDate,
-			Time economyUpdate) {
+			WeekDayTime economyUpdate) {
 		Map<Integer, List<Date>> wages = new HashMap<Integer, List<Date>>();
 		int totalDaysInPeriod = getDaysBetween(sellingDate, buyingDate);
 		System.out.println("totalDaysInPeriod: " + totalDaysInPeriod);
@@ -58,10 +58,10 @@ public class Calc {
 		int daysToNextBirthday = 112 - days;
 		System.out.println("daysToNextBirthday " + daysToNextBirthday);
 
-		Date firstDate = nextUpdateAfter(Calendar.SATURDAY, economyUpdate, buyingDate);
+		Date firstDate = nextUpdateAfter(economyUpdate, buyingDate);
 		if (totalDaysInPeriod < daysToNextBirthday) {
 			System.out.println("nextUpdateAfter " + buyingDate + " - "
-					+ nextUpdateAfter(Calendar.SATURDAY, economyUpdate, buyingDate));
+					+ nextUpdateAfter(economyUpdate, buyingDate));
 		}
 
 		return wages;
@@ -74,17 +74,17 @@ public class Calc {
 		return (int) updates;
 	}
 
-	private static Date nextUpdateAfter(int dayOfWeek, Time time, Date date) {
+	private static Date nextUpdateAfter(WeekDayTime time, Date date) {
 		// Bsp.: Sa. 01:00
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(date);
 
 		// set the weekday to the day when the updates happens
-		cal.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+		cal.set(Calendar.DAY_OF_WEEK, time.getDay());
 		cal.set(Calendar.HOUR_OF_DAY, time.getHour());
 		cal.set(Calendar.MINUTE, time.getMinute());
 		cal.set(Calendar.SECOND, time.getSecond());
-		cal.set(Calendar.MILLISECOND, time.getMillisecond());
+		cal.set(Calendar.MILLISECOND, 0);
 
 		// if the day where the update happens is before the given date,
 		// take the update next week
@@ -95,7 +95,7 @@ public class Calc {
 		return cal.getTime();
 	}
 
-	private static Date lastUpdateBefore(int dayOfWeek, Time time, Date date) {
+	private static Date lastUpdateBefore(int dayOfWeek, WeekDayTime time, Date date) {
 		// Bsp.: Sa. 01:00
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(date);
@@ -105,7 +105,7 @@ public class Calc {
 		cal.set(Calendar.HOUR_OF_DAY, time.getHour());
 		cal.set(Calendar.MINUTE, time.getMinute());
 		cal.set(Calendar.SECOND, time.getSecond());
-		cal.set(Calendar.MILLISECOND, time.getMillisecond());
+		cal.set(Calendar.MILLISECOND, 0);
 
 		// if the day where the update happens is past the given date,
 		// take the update before (one week back)
@@ -169,83 +169,5 @@ public class Calc {
 		cal.set(GregorianCalendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
 		cal.set(GregorianCalendar.SECOND, cal.getMinimum(Calendar.SECOND));
 		cal.set(GregorianCalendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
-	}
-
-	private final static class Time {
-
-		private int hour;
-		private int minute;
-		private int second;
-		private int millisecond;
-
-		public Time() {
-		}
-
-		public Time(int hour) {
-			setHour(hour);
-		}
-
-		public Time(int hour, int minute) {
-			this(hour);
-			setMinute(minute);
-		}
-
-		public Time(int hour, int minute, int second) {
-			this(hour, minute);
-			setSecond(second);
-		}
-
-		public Time(int hour, int minute, int second, int millisecond) {
-			this(hour, minute, second);
-			setMillisecond(millisecond);
-		}
-
-		public int getHour() {
-			return hour;
-		}
-
-		public void setHour(int hour) {
-			if (hour < 0 || hour > 23) {
-				throw new IllegalArgumentException("Invalid value for hour: " + hour
-						+ " (has to be a value between 0 and 23)");
-			}
-			this.hour = hour;
-		}
-
-		public int getMillisecond() {
-			return millisecond;
-		}
-
-		public void setMillisecond(int millisecond) {
-			if (millisecond < 0 || millisecond > 999) {
-				throw new IllegalArgumentException("Invalid value for millisecond: " + millisecond
-						+ " (has to be a value between 0 and 999)");
-			}
-			this.millisecond = millisecond;
-		}
-
-		public int getMinute() {
-			return minute;
-		}
-
-		public void setMinute(int minute) {
-			if (minute < 0 || minute > 59) {
-				throw new IllegalArgumentException("Invalid value for minute: " + minute
-						+ " (has to be a value between 0 and 59)");
-			}
-			this.minute = minute;
-		}
-
-		public int getSecond() {
-			return second;
-		}
-
-		public void setSecond(int second) {
-			if (second < 0 || second > 59) {
-				throw new IllegalArgumentException("Invalid value for second: " + second
-						+ " (has to be a value between 0 and 59)");
-			}
-			this.second = second;
-		}
 	}
 }

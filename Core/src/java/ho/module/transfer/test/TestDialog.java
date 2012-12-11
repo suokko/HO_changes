@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -77,6 +77,14 @@ public class TestDialog extends JDialog {
 			}
 			sb.append("\n\n");
 			sb.append("Bought at: " + getByingDate(spieler.getSpielerID()).get(0));
+
+			int ageDays = getAgeAt(new Date(), spieler.getSpielerID());
+			int age = ageDays / 112;
+			int days = ageDays % 112;
+
+			sb.append("\n\n");
+			sb.append("Age: " + age + "." + days);
+
 			this.textArea.setText(sb.toString());
 		} else {
 			this.textArea.setText("");
@@ -99,12 +107,12 @@ public class TestDialog extends JDialog {
 			return this.spieler;
 		}
 	}
-	
+
 	private List<Date> getByingDate(int playerId) {
 		List<Date> list = new ArrayList<Date>();
-		
-		String query = "SELECT * FROM transfer WHERE playerid=" + playerId + " AND buyerid=" +
-				HOVerwaltung.instance().getModel().getBasics().getTeamId();
+
+		String query = "SELECT * FROM transfer WHERE playerid=" + playerId + " AND buyerid="
+				+ HOVerwaltung.instance().getModel().getBasics().getTeamId();
 		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
 		try {
 			while (rs.next()) {
@@ -113,7 +121,29 @@ public class TestDialog extends JDialog {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
+	}
+
+	// EconomyDate Germany 2012-12-15 00:00:01
+	private WeekDayTime getEconomyDate() {
+		return new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
+	}
+
+	private int getAgeAt(Date date, int playerId) {
+		String query = "SELECT LIMIT 0 1 AGE, AGEDAYS, DATUM FROM spieler WHERE spielerid="
+				+ playerId;
+		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
+		try {
+			if (rs.next()) {
+				int age = rs.getInt("AGE") * 112 + rs.getInt("AGEDAYS");
+				Date rsDate = new Date(rs.getTimestamp("DATUM").getTime());
+				return Calc.getDaysBetween(date, rsDate) + age;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return -1;
 	}
 }
