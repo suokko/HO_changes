@@ -5,6 +5,7 @@ import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.module.ModuleConfigPanel;
 import ho.core.module.ModuleManager;
 import ho.core.module.config.ModuleConfig;
@@ -16,8 +17,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -26,235 +27,169 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-
-
 /**
  * Ein Dialog mit allen Optionen für HO
  */
-public class OptionenDialog extends JDialog implements WindowListener, ActionListener {
-    //~ Instance fields ----------------------------------------------------------------------------
+public class OptionenDialog extends JDialog {
+
 	private static final long serialVersionUID = 1L;
 	private FarbPanel m_jpFarben;
-    private FormelPanel m_jpFormeln;
-    private RatingOffsetPanel m_jpRatingOffset;
-    private SonstigeOptionenPanel m_jpSonstigeOptionen;
-    private CheckOptionPanel hoConnectionOptions;
-//    private TabOptionenPanel m_jpTabOptionen;
-    private TrainingsOptionenPanel m_jpTrainingsOptionen;
-    private UserPanel m_jpUserOptionen;
-    private UserColumnsPanel m_jpUserColumns;
-    private DownloadPanel m_jpDownloadPanel;
-    private JButton m_jbSave = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.save"));
-    private JButton m_jbCancel = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
-    private ImagePanel m_jpButtonPanel = new ImagePanel();
+	private FormelPanel m_jpFormeln;
+	private RatingOffsetPanel m_jpRatingOffset;
+	private SonstigeOptionenPanel m_jpSonstigeOptionen;
+	private CheckOptionPanel hoConnectionOptions;
+	private TrainingsOptionenPanel m_jpTrainingsOptionen;
+	private UserPanel m_jpUserOptionen;
+	private UserColumnsPanel m_jpUserColumns;
+	private DownloadPanel m_jpDownloadPanel;
+	private JButton saveButton;
+	private JButton cancelButton;
+	private ImagePanel buttonPanel;
 
-    //~ Constructors -------------------------------------------------------------------------------
+	public OptionenDialog(JFrame owner) {
+		super(owner, HOVerwaltung.instance().getLanguageString("Optionen"), true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		initComponents();
+		addListeners();
+	}
 
-    /**
-     * Creates a new OptionenDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     */
-    public OptionenDialog(JFrame owner) {
-        super(owner,
-              HOVerwaltung.instance().getLanguageString("Optionen"),
-              true);
+	private void addListeners() {
 
-        this.addWindowListener(this);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        initComponents();
-    }
+		saveButton.addActionListener(new ActionListener() {
 
-    //~ Methods ------------------------------------------------------------------------------------
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				save();
+				OptionManager.deleteInstance();
+				dispose();
+			}
+		});
 
-    //---------------unused-------------------------------------
-    public void windowActivated(java.awt.event.WindowEvent windowEvent) {
-    }
+		cancelButton.addActionListener(new ActionListener() {
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UserParameter.deleteTempParameter();
+				ModuleManager.instance().clearTemp();
+				OptionManager.deleteInstance();
+				dispose();
+			}
+		});
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public final void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				save();
+			}
+		});
+	}
 
-    	ho.core.model.UserParameter.saveTempParameter();
-    	ModuleConfig.instance().save();
-		if (OptionManager.instance().isRestartNeeded()) {
-	            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
-	            		"", JOptionPane.INFORMATION_MESSAGE);
-	    }
+	private void initComponents() {
+		setContentPane(new ImagePanel());
+		getContentPane().setLayout(new BorderLayout());
 
-		if (OptionManager.instance().isReInitNeeded()) {
-			final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-	        waitdialog.setVisible(true);
-	        RefreshManager.instance().doReInit();
-	        waitdialog.setVisible(false);
-		}
+		JTabbedPane tabbedPane = new JTabbedPane();
 
+		// Verschiedenes
+		m_jpSonstigeOptionen = new SonstigeOptionenPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"),
+				new JScrollPane(m_jpSonstigeOptionen));
 
-		OptionManager.deleteInstance();
-		setVisible(false);
-		removeWindowListener(this);
-		dispose();
-    }
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Module"), new JScrollPane(
+				new ModuleConfigPanel()));
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public void windowDeactivated(WindowEvent windowEvent) {
-    }
+		// Farben
+		m_jpFarben = new FarbPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Farben"), new JScrollPane(
+				m_jpFarben));
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public void windowDeiconified(WindowEvent windowEvent) {
-    }
+		// Formeln
+		m_jpFormeln = new FormelPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Formeln"), new JScrollPane(
+				m_jpFormeln));
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public void windowIconified(WindowEvent windowEvent) {
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param windowEvent TODO Missing Method Parameter Documentation
-     */
-    public void windowOpened(WindowEvent windowEvent) {
-    }
-
-    /**
-     * TODO Missing Method Documentation
-     */
-    private void initComponents() {
-        setContentPane(new ImagePanel());
-        getContentPane().setLayout(new BorderLayout());
-
-        final JTabbedPane tabbedPane = new JTabbedPane();
-
-        //Verschiedenes
-        m_jpSonstigeOptionen = new SonstigeOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Verschiedenes"),
-                          new JScrollPane(m_jpSonstigeOptionen));
-
-		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Module"),new JScrollPane(new ModuleConfigPanel()));
-
-        //Farben
-        m_jpFarben = new FarbPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Farben"),
-                          new JScrollPane(m_jpFarben));
-
-        //Formeln
-        m_jpFormeln = new FormelPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Formeln"),
-                          new JScrollPane(m_jpFormeln));
-
-		//Rating Offset
+		// Rating Offset
 		m_jpRatingOffset = new RatingOffsetPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("PredictionOffset"),
-						  new JScrollPane(m_jpRatingOffset));
+				new JScrollPane(m_jpRatingOffset));
 
-        //Training
-        m_jpTrainingsOptionen = new TrainingsOptionenPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"),
-                          new JScrollPane(m_jpTrainingsOptionen));
+		// Training
+		m_jpTrainingsOptionen = new TrainingsOptionenPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), new JScrollPane(
+				m_jpTrainingsOptionen));
 
-        m_jpUserOptionen = new UserPanel();
-        tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Info.users"), new JScrollPane(m_jpUserOptionen));
+		m_jpUserOptionen = new UserPanel();
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Info.users"), new JScrollPane(
+				m_jpUserOptionen));
 
 		// HO Check
 		hoConnectionOptions = new CheckOptionPanel();
-		tabbedPane.addTab("HO Check",new JScrollPane(hoConnectionOptions));
+		tabbedPane.addTab("HO Check", new JScrollPane(hoConnectionOptions));
 
-		//Download
-        m_jpDownloadPanel = new DownloadPanel();
-        tabbedPane.addTab(ho.core.model.HOVerwaltung.instance().getLanguageString("options.tabtitle.download"),
-                          new JScrollPane(m_jpDownloadPanel));
+		// Download
+		m_jpDownloadPanel = new DownloadPanel();
+		tabbedPane.addTab(
+				ho.core.model.HOVerwaltung.instance()
+						.getLanguageString("options.tabtitle.download"), new JScrollPane(
+						m_jpDownloadPanel));
 
-//		 HO Check
+		// HO Check
 		m_jpUserColumns = new UserColumnsPanel();
-		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"),new JScrollPane(m_jpUserColumns));
+		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("columns"), new JScrollPane(
+				m_jpUserColumns));
 
-
-        //Tabs der plugins
-        for (int i = 0;
-             (i < HOMainFrame.instance().getOptionPanelNames().size())
-             && (i < HOMainFrame.instance().getOptionPanels().size());
-             ++i) {
-            tabbedPane.addTab(HOMainFrame.instance().getOptionPanelNames().get(i).toString(),
-                              HOMainFrame.instance().getOptionPanels().get(i));
-        }
-
-        getContentPane().add(tabbedPane, BorderLayout.CENTER);
-
-        //Add Buttons
-        m_jpButtonPanel.add(m_jbSave);
-        m_jbSave.setFont(m_jbSave.getFont().deriveFont(Font.BOLD));
-        m_jpButtonPanel.add(m_jbCancel);
-
-        m_jbSave.addActionListener(this);
-        m_jbCancel.addActionListener(this);
-
-        getContentPane().add(m_jpButtonPanel,BorderLayout.SOUTH);
-
-        if (HOMainFrame.instance().getToolkit().getScreenSize().height >= 700) {
-            setSize(new Dimension(450, 700));
-        } else {
-            setSize(new Dimension(450, HOMainFrame.instance().getToolkit().getScreenSize().height - 50));
-        }
-
-        final Dimension size = HOMainFrame.instance().getToolkit().getScreenSize();
-
-        if (size.width > this.getSize().width) {
-            //Mittig positionieren
-            this.setLocation((size.width / 2) - (this.getSize().width / 2),
-                             (size.height / 2) - (this.getSize().height / 2));
-        }
-
-        this.setResizable(false);
-    }
-
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(m_jbSave)) {
-			ho.core.model.UserParameter.saveTempParameter();
-			ModuleManager.instance().saveTemp();
-			if (OptionManager.instance().isRestartNeeded()) {
-		            Helper.showMessage(this, HOVerwaltung.instance().getLanguageString("NeustartErforderlich"),
-		            		"", JOptionPane.INFORMATION_MESSAGE);
-		    }
-			if (OptionManager.instance().isReInitNeeded()) {
-				final LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
-		        waitdialog.setVisible(true);
-		        RefreshManager.instance().doReInit();
-		        waitdialog.setVisible(false);
-			}
-			//if (HOMainFrame.isDevelopment() && OptionManager.instance().isSkinChanged()) {
-			//	HOMainFrame.instance().setDefaultFont(gui.UserParameter.temp().schriftGroesse);
-			//}
+		// Tabs der plugins
+		for (int i = 0; (i < HOMainFrame.instance().getOptionPanelNames().size())
+				&& (i < HOMainFrame.instance().getOptionPanels().size()); ++i) {
+			tabbedPane.addTab(HOMainFrame.instance().getOptionPanelNames().get(i).toString(),
+					HOMainFrame.instance().getOptionPanels().get(i));
 		}
-		else if (e.getSource().equals(m_jbCancel)) {
-			ho.core.model.UserParameter.deleteTempParameter();
-			ModuleManager.instance().clearTemp();
+
+		getContentPane().add(tabbedPane, BorderLayout.CENTER);
+
+		buttonPanel = new ImagePanel();
+		// Add Buttons
+		saveButton = new JButton();
+		saveButton.setText(HOVerwaltung.instance().getLanguageString("ls.button.save"));
+		saveButton.setFont(saveButton.getFont().deriveFont(Font.BOLD));
+		buttonPanel.add(saveButton);
+		cancelButton = new JButton();
+		cancelButton.setText(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
+		buttonPanel.add(cancelButton);
+
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+		if (HOMainFrame.instance().getToolkit().getScreenSize().height >= 700) {
+			setSize(new Dimension(450, 700));
+		} else {
+			setSize(new Dimension(450,
+					HOMainFrame.instance().getToolkit().getScreenSize().height - 50));
 		}
-		OptionManager.deleteInstance();
-		setVisible(false);
-		removeWindowListener(this);
-		dispose();
+
+		Dimension size = HOMainFrame.instance().getToolkit().getScreenSize();
+		if (size.width > this.getSize().width) {
+			// Mittig positionieren
+			setLocation((size.width / 2) - (this.getSize().width / 2), (size.height / 2)
+					- (getSize().height / 2));
+		}
+
+		setResizable(false);
+	}
+
+	private void save() {
+		UserParameter.saveTempParameter();
+		ModuleConfig.instance().save();
+		ModuleManager.instance().saveTemp();
+		if (OptionManager.instance().isRestartNeeded()) {
+			Helper.showMessage(OptionenDialog.this,
+					HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+		if (OptionManager.instance().isReInitNeeded()) {
+			LoginWaitDialog waitdialog = new LoginWaitDialog(HOMainFrame.instance());
+			waitdialog.setVisible(true);
+			RefreshManager.instance().doReInit();
+			waitdialog.setVisible(false);
+		}
 	}
 }
