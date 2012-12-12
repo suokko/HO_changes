@@ -68,7 +68,7 @@ public class TestDialog extends JDialog {
 	private void spielerChanged() {
 		if (this.cbox.getSelectedItem() != null) {
 			Spieler spieler = ((CBItm) this.cbox.getSelectedItem()).getSpieler();
-			List<Wage> wages = Wage.getWages(spieler.getSpielerID());
+			List<Wage> wages = Wage.getWagesByAge(spieler.getSpielerID());
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("Age   -   Wage" + "\n");
@@ -78,7 +78,7 @@ public class TestDialog extends JDialog {
 			sb.append("\n\n");
 			sb.append("Bought at: " + getByingDate(spieler.getSpielerID()).get(0));
 
-			int ageDays = getAgeAt(new Date(), spieler.getSpielerID());
+			int ageDays = Calc.getAgeAt(new Date(), spieler.getSpielerID());
 			int age = ageDays / 112;
 			int days = ageDays % 112;
 
@@ -128,22 +128,5 @@ public class TestDialog extends JDialog {
 	// EconomyDate Germany 2012-12-15 00:00:01
 	private WeekDayTime getEconomyDate() {
 		return new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
-	}
-
-	private int getAgeAt(Date date, int playerId) {
-		String query = "SELECT LIMIT 0 1 AGE, AGEDAYS, DATUM FROM spieler WHERE spielerid="
-				+ playerId;
-		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
-		try {
-			if (rs.next()) {
-				int age = rs.getInt("AGE") * 112 + rs.getInt("AGEDAYS");
-				Date rsDate = new Date(rs.getTimestamp("DATUM").getTime());
-				return Calc.getDaysBetween(date, rsDate) + age;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return -1;
 	}
 }

@@ -20,6 +20,11 @@ public class Wage {
 		this.wage = wage;
 	}
 
+	/**
+	 * Gets the age (year).
+	 * 
+	 * @return
+	 */
 	public int getAge() {
 		return age;
 	}
@@ -36,7 +41,14 @@ public class Wage {
 		this.wage = wage;
 	}
 
-	public static List<Wage> getWages(int playerID) {
+	/**
+	 * Gets a list of Wages for player which have to be payed for his different
+	 * ages (the wages to be payed at birthdays in the past).
+	 * 
+	 * @param playerID
+	 * @return
+	 */
+	public static List<Wage> getWagesByAge(int playerID) {
 		List<Wage> wages = new ArrayList<Wage>();
 
 		String query = "SELECT age, gehalt FROM Spieler WHERE spielerid=" + playerID

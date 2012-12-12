@@ -1,8 +1,13 @@
 package ho.module.transfer.test;
 
+import ho.core.db.DBManager;
+
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -35,6 +40,49 @@ public class Calc {
 		} catch (ParseException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static List<Birthday> getBirthdays(int playerId, int from, int to) {
+		List<Birthday> list = new ArrayList<Birthday>();
+
+		Date birthday17 = get17thBirthday(playerId);
+		
+		if (from < 17) {
+			from = 17;
+		}
+		
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(birthday17);
+		int offset = to-17;
+		for (int i=from; i<=to; i++) {
+			cal.add(GregorianCalendar.DAY_OF_MONTH, offset*112);
+			list.add(new Birthday(i, cal.getTime()));
+			offset++;
+		}
+		
+		return list;
+	}
+
+	public static Date get17thBirthday(int playerId) {
+		String query = "SELECT LIMIT 0 1 AGE, AGEDAYS, DATUM FROM spieler WHERE spielerid="
+				+ playerId;
+		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
+		try {
+			if (rs.next()) {
+				Date rsDate = new Date(rs.getTimestamp("DATUM").getTime());
+				int yearsDiffTo17 = rs.getInt("AGE") - 17;
+				int daysSince17 = yearsDiffTo17 * 112 + rs.getInt("AGEDAYS");
+
+				GregorianCalendar cal = new GregorianCalendar();
+				cal.setTime(rsDate);
+				cal.add(GregorianCalendar.DAY_OF_MONTH, -daysSince17);
+				return cal.getTime();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
@@ -169,5 +217,22 @@ public class Calc {
 		cal.set(GregorianCalendar.MINUTE, cal.getMinimum(Calendar.MINUTE));
 		cal.set(GregorianCalendar.SECOND, cal.getMinimum(Calendar.SECOND));
 		cal.set(GregorianCalendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+	}
+
+	public static int getAgeAt(Date date, int playerId) {
+		String query = "SELECT LIMIT 0 1 AGE, AGEDAYS, DATUM FROM spieler WHERE spielerid="
+				+ playerId;
+		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
+		try {
+			if (rs.next()) {
+				int age = rs.getInt("AGE") * 112 + rs.getInt("AGEDAYS");
+				Date rsDate = new Date(rs.getTimestamp("DATUM").getTime());
+				return Calc.getDaysBetween(date, rsDate) + age;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return -1;
 	}
 }
