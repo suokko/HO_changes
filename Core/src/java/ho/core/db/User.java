@@ -7,6 +7,7 @@ import ho.tool.updater.UpdateHelper;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,7 +16,7 @@ import org.w3c.dom.Text;
 
 public class User {
 
-	private static ArrayList<User> users = null;
+	private static List<User> users = null;
 	private static final String FILENAME = "user.xml";
 	public static int INDEX = 0;
 	private String driver = "org.hsqldb.jdbcDriver";
@@ -31,7 +32,7 @@ public class User {
 	private User() {
 	}
 
-	public static ArrayList<User> getAllUser() {
+	public static List<User> getAllUser() {
 		try {
 			if (users == null) {
 				load();
@@ -157,16 +158,35 @@ public class User {
 		url = "jdbc:hsqldb:file:" + path + "/database";
 	}
 
-	public static void addNewUser() {
+	public static User addNewUser() {
 		User newUser = new User();
 		newUser.setName("user" + (users.size() + 1));
 		newUser.setPath("db" + (users.size() + 1));
 		users.add(newUser);
+		return newUser;
 	}
 
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public static boolean isNameUnique(String name) {
+		for (User user : getAllUser()) {
+			if (user.getName().equalsIgnoreCase(name)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean isDBPathUnique(String path) {
+		for (User user : getAllUser()) {
+			if (user.getDBPath().equalsIgnoreCase(path)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static File getFile() {

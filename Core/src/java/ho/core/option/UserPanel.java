@@ -9,8 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
@@ -55,13 +54,13 @@ public class UserPanel extends ImagePanel implements ActionListener {
 		}
 
 		if (e.getSource() == m_jbDeleteUser) {
-			ArrayList<User> users = User.getAllUser();
+			List<User> users = User.getAllUser();
 			users.remove(table.getSelectedRow());
 			refresh();
 		}
 
 		if (e.getSource() == m_jbSaveUser) {
-			ArrayList<User> users = User.getAllUser();
+			List<User> users = User.getAllUser();
 
 			for (int i = 0; i < table.getRowCount(); i++) {
 				User user = users.get(i);

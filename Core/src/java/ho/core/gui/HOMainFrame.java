@@ -23,6 +23,7 @@ import ho.core.net.DownloadDialog;
 import ho.core.net.MyConnector;
 import ho.core.net.login.ProxySettings;
 import ho.core.option.OptionenDialog;
+import ho.core.option.db.DatabaseOptionsDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
 import ho.core.util.StringUtils;
@@ -112,6 +113,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			.getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"Optionen"));
+	private final JMenuItem databaseMenu = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+			"db.options.menu"));
 	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance()
@@ -339,6 +342,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			new DownloadDialog();
 		} else if (source.equals(m_jmOptionen)) { // Options
 			new OptionenDialog(this).setVisible(true);
+		} else if (source.equals(databaseMenu)) { 
+			new DatabaseOptionsDialog(this).setVisible(true);			
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
 					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"), HOVerwaltung
@@ -522,6 +527,8 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 		// Optionen
 		m_jmOptionen.addActionListener(this);
 		m_jmDatei.add(m_jmOptionen);
+		databaseMenu.addActionListener(this);
+		m_jmDatei.add(databaseMenu);
 
 		m_jmDatei.addSeparator();
 
