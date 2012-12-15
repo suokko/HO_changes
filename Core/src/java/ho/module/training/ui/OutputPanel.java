@@ -1,16 +1,18 @@
 // %3839090226:hoplugins.trainingExperience.ui%
 package ho.module.training.ui;
 
+import ho.core.gui.HOMainFrame;
 import ho.core.gui.RefreshManager;
+import ho.core.gui.comp.NumericDocument;
 import ho.core.gui.comp.panel.LazyImagePanel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.MatchType;
 import ho.core.model.player.Spieler;
 import ho.core.net.OnlineWorker;
 import ho.core.training.TrainingManager;
-import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.HelperWrapper;
+import ho.core.util.StringUtils;
 import ho.module.training.ui.model.ModelChange;
 import ho.module.training.ui.model.ModelChangeListener;
 import ho.module.training.ui.model.OutputTableModel;
@@ -32,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -85,12 +88,17 @@ public class OutputPanel extends LazyImagePanel {
 	 * Import a match from Hattrick
 	 */
 	private void importMatches() {
-		String input = JOptionPane.showInputDialog(HOVerwaltung.instance().getLanguageString(
-				"ls.match.id"));
-		try {
-			if (input != null) {
-				input = input.trim();
-			}
+
+		JTextField tf = new JTextField();
+		tf.setDocument(new NumericDocument(10));
+		Object[] objs = { HOVerwaltung.instance().getLanguageString("ls.match.id"), tf };
+
+		int value = JOptionPane.showConfirmDialog(HOMainFrame.instance(), objs, HOVerwaltung
+				.instance().getLanguageString("ImportMatch"), JOptionPane.OK_CANCEL_OPTION);
+		
+		String input = tf.getText();
+		if (value == JOptionPane.YES_OPTION && !StringUtils.isEmpty(input)) {
+
 			Integer matchID = new Integer(input);
 
 			if (HelperWrapper.instance().isUserMatch(input, MatchType.LEAGUE)) {
@@ -104,10 +112,6 @@ public class OutputPanel extends LazyImagePanel {
 				Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("NotUserMatch"),
 						HOVerwaltung.instance().getLanguageString("ImportError"), 1);
 			}
-		} catch (Exception e) {
-			Helper.showMessage(null, HOVerwaltung.instance().getLanguageString("MatchNotImported"),
-					HOVerwaltung.instance().getLanguageString("ImportError"), 1);
-			HOLogger.instance().log(OutputPanel.class, e);
 		}
 	}
 
