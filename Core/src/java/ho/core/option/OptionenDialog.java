@@ -39,7 +39,6 @@ public class OptionenDialog extends JDialog {
 	private SonstigeOptionenPanel m_jpSonstigeOptionen;
 	private CheckOptionPanel hoConnectionOptions;
 	private TrainingsOptionenPanel m_jpTrainingsOptionen;
-	private UserPanel m_jpUserOptionen;
 	private UserColumnsPanel m_jpUserColumns;
 	private DownloadPanel m_jpDownloadPanel;
 	private JButton saveButton;
@@ -117,10 +116,6 @@ public class OptionenDialog extends JDialog {
 		m_jpTrainingsOptionen = new TrainingsOptionenPanel();
 		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Training"), new JScrollPane(
 				m_jpTrainingsOptionen));
-
-		m_jpUserOptionen = new UserPanel();
-		tabbedPane.addTab(HOVerwaltung.instance().getLanguageString("Info.users"), new JScrollPane(
-				m_jpUserOptionen));
 
 		// HO Check
 		hoConnectionOptions = new CheckOptionPanel();
