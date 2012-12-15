@@ -35,6 +35,7 @@ import ho.module.playerOverview.SpielerUebersichtsPanel;
 import ho.module.playeranalysis.PlayerAnalysisModulePanel;
 import ho.module.transfer.TransfersPanel;
 import ho.tool.ToolManager;
+import ho.tool.dbcleanup.DBCleanupTool;
 import ho.tool.updater.UpdateController;
 
 import java.awt.BorderLayout;
@@ -108,13 +109,15 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			.getLanguageString("Homepage"));
 	private final JMenuItem m_jmFullScreenItem = new JMenuItem(HOVerwaltung.instance()
 			.getLanguageString("FullScreen.toggle"));
-
 	private final JMenuItem m_jmImportItem = new JMenuItem(HOVerwaltung.instance()
 			.getLanguageString("HRFImportieren"));
 	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"Optionen"));
-	private final JMenuItem databaseMenu = new JMenuItem(HOVerwaltung.instance().getLanguageString(
+	private final JMenu databaseMenu = new JMenu(HOVerwaltung.instance().getLanguageString(
+			"db.menu"));
+	private final JMenuItem databaseOptionsMenu = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"db.options.menu"));
+	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"SubskillsBerechnen"));
 	private final JMenuItem m_jmTraining2 = new JMenuItem(HOVerwaltung.instance()
@@ -129,7 +132,6 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			+ " (" + HOVerwaltung.instance().getLanguageString("Beta") + ")");
 	private final JMenuItem m_jmiRatings = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"Ratings"));
-
 	private final JMenuItem m_jmiLanguages = new JMenuItem(HOVerwaltung.instance()
 			.getLanguageString("Sprachdatei"));
 	// Components
@@ -342,8 +344,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			new DownloadDialog();
 		} else if (source.equals(m_jmOptionen)) { // Options
 			new OptionenDialog(this).setVisible(true);
-		} else if (source.equals(databaseMenu)) { 
-			new DatabaseOptionsDialog(this).setVisible(true);			
+		} else if (source.equals(databaseOptionsMenu)) { 
+			new DatabaseOptionsDialog(this).setVisible(true);
+		} else if (source.equals(m_jmiDbCleanupTool)) { 
+			DBCleanupTool dbCleanupTool = new DBCleanupTool();
+			dbCleanupTool.showDialog(HOMainFrame.instance());			
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
 					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"), HOVerwaltung
@@ -527,7 +532,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 		// Optionen
 		m_jmOptionen.addActionListener(this);
 		m_jmDatei.add(m_jmOptionen);
-		databaseMenu.addActionListener(this);
+		databaseMenu.add(databaseOptionsMenu);
+		databaseOptionsMenu.addActionListener(this);
+		databaseMenu.add(m_jmiDbCleanupTool);
+		m_jmiDbCleanupTool.addActionListener(this);
 		m_jmDatei.add(databaseMenu);
 
 		m_jmDatei.addSeparator();
