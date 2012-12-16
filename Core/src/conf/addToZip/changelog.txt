@@ -64,6 +64,9 @@ Changelist HO! 1.432
 - Removed Shirt number 100 for players without a shirt number.
 - Included Loyalty and mother club into csv player export
 - ArenaStats initial view corrected (filter setting was "competition matches", while what was displayed was "all matches").
+- on HRF import, user will not be asked for every HRF which was already imported if he wants to import it again (checkbox "apply to all")
+- user/database configuration form got some polish and went from the Options dialog to the File->Database menu
+- database cleanup tool went from the Tools menu to File->Database 
 
 Language updates:
 -----------------
