@@ -241,8 +241,6 @@ public class HO {
 		}
 		if (revision == 0) { // to avoid multiple errors
 			revision = 1;
-		} else {
-			HOLogger.instance().info(HO.class, "HO! revision " + HO.revision);
 		}
 		return revision;
 	}

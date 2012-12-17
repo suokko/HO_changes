@@ -653,7 +653,7 @@ public class HOModel {
     		double afterSub = after.getSubskill4Pos(skill);
 
 
-    		HOLogger.instance().info(getClass(), "TrLog:" + m_iID + "|"
+    		HOLogger.instance().debug(getClass(), "TrLog:" + m_iID + "|"
     				+ m_clBasics.getSeason() + "|" + m_clBasics.getSpieltag() + "|"
     				+ playerID + "|" + playerName + "|" + age + "|"
     				+ trArt + "|" + trArtString + "|" + trLevel + "|" + trStPart + "|"
