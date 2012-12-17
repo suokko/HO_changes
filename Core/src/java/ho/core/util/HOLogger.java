@@ -22,7 +22,7 @@ public class HOLogger {
 	public static final int WARNING = 2;
 	public static final int ERROR = 3;
 	private FileWriter logWriter;
-	private int logLevel = WARNING;
+	private int logLevel = INFORMATION;
 
 	/**
 	 * Creates a new instance of Logger

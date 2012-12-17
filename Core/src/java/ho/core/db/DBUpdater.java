@@ -64,8 +64,10 @@ final class DBUpdater {
 				case 11:
 					updateDBv12(DBVersion, version);
 				case 4:
-					// in Beta 1.432 Rev 1906, the DBVersion was set to '4' by mistake.
-					// to fix that, we just execute updateDBTo1432() in this case
+					// in Beta 1.432 Rev 1906, the DBVersion was set to '4' by
+					// mistake.
+					// to fix that, we just execute updateDBTo1432() in this
+					// case
 				case 12:
 				case 13:
 				case 14:
@@ -279,6 +281,10 @@ final class DBUpdater {
 	 * @throws SQLException
 	 */
 	private void updateDBTo1432(int DBVersion, int version) throws SQLException {
+		HOLogger.instance().info(
+				DBUpdater.class,
+				"Running updateDBTo1432(), current version is " + version
+						+ ", new version will be " + DBVersion);
 		// Stadion table
 		if (tableExists("STADION")) {
 			dropColumn("STADION", "VerkaufteSteh");
@@ -389,7 +395,7 @@ final class DBUpdater {
 		if (!columnExistsInTable("ActivationDate", "basics")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
 		}
-		
+
 		if (tableExists("PENALTYTAKERS")) {
 			m_clJDBCAdapter.executeUpdate("DROP TABLE PENALTYTAKERS");
 		}
@@ -402,10 +408,17 @@ final class DBUpdater {
 		// last update should be made during first run of a non development
 		// version.
 		if ((version == (DBVersion - 1) && !HO.isDevelopment()) || (version < (DBVersion - 1))) {
+			HOLogger.instance().info(DBUpdater.class,
+					"Update done, setting db version number from " + version + " to " + DBVersion);
 			dbZugriff.saveUserParameter("DBVersion", DBVersion);
+		} else {
+			HOLogger.instance().info(
+					DBUpdater.class,
+					"Update done, db version number will NOT be increased from " + version
+							+ " to " + DBVersion + " (isDevelopment=" + HO.isDevelopment() + ")");
 		}
 	}
-	
+
 	/**
 	 * Automatic update of User Configuration parameters
 	 * 
