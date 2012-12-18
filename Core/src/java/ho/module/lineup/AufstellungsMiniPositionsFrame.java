@@ -142,10 +142,10 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 	@Override
 	public final void refresh() {
-		final boolean gruppenfilter = m_clAufstellungsPanel.getAufstellungsAssitentPanel()
+		final boolean gruppenfilter = m_clAufstellungsPanel.getAufstellungsAssistentPanel()
 				.isGroupFilter();
-		final String gruppe = m_clAufstellungsPanel.getAufstellungsAssitentPanel().getGroup();
-		final boolean gruppenegieren = m_clAufstellungsPanel.getAufstellungsAssitentPanel()
+		final String gruppe = m_clAufstellungsPanel.getAufstellungsAssistentPanel().getGroup();
+		final boolean gruppenegieren = m_clAufstellungsPanel.getAufstellungsAssistentPanel()
 				.isNotGroup();
 
 		// Alle SpielerPositionen Informieren

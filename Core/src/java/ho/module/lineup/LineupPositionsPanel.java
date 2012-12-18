@@ -68,7 +68,7 @@ public class LineupPositionsPanel extends ho.core.gui.comp.panel.RasenPanel impl
 
 	public LineupPositionsPanel(LineupPanel panel) {
 		m_clLineupPanel = panel;
-		assistantPanel = panel.getAufstellungsAssitentPanel();
+		assistantPanel = panel.getAufstellungsAssistentPanel();
 		initComponentes();
 		RefreshManager.instance().registerRefreshable(this);
 	}
@@ -107,12 +107,12 @@ public class LineupPositionsPanel extends ho.core.gui.comp.panel.RasenPanel impl
 
 	@Override
 	public final void refresh() {
-		boolean gruppenfilter = m_clLineupPanel.getAufstellungsAssitentPanel()
+		boolean gruppenfilter = m_clLineupPanel.getAufstellungsAssistentPanel()
 				.isGroupFilter();
-		String gruppe = m_clLineupPanel.getAufstellungsAssitentPanel().getGroup();
-		boolean gruppenegieren = m_clLineupPanel.getAufstellungsAssitentPanel().isNotGroup();
+		String gruppe = m_clLineupPanel.getAufstellungsAssistentPanel().getGroup();
+		boolean gruppenegieren = m_clLineupPanel.getAufstellungsAssistentPanel().isNotGroup();
 
-		boolean exludeLast = m_clLineupPanel.getAufstellungsAssitentPanel()
+		boolean exludeLast = m_clLineupPanel.getAufstellungsAssistentPanel()
 				.isExcludeLastMatch();
 
 		// Alle SpielerPositionen Informieren erste 11

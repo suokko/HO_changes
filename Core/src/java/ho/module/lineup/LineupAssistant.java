@@ -793,7 +793,7 @@ public class LineupAssistant {
 		// AssistantPanel.
 		Vector<ISpielerPosition> returnVec = new Vector<ISpielerPosition>();
 		Map<Integer, Boolean> statusMap = HOMainFrame.instance()
-				.getAufstellungsPanel().getAufstellungsAssitentPanel().getPositionStatuses();
+				.getAufstellungsPanel().getAufstellungsAssistentPanel().getPositionStatuses();
 		for (int i = 0; i < positions.size(); i++) {
 			SpielerPosition pos = (SpielerPosition) positions.get(i);
 			if ((!statusMap.containsKey(pos.getId())) || (statusMap.get(pos.getId()))) {

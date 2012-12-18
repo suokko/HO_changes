@@ -320,7 +320,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 		if (m_clHOMainFrame == null) {
 			return Weather.PARTIALLY_CLOUDY;
 		}
-		return instance().getAufstellungsPanel().getAufstellungsAssitentPanel().getWeather();
+		return instance().getAufstellungsPanel().getAufstellungsAssistentPanel().getWeather();
 	}
 
 	/**
@@ -792,7 +792,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 				getToolkit().getScreenSize().height - parameter.hoMainFrame_PositionY);
 
 		final IAufstellungsAssistentPanel aap = getAufstellungsPanel()
-				.getAufstellungsAssitentPanel();
+				.getAufstellungsAssistentPanel();
 
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
