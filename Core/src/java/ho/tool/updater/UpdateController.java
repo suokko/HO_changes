@@ -60,7 +60,7 @@ public final class UpdateController {
 					new File(System.getProperty("user.dir") + File.separator + "sprache" + File.separator
 							+ "languages.xml"));
 
-			Document doc = UpdateHelper.instance().getDocument(file);
+			Document doc = UpdateHelper.getDocument(file);
 
 			Hashtable<String, HPLanguageInfo> list = getWebLanguages(
 					doc.getDocumentElement().getChildNodes(), new Hashtable<String, HPLanguageInfo>());
@@ -82,7 +82,7 @@ public final class UpdateController {
 	 */
 	public static void updateFlags() {
 		try {
-			UpdateHelper.instance().download(WEB_FLAGSFILE, getLocalZipFile());
+			UpdateHelper.download(WEB_FLAGSFILE, getLocalZipFile());
 			ZipHelper.unzip(getLocalZipFile(), new File( System.getProperty("user.dir")));
 			JOptionPane.showMessageDialog(null,
 					HOVerwaltung.instance().getLanguageString("NeustartErforderlich"), "HO!",
@@ -204,7 +204,7 @@ public final class UpdateController {
 		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
 		HOLogger.instance().debug(UpdateController.class, "Try to download: " + urlString);
-		if (!UpdateHelper.instance().download(urlString, tmp)) {
+		if (!UpdateHelper.download(urlString, tmp)) {
 			wait.setVisible(false);
 			return;
 		}
@@ -282,7 +282,7 @@ public final class UpdateController {
 		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
-		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/epvWeights.mlp",
+		if (!UpdateHelper.download(MyConnector.getResourceSite() + "/downloads/epvWeights.mlp",
 				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();
@@ -327,7 +327,7 @@ public final class UpdateController {
 		File tmp = new File("tmp.dat");
 		LoginWaitDialog wait = new LoginWaitDialog(HOMainFrame.instance());
 		wait.setVisible(true);
-		if (!UpdateHelper.instance().download(MyConnector.getResourceSite() + "/downloads/prediction.zip",
+		if (!UpdateHelper.download(MyConnector.getResourceSite() + "/downloads/prediction.zip",
 				tmp)) {
 			wait.setVisible(false);
 			tmp.delete();

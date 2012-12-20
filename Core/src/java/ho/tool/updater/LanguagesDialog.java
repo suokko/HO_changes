@@ -154,7 +154,7 @@ public final class LanguagesDialog extends UpdaterDialog {
                         languageFile.createNewFile();
 
                         String url = WEB_LANGUAGE_DIR + languageFile.getName();
-                        UpdateHelper.instance().download(url, languageFile);
+                        UpdateHelper.download(url, languageFile);
                     }
                      // selected
                 }

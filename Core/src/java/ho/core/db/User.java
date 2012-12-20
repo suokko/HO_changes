@@ -77,7 +77,7 @@ public class User {
 		users = new ArrayList<User>();
 
 		if (file.exists()) {
-			Document doc = UpdateHelper.instance().getDocument(file);
+			Document doc = UpdateHelper.getDocument(file);
 			parseFile(doc.getChildNodes());
 		} else {
 			users.add(new User());

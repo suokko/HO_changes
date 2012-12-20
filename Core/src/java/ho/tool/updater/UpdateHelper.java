@@ -19,28 +19,13 @@ import org.xml.sax.SAXException;
 
 public class UpdateHelper {
 
-	private static UpdateHelper m_clInstance;
-
 	/**
 	 * Creates a new UpdateHelper object.
 	 */
 	private UpdateHelper() {
 	}
 
-	/**
-	 * Basic functions for updating anything
-	 * 
-	 * @return UpdateHelper
-	 */
-	public static UpdateHelper instance() {
-		if (m_clInstance == null) {
-			m_clInstance = new UpdateHelper();
-		}
-
-		return m_clInstance;
-	}
-
-	public final Document getDocument(File file) throws ParserConfigurationException, IOException,
+	public static Document getDocument(File file) throws ParserConfigurationException, IOException,
 			SAXException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -50,7 +35,7 @@ public class UpdateHelper {
 	/**
 	 * Download contents of a url into a target file.
 	 */
-	public boolean download(String urlName, File targetFile) {
+	public static boolean download(String urlName, File targetFile) {
 		int data;
 		try {
 			FileOutputStream outStream = new FileOutputStream(targetFile);
@@ -69,7 +54,8 @@ public class UpdateHelper {
 			outStream.flush();
 			outStream.close();
 		} catch (Exception e) {
-			HOLogger.instance().log(getClass(), "Error downloading from '" + urlName + "': " + e);
+			HOLogger.instance().log(UpdateHelper.class,
+					"Error downloading from '" + urlName + "': " + e);
 			return false;
 		}
 		return true;

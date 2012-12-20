@@ -31,7 +31,7 @@ public class DebugMode {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ho.module.transfer.test.TestDialog().setVisible(true);
+				new ho.module.transfer.test.TestDialog(HOMainFrame.instance()).setVisible(true);
 			}
 		});
 		return newItem;
