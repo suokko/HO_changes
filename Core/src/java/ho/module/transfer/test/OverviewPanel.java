@@ -28,7 +28,7 @@ public class OverviewPanel extends JPanel {
 
 	private static final long serialVersionUID = -5446688280760617921L;
 
-	OverviewPanel() {
+	public OverviewPanel() {
 		initComponents();
 	}
 
