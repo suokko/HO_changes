@@ -19,22 +19,8 @@ public class DebugMode {
 		menu.add(getSQLDialogMenuItem());
 		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
-		menu.add(getPlayerHistoryMenuItem());
-		menu.add(getTransfersTestDialogMenuItem());
-		
+		menu.add(getPlayerHistoryMenuItem());	
 		return menu;
-	}
-
-	private static JMenuItem getTransfersTestDialogMenuItem() {
-		JMenuItem newItem = new JMenuItem("Transfers test");
-		newItem.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ho.module.transfer.test.TestDialog(HOMainFrame.instance()).setVisible(true);
-			}
-		});
-		return newItem;
 	}
 	
 	private static JMenuItem getLookAndFeelDialogMenuItem() {
