@@ -1,17 +1,16 @@
 package ho.module.transfer.test;
 
 import ho.core.db.DBManager;
-import ho.core.gui.HOMainFrame;
 import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.model.player.Spieler;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,23 +18,43 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 public class TestDialog extends JDialog {
 
 	private static final long serialVersionUID = -2583288103393550257L;
 	private JTextArea textArea;
 	private JComboBox cbox;
+	private WagesOverviewPanel wagesOverviewPanel;
+	private WagesSumPanel wagesSumPanel;
+	private PlayerTransferIncomePanel playerTransferIncomePanel;
+	private OverviewPanel overviewPanel;
 
-	public TestDialog() {
-		super(HOMainFrame.instance(), ModalityType.APPLICATION_MODAL);
+	public TestDialog(Window parent) {
+		super(parent, ModalityType.APPLICATION_MODAL);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		initComponents();
+		addListeners();
 		pack();
+	}
+
+	private void addListeners() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 	}
 
 	private void initComponents() {
 		getContentPane().setLayout(new BorderLayout());
 		List<Spieler> spieler = HOVerwaltung.instance().getModel().getAllSpieler();
+		spieler.addAll(HOVerwaltung.instance().getModel().getAllOldSpieler());
+
 		Collections.sort(spieler, new Comparator<Spieler>() {
 
 			@Override
@@ -63,32 +82,104 @@ public class TestDialog extends JDialog {
 				spielerChanged();
 			}
 		});
+
+		// this.wagesOverviewPanel = new WagesOverviewPanel();
+		// getContentPane().add(this.wagesOverviewPanel, BorderLayout.SOUTH);
+
+		// this.wagesSumPanel = new WagesSumPanel();
+		// getContentPane().add(this.wagesSumPanel, BorderLayout.SOUTH);
+
+//		this.playerTransferIncomePanel = new PlayerTransferIncomePanel();
+//		getContentPane().add(this.playerTransferIncomePanel, BorderLayout.SOUTH);
+		
+		this.overviewPanel = new OverviewPanel();
+		getContentPane().add(this.overviewPanel, BorderLayout.SOUTH);
 	}
 
 	private void spielerChanged() {
 		if (this.cbox.getSelectedItem() != null) {
 			Spieler spieler = ((CBItm) this.cbox.getSelectedItem()).getSpieler();
-			List<Wage> wages = Wage.getWagesByAge(spieler.getSpielerID());
+
+			// List<Wage> wages = Wage.getWagesByAge(spieler.getSpielerID());
+
+			Transfer t = Transfer.getTransfer(spieler.getSpielerID());
+			Date buyingDate = null;
+			if (!spieler.isHomeGrown()) {
+				buyingDate = t.purchaseDate;
+
+			} else {
+				buyingDate = new Date(DBManager.instance()
+						.getSpielerFirstHRF(spieler.getSpielerID()).getHrfDate().getTime());
+			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("Age   -   Wage" + "\n");
-			for (Wage wage : wages) {
-				sb.append(wage.getAge() + " - " + wage.getWage() + "\n");
-			}
-			sb.append("\n\n");
-			sb.append("Bought at: " + getByingDate(spieler.getSpielerID()).get(0));
+			int purchasePrice = (t.purchasePrice > 0) ? t.purchasePrice / 10 : 0;
+			int sellingPrice = (t.sellingPrice > 0) ? t.sellingPrice / 10 : 0;
+			sb.append("Gekauft für ").append(purchasePrice).append("\n");
+			sb.append("Verkauft für ").append(sellingPrice).append("\n");
 
-			int ageDays = Calc.getAgeAt(new Date(), spieler.getSpielerID());
-			int age = ageDays / 112;
-			int days = ageDays % 112;
+			int wages = Calc.getWagesSum(spieler.getSpielerID(), buyingDate, t.sellingDate);
 
-			sb.append("\n\n");
-			sb.append("Age: " + age + "." + days);
+			sb.append("wages payed: ").append(wages).append("\n");
+			int daysInTeam = Calc.getDaysBetween(t.sellingDate, buyingDate);
+			double fee = sellingPrice * (TransferFee.getFee(daysInTeam) / 100);
+			sb.append("Gebühr für den Spielervermittler: ").append(fee).append("\n");
+
+			double feePreviousClub = sellingPrice * (TransferFee.feePreviousClub(2) / 100);
+			sb.append("Prämie für vorherigen Verein: ").append(feePreviousClub).append("\n");
+
+			double gewinn = sellingPrice - purchasePrice - wages - fee - feePreviousClub;
+			sb.append("Gewinn: ").append(gewinn).append("\n");
+
+			// sb.append("Age   -   Wage" + "\n");
+			// for (Wage wage : wages) {
+			// sb.append(wage.getAge() + " - " + wage.getWage() + "\n");
+			// }
+			// sb.append("\n\n");
+			// if (!spieler.isHomeGrown()) {
+			// sb.append("Bought at: " +
+			// Calc.getBuyingDates(spieler.getSpielerID()).get(0));
+			// }
+			//
+			// int ageDays = Calc.getAgeAt(new Date(), spieler.getSpielerID());
+			// int age = ageDays / 112;
+			// int days = ageDays % 112;
+			//
+			// sb.append("\n\n");
+			// sb.append("Age: " + age + "." + days);
+			//
+			// sb.append("\n\n");
+			// sb.append("Birthdays from 17 to 30\n");
+			// List<Birthday> birthdays =
+			// Calc.getBirthdays(spieler.getSpielerID(), 17, 30);
+			// for (Birthday birthday : birthdays) {
+			// sb.append(birthday.getAge()).append(" ").append(birthday.getDate()).append("\n");
+			// }
 
 			this.textArea.setText(sb.toString());
+
+			if (this.wagesOverviewPanel != null) {
+				this.wagesOverviewPanel.setPlayer(spieler);
+			}
+			if (this.wagesSumPanel != null) {
+				this.wagesSumPanel.setPlayer(spieler);
+			}
+			if (this.playerTransferIncomePanel != null) {
+				this.playerTransferIncomePanel.setPlayer(spieler);
+			}
 		} else {
 			this.textArea.setText("");
+			if (this.wagesOverviewPanel != null) {
+				this.wagesOverviewPanel.setPlayer(null);
+			}
+			if (this.wagesSumPanel != null) {
+				this.wagesSumPanel.setPlayer(null);
+			}
+			if (this.playerTransferIncomePanel != null) {
+				this.playerTransferIncomePanel.setPlayer(null);
+			}
 		}
+
 	}
 
 	private class CBItm {
@@ -108,25 +199,30 @@ public class TestDialog extends JDialog {
 		}
 	}
 
-	private List<Date> getByingDate(int playerId) {
-		List<Date> list = new ArrayList<Date>();
-
-		String query = "SELECT * FROM transfer WHERE playerid=" + playerId + " AND buyerid="
-				+ HOVerwaltung.instance().getModel().getBasics().getTeamId();
-		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
+	public static void main(String[] args) {
+		HOVerwaltung.instance().setResource(UserParameter.instance().sprachDatei);
+		HOVerwaltung.instance().loadLatestHoModel();
+		
 		try {
-			while (rs.next()) {
-				list.add(new Date(rs.getTimestamp("date").getTime()));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
 
-		return list;
-	}
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				DBManager.instance().disconnect();
+			}
+		});
 
-	// EconomyDate Germany 2012-12-15 00:00:01
-	private WeekDayTime getEconomyDate() {
-		return new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
+		JFrame frame = new JFrame();
+		TestDialog dlg = new TestDialog(frame);
+		dlg.setVisible(true);
 	}
 }

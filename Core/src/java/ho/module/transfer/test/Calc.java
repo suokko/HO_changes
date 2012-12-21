@@ -1,6 +1,7 @@
 package ho.module.transfer.test;
 
 import ho.core.db.DBManager;
+import ho.core.model.HOVerwaltung;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -23,46 +24,101 @@ public class Calc {
 			// 26.05. 02.06. 09.06. 16.03. 23.06. 30.06 07.07. 14.07. 21.07.
 			// 28.07. 04.08. 11.08. 18.08.
 
-			Date buyingDate = df.parse("25.05.2012 17:00:12");
-			Date sellingDate = df.parse("09.06.2012 10:30:45");
+			// Date buyingDate = df.parse("25.05.2012 17:00:12");
+			// Date sellingDate = df.parse("09.06.2012 10:30:45");
+			// WeekDayTime time = new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
+			//
+			// Date lastEconomyDateInPeriod =
+			// lastUpdateBefore(Calendar.SATURDAY, time, sellingDate);
+			// System.out.println("buyingDate: " + buyingDate);
+			// System.out.println("sellingDate: " + sellingDate);
+			// System.out.println("lastEconomyDateInPeriod: " +
+			// lastEconomyDateInPeriod);
+			// System.out.println("updates: " + getUpdates(buyingDate,
+			// lastEconomyDateInPeriod));
+			//
+			// // 18 Jahre und 28 Tage, nächster Geburtstag: 23.10.2012
+			//
+			// int age = 18 * 112 + 28;
+			// getWages(age, buyingDate, sellingDate, time);
+
 			WeekDayTime time = new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
+			Date fromDate = df.parse("14.12.2012 17:00:12");
+			Date toDate = df.parse("31.12.2012 10:30:45");
 
-			Date lastEconomyDateInPeriod = lastUpdateBefore(Calendar.SATURDAY, time, sellingDate);
-			System.out.println("buyingDate: " + buyingDate);
-			System.out.println("sellingDate: " + sellingDate);
-			System.out.println("lastEconomyDateInPeriod: " + lastEconomyDateInPeriod);
-			System.out.println("updates: " + getUpdates(buyingDate, lastEconomyDateInPeriod));
-
-			// 18 Jahre und 28 Tage, nächster Geburtstag: 23.10.2012
-
-			int age = 18 * 112 + 28;
-			getWages(age, buyingDate, sellingDate, time);
+			List<Date> list = getUpdates(time, fromDate, toDate);
+			for (Date date : list) {
+				System.out.println(date);
+			}
 		} catch (ParseException ex) {
 			ex.printStackTrace();
 		}
 	}
 
+	public static Date getBuyingDate(int playerId) {
+		List<Date> dates = getBuyingDates(playerId);
+		if (!dates.isEmpty()) {
+			return dates.get(0);
+		}
+		return null;
+	}
+
+	public static List<Date> getBuyingDates(int playerId) {
+		List<Date> list = new ArrayList<Date>();
+
+		String query = "SELECT * FROM transfer WHERE playerid=" + playerId + " AND buyerid="
+				+ HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		ResultSet rs = DBManager.instance().getAdapter().executeQuery(query);
+		try {
+			while (rs.next()) {
+				list.add(new Date(rs.getTimestamp("date").getTime()));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	// EconomyDate Germany 2012-12-15 00:00:01
+	public static WeekDayTime getEconomyDate() {
+		return new WeekDayTime(Calendar.SATURDAY, 0, 0, 1);
+	}
+
+	/**
+	 * Gets a range of birthdays for a player.
+	 * 
+	 * @param playerId
+	 *            the id of the player
+	 * @param from
+	 *            the birthday to start with (including, minimum 17).
+	 * @param to
+	 *            the birthday to end with (including)
+	 * @return a list of birthdays starting at 'from', ending at 'to'
+	 */
 	public static List<Birthday> getBirthdays(int playerId, int from, int to) {
 		List<Birthday> list = new ArrayList<Birthday>();
 
 		Date birthday17 = get17thBirthday(playerId);
-		
+
 		if (from < 17) {
 			from = 17;
 		}
-		
+
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(birthday17);
-		int offset = to-17;
-		for (int i=from; i<=to; i++) {
-			cal.add(GregorianCalendar.DAY_OF_MONTH, offset*112);
+
+		int offset = from - 17 - 1;
+		cal.add(GregorianCalendar.DAY_OF_MONTH, offset * 112);
+
+		for (int i = from; i <= to; i++) {
+			cal.add(GregorianCalendar.DAY_OF_MONTH, 112);
 			list.add(new Birthday(i, cal.getTime()));
-			offset++;
 		}
-		
+
 		return list;
 	}
-
+	
 	public static Date get17thBirthday(int playerId) {
 		String query = "SELECT LIMIT 0 1 AGE, AGEDAYS, DATUM FROM spieler WHERE spielerid="
 				+ playerId;
@@ -85,6 +141,25 @@ public class Calc {
 		return null;
 	}
 
+	public static int getWagesSum(int playerId, Date dateFrom, Date dateTo) {
+		List<Date> updates = Calc.getUpdates(Calc.getEconomyDate(), dateFrom, dateTo);
+		List<Wage> wagesByAge = Wage.getWagesByAge(playerId);
+
+		Map<Integer, Wage> ageWageMap = new HashMap<Integer, Wage>();
+		for (Wage wage : wagesByAge) {
+			ageWageMap.put(Integer.valueOf(wage.getAge()), wage);
+		}
+
+		Date birthDay17 = Calc.get17thBirthday(playerId);
+		int sum = 0;
+		for (Date date : updates) {
+			int ageAt = Calc.getAgeAt(birthDay17, date);
+			Integer key = Integer.valueOf(ageAt);
+			sum += ageWageMap.get(Integer.valueOf(ageAt)).getWage();
+		}
+		return sum;
+	}
+	
 	/**
 	 * 
 	 * @param age
@@ -234,5 +309,38 @@ public class Calc {
 		}
 
 		return -1;
+	}
+
+	public static int getAgeAt(Date birthDay17, Date date) {
+		if (date.before(birthDay17)) {
+			throw new IllegalArgumentException();
+		}
+		int days = getDaysBetween(date, birthDay17);
+
+		return 17 + days / 112;
+	}
+
+	public static List<Date> getUpdates(WeekDayTime updateTime, Date from, Date to) {
+		List<Date> list = new ArrayList<Date>();
+
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(from);
+		cal.set(Calendar.DAY_OF_WEEK, updateTime.getDay());
+		cal.set(Calendar.HOUR_OF_DAY, updateTime.getHour());
+		cal.set(Calendar.MINUTE, updateTime.getMinute());
+		cal.set(Calendar.SECOND, updateTime.getSecond());
+		cal.set(Calendar.MILLISECOND, 0);
+
+		if (cal.getTime().before(from)) {
+			cal.add(Calendar.DAY_OF_YEAR, 7);
+		}
+
+		Date date = null;
+		while ((date = cal.getTime()).before(to)) {
+			list.add(date);
+			cal.add(Calendar.DAY_OF_YEAR, 7);
+		}
+
+		return list;
 	}
 }
