@@ -138,12 +138,12 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 	 */
 	@Override
 	public final void actionPerformed(ActionEvent actionEvent) {
-		if (actionEvent.getSource().equals(m_jbAufstellungAnzeigen)) { 
+		if (actionEvent.getSource().equals(m_jbAufstellungAnzeigen)) {
 			// use selected lineup
 			loadSelectedStoredLineup();
-		} else if (actionEvent.getSource().equals(m_jbAufstellungSpeichern)) { 
+		} else if (actionEvent.getSource().equals(m_jbAufstellungSpeichern)) {
 			saveLineup();
-		} else if (actionEvent.getSource().equals(m_jbAufstellungLoeschen)) { 
+		} else if (actionEvent.getSource().equals(m_jbAufstellungLoeschen)) {
 			deleteLineup();
 		}
 		repaint();
@@ -152,24 +152,25 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 	private void saveLineup() {
 		String aufstellungsname = "";
 		if (m_jlAufstellungen.getSelectedIndex() > 1) {
-			aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue())
-					.getText();
+			aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText();
 		}
 		final int x = HOMainFrame.instance().getLocation().x
 				+ HOMainFrame.instance().getSize().width;
 		final int y = HOMainFrame.instance().getLocation().y
 				+ HOMainFrame.instance().getSize().height;
-		AufstellungsNameDialog temp = new AufstellungsNameDialog(HOMainFrame.instance(),
+		AufstellungsNameDialog dlg = new AufstellungsNameDialog(HOMainFrame.instance(),
 				aufstellungsname, HOVerwaltung.instance().getModel().getAufstellung(), x, y);
-		temp.setVisible(true);
-		reInit();
+		dlg.setVisible(true);
+
+		if (!dlg.isCanceled()) {
+			reInit();
+		}
 	}
-	
+
 	private void deleteLineup() {
 		String aufstellungsname = "";
 		if (m_jlAufstellungen.getSelectedIndex() > 0) {
-			aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue())
-					.getText();
+			aufstellungsname = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText();
 		}
 		DBManager.instance().deleteAufstellung(Lineup.NO_HRF_VERBINDUNG,
 				((AufstellungCBItem) m_jlAufstellungen.getSelectedValue()).getText());
@@ -182,14 +183,13 @@ public class AufstellungsVergleichHistoryPanel extends ImagePanel implements
 								+ ((ho.core.gui.model.AufstellungCBItem) m_jlAufstellungen
 										.getSelectedValue()).getText() + " "
 								+ HOVerwaltung.instance().getLanguageString("geloescht"));
-		File f = new File("Lineups/"
-				+ HOVerwaltung.instance().getModel().getBasics().getManager() + "/"
-				+ aufstellungsname + ".dat");
+		File f = new File("Lineups/" + HOVerwaltung.instance().getModel().getBasics().getManager()
+				+ "/" + aufstellungsname + ".dat");
 		f.delete();
 		((DefaultListModel) m_jlAufstellungen.getModel()).removeElement(m_jlAufstellungen
 				.getSelectedValue());
 	}
-	
+
 	private void loadSelectedStoredLineup() {
 		final Lineup old = HOVerwaltung.instance().getModel().getAufstellung();
 		m_clAngezeigteAufstellung = ((AufstellungCBItem) m_jlAufstellungen.getSelectedValue())

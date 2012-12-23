@@ -35,6 +35,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 	private JButton cancelButton;
 	private JButton okButton;
 	private JTextField nameTextField;
+	private boolean canceled = true;
 
 	protected AufstellungsNameDialog(JFrame owner, String aufstellungsName, Lineup aufstellung,
 			int x, int y) {
@@ -141,8 +142,13 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 				}
 			}
 		} else if (actionEvent.getSource().equals(cancelButton)) {
+			this.canceled = true;
 			setVisible(false);
 		}
+	}
+	
+	public boolean isCanceled() {
+		return this.canceled;
 	}
 
 	// Name noch nicht in DB oder Aktuelle Aufstellung
@@ -168,5 +174,6 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 		lineup.save(nameTextField.getText());
 		HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel()
 				.exportOldLineup(name);
+		this.canceled = false;
 	}
 }
