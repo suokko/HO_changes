@@ -83,8 +83,8 @@ public class TestDialog extends JDialog {
 			}
 		});
 
-		// this.wagesOverviewPanel = new WagesOverviewPanel();
-		// getContentPane().add(this.wagesOverviewPanel, BorderLayout.SOUTH);
+		 this.wagesOverviewPanel = new WagesOverviewPanel();
+		 getContentPane().add(this.wagesOverviewPanel, BorderLayout.SOUTH);
 
 		// this.wagesSumPanel = new WagesSumPanel();
 		// getContentPane().add(this.wagesSumPanel, BorderLayout.SOUTH);
@@ -92,8 +92,8 @@ public class TestDialog extends JDialog {
 //		this.playerTransferIncomePanel = new PlayerTransferIncomePanel();
 //		getContentPane().add(this.playerTransferIncomePanel, BorderLayout.SOUTH);
 		
-		this.overviewPanel = new OverviewPanel();
-		getContentPane().add(this.overviewPanel, BorderLayout.SOUTH);
+//		this.overviewPanel = new OverviewPanel();
+//		getContentPane().add(this.overviewPanel, BorderLayout.SOUTH);
 	}
 
 	private void spielerChanged() {

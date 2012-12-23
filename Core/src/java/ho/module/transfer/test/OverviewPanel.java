@@ -8,6 +8,8 @@ import ho.module.transfer.PlayerTransfer;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +31,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class OverviewPanel extends JPanel {
 
 	private static final long serialVersionUID = -5446688280760617921L;
+	private JTable table;
 
 	public OverviewPanel() {
 		initComponents();
@@ -46,7 +51,7 @@ public class OverviewPanel extends JPanel {
 			data.add(row);
 		}
 
-		JTable table = new JTable(new MyTableModel(data));
+		this.table = new JTable(new MyTableModel(data));
 		table.setPreferredScrollableViewportSize(new Dimension(1000, 400));
 		table.getColumnModel().getColumn(0).setCellRenderer(new DateRenderer());
 		table.getColumnModel().getColumn(2).setCellRenderer(new NumberRenderer());
@@ -57,10 +62,29 @@ public class OverviewPanel extends JPanel {
 		table.getColumnModel().getColumn(7).setCellRenderer(new NumberRenderer());
 		table.getColumnModel().getColumn(8).setCellRenderer(new NumberRenderer());
 		table.getColumnModel().getColumn(9).setCellRenderer(new NumberRenderer());
+		table.setAutoCreateRowSorter(true);
 
 		add(new JScrollPane(table), BorderLayout.CENTER);
+	
+		JButton button = new JButton("test");
+		add(button, BorderLayout.SOUTH);
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = table.getSelectedRow();
+				selectedRow = table.convertRowIndexToModel(selectedRow);
+				int playerId = ((MyTableModel)table.getModel()).getPlayerId(selectedRow);
+				
+				WagesPanel p = new  WagesPanel(playerId);
+				JDialog dlg = new JDialog();
+				dlg.getContentPane().add(new JScrollPane(p));
+				dlg.pack();
+				dlg.setVisible(true);
+			}
+		});
 	}
-
+	
 	private void addSomeData(TableRow row) {
 		Spieler player = getPlayer(row.getSale().getPlayerId(), row.getSale().getPlayerName());
 
@@ -168,6 +192,10 @@ public class OverviewPanel extends JPanel {
 			return columns.length;
 		}
 
+		public int getPlayerId(int row) {
+			return this.data.get(row).getSale().getPlayerId();
+		}
+		
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			switch (columnIndex) {
