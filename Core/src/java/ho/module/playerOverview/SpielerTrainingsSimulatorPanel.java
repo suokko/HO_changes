@@ -1,8 +1,6 @@
-// %857396099:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.constants.player.PlayerAbility;
-import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
@@ -123,12 +121,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     */
     public final void setSpieler(Spieler spieler) {
         m_clSpieler = spieler;
 
@@ -152,11 +144,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jbAddTempSpieler)) {
             final Spieler tempSpieler = new Spieler();
@@ -189,11 +176,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(ItemEvent itemEvent) {
         if ((itemEvent.getStateChange() == ItemEvent.SELECTED) || (itemEvent.getSource() == m_jchHomegrown)) {
             if (m_clSpieler != null) {
@@ -204,23 +186,14 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reInit() {
         setSpieler(null);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void refresh() {
         setSpieler(null);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void setCBs() {
         m_jlName.setText(m_clSpieler.getName());
 		jtfAge.setText(m_clSpieler.getAlter()+"."+m_clSpieler.getAgeDays());
@@ -266,9 +239,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         m_jchHomegrown.setEnabled(true);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void setLabels() {
         final Spieler tempSpieler = new Spieler();
         tempSpieler.setForm(((CBItem) m_jcbForm.getSelectedItem()).getId());
@@ -418,9 +388,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
 		return age;
 	}
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -806,9 +773,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
         add(panel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void resetCBs() {
         m_jlName.setText("");
 		jtfAge.setText("17.0");
@@ -849,9 +813,7 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     	Helper.markierenComboBox(cb, PlayerAbility.DISASTROUS);
     	cb.setEnabled(false);
     }
-    /**
-     * TODO Missing Method Documentation
-     */
+
     private void resetLabels() {
         m_jpBestPos.clear();
         m_jpWertTor.clear();
@@ -877,7 +839,6 @@ final class SpielerTrainingsSimulatorPanel extends ImagePanel
     }
 
 	public void focusGained(FocusEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 	public void focusLost(FocusEvent e) {

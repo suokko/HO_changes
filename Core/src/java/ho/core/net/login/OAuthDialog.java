@@ -8,8 +8,6 @@ import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
 import ho.core.util.Helper;
 import ho.core.util.StringUtils;
-import ho.module.lineup.CopyListener;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;

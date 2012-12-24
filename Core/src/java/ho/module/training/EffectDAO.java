@@ -1,19 +1,14 @@
-// %1641442024:hoplugins.trainingExperience.dao%
 package ho.module.training;
 
 import ho.core.db.DBManager;
 import ho.core.db.JDBCAdapter;
 import ho.core.model.HOVerwaltung;
-import ho.core.model.UserParameter;
 import ho.core.model.player.ISkillup;
 import ho.core.model.player.Spieler;
 import ho.core.util.HTCalendarFactory;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

@@ -1,9 +1,3 @@
-// %3047011827:de.hattrickorganizer.logik.xml%
-/*
- * xmlMatchdetailsParser.java
- *
- * Created on 8. Januar 2004, 14:11
- */
 package ho.core.file.xml;
 
 import ho.core.model.match.IMatchHighlight;
@@ -12,18 +6,11 @@ import ho.core.model.match.MatchLineup;
 import ho.core.model.match.MatchLineupPlayer;
 import ho.core.model.match.Matchdetails;
 import ho.core.util.HOLogger;
-
 import java.util.Vector;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-
-
 
 /**
- *
  * @author thomas.werth
  */
 public class XMLMatchdetailsParser {
@@ -88,9 +75,6 @@ public class XMLMatchdetailsParser {
             ele = (Element) root.getElementsByTagName("HomeTeam").item(0);
             final String homeTeamID = XMLManager.getFirstChildNodeValue((Element) ele.getElementsByTagName("HomeTeamID")
                                                                                                         .item(0));
-//            ele = (Element) root.getElementsByTagName("AwayTeam").item(0);
-//            final String awayTeamID = XMLManager.getFirstChildNodeValue((Element) ele.getElementsByTagName("AwayTeamID")
-//                                                                                                        .item(0));
             
             final Vector<Vector<String>> homeTeamPlayers = parseLineup (lineup.getHeim().getAufstellung());
             final Vector<Vector<String>> awayTeamPlayers = parseLineup (lineup.getGast().getAufstellung());
@@ -574,24 +558,6 @@ public class XMLMatchdetailsParser {
             md.setGuestMidAtt(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("RatingLeftAtt").item(0);
             md.setGuestLeftAtt(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-
-            /*
-               //subRatings
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidfield" ).item (0);
-               md.setGuestMidfieldSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingRightDef" ).item (0);
-               md.setGuestRightDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidDef" ).item (0);
-               md.setGuestMidDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftDef" ).item (0);
-               md.setGuestLeftDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingRightAtt" ).item (0);
-               md.setGuestRightAttSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidAtt" ).item (0);
-               md.setGuestMidAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftAtt" ).item (0);
-               md.setGuestLeftAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
-             */
             try {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);
                 md.setGuestEinstellung(Integer.parseInt(ele.getFirstChild().getNodeValue()));
@@ -640,24 +606,6 @@ public class XMLMatchdetailsParser {
             md.setHomeMidAtt(Integer.parseInt(ele.getFirstChild().getNodeValue()));
             ele = (Element) root.getElementsByTagName("RatingLeftAtt").item(0);
             md.setHomeLeftAtt(Integer.parseInt(ele.getFirstChild().getNodeValue()));
-
-            /*
-               //subRatings
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidfield" ).item (0);
-               md.setHomeMidfieldSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingRightDef" ).item (0);
-               md.setHomeRightDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidDef" ).item (0);
-               md.setHomeMidDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftDef" ).item (0);
-               md.setHomeLeftDefSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingRightAtt" ).item (0);
-               md.setHomeRightAttSub ( XMLManager.getFirstChildNodeValue ( ele ) );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingMidAtt" ).item (0);
-               md.setHomeMidAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
-               ele     =   (Element) root.getElementsByTagName ( "SubRatingLeftAtt" ).item (0);
-               md.setHomeLeftAttSub ( XMLManager.getFirstChildNodeValue ( ele )  );
-             */
             try {
                 ele = (Element) root.getElementsByTagName("TeamAttitude").item(0);
                 md.setHomeEinstellung(Integer.parseInt(ele.getFirstChild().getNodeValue()));

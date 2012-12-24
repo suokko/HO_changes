@@ -1,8 +1,5 @@
-// %3702132305:de.hattrickorganizer.gui.model%
 package ho.module.transfer.scout;
 
-
-import ho.core.constants.player.PlayerSkill;
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.gui.comp.entry.HomegrownEntry;
 import ho.core.gui.comp.entry.SpielerLabelEntry;
@@ -10,18 +7,12 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 import ho.core.model.player.SpielerPosition;
-
 import java.util.Vector;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-
-
 /**
- * DOCUMENT ME!
- *
  * @author Volker Fischer
  * @version 0.2a    31.10.2001
  */
@@ -114,7 +105,6 @@ public class TransferTableModel extends AbstractTableModel {
 
     };
 
-    /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
     /** Array of Strings shown in the table header (first row of table) */
@@ -206,8 +196,6 @@ public class TransferTableModel extends AbstractTableModel {
 
     /**
      * Creates a new TransferTableModel object.
-     *
-     * @param scouteintraege TODO Missing Constructuor Parameter Documentation
      */
     public TransferTableModel(Vector<ScoutEintrag> scouteintraege) {
         m_vScoutEintraege = scouteintraege;
@@ -280,13 +268,6 @@ public class TransferTableModel extends AbstractTableModel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param playerID TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final ScoutEintrag getScoutEintrag(int playerID) {
         for (int i = 0; i < m_vScoutEintraege.size(); i++) {
             if ((m_vScoutEintraege.get(i)).getPlayerID() == playerID) {
@@ -298,21 +279,11 @@ public class TransferTableModel extends AbstractTableModel {
 
     /**
      * Returns the list of ScoutEntries
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final java.util.Vector<ScoutEintrag> getScoutListe() {
         return m_vScoutEintraege;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param columnName TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Object getValue(int row, String columnName) {
         if ((m_sColumnNames != null) && (m_clData != null)) {
             int i = 0;
@@ -325,26 +296,11 @@ public class TransferTableModel extends AbstractTableModel {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Object getValueAt(int row, int column) {
         if (m_clData != null) {
             return m_clData[row][column];
@@ -354,8 +310,6 @@ public class TransferTableModel extends AbstractTableModel {
 
     /**
      * Set player again
-     *
-     * @param scouteintraege TODO Missing Constructuor Parameter Documentation
      */
     public final void setValues(Vector<ScoutEintrag> scouteintraege) {
         m_vScoutEintraege = scouteintraege;
@@ -364,8 +318,6 @@ public class TransferTableModel extends AbstractTableModel {
 
     /**
      * Add player to the table
-     *
-     * @param scouteintraege TODO Missing Constructuor Parameter Documentation
      */
     public final void addScoutEintrag(ScoutEintrag scouteintraege) {
         m_vScoutEintraege.add(scouteintraege.duplicate());

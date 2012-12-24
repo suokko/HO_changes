@@ -69,17 +69,19 @@ public class PluginIfaUtils {
 		JWindow waitWindow = new LoginWaitDialog(HOMainFrame.instance());
 		try {
 			waitWindow.setVisible(true);
-
-			Date from = DateHelper.getDate(DBManager.instance()
-					.getLastIFAMatchDate(time.toString()));
-			try {
-				List<Date[]> times = getTimeIntervalsForRetrieval(from);
-				for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
-					Date[] fromTo = i.next();
-					insertMatches(fromTo[0], fromTo[1]);
+			if(time != null)
+			{
+				Date from = DateHelper.getDate(DBManager.instance()
+						.getLastIFAMatchDate(time.toString()));
+				try {
+					List<Date[]> times = getTimeIntervalsForRetrieval(from);
+					for (Iterator<Date[]> i = times.iterator(); i.hasNext();) {
+						Date[] fromTo = i.next();
+						insertMatches(fromTo[0], fromTo[1]);
+					}
+				} catch (Exception e) {
+					insertMatches(from, new Date());
 				}
-			} catch (Exception e) {
-				insertMatches(from, new Date());
 			}
 			waitWindow.setVisible(false);
 		} catch (Exception e) {

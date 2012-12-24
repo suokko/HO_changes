@@ -1,8 +1,6 @@
-// %1128099595984:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
 import ho.core.constants.player.PlayerAbility;
-import ho.core.constants.player.PlayerSkill;
 import ho.core.constants.player.PlayerSpeciality;
 import ho.core.datatype.CBItem;
 import ho.core.epv.EPVData;
