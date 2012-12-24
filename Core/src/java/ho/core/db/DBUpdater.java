@@ -288,10 +288,10 @@ final class DBUpdater {
 						+ ", new version will be " + DBVersion);
 		// Stadion table
 		if (tableExists("STADION")) {
-			dropColumn("STADION", "VerkaufteSteh");
-			dropColumn("STADION", "VerkaufteSitz");
-			dropColumn("STADION", "VerkaufteDach");
-			dropColumn("STADION", "VerkaufteLogen");
+			dropColumn("VerkaufteSteh", "STADION");
+			dropColumn("VerkaufteSitz", "STADION");
+			dropColumn("VerkaufteDach", "STADION");
+			dropColumn("VerkaufteLogen", "STADION");
 			if (indexExists("ISTADION_1", "STADION")) {
 				m_clJDBCAdapter.executeUpdate("DROP INDEX ISTADION_1");
 			}
@@ -388,10 +388,10 @@ final class DBUpdater {
 		}
 
 		// Spieler table
-		dropColumn("SPIELER", "sSpezialitaet");
-		dropColumn("SPIELER", "sCharakter");
-		dropColumn("SPIELER", "sAnsehen");
-		dropColumn("SPIELER", "sAgressivitaet");
+		dropColumn("sSpezialitaet", "SPIELER");
+		dropColumn("sCharakter", "SPIELER");
+		dropColumn("sAnsehen", "SPIELER");
+		dropColumn("sAgressivitaet", "SPIELER");
 
 		if (!columnExistsInTable("ActivationDate", "basics")) {
 			m_clJDBCAdapter.executeUpdate("ALTER TABLE basics ADD COLUMN ActivationDate TIMESTAMP");
