@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-
-
 /**
  * TableCellRenderer for the update plugins panel and user columns settings panel. 
  *
@@ -71,5 +69,4 @@ public final class UpdaterCellRenderer implements TableCellRenderer {
 		}
 		return label;
 	}
-
 }

@@ -40,11 +40,6 @@ final class HPLanguageInfo {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public String toString() {
         if (version == null) {
@@ -54,40 +49,18 @@ final class HPLanguageInfo {
         return version;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return String
-     */
     protected String getFilename() {
         return filename;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected int getId() {
         return id;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected String getVersion() {
         return version;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param elements TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected static HPLanguageInfo instance(NodeList elements) {
         HPLanguageInfo hpPluginInfo = new HPLanguageInfo();
 
@@ -119,31 +92,14 @@ final class HPLanguageInfo {
         return hpPluginInfo;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param filename TODO Missing Method Parameter Documentation
-     */
     private void setFilename(String filename) {
         this.filename = filename;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param newId TODO Missing Method Parameter Documentation
-     *
-     * @throws Exception TODO Missing Method Exception Documentation
-     */
     private void setId(String newId) throws Exception {
         id = Integer.parseInt(newId);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param version TODO Missing Method Parameter Documentation
-     */
     private void setVersion(String version) {
         this.version = version;
     }

@@ -1,6 +1,4 @@
-// %362946196:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
-
 
 import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.comp.panel.ImagePanel;

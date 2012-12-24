@@ -13,9 +13,6 @@ import ho.core.util.HOLogger;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,14 +22,9 @@ import javax.swing.SwingConstants;
 /**
  * @author Mirtillo
  *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 class NewsPanel extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6950711476669887530L;
 	private JLabel header = new JLabel("",SwingConstants.LEFT); 
 	private JButton b3 = new JButton("");

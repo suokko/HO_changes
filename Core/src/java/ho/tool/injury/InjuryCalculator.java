@@ -1,4 +1,3 @@
-// %653779730:de.hattrickorganizer.logik%
 package ho.tool.injury;
 
 /**

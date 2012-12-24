@@ -80,8 +80,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
         if (comand.equals(ACT_FIND)) {
             dialog.action();
         }
-
-
     }
 
     protected abstract TableModel getModel(boolean selected, String[] columnNames2);
@@ -100,11 +98,8 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
     protected JLabel getLabel(boolean isEnabled, String txt) {
         JLabel tmp = new JLabel(txt);
         tmp.setEnabled(isEnabled);
-        //tmp.setBackground(Color.lightGray);
         return tmp;
     }
-
-
 
     protected JPanel createButtons() {
         JPanel buttonPanel = new ImagePanel();
@@ -125,7 +120,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 
 	protected JScrollPane createTable() {
 		table = new JTable(getModel(defaultSelected, columnNames));
-		//table.setRowHeight(25);
 		table.setDefaultRenderer(Object.class, new UpdaterCellRenderer());
 		table.getTableHeader().setReorderingAllowed(false);
 
@@ -140,10 +134,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
 	}
 
     protected void handleException(Exception e, String txt) {
-        //	    JOptionPane.showMessageDialog(null,	txt
-        //				,RSC.NAME,JOptionPane.ERROR_MESSAGE);
-        //		if(e!=null)
-        //			writeErrorToLog(e);
         showException(e, txt);
     }
 
@@ -159,7 +149,6 @@ abstract class UpdaterDialog extends JDialog implements ActionListener {
                 tmp.setSelected(value);
             }
         }
-
         table.repaint();
     }
 }

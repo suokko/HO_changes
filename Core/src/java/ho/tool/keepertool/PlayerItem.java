@@ -1,9 +1,7 @@
-// %2775781217:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
 
 import ho.core.model.player.Spieler;
 import ho.module.transfer.scout.ScoutEintrag;
-
 
 /**
  * A Player Item object to be used in JComboBox

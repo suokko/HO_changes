@@ -39,21 +39,16 @@ public final class LanguagesDialog extends UpdaterDialog {
 	 */
 	private static final long serialVersionUID = -8429766970834045846L;
 
-	/** TODO Missing Parameter Documentation */
     private static final String PROP_LANGUAGEFILE = HOVerwaltung.instance().getLanguageString("Sprachdatei");
 
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     protected final String PROP_REFRESH = HOVerwaltung.instance().getLanguageString("ls.button.update");
 
-    /** TODO Missing Parameter Documentation */
     protected final String WEB_LANGUAGE_DIR = UpdateController.PLUGINS_HOMEPAGE + "/sprache/";
 
-    /** TODO Missing Parameter Documentation */
     protected Hashtable<?, ?> hash;
 
-    /** TODO Missing Parameter Documentation */
     private final String SPRACHE_DIRECTORY = System.getProperty("user.dir") + File.separator
                                              + "sprache";
 
@@ -61,8 +56,6 @@ public final class LanguagesDialog extends UpdaterDialog {
 
     /**
      * Creates a new LanguagesDialog object.
-     *
-     * @param data TODO Missing Constructuor Parameter Documentation
      */
     protected LanguagesDialog(Object data) {
         super(data, PROP_LANGUAGEFILE);
@@ -76,14 +69,6 @@ public final class LanguagesDialog extends UpdaterDialog {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param selected TODO Missing Method Parameter Documentation
-     * @param columnNames2 TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	protected TableModel getModel(boolean selected, String[] columnNames2) {
         Object[][] updates = new Object[object.length][4];
@@ -136,9 +121,6 @@ public final class LanguagesDialog extends UpdaterDialog {
         return model;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	protected void action() {
         if (table != null) {
@@ -173,14 +155,6 @@ public final class LanguagesDialog extends UpdaterDialog {
         this.dispose();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param hashi TODO Missing Method Parameter Documentation
-     * @param selected TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Object[][] getNewLanguages(Hashtable<?, ?> hashi, boolean selected) {
         Object[][] tmp = new Object[hashi.size()][4];
         boolean enabled = true;
@@ -197,9 +171,6 @@ public final class LanguagesDialog extends UpdaterDialog {
         return tmp;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void inizialize() {
         final File dir = new File(SPRACHE_DIRECTORY);
         object = dir.listFiles(new ExampleFileFilter("properties"));

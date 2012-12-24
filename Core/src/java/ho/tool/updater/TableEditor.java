@@ -36,18 +36,12 @@ import javax.swing.table.TableCellEditor;
 public final class TableEditor extends AbstractCellEditor implements TableCellEditor {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 204969955618566382L;
 
-	/** TODO Missing Parameter Documentation */
     protected HashMap<Integer,TableCellEditor> editors;
 
-    /** TODO Missing Parameter Documentation */
     protected TableCellEditor defaultEditor;
 
-    /** TODO Missing Parameter Documentation */
     protected TableCellEditor editor;
     private JTextField textField;
 
@@ -68,35 +62,14 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public boolean isCellEditable() {
         return true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public Object getCellEditorValue() {
         return editor.getCellEditorValue();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param table TODO Missing Method Parameter Documentation
-     * @param value TODO Missing Method Parameter Documentation
-     * @param isSelected TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                  int row, int column) {
         editor = editors.get(Integer.valueOf(row));
@@ -136,61 +109,30 @@ public final class TableEditor extends AbstractCellEditor implements TableCellEd
         return editor.getTableCellEditorComponent(table, value, isSelected, row, column);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param teditor TODO Missing Method Parameter Documentation
-     */
     public void add(int row, TableCellEditor teditor) {
         editors.put(new Integer(row), teditor);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param l TODO Missing Method Parameter Documentation
-     */
     @Override
 	public void addCellEditorListener(CellEditorListener l) {
         editor.addCellEditorListener(l);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     @Override
 	public void cancelCellEditing() {
         super.cancelCellEditing();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param l TODO Missing Method Parameter Documentation
-     */
     @Override
 	public void removeCellEditorListener(CellEditorListener l) {
         editor.removeCellEditorListener(l);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param anEvent TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public boolean shouldSelectCell(EventObject anEvent) {
         return super.shouldSelectCell(anEvent);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public boolean stopCellEditing() {
         return super.stopCellEditing();

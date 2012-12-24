@@ -1,24 +1,19 @@
-// %3911272477:de.hattrickorganizer.gui.keepertool%
 package ho.tool.keepertool;
-
 
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.module.transfer.scout.ScoutEintrag;
 import ho.module.transfer.scout.TransferTableModel;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Iterator;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 
 /**
  * Panel for selection of scouted keepers

@@ -1,15 +1,10 @@
-// %1490429830:de.hattrickorganizer.gui.injury%
 package ho.tool.injury;
-
 
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.model.HOVerwaltung;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.WindowListener;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,19 +20,12 @@ public class InjuryDialog extends JDialog {
 	private static final long serialVersionUID = 5194730460165995230L;
 
     //~ Instance fields ----------------------------------------------------------------------------
-
-	/** TODO Missing Parameter Documentation */
     DoctorPanel doctorPanel;
-
-    /** TODO Missing Parameter Documentation */
     UpdatePanel updatePanel;
-
-    /** TODO Missing Parameter Documentation */
     UpdateTSIPanel tsiPanel;
     private InjuryDetailPanel detail = new InjuryDetailPanel();
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new KeeperToolDialog object.
      *

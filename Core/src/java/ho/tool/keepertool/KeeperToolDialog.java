@@ -11,8 +11,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowListener;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -52,12 +50,8 @@ public class KeeperToolDialog extends JDialog implements ActionListener {
 
         resultPanel = new ResultPanel(this);
         initComponents();
-
         //reload();
         setSize(400, 250);
-        //setLocation(0, 0);
-
-        //setResizable(false);
         reload();
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }

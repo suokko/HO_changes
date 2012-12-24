@@ -29,15 +29,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author Thorsten Dietz
- *
- * @since 1.35
- */
 public final class UpdateController {
 	// ~ Static fields/initializers
 	// -----------------------------------------------------------------
@@ -72,11 +63,6 @@ public final class UpdateController {
 			HOLogger.instance().log(UpdateController.class, e1);
 		}
 	}
-
-
-
-
-
 	/**
 	 * Download latest flags from the external space.
 	 */
@@ -113,7 +99,7 @@ public final class UpdateController {
 	}
 
 	/**
-	 * analyse the /sprache/languages.xml file and creates a hashtable
+	 * analyse the languages.xml file and create a hashtable
 	 */
 	private static Hashtable<String, HPLanguageInfo> getWebLanguages(NodeList elements,
 			Hashtable<String, HPLanguageInfo> list) {
@@ -408,9 +394,7 @@ public final class UpdateController {
 					// Unsupported Message Type
 				}
 				}
-
 			}
 		}
 	}
-
 }

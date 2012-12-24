@@ -1,8 +1,5 @@
-// %4181403314:de.hattrickorganizer.gui.injury.panel%
 package ho.tool.injury;
-
 import ho.core.model.HOVerwaltung;
-
 
 /**
  * The Panel to calculate the number of needed doctors

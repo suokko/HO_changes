@@ -17,16 +17,10 @@ import javax.swing.table.DefaultTableModel;
 public final class TableModel extends DefaultTableModel {
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -3901370941644100246L;
 
 	/**
      * Creates a new TableModel object.
-     *
-     * @param daten TODO Missing Constructuor Parameter Documentation
-     * @param headers TODO Missing Constructuor Parameter Documentation
      */
     public TableModel(Object[][] daten, Object[] headers) {
         super(daten, headers);
@@ -34,14 +28,6 @@ public final class TableModel extends DefaultTableModel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param col TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public boolean isCellEditable(int row, int col) {
         return getValueAt(row, col) instanceof JCheckBox || getValueAt(row, col) instanceof JButton || getValueAt(row, col) instanceof JComboBox ;
