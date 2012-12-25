@@ -30,25 +30,12 @@ public class XMLMatchesParser {
 	private XMLMatchesParser() {
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param input
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public static List<MatchKurzInfo> parseMatchesFromString(String input) {
 		return createMatches(XMLManager.parseString(input));
 	}
 
 	/**
 	 * Wertet den StatusString aus und liefert einen INT
-	 * 
-	 * @param status
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private static int getStatus(String status) {
 		if (status.equalsIgnoreCase("FINISHED")) {
@@ -64,11 +51,6 @@ public class XMLMatchesParser {
 
 	/**
 	 * erstellt das MAtchlineup Objekt
-	 * 
-	 * @param doc
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private static List<MatchKurzInfo> createMatches(Document doc) {
 

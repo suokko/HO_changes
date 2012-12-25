@@ -35,8 +35,6 @@ public final class Liga {
 
     /**
      * Creates a new Liga object.
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
      */
     public Liga(java.util.Properties properties) {
         m_sLiga = properties.getProperty("serie", "").toString();
@@ -75,8 +73,6 @@ public final class Liga {
 
     /**
      * Creates a new Liga object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
      */
     public Liga(java.sql.ResultSet rs) {
         try {

@@ -42,26 +42,12 @@ public class XMLPlayerParser {
         return parseSpieler(XMLManager.parseFile(dateiname));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Vector<Spieler> parsePlayer(java.io.File datei) {
         return parseSpieler(XMLManager.parseFile(datei));
     }
 
     /**
      * erzeugt einen Spieler aus dem xml
-     *
-     * @param ele TODO Missing Constructuor Parameter Documentation
-     * @param fetchdate TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     protected final Spieler createPlayer(Element ele, Timestamp fetchdate)
       throws Exception
@@ -139,10 +125,6 @@ public class XMLPlayerParser {
 
     /**
      * parsed nen String ins DateFormat
-     *
-     * @param date TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final Timestamp parseDateFromString(String date) {
         try {
@@ -172,10 +154,6 @@ public class XMLPlayerParser {
 
     /**
      * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final Vector<Spieler> parseSpieler(Document doc) {
         Element ele = null;

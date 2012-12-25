@@ -110,9 +110,6 @@ final class FarbPanel extends ImagePanel implements ActionListener {
         transferButton.setBackground(temp.FG_TRANSFERMARKT);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();

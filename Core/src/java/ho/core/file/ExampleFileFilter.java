@@ -134,8 +134,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * Sets the human readable description of this filter. For example: filter.setDescription("Gif
      * and JPG Images");
      *
-     * @param description TODO Missing Constructuor Parameter Documentation
-     *
      * @see setDescription
      * @see setExtensionListInDescription
      * @see isExtensionListInDescription
@@ -148,8 +146,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
     /**
      * Returns the human readable description of this filter. For example: "JPEG and GIF Image
      * Files (.jpg, .gif)"
-     *
-     * @return TODO Missing Return Method Documentation
      *
      * @see setDescription
      * @see setExtensionListInDescription
@@ -184,13 +180,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
 
     /**
      * Return the extension portion of the file's name .
-     *
-     * @param f TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @see #getExtension
-     * @see FileFilter#accept
      */
     public final String getExtension(File f) {
         if (f != null) {
@@ -212,8 +201,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * description. Only relevent if a description was provided in the constructor or using
      * setDescription();
      *
-     * @param b TODO Missing Constructuor Parameter Documentation
-     *
      * @see getDescription
      * @see setDescription
      * @see isExtensionListInDescription
@@ -228,8 +215,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * description. Only relevent if a description was provided in the constructor or using
      * setDescription();
      *
-     * @return TODO Missing Return Method Documentation
-     *
      * @see getDescription
      * @see setDescription
      * @see setExtensionListInDescription
@@ -241,13 +226,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
     /**
      * Return true if this file should be shown in the directory pane, false if it shouldn't. Files
      * that begin with "." are ignored.
-     *
-     * @param f TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @see #getExtension
-     * @see FileFilter#accepts
      */
     @Override
 	public final boolean accept(File f) {
@@ -274,8 +252,6 @@ public class ExampleFileFilter extends javax.swing.filechooser.FileFilter
      * ExampleFileFilter filter = new ExampleFileFilter(); filter.addExtension("jpg");
      * filter.addExtension("tif"); Note that the "." before the extension is not needed and will
      * be ignored.
-     *
-     * @param extension TODO Missing Constructuor Parameter Documentation
      */
     public final void addExtension(String extension) {
         if (filters == null) {

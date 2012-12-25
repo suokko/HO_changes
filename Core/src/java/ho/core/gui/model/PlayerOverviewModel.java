@@ -68,13 +68,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
 		columns[47] = add[10];
 	}
 	
-	/**
-     * TODO Missing Method Documentation
-     *
-     * @param id TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Spieler getSpieler(int id) {
         //Kann < 0 sein für TempSpieler if ( id > 0 )
         if (id != 0) {
@@ -90,8 +83,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
     
     /**
      * Spieler neu setzen
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
      */
     public final void setValues(Vector<Spieler> player) {
     	m_vPlayers = player;
@@ -100,9 +91,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
     
     /**
      * Fügt der Tabelle einen Spieler hinzu
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param index TODO Missing Constructuor Parameter Documentation
      */
     public final void addSpieler(Spieler player, int index) {
     	m_vPlayers.add(index, player);
@@ -118,8 +106,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
     
     /**
      * Entfernt den Spieler aus der Tabelle
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
      */
     public final void removeSpieler(Spieler player) {
     	m_vPlayers.remove(player);
@@ -128,10 +114,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
     
     /**
      * Gibt den Spieler mit der gleichen ID, wie die übergebene, zurück, oder null
-     *
-     * @param vorlage TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private Spieler getVergleichsSpieler(Spieler vorlage) {
         final int id = vorlage.getSpielerID();
@@ -157,10 +139,6 @@ public final  class PlayerOverviewModel extends HOTableModel {
     
     /**
      * Gibt den Spieler aus dem ersten HRF, wo der Spieler aufgetauch ist, zurück
-     *
-     * @param vorlage TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private Spieler getVergleichsSpielerFirstHRF(Spieler vorlage) {
         return ho.core.db.DBManager.instance().getSpielerFirstHRF(vorlage

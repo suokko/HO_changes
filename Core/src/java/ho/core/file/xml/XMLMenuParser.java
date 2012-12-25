@@ -37,24 +37,10 @@ public class XMLMenuParser {
         return parseDetails(XMLManager.parseFile(dateiname));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String parseMenuFromFile(java.io.File datei) {
         return parseDetails(XMLManager.parseFile(datei));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param inputStream TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String parseMenuFromString(String inputStream) {
         return parseDetails(XMLManager.parseString(inputStream));
     }
@@ -62,16 +48,9 @@ public class XMLMenuParser {
     /////////////////////////////////////////////////////////////////////////////////    
     //Parser Helper private
     ////////////////////////////////////////////////////////////////////////////////  
-    /////////////////////////////////////////////////////////////////////////////////    
-    //Parser Helper private
-    ////////////////////////////////////////////////////////////////////////////////    
 
     /**
      * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final String parseDetails(Document doc) {
         Element ele = null;

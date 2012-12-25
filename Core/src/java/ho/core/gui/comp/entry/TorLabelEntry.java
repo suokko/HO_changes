@@ -72,9 +72,6 @@ public class TorLabelEntry implements IHOTableEntry {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void createComponent() {
         JPanel renderer = new JPanel();
         renderer.setLayout(new BoxLayout(renderer, 0));

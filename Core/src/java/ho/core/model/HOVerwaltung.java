@@ -75,7 +75,6 @@ public class HOVerwaltung {
 		if (m_clInstance == null) {
 			m_clInstance = new HOVerwaltung();
 
-			// TODO : defaults für FaktorObjekte einladen
 			DBManager.instance().getFaktorenFromDB();
 
 			// Krücke bisher

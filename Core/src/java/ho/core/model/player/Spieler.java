@@ -230,11 +230,6 @@ public final class Spieler {
 
     /**
      * Erstellt einen Spieler aus den Properties einer HRF Datei
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
-     * @param hrfdate TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     public Spieler(java.util.Properties properties, Timestamp hrfdate)
       throws Exception
@@ -345,10 +340,6 @@ public final class Spieler {
     /**
      * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill Vector filled with
      * object[] [0] = Time der Änderung [1] = Boolean: false=Keine Änderung gefunden
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public Vector<Object[]> getAllLevelUp(int skill) {
         return DBManager.instance().getAllLevelUp(skill,m_iSpielerID);
@@ -668,8 +659,6 @@ public final class Spieler {
 
     /**
      * gibt an ob der spieler gesperrt ist
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public boolean isGesperrt() {
         return (m_iGelbeKarten > 2);
@@ -711,12 +700,6 @@ public final class Spieler {
     	return m_bHomeGrown;
     }
 
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public Timestamp getHrfDate() {
         return m_clhrfDate;
     }
@@ -726,10 +709,6 @@ public final class Spieler {
     }
     /**
      * liefert die Stärke für die IdealPosition
-     *
-     * @param mitForm TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getIdealPosStaerke(boolean mitForm) {
         return calcPosValue(getIdealPosition(), mitForm);
@@ -737,8 +716,6 @@ public final class Spieler {
 
     /**
      * liefert die IdealPosition
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public byte getIdealPosition() {
         //Usr Vorgabe aus DB holen
@@ -805,10 +782,6 @@ public final class Spieler {
     /**
      * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill [0] = Time der
      * Änderung [1] = Boolean: false=Keine Änderung gefunden
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public Object[] getLastLevelUp(int skill) {
         return DBManager.instance().getLastLevelUp(skill, m_iSpielerID);
@@ -816,8 +789,6 @@ public final class Spieler {
 
     /**
      * liefert die vergangenen Tage seit dem letzem LevelAufstieg für den angeforderten Skill
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
      *
      * @return anzahl Tage seit dem letzen Aufstieg
      */
@@ -839,8 +810,6 @@ public final class Spieler {
 
     /**
      * Gibt die Letzte Bewertung zurück, die der Spieler bekommen hat
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public int getLetzteBewertung() {
         if (m_iLastBewertung < 0) {
@@ -853,8 +822,6 @@ public final class Spieler {
 
     /**
      * Returns the loyalty stat
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public int getLoyalty() {
     	return m_iLoyalty;
@@ -862,8 +829,6 @@ public final class Spieler {
 
     /**
      * Sets the loyalty stat
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public void  setLoyalty(int loy) {
     	m_iLoyalty = loy;
@@ -1005,8 +970,6 @@ public final class Spieler {
 
     /**
      * Zum speichern! Die Reduzierung des Marktwerts auf TSI wird rückgängig gemacht
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public int getSaveMarktwert() {
         if (m_clhrfDate == null || m_clhrfDate.before(DBManager.TSIDATE)) {
@@ -1056,8 +1019,6 @@ public final class Spieler {
 
     /**
      * setzt ob der User den Spieler zum Spiel zulässt
-     *
-     * @param flag TODO Missing Constructuor Parameter Documentation
      */
     public void setSpielberechtigt(boolean flag) {
         m_bSpielberechtigt = Boolean.valueOf(flag);
@@ -1067,8 +1028,6 @@ public final class Spieler {
 
     /**
      * gibt an ob der User den Spieler zum Spiel zulässt
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public boolean isSpielberechtigt() {
         //Nur pr�fen, wenn nicht Spielberechtigt: Reduziert Zugriffe!
@@ -1118,10 +1077,6 @@ public final class Spieler {
 
     /**
      * berechnet den Subskill pro position
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public float getSubskill4Pos(int skill) {
     	return Math.min(0.99f, Helper.round(getSubskill4PosAccurate(skill), 2));
@@ -1230,8 +1185,6 @@ public final class Spieler {
 
     /**
      * Gibt das Datum des ersten HRFs mit dem Spieler zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public Timestamp getTimestamp4FirstPlayerHRF() {
         if (m_tsTime4FirstHRF == null) {
@@ -1369,8 +1322,6 @@ public final class Spieler {
 
     /**
      * gibt an ob der Spieler Trainer ist
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public boolean isTrainer() {
         return ((m_iTrainer > 0) && (m_iTrainerTyp >= 0));
@@ -1448,11 +1399,6 @@ public final class Spieler {
         return m_iU20Laenderspiele;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param flag TODO Missing Method Parameter Documentation
-     */
     public void setUserPosFlag(byte flag) {
         m_bUserPosFlag = flag;
         DBManager.instance().saveSpielerUserPosFlag(m_iSpielerID, m_bUserPosFlag);
@@ -1460,8 +1406,6 @@ public final class Spieler {
 
     /**
      * liefert User Notiz zum Spieler
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public byte getUserPosFlag() {
         if (m_bUserPosFlag < SpielerPosition.UNKNOWN) {
@@ -1474,10 +1418,6 @@ public final class Spieler {
 
     /**
      * get Skillvalue 4 skill
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public int getValue4Skill4(int skill) {
         switch (skill) {
@@ -1909,11 +1849,6 @@ public final class Spieler {
 
     /**
      * prüft ob Skillup vorliegt
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param oldPlayer TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected boolean check4SkillUp(int skill, Spieler oldPlayer) {
     	if ((oldPlayer != null) && (oldPlayer.getSpielerID() > 0))
@@ -1923,11 +1858,6 @@ public final class Spieler {
 
     /**
      * Test for whether skilldown has occurred
-     *
-     * @param skill TODO Missing Constructuor Parameter Documentation
-     * @param oldPlayer TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public boolean check4SkillDown(int skill, Spieler oldPlayer) {
     	if (skill < PlayerSkill.EXPERIENCE)

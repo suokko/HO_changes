@@ -30,8 +30,6 @@ public final class LineUp extends PrintObject {
 
     /**
      * Creates a new LineUp object.
-     *
-     * @param pf TODO Missing Constructuor Parameter Documentation
      */
     public LineUp(PageFormat pf) {
         super(pf);
@@ -109,11 +107,6 @@ public final class LineUp extends PrintObject {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g2 TODO Missing Method Parameter Documentation
-     */
     @Override
 	protected void paintMe(Graphics2D g2) {
         int currentY = 0;
@@ -128,13 +121,8 @@ public final class LineUp extends PrintObject {
         forward.draw(currentY = currentY + midfield.getTotalHeight() + margin, (int) dw, g2);
         reserve1.draw(currentY = currentY + forward.getTotalHeight() + margin + 10, (int) dw, g2);
         reserve2.draw(currentY = currentY + reserve1.getTotalHeight() + margin, (int) dw, g2);
-
-        //			values.draw(currentY = currentY +reserve2.getTotalHeight()+margin+10,(int)dw,g2);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initialize() {
         goalkeeper = new LineUpRow(1);
         defence = new LineUpRow(4);

@@ -14,105 +14,43 @@ package ho.core.model.series;
  */
 public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
     //~ Instance fields ----------------------------------------------------------------------------
-    /** TODO Missing Parameter Documentation */
     public static final byte H_SIEG = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte A_SIEG = 2;
-
     /** HOME DRAW */
     public static final byte H_UN = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte A_UN = 4;
-
     /** Home Loose */
     public static final byte H_NIED = 5;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte A_NIED = 6;
-
-    /** TODO Missing Parameter Documentation */
     public static final byte UNKOWN = 0;
-    
-    /** TODO Missing Parameter Documentation */
     protected String m_sTeamName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected byte[] m_aSerie = new byte[14];
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_Nied = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_Punkte = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_Siege = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_ToreFuer = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_ToreGegen = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iA_Un = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iAltePosition = 1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iAnzSpiele = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iG_Nied = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iG_Siege = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iG_Un = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_Nied = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_Punkte = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_Siege = -1;
-
-    //Extended Var'S//    
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_ToreFuer = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_ToreGegen = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iH_Un = -1;
 
     ///////////MEMBER////////////////////////
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iPosition = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iPunkte = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iTeamId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iToreFuer = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iToreGegen = -1;
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new instance of LigaTabellenEintrag
      */
@@ -272,11 +210,6 @@ public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
         return m_iAnzSpiele;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getAwayTorDiff() {
         return (m_iA_ToreFuer - m_iA_ToreGegen);
     }
@@ -450,11 +383,6 @@ public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
         return m_iH_Un;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getHeimTorDiff() {
         return (m_iH_ToreFuer - m_iH_ToreGegen);
     }
@@ -464,8 +392,6 @@ public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
      *
      * @param anzahl wie viele der letzen Spiele sollen angezeigt werden,  -1 = alle, 0 = nur das
      *        akuelle, 1-x = anzahl Spiele vor dem aktuellen
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final byte[] getLastSerie(int anzahl) {
         byte[] miniSerie = new byte[0];
@@ -548,11 +474,6 @@ public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
         return this.m_aSerie;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getSerieAsString() {
         final StringBuffer buffer = new StringBuffer();
 
@@ -678,10 +599,6 @@ public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
 
     /**
      * vergleicht die Einträge
-     *
-     * @param obj TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final int compareTo(LigaTabellenEintrag obj) {
         if (obj instanceof LigaTabellenEintrag) {

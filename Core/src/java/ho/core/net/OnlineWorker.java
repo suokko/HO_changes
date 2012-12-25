@@ -417,7 +417,6 @@ public class OnlineWorker {
 	 * @param teamId
 	 *            angabe der Saison ( optinal &lt; 1 für aktuelle
 	 * @param forceRefresh
-	 *            TODO Missing Constructuor Parameter Documentation
 	 * @param store
 	 *            true if the full match details are to be stored, false if not.
 	 * @param upcoming
@@ -494,8 +493,6 @@ public class OnlineWorker {
 	 *            Erste Teamid (pflicht)
 	 * @param teamId2
 	 *            Zweite Teamid (optional auch -1)
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private static MatchLineup getMatchlineup(int matchId, MatchType matchType, int teamId1,
 			int teamId2) {

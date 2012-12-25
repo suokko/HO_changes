@@ -30,37 +30,26 @@ import java.util.Vector;
 public class HRFFileParser {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     private static final String ENTITY = "Entity";
 
-    /** TODO Missing Parameter Documentation */
     private static final String BASICS = "[basics]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String LEAGUE = "[league]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String CLUB = "[club]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String TEAM = "[team]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String LINEUP = "[lineup]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String ECONOMY = "[economy]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String ARENA = "[arena]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String PLAYER = "[player]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String XTRA = "[xtra]";
 
-    /** TODO Missing Parameter Documentation */
     private static final String LASTLINEUP = "[lastlineup]";
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -71,10 +60,6 @@ public class HRFFileParser {
 
     /**
      * Datei einlesen und parsen
-     *
-     * @param datei TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final HOModel parse(File datei) {
         java.sql.Timestamp hrfdate = null;
@@ -173,13 +158,6 @@ public class HRFFileParser {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param date TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private java.sql.Timestamp getDatumByString(String date) {
         try {
             //Hattrick
@@ -203,13 +181,6 @@ public class HRFFileParser {
 
     /**
      * Erzeugt aus dem Vector mit Properties ein HOModel
-     *
-     * @param propertiesVector TODO Missing Constructuor Parameter Documentation
-     * @param hrfdate TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     private HOModel createHOModel(Vector<Properties> propertiesVector, java.sql.Timestamp hrfdate)
       throws Exception
@@ -286,33 +257,4 @@ public class HRFFileParser {
 
         return hoModel;
     }
-
-    //--------------------Debug-------------------------------------------    
-
-    /**
-     * Debugfunktion: Ausgabe aller Properties
-     *
-     * @param propertiesVector TODO Missing Constructuor Parameter Documentation
-     */
-    /*private void printProperties(Vector<Properties> propertiesVector) {
-        for (int i = 0; i < propertiesVector.size(); i++) {
-            final Properties properties = (Properties) propertiesVector.get(i);
-            final Enumeration<Object> keys = properties.keys();
-            final Enumeration<Object> elements = properties.elements();
-
-            while (keys.hasMoreElements() && elements.hasMoreElements()) {
-                final String key = keys.nextElement().toString();
-                final int blanks = 25 - key.length();
-
-                HOLogger.instance().log(getClass(),key);
-
-                for (int j = 0; j < blanks; j++) {
-                    HOLogger.instance().log(getClass()," ");
-                }
-
-                HOLogger.instance().log(getClass(),":\t" + elements.nextElement().toString());
-            }
-
-        }
-    }*/
 }

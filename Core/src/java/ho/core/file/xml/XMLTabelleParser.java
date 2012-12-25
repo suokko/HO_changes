@@ -32,24 +32,10 @@ public class XMLTabelleParser {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param dateiname TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final LigaTabelle parseTabelle(String dateiname) {
         return createTabelle(XMLManager.parseFile(dateiname));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param ele TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     protected final LigaTabellenEintrag createEintrag(Element ele) {
         Element tmp = null;
         final LigaTabellenEintrag lte = new LigaTabellenEintrag();

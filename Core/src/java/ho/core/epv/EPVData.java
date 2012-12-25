@@ -56,8 +56,6 @@ public class EPVData implements Cloneable {
 
     /**
      * Creates a new EPVData object.
-     *
-     * @param s TODO Missing Constructuor Parameter Documentation
      */
     public EPVData(Spieler s) {
         setPlayerName(s.getName());
@@ -92,11 +90,6 @@ public class EPVData implements Cloneable {
 
 	//~ Methods ------------------------------------------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setAge(int i) {
 		age = i;
 	}
@@ -116,315 +109,136 @@ public class EPVData implements Cloneable {
 		this.ageDays = ageDays;
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setAttack(double i) {
 		attack = i;
 		checkMaxSkill(i);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getAttack() {
 		return attack;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setDefense(double i) {
 		defense = i;
 		checkMaxSkill(i);		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getDefense() {
 		return defense;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setExperience(int i) {
 		experience = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getExperience() {
 		return experience;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setForm(int i) {
 		form = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getForm() {
 		return form;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setGoalKeeping(double i) {
 		goalKeeping = i;
 		checkMaxSkill(i);		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getGoalKeeping() {
 		return goalKeeping;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setId(int i) {
 		playerId = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getId() {
 		return playerId;
 	}
 
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setLeadership(int i) {
 		leadership = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getLeadership() {
 		return leadership;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setPassing(double i) {
 		passing = i;
 		checkMaxSkill(i);		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getPassing() {
 		return passing;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setPlayMaking(double i) {
 		playMaking = i;
 		checkMaxSkill(i);		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getPlayMaking() {
 		return playMaking;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param string TODO Missing Method Parameter Documentation
-	 */
 	public void setPlayerName(String string) {
 		playerName = string;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public String getPlayerName() {
 		return playerName;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setPrice(int i) {
 		price = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getPrice() {
 		return price;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setStamina(double i) {
 		stamina = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getStamina() {
 		return stamina;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setSetPieces(double i) {
 		setPieces = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getSetPieces() {
 		return setPieces;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param string TODO Missing Method Parameter Documentation
-	 */
 	public void setSpeciality(int se) {
 		speciality = se;
 	}
 
-	//	public String getAggressivness() {
-	//		return aggressivness;
-	//	}
-	//
-	//	public String getGentleness() {
-	//		return gentleness;
-	//	}
-	//
-	//	public String getCharacter() {
-	//		return character;
-	//	}
-	//
-	//	public void setAggressivness(String string) {
-	//		aggressivness = string;
-	//	}
-	//
-	//	public void setGentleness(String string) {
-	//		gentleness = string;
-	//	}
-	//
-	//	public void setCharacter(String string) {
-	//		character = string;
-	//	}
 	public int getSpeciality() {
 		return speciality;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setTSI(int i) {
 		TSI = i;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public int getTSI() {
 		return TSI;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param i TODO Missing Method Parameter Documentation
-	 */
 	public void setWing(double i) {
 		wing = i;
 		checkMaxSkill(i);		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public double getWing() {
 		return wing;
 	}

@@ -21,45 +21,18 @@ public class MatchLineup {
     //MEMBER
     ////////////////////////////////////////////////////////////////////////////////
 
-    /** TODO Missing Parameter Documentation */
     protected int m_iHeimId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iMatchID = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected MatchType m_MatchTyp = MatchType.NONE;
-
-    /** TODO Missing Parameter Documentation */
     MatchLineupTeam m_clGast;
-
-    /** TODO Missing Parameter Documentation */
     MatchLineupTeam m_clHeim;
-
-    /** TODO Missing Parameter Documentation */
     private String m_sArenaName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sFetchDatum = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sGastName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sHeimName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sSpielDatum = "";
-
-    /** TODO Missing Parameter Documentation */
     private int m_iArenaID = -1;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iGastId = -1;
-
-	/** TODO Missing Parameter Documentation */
-	
- 
    
     //~ Constructors -------------------------------------------------------------------------------
 
@@ -332,20 +305,10 @@ public class MatchLineup {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getStringFetchDate() {
         return m_sFetchDatum;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getStringSpielDate() {
         return m_sSpielDatum;
     }

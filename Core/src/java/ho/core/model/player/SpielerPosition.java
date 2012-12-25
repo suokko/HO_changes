@@ -57,13 +57,8 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	// Konstanten für TRAININGSEFFEKTE
 
-	/** TODO Missing Parameter Documentation */
 	public static final byte KEIN_TE = 0;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte SCHWACHER_TE = 1;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte VOLLER_TE = 2;
 
 	// ~ Instance fields
@@ -89,13 +84,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Creates a new instance of SpielerPosition
-	 *
-	 * @param id
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param spielerId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param taktik
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 
 	/* byte position, */
@@ -113,9 +101,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Creates a new instance of SpielerPosition
-	 *
-	 * @param sp
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public SpielerPosition(SpielerPosition sp) {
 		// m_bPosition = position;
@@ -161,11 +146,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * Gibt eine mögliche HT-Positionsid für eine HO-Positionsid zurück. Nur zum
 	 * Laden des Positionsimage zu gebrauchen!!!
-	 *
-	 * @param posId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static int getHTPosidForHOPosition4Image(byte posId) {
 		switch (posId) {
@@ -214,11 +194,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt das Kürzel für den Namen zurück
-	 *
-	 * @param posId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getKurzNameForPosition(byte posId) {
 
@@ -294,11 +269,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt zu einer Positionsid den Namen zurück
-	 *
-	 * @param id
-	 *            TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getNameForID(int id) {
 		switch (id) {
@@ -373,11 +343,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 
 	/**
 	 * Gibt zu einer Positionsid den Namen zurück
-	 *
-	 * @param posId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static String getNameForPosition(byte posId) {
 
@@ -454,22 +419,12 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public byte getPosition() {
 		return SpielerPosition.getPosition(m_iId, m_bTaktik);
 	}
 
 	/**
 	 * Getter for property m_bPosition.
-	 *
-	 * @param id
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param taktik
-	 *            TODO Missing Constructuor Parameter Documentation
 	 *
 	 * @return Value of property m_bPosition.
 	 */
@@ -595,9 +550,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	 * liefert eine ID nach der Sortiert werden kann ( z.B.
 	 * Spierlübersichtstabelle
 	 *
-	 *
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final int getSortId() {
 		int id = this.getPosition();
@@ -616,13 +568,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	/**
 	 * liefert eine ID nach der Sortiert werden kann ( z.B.
 	 * Spierlübersichtstabelle
-	 *
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param reserve
-	 *            TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public static int getSortId(byte position, boolean reserve) {
 		int id = position;

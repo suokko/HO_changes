@@ -19,28 +19,14 @@ import java.util.Vector;
  */
 public class LigaTabelle  {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sLigaLandName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sLigaName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected Vector<LigaTabellenEintrag> m_vEintraege = new Vector<LigaTabellenEintrag>();
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iLigaLandId = -1;
-
     /** Maximale ANzahl an Spielklassen */
     protected int m_iMaxAnzahlSpielklassen = -1;
-
     /*Wie hoch ist die Liga 1== hoch 6,7 == unten*/
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iSpielklasse = -1;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -52,22 +38,12 @@ public class LigaTabelle  {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Vector<LigaTabellenEintrag> getEintraege() {
         return m_vEintraege;
     }
 
     /**
      * liefert den Eintrag zu einem Team
-     *
-     * @param teamId TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final LigaTabellenEintrag getEintragByTeamId(int teamId) {
         LigaTabellenEintrag tmp = null;
@@ -198,11 +174,6 @@ public class LigaTabelle  {
     /**
      * liefert tendenz zur Platzierung des Teams im Vergleich mit der angegebenen Tabelle -1 ==
      * abgerutscht, 0 = gleich, 1 == aufgestiegen
-     *
-     * @param teamId TODO Missing Constructuor Parameter Documentation
-     * @param compare TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final byte getTeamPlatzTendenz(int teamId, LigaTabelle compare) {
         LigaTabellenEintrag aktu = null;
@@ -225,11 +196,6 @@ public class LigaTabelle  {
         return (byte) 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param lte TODO Missing Method Parameter Documentation
-     */
     public final void addEintrag(LigaTabellenEintrag lte) {
         if ((lte != null) && (!m_vEintraege.contains(lte))) {
             m_vEintraege.add(lte);

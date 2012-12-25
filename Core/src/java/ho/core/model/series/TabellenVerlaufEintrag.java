@@ -13,18 +13,11 @@ package ho.core.model.series;
  */
 public class TabellenVerlaufEintrag {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sTeamName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected int[] m_iPlatzierungen = new int[0];
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iTeamId = -1;
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new instance of TabellenVerlaufEintrag
      */

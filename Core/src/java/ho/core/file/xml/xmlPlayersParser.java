@@ -48,10 +48,6 @@ public class xmlPlayersParser {
 
     /**
      * erzeugt das Team aus dem xml
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 
     //throws Exception

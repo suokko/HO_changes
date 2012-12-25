@@ -48,11 +48,6 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param changeEvent TODO Missing Method Parameter Documentation
-     */
     public final void refresh() {
         UserParameter.temp().TRAINING_OFFSET_GOALKEEPING =  m_jtapGoalkeeping.getValue();
         UserParameter.temp().TRAINING_OFFSET_DEFENDING =  m_jtapDefending.getValue();
@@ -71,9 +66,6 @@ final class TrainingsOptionenPanel extends ImagePanel implements ActionListener 
         OptionManager.instance().setReInitNeeded();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
     	setLayout(new GridLayout(15, 1, 4, 0));
 

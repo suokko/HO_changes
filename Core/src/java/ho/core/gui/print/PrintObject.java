@@ -30,11 +30,6 @@ abstract class PrintObject extends JPanel implements Printable {
     // Seitenrand
     protected int sr;
 
-    /**
-     * Konstructor
-     *
-     * @param pf TODO Missing Constructuor Parameter Documentation
-     */
     public PrintObject(PageFormat pf) {
         // Werte übernehmen
         this.pf = pf;

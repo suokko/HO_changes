@@ -154,11 +154,6 @@ public final class Basics  {
         return m_clDatum;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param date TODO Missing Method Parameter Documentation
-     */
     public java.sql.Timestamp setDatumByString(String date) {
         try {
             //Hattrick

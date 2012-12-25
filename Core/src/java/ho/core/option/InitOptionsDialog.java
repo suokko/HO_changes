@@ -37,12 +37,6 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbOK)) {
             if (m_jcbSprachdatei.getSelectedItem() != null) {
@@ -54,9 +48,6 @@ public final class InitOptionsDialog extends JDialog implements java.awt.event.A
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setContentPane(new JPanel(new BorderLayout()));
 

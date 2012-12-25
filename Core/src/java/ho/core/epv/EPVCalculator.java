@@ -58,7 +58,6 @@ class EPVCalculator
     	price = Helper.round(price, -3);
     	if (price < 1000)
     		price = 1000;
-    	// TODO currencyRate ok?
     	return (price * 10/currencyRate);
     }
 

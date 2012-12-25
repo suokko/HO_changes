@@ -21,37 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.Vector;
 public class HRFStringParser {
-	/** TODO Missing Parameter Documentation */
     private static final String ENTITY = "Entity";
-
-    /** TODO Missing Parameter Documentation */
     private static final String BASICS = "[basics]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String LEAGUE = "[league]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String CLUB = "[club]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String TEAM = "[team]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String LINEUP = "[lineup]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String ECONOMY = "[economy]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String ARENA = "[arena]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String PLAYER = "[player]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String XTRA = "[xtra]";
-
-    /** TODO Missing Parameter Documentation */
     private static final String LASTLINEUP = "[lastlineup]";
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -163,13 +142,6 @@ public class HRFStringParser {
 
     /**
      * Erzeugt aus dem Vector mit Properties ein HOModel
-     *
-     * @param propertiesVector TODO Missing Constructuor Parameter Documentation
-     * @param hrfdate TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     private HOModel createHOModel(Vector<Properties> propertiesVector, Timestamp hrfdate)
       throws Exception

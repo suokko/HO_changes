@@ -28,7 +28,6 @@ public class RasenPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -8146276344087586861L;
 
-//	/** TODO Missing Parameter Documentation */
     public static BufferedImage background;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -47,8 +46,6 @@ public class RasenPanel extends JPanel {
 
     /**
      * Creates a new RasenPanel object.
-     *
-     * @param layout TODO Missing Constructuor Parameter Documentation
      */
     public RasenPanel(LayoutManager layout) {
         super(layout);
@@ -57,8 +54,6 @@ public class RasenPanel extends JPanel {
 
     /**
      * Creates a new RasenPanel object.
-     *
-     * @param forprint TODO Missing Constructuor Parameter Documentation
      */
     public RasenPanel(boolean forprint) {
         super();
@@ -67,9 +62,6 @@ public class RasenPanel extends JPanel {
 
     /**
      * Creates a new RasenPanel object.
-     *
-     * @param layout TODO Missing Constructuor Parameter Documentation
-     * @param forprint TODO Missing Constructuor Parameter Documentation
      */
     public RasenPanel(LayoutManager layout, boolean forprint) {
         super(layout);
@@ -78,11 +70,6 @@ public class RasenPanel extends JPanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void paint(Graphics g) {
         final java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
@@ -100,11 +87,6 @@ public class RasenPanel extends JPanel {
         paintBorder(g2d);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param printing TODO Missing Method Parameter Documentation
-     */
     private void init(boolean printing) {
         m_bPrint = printing;
 

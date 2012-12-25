@@ -33,24 +33,10 @@ public class XMLNewsParser {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param dateiname TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final News parseNews(String dateiname) {
         return parseDetails(XMLManager.parseString(dateiname));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param datei TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final News parseNews(java.io.File datei) {
         return parseDetails(XMLManager.parseFile(datei));
     }
@@ -68,10 +54,6 @@ public class XMLNewsParser {
 
     /**
      * erstellt das MAtchlineup Objekt
-     *
-     * @param doc TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final News parseDetails(Document doc) {
 		News news = new News();	

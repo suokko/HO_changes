@@ -131,11 +131,6 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             refresh();
@@ -174,11 +169,6 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         m_jpStandard.addChangeListener(this);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param changeEvent TODO Missing Method Parameter Documentation
-     */
     public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
         //saven der aktuellen Einstellungen
     	final FormulaFactors factors = FormulaFactors.instance();
@@ -196,9 +186,6 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         OptionManager.instance().setReInitNeeded();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();

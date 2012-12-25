@@ -56,12 +56,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
 
     /**
      * Label für den Spielernamen (je nach Status)
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param positionAktuell TODO Missing Constructuor Parameter Documentation
-     * @param positionsbewertung TODO Missing Constructuor Parameter Documentation
-     * @param showTrikot TODO Missing Constructuor Parameter Documentation
-     * @param showWetterwarnung TODO Missing Constructuor Parameter Documentation
      */
     public SpielerLabelEntry(Spieler spieler, SpielerPosition positionAktuell,
                              float positionsbewertung, boolean showTrikot, boolean showWetterwarnung) {
@@ -96,10 +90,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
 
 	/**
      * Gibt eine passende Komponente zurück
-     *
-     * @param isSelected TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public final JComponent getComponent(boolean isSelected) {
     	 m_clComponent.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:ColorLabelEntry.BG_STANDARD);
@@ -107,11 +97,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
     	 return m_clComponent;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Spieler getSpieler() {
         return m_clPlayer;
     }
@@ -126,10 +111,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
 
     /**
      * Vergleich zum Sortieren
-     *
-     * @param obj TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SpielerLabelEntry) {
@@ -237,9 +218,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
         m_clComponent.setPreferredSize(new Dimension(Helper.calcCellWidth(150),Helper.calcCellWidth(18)));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void updateComponent() {
         if (m_clPlayer != null) {
             m_jlName.setForeground(getForegroundForSpieler(m_clPlayer));
@@ -252,13 +230,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
                                                                                      .getTrikotnummer()));
                 showGroupIcon();
             }
-
-            //            else if ( m_bShowTrikot )
-            //            {
-            //                m_jlName.setIcon ( m_clLeer );
-            //                m_jlGruppe.setIcon ( tools.Helper.getImageIcon4MiniGruppe ( m_clSpieler.getTeamInfoSmilie () ) );
-            //            }
-
             updateDisplay(m_clPlayer);
 
         } else {
@@ -268,10 +239,6 @@ public final class SpielerLabelEntry implements IHOTableEntry {
 
     /**
      * Aktualisierung des Entrys
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param positionAktuell TODO Missing Constructuor Parameter Documentation
-     * @param positionsbewertung TODO Missing Constructuor Parameter Documentation
      */
     public final void updateComponent(Spieler spieler, SpielerPosition positionAktuell,
                                       float positionsbewertung, String nameText) {

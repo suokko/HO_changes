@@ -54,8 +54,6 @@ public class SkillEntry implements IHOTableEntry {
 
     /**
      * Creates a new SkillEntry object.
-     *
-     * @param zahl TODO Missing Constructuor Parameter Documentation
      */
     public SkillEntry(double zahl) {
         m_dZahl = zahl;
@@ -65,11 +63,6 @@ public class SkillEntry implements IHOTableEntry {
 
     /**
      * Creates a new SkillEntry object.
-     *
-     * @param zahl TODO Missing Constructuor Parameter Documentation
-     * @param foreground TODO Missing Constructuor Parameter Documentation
-     * @param foreground2 TODO Missing Constructuor Parameter Documentation
-     * @param background TODO Missing Constructuor Parameter Documentation
      */
     public SkillEntry(double zahl, Color foreground, Color background) {
         m_dZahl = zahl;
@@ -81,11 +74,6 @@ public class SkillEntry implements IHOTableEntry {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param bgcolor TODO Missing Method Parameter Documentation
-     */
     public final void setBGColor(Color bgcolor) {
         m_clBGColor = bgcolor;
         updateComponent();
@@ -93,10 +81,6 @@ public class SkillEntry implements IHOTableEntry {
 
     /**
      * Gibt eine passende Komponente zurück
-     *
-     * @param isSelected TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public final JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground(isSelected?HODefaultTableCellRenderer.SELECTION_BG:m_clBGColor);
@@ -105,21 +89,11 @@ public class SkillEntry implements IHOTableEntry {
         return m_clComponent;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param fgcolor TODO Missing Method Parameter Documentation
-     */
     public final void setFGColor(Color fgcolor) {
         m_clFGColor = fgcolor;
         updateComponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param zahl TODO Missing Method Parameter Documentation
-     */
     public final void setZahl(double zahl) {
         m_dZahl = zahl;
         updateComponent();
@@ -127,16 +101,11 @@ public class SkillEntry implements IHOTableEntry {
 
     /**
      * Gibt die Zahl zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final double getZahl() {
         return m_dZahl;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void clear() {
         m_dZahl = 0d;
         updateComponent();
@@ -144,10 +113,6 @@ public class SkillEntry implements IHOTableEntry {
 
     /**
      * Vergleich zum Sortieren
-     *
-     * @param obj TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof SkillEntry) {
@@ -224,9 +189,6 @@ public class SkillEntry implements IHOTableEntry {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void updateComponent() {
         m_jlLabel1.setText(m_sText);
         m_jlLabel2.setText(m_sNachkomma);

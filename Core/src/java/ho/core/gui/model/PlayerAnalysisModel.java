@@ -142,8 +142,6 @@ public class PlayerAnalysisModel extends HOTableModel {
  
     /**
      * Spieler neu setzen
-     *
-     * @param spielermatchCBItem TODO Missing Constructuor Parameter Documentation
      */
     public final void setValues(Vector<SpielerMatchCBItem> spielermatchCBItem) {
         m_vSpielerMatchCBItem = spielermatchCBItem;

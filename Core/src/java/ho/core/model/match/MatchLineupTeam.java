@@ -24,19 +24,10 @@ import java.util.Vector;
 public class MatchLineupTeam {
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------
-
-	/** TODO Missing Parameter Documentation */
 	private String m_sTeamName;
-
-	/** TODO Missing Parameter Documentation */
 	private Vector<MatchLineupPlayer> m_vAufstellung = new Vector<MatchLineupPlayer>();
-
 	private List<Substitution> m_vSubstitutions = new ArrayList<Substitution>();
-
-	/** TODO Missing Parameter Documentation */
 	private int m_iErfahrung;
-
-	/** TODO Missing Parameter Documentation */
 	private int m_iTeamID;
 	// null player to fill empty spots
 	private final static MatchLineupPlayer NULLPLAYER = new MatchLineupPlayer(-1, 0, -1, -1d, "", 0);
@@ -46,13 +37,6 @@ public class MatchLineupTeam {
 
 	/**
 	 * Creates a new instance of MatchLineupTeam
-	 * 
-	 * @param teamName
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param teamID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param erfahrung
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public MatchLineupTeam(String teamName, int teamID, int erfahrung) {
 		m_sTeamName = teamName;
@@ -185,11 +169,6 @@ public class MatchLineupTeam {
 
 	/**
 	 * Liefert Einen Spieler per PositionsID aus der Aufstellung
-	 * 
-	 * @param id
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final MatchLineupPlayer getPlayerByPosition(int id) {
 		MatchLineupPlayer player = null;
@@ -242,12 +221,6 @@ public class MatchLineupTeam {
 		return m_sTeamName;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param player
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public final void add2Aufstellung(MatchLineupPlayer player) {
 		m_vAufstellung.add(player);
 	}

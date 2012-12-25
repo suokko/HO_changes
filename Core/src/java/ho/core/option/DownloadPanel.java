@@ -35,12 +35,6 @@ public final class DownloadPanel extends ImagePanel
 
     //~ Methods ------------------------------------------------------------------------------------
 
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {        
         ho.core.model.UserParameter.temp().xmlDownload = m_jchXMLDownload.isSelected();
         ho.core.model.UserParameter.temp().fixtures = m_jchFixtures.isSelected();
@@ -51,10 +45,6 @@ public final class DownloadPanel extends ImagePanel
 				
 	}
 
-
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new GridLayout(10, 1, 4, 4));
 

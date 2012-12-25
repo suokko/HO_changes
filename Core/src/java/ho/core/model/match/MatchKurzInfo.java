@@ -53,16 +53,9 @@ public class MatchKurzInfo implements Comparable<Object> {
 
 	/** Typ des Spiels */
 	private MatchType m_mtMatchTyp = MatchType.NONE;
-
 	private Timestamp matchDateTimestamp;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int ONGOING = 3;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int UPCOMING = 2;
-
-	/** TODO Missing Parameter Documentation */
 	public static final int FINISHED = 1;
 
 	/**

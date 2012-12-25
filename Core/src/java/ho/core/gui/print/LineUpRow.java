@@ -92,7 +92,6 @@ class LineUpRow {
     final class LineUpBox {
         //~ Instance fields ------------------------------------------------------------------------
 
-        /** TODO Missing Parameter Documentation */
         int rowHeight = 10;
         private String title;
         private String[] rows;

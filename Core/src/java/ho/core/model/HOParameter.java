@@ -40,18 +40,9 @@ public final class HOParameter extends Configuration {
 	}
 
     //------Konstanten-----------------------------------------------
-
-
-	/** TODO Missing Parameter Documentation */
 	public int lastNews = -1;
-
-	/** TODO Missing Parameter Documentation */
 	public float EpvRelease = 1f;
-	
-	/** TODO Missing Parameter Documentation */
 	public float RatingsRelease = 1f;	
-	
-    /** TODO Missing Parameter Documentation */
     public int DBVersion = DBManager.getVersion();
 
     /** @deprecated since HO! 1.431 */

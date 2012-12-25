@@ -21,13 +21,6 @@ public class EPV {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final EPVData getEPVData(Spieler spieler) {
         final EPVData data = new EPVData(spieler);
         return data;
@@ -41,14 +34,6 @@ public class EPV {
         return getPrice(data, HOVerwaltung.instance().getModel().getBasics().getSpieltag());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param data TODO Missing Method Parameter Documentation
-     * @param week TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final double getPrice(EPVData data, int week) {
     	try {
     		return EPVCalculator.getInstance().getPrice( data, week, HOVerwaltung.instance().getModel().getXtraDaten().getCurrencyRate() );

@@ -168,39 +168,16 @@ public abstract class HOTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	@Override
 	public final int getRowCount() {
 		return (m_clData != null) ? m_clData.length : 0;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param row
-	 *            TODO Missing Method Parameter Documentation
-	 * @param col
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	@Override
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param columnIndex
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	@Override
 	public final Class<?> getColumnClass(int columnIndex) {
 		final Object obj = getValueAt(0, columnIndex);
@@ -212,14 +189,6 @@ public abstract class HOTableModel extends AbstractTableModel {
 		return "".getClass();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param columnIndex
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	@Override
 	public final String getColumnName(int columnIndex) {
 		if (getDisplayedColumnCount() > columnIndex) {
@@ -229,16 +198,6 @@ public abstract class HOTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param row
-	 *            TODO Missing Method Parameter Documentation
-	 * @param columnName
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final Object getValue(int row, String columnName) {
 		if (m_clData != null) {
 			int i = 0;
@@ -253,16 +212,6 @@ public abstract class HOTableModel extends AbstractTableModel {
 		return null;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param value
-	 *            TODO Missing Method Parameter Documentation
-	 * @param row
-	 *            TODO Missing Method Parameter Documentation
-	 * @param column
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	@Override
 	public final void setValueAt(Object value, int row, int column) {
 		m_clData[row][column] = value;

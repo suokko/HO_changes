@@ -92,10 +92,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * Gibt den Namen zu einer BewertungzurÃ¼ck
-     *
-     * @param einstellung TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static String getNameForEinstellung(int einstellung) {
         switch (einstellung) {
@@ -119,10 +115,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * Gibt den Namen zu einer BewertungzurÃ¼ck
-     *
-     * @param taktikTyp TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static String getNameForTaktik(int taktikTyp) {
 
@@ -227,10 +219,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * Getter for property m_lDatum.
-     *
-     * @param date TODO Missing Constructuor Parameter Documentation
-     *
-     * @return Value of property m_lDatum.
      */
     public final boolean setFetchDatumFromString(String date) {
         try {
@@ -335,10 +323,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
-     *
-     * @param absolut TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getGuestGesamtstaerke(boolean absolut) {
         double summe = 0d;
@@ -615,10 +599,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * Gibt die GesamtstÃ¤rke zurÃ¼ck, Absolut oder durch die Anzahl der Summanten geteilt
-     *
-     * @param absolut TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final float getHomeGesamtstaerke(boolean absolut) {
         double summe = 0d;
@@ -914,8 +894,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
     /**
      * Getter for property m_lDatum.
      *
-     * @param date TODO Missing Constructuor Parameter Documentation
-     *
      * @return Value of property m_lDatum.
      */
     public final boolean setSpielDatumFromString(String date) {
@@ -1020,10 +998,6 @@ public class Matchdetails implements ho.core.model.match.IMatchDetails {
 
     /**
      * check if numeric
-     *
-     * @param aText TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final static boolean isNumeric(String aText) {
         for (int k = 0; k < aText.length(); k++) {

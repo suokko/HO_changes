@@ -19,16 +19,9 @@ public class ComponentPrintObject extends PrintObject {
 	
     //~ Static fields/initializers -----------------------------------------------------------------
 
-	/** TODO Missing Parameter Documentation */
     public static int SICHTBAR;
-
-    /** TODO Missing Parameter Documentation */
     public static int SICHTBARMAXIMIEREN = 3;
-
-    /** TODO Missing Parameter Documentation */
     public static int NICHTSICHTBAR = 1;
-
-    /** TODO Missing Parameter Documentation */
     public static int NICHTSICHTBARMAXIMIEREN = 2;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -42,7 +35,7 @@ public class ComponentPrintObject extends PrintObject {
     /**
      * Konstruktor
      *
-     * @param pageformat TODO Missing Constructuor Parameter Documentation
+     * @param pageformat PageFormat
      * @param titel Titel des Drucks
      * @param component Component, die gedruckt werden soll
      * @param sichtbar Ist die Componente schon sichtbar, der muss sie noch in einem eigenen Dialog
@@ -59,11 +52,6 @@ public class ComponentPrintObject extends PrintObject {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g2 TODO Missing Method Parameter Documentation
-     */
     @Override
 	protected final void paintMe(java.awt.Graphics2D g2) {
         JDialog dialog = null;

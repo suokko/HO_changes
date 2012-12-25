@@ -29,10 +29,6 @@ public class XtraData  {
 
     /**
      * Creates a new instance of XtraData
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     public XtraData(java.util.Properties properties) throws Exception {
         m_dCurrencyRate = Double.parseDouble(properties.getProperty("currencyrate", "1"));
@@ -52,10 +48,6 @@ public class XtraData  {
 
     /**
      * Creates a new XtraData object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     public XtraData(java.sql.ResultSet rs) throws Exception {
         try {

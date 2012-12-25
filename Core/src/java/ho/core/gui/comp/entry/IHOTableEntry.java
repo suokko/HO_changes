@@ -20,10 +20,6 @@ public interface IHOTableEntry extends Comparable<IHOTableEntry> {
      * be created be createComponent and only the background should be changed according to the
      * isSelected-Flag. Nevertheless you  can ignore the createComponent and updateComponent and
      * create a new one everytime getComponent is called, but that is much slower!
-     *
-     * @param isSelected TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public javax.swing.JComponent getComponent(boolean isSelected);
 
@@ -34,11 +30,7 @@ public interface IHOTableEntry extends Comparable<IHOTableEntry> {
     public void clear();
 
     /**
-     * Usefull to sort the table
-     *
-     * @param obj TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
+     * Useful to sort the table
      */
     public int compareTo(IHOTableEntry obj);
 

@@ -75,11 +75,6 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements KeyList
     }
 
    
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     private void initComponents(String text) {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -150,7 +145,6 @@ public final class TrainingAdjustmentPanel extends ImagePanel implements KeyList
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

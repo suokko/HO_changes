@@ -39,12 +39,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(ItemEvent itemEvent) {
 
     	// New Tab can not be shown immediately
@@ -63,9 +57,6 @@ final class TabOptionenPanel extends ImagePanel implements java.awt.event.ItemLi
         ho.core.model.UserParameter.temp().tempTabInformation = !m_jchInformation.isSelected();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new GridLayout(9, 1, 4, 4));
 

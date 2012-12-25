@@ -30,14 +30,6 @@ public class MyHashtable extends Hashtable<String,String> {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param key TODO Missing Method Parameter Documentation
-     * @param value TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final String put(String key, String value) {
         return (value != null) ? super.put(key, value) : super.put(key, "");

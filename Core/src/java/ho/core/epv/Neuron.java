@@ -79,20 +79,15 @@ class Neuron {
 			break;
 		case SOFTMAX:
 			double normalization = 0;
-			// TODO Is this correct?
-//			System.out.println ("Softmax");
 			for (int i=0; i < activeLayer.getNeuronCount(); i++) {
 				normalization += Math.exp(activeLayer.getNeuron(i).calculate());
-//				System.out.println (activeLayer.getNeuron(i).getInput() + " -> " + normalization);
 			}
 			if (normalization > 0)
 				retVal = Math.exp(input)/normalization;
 			else
 				retVal = 1/activeLayer.getNeuronCount();
-//			System.out.println ("input="+input+", retVal="+retVal);
 			break;
 		case EXTERNAL:
-			// TODO Implementation missing
 			break;
 		}
 		return retVal * multi + delta;

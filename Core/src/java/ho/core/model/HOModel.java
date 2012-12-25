@@ -69,8 +69,6 @@ public class HOModel {
 
     /**
      * Alle Spieler werden übergeben und die noch aktuellen Spieler entfernt
-     *
-     * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
     public final void setAllOldSpieler(Vector<Spieler> spielerVector) {
         for (int i = 0; i < spielerVector.size(); i++) {
@@ -94,8 +92,6 @@ public class HOModel {
 
     /**
      * Gibt alle alten Spieler (nicht mehr im Team befindliche) zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Vector<Spieler> getAllOldSpieler() {
         return m_vOldSpieler;
@@ -105,8 +101,6 @@ public class HOModel {
 
     /**
      * Gibt alle Spieler zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Vector<Spieler> getAllSpieler() {
         return m_vSpieler;
@@ -114,8 +108,6 @@ public class HOModel {
 
     /**
      * Setzt neue Aufstellung
-     *
-     * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
     public final void setAufstellung(Lineup aufstellung) {
         m_clAufstellung = aufstellung;
@@ -125,8 +117,6 @@ public class HOModel {
 
     /**
      * Gibt die Aufstellung zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Lineup getAufstellung() {
         return m_clAufstellung;
@@ -134,8 +124,6 @@ public class HOModel {
 
     /**
      * Setzt neue Basics
-     *
-     * @param basics TODO Missing Constructuor Parameter Documentation
      */
     public final void setBasics(Basics basics) {
         m_clBasics = basics;
@@ -145,26 +133,17 @@ public class HOModel {
 
     /**
      * Gibt die Basics zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Basics getBasics() {
         return m_clBasics;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final EPV getEPV() {
         return epv;
     }
 
     /**
      * Setzt neue Finanzen
-     *
-     * @param finanzen TODO Missing Constructuor Parameter Documentation
      */
     public final void setFinanzen(Finanzen finanzen) {
         m_clFinanzen = finanzen;
@@ -174,8 +153,6 @@ public class HOModel {
 
     /**
      * Gibt die Finanzen zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Finanzen getFinanzen() {
         return m_clFinanzen;
@@ -203,8 +180,6 @@ public class HOModel {
 
     /**
      * Setzt neue Aufstellung
-     *
-     * @param aufstellung TODO Missing Constructuor Parameter Documentation
      */
     public final void setLastAufstellung(Lineup aufstellung) {
         m_clLastAufstellung = aufstellung;
@@ -212,8 +187,6 @@ public class HOModel {
 
     /**
      * Gibt die Aufstellung zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Lineup getLastAufstellung() {
         return m_clLastAufstellung;
@@ -221,8 +194,6 @@ public class HOModel {
 
     /**
      * Setzt neue Basics
-     *
-     * @param liga TODO Missing Constructuor Parameter Documentation
      */
     public final void setLiga(Liga liga) {
         m_clLiga = liga;
@@ -232,8 +203,6 @@ public class HOModel {
 
     /**
      * Gibt die Basics zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Liga getLiga() {
         return m_clLiga;
@@ -241,8 +210,6 @@ public class HOModel {
 
     /**
      * Setzt einen neuen SpielerVector
-     *
-     * @param spielerVector TODO Missing Constructuor Parameter Documentation
      */
     public final void setSpieler(Vector<Spieler> spielerVector) {
         m_vSpieler = spielerVector;
@@ -250,10 +217,6 @@ public class HOModel {
 
     /**
      * Gibt den Spieler mit der ID zurück
-     *
-     * @param id TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Spieler getSpieler(int id) {
         for (int i = 0; (m_vSpieler != null) && (i < m_vSpieler.size()); i++) {
@@ -287,8 +250,6 @@ public class HOModel {
 
     /**
      * Setzt neues Stadium
-     *
-     * @param stadium TODO Missing Constructuor Parameter Documentation
      */
     public final void setStadium(Stadium stadium) {
         m_clStadium = stadium;
@@ -298,8 +259,6 @@ public class HOModel {
 
     /**
      * Gibt das Stadium zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Stadium getStadium() {
         return m_clStadium;
@@ -307,8 +266,6 @@ public class HOModel {
 
     /**
      * Setzt neues Team
-     *
-     * @param team TODO Missing Constructuor Parameter Documentation
      */
     public final void setTeam(Team team) {
         m_clTeam = team;
@@ -318,8 +275,6 @@ public class HOModel {
 
     /**
      * Gibt das Team zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Team getTeam() {
         return m_clTeam;
@@ -327,8 +282,6 @@ public class HOModel {
 
     /**
      * Gibt den Trainer zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Spieler getTrainer() {
     	Spieler trainer = null;
@@ -349,8 +302,6 @@ public class HOModel {
 
     /**
      * Setzt neuen Verein
-     *
-     * @param verein TODO Missing Constructuor Parameter Documentation
      */
     public final void setVerein(Verein verein) {
         m_clVerein = verein;
@@ -360,8 +311,6 @@ public class HOModel {
 
     /**
      * Gibt den Verein zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Verein getVerein() {
         return m_clVerein;
@@ -387,8 +336,6 @@ public class HOModel {
 
     /**
      * Fügt einen Spieler hinzu (wofür auch immer...)
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
      */
     public final void addSpieler(Spieler spieler) {
         m_vSpieler.add(spieler);
@@ -663,9 +610,6 @@ public class HOModel {
     				);
     	}
     }
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void loadStdAufstellung() {
         m_clAufstellung = DBManager.instance().getAufstellung(-1,
                                                                                             Lineup.DEFAULT_NAME);
@@ -674,9 +618,6 @@ public class HOModel {
         m_clAufstellung.checkAufgestellteSpieler();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void loadStdLastAufstellung() {
         m_clLastAufstellung = DBManager.instance().getAufstellung(-1,
                                                                                                 Lineup.DEFAULT_NAMELAST);
@@ -687,8 +628,6 @@ public class HOModel {
 
     /**
      * Entfernt einen Spieler
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
      */
     public final void removeSpieler(Spieler spieler) {
         m_vSpieler.remove(spieler);
@@ -700,7 +639,6 @@ public class HOModel {
 
     //java.sql.Timestamp hrfDateiDatum )
     public final synchronized void saveHRF() {
-        //HRF //TODO Datum angabe in Modell aus file last modified übernehmen ersetzen
         DBManager.instance().saveHRF(m_iID,
         		java.text.DateFormat.getDateTimeInstance().format(new java.util.Date(
         				System.currentTimeMillis())), m_clBasics.getDatum());

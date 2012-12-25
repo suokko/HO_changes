@@ -41,58 +41,26 @@ class ComboBoxPanel extends ImagePanel {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param id TODO Missing Method Parameter Documentation
-     */
     public final void setSelectedId(int id) {
         ho.core.util.Helper.markierenComboBox(m_jcbComboBox, id);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     */
     public final void setSelectedItem(Object obj) {
         m_jcbComboBox.setSelectedItem(obj);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Object getSelectedItem() {
         return m_jcbComboBox.getSelectedItem();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
     public final void addItemListener(ItemListener listener) {
         m_jcbComboBox.addItemListener(listener);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param listener TODO Missing Method Parameter Documentation
-     */
     public final void removeChangeListener(ItemListener listener) {
         m_jcbComboBox.removeItemListener(listener);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     * @param items TODO Missing Method Parameter Documentation
-     */
     private void initComponents(String text, Object[] items) {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();

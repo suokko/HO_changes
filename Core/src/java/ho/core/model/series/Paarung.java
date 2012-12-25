@@ -15,40 +15,17 @@ import ho.core.util.HOLogger;
  */
 public class Paarung implements Comparable<Paarung>{
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sDatum = "";
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sGastName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sHeimName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iGastId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iHeimId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iMatchId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iSaison = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iSpieltag = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iToreGast = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iToreHeim = -1;
-
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
@@ -241,11 +218,6 @@ public class Paarung implements Comparable<Paarung>{
         return m_iSpieltag;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getStringDate() {
         return m_sDatum;
     }
@@ -288,10 +260,6 @@ public class Paarung implements Comparable<Paarung>{
 
     /**
      * vergleicht anhand des SPieltages um eine nach Spieltagen sortierte Liste zu bekommen
-     *
-     * @param obj TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final int compareTo(Paarung obj) {
         Paarung tmp = obj;
@@ -327,11 +295,6 @@ public class Paarung implements Comparable<Paarung>{
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean hatStattgefunden() {
         return (m_iToreHeim > -1) && (m_iToreGast > -1);
     }

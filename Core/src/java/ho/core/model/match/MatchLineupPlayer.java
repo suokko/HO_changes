@@ -22,24 +22,13 @@ public class MatchLineupPlayer extends SpielerPosition {
 	 * 
 	 */
 	private static final long serialVersionUID = -5986419471284091148L;
-
-	/** TODO Missing Parameter Documentation */
     private String m_sNickName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sSpielerName = "";
-
-    /** TODO Missing Parameter Documentation */
     private String m_sSpielerVName = "";
-
-    
-    /** TODO Missing Parameter Documentation */
     private double m_dRating;
     private double m_dRatingStarsEndOfMatch;
     private int m_iStartPosition = -1;
     private int m_iStartBehavior = -1;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iStatus;
 
     //~ Constructors -------------------------------------------------------------------------------
@@ -50,15 +39,6 @@ public class MatchLineupPlayer extends SpielerPosition {
 
     /**
      * Creates a new instance of MatchLineupPlayer
-     *
-     * @param roleID TODO Missing Constructuor Parameter Documentation
-     * @param behaivior TODO Missing Constructuor Parameter Documentation
-     * @param spielerID TODO Missing Constructuor Parameter Documentation
-     * @param rating TODO Missing Constructuor Parameter Documentation
-     * @param name TODO Missing Constructuor Parameter Documentation
-     * @param positionsCode TODO Missing Constructuor Parameter Documentation
-     * @param status TODO Missing Constructuor Parameter Documentation
-     * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
     public MatchLineupPlayer(int roleID, int behavior, int spielerID, double rating, String name,
                              int status) {
@@ -73,17 +53,6 @@ public class MatchLineupPlayer extends SpielerPosition {
 
     /**
      * Creates a new instance of MatchLineupPlayer
-     *
-     * @param roleID TODO Missing Constructuor Parameter Documentation
-     * @param behaivior TODO Missing Constructuor Parameter Documentation
-     * @param spielerID TODO Missing Constructuor Parameter Documentation
-     * @param rating TODO Missing Constructuor Parameter Documentation
-     * @param vname TODO Missing Constructuor Parameter Documentation
-     * @param nickName TODO Missing Constructuor Parameter Documentation
-     * @param name TODO Missing Constructuor Parameter Documentation
-     * @param positionsCode TODO Missing Constructuor Parameter Documentation
-     * @param status TODO Missing Constructuor Parameter Documentation
-     * @param fieldPos TODO Missing Constructuor Parameter Documentation
      */
     public MatchLineupPlayer(int roleID, int behaivior, int spielerID, double rating, String vname,
                              String nickName, String name, int status, double ratingStarsEndOfMatch, int startPos, int startBeh) {
@@ -313,8 +282,6 @@ public class MatchLineupPlayer extends SpielerPosition {
 
     /**
      * bricht den Namen auf
-     *
-     * @param name TODO Missing Constructuor Parameter Documentation
      */
     protected final void setName(String name) {
         final int index = name.indexOf("  ");

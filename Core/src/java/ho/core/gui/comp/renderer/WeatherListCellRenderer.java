@@ -17,7 +17,6 @@ import javax.swing.SwingConstants;
 public class WeatherListCellRenderer implements ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     public ColorLabelEntry m_clEntry = new ColorLabelEntry("", ColorLabelEntry.FG_STANDARD,
     												ThemeManager.getColor(HOColorName.TABLEENTRY_BG),
                                                            SwingConstants.LEFT);

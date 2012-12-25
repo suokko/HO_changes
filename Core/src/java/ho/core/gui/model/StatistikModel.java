@@ -18,12 +18,6 @@ public class StatistikModel {
 
     /**
      * Creates a new StatistikModel object.
-     *
-     * @param werte TODO Missing Constructuor Parameter Documentation
-     * @param name TODO Missing Constructuor Parameter Documentation
-     * @param show TODO Missing Constructuor Parameter Documentation
-     * @param farbe TODO Missing Constructuor Parameter Documentation
-     * @param format TODO Missing Constructuor Parameter Documentation
      */
     public StatistikModel(double[] werte, String name, boolean show, java.awt.Color farbe,
                           java.text.NumberFormat format) {
@@ -32,13 +26,6 @@ public class StatistikModel {
 
     /**
      * Creates a new StatistikModel object.
-     *
-     * @param werte TODO Missing Constructuor Parameter Documentation
-     * @param name TODO Missing Constructuor Parameter Documentation
-     * @param show TODO Missing Constructuor Parameter Documentation
-     * @param farbe TODO Missing Constructuor Parameter Documentation
-     * @param format TODO Missing Constructuor Parameter Documentation
-     * @param faktor TODO Missing Constructuor Parameter Documentation
      */
     public StatistikModel(double[] werte, String name, boolean show, java.awt.Color farbe,
                           java.text.NumberFormat format, double faktor) {
@@ -119,11 +106,6 @@ public class StatistikModel {
         return (max);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final double getMinValue() {
         double min = 0;
 

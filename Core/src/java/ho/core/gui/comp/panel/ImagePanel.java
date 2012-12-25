@@ -27,7 +27,6 @@ public class ImagePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 8960221838823071903L;
 
-	/** TODO Missing Parameter Documentation */
     public static BufferedImage background;
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -46,8 +45,6 @@ public class ImagePanel extends JPanel {
 
     /**
      * Creates a new ImagePanel object.
-     *
-     * @param layout TODO Missing Constructuor Parameter Documentation
      */
     public ImagePanel(java.awt.LayoutManager layout) {
         super(layout);
@@ -56,8 +53,6 @@ public class ImagePanel extends JPanel {
 
     /**
      * Creates a new ImagePanel object.
-     *
-     * @param forprint TODO Missing Constructuor Parameter Documentation
      */
     public ImagePanel(boolean forprint) {
         super();
@@ -66,9 +61,6 @@ public class ImagePanel extends JPanel {
 
     /**
      * Creates a new ImagePanel object.
-     *
-     * @param layout TODO Missing Constructuor Parameter Documentation
-     * @param forprint TODO Missing Constructuor Parameter Documentation
      */
     public ImagePanel(java.awt.LayoutManager layout, boolean forprint) {
         super(layout);
@@ -77,11 +69,6 @@ public class ImagePanel extends JPanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param g TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void paint(java.awt.Graphics g) {
     	if(!ThemeManager.instance().isSet(HOBooleanName.IMAGEPANEL_BG_PAINTED)){
@@ -103,11 +90,6 @@ public class ImagePanel extends JPanel {
     	}
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param printing TODO Missing Method Parameter Documentation
-     */
     private void init(boolean printing) {
         m_bPrint = printing;
 

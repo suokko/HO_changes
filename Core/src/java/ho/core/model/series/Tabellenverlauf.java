@@ -15,8 +15,6 @@ package ho.core.model.series;
  */
 public class Tabellenverlauf {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     TabellenVerlaufEintrag[] m_aEintraege = new TabellenVerlaufEintrag[0];
 
     //~ Constructors -------------------------------------------------------------------------------

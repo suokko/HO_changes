@@ -45,15 +45,6 @@ public final class FactorObject {
 
     /**
      * Creates a new instance of FactorObject
-     *
-     * @param position TODO Missing Constructuor Parameter Documentation
-     * @param torwart TODO Missing Constructuor Parameter Documentation
-     * @param spielaufbau TODO Missing Constructuor Parameter Documentation
-     * @param passpiel TODO Missing Constructuor Parameter Documentation
-     * @param fluegel TODO Missing Constructuor Parameter Documentation
-     * @param abwehr TODO Missing Constructuor Parameter Documentation
-     * @param torschuss TODO Missing Constructuor Parameter Documentation
-     * @param standards TODO Missing Constructuor Parameter Documentation
      */
     public FactorObject(byte position, float torwart, float spielaufbau, float passpiel,
                         float fluegel, float abwehr, float torschuss, float standards) {
@@ -69,8 +60,6 @@ public final class FactorObject {
 
     /**
      * Creates a new FactorObject object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
      */
     public FactorObject(java.sql.ResultSet rs) {
         try {

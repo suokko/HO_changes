@@ -28,7 +28,6 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -4407511039452889638L;
 
-	/** TODO Missing Parameter Documentation */
     public String[] m_sToolTipStrings = {
     	HOVerwaltung.instance().getLanguageString("Position"),
         //Maximal
@@ -39,10 +38,8 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 	    HOVerwaltung.instance().getLanguageString("Durchschnitt"),
     };
 
-    /** TODO Missing Parameter Documentation */
     protected Object[][] m_clData;
 
-    /** TODO Missing Parameter Documentation */
     protected String[] m_sColumnNames = {
                                             HOVerwaltung.instance().getLanguageString("Position"),
                                             
@@ -64,8 +61,6 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
     /**
      * Creates a new SpielerPositionTableModel object.
-     *
-     * @param spielerbewertung TODO Missing Constructuor Parameter Documentation
      */
     public SpielerPositionTableModel(Vector<float[]> spielerbewertung) {
         m_vSpielerBewertung = spielerbewertung;
@@ -74,26 +69,11 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param col TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final boolean isCellEditable(int row, int col) {
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final Class<?> getColumnClass(int columnIndex) {
         final Object obj = getValueAt(0, columnIndex);
@@ -117,13 +97,6 @@ public class SpielerPositionTableModel extends AbstractTableModel {
          */
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param columnIndex TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final String getColumnName(int columnIndex) {
         if ((m_sColumnNames != null) && (m_sColumnNames.length > columnIndex)) {
@@ -133,23 +106,10 @@ public class SpielerPositionTableModel extends AbstractTableModel {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getRowCount() {
         return (m_clData != null) ? m_clData.length : 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param columnName TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Object getValue(int row, String columnName) {
         if ((m_sColumnNames != null) && (m_clData != null)) {
             int i = 0;
@@ -164,26 +124,11 @@ public class SpielerPositionTableModel extends AbstractTableModel {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void setValueAt(Object value, int row, int column) {
         m_clData[row][column] = value;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Object getValueAt(int row, int column) {
         if (m_clData != null) {
             return m_clData[row][column];
@@ -194,8 +139,6 @@ public class SpielerPositionTableModel extends AbstractTableModel {
 
     /**
      * Spieler neu setzen
-     *
-     * @param spielerbewertung TODO Missing Constructuor Parameter Documentation
      */
     public final void setValues(Vector<float[]> spielerbewertung) {
         m_vSpielerBewertung = spielerbewertung;

@@ -81,7 +81,6 @@ class Net {
 			String curName = (String)nameIter.next();
 			Double curVal = (Double)inputMap.get(curName);
 			int curIndex = getInParIndex(curName);
-			// TODO catch me IOBE
 			inputPar[curIndex] = curVal.doubleValue();
 		}
 		return calculate(index, inputPar);

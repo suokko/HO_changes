@@ -29,11 +29,6 @@ public class RefreshManager {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static RefreshManager instance() {
         if (m_clRefreshManager == null) {
             m_clRefreshManager = new RefreshManager();
@@ -84,20 +79,10 @@ public class RefreshManager {
 		HOMainFrame.setHOStatus(HOMainFrame.READY);        
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param refreshable TODO Missing Method Parameter Documentation
-     */
     public void registerRefreshable(IRefreshable refreshable) {
         m_clRefreshable.add(refreshable);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param refreshable TODO Missing Method Parameter Documentation
-     */
     public void unregisterRefreshable(IRefreshable refreshable) {
         m_clRefreshable.remove(refreshable);
     }

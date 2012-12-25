@@ -146,11 +146,6 @@ public final class Verein {
         return m_clDate;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param date TODO Missing Method Parameter Documentation
-     */
     public void setDateFromString(String date) {
         try {
             //Hattrick

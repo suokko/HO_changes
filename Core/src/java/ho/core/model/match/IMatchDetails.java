@@ -14,7 +14,6 @@ package ho.core.model.match;
 public interface IMatchDetails {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     public static final int EINSTELLUNG_UNBEKANNT = -1000;
     /** Play it cool */
     public static final int EINSTELLUNG_PIC = -1;

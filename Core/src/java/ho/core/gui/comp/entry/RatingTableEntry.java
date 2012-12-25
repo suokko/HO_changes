@@ -14,13 +14,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class RatingTableEntry implements IHOTableEntry {
     //~ Static fields/initializers -----------------------------------------------------------------
 
@@ -59,9 +52,6 @@ public class RatingTableEntry implements IHOTableEntry {
 
     /**
      * Creates a new RatingTableEntry object.
-     *
-     * @param f TODO Missing Constructuor Parameter Documentation
-     * @param yellowstar TODO Missing Constructuor Parameter Documentation
      */
     public RatingTableEntry(float f, boolean yellowstar) {
         initStarsIcons();
@@ -74,13 +64,6 @@ public class RatingTableEntry implements IHOTableEntry {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param isSelected TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
 	public final javax.swing.JComponent getComponent(boolean isSelected) {
         m_clComponent.setBackground((isSelected)?HODefaultTableCellRenderer.SELECTION_BG:bgColor);
         m_clComponent.setOpaque(isOpaque);
@@ -88,21 +71,10 @@ public class RatingTableEntry implements IHOTableEntry {
         return m_clComponent;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param f TODO Missing Method Parameter Documentation
-     */
     public final void setRating(float f) {
         setRating(f, false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param f TODO Missing Method Parameter Documentation
-     * @param forceUpdate TODO Missing Method Parameter Documentation
-     */
     public final void setRating(float f, boolean forceUpdate) {
         if (f < 0) {
             f = 0;
@@ -116,30 +88,15 @@ public class RatingTableEntry implements IHOTableEntry {
         m_clComponent.repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final float getRating() {
         return m_fRating;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param text TODO Missing Method Parameter Documentation
-     */
     public final void setToolTipText(String text) {
         m_sTooltip = text;
         updateComponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param value TODO Missing Method Parameter Documentation
-     */
     public final void setYellowStar(boolean value) {
         if (m_bYellowStar != value) {
             m_bYellowStar = value;
@@ -147,18 +104,10 @@ public class RatingTableEntry implements IHOTableEntry {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isYellowStar() {
         return m_bYellowStar;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void clear() {
         m_clComponent.removeAll();
 
@@ -169,13 +118,6 @@ public class RatingTableEntry implements IHOTableEntry {
         m_clComponent.add(jlabel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
 	public final int compareTo(IHOTableEntry obj) {
         if (obj instanceof RatingTableEntry) {
             final RatingTableEntry entry = (RatingTableEntry) obj;
@@ -192,9 +134,6 @@ public class RatingTableEntry implements IHOTableEntry {
         return 0;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void createComponent() {
         float f = m_fRating / 2;
         JPanel renderer = new JPanel();
@@ -223,9 +162,6 @@ public class RatingTableEntry implements IHOTableEntry {
         panel.add(jlabel);
     }
     
-    /**
-     * TODO Missing Method Documentation
-     */
 	public final void updateComponent() {
         float f = m_fRating / 2;
         

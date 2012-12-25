@@ -10,7 +10,6 @@ import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 public class SpielerCBItemRenderer implements javax.swing.ListCellRenderer {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     public javax.swing.JLabel m_jlLeer = new javax.swing.JLabel(" ");
 
     //~ Methods ------------------------------------------------------------------------------------

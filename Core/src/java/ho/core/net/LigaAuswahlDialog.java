@@ -43,9 +43,6 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
 
     /**
      * Creates a new LigaAuswahlDialog object.
-     *
-     * @param owner TODO Missing Constructuor Parameter Documentation
-     * @param seasonid TODO Missing Constructuor Parameter Documentation
      */
     public LigaAuswahlDialog(JDialog owner, int seasonid) {
         super(owner,
@@ -60,18 +57,11 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
 
     /**
      * Gibt die Ligaid zurück oder -1 für aktulleLigaid oder -2 für abbruch
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final int getLigaID() {
         return m_iLigaId;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param e TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(m_jbOk)) {
             //Ist es eine Zahl
@@ -100,21 +90,11 @@ public class LigaAuswahlDialog extends JDialog implements ActionListener {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Integer[] fillCB() {
         //Alle möglichen LigaIDs holen
         return ho.core.db.DBManager.instance().getAllLigaIDs();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param seasonid TODO Missing Method Parameter Documentation
-     */
     private void initComponents(int seasonid) {
         setContentPane(new ImagePanel(new GridLayout(4, 2, 4, 4)));
 

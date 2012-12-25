@@ -1,4 +1,3 @@
-// %1127326195572:gui%
 package ho.core.gui;
 
 /**
@@ -7,11 +6,5 @@ package ho.core.gui;
  */
 public interface Refreshable extends IRefreshable {
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     */
     public void reInit();
-
-
 }

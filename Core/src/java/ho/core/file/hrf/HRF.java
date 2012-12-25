@@ -22,8 +22,6 @@ public final class HRF {
 	/**
 	 * Creates a new Hrf object.
 	 *
-	 * @param rs TODO Missing Constructuor Parameter Documentation
-	 *
 	 */
 	public HRF() {						
 	}
@@ -42,10 +40,6 @@ public final class HRF {
 	}	
     /**
      * Creates a new Hrf object.
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
-     *
-     * @throws Exception TODO Missing Constructuor Exception Documentation
      */
     public HRF(java.sql.ResultSet rs) throws Exception {
         try {

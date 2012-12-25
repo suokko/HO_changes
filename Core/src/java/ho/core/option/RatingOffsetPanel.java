@@ -43,12 +43,6 @@ public final class RatingOffsetPanel
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param changeEvent TODO Missing Method Parameter Documentation
-	 */
 	public final void stateChanged(javax.swing.event.ChangeEvent changeEvent) {
 		UserParameter.temp().leftDefenceOffset =
 			slider[2].getValue() / 100.0f;
@@ -68,9 +62,6 @@ public final class RatingOffsetPanel
 		OptionManager.instance().setReInitNeeded();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-+	 */
 	private void initComponents() {
 		slider[0] = createSlider(UserParameter.temp().rightDefenceOffset,"ls.match.ratingsector.rightdefence");
         slider[1] = createSlider(UserParameter.temp().middleDefenceOffset,"ls.match.ratingsector.centraldefence");

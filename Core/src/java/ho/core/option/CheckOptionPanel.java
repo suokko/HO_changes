@@ -38,11 +38,6 @@ public final class CheckOptionPanel extends ImagePanel
     //~ Methods ------------------------------------------------------------------------------------
 
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {        
         ho.core.model.UserParameter.temp().newsCheck = m_jchHONews.isSelected();
         ho.core.model.UserParameter.temp().updateCheck = m_jchUpdateCheck.isSelected();
@@ -55,10 +50,6 @@ public final class CheckOptionPanel extends ImagePanel
 				
 	}
 
-
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new GridLayout(10, 1, 4, 4));
 

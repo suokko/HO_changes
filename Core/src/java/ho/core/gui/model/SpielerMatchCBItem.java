@@ -30,20 +30,6 @@ public class SpielerMatchCBItem {
 
     /**
      * Creates a new SpielerMatchCBItem object.
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     * @param matchid TODO Missing Constructuor Parameter Documentation
-     * @param rating TODO Missing Constructuor Parameter Documentation
-     * @param positionsid TODO Missing Constructuor Parameter Documentation
-     * @param matchdate TODO Missing Constructuor Parameter Documentation
-     * @param heimteam TODO Missing Constructuor Parameter Documentation
-     * @param heimid TODO Missing Constructuor Parameter Documentation
-     * @param gastteam TODO Missing Constructuor Parameter Documentation
-     * @param gastid TODO Missing Constructuor Parameter Documentation
-     * @param matchtyp TODO Missing Constructuor Parameter Documentation
-     * @param matchdetails TODO Missing Constructuor Parameter Documentation
-     * @param selbstvertrauen TODO Missing Constructuor Parameter Documentation
-     * @param stimmung TODO Missing Constructuor Parameter Documentation
      */
     public SpielerMatchCBItem(Spieler spieler, int matchid, float rating, int positionsid,
                               String matchdate, String heimteam, int heimid, String gastteam,
