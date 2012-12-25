@@ -51,10 +51,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	/**
 	 * Gibt eine Liste an Ratings zurück, auf denen der Spieler gespielt hat: 0 = Max 1 = Min 2 =
 	 * Durchschnitt 3 = posid
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<float[]> getAlleBewertungen(int spielerid) {
 		final Vector<float[]> bewertung = new Vector<float[]>();
@@ -78,10 +74,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	/**
 	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den Spieler, sowie die
 	 * Anzahl der Bewertungen zurück // Match
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	float[] getBewertungen4Player(int spielerid) {
 		//Max, Min, Durchschnitt
@@ -134,8 +126,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	 *
 	 * @param spielerid Spielerid
 	 * @param position Usere positionscodierung mit taktik
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	float[] getBewertungen4PlayerUndPosition(int spielerid, byte position) {
 		//Max, Min, Durchschnitt
@@ -185,10 +175,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	/**
 	 * Deletes the given player based on teamID and matchID.
 	 * He is only deleted from the role set in the player object.
-	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
 	 * 
 	 * @author blaghaid
 	 */
@@ -202,7 +188,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	
 	/**
 	 * Deletes all players from the given match
-	 * @param matchID TODO Missing Method Parameter Documentation
 	 * 
 	 * @author blaghaid
 	 */
@@ -215,10 +200,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 	/**
 	 * Updates a match lineup based on the given inputs
 	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 * 
 	 * @author blaghaid
 	 */
 	void updateMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
@@ -265,14 +246,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		}
 	}	
 	
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param player TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 */
 	@SuppressWarnings("deprecation")
 	void storeMatchLineupPlayer(MatchLineupPlayer player, int matchID, int teamID) {
 		if (player != null) {
@@ -329,14 +302,6 @@ public final class MatchLineupPlayerTable extends AbstractTable {
 		}
 	}	
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		MatchLineupPlayer player = null;
 		final Vector<MatchLineupPlayer> vec = new Vector<MatchLineupPlayer>();

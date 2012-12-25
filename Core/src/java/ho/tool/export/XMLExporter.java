@@ -168,6 +168,7 @@ public class XMLExporter  {
 	/**
 	 * Save XMP file.
 	 */
+	@SuppressWarnings("deprecation")
 	public void saveXML(String filename, Timestamp startingDate) {
 				
 		//Alle Matches holen			

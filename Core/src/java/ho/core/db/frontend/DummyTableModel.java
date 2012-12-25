@@ -16,6 +16,7 @@ final class DummyTableModel extends DefaultTableModel {
 		super(daten, headers);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<?> getColumnClass(int col) {
 		Vector vector = (Vector) dataVector.elementAt(0);

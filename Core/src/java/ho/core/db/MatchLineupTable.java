@@ -39,13 +39,6 @@ public final class MatchLineupTable extends AbstractTable {
 			"CREATE INDEX IMATCHLINEUP_1 ON " + getTableName() + "(" + columns[0].getColumnName() + ")"};
 	}	
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	MatchLineup getMatchLineup(int matchID) {
 		MatchLineup lineup = null;
 		String sql = null;
@@ -85,10 +78,6 @@ public final class MatchLineupTable extends AbstractTable {
 
 	/**
 	 * Ist das Match schon in der Datenbank vorhanden?
-	 *
-	 * @param matchid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	boolean isMatchLineupVorhanden(int matchid) {
 		boolean vorhanden = false;
@@ -111,8 +100,6 @@ public final class MatchLineupTable extends AbstractTable {
 
 	/**
 	 * speichert ein Matchlineup
-	 *
-	 * @param lineup TODO Missing Constructuor Parameter Documentation
 	 */
 	void storeMatchLineup(MatchLineup lineup) {
 		if (lineup != null) {

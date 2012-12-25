@@ -50,8 +50,6 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * liefert die aktuelle Id des neuesten HRF-Files
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private HRF loadLatestHrf() {
 		ResultSet rs = null;
@@ -72,8 +70,6 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * liefert die Maximal Vergebene Id eines HRF-Files
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	private HRF loadMaxHrf() {
 		ResultSet rs = adapter.executeQuery("SELECT Max( HRF_ID ) FROM " + getTableName() + "");
@@ -90,11 +86,6 @@ public final class HRFTable extends AbstractTable {
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor
 	 * Wird kein HRF gefunden wird -1 zurückgegeben
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getPreviousHRF(int hrfId) {
 		String sql;
@@ -121,11 +112,6 @@ public final class HRFTable extends AbstractTable {
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor
 	 * Wird kein HRF gefunden wird -1 zurückgegeben
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getFollowingHRF(int hrfId) {
 		String sql;
@@ -151,13 +137,6 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * speichert das Verein
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param datum
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveHRF(int hrfId, String name, Timestamp datum) {
 		String statement = null;
@@ -211,13 +190,6 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * Gibt die HRFId vor dem Datum zurück, wenn möglich
-	 * 
-	 * @param time
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param auchNachfolgendSuchen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getHrfId4Date(Timestamp time) {
 		ResultSet rs = null;
@@ -255,11 +227,6 @@ public final class HRFTable extends AbstractTable {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	HRF getHRF(int hrfID) {
 		ResultSet rs = null;

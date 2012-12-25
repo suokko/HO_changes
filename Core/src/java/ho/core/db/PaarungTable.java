@@ -36,10 +36,6 @@ public final class PaarungTable extends AbstractTable {
 
 	/**
 	 * speichert die Paarungen zu einem Spielplan
-	 *
-	 * @param paarungen TODO Missing Constructuor Parameter Documentation
-	 * @param ligaId TODO Missing Constructuor Parameter Documentation
-	 * @param saison TODO Missing Constructuor Parameter Documentation
 	 */
 	void storePaarung(Vector<Paarung> paarungen, int ligaId, int saison) {
 		Paarung match = null;
@@ -80,8 +76,6 @@ public final class PaarungTable extends AbstractTable {
 
 	/**
 	 * holt die Paarungen zum Plan aus der DB und added sie
-	 *
-	 * @param plan TODO Missing Constructuor Parameter Documentation
 	 */
 	void getPaarungen(Spielplan plan) {
 		Paarung match = null;

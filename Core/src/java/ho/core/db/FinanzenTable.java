@@ -64,10 +64,6 @@ public final class FinanzenTable extends AbstractTable {
 	
 	/**
 	 * speichert die Finanzen
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param finanzen TODO Missing Constructuor Parameter Documentation
-	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveFinanzen(int hrfId, Finanzen finanzen, Timestamp date) {
 		String statement = null;
@@ -150,10 +146,6 @@ public final class FinanzenTable extends AbstractTable {
 	
 	/**
 	 * lädt die Finanzen zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Finanzen getFinanzen(int hrfID) {
 		ResultSet rs = null;

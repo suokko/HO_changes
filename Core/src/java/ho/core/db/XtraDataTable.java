@@ -36,10 +36,6 @@ final class XtraDataTable extends AbstractTable {
 	
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	XtraData getXtraDaten(int hrfID) {
 		ResultSet rs = null;
@@ -63,9 +59,6 @@ final class XtraDataTable extends AbstractTable {
 
 	/**
 	 * speichert das Team
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param xtra TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveXtraDaten(int hrfId, XtraData xtra) {
 		String statement = null;

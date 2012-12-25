@@ -50,9 +50,6 @@ final class ScoutTable extends AbstractTable {
 
 	/**
 	 * Save players from TransferScout
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param list TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveScoutList(Vector<ScoutEintrag> list) {
 		String sql = "";
@@ -145,8 +142,6 @@ final class ScoutTable extends AbstractTable {
 	
 	/**
 	 * Load player list for insertion into TransferScout
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<ScoutEintrag> getScoutList() {
 		final Vector<ScoutEintrag> ret = new Vector<ScoutEintrag>();

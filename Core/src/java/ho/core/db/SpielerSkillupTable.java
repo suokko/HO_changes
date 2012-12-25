@@ -44,10 +44,6 @@ final class SpielerSkillupTable extends AbstractTable {
 
 	/**
 	 * speichert die Spieler
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param spieler TODO Missing Constructuor Parameter Documentation
-	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveSkillup(int hrfId, int spielerId, Timestamp date, int skillValue, int skillCode) {
 		storeSkillup(hrfId,spielerId,date,skillValue,skillCode,true);

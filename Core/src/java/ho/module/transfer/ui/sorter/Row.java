@@ -42,7 +42,8 @@ class Row implements Comparable<Row> {
      *
      * @return
      */
-    public int compareTo(Row o) {
+    @SuppressWarnings("unchecked")
+	public int compareTo(Row o) {
         int row1 = modelIndex;
         int row2 = o.modelIndex;
 

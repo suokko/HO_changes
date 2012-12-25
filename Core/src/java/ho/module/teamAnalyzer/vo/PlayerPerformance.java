@@ -63,7 +63,8 @@ public class PlayerPerformance {
      *
      * @return
      */
-    public int getPositionCode() {
+    @SuppressWarnings("deprecation")
+	public int getPositionCode() {
         return mlp.getPositionCode();
     }
 

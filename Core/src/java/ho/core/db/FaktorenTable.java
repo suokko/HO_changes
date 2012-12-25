@@ -32,11 +32,6 @@ public final class FaktorenTable extends AbstractTable {
 		
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param fo TODO Missing Method Parameter Documentation
-	 */
 	protected void setFaktorenFromDB(FactorObject fo) {
 		if (fo != null) {
 			String statement = null;

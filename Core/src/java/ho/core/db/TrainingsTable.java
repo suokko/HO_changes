@@ -27,11 +27,6 @@ final class TrainingsTable extends AbstractTable {
 
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param training TODO Missing Method Parameter Documentation
-	 */
 	void saveTraining(ho.core.training.TrainingPerWeek training) {
 		if (training != null) {
 			final String[] awhereS = { "Week", "Year" };
@@ -46,11 +41,6 @@ final class TrainingsTable extends AbstractTable {
 		}
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	List<TrainingPerWeek> getTrainingList() {
 		final List<TrainingPerWeek> vTrainings = new ArrayList<TrainingPerWeek>();
 

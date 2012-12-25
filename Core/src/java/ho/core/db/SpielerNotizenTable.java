@@ -26,13 +26,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		columns[5]= new ColumnDescriptor("userPos",Types.INTEGER,false);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	byte getSpielerUserPosFlag(int spielerId) {
 		if (spielerId <= 0) {
 			return ho.core.model.player.ISpielerPosition.UNKNOWN;
@@ -60,13 +53,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		return ho.core.model.player.ISpielerPosition.UNKNOWN;
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	String getManuellerSmilie(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
@@ -89,13 +75,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		return "";
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	String getSpielerNotiz(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
@@ -140,13 +119,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		return true;
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	String getTeamInfoSmilie(int spielerId) {
 		ResultSet rs = null;
 		String sql = null;
@@ -167,12 +139,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		return "";
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param smilie TODO Missing Method Parameter Documentation
-	 */
 	void saveManuellerSmilie(int spielerId, String smilie) {
 		String statement = null;
 
@@ -196,12 +162,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param notiz TODO Missing Method Parameter Documentation
-	 */
 	void saveSpielerNotiz(int spielerId, String notiz) {
 		String statement = null;
 
@@ -223,12 +183,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		}
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param spielberechtigt TODO Missing Method Parameter Documentation
-	 */
 	void saveSpielerSpielberechtigt(int spielerId, boolean spielberechtigt) {
 		String statement = null;
 
@@ -252,12 +206,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param flag TODO Missing Method Parameter Documentation
-	 */
 	void saveSpielerUserPosFlag(int spielerId, byte flag) {
 		String statement = null;
 
@@ -278,12 +226,6 @@ final class SpielerNotizenTable extends AbstractTable {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param spielerId TODO Missing Method Parameter Documentation
-	 * @param smilie TODO Missing Method Parameter Documentation
-	 */
 	void saveTeamInfoSmilie(int spielerId, String smilie) {
 		String statement = null;
 

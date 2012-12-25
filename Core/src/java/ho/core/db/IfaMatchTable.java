@@ -81,6 +81,7 @@ public class IfaMatchTable extends AbstractTable {
 		return s;
 	}
 
+	@SuppressWarnings("deprecation")
 	IfaMatch[] getMatches(boolean home) {
 		ArrayList<IfaMatch> list = new ArrayList<IfaMatch>();
 		StringBuffer select = new StringBuffer(100);
@@ -117,6 +118,7 @@ public class IfaMatchTable extends AbstractTable {
 		return list.toArray(new IfaMatch[list.size()]);
 	}
 
+	@SuppressWarnings("deprecation")
 	void insertMatch(IfaMatch match) {
 		StringBuilder statement = new StringBuilder(100);
 		statement.append("insert into ").append(getTableName()).append("(");

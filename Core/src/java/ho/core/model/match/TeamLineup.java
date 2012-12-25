@@ -10,6 +10,7 @@ import java.util.List;
  *
  * @author Draghetto HO
  */
+@SuppressWarnings("unchecked")
 public class TeamLineup {
     //~ Instance fields ----------------------------------------------------------------------------
 

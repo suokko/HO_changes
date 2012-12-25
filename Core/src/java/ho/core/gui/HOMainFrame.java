@@ -781,6 +781,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 	/**
 	 * Holt die Parameter aus den Dialogen und speichert sie in der DB
 	 */
+	@SuppressWarnings("deprecation")
 	private void saveUserParameter() {
 		UserParameter parameter = UserParameter.instance();
 

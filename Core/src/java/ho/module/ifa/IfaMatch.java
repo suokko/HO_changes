@@ -36,6 +36,7 @@ public class IfaMatch {
 	 * @deprecated use {@link IfaMatch#getPlayedDate()} instead
 	 * @return
 	 */
+	@Deprecated
 	public final String getPlayedDateString() {
 		return playedDateString;
 	}
@@ -44,6 +45,7 @@ public class IfaMatch {
 	 * @deprecated use {@link IfaMatch#setPlayedDate(Date)} instead
 	 * @param playedDateString
 	 */
+	@Deprecated
 	public final void setPlayedDateString(String playedDateString) {
 		this.playedDateString = playedDateString;
 	}

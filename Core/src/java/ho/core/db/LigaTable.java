@@ -36,10 +36,7 @@ public final class LigaTable extends AbstractTable {
 	}
 	
 	/**
-	 * speichert die Basdics
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param liga TODO Missing Constructuor Parameter Documentation
+	 * speichert die Basics
 	 */
 	protected void saveLiga(int hrfId, Liga liga) {
 		String statement = null;
@@ -59,8 +56,6 @@ public final class LigaTable extends AbstractTable {
 	
 	/**
 	 * Gibt alle bekannten Ligaids zurück
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Integer[] getAllLigaIDs() {
 		final Vector<Integer> vligaids = new Vector<Integer>();
@@ -91,10 +86,6 @@ public final class LigaTable extends AbstractTable {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Liga getLiga(int hrfID) {
 		ResultSet rs = null;

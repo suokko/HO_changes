@@ -84,10 +84,6 @@ final class StadionTable extends AbstractTable {
 	
 	/**
 	 * lädt die Finanzen zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Stadium getStadion(int hrfID) {
 		ResultSet rs = null;

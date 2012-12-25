@@ -177,10 +177,6 @@ final class SpielerTable extends AbstractTable {
 	
 	/**
 	 * speichert die Spieler
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param spieler TODO Missing Constructuor Parameter Documentation
-	 * @param date TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
 //		String statement = null;
@@ -235,10 +231,6 @@ final class SpielerTable extends AbstractTable {
 	
 	/**
 	 * lädt die Spieler zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<Spieler> getSpieler(int hrfID) {
 		ResultSet rs = null;
@@ -269,8 +261,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * gibt alle Spieler zurück, auch ehemalige
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<Spieler> getAllSpieler() {
 		ResultSet rs = null;
@@ -312,10 +302,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * Gibt die letzte Bewertung für den Spieler zurück // HRF
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getLetzteBewertung4Spieler(int spielerid) {
 		int bewertung = 0;
@@ -336,11 +322,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 * @param time TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Spieler getSpielerAtDate(int spielerid, Timestamp time) {
 		ResultSet rs = null;
@@ -449,10 +430,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * Gibt einen Spieler zurück aus dem ersten HRF
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Spieler getSpielerFirstHRF(int spielerid) {
 		ResultSet rs = null;
@@ -481,10 +458,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * Gibt das Datum des ersten HRFs zurück, in dem der Spieler aufgetaucht ist
-	 *
-	 * @param spielerid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
 		Timestamp time = null;
@@ -505,10 +478,6 @@ final class SpielerTable extends AbstractTable {
 
 	/**
 	 * Gibt einen Spieler zurï¿½ck mit den Daten kurz vor dem Timestamp
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getTrainerType(int hrfID) {
 		ResultSet rs = null;
@@ -531,8 +500,6 @@ final class SpielerTable extends AbstractTable {
 
 	   /**
      * Erstellt einen Spieler aus der Datenbank
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
      */
     private Spieler createObject(ResultSet rs) {
     	Spieler player = new Spieler();

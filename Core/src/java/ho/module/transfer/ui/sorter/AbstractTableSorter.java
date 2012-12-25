@@ -49,46 +49,29 @@ import java.util.Map;
  * @version 2.0 02/27/04
  */
 public abstract class AbstractTableSorter extends AbstractTableModel {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1943995728912103888L;
-
-	/**  */
-    /** TODO Missing Parameter Documentation */
     public static final int DESCENDING = -1;
-
-    /**  */
-    /** TODO Missing Parameter Documentation */
     public static final int NOT_SORTED = 0;
-
-    /**  */
-    /** TODO Missing Parameter Documentation */
     public static final int ASCENDING = 1;
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
-
-    /**  */
-    /** TODO Missing Parameter Documentation */
-    public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
+    @SuppressWarnings("unchecked")
+	public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
             public int compare(Object o1, Object o2) {
                 return ((Comparable) o1).compareTo(o2);
             }
         };
-
-    /**  */
-    /** TODO Missing Parameter Documentation */
-    public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
+    @SuppressWarnings("unchecked")
+	public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
             public int compare(Object o1, Object o2) {
                 return o1.toString().compareTo(o2.toString());
             }
         };
 
-    /**  */
-    /** TODO Missing Parameter Documentation */
     protected TableModel tableModel;
     private JTableHeader tableHeader;
     private List<Directive> sortingColumns = new ArrayList<Directive>();
-    private Map<Class<?>,Comparator> columnComparators = new HashMap<Class<?>,Comparator>();
+    @SuppressWarnings("unchecked")
+	private Map<Class<?>,Comparator> columnComparators = new HashMap<Class<?>,Comparator>();
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
     private int[] modelToView;
@@ -137,25 +120,13 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         return tableModel.isCellEditable(modelIndex(row), column);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
     @Override
 	public Class<?> getColumnClass(int column) {
         return tableModel.getColumnClass(column);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param type
-     * @param comparator
-     */
-    public void setColumnComparator(Class<?> type, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+	public void setColumnComparator(Class<?> type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
         }
@@ -164,65 +135,31 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         }
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getColumnCount() {
         return (tableModel == null) ? 0 : tableModel.getColumnCount();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
     @Override
 	public String getColumnName(int column) {
         return tableModel.getColumnName(column);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
-    public abstract Comparator getCustomComparator(int column);
+    @SuppressWarnings("unchecked")
+	public abstract Comparator getCustomComparator(int column);
 
     // TableModel interface methods 
     public int getRowCount() {
         return (tableModel == null) ? 0 : tableModel.getRowCount();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public boolean isSorting() {
         return sortingColumns.size() != 0;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public List<Directive> getSortingColumns() {
         return sortingColumns;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     * @param status
-     */
     public void setSortingStatus(int column, int status) {
         Directive directive = getDirective(column);
 
@@ -237,22 +174,10 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         sortingStatusChanged();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
     public int getSortingStatus(int column) {
         return getDirective(column).getDirection();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param tableHeader
-     */
     public void setTableHeader(JTableHeader tableHeader) {
         if (this.tableHeader != null) {
             this.tableHeader.removeMouseListener(mouseListener);
@@ -275,20 +200,10 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         }
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public JTableHeader getTableHeader() {
         return tableHeader;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param tableModel
-     */
     public void setTableModel(TableModel tableModel) {
         if (this.tableModel != null) {
             this.tableModel.removeTableModelListener(tableModelListener);
@@ -304,72 +219,29 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         fireTableStructureChanged();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public TableModel getTableModel() {
         return tableModel;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param aValue
-     * @param row
-     * @param column
-     */
     @Override
 	public void setValueAt(Object aValue, int row, int column) {
         tableModel.setValueAt(aValue, modelIndex(row), column);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param row
-     * @param column
-     *
-     * @return
-     */
     public Object getValueAt(int row, int column) {
         return tableModel.getValueAt(modelIndex(row), column);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public abstract boolean hasHeaderLine();
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public abstract int minSortableColumn();
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param viewIndex
-     *
-     * @return
-     */
     public int modelIndex(int viewIndex) {
         return getViewToModel()[viewIndex].getModelIndex();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
-    protected Comparator getComparator(int column) {
+    @SuppressWarnings("unchecked")
+	protected Comparator getComparator(int column) {
         Comparator comparator = getCustomComparator(column);
 
         if (comparator != null) {
@@ -391,14 +263,6 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         return LEXICAL_COMPARATOR;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     * @param size
-     *
-     * @return
-     */
     protected Icon getHeaderRendererIcon(int column, int size) {
         Directive directive = getDirective(column);
 
@@ -410,19 +274,11 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
             sortingColumns.indexOf(directive));
     }
 
-    /**
-     *
-     */
     protected void cancelSorting() {
         sortingColumns.clear();
         sortingStatusChanged();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     int[] getModelToView() {
         if (modelToView == null) {
             int n = getViewToModel().length;
@@ -437,21 +293,11 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         return modelToView;
     }
 
-    /**
-     *
-     */
     void clearSortingState() {
         viewToModel = null;
         modelToView = null;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param column
-     *
-     * @return
-     */
     private Directive getDirective(int column) {
         for (int i = 0; i < sortingColumns.size(); i++) {
             Directive directive = (Directive) sortingColumns.get(i);
@@ -464,11 +310,6 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         return EMPTY_DIRECTIVE;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     private Row[] getViewToModel() {
         if (viewToModel == null) {
             int tableModelRowCount = tableModel.getRowCount();
@@ -487,9 +328,6 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         return viewToModel;
     }
 
-    /**
-     *
-     */
     private void sortingStatusChanged() {
         clearSortingState();
         fireTableDataChanged();

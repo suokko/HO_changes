@@ -87,6 +87,7 @@ public class OutputPanel extends LazyImagePanel {
 	/**
 	 * Import a match from Hattrick
 	 */
+	@SuppressWarnings("deprecation")
 	private void importMatches() {
 
 		JTextField tf = new JTextField();

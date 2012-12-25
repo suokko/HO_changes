@@ -28,14 +28,6 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		columns[3]= new ColumnDescriptor("TeamID",Types.INTEGER,false);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 * @param teamID TODO Missing Method Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
 	MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
 		MatchLineupTeam team = null;
 		String sql = null;
@@ -61,12 +53,6 @@ public final class MatchLineupTeamTable extends AbstractTable {
 		return team;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param team TODO Missing Method Parameter Documentation
-	 * @param matchID TODO Missing Method Parameter Documentation
-	 */
 	void storeMatchLineupTeam(MatchLineupTeam team, int matchID) {
 		if (team != null) {
 			final String[] where = { "MatchID" , "TeamID"};

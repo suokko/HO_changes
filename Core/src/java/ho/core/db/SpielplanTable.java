@@ -30,8 +30,6 @@ final class SpielplanTable extends AbstractTable {
 	 * lädt alle Spielpläne aus der DB
 	 *
 	 * @param mitPaarungen inklusive der Paarungen ja/nein
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
 		final Vector<Spielplan> vec = new Vector<Spielplan>();
@@ -83,8 +81,6 @@ final class SpielplanTable extends AbstractTable {
 	 *
 	 * @param ligaId Id der Liga
 	 * @param saison die Saison
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Spielplan getSpielplan(int ligaId, int saison) {
 		Spielplan plan = null;
@@ -128,10 +124,6 @@ final class SpielplanTable extends AbstractTable {
 	/**
 	 * Gibt eine Ligaid zu einer Seasonid zurück, oder -1, wenn kein Eintrag in der DB gefunden
 	 * wurde
-	 *
-	 * @param seasonid TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getLigaID4SaisonID(int seasonid) {
 		int ligaid = -1;
@@ -152,8 +144,6 @@ final class SpielplanTable extends AbstractTable {
 	
 	/**
 	 * speichert einen Spielplan mitsamt Paarungen
-	 *
-	 * @param plan TODO Missing Constructuor Parameter Documentation
 	 */
 	void storeSpielplan(Spielplan plan) {
 		if (plan != null) {

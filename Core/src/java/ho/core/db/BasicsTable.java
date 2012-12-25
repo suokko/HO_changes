@@ -44,8 +44,6 @@ final class BasicsTable extends AbstractTable {
 	/**
 	 * speichert die Basdics
 	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param basics TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveBasics(int hrfId, ho.core.model.misc.Basics basics) {
 		String statement = null;
@@ -91,9 +89,6 @@ final class BasicsTable extends AbstractTable {
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
 	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Basics getBasics(int hrfID) {
 		ResultSet rs = null;
@@ -119,7 +114,6 @@ final class BasicsTable extends AbstractTable {
 	 *
 	 * @param datum from which hrf has to be returned, used to load a subset of hrf
 	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
 		ResultSet rs = null;
@@ -157,10 +151,6 @@ final class BasicsTable extends AbstractTable {
 	
 	/**
 	 * Gibt die HRFId vor dem Datum zurï¿½ck, wenn mï¿½glich
-	 *
-	 * @param time TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	int getHrfIDSameTraining(Timestamp time) {
 		ResultSet rs = null;

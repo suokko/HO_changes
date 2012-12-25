@@ -1,22 +1,7 @@
-/**
- * MySwing: Advanced Swing Utilites Copyright (C) 2005 Santhosh Kumar T
- * <p/>
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- * <p/>
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
 package ho.module.ifa.table;
 
 import java.text.Collator;
 import java.util.Comparator;
-
 import javax.swing.DefaultRowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
@@ -49,8 +34,8 @@ public class SummaryTableSorter<M extends TableModel> extends TableRowSorter<M> 
 		return new TableCellValueComparator(comparator);
 	}
 
-	class SummaryModelWrapper<M extends TableModel> extends
-			DefaultRowSorter.ModelWrapper<M, Integer> {
+	@SuppressWarnings("hiding")
+	class SummaryModelWrapper<M extends TableModel> extends DefaultRowSorter.ModelWrapper<M, Integer> {
 		private DefaultRowSorter.ModelWrapper<M, Integer> delegate;
 
 		public SummaryModelWrapper(DefaultRowSorter.ModelWrapper<M, Integer> delegate) {
@@ -102,8 +87,10 @@ public class SummaryTableSorter<M extends TableModel> extends TableRowSorter<M> 
 	}
 
 	class TableCellValueComparator implements Comparator<TableCellValue> {
+		@SuppressWarnings("unchecked")
 		private Comparator delegate;
 
+		@SuppressWarnings("unchecked")
 		public TableCellValueComparator(Comparator delegate) {
 			this.delegate = delegate;
 		}

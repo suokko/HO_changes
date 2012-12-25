@@ -30,11 +30,6 @@ public final class PositionenTable extends AbstractTable {
 	
 	/**
 	 * lädt System Positionen
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 * @param sysName TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		ResultSet rs = null;
@@ -94,10 +89,6 @@ public final class PositionenTable extends AbstractTable {
 
 	/**
 	 * speichert System Positionen
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param positionen TODO Missing Constructuor Parameter Documentation
-	 * @param sysName TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		String statement = null;

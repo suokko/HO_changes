@@ -435,6 +435,7 @@ class HrfDetails {
 	 * @param datum
 	 *            The m_Datum to set.
 	 */
+	@SuppressWarnings("deprecation")
 	void setDatum(int gc_tag, int gc_monat, int gc_jahr) {
 		this.m_Datum = new Date(gc_jahr - 1900, gc_monat, gc_tag);
 	}

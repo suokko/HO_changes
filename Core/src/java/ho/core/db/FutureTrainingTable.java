@@ -108,11 +108,6 @@ public final class FutureTrainingTable extends AbstractTable {
 		return futures;
 	}
 	
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param training TODO Missing Method Parameter Documentation
-	 */
 	void saveFutureTraining(TrainingPerWeek training) {
 		if (training != null) {
 			String statement =

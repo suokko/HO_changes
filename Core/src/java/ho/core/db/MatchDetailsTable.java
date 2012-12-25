@@ -71,10 +71,6 @@ final class MatchDetailsTable extends AbstractTable {
 	
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
-	 *
-	 * @param matchId TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Matchdetails getMatchDetails(int matchId) {
 		final Matchdetails details = new Matchdetails();
@@ -139,8 +135,6 @@ final class MatchDetailsTable extends AbstractTable {
 	
 	/**
 	 * speichert die MatchDetails
-	 *
-	 * @param details TODO Missing Constructuor Parameter Documentation
 	 */
 	void storeMatchDetails(Matchdetails details) {
 		if (details != null) {

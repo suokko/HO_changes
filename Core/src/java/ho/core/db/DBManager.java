@@ -239,11 +239,6 @@ public class DBManager {
 		m_bFirstStart = firststart;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public boolean isFirstStart() {
 		return m_bFirstStart;
 	}
@@ -259,8 +254,6 @@ public class DBManager {
 
 	/**
 	 * stellt die Verbindung zur DB her
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	protected void connect() throws Exception {
 		User user = User.getCurrentUser();
@@ -290,7 +283,6 @@ public class DBManager {
 	 * @param value
 	 *            Wert des Skills Vor dem LevelUp
 	 * @param spielerId
-	 *            TODO Missing Constructuor Parameter Documentation
 	 * 
 	 * @return [0] = Time der Änderung [1] = Boolean: false=Keine Änderung
 	 *         gefunden
@@ -304,26 +296,11 @@ public class DBManager {
 	 * liefert das Datum des letzen LevelAufstiegs für den angeforderten Skill
 	 * Vector filled with Skillup Objects
 	 * 
-	 * @param skill
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Object[]> getAllLevelUp(int skill, int m_iSpielerID) {
 		return ((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).getAllLevelUp(skill,
 				m_iSpielerID);
 	}
-
-	// public void saveSkillup(int hrfId, Timestamp datum, int m_iSpielerID, int
-	// skill, int value) {
-	// ((SpielerSkillupTable)
-	// getTable(SpielerSkillupTable.TABLENAME)).saveSkillup(
-	// hrfId,
-	// m_iSpielerID,
-	// datum,
-	// skill,
-	// value);
-	// }
 
 	public void reimportSkillup() {
 		((SpielerSkillupTable) getTable(SpielerSkillupTable.TABLENAME)).importFromSpieler();
@@ -338,8 +315,6 @@ public class DBManager {
 
 	/**
 	 * gibt alle Spieler zurück, auch ehemalige
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Spieler> getAllSpieler() {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getAllSpieler();
@@ -347,11 +322,6 @@ public class DBManager {
 
 	/**
 	 * Gibt die letzte Bewertung für den Spieler zurück // HRF
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getLetzteBewertung4Spieler(int spielerid) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
@@ -360,11 +330,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Spieler zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<Spieler> getSpieler(int hrfID) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpieler(hrfID);
@@ -387,38 +352,13 @@ public class DBManager {
 
 	/**
 	 * Gibt einen Spieler zurück mit den Daten kurz vor dem Timestamp
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param time
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spieler getSpielerAtDate(int spielerid, Timestamp time) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerAtDate(spielerid, time);
 	}
 
-	// /**
-	// *
-	// * @param time
-	// * @param spielerid
-	// * @return
-	// */
-	// public Spieler getSpielerBeforeDate(Timestamp time, int spielerid) {
-	// return ((SpielerTable)
-	// getTable(SpielerTable.TABLENAME)).getSpielerBeforeDate(
-	// time,
-	// spielerid);
-	// }
-
 	/**
 	 * Gibt einen Spieler zurück aus dem ersten HRF
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spieler getSpielerFirstHRF(int spielerid) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME)).getSpielerFirstHRF(spielerid);
@@ -426,11 +366,6 @@ public class DBManager {
 
 	/**
 	 * Gibt das Datum des ersten HRFs zurück, in dem der Spieler aufgetaucht ist
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Timestamp getTimestamp4FirstPlayerHRF(int spielerid) {
 		return ((SpielerTable) getTable(SpielerTable.TABLENAME))
@@ -450,13 +385,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Spieler
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param spieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param date
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveSpieler(int hrfId, Vector<Spieler> spieler, Timestamp date) {
 		((SpielerTable) getTable(SpielerTable.TABLENAME)).saveSpieler(hrfId, spieler, date);
@@ -481,8 +409,6 @@ public class DBManager {
 
 	/**
 	 * Gibt alle bekannten Ligaids zurück
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Integer[] getAllLigaIDs() {
 		return ((LigaTable) getTable(LigaTable.TABLENAME)).getAllLigaIDs();
@@ -490,11 +416,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Liga getLiga(int hrfID) {
 		return ((LigaTable) getTable(LigaTable.TABLENAME)).getLiga(hrfID);
@@ -502,11 +423,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Basdics
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param liga
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveLiga(int hrfId, Liga liga) {
 		((LigaTable) getTable(LigaTable.TABLENAME)).saveLiga(hrfId, liga);
@@ -518,11 +434,6 @@ public class DBManager {
 	/**
 	 * Gibt eine Ligaid zu einer Seasonid zurück, oder -1, wenn kein Eintrag in
 	 * der DB gefunden wurde
-	 * 
-	 * @param seasonid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getLigaID4SaisonID(int seasonid) {
 		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME)).getLigaID4SaisonID(seasonid);
@@ -536,8 +447,6 @@ public class DBManager {
 	 *            Id der Liga
 	 * @param saison
 	 *            die Saison
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spielplan getSpielplan(int ligaId, int saison) {
 		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME)).getSpielplan(ligaId, saison);
@@ -545,22 +454,11 @@ public class DBManager {
 
 	/**
 	 * speichert einen Spielplan mitsamt Paarungen
-	 * 
-	 * @param plan
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void storeSpielplan(Spielplan plan) {
 		((SpielplanTable) getTable(SpielplanTable.TABLENAME)).storeSpielplan(plan);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param whereSpalten
-	 *            TODO Missing Method Parameter Documentation
-	 * @param whereValues
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void deleteSpielplanTabelle(String[] whereSpalten, String[] whereValues) {
 		getTable(SpielplanTable.TABLENAME).delete(whereSpalten, whereValues);
 	}
@@ -570,8 +468,6 @@ public class DBManager {
 	 * 
 	 * @param mitPaarungen
 	 *            inklusive der Paarungen ja/nein
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Spielplan[] getAllSpielplaene(boolean mitPaarungen) {
 		return ((SpielplanTable) getTable(SpielplanTable.TABLENAME))
@@ -584,11 +480,6 @@ public class DBManager {
 	/**
 	 * Gibt eine Liste an Ratings zurück, auf denen der Spieler gespielt hat: 0
 	 * = Max 1 = Min 2 = Durchschnitt 3 = posid
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<float[]> getAlleBewertungen(int spielerid) {
 		return ((MatchLineupPlayerTable) getTable(MatchLineupPlayerTable.TABLENAME))
@@ -598,11 +489,6 @@ public class DBManager {
 	/**
 	 * Gibt die beste, schlechteste und durchschnittliche Bewertung für den
 	 * Spieler, sowie die Anzahl der Bewertungen zurück // Match
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public float[] getBewertungen4Player(int spielerid) {
 		return ((MatchLineupPlayerTable) getTable(MatchLineupPlayerTable.TABLENAME))
@@ -617,78 +503,22 @@ public class DBManager {
 	 *            Spielerid
 	 * @param position
 	 *            Usere positionscodierung mit taktik
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public float[] getBewertungen4PlayerUndPosition(int spielerid, byte position) {
 		return ((MatchLineupPlayerTable) getTable(MatchLineupPlayerTable.TABLENAME))
 				.getBewertungen4PlayerUndPosition(spielerid, position);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param matchID
-	 *            TODO Missing Method Parameter Documentation
-	 * @param teamID
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public Vector<MatchLineupPlayer> getMatchLineupPlayers(int matchID, int teamID) {
 		return ((MatchLineupPlayerTable) getTable(MatchLineupPlayerTable.TABLENAME))
 				.getMatchLineupPlayers(matchID, teamID);
 	}
-
-	// /**
-	// * Deletes the given player based on teamID and matchID.
-	// * He is only deleted from the role set in the player object.
-	// *
-	// * @param player TODO Missing Method Parameter Documentation
-	// * @param matchID TODO Missing Method Parameter Documentation
-	// * @param teamID TODO Missing Method Parameter Documentation
-	// *
-	// */
-	// protected void deleteMatchLineupPlayer(MatchLineupPlayer player, int
-	// matchID, int teamID) {
-	// (
-	// (MatchLineupPlayerTable) getTable(
-	// MatchLineupPlayerTable.TABLENAME)).deleteMatchLineupPlayer(
-	// player,
-	// matchID,
-	// teamID);
-	// }
-
-	// /**
-	// * Updates a player in a match.
-	// *
-	// * @param player TODO Missing Method Parameter Documentation
-	// * @param matchID TODO Missing Method Parameter Documentation
-	// * @param teamID TODO Missing Method Parameter Documentation
-	// *
-	// */
-	// public void updateMatchLineupPlayer(MatchLineupPlayer player, int
-	// matchID, int teamID) {
-	// (
-	// (MatchLineupPlayerTable) getTable(
-	// MatchLineupPlayerTable.TABLENAME)).updateMatchLineupPlayer(
-	// player,
-	// matchID,
-	// teamID);
-	// }
 
 	// ------------------------------- AufstellungTable
 	// -------------------------------------------------
 
 	/**
 	 * lädt System Positionen
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Lineup getAufstellung(int hrfID, String name) {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME))
@@ -700,8 +530,6 @@ public class DBManager {
 	 * 
 	 * @param hrfID
 	 *            -1 für default = hrf unabhängig
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<String> getAufstellungsListe(int hrfID) {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME))
@@ -710,8 +538,6 @@ public class DBManager {
 
 	/**
 	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurück
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<String> getUserAufstellungsListe() {
 		return ((AufstellungTable) getTable(AufstellungTable.TABLENAME)).getUserAufstellungsListe();
@@ -719,13 +545,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Aufstellung und die aktuelle Aufstellung als STANDARD
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param aufstellung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveAufstellung(int hrfId, Lineup aufstellung, String name) {
 		try {
@@ -741,11 +560,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Basics getBasics(int hrfID) {
 		return ((BasicsTable) getTable(BasicsTable.TABLENAME)).getBasics(hrfID);
@@ -757,8 +571,6 @@ public class DBManager {
 	 * @param datum
 	 *            from which hrf has to be returned, used to load a subset of
 	 *            hrf
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<CBItem> getCBItemHRFListe(Timestamp datum) {
 		return ((BasicsTable) getTable(BasicsTable.TABLENAME)).getCBItemHRFListe(datum);
@@ -777,11 +589,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Basdics
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param basics
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveBasics(int hrfId, ho.core.model.misc.Basics basics) {
 		((BasicsTable) getTable(BasicsTable.TABLENAME)).saveBasics(hrfId, basics);
@@ -789,22 +596,10 @@ public class DBManager {
 
 	// ------------------------------- FaktorenTable
 	// -------------------------------------------------
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param fo
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void setFaktorenFromDB(FactorObject fo) {
 		((FaktorenTable) getTable(FaktorenTable.TABLENAME)).setFaktorenFromDB(fo);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param fo
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void getFaktorenFromDB() {
 		((FaktorenTable) getTable(FaktorenTable.TABLENAME)).getFaktorenFromDB();
 	}
@@ -814,11 +609,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Finanzen zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Finanzen getFinanzen(int hrfID) {
 		return ((FinanzenTable) getTable(FinanzenTable.TABLENAME)).getFinanzen(hrfID);
@@ -826,13 +616,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Finanzen
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param finanzen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param date
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveFinanzen(int hrfId, Finanzen finanzen, Timestamp date) {
 		((FinanzenTable) getTable(FinanzenTable.TABLENAME)).saveFinanzen(hrfId, finanzen, date);
@@ -866,8 +649,6 @@ public class DBManager {
 
 	/**
 	 * liefert die aktuelle Id des neuesten HRF-Files
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getMaxHrfId() {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getMaxHrf().getHrfId();
@@ -875,8 +656,6 @@ public class DBManager {
 
 	/**
 	 * liefert die Maximal Vergebene Id eines HRF-Files
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getLatestHrfId() {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getLatestHrf().getHrfId();
@@ -885,11 +664,6 @@ public class DBManager {
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor
 	 * Wird kein HRF gefunden wird -1 zurückgegeben
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getPreviousHRF(int hrfId) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getPreviousHRF(hrfId);
@@ -898,11 +672,6 @@ public class DBManager {
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor
 	 * Wird kein HRF gefunden wird -1 zurückgegeben
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int getFollowingHRF(int hrfId) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getFollowingHRF(hrfId);
@@ -910,21 +679,11 @@ public class DBManager {
 
 	/**
 	 * speichert das Verein
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param datum
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveHRF(int hrfId, String name, Timestamp datum) {
 		((HRFTable) getTable(HRFTable.TABLENAME)).saveHRF(hrfId, name, datum);
 	}
 
-	/**
-	 *
-	 */
 	public int getHRFID4Date(Timestamp time) {
 		return ((HRFTable) getTable(HRFTable.TABLENAME)).getHrfId4Date(time);
 	}
@@ -946,40 +705,16 @@ public class DBManager {
 	// ------------------------------- SpielerNotizenTable
 	// -------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public String getManuellerSmilie(int spielerId) {
 		return ((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
 				.getManuellerSmilie(spielerId);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public String getTeamInfoSmilie(int spielerId) {
 		return ((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
 				.getTeamInfoSmilie(spielerId);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public String getSpielerNotiz(int spielerId) {
 		return ((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
 				.getSpielerNotiz(spielerId);
@@ -990,79 +725,31 @@ public class DBManager {
 				.getSpielerSpielberechtigt(spielerId);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public byte getSpielerUserPosFlag(int spielerId) {
 		return ((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME))
 				.getSpielerUserPosFlag(spielerId);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * @param smilie
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveManuellerSmilie(int spielerId, String smilie) {
 		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveManuellerSmilie(
 				spielerId, smilie);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * @param notiz
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveSpielerNotiz(int spielerId, String notiz) {
 		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerNotiz(spielerId,
 				notiz);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * @param spielberechtigt
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveSpielerSpielberechtigt(int spielerId, boolean spielberechtigt) {
 		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerSpielberechtigt(
 				spielerId, spielberechtigt);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * @param flag
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveSpielerUserPosFlag(int spielerId, byte flag) {
 		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveSpielerUserPosFlag(
 				spielerId, flag);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Method Parameter Documentation
-	 * @param smilie
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveTeamInfoSmilie(int spielerId, String smilie) {
 		((SpielerNotizenTable) getTable(SpielerNotizenTable.TABLENAME)).saveTeamInfoSmilie(
 				spielerId, smilie);
@@ -1071,25 +758,12 @@ public class DBManager {
 	// ------------------------------- MatchLineupTable
 	// -------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param matchID
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public MatchLineup getMatchLineup(int matchID) {
 		return ((MatchLineupTable) getTable(MatchLineupTable.TABLENAME)).getMatchLineup(matchID);
 	}
 
 	/**
 	 * Ist das Match schon in der Datenbank vorhanden?
-	 * 
-	 * @param matchid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean isMatchLineupVorhanden(int matchid) {
 		return ((MatchLineupTable) getTable(MatchLineupTable.TABLENAME))
@@ -1101,11 +775,6 @@ public class DBManager {
 
 	/**
 	 * Ist das Match schon in der Datenbank vorhanden?
-	 * 
-	 * @param matchid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public boolean isMatchVorhanden(int matchid) {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
@@ -1166,9 +835,6 @@ public class DBManager {
 	 * @param matchtyp
 	 *            Welche Matches? Konstanten im SpielePanel!
 	 * @param asc
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public MatchKurzInfo[] getMatchesKurzInfo(int teamId, int matchtyp, boolean asc) {
 		return ((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
@@ -1186,9 +852,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Matches
-	 * 
-	 * @param matches
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void storeMatchKurzInfos(MatchKurzInfo[] matches) {
 		((MatchesKurzInfoTable) getTable(MatchesKurzInfoTable.TABLENAME))
@@ -1200,8 +863,6 @@ public class DBManager {
 
 	/**
 	 * Load player list for insertion into TransferScout
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<ScoutEintrag> getScoutList() {
 		return ((ScoutTable) getTable(ScoutTable.TABLENAME)).getScoutList();
@@ -1209,11 +870,6 @@ public class DBManager {
 
 	/**
 	 * Save players from TransferScout
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param list
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveScoutList(Vector<ScoutEintrag> list) {
 		((ScoutTable) getTable(ScoutTable.TABLENAME)).saveScoutList(list);
@@ -1224,11 +880,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Finanzen zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Stadium getStadion(int hrfID) {
 		return ((StadionTable) getTable(StadionTable.TABLENAME)).getStadion(hrfID);
@@ -1236,11 +887,6 @@ public class DBManager {
 
 	/**
 	 * speichert die Finanzen
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param stadion
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveStadion(int hrfId, ho.tool.arenasizer.Stadium stadion) {
 		((StadionTable) getTable(StadionTable.TABLENAME)).saveStadion(hrfId, stadion);
@@ -1291,11 +937,6 @@ public class DBManager {
 	/**
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] =
 	 * Stimmung [1] = Selbstvertrauen
-	 * 
-	 * @param hrfid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public String[] getStimmmungSelbstvertrauen(int hrfid) {
 		return ((TeamTable) getTable(TeamTable.TABLENAME)).getStimmmungSelbstvertrauen(hrfid);
@@ -1304,11 +945,6 @@ public class DBManager {
 	/**
 	 * Gibt die Teamstimmung und das Selbstvertrauen für ein HRFID zurück [0] =
 	 * Stimmung [1] = Selbstvertrauen
-	 * 
-	 * @param hrfid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public int[] getStimmmungSelbstvertrauenValues(int hrfid) {
 		return ((TeamTable) getTable(TeamTable.TABLENAME)).getStimmmungSelbstvertrauenValues(hrfid);
@@ -1316,11 +952,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Team getTeam(int hrfID) {
 		return ((TeamTable) getTable(TeamTable.TABLENAME)).getTeam(hrfID);
@@ -1328,11 +959,6 @@ public class DBManager {
 
 	/**
 	 * speichert das Team
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param team
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveTeam(int hrfId, Team team) {
 		((TeamTable) getTable(TeamTable.TABLENAME)).saveTeam(hrfId, team);
@@ -1343,13 +969,6 @@ public class DBManager {
 
 	/**
 	 * lädt System Positionen
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param sysName
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<ISpielerPosition> getSystemPositionen(int hrfID, String sysName) {
 		return ((PositionenTable) getTable(PositionenTable.TABLENAME)).getSystemPositionen(hrfID,
@@ -1358,13 +977,6 @@ public class DBManager {
 
 	/**
 	 * speichert System Positionen
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param sysName
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveSystemPositionen(int hrfId, Vector<ISpielerPosition> positionen, String sysName) {
 		((PositionenTable) getTable(PositionenTable.TABLENAME)).saveSystemPositionen(hrfId,
@@ -1373,11 +985,6 @@ public class DBManager {
 
 	/**
 	 * delete das System
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param sysName
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void deleteSystem(int hrfId, String sysName) {
 		final String[] whereS = { "Aufstellungsname", "HRF_ID" };
@@ -1390,21 +997,10 @@ public class DBManager {
 	// ------------------------------- TrainingsTable
 	// -------------------------------------------------
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public List<TrainingPerWeek> getTrainingOverrides() {
 		return ((TrainingsTable) getTable(TrainingsTable.TABLENAME)).getTrainingList();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param training
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveTraining(ho.core.training.TrainingPerWeek training) {
 		((TrainingsTable) getTable(TrainingsTable.TABLENAME)).saveTraining(training);
 	}
@@ -1417,12 +1013,6 @@ public class DBManager {
 				.getFutureTrainingsVector();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param training
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void saveFutureTraining(TrainingPerWeek training) {
 		((FutureTrainingTable) getTable(FutureTrainingTable.TABLENAME))
 				.saveFutureTraining(training);
@@ -1433,11 +1023,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Verein getVerein(int hrfID) {
 		return ((VereinTable) getTable(VereinTable.TABLENAME)).getVerein(hrfID);
@@ -1445,11 +1030,6 @@ public class DBManager {
 
 	/**
 	 * speichert das Verein
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param verein
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveVerein(int hrfId, Verein verein) {
 		((VereinTable) getTable(VereinTable.TABLENAME)).saveVerein(hrfId, verein);
@@ -1460,11 +1040,6 @@ public class DBManager {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public XtraData getXtraDaten(int hrfID) {
 		return ((XtraDataTable) getTable(XtraDataTable.TABLENAME)).getXtraDaten(hrfID);
@@ -1472,11 +1047,6 @@ public class DBManager {
 
 	/**
 	 * speichert das Team
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param xtra
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void saveXtraDaten(int hrfId, XtraData xtra) {
 		((XtraDataTable) getTable(XtraDataTable.TABLENAME)).saveXtraDaten(hrfId, xtra);
@@ -1484,17 +1054,6 @@ public class DBManager {
 
 	// ------------------------------- MatchLineupTeamTable
 	// -------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param matchID
-	 *            TODO Missing Method Parameter Documentation
-	 * @param teamID
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public MatchLineupTeam getMatchLineupTeam(int matchID, int teamID) {
 		return ((MatchLineupTeamTable) getTable(MatchLineupTeamTable.TABLENAME))
 				.getMatchLineupTeam(matchID, teamID);
@@ -1533,9 +1092,6 @@ public class DBManager {
 
 	/**
 	 * holt die Paarungen zum Plan aus der DB und added sie
-	 * 
-	 * @param plan
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected void getPaarungen(Spielplan plan) {
 		((PaarungTable) getTable(PaarungTable.TABLENAME)).getPaarungen(plan);
@@ -1543,26 +1099,11 @@ public class DBManager {
 
 	/**
 	 * speichert die Paarungen zu einem Spielplan
-	 * 
-	 * @param paarungen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ligaId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param saison
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected void storePaarung(Vector<Paarung> paarungen, int ligaId, int saison) {
 		((PaarungTable) getTable(PaarungTable.TABLENAME)).storePaarung(paarungen, ligaId, saison);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param whereSpalten
-	 *            TODO Missing Method Parameter Documentation
-	 * @param whereValues
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void deletePaarungTabelle(String[] whereSpalten, String[] whereValues) {
 		getTable(PaarungTable.TABLENAME).delete(whereSpalten, whereValues);
 	}
@@ -1572,11 +1113,6 @@ public class DBManager {
 
 	/**
 	 * Gibt die MatchDetails zu einem Match zurück
-	 * 
-	 * @param matchId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Matchdetails getMatchDetails(int matchId) {
 		return ((MatchDetailsTable) getTable(MatchDetailsTable.TABLENAME)).getMatchDetails(matchId);
@@ -1597,11 +1133,6 @@ public class DBManager {
 
 	/**
 	 * Gibt die MatchHighlights zu einem Match zurück
-	 * 
-	 * @param matchId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<MatchHighlight> getMatchHighlights(int matchId) {
 		return ((MatchHighlightsTable) getTable(MatchHighlightsTable.TABLENAME))
@@ -1619,7 +1150,6 @@ public class DBManager {
 	}
 
 	// Transfer
-
 	public List<PlayerTransfer> getTransfers(int playerid, boolean allTransfers) {
 		return ((TransferTable) getTable(TransferTable.TABLENAME)).getTransfers(playerid,
 				allTransfers);
@@ -1690,16 +1220,9 @@ public class DBManager {
 		return StatisticQuery.getDurchschnittlicheSpielerDaten4Statistik(anzahlHRF, group);
 	}
 
-	// --------------------------------- TODO ---------------------------
-
 	/**
 	 * Sucht das letzte HRF zwischen dem angegebenen Datum und 6 Tagen davor
 	 * Wird kein HRF gefunden wird -1 zurückgegeben
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Timestamp getPreviousTrainingDate(int hrfId) {
 		String sql = "select trainingdate from HRF, XTRADATA where HRF.hrf_id=XTRADATA.hrf_id and trainingdate < (select trainingdate from XTRADATA where hrf_id="
@@ -1749,11 +1272,6 @@ public class DBManager {
 
 	/**
 	 * Gibt eine Liste mit SpielerMatchCBItems zu den einzelnen Matches zurück
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public Vector<SpielerMatchCBItem> getSpieler4Matches(int spielerid) {
 		final Vector<SpielerMatchCBItem> spielerMatchCBItems = new Vector<SpielerMatchCBItem>();
@@ -1830,13 +1348,6 @@ public class DBManager {
 
 	// ------------------------------------- Delete
 	// -------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param hrfid
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	public void deleteHRF(int hrfid) {
 		final String[] where = { "HRF_ID" };
 		final String[] value = { hrfid + "" };
@@ -1930,11 +1441,6 @@ public class DBManager {
 
 	/**
 	 * delete eine Aufstellung + Positionen
-	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public void deleteAufstellung(int hrfId, String name) {
 		String[] whereS = { "HRF_ID", "Aufstellungsname" };

@@ -32,13 +32,6 @@ final class AufstellungTable extends AbstractTable {
 
 	/**
 	 * lädt System Positionen
-	 * 
-	 * @param hrfID
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Lineup getAufstellung(int hrfID, String name) {
 		ResultSet rs = null;
@@ -79,8 +72,6 @@ final class AufstellungTable extends AbstractTable {
 	 * 
 	 * @param hrfID
 	 *            -1 für default = hrf unabhängig
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<String> getAufstellungsListe(int hrfID) {
 		final Vector<String> ret = new Vector<String>();
@@ -107,8 +98,6 @@ final class AufstellungTable extends AbstractTable {
 
 	/**
 	 * Gibt eine Liste aller Usergespeicherten Aufstellungsnamen zurück
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Vector<String> getUserAufstellungsListe() {
 		ResultSet rs = null;
@@ -136,12 +125,6 @@ final class AufstellungTable extends AbstractTable {
 	/**
 	 * speichert die Aufstellung und die aktuelle Aufstellung als STANDARD
 	 * 
-	 * @param hrfId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param aufstellung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
 	 * @throws SQLException 
 	 */
 	void saveAufstellung(int hrfId, Lineup aufstellung, String name) throws SQLException {

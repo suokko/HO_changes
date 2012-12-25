@@ -21,6 +21,7 @@ public class HrfTableModel extends DefaultTableModel {
 	 */
 	private static final long serialVersionUID = -4726662462776212169L;
 
+	@SuppressWarnings("unchecked")
 	public HrfTableModel(Vector columns, Vector rows) {
 		dataVector = rows;
 		columnIdentifiers = columns;
@@ -38,6 +39,7 @@ public class HrfTableModel extends DefaultTableModel {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class getColumnClass(int columnIndex) {
 		Object o = getValueAt(0, columnIndex);
@@ -54,6 +56,7 @@ public class HrfTableModel extends DefaultTableModel {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addRow(Vector myRow) {
 		try {

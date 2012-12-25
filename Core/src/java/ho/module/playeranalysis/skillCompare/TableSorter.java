@@ -1,17 +1,5 @@
-/*
- * Created on 08.07.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package ho.module.playeranalysis.skillCompare;
 
-/**
- * @author Administrator
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -25,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -86,15 +73,7 @@ import javax.swing.table.TableModel;
  * 
  */
 
- /* 
- *  This is a, long overdue, rewrite of a class of the same name that 
- *  first appeared in the swing table demos in 1997. This version was 
- *  last updated on: 25:2:2004 
- */
 class TableSorter extends AbstractTableModel {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 8099667252567228773L;
 
 	protected TableModel tableModel;
@@ -105,12 +84,14 @@ class TableSorter extends AbstractTableModel {
 
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
     
-    public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
+    @SuppressWarnings("unchecked")
+	public static final Comparator COMPARABLE_COMAPRATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
             return ((Comparable) o1).compareTo(o2);
         }
     };
-    public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
+    @SuppressWarnings("unchecked")
+	public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
             return o1.toString().compareTo(o2.toString());
         }
@@ -122,7 +103,8 @@ class TableSorter extends AbstractTableModel {
     private JTableHeader tableHeader;
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
-    private Map columnComparators = new HashMap();
+    @SuppressWarnings("unchecked")
+	private Map columnComparators = new HashMap();
     private List<Directive> sortingColumns = new ArrayList<Directive>();
 
     TableSorter() {
@@ -233,7 +215,8 @@ class TableSorter extends AbstractTableModel {
         sortingStatusChanged();
     }
 
-    public void setColumnComparator(Class type, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+	public void setColumnComparator(Class type, Comparator comparator) {
         if (comparator == null) {
             columnComparators.remove(type);
         } else {
@@ -241,7 +224,8 @@ class TableSorter extends AbstractTableModel {
         }
     }
 
-    protected Comparator getComparator(int column) {
+    @SuppressWarnings("unchecked")
+	protected Comparator getComparator(int column) {
         Class columnType = tableModel.getColumnClass(column);
         Comparator comparator = (Comparator) columnComparators.get(columnType);
         if (comparator != null) {
@@ -319,7 +303,8 @@ class TableSorter extends AbstractTableModel {
 
     // Helper classes
     
-    private class Row implements Comparable {
+    @SuppressWarnings("unchecked")
+	private class Row implements Comparable {
         private int modelIndex;
 
         public Row(int index) {
@@ -490,16 +475,10 @@ class TableSorter extends AbstractTableModel {
             this.tableCellRenderer = tableCellRenderer;
         }
 
-        public Component getTableCellRendererComponent(JTable table, 
-                                                       Object value,
-                                                       boolean isSelected, 
-                                                       boolean hasFocus,
-                                                       int row, 
-                                                       int column) {
-            Component c = tableCellRenderer.getTableCellRendererComponent(table, value, 
-                                                                          isSelected, 
-                                                                          hasFocus, 
-                                                                          row, column);
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+        		boolean hasFocus, int row, int column) {
+            Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected,
+            		hasFocus, row, column);
             if (c instanceof JLabel) {
                 JLabel l = (JLabel) c;
                 l.setHorizontalTextPosition(JLabel.LEFT);

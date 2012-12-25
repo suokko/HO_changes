@@ -139,6 +139,7 @@ public class PluginIfaUtils {
 				/ (double) league.getActiveUsers();
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void insertMatches(Date from, Date to) throws Exception {
 		StringBuilder errors = new StringBuilder();
 		String matchDate = null;

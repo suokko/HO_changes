@@ -37,9 +37,6 @@ final class VereinTable extends AbstractTable {
 	}
 	/**
 	 * speichert das Verein
-	 *
-	 * @param hrfId TODO Missing Constructuor Parameter Documentation
-	 * @param verein TODO Missing Constructuor Parameter Documentation
 	 */
 	void saveVerein(int hrfId, Verein verein) {
 		String statement = null;
@@ -84,10 +81,6 @@ final class VereinTable extends AbstractTable {
 
 	/**
 	 * lädt die Basics zum angegeben HRF file ein
-	 *
-	 * @param hrfID TODO Missing Constructuor Parameter Documentation
-	 *
-	 * @return TODO Missing Return Method Documentation
 	 */
 	Verein getVerein(int hrfID) {
 		ResultSet rs = null;

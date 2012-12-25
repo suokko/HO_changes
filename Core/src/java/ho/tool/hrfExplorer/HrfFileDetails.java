@@ -143,6 +143,7 @@ public class HrfFileDetails extends HrfDetails
 	/**
 	 * @return Returns all needed Values as Vector
 	 */
+	@SuppressWarnings("unchecked")
 	public Vector getDatenVector()
 	{
 		Vector daten = new Vector();
