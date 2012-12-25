@@ -1,10 +1,3 @@
-// %535933150:hoplugins.trainingExperience.ui%
-/*
- * Created on 20-mar-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.training.ui;
 
 import ho.core.model.UserParameter;
@@ -12,13 +5,6 @@ import ho.core.model.UserParameter;
 import java.util.Comparator;
 import java.util.Vector;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author Mirtillo To change the template for this generated type comment go to
- *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 public class TrainingComparator implements Comparator<Vector<String>> {
     //~ Methods ------------------------------------------------------------------------------------
     private int speed;
@@ -29,9 +15,6 @@ public class TrainingComparator implements Comparator<Vector<String>> {
         speed = speedColumn;
     }
 
-    /* (non-Javadoc)
-     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-     */
     @Override
     public int compare(Vector<String> arg0, Vector<String> arg1) {
         Vector<String> v1 =  arg0;

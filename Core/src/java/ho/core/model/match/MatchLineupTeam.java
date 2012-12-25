@@ -1,9 +1,3 @@
-// %716628770:de.hattrickorganizer.model.matches%
-/*
- * MatchLineupTeam.java
- *
- * Created on 20. Oktober 2003, 08:55
- */
 package ho.core.model.match;
 
 import ho.core.model.player.ISpielerPosition;
@@ -16,11 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
-/**
- * DOCUMENT ME!
- * 
- * @author thomas.werth
- */
 public class MatchLineupTeam {
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------

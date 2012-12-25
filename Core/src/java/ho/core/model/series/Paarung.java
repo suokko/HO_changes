@@ -1,18 +1,7 @@
-// %3089831978:de.hattrickorganizer.model.matchlist%
-/*
- * Paarung.java
- *
- * Created on 7. Oktober 2003, 12:24
- */
 package ho.core.model.series;
 
 import ho.core.util.HOLogger;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class Paarung implements Comparable<Paarung>{
     //~ Instance fields ----------------------------------------------------------------------------
     protected String m_sDatum = "";

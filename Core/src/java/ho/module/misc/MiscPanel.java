@@ -1,4 +1,3 @@
-// %2020218070:de.hattrickorganizer.gui.info%
 package ho.module.misc;
 
 import ho.core.constants.player.PlayerAbility;
@@ -80,9 +79,6 @@ final class MiscPanel extends JPanel {
         m_jpDErfahrung.setText(getDurchschnittsErfahrung() + "");
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0.0;

@@ -1,4 +1,3 @@
-// %3484484869:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.constants.player.PlayerAbility;
@@ -259,8 +258,6 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
 
     /**
      * Set the player to be shown
-     *
-     * @param spieler TODO Missing Method Parameter Documentation
      */
     public final void setSpieler(Spieler player) {
         m_clPlayer = player;
@@ -275,11 +272,6 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionevent TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void actionPerformed(java.awt.event.ActionEvent actionevent) {
     	if (actionevent.getSource().equals(m_jbStatistics)) {
@@ -319,11 +311,6 @@ public final class SpielerDetailPanel extends ImagePanel implements Refreshable,
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param itemEvent TODO Missing Method Parameter Documentation
-     */
     @Override
 	public final void itemStateChanged(java.awt.event.ItemEvent itemEvent) {
         if (itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED) {

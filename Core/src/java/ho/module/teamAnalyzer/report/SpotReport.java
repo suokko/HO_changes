@@ -35,21 +35,10 @@ public class SpotReport extends Report {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public Collection<PlayerAppearance> getPlayerAppearance() {
         return players.values();
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public Collection<PositionReport> getPositionReports() {
         return positionReports.values();
     }

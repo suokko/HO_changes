@@ -9,33 +9,10 @@ public interface ISkillup {
 
 	/** PRedicted Skillup at maximum training */
 	public static final int SKILLUP_FUTURE = 1;
-		
-	/**
-	* Document me!
-	*
-	* @return
-	*/
 	public abstract Date getDate();
-
-	/**
-	* Document me!
-	*
-	* @return
-	*/
 	public abstract int getHtSeason();
-
-	/**
-	* Document me!
-	*
-	* @return
-	*/
 	public abstract int getHtWeek();
 
-	/**
-	* DOCUMENT ME!
-	*
-	* @return
-	*/
 	public abstract int getTrainType();
 
 	/**

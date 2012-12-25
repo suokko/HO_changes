@@ -1,13 +1,6 @@
-// %18907463:plugins%
-/*
- * ISpielerPosition.java
- *
- * Created on 19. April 2004, 07:40
- */
 package ho.core.model.player;
 
 /**
- * DOCUMENT ME!
  * 
  * Interface giving the constants for player positions
  * 

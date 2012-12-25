@@ -1,18 +1,5 @@
-// %744452170:de.hattrickorganizer.model.lineup%
-/*
- * Tabellenverlauf.java
- *
- * Created on 13. Oktober 2003, 07:51
- */
 package ho.core.model.series;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class Tabellenverlauf {
     //~ Instance fields ----------------------------------------------------------------------------
     TabellenVerlaufEintrag[] m_aEintraege = new TabellenVerlaufEintrag[0];

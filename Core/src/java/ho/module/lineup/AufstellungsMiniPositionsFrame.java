@@ -129,7 +129,6 @@ public class AufstellungsMiniPositionsFrame extends JFrame implements WindowList
 
 			printController.print();
 		} catch (Exception e) {
-			// TODO
 		}
 
 		setVisible(false);

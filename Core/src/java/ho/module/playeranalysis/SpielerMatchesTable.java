@@ -22,9 +22,6 @@ final class SpielerMatchesTable extends JTable {
 
 	/**
 	 * Creates a new SpielerMatchesTable object.
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	SpielerMatchesTable(int spielerid, int instance) {
 		super();

@@ -1,16 +1,5 @@
-// %1602616431:de.hattrickorganizer.model.lineup%
-/*
- * TabellenVerlaufEintrag.java
- *
- * Created on 13. Oktober 2003, 07:47
- */
 package ho.core.model.series;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class TabellenVerlaufEintrag {
     //~ Instance fields ----------------------------------------------------------------------------
     protected String m_sTeamName = "";

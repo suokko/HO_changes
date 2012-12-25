@@ -1,9 +1,3 @@
-// %16308149:de.hattrickorganizer.model.matches%
-/*
- * MatchKurzInfo.java
- *
- * Created on 22. Oktober 2003, 09:03
- */
 package ho.core.model.match;
 
 import ho.core.util.HOLogger;
@@ -12,11 +6,6 @@ import ho.core.util.StringUtils;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-/**
- * DOCUMENT ME!
- * 
- * @author thomas.werth
- */
 public class MatchKurzInfo implements Comparable<Object> {
 	// ~ Instance fields
 	// ----------------------------------------------------------------------------

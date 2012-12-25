@@ -1,4 +1,3 @@
-// %1838430110:hoplugins.trainingExperience.ui.model%
 package ho.module.training.ui.model;
 
 import ho.core.model.HOVerwaltung;
@@ -26,7 +25,6 @@ public class EffectTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 6647124384624067021L;
 
-	/** TODO Missing Parameter Documentation */
     private static final NumberFormat FORMATTER = NumberFormat.getInstance();
 
     //~ Instance fields ----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-// %4201738339:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
 import ho.core.db.DBManager;
@@ -55,21 +54,10 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getDividerLocation() {
         return verticalSplitPane.getDividerLocation();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final TransferTable getTransferTable() {
         return m_jtTransferTable;
     }
@@ -124,33 +112,18 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
     public final void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
     public final void keyReleased(KeyEvent keyEvent) {
         if (keyEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param keyEvent TODO Missing Method Parameter Documentation
-     */
     public void keyTyped(KeyEvent keyEvent) {
     }
 
@@ -158,35 +131,15 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
     public void mouseClicked(MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public void mouseEntered(MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public void mouseExited(MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public void mousePressed(MouseEvent mouseEvent) {
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param mouseEvent TODO Missing Method Parameter Documentation
-     */
     public final void mouseReleased(MouseEvent mouseEvent) {
         if (mouseEvent.getSource().equals(m_jtTransferTable)) {
             newSelectionInform();
@@ -230,16 +183,10 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
         m_jtTransferTable.refresh();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void saveScoutListe() {
         DBManager.instance().saveScoutList(m_jtTransferTable.getTransferTableModel().getScoutListe());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void initComponents() {
         setLayout(new BorderLayout());
 
@@ -265,21 +212,11 @@ public class TransferScoutPanel extends ImagePanel implements MouseListener, Key
     	}
     	return toolbar;
     }
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initTransferEingabePanel() {
         m_jpTransferEingabePanel = new TransferEingabePanel(this);
         return new JScrollPane(m_jpTransferEingabePanel);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Component initTransferTable() {
         m_jtTransferTable = new TransferTable();
         m_jtTransferTable.addMouseListener(this);

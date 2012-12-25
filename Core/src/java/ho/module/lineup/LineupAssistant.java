@@ -1,9 +1,3 @@
-// %3239001626:de.hattrickorganizer.logik%
-/*
- * Aufstellungsassistent.java
- *
- * Created on 20. März 2003, 10:20
- */
 package ho.module.lineup;
 
 import ho.core.gui.HOMainFrame;
@@ -18,40 +12,20 @@ import java.util.Map;
 import java.util.Vector;
 
 public class LineupAssistant {
-
 	/** Order for lineup assistent */
 	public static final byte AW_MF_ST = 0;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte AW_ST_MF = 1;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte MF_ST_AW = 2;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte MF_AW_ST = 3;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte ST_AW_MF = 4;
-
-	/** TODO Missing Parameter Documentation */
 	public static final byte ST_MF_AW = 5;
-
 	/** gibt an wie auf Wettereinfluss reagiert werden soll in Prozent */
 	private float m_fWetterBonus = 0.2f;
-
 	/** gibt das Wetter an */
 	private Weather weather = Weather.PARTIALLY_CLOUDY;
 
 	/**
 	 * gibt an ob der Spieler bereits aufgestellt ist auch ReserveBank zählt mit
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final boolean isSpielerAufgestellt(int spielerId, List<ISpielerPosition> positions) {
 		if (positions != null) {
@@ -67,13 +41,6 @@ public class LineupAssistant {
 
 	/**
 	 * gibt an ob der Spieler von beginn an Spielt
-	 * 
-	 * @param spielerId
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final boolean isSpielerInAnfangsElf(int spielerId, Vector<ISpielerPosition> positionen) {
 		for (int i = 0; (positionen != null) && (i < positionen.size()); i++) {
@@ -445,21 +412,6 @@ public class LineupAssistant {
 	/**
 	 * liefert aus dem eigenen Vector mit Spielern den besten für die
 	 * angefordertet Position der noch nicht aufgestellt ist
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	protected final ho.core.model.player.Spieler getBestSpieler(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -492,21 +444,6 @@ public class LineupAssistant {
 	/**
 	 * liefert aus dem eigenen Vector mit Spielern den besten für die
 	 * angefordertet Position der noch nicht aufgestellt ist
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	protected final Spieler getBestSpielerIdealPosOnly(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -542,19 +479,6 @@ public class LineupAssistant {
 
 	/**
 	 * besetzt die Torwart Positionen im Vector m_vPositionen
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected final void doReserveSpielerAufstellen(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -586,19 +510,6 @@ public class LineupAssistant {
 
 	/**
 	 * besetzt die Torwart Positionen im Vector m_vPositionen
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected final void doReserveSpielerAufstellenIdealPos(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -630,19 +541,6 @@ public class LineupAssistant {
 
 	/**
 	 * besetzt die Torwart Positionen im Vector m_vPositionen
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected final void doSpielerAufstellen(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -697,19 +595,6 @@ public class LineupAssistant {
 
 	/**
 	 * besetzt die Torwart Positionen im Vector m_vPositionen
-	 * 
-	 * @param position
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param mitForm
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreVerletzung
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param ignoreSperre
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param vSpieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param positionen
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	protected final void doSpielerAufstellenIdealPos(byte position, boolean mitForm,
 			boolean ignoreVerletzung, boolean ignoreSperre, List<Spieler> vSpieler,
@@ -762,14 +647,6 @@ public class LineupAssistant {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spieler
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	private float calcAveragePosValue(List<Spieler> spieler) {
 		float average = 0.0f;
 		Spieler player = null;

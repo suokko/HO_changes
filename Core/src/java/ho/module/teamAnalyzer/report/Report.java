@@ -46,93 +46,42 @@ public class Report {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setAppearance(int i) {
         appearance = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getAppearance() {
         return appearance;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
     public void setPlayerId(int i) {
         playerId = i;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getPlayerId() {
         return playerId;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
     public void setPosition(int i) {
         position = i;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getPosition() {
         return position;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param d
-     */
     public void setRating(double d) {
         rating = d;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public double getRating() {
         return rating;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setSpot(int i) {
         spot = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getSpot() {
         return spot;
     }

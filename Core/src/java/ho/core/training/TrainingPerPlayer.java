@@ -83,11 +83,6 @@ public class TrainingPerPlayer  {
 		this._TrainingDate = timestamp;
 	}
 
-	/**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     /**
      * add sub values of another ITrainingPerPlayer instance to this instance
      * @param values	the instance we take the values from

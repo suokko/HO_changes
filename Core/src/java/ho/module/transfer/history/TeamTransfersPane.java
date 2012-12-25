@@ -1,4 +1,3 @@
-// %1126721330729:hoplugins.transfers.ui%
 package ho.module.transfer.history;
 
 import ho.core.gui.comp.panel.ImagePanel;
@@ -17,8 +16,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
-
-
 
 /**
  * Pane to show transfers for your own team.
@@ -67,8 +64,6 @@ class TeamTransfersPane extends JPanel implements ListSelectionListener {
 
     /**
      * Creates a new TeamTransfersPane object.
-     *
-     * @param playerDetailPanel TODO Missing Constructuor Parameter Documentation
      */
     public TeamTransfersPane(PlayerDetailPanel playerDetailPanel) {
         this();

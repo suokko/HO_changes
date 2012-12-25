@@ -1,4 +1,3 @@
-// %2522043834:de.hattrickorganizer.database%
 package ho.core.db;
 
 import ho.core.datatype.CBItem;
@@ -52,11 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 
-/**
- * DOCUMENT ME!
- * 
- * @author tom
- */
 public class DBManager {
 	// ~ Static fields/initializers
 	// -----------------------------------------------------------------

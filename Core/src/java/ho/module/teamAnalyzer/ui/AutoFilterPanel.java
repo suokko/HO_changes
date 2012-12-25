@@ -1,9 +1,3 @@
-// %1955470492:hoplugins.teamAnalyzer.ui%
-/*
- * AutoFilterPanel.java
- *
- * Created on 20 settembre 2004, 16.12
- */
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.panel.ImagePanel;
@@ -23,19 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author samuele.peli
- */
 public class AutoFilterPanel extends JPanel implements ActionListener, KeyListener {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 980373632967180587L;
 	private JCheckBox awayGames = new JCheckBox();
     private JCheckBox cup = new JCheckBox();
@@ -62,10 +45,6 @@ public class AutoFilterPanel extends JPanel implements ActionListener, KeyListen
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     */
     public void reload() {
     	Filter filter = TeamAnalyzerPanel.filter;
     	filter.loadFilters();
@@ -83,9 +62,6 @@ public class AutoFilterPanel extends JPanel implements ActionListener, KeyListen
         masters.setSelected(filter.isMasters());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     protected void setFilter() {
     	Filter filter = TeamAnalyzerPanel.filter;
     	filter.setAwayGames(awayGames.isSelected());
@@ -112,9 +88,6 @@ public class AutoFilterPanel extends JPanel implements ActionListener, KeyListen
     	setFilter();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void jbInit() {
     	Filter filter = TeamAnalyzerPanel.filter;
         JPanel main = new ImagePanel();

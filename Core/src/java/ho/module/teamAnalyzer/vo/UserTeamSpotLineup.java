@@ -16,39 +16,18 @@ public class UserTeamSpotLineup extends SpotLineup {
     private int tacticCode;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
     public void setSpecialEvent(int i) {
         specialEvent = i;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getSpecialEvent() {
         return specialEvent;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setTacticCode(int i) {
         tacticCode = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getTacticCode() {
         return tacticCode;
     }

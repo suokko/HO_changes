@@ -1,4 +1,3 @@
-// %2655100108:de.hattrickorganizer.gui.playeranalysis%
 package ho.module.playeranalysis;
 
 import ho.core.db.DBManager;
@@ -22,9 +21,6 @@ final class SpielerPositionTable extends JTable {
 
 	/**
 	 * Creates a new SpielerPositionTable object.
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	SpielerPositionTable(int spielerid) {
 		super();

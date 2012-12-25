@@ -1,11 +1,8 @@
-// %1126721452213:hoplugins.trainingExperience.vo%
 package ho.core.training;
 
 import ho.core.model.player.ISkillup;
 
 import java.util.Date;
-
-
 
 /**
  * Base Object for the Skillup table
@@ -31,84 +28,44 @@ public class PlayerSkillup implements ISkillup
     /** Value of skill */
     private int value;
 
-    /**
-* Document me!
-*
-* @param date
-*/
     public void setDate(Date date)
     {
         this.date = date;
     }
 
-    /**
-* Document me!
-*
-* @return
-*/
     @Override
 	public Date getDate()
     {
         return date;
     }
 
-    /**
-* Document me!
-*
-* @param i
-*/
     public void setHtSeason(int i)
     {
         htSeason = i;
     }
 
-    /**
-* Document me!
-*
-* @return
-*/
     @Override
 	public int getHtSeason()
     {
         return htSeason;
     }
 
-    /**
-* Document me!
-*
-* @param i
-*/
     public void setHtWeek(int i)
     {
         htWeek = i;
     }
 
-    /**
-* Document me!
-*
-* @return
-*/
     @Override
 	public int getHtWeek()
     {
         return htWeek;
     }
 
-    /**
-* DOCUMENT ME!
-*
-* @param i
-*/
     public void setTrainType(int i)
     {
         trainType = i;
     }
 
-    /**
-* DOCUMENT ME!
-*
-* @return
-*/
     @Override
 	public int getTrainType()
     {

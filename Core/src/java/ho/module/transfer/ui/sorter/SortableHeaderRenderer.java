@@ -1,10 +1,3 @@
-// %1126721046119:hoplugins.commons.ui.sorter%
-/*
- * Created on 7-apr-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.transfer.ui.sorter;
 
 import javax.swing.JLabel;
@@ -14,13 +7,7 @@ import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
 
-/**
- * DOCUMENT ME!
- *
- * @author
- */
 class SortableHeaderRenderer implements TableCellRenderer {
-    /** TODO Missing Parameter Documentation */
     private final AbstractTableSorter sorter;
     private TableCellRenderer tableCellRenderer;
 
@@ -36,27 +23,10 @@ class SortableHeaderRenderer implements TableCellRenderer {
         this.sorter = sorter;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public TableCellRenderer getTableCellRenderer() {
         return tableCellRenderer;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param table
-     * @param value
-     * @param isSelected
-     * @param hasFocus
-     * @param row
-     * @param column
-     *
-     * @return
-     */
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = tableCellRenderer.getTableCellRendererComponent(table,

@@ -1,18 +1,7 @@
-// %2778683404:de.hattrickorganizer.model%
-/*
- * ScoutEintrag.java
- *
- * Created on 26. März 2003, 13:57
- */
 package ho.module.transfer.scout;
 
 import ho.core.util.HOLogger;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class ScoutEintrag {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -95,8 +84,6 @@ public class ScoutEintrag {
 
     /**
      * Creates a new instance of ScoutEintrag
-     *
-     * @param rs TODO Missing Constructuor Parameter Documentation
      */
     public ScoutEintrag(java.sql.ResultSet rs) {
         try {
@@ -355,56 +342,26 @@ public class ScoutEintrag {
         return m_iPasspiel;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param m_iPlayerID TODO Missing Method Parameter Documentation
-     */
     public final void setPlayerID(int m_iPlayerID) {
         this.m_iPlayerID = m_iPlayerID;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getPlayerID() {
         return m_iPlayerID;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param m_iPrice TODO Missing Method Parameter Documentation
-     */
     public final void setPrice(int m_iPrice) {
         this.m_iPrice = m_iPrice;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getPrice() {
         return m_iPrice;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param m_iSpeciality TODO Missing Method Parameter Documentation
-     */
     public final void setSpeciality(int m_iSpeciality) {
         this.m_iSpeciality = m_iSpeciality;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getSpeciality() {
         return m_iSpeciality;
     }
@@ -625,11 +582,6 @@ public class ScoutEintrag {
     	return m_iLeadership;
 	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final ScoutEintrag duplicate() {
         final ScoutEintrag eintrag = new ScoutEintrag();
         eintrag.setPlayerID(getPlayerID());
@@ -661,13 +613,6 @@ public class ScoutEintrag {
         return eintrag;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param obj TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final boolean equals(Object obj) {
         if (obj instanceof ScoutEintrag) {
@@ -677,15 +622,8 @@ public class ScoutEintrag {
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final int hashCode() {
         return getPlayerID();
     }
-
-	
 }

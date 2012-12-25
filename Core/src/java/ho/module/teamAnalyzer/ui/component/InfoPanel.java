@@ -1,4 +1,3 @@
-// %1126721045619:hoplugins.commons.ui%
 package ho.module.teamAnalyzer.ui.component;
 
 import javax.swing.JLabel;
@@ -14,15 +13,10 @@ import java.awt.Insets;
  * @author <a href=mailto:draghetto@users.sourceforge.net>Massimiliano Amato</a>
  */
 public class InfoPanel extends JPanel {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -983845737480059931L;
 
 	/**
      * Constructs a new instance.
-     *
-     * @param messages TODO Missing Constructuor Parameter Documentation
      */
     public InfoPanel(String[] messages) {
         jbInit(messages);
@@ -30,8 +24,6 @@ public class InfoPanel extends JPanel {
 
     /**
      * Initializes the state of this instance.
-     *
-     * @param messages TODO Missing Constructuor Parameter Documentation
      */
     private void jbInit(String[] messages) {
         GridBagLayout gridBagLayout1 = new GridBagLayout();

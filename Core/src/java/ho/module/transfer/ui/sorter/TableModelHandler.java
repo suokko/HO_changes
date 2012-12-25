@@ -1,22 +1,9 @@
-// %1126721046151:hoplugins.commons.ui.sorter%
-/*
- * Created on 7-apr-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.transfer.ui.sorter;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-/**
- * DOCUMENT ME!
- *
- * @author
- */
 class TableModelHandler implements TableModelListener {
-    /** TODO Missing Parameter Documentation */
     private final AbstractTableSorter sorter;
 
     /**
@@ -28,11 +15,6 @@ class TableModelHandler implements TableModelListener {
         this.sorter = sorter;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param e
-     */
     public void tableChanged(TableModelEvent e) {
         // If we're not sorting by anything, just pass the event along.             
         if (!this.sorter.isSorting()) {

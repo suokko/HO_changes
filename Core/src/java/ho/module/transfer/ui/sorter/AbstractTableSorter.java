@@ -1,4 +1,3 @@
-// %1126721045932:hoplugins.commons.ui.sorter%
 package ho.module.transfer.ui.sorter;
 
 import javax.swing.Icon;
@@ -107,14 +106,6 @@ public abstract class AbstractTableSorter extends AbstractTableModel {
         setTableModel(tableModel);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param row
-     * @param column
-     *
-     * @return
-     */
     @Override
 	public boolean isCellEditable(int row, int column) {
         return tableModel.isCellEditable(modelIndex(row), column);

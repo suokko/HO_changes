@@ -1,4 +1,3 @@
-// %2759382947:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.constants.player.PlayerSkill;
@@ -24,11 +23,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 final class SpielerOffsetDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1187335231698270294L;
@@ -50,18 +44,11 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 
 	/**
 	 * Creates a new SpielerOffsetDialog object.
-	 *
-	 * @param owner TODO Missing Constructuor Parameter Documentation
-	 * @param spieler TODO Missing Constructuor Parameter Documentation
 	 */
 	protected SpielerOffsetDialog(javax.swing.JFrame owner, Spieler spieler) {
 		super(owner, true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle(
-			HOVerwaltung.instance().getLanguageString(
-				"OffsetTitle")
-				+ " "
-				+ spieler.getName());
+		setTitle(HOVerwaltung.instance().getLanguageString("OffsetTitle") + " " + spieler.getName());
 
 		m_clSpieler = spieler;
 
@@ -81,12 +68,6 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 *
-	 * @param actionEvent TODO Missing Method Parameter Documentation
-	 */
 	@Override
 	public final void actionPerformed(ActionEvent actionEvent) {
 		if (actionEvent.getSource().equals(m_jbOK)) {
@@ -114,9 +95,6 @@ final class SpielerOffsetDialog extends JDialog implements ActionListener {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void initComponents() {
 		setContentPane(new ho.core.gui.comp.panel.ImagePanel());
 

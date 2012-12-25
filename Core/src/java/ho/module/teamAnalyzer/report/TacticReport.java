@@ -28,21 +28,10 @@ public class TacticReport extends Report {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document me!
-     *
-     * @param i
-     */
     public void setTacticCode(int i) {
         tacticCode = i;
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public int getTacticCode() {
         return tacticCode;
     }

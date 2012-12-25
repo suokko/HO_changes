@@ -1,11 +1,4 @@
-// %1412607374:de.hattrickorganizer.logik.xml%
-/*
- * XMLPlayerParser.java
- *
- * Created on 9. Dezember 2003, 08:56
- */
 package ho.core.file.xml;
-
 
 import ho.core.model.player.Spieler;
 import ho.core.util.HOLogger;
@@ -17,13 +10,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class XMLPlayerParser {
     //~ Constructors -------------------------------------------------------------------------------
 

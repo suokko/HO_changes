@@ -1,6 +1,4 @@
-// %4073173605:de.hattrickorganizer.model%
 package ho.tool.arenasizer;
-
 
 /**
  * Enthält die Stadiendaten
@@ -57,8 +55,6 @@ public class Stadium {
 
     /**
      * Creates a new Stadium object.
-     *
-     * @param properties TODO Missing Constructuor Parameter Documentation
      */
     public Stadium(java.util.Properties properties) {
         m_sStadienname = properties.getProperty("arenaname", "");
@@ -97,11 +93,6 @@ public class Stadium {
         this.m_bAusbau = m_bAusbau;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final byte getAusbau() {
         return (m_bAusbau) ? (byte) 1 : (byte) 0;
     }

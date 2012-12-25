@@ -1,4 +1,3 @@
-// %2927626437:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
 import ho.core.constants.player.PlayerSkill;
@@ -47,12 +46,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
     //~ Static fields/initializers -----------------------------------------------------------------
 	private static final long serialVersionUID = 3121389904504282953L;
 
-	/** TODO Missing Parameter Documentation */
- //   protected static final int CAPTAIN = 200;
-
-    /** TODO Missing Parameter Documentation */
- //   protected static final int SET_PIECE = 201;
-
 	protected static int PLAYER_POSITION_PANEL_WIDTH = Helper.calcCellWidth(160);
 	protected static int PLAYER_POSITION_PANEL_HEIGHT_FULL = Helper.calcCellWidth(80);
 	// Used for positions with no tactics box
@@ -65,28 +58,15 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 	private static SpielerCBItem m_clNullSpieler = new SpielerCBItem("", 0f, null, true);
 
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     private final JComboBox m_jcbPlayer = new JComboBox();
     private final JComboBox m_jcbTactic = new JComboBox();
-
-    /** TODO Missing Parameter Documentation */
     private final JLabel m_jlPosition = new JLabel();
-
-    /** TODO Missing Parameter Documentation */
-
     //Für Minimized
     private final JLabel m_jlPlayer = new JLabel();
     private final SpielerCBItem m_clSelectedPlayer = new SpielerCBItem("", 0f, null, true);
-
-    /** TODO Missing Parameter Documentation */
     private Updateable m_clUpdater;
     private SpielerCBItem[] m_clCBItems = new SpielerCBItem[0];
-
-    /** TODO Missing Parameter Documentation */
     private boolean m_bMinimize;
-
-    /** TODO Missing Parameter Documentation */
     private int m_iPositionID = -1;
 
 	private int playerId = -1;
@@ -99,9 +79,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Creates a new SpielerPositionsPanel object.
-     *
-     * @param updater TODO Missing Constructuor Parameter Documentation
-     * @param positionsID TODO Missing Constructuor Parameter Documentation
      */
     protected PlayerPositionPanel(Updateable updater, int positionsID) {
         this(updater, positionsID, false, false);
@@ -109,11 +86,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Creates a new SpielerPositionsPanel object.
-     *
-     * @param updater TODO Missing Constructuor Parameter Documentation
-     * @param positionsID TODO Missing Constructuor Parameter Documentation
-     * @param print TODO Missing Constructuor Parameter Documentation
-     * @param minimize TODO Missing Constructuor Parameter Documentation
      */
     protected PlayerPositionPanel(Updateable updater, int positionsID, boolean print,
                                  boolean minimize) {
@@ -136,28 +108,13 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Gibt die PositionsID zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected int getPositionsID() {
         return m_iPositionID;
     }
 
-//    /**
-//     * Setzt ein neues Label aus Beschriftung
-//     *
-//     * @param text TODO Missing Constructuor Parameter Documentation
-//     */
-//    public void setPositionsLabel(String text) {
-//        m_jlPosition.setText(text);
-//
-//        repaint();
-//    }
-
     /**
      * Gibt den aktuellen Spieler auf dieser Position zurück, oder null, wenn keiner gewählt wurde
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private Spieler getSelectedPlayer() {
         final Object obj = m_jcbPlayer.getSelectedItem();
@@ -171,18 +128,11 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Gibt die Taktik an
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private byte getTactic() {
         return (byte) ((CBItem) m_jcbTactic.getSelectedItem()).getId();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param event TODO Missing Method Parameter Documentation
-     */
     @Override
 	public void focusGained(FocusEvent event) {
         if (getSelectedPlayer() != null) {
@@ -190,11 +140,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param event TODO Missing Method Parameter Documentation
-     */
     @Override
 	public void focusLost(FocusEvent event) {
         //nix
@@ -202,8 +147,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Erzeugt die Komponenten, Die CB für die Spieler und den Listener nicht vergessen!
-     *
-     * @param aenderbar TODO Missing Constructuor Parameter Documentation
      */
     private void initComponents(boolean aenderbar) {
         final GridBagConstraints constraints = new GridBagConstraints();
@@ -338,8 +281,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Erneuert die Daten in den Komponenten
-     *
-     * @param spieler TODO Missing Constructuor Parameter Documentation
      */
     public void refresh(List<Spieler> spieler) {
         Spieler aktuellerSpieler = null;
@@ -414,9 +355,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Setzt die Liste der möglichen Spieler für diese Position und den aktuell gewählten Spieler
-     *
-     * @param spielerListe TODO Missing Constructuor Parameter Documentation
-     * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
     protected void setSpielerListe(List<Spieler> spielerListe, Spieler aktuellerSpieler) {
         //Listener entfernen
@@ -498,9 +436,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Setzt die aktuelle Taktik
-     *
-     * @param taktik TODO Missing Constructuor Parameter Documentation
-     * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
     private void setTaktik(byte taktik, Spieler aktuellerSpieler) {
         //Listener entfernen
@@ -563,8 +498,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Setzt die Taktik je nach SpielerPosition
-     *
-     * @param aktuellerSpieler TODO Missing Constructuor Parameter Documentation
      */
     private void initTaktik(Spieler aktuellerSpieler) {
         m_jcbTactic.removeAllItems();
@@ -670,11 +603,6 @@ class PlayerPositionPanel extends ImagePanel implements ItemListener, FocusListe
 
     /**
      * Generiert ein SpielerCBItem für einen Spieler
-     *
-     * @param item TODO Missing Constructuor Parameter Documentation
-     * @param spieler TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     private SpielerCBItem createSpielerCBItem(SpielerCBItem item, Spieler spieler) {
         if (spieler != null) {

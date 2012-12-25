@@ -1,10 +1,3 @@
-// %1126721046073:hoplugins.commons.ui.sorter%
-/*
- * Created on 7-apr-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.transfer.ui.sorter;
 
 import javax.swing.table.JTableHeader;
@@ -13,13 +6,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * DOCUMENT ME!
- *
- * @author
- */
 class MouseHandler extends MouseAdapter {
-    /** TODO Missing Parameter Documentation */
     private final AbstractTableSorter sorter;
 
     /**
@@ -33,11 +20,6 @@ class MouseHandler extends MouseAdapter {
         // 
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param e
-     */
     @Override
 	public void mouseClicked(MouseEvent e) {
         JTableHeader h = (JTableHeader) e.getSource();

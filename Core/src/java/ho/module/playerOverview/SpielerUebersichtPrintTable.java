@@ -1,4 +1,3 @@
-// %932302465:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.gui.comp.table.TableSorter;
@@ -7,13 +6,6 @@ import ho.core.gui.model.PlayerOverviewModel;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class SpielerUebersichtPrintTable extends JTable {
 
 	private static final long serialVersionUID = -523733130618224089L;
@@ -41,8 +33,6 @@ public class SpielerUebersichtPrintTable extends JTable {
 
     /**
      * Initialisiert das Model
-     *
-     * @param spaltenreihenfolge TODO Missing Constructuor Parameter Documentation
      */
     private void initModel(int[][] spaltenreihenfolge) {
         setOpaque(false);

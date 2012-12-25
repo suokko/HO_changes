@@ -1,9 +1,6 @@
-// %3874463565:hoplugins.trainingExperience.vo%
 package ho.module.training;
 
-
 import ho.core.model.player.ISkillup;
-
 import java.util.Date;
 
 
@@ -32,75 +29,34 @@ public class PastSkillup implements ISkillup {
     private int value;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document me!
-     *
-     * @param date
-     */
     public void setDate(Date date) {
         this.date = date;
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public Date getDate() {
         return date;
     }
 
-    /**
-     * Document me!
-     *
-     * @param i
-     */
     public void setHtSeason(int i) {
         htSeason = i;
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public int getHtSeason() {
         return htSeason;
     }
 
-    /**
-     * Document me!
-     *
-     * @param i
-     */
     public void setHtWeek(int i) {
         htWeek = i;
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public int getHtWeek() {
         return htWeek;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
     public void setTrainType(int i) {
         trainType = i;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getTrainType() {
         return trainType;
     }

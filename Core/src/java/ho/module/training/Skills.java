@@ -1,13 +1,9 @@
-// %1283121044:hoplugins.trainingExperience.constants%
 package ho.module.training;
 
 import ho.core.constants.TrainingType;
 import ho.core.constants.player.PlayerSkill;
 import ho.core.model.player.Spieler;
-
 import java.awt.Color;
-
-
 
 /**
  * Class that manages all the relation of Skills
@@ -16,14 +12,6 @@ import java.awt.Color;
  */
 public class Skills {
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param position TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static int getSkillAtPosition(int position) {
         switch (position) {
             case 0:

@@ -1,4 +1,3 @@
-// %835133416:hoplugins.trainingExperience.vo%
 package ho.module.training;
 
 /**
@@ -54,7 +53,7 @@ public class TrainWeekEffect {
      * Creates a new TrainWeek object.
      *
      * @param week Training week
-     * @param season TODO Missing Constructuor Parameter Documentation
+     * @param season training season
      * @param beforeHRF HRF id before training update
      * @param afterHRF HRF id after training update
      */
@@ -211,20 +210,10 @@ public class TrainWeekEffect {
         return totalTSI;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param trainingType TODO Missing Method Parameter Documentation
-     */
     public void setTrainingType(int trainingType) {
         this.trainingType = trainingType;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public int getTrainingType() {
         return trainingType;
     }
@@ -255,11 +244,6 @@ public class TrainWeekEffect {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public String toString() {
         StringBuffer buffer = new StringBuffer();

@@ -1,9 +1,3 @@
-// %2316364359:hoplugins.teamAnalyzer.ui%
-/*
- * ManualFilterPanel.java
- *
- * Created on 20 settembre 2004, 16.13
- */
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.db.DBManager;
@@ -147,9 +141,6 @@ public class ManualFilterPanel extends JPanel {
 		TeamAnalyzerPanel.filter.setMatches(list);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void addTableListener() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -177,9 +168,6 @@ public class ManualFilterPanel extends JPanel {
 		});
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void jbInit() {
 		JPanel main = new ImagePanel();
 

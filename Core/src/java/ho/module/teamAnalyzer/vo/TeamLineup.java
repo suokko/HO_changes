@@ -38,20 +38,10 @@ public class TeamLineup {
         return spotLineups.get(spot);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param rating
-     */
     public void setRating(MatchRating rating) {
         this.rating = rating;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public MatchRating getRating() {
         return rating;
     }
@@ -66,20 +56,10 @@ public class TeamLineup {
         spotLineups.put(spot, detail);
     }
 
-    /**
-     * document me!
-     *
-     * @param d
-     */
     public void setStars(double d) {
         stars = d;
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public double getStars() {
         return stars;
     }

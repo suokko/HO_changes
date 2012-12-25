@@ -1,4 +1,3 @@
-// %2863750181:de.hattrickorganizer.gui.lineup%
 package ho.module.lineup;
 
 import ho.core.db.DBManager;
@@ -22,11 +21,6 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-/**
- * TODO Missing Class Documentation
- * 
- * @author TODO Author Name
- */
 public final class AustellungSpielerTable extends JTable implements ho.core.gui.Refreshable,
 		PlayerTable {
 
@@ -53,13 +47,6 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 
 	// ~ Methods
 	// ------------------------------------------------------------------------------------
-
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param spielerid
-	 *            TODO Missing Method Parameter Documentation
-	 */
 	@Override
 	public void setSpieler(int spielerid) {
 		int index = tableSorter.getRow4Spieler(spielerid);
@@ -73,25 +60,16 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 		return this.tableSorter.getSpieler(row);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	@Override
 	public void reInit() {
 		initModel();
 		repaint();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	public void reInitModel() {
 		((LineupTableModel) (this.getSorter()).getModel()).reInitData();
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	@Override
 	public void refresh() {
 		reInitModel();
@@ -100,8 +78,6 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 
 	/**
 	 * Breite der BestPosSpalte zurückgeben
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	protected int getBestPosWidth() {
 		return getColumnModel().getColumn(getColumnModel().getColumnIndex(Integer.valueOf(3)))
@@ -110,8 +86,6 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 
 	/**
 	 * Gibt die Spalte für die Sortierung zurück
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	protected int getSortSpalte() {
 		switch (ho.core.model.UserParameter.instance().standardsortierung) {
@@ -136,20 +110,10 @@ public final class AustellungSpielerTable extends JTable implements ho.core.gui.
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	protected TableSorter getSorter() {
 		return tableSorter;
 	}
 
-	/**
-	 * DOCUMENT ME!
-	 * 
-	 * @return int[spaltenanzahl][2] mit 0=ModelIndex und 1=ViewIndex
-	 */
 	protected int[][] getSpaltenreihenfolge() {
 		final int[][] reihenfolge = new int[tableModel.getColumnCount()][2];
 

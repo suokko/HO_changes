@@ -1,4 +1,3 @@
-// %2903488262:de.hattrickorganizer.gui.print%
 package ho.core.gui.print;
 
 import java.awt.Font;
@@ -6,11 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author Thorsten Schmidt Erzeugt ein Druckpanel mit der Spieleraustellung
- */
 public final class LineUp extends PrintObject {
 	
 	private static final long serialVersionUID = -111352367289407651L;

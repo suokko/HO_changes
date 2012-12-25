@@ -44,57 +44,26 @@ public class SpotLineup extends Report {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document Me!
-     *
-     * @param string
-     */
     public void setName(String string) {
         name = string;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setStatus(int i) {
         status = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getStatus() {
         return status;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param list
-     */
     public void setTactics(List<TacticReport> list) {
         tactics = list;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public List<TacticReport> getTactics() {
         return tactics;
     }

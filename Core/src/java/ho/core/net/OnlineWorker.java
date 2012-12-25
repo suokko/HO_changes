@@ -1,9 +1,3 @@
-// %1507739964:de.hattrickorganizer.gui.utils%
-/*
- * OnlineWorker.java
- *
- * Created on 10. Oktober 2003, 07:53
- */
 package ho.core.net;
 
 import ho.core.db.DBManager;
@@ -64,8 +58,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * DOCUMENT ME!
- * 
  * @author thomas.werth
  */
 public class OnlineWorker {

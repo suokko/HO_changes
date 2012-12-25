@@ -1,27 +1,11 @@
-// %2675225597:de.hattrickorganizer.logik.xml%
-/*
- * XMLArenaParser.java
- *
- * Created on 5. Juni 2004, 15:40
- */
 package ho.core.file.xml;
-
 
 import ho.core.model.News;
 import ho.core.util.HOLogger;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thetom
- */
 public class XMLNewsParser {
     //~ Constructors -------------------------------------------------------------------------------
 

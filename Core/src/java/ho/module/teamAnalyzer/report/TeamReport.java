@@ -44,12 +44,6 @@ public class TeamReport {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public MatchRating getRating() {
         return rating;
     }
@@ -65,11 +59,6 @@ public class TeamReport {
         return spotReports.get(spot);
     }
 
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public double getStars() {
         return averageStars;
     }

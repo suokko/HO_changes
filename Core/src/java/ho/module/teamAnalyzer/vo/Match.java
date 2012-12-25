@@ -104,200 +104,90 @@ public class Match {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setAwayGoals(int i) {
         awayGoals = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getAwayGoals() {
         return awayGoals;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setAwayId(int i) {
         awayId = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getAwayId() {
         return awayId;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param string
-     */
     public void setAwayTeam(String string) {
         awayTeam = string;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public String getAwayTeam() {
         return awayTeam;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setHomeGoals(int i) {
         homeGoals = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getHomeGoals() {
         return homeGoals;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setHomeId(int i) {
         homeId = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getHomeId() {
         return homeId;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param string
-     */
     public void setHomeTeam(String string) {
         homeTeam = string;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public String getHomeTeam() {
         return homeTeam;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param date
-     */
     public void setMatchDate(Date date) {
         matchDate = date;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public Date getMatchDate() {
         return matchDate;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setMatchId(int i) {
         matchId = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getMatchId() {
         return matchId;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setMatchType(MatchType i) {
         matchType = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public MatchType getMatchType() {
         return matchType;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setSeason(int i) {
         season = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getSeason() {
         return season;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setWeek(int i) {
         week = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getWeek() {
         return week;
     }

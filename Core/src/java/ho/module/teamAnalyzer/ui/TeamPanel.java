@@ -1,4 +1,3 @@
-// %924224980:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.comp.panel.RasenPanel;
@@ -24,18 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class TeamPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -4778556838500877114L;
 	private FormationPanel lineupPanel = new FormationPanel();
     private PlayerPanel keeper = new PlayerPanel();
@@ -64,31 +53,15 @@ public class TeamPanel extends JPanel {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public TeamLineupData getMyTeamLineupPanel() {
         return lineupPanel.getMyTeam();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public TeamLineupData getOpponentTeamLineupPanel() {
         return lineupPanel.getOpponentTeam();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void jbInit() {
-        
-
         grassPanel.setLayout(new BorderLayout());
         grassPanel.add(lineupPanel, BorderLayout.CENTER);
         setMyTeam();
@@ -116,13 +89,6 @@ public class TeamPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param lineup
-     * @param week TODO Missing Constructuor Parameter Documentation
-     * @param season TODO Missing Constructuor Parameter Documentation
-     */
     public void reload(TeamLineup lineup, int week, int season) {
         if (lineup != null) {
             lineupPanel.getOpponentTeam().setTeamName(SystemManager.getActiveTeamName() + " ("
@@ -198,9 +164,6 @@ public class TeamPanel extends JPanel {
         grassPanel.repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void setMyTeam() {
         //List<UserTeamPlayerPanel> list = new ArrayList<UserTeamPlayerPanel>();
     	HashMap<Integer, UserTeamPlayerPanel> list = new HashMap<Integer, UserTeamPlayerPanel>();
@@ -266,23 +229,10 @@ public class TeamPanel extends JPanel {
         return " " + name.substring(0, 1) + "." +name.substring(name.indexOf(" ")+1);
     }
     
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param rating TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private int convertRating(double rating) {
         return RatingUtil.getIntValue4Rating(rating);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param panel TODO Missing Method Parameter Documentation
-     * @param playerPanel TODO Missing Method Parameter Documentation
-     */
     private void fillPanel(JPanel panel, PlayerPanel playerPanel) {
         panel.removeAll();
         

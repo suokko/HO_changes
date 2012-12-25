@@ -1,13 +1,9 @@
-// %531033194:de.hattrickorganizer.model%
 package ho.core.training;
 
 import java.sql.Timestamp;
 
 /**
  * New Training Class
- *
- * @author Bernhard To change the template for this generated type comment go to
- *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class TrainingPerWeek  {
     //~ Instance fields ----------------------------------------------------------------------------
@@ -47,129 +43,58 @@ public class TrainingPerWeek  {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setHattrickSeason(int i) {
         _HTSeason = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getHattrickSeason() {
         return _HTSeason;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setHattrickWeek(int i) {
         _HTWeek = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getHattrickWeek() {
         return _HTWeek;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setHrfId(int i) {
         _HRFID = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getHrfId() {
         return _HRFID;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param stamina
-     */
     public final void setStaminaPart(int stamina) {
         this._Stamina = stamina;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public final int getStaminaPart() {
         return this._Stamina;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param intensity
-     */
     public final void setTrainingIntensity(int intensity) {
         this._Intensity = intensity;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public final int getTrainingIntensity() {
         return this._Intensity;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param trType
-     */
     public final void setTrainingType(int trType) {
         this._TrainingType = trType;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public final int getTrainingType() {
         return this._TrainingType;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public final int getWeek() {
         return this._Week;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public final int getYear() {
         return this._Year;
     }

@@ -1,4 +1,3 @@
-// %1590051216:de.hattrickorganizer.gui.model%
 /*
  * MatchPredictionSpieleTableModel.java
  *
@@ -13,37 +12,24 @@ import ho.core.prediction.engine.MatchResult;
 import javax.swing.SwingConstants;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author Pirania
- */
 public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -2114489862284776054L;
-	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
-		{
-			HOVerwaltung.instance().getLanguageString("ls.match.result"),
-			HOVerwaltung.instance().getLanguageString("frequency")};
+	{
+		HOVerwaltung.instance().getLanguageString("ls.match.result"),
+		HOVerwaltung.instance().getLanguageString("frequency")
+	};
 
 	//~ Constructors -------------------------------------------------------------------------------
-
 	/**
 	 * Creates a new MatchPredictionSpieleTableModel object.
-	 *
-	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
 	public MatchScoreDiffTableModel(MatchResult matchresult,boolean ishome) {
 		super(matchresult,ishome);
 	}
 
 	//~ Methods ------------------------------------------------------------------------------------
-
 	/**
 	 * Erzeugt einen Data[][] aus dem Spielervector
 	 */
@@ -81,7 +67,6 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 					SwingConstants.LEFT);
 
 			m_clData[8 - i][1] = getProgressBar(result[i] / number);
-
 		}
 
 		m_clData[4][0] =
@@ -103,14 +88,11 @@ public class MatchScoreDiffTableModel extends AbstractMatchTableModel {
 					SwingConstants.LEFT);
 
 			m_clData[8 - i][1] = getProgressBar(result[i] / number);
-
 		}
-
 	}
 
 	@Override
 	public String[] getColumnNames() {
 		return columnNames;
 	}
-
 }

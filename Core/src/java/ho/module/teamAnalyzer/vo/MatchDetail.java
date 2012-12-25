@@ -46,111 +46,50 @@ public class MatchDetail {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public final List<PlayerPerformance> getPerformances() {
         return playerPerf;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setFormation(String i) {
         formation = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public String getFormation() {
         return formation;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public Match getMatchDetail() {
         return match;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param rating
-     */
     public void setRating(MatchRating rating) {
         this.rating = rating;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public MatchRating getRating() {
         return rating;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setStars(double i) {
         stars = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public double getStars() {
         return stars;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setTacticCode(int i) {
         tacticCode = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getTacticCode() {
         return tacticCode;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setTacticLevel(int i) {
         tacticLevel = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getTacticLevel() {
         return tacticLevel;
     }

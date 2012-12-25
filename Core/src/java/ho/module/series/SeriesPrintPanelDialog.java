@@ -1,4 +1,3 @@
-// %1351448296:de.hattrickorganizer.gui.league%
 package ho.module.series;
 
 import ho.core.gui.print.ComponentPrintObject;
@@ -46,9 +45,6 @@ public class SeriesPrintPanelDialog extends JDialog {
 
 	/**
 	 * Drucken des Spiels
-	 * 
-	 * @param titel
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void doPrint(String titel) {
 		try {
@@ -63,9 +59,6 @@ public class SeriesPrintPanelDialog extends JDialog {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void initComponents() {
 		final GridBagLayout layout = new GridBagLayout();
 		final GridBagConstraints constraints = new GridBagConstraints();
@@ -107,9 +100,6 @@ public class SeriesPrintPanelDialog extends JDialog {
 		getContentPane().add(m_jpSpielPlan2);
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 */
 	private void initValues() {
 		m_jpLigaTabelle.changeSaison();
 		m_jpTabellenverlaufStatistik.changeSaison();

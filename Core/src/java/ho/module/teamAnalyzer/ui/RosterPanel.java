@@ -1,4 +1,3 @@
-// %988591988:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.model.HOVerwaltung;
@@ -21,18 +20,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class RosterPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = -3867854224503291836L;
 	private JTable table;
     private List<PlayerInfo> oldPlayersInfo = new ArrayList<PlayerInfo>();
@@ -64,14 +53,6 @@ public class RosterPanel extends JPanel {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param playerId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public PlayerInfo getPrevious(int playerId) {
         for (Iterator<PlayerInfo> iter = oldPlayersInfo.iterator(); iter.hasNext();) {
             PlayerInfo element = iter.next();
@@ -84,9 +65,6 @@ public class RosterPanel extends JPanel {
         return new PlayerInfo();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void jbInit() {
         Vector<Object> data = new Vector<Object> ();
 

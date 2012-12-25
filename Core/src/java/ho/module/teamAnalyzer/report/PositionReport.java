@@ -31,12 +31,6 @@ public class PositionReport extends Report {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * Document me!
-     *
-     * @return
-     */
     public Collection<TacticReport> getTacticReports() {
         return tacticReports.values();
     }

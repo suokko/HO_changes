@@ -1,26 +1,11 @@
-// %272003758:de.hattrickorganizer.model.matches%
-/*
- * MatchLineupPlayer.java
- *
- * Created on 20. Oktober 2003, 08:55
- */
 package ho.core.model.match;
 
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.SpielerPosition;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class MatchLineupPlayer extends SpielerPosition {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -5986419471284091148L;
     private String m_sNickName = "";
     private String m_sSpielerName = "";

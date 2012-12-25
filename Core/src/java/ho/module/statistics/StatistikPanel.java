@@ -1,4 +1,3 @@
-// %3403723335:de.hattrickorganizer.gui.statistic%
 package ho.module.statistics;
 
 import ho.core.gui.model.StatistikModel;
@@ -92,8 +91,6 @@ public class StatistikPanel extends JPanel {
 
 	/**
 	 * Liefert den Zustand der Beschriftung (an/aus)
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final boolean getBeschriftung() {
 		return beschriftung;
@@ -112,8 +109,6 @@ public class StatistikPanel extends JPanel {
 
 	/**
 	 * Liefert den Zustand der Hilfslinien (an/aus)
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final boolean getHilfslinien() {
 		return hilfslinien;
@@ -130,11 +125,6 @@ public class StatistikPanel extends JPanel {
 
 	/**
 	 * Ein bestimmtes Model holen
-	 * 
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
 	 */
 	public final StatistikModel getModel(String name) {
 		for (int i = 0; (m_clStatistikModel != null) && (m_clStatistikModel.length > i); i++) {
@@ -148,11 +138,6 @@ public class StatistikPanel extends JPanel {
 
 	/**
 	 * Einen bestimmten Graf sichtbar/unsichtbar machen
-	 * 
-	 * @param name
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param show
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void setShow(String name, boolean show) {
 		for (int i = 0; (m_clStatistikModel != null) && (m_clStatistikModel.length > i); i++) {

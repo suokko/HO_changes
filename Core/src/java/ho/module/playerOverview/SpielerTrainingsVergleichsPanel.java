@@ -1,4 +1,3 @@
-// %2054665773:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.datatype.CBItem;
@@ -58,30 +57,17 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static boolean isVergleichsMarkierung() {
         return vergleichsMarkierung;
     }
 
     /**
      * Gibt die Vergleichsspieler zurück
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static Vector<Spieler> getVergleichsSpieler() {
         return vergleichsSpieler;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         final Object[] hrfs = m_jlHRFs.getSelectedValues();
         String text = HOVerwaltung.instance().getLanguageString("ls.button.delete");
@@ -119,16 +105,10 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reInit() {
         loadHRFListe(false);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public void refresh() {
         //nix
     }
@@ -184,11 +164,6 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
 		add(m_jbLoeschen, BorderLayout.SOUTH);
 	}
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param init TODO Missing Method Parameter Documentation
-     */
     private void loadHRFListe(boolean init) {
         final Vector<CBItem> hrfListe = DBManager.instance().getCBItemHRFListe(new Timestamp(0));
 

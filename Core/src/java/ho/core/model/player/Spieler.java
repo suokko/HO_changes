@@ -1,9 +1,3 @@
-// %1607162836:de.hattrickorganizer.model%
-/*
- * Spieler.java
- *
- * Created on 17. März 2003, 15:41
- */
 package ho.core.model.player;
 
 import ho.core.constants.player.PlayerSkill;
@@ -28,12 +22,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public final class Spieler {
     //~ Class fields -------------------------------------------------------------------------------
 

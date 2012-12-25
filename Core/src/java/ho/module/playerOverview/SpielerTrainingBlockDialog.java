@@ -1,4 +1,3 @@
-// %2759382947:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.db.DBManager;
@@ -56,9 +55,6 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 	/**
 	 * Creates a new SpielerTrainingBlockDialog object.
-	 *
-	 * @param owner TODO Missing Constructuor Parameter Documentation
-	 * @param player TODO Missing Constructuor Parameter Documentation
 	 */
 	protected SpielerTrainingBlockDialog(javax.swing.JFrame owner, Spieler player) {
 		super(owner, true);
@@ -185,8 +181,6 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 
 	/**
 	 * Button pressed
-	 *
-	 * @param actionEvent TODO Missing Method Parameter Documentation
 	 */
 	public final void actionPerformed(ActionEvent actionEvent) {
 		if (actionEvent.getSource().equals(m_jbOK)) {
@@ -195,18 +189,7 @@ final class SpielerTrainingBlockDialog extends JDialog implements ActionListener
 				HOLogger.instance().log(getClass(),
 						"Block found from: "+curBlock.getBlockStart().toString()+" to:"+curBlock.getBlockEnd().toString());
 			}
-			// TODO save training blocks
 			saveBlocks();
-			// TODO Re-Calc Subskills
-
-//			DBZugriff.instance().saveSpieler(
-//				HOVerwaltung.instance().getModel().getID(),
-//				HOVerwaltung.instance().getModel().getAllSpieler(),
-//				HOVerwaltung.instance().getModel().getBasics().getDatum());
-
-			//GUI aktualisieren
-//			de.hattrickorganizer.gui.RefreshManager.instance().doReInit();
-
 			setVisible(false);
 			dispose();
 		} else if (actionEvent.getSource().equals(m_jbCancel)) {

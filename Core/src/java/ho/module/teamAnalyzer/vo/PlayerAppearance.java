@@ -23,74 +23,34 @@ public class PlayerAppearance {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getAppearance() {
         return apperarence;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setApperarence(int i) {
         apperarence = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param string
-     */
     public void setName(String string) {
         name = string;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setPlayerId(int i) {
         playerId = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getPlayerId() {
         return playerId;
     }
 
-    /**
-     * Document Me!
-     *
-     * @param i
-     */
     public void setStatus(int i) {
         status = i;
     }
 
-    /**
-     * Document Me!
-     *
-     * @return
-     */
     public int getStatus() {
         return status;
     }

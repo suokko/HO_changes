@@ -20,8 +20,6 @@ import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
-
-
 /**
  * Class that extract data from Database and calculates TrainingWeek and TrainingPoints earned from
  * players
@@ -64,14 +62,6 @@ public class TrainingManager {
         return _WeekManager.getTrainingList();
     }
 
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param inputTrainings TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public List<TrainingPerWeek> refreshTrainingWeeks() {
         return _WeekManager.refreshTrainingList();
     }

@@ -1,10 +1,3 @@
-// %1654063142:hoplugins.teamAnalyzer.ui%
-/*
- * Created on Sep 20, 2004
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.model.BaseTableModel;
@@ -25,14 +18,6 @@ import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author mamato To change the template for this generated type comment go to
- *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 public class TacticPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -54,23 +39,10 @@ public class TacticPanel extends JPanel {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param number TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public String format(double number) {
         return f.format(number);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param list TODO Missing Method Parameter Documentation
-     */
     public void reload(List<TacticReport> list) {
         tableModel = new BaseTableModel(new Vector<Object>(),
                                         new Vector<String>(Arrays.asList(new String[]{
@@ -119,9 +91,6 @@ public class TacticPanel extends JPanel {
         return v;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void jbInit() {
         Vector<Object> data = new Vector<Object>();
 

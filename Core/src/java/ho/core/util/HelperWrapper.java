@@ -1,9 +1,3 @@
-// %2519751489:de.hattrickorganizer.tools%
-/*
- * HelperWrapper.java
- *
- * Created on 29. März 2004, 08:10
- */
 package ho.core.util;
 
 import ho.core.file.xml.XMLMatchdetailsParser;
@@ -19,12 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
-
-
 /**
- * DOCUMENT ME!
- *
  * @author thomas.werth
  */
 public class HelperWrapper {

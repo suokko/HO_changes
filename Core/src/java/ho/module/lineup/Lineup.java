@@ -1,9 +1,3 @@
-// %2598623053:de.hattrickorganizer.model%
-/*
- * Aufstellung.java
- *
- * Created on 20. Mï¿½rz 2003, 14:35
- */
 package ho.module.lineup;
 
 import ho.core.constants.player.PlayerSkill;
@@ -36,7 +30,6 @@ import java.util.Properties;
 import java.util.Vector;
 
 /**
- * DOCUMENT ME!
  * 
  * Blaghaid moves it to a 553 model. Lots of changes. This is the model
  * responsible for holding the lineup used in predictions and other things.

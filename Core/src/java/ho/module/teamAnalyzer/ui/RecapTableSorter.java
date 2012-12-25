@@ -1,4 +1,3 @@
-// %1180046389:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.constants.player.PlayerAbility;
@@ -15,11 +14,6 @@ import javax.swing.table.TableModel;
 
 
 
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class RecapTableSorter extends AbstractTableSorter {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -39,9 +33,6 @@ public class RecapTableSorter extends AbstractTableSorter {
 		}
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3606200720032237171L;
 	private List<String> skills;
 
@@ -49,8 +40,6 @@ public class RecapTableSorter extends AbstractTableSorter {
 
     /**
      * Creates a new RecapTableSorter object.
-     *
-     * @param tableModel TODO Missing Constructuor Parameter Documentation
      */
     public RecapTableSorter(TableModel tableModel) {
         super(tableModel);
@@ -61,13 +50,6 @@ public class RecapTableSorter extends AbstractTableSorter {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param column TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public Comparator<String> getCustomComparator(int column) {
     	if (column == 3) {
@@ -200,21 +182,11 @@ public class RecapTableSorter extends AbstractTableSorter {
         return null;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public boolean hasHeaderLine() {
         return true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public int minSortableColumn() {
         return 3;

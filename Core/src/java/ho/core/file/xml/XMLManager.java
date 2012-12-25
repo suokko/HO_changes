@@ -1,4 +1,3 @@
-// %955353293:de.hattrickorganizer.tools.xml%
 package ho.core.file.xml;
 
 import ho.core.util.HOLogger;
@@ -17,12 +16,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class XMLManager  {
 
     /**

@@ -1,26 +1,9 @@
-// %834608826:de.hattrickorganizer.model.matches%
-/*
- * MatchLineup.java
- *
- * Created on 20. Oktober 2003, 08:47
- */
 package ho.core.model.match;
 
 import ho.core.util.HOLogger;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class MatchLineup {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /////////////////////////////////////////////////////////////////////////////////    
-    //MEMBER
-    ////////////////////////////////////////////////////////////////////////////////
-
     protected int m_iHeimId = -1;
     protected int m_iMatchID = -1;
     protected MatchType m_MatchTyp = MatchType.NONE;

@@ -1,21 +1,9 @@
-// %3690693536:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
 import javax.swing.table.AbstractTableModel;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author Stefan Gawlick/ Volker Fischer
- * @version 0.2a    31.10.2001
- */
 public class VAPTableModel extends AbstractTableModel {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -8731149650305126908L;
 
     private String[] columnNames;

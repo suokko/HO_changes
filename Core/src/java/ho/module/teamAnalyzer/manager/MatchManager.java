@@ -1,4 +1,3 @@
-// %3449686638:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
@@ -20,33 +19,16 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class MatchManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
     private static MatchList matches = null;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static List<Match> getAllMatches() {
         return matches.getMatches();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static List<MatchDetail> getMatchDetails() {
         List<Match> filteredMatches = getSelectedMatches();
         MatchPopulator matchPopulator = new MatchPopulator();
@@ -54,11 +36,6 @@ public class MatchManager {
         return matchPopulator.populate(filteredMatches);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static List<Match> getSelectedMatches() {
         if (matches == null) {
             loadActiveTeamMatchList();
@@ -67,16 +44,10 @@ public class MatchManager {
         return matches.filterMatches(TeamAnalyzerPanel.filter);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void clean() {
         loadActiveTeamMatchList();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void loadActiveTeamMatchList() {
         matches = new MatchList();
 
@@ -89,11 +60,6 @@ public class MatchManager {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private static List<Match> getTeamMatch() {
         List<Match> teamMatches = new ArrayList<Match>();
         String oldName = SystemManager.getActiveTeamName();
@@ -148,11 +114,6 @@ public class MatchManager {
         return teamMatches;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private static SortedSet<Match> loadMatchList() {
         Map<String,Match> matchIds = new HashMap<String,Match>();
 

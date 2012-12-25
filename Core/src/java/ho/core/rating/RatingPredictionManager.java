@@ -247,7 +247,6 @@ public class RatingPredictionManager {
 
     public double applyCommonProps (double inVal, RatingPredictionParameter params, String sectionName) {
     	double retVal = inVal;
-    	// TODO Reihenfolge ok?
         retVal += params.getParam(sectionName, "squareMod", 0) * Math.pow(retVal, 2); // Avoid if possible! 
         retVal += params.getParam(sectionName, "cubeMod", 0) * Math.pow(retVal, 3); // Avoid even more! 
 

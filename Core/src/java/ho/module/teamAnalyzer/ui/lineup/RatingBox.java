@@ -1,4 +1,3 @@
-// %2624369625:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui.lineup;
 
 import ho.core.gui.comp.panel.ImagePanel;
@@ -14,13 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 class RatingBox extends JPanel {
 	private static final long serialVersionUID = 7739872564097601073L;
 

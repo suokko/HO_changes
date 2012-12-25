@@ -1,4 +1,3 @@
-// %1980238621:hoplugins.teamAnalyzer.ui%
 /*
  * Created on 23.10.2005
  */
@@ -20,45 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author <a href="mailto:kenmooda@users.sourceforge.net">Tommi Rautava </a>
- */
 public class PlayerInfoPanel extends JPanel {
     //~ Instance fields ----------------------------------------------------------------------------
-
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 5338615169669058973L;
-
-	/** TODO Missing Parameter Documentation */
     protected JLabel ageLabel = new JLabel("");
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel expLabel = new JLabel("");
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel formLabel = new JLabel("");
-
-    /** TODO Missing Parameter Documentation */
     protected JLabel tsiLabel = new JLabel("");
 
     //~ Constructors -------------------------------------------------------------------------------
 
-    /**
-     *
-     */
     public PlayerInfoPanel() {
         super();
 
-        //this.setOpaque(false);
         this.setLayout(new GridBagLayout());
 
-        //this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         addInfo(HOVerwaltung.instance().getLanguageString("ls.player.age"), ageLabel, 0, 0);
         addInfo(HOVerwaltung.instance().getLanguageString("ls.player.tsi"), tsiLabel, 0, 1);
         addInfo(HOVerwaltung.instance().getLanguageString("ls.player.form"), formLabel, 1, 0);
@@ -67,11 +42,6 @@ public class PlayerInfoPanel extends JPanel {
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param oldPlayer TODO Missing Method Parameter Documentation
-     */
     public void setValue(PlayerInfo oldPlayer) {
         clearData();
         expLabel.setText(PlayerAbility.getNameForSkill(oldPlayer.getExperience(),
@@ -118,8 +88,6 @@ public class PlayerInfoPanel extends JPanel {
     }
 
     /**
-     * DOCUMENT ME!
-     *
      * @param gridx
      * @param gridy
      * @param gridwidth
@@ -146,8 +114,6 @@ public class PlayerInfoPanel extends JPanel {
     }
 
     /**
-     * DOCUMENT ME!
-     *
      * @param title
      * @param label
      * @param x

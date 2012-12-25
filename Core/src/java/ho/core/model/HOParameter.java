@@ -27,8 +27,6 @@ public final class HOParameter extends Configuration {
 	//~ Methods ------------------------------------------------------------------------------------
 
 	/**
-	 * DOCUMENT ME!
-	 *
 	 * @return singelton instance
 	 */
 	public static HOParameter instance() {

@@ -1,17 +1,9 @@
-// %1126721046088:hoplugins.commons.ui.sorter%
-/*
- * Created on 7-apr-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.transfer.ui.sorter;
 
 import java.util.Iterator;
 
 // Helper classes
 class Row implements Comparable<Row> {
-    /** TODO Missing Parameter Documentation */
     private final AbstractTableSorter sorter;
     private int modelIndex;
 
@@ -26,22 +18,10 @@ class Row implements Comparable<Row> {
         this.sorter = sorter;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getModelIndex() {
         return modelIndex;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param o
-     *
-     * @return
-     */
     @SuppressWarnings("unchecked")
 	public int compareTo(Row o) {
         int row1 = modelIndex;

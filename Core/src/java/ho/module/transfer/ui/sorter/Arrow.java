@@ -1,10 +1,3 @@
-// %1126721046026:hoplugins.commons.ui.sorter%
-/*
- * Created on 7-apr-2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package ho.module.transfer.ui.sorter;
 
 import javax.swing.Icon;
@@ -13,11 +6,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
-/**
- * DOCUMENT ME!
- *
- * @author
- */
 class Arrow implements Icon {
     private boolean descending;
     private int priority;
@@ -36,32 +24,14 @@ class Arrow implements Icon {
         this.priority = priority;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getIconHeight() {
         return size;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getIconWidth() {
         return size;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param c
-     * @param g
-     * @param x
-     * @param y
-     */
     public void paintIcon(Component c, Graphics g, int x, int y) {
         Color color = (c == null) ? Color.GRAY : c.getBackground();
 

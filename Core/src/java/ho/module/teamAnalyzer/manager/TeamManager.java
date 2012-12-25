@@ -1,4 +1,3 @@
-// %1705119372:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
@@ -10,7 +9,6 @@ import ho.core.model.series.Paarung;
 import ho.module.matches.SpielePanel;
 import ho.module.series.Spielplan;
 import ho.module.teamAnalyzer.vo.Team;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,13 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class TeamManager {
     //~ Static fields/initializers -----------------------------------------------------------------
 
@@ -33,12 +24,6 @@ public class TeamManager {
     private static boolean updated = false;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static Team getNextCupOpponent() {
         Team team = new Team();
         int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -108,11 +93,6 @@ public class TeamManager {
     	return team;
     }
     
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static Team getNextLeagueOpponent() {
         Spielplan league = getDivisionMatches();
 
@@ -147,37 +127,17 @@ public class TeamManager {
         return getNextQualificationOpponent();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param teamId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static Team getTeam(int teamId) {
         return teams.get(teamId);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param teamId TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static boolean isTeamInList(int teamId) {
         if (teams.get(teamId) != null) {
             return true;
         }
-
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static Collection<Team> getTeams() {
         if (teams == null) {
             teams = new HashMap<Integer, Team>();
@@ -212,22 +172,12 @@ public class TeamManager {
         return teams.values();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static boolean isUpdated() {
         updated = !updated;
 
         return !updated;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param team TODO Missing Method Parameter Documentation
-     */
     public static void addFavouriteTeam(Team team) {
         if (!isTeamInList(team.getTeamId())) {
             teams.put(team.getTeamId(), team);
@@ -236,26 +186,15 @@ public class TeamManager {
         forceUpdate();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void clean() {
         teams = null;
         updated = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void forceUpdate() {
         updated = true;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private static Spielplan getDivisionMatches() {
         Spielplan league = DBManager.instance().getSpielplan(HOVerwaltung.instance().getModel().getXtraDaten()
                                                                    .getLeagueLevelUnitID(),
@@ -265,11 +204,6 @@ public class TeamManager {
         return league;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private static Team getNextQualificationOpponent() {
         Team team = new Team();
         int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
@@ -303,11 +237,6 @@ public class TeamManager {
         return team;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private static List<Team> loadDivisionTeams() {
         List<Team> loadedTeams = new ArrayList<Team>();
         Spielplan league = getDivisionMatches();

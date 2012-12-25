@@ -1,16 +1,8 @@
-// %152637185:de.hattrickorganizer.model%
-/*
- * XtraData.java
- *
- * Created on 8. Mai 2004, 09:57
- */
 package ho.core.model;
 
 import ho.core.util.HOLogger;
 
 /**
- * DOCUMENT ME!
- *
  * @author thetom
  */
 public class XtraData  {

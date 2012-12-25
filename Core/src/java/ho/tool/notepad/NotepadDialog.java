@@ -87,7 +87,6 @@ public class NotepadDialog extends JDialog implements ActionListener{
             }
             textArea.setText(txt.toString());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             HOLogger.instance().log(getClass(),e);
         }
     }

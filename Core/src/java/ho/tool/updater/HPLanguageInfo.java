@@ -1,8 +1,3 @@
-// %3094578472:de.hattrickorganizer.tools.updater%
-/*
- * Created on 21.07.2004
- *
- */
 package ho.tool.updater;
 
 import ho.core.util.HOLogger;
@@ -10,8 +5,6 @@ import ho.core.util.HOLogger;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
-
 
 /**
  * Value-Object about Language-files on hoplugins.de
@@ -23,13 +16,8 @@ import org.w3c.dom.Text;
 final class HPLanguageInfo {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /** TODO Missing Parameter Documentation */
     private static final String TAG_FILE = "datei";
-
-    /** TODO Missing Parameter Documentation */
     private static final String TAG_ID = "lang_id";
-
-    /** TODO Missing Parameter Documentation */
     private static final String TAG_VERSION = "version";
 
     //~ Instance fields ----------------------------------------------------------------------------

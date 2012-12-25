@@ -1,21 +1,7 @@
-// %485179546:de.hattrickorganizer.model.matches%
-/*
- * MatchHighlight.java
- *
- * Created on 9. Januar 2004, 07:58
- */
-
-//package model.matches;
 package ho.core.model.match;
 
 import ho.core.model.HOVerwaltung;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth extended by
- * @author Marco Senn, Tooldesign
- */
 public class MatchHighlight implements ho.core.model.match.IMatchHighlight {
 
     private String m_sEventText = "";

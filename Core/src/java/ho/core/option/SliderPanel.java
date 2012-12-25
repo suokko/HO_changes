@@ -1,4 +1,3 @@
-// %1839835436:de.hattrickorganizer.gui.menu.option%
 package ho.core.option;
 
 
@@ -35,8 +34,6 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
-     * DOCUMENT ME!
-     *
      * @param text Text des Labels
      * @param max Maximaler Wert
      * @param min Minimaler Wert
@@ -54,8 +51,6 @@ public final class SliderPanel extends ImagePanel implements ChangeListener {
     }
 
 	/**
-	 * DOCUMENT ME!
-	 *
 	 * @param text Text des Labels
 	 * @param max Maximaler Wert
 	 * @param min Minimaler Wert

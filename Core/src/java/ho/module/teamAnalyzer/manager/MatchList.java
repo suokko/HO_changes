@@ -1,4 +1,3 @@
-// %2944446152:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.module.teamAnalyzer.ui.TeamAnalyzerPanel;
@@ -9,19 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class MatchList {
     //~ Instance fields ----------------------------------------------------------------------------
-
     private List<Match> matchList;
 
     //~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Creates a new MatchList object.
      */
@@ -30,32 +21,14 @@ public class MatchList {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public List<Match> getMatches() {
         return matchList;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param match TODO Missing Method Parameter Documentation
-     */
     public void addMatch(Match match) {
         matchList.add(match);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param filter TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public List<Match> filterMatches(Filter filter) {
         int counter = 0;
         List<Match> list = new ArrayList<Match>();

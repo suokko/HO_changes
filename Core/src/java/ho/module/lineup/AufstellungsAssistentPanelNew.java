@@ -39,25 +39,21 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isExcludeLastMatch() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isConsiderForm() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isIgnoreSuspended() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public String getGroup() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -68,7 +64,6 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isIdealPositionZuerst() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -79,13 +74,11 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public int getOrder() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isIgnoreInjured() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -96,12 +89,10 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public void addToAssistant(PlayerPositionPanel positionPanel) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public Map<Integer, Boolean> getPositionStatuses() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

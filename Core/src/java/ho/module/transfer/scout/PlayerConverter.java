@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-
 /**
  * Parses a player out of a text copied from HT. Tries also to give error informations but this may
  * be wrong!

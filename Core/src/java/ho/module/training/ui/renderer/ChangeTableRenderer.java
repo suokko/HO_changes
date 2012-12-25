@@ -1,4 +1,3 @@
-// %951755279:hoplugins.trainingExperience.ui.renderer%
 package ho.module.training.ui.renderer;
 
 import ho.core.constants.player.PlayerSkill;
@@ -10,8 +9,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
-
 /**
  * TableCellRenderer for showing arrows representing the amount of change.
  *
@@ -20,11 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class ChangeTableRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -8664774318961127994L;
-	/** TODO Missing Parameter Documentation */
     private static final Color SILVER = new Color(239, 239, 239);
 
     //~ Methods ------------------------------------------------------------------------------------

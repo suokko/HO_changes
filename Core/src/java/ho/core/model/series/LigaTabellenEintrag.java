@@ -1,17 +1,5 @@
-// %902012711:de.hattrickorganizer.model.lineup%
-/*
- * LigaTabellenEintrag.java
- *
- * Created on 7. Oktober 2003, 11:36
- */
 package ho.core.model.series;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class LigaTabellenEintrag  implements Comparable<LigaTabellenEintrag>{
     //~ Instance fields ----------------------------------------------------------------------------
     public static final byte H_SIEG = 1;

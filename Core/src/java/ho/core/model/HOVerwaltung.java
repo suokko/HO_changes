@@ -1,9 +1,3 @@
-// %1206903388:de.hattrickorganizer.model%
-/*
- * HOVerwaltung.java
- *
- * Created on 22. März 2003, 16:31
- */
 package ho.core.model;
 
 import ho.HO;
@@ -26,8 +20,6 @@ import java.util.Properties;
 import java.util.Vector;
 
 /**
- * DOCUMENT ME!
- * 
  * @author tom
  */
 public class HOVerwaltung {

@@ -63,16 +63,6 @@ public class LineupTableModel extends HOTableModel {
 		columns[41] = add[9];
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param row
-	 *            TODO Missing Method Parameter Documentation
-	 * @param col
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	@Override
 	public final boolean isCellEditable(int row, int col) {
 		if (getValueAt(row, col) instanceof Boolean) {
@@ -85,9 +75,6 @@ public class LineupTableModel extends HOTableModel {
 
 	/**
 	 * Listener für die Checkboxen zum Autoaufstellen
-	 * 
-	 * @param zeile
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void setSpielberechtigung() {
 		try {
@@ -112,14 +99,6 @@ public class LineupTableModel extends HOTableModel {
 		}
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param id
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final Spieler getSpieler(int id) {
 		if (id > 0) {
 			for (int i = 0; i < m_vPlayers.size(); i++) {
@@ -134,9 +113,6 @@ public class LineupTableModel extends HOTableModel {
 
 	/**
 	 * Spieler neu setzen
-	 * 
-	 * @param spieler
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void setValues(Vector<Spieler> player) {
 		m_vPlayers = player;
@@ -145,11 +121,6 @@ public class LineupTableModel extends HOTableModel {
 
 	/**
 	 * Fügt der Tabelle einen Spieler hinzu
-	 * 
-	 * @param spieler
-	 *            TODO Missing Constructuor Parameter Documentation
-	 * @param index
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void addSpieler(Spieler player, int index) {
 		m_vPlayers.add(index, player);
@@ -199,9 +170,6 @@ public class LineupTableModel extends HOTableModel {
 
 	/**
 	 * Entfernt den Spieler aus der Tabelle
-	 * 
-	 * @param spieler
-	 *            TODO Missing Constructuor Parameter Documentation
 	 */
 	public final void removeSpieler(Spieler player) {
 		m_vPlayers.remove(player);

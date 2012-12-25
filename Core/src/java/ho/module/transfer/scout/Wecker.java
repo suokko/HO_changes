@@ -1,9 +1,3 @@
-// %2833997336:de.hattrickorganizer.gui.transferscout%
-/*
- * Wecker.java
- *
- * Created on 8. April 2003, 10:14
- */
 package ho.module.transfer.scout;
 
 import ho.core.gui.HOMainFrame;
@@ -11,11 +5,7 @@ import ho.core.gui.HOMainFrame;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-
-
 /**
- * DOCUMENT ME!
- *
  * @author thomas.werth
  */
 class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener {
@@ -28,11 +18,8 @@ class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener
     //~ Constructors -------------------------------------------------------------------------------
     /**
      * Creates a new instance of Wecker
-     *
-     * @param text TODO Missing Constructuor Parameter Documentation
      */
     Wecker(String text) {
-        //javax.swing.JOptionPane temp    =   new javax.swing.JOptionPane( text, javax.swing.JOptionPane.INFORMATION_MESSAGE ) ;
         final JTextArea ta = new JTextArea();
 
         ta.setEditable(false);
@@ -60,12 +47,6 @@ class Wecker extends javax.swing.JFrame implements java.awt.event.ActionListener
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param actionEvent TODO Missing Method Parameter Documentation
-     */
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbOK)) {
             setVisible(false);

@@ -1,4 +1,3 @@
-// %715342267:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.db.DBManager;
@@ -51,8 +50,6 @@ public class PlayerOverviewTable extends JTable implements ho.core.gui.Refreshab
 	}
 
 	/**
-	 * DOCUMENT ME!
-	 * 
 	 * @return int[spaltenanzahl][2] mit 0=ModelIndex und 1=ViewIndex
 	 */
 	public final int[][] getSpaltenreihenfolge() {

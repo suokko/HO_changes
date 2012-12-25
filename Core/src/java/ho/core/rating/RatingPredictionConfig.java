@@ -110,7 +110,6 @@ public class RatingPredictionConfig {
     		} catch (FileNotFoundException e) {
     			HOLogger.instance().error(RatingPredictionConfig.class, "File not found: "+predConfigFile);
     		} catch (Exception e) {
-    			// TODO: handle exception
     			e.printStackTrace();
     		}
     		if (allPredictionNames == null) {

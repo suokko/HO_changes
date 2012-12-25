@@ -1,24 +1,10 @@
-// %2260631617:de.hattrickorganizer.logik.xml%
-/*
- * XMLMenuParser.java
- *
- * Created on 12. März 2004, 07:53
- */
 package ho.core.file.xml;
-
 
 import ho.core.util.HOLogger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class XMLMenuParser {
     //~ Constructors -------------------------------------------------------------------------------
 

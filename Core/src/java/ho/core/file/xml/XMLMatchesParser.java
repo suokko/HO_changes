@@ -1,9 +1,3 @@
-// %3934770789:de.hattrickorganizer.logik.xml%
-/*
- * XMLMAtchesParser.java
- *
- * Created on 23. Oktober 2003, 07:57
- */
 package ho.core.file.xml;
 
 import ho.core.model.match.MatchKurzInfo;
@@ -17,11 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-/**
- * DOCUMENT ME!
- * 
- * @author thomas.werth
- */
 public class XMLMatchesParser {
 
 	/**

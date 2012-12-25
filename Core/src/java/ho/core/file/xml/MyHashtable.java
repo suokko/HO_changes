@@ -8,17 +8,8 @@ package ho.core.file.xml;
 
 import java.util.Hashtable;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class MyHashtable extends Hashtable<String,String> {
     //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -4952614135098302927L;
 
 	/**

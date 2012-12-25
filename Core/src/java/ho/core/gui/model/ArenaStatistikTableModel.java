@@ -1,4 +1,3 @@
-// %534638504:de.hattrickorganizer.gui.model%
 package ho.core.gui.model;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
@@ -19,14 +18,6 @@ import java.text.DateFormat;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author Volker Fischer
- * @version 0.2a    31.10.2001
- */
 public class ArenaStatistikTableModel extends AbstractTableModel {
     //~ Static fields/initializers -----------------------------------------------------------------
 

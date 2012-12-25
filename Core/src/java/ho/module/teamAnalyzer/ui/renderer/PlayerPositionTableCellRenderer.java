@@ -1,40 +1,22 @@
-// %4090885170:hoplugins.teamAnalyzer.ui.renderer%
 package ho.module.teamAnalyzer.ui.renderer;
 
 import ho.core.gui.theme.ImageUtilities;
 import ho.core.model.player.SpielerPosition;
 import ho.core.util.HelperWrapper;
-
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author Tommi Rautava &lt;kenmooda
- *
- * @users.sourceforge.net&gt;
- */
 public class PlayerPositionTableCellRenderer extends DefaultTableCellRenderer {
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     private static final long serialVersionUID = 3258412837305923127L;
     private static Map<Object,ImageIcon> map;
 
 
     //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-     *
-     */
     public PlayerPositionTableCellRenderer() {
         super();
 

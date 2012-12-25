@@ -1,9 +1,3 @@
-// %743607116:de.hattrickorganizer.model%
-/*
- * SpielerPosition.java
- *
- * Created on 20. März 2003, 10:21
- */
 package ho.core.model.player;
 
 import ho.core.datatype.CBItem;
@@ -15,12 +9,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class SpielerPosition implements java.io.Serializable, Comparable<ISpielerPosition>,
 		ho.core.model.player.ISpielerPosition {
 
@@ -525,17 +513,6 @@ public class SpielerPosition implements java.io.Serializable, Comparable<ISpiele
 	public final void setId(int m_iId) {
 		this.m_iId = m_iId;
 	}
-
-	/**
-	 * Setter for property m_bPosition.
-	 *
-	 * @return TODO Missing Return Method Documentation
-	 */
-
-	/*
-	 * public void setPosition (byte m_bPosition) { this.m_bPosition =
-	 * m_bPosition; }
-	 */
 
 	/**
 	 * Getter for property m_iId.

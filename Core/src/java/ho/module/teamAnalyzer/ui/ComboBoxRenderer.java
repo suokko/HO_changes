@@ -1,28 +1,15 @@
-// %1117338229:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
 import ho.core.gui.theme.HOColorName;
 import ho.core.gui.theme.ThemeManager;
 import ho.module.teamAnalyzer.SystemManager;
 import ho.module.teamAnalyzer.vo.Team;
-
 import java.awt.Component;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class ComboBoxRenderer extends DefaultListCellRenderer {
     //~ Constructors -------------------------------------------------------------------------------
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -3551665867069804794L;
 
 	/**

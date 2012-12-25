@@ -94,14 +94,6 @@ public class LoddarStatsCalculator {
 		this.leftAttackRating = leftAttackRating;
 	}
 
-	/**
-	 * TODO Missing Method Documentation
-	 * 
-	 * @param x
-	 *            TODO Missing Method Parameter Documentation
-	 * 
-	 * @return TODO Missing Return Method Documentation
-	 */
 	public final float HQ(double x) {
 		// first convert to original HT rating (1...80)
 		float htRating = (float) Lineup.HTfloat2int(x);

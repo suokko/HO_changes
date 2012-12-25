@@ -1,4 +1,3 @@
-// %3018375595:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.db.DBManager;
@@ -16,42 +15,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class MatchPopulator {
     //~ Static fields/initializers -----------------------------------------------------------------
-
     private static List<MatchDetail> analyzedMatch = new ArrayList<MatchDetail>();
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static List<MatchDetail> getAnalyzedMatch() {
         return analyzedMatch;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void clean() {
         analyzedMatch = new ArrayList<MatchDetail>();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matches TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public List<MatchDetail> populate(List<Match> matches) {
         List<MatchDetail> list = new ArrayList<MatchDetail>();
 
@@ -77,13 +53,6 @@ public class MatchPopulator {
         return list;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param aMatchDetail TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private int getTacticLevel(Matchdetails aMatchDetail) {
         if (isHome(aMatchDetail)) {
             return aMatchDetail.getHomeTacticSkill();
@@ -92,13 +61,6 @@ public class MatchPopulator {
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param aMatchDetail TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private int getTacticType(Matchdetails aMatchDetail) {
         if (isHome(aMatchDetail)) {
             return aMatchDetail.getHomeTacticType();
@@ -138,13 +100,6 @@ public class MatchPopulator {
         return mr;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param aMatch TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private MatchDetail populateMatch(Match aMatch) {
     	Matchdetails tmpMatch = DBManager.instance().getMatchDetails(aMatch.getMatchId());
 

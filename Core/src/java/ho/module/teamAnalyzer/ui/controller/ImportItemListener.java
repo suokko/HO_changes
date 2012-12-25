@@ -1,10 +1,8 @@
-// %3047457688:hoplugins.teamAnalyzer.ui.controller%
 package ho.module.teamAnalyzer.ui.controller;
 
 import ho.module.teamAnalyzer.ht.HattrickManager;
 import ho.module.teamAnalyzer.manager.TeamManager;
 import ho.module.teamAnalyzer.vo.Team;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -25,12 +23,6 @@ public class ImportItemListener implements ActionListener {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param arg0 TODO Missing Method Parameter Documentation
-     */
     public void actionPerformed(ActionEvent arg0) {
         for (Iterator<Team> iter = TeamManager.getTeams().iterator(); iter.hasNext();) {
             Team element = iter.next();

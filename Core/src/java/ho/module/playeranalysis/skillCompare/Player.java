@@ -1,18 +1,9 @@
-/*
- * Created on 29.08.2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package ho.module.playeranalysis.skillCompare;
 
 import ho.core.model.player.ISpielerPosition;
 import ho.core.model.player.Spieler;
 /**
  * @author KickMuck
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Player
 {

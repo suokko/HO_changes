@@ -31,8 +31,6 @@ public final class MiscModule extends DefaultModule {
 	}
 
 	public void addMenus() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

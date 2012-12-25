@@ -1,4 +1,3 @@
-// %2129436708:de.hattrickorganizer.gui.menu.option%
 package ho.core.option;
 
 
@@ -29,8 +28,6 @@ class ComboBoxPanel extends ImagePanel {
     //~ Constructors -------------------------------------------------------------------------------
 
     /**
-     * DOCUMENT ME!
-     *
      * @param text Text des Labels
      * @param items Einträge in der ComboBox
      * @param textbreite Breite, die für das Label vorgesehen ist.

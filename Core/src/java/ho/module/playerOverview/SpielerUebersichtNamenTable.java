@@ -1,4 +1,3 @@
-// %733429640:de.hattrickorganizer.gui.playeroverview%
 package ho.module.playerOverview;
 
 import ho.core.gui.RefreshManager;
@@ -10,11 +9,6 @@ import ho.core.model.player.Spieler;
 
 import javax.swing.JTable;
 
-/**
- * TODO Missing Class Documentation
- * 
- * @author TODO Author Name
- */
 public class SpielerUebersichtNamenTable extends JTable implements Refreshable, PlayerTable {
 
 	private static final long serialVersionUID = -7686660400379157142L;

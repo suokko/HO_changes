@@ -1,22 +1,9 @@
-// %97209093:de.hattrickorganizer.model.lineup%
-/*
- * LigaTabelle.java
- *
- * Created on 7. Oktober 2003, 11:35
- */
 package ho.core.model.series;
-
 
 import ho.core.util.Helper;
 
 import java.util.Vector;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class LigaTabelle  {
     //~ Instance fields ----------------------------------------------------------------------------
     protected String m_sLigaLandName = "";

@@ -1,20 +1,7 @@
-// %1301392466:de.hattrickorganizer.logik%
-/*
- * ScoutThread.java
- *
- * Created on 8. April 2003, 10:49
- */
 package ho.module.transfer.scout;
 
 import java.util.Vector;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class ScoutThread implements Runnable {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -25,18 +12,12 @@ public class ScoutThread implements Runnable {
 
     /**
      * Creates a new instance of ScoutThread
-     *
-     * @param scouts TODO Missing Constructuor Parameter Documentation
      */
     public ScoutThread(Vector<ScoutEintrag> scouts) {
         m_vScoutEintraege = new Vector<ScoutEintrag>(scouts);
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void run() {
         ho.module.transfer.scout.ScoutEintrag se = null;
         final java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
@@ -89,10 +70,6 @@ public class ScoutThread implements Runnable {
 
     /**
      * startet einen Scout
-     *
-     * @param scouts TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public static ScoutThread start(Vector<ScoutEintrag> scouts) {
         final ScoutThread temp = new ScoutThread(scouts);
@@ -101,21 +78,7 @@ public class ScoutThread implements Runnable {
 
         return temp;
     }
-
-    /*
-       public void addEintrag( model.ScoutEintrag se )
-       {
-           if ( !m_vScoutEintraege.contains ( se ) )
-           {
-               m_vScoutEintraege.addElement ( se );
-           }
-       }
-    
-       public void removeEintrag( model.ScoutEintrag se )
-       {
-           m_vScoutEintraege.removeElement ( se );
-       }
-     */
+ 
     public final void setVector(Vector<ScoutEintrag> vec) {
         m_vScoutEintraege = vec;
     }

@@ -1,17 +1,9 @@
-// %1125186933:de.hattrickorganizer.logik.matchengine.engine.common%
 package ho.core.prediction.engine;
 
 import ho.core.model.match.IMatchDetails;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class Action implements  Comparable<Object> {
     //~ Instance fields ----------------------------------------------------------------------------
-
     private boolean homeTeam;
     private boolean score;
     private int area;
@@ -19,84 +11,38 @@ public class Action implements  Comparable<Object> {
     private int type;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setArea(int i) {
         area = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getArea() {
         return area;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param b TODO Missing Method Parameter Documentation
-     */
     public final void setHomeTeam(boolean b) {
         homeTeam = b;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isHomeTeam() {
         return homeTeam;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setMinute(int i) {
         minute = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getMinute() {
         return minute;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param b TODO Missing Method Parameter Documentation
-     */
     public final void setScore(boolean b) {
         score = b;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final boolean isScore() {
         return score;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final String getShortDesc() {
         final StringBuffer buffer = new StringBuffer();
 
@@ -126,31 +72,14 @@ public class Action implements  Comparable<Object> {
         return buffer.toString();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param i TODO Missing Method Parameter Documentation
-     */
     public final void setType(int i) {
         type = i;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int getType() {
         return type;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param o TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final int compareTo(Object o) {
         if (o instanceof Action) {
             final Action action = (Action) o;

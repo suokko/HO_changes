@@ -1,4 +1,3 @@
-// %3549957018:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.model.HOVerwaltung;
@@ -10,7 +9,6 @@ import ho.module.teamAnalyzer.report.TeamReport;
 import ho.module.teamAnalyzer.vo.PlayerAppearance;
 import ho.module.teamAnalyzer.vo.SpotLineup;
 import ho.module.teamAnalyzer.vo.TeamLineup;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,14 +17,6 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class TeamLineupBuilder {
     //~ Instance fields ----------------------------------------------------------------------------
 
@@ -36,8 +26,6 @@ public class TeamLineupBuilder {
 
     /**
      * Creates a new TeamLineupBuilder object.
-     *
-     * @param teamReport TODO Missing Constructuor Parameter Documentation
      */
     public TeamLineupBuilder(TeamReport teamReport) {
         teamLineup = new TeamLineup();
@@ -57,23 +45,10 @@ public class TeamLineupBuilder {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public TeamLineup getLineup() {
         return teamLineup;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param positions TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private Collection<TacticReport> getAllTactics(Collection<PositionReport> positions) {
         Collection<TacticReport> tactics = new ArrayList<TacticReport>();
 
@@ -86,13 +61,6 @@ public class TeamLineupBuilder {
         return tactics;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param collection TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private PlayerAppearance getPlayer(Collection<PlayerAppearance> collection) {
         PlayerAppearance[] appearances = getSortedAppearance(collection);
 
@@ -120,13 +88,6 @@ public class TeamLineupBuilder {
         return app;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tacticsReport TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private int getPosition(TacticReport[] tacticsReport) {
         if (isSingle(tacticsReport)) {
             return tacticsReport[0].getTacticCode();
@@ -139,13 +100,6 @@ public class TeamLineupBuilder {
         return -1;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tacticsReport TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private boolean isSingle(TacticReport[] tacticsReport) {
         if (tacticsReport.length == 1) {
             return true;
@@ -158,13 +112,6 @@ public class TeamLineupBuilder {
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param appearance TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private PlayerAppearance[] getSortedAppearance(Collection<PlayerAppearance> appearance) {
         SortedSet<PlayerAppearance> sorted = getSortedSet(appearance, new AppearanceComparator());
         int size = sorted.size();
@@ -190,13 +137,6 @@ public class TeamLineupBuilder {
 
         return set;
     }
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param tactics TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private TacticReport[] getSortedTactics(Collection<TacticReport> tactics) {
         SortedSet<TacticReport> sorted = getSortedSet(tactics, new PerformanceComparator());
         int size = sorted.size();
@@ -213,13 +153,6 @@ public class TeamLineupBuilder {
         return tacticsReport;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spotReport TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private SpotLineup buildSpotLineup(SpotReport spotReport) {
         SpotLineup spotLineup = new SpotLineup(spotReport);
 

@@ -347,8 +347,6 @@ public final class UserParameter extends Configuration {
     //~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * DOCUMENT ME!
-     *
      * @return singelton instance
      */
     public static UserParameter instance() {

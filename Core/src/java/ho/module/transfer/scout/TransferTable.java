@@ -1,4 +1,3 @@
-// %1101944701:de.hattrickorganizer.gui.transferscout%
 package ho.module.transfer.scout;
 
 import ho.core.db.DBManager;
@@ -8,16 +7,8 @@ import ho.core.gui.comp.renderer.HODefaultTableCellRenderer;
 import ho.core.gui.comp.table.TableSorter;
 import ho.core.gui.comp.table.ToolTipHeader;
 import ho.core.util.Helper;
-
 import javax.swing.JTable;
 
-
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class TransferTable extends JTable implements Refreshable {
 	
 	private static final long serialVersionUID = 5687881326217263261L;
@@ -46,17 +37,11 @@ public class TransferTable extends JTable implements Refreshable {
         return ((TransferTableModel) ((TableSorter) this.getModel()).getModel());
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void reInit() {
         initModel();
         repaint();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public final void refresh() {
         initModel();
         repaint();

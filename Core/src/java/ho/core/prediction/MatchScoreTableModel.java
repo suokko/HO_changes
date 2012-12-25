@@ -1,31 +1,13 @@
-// %1590051216:de.hattrickorganizer.gui.model%
-/*
- * MatchPredictionSpieleTableModel.java
- *
- * Created on 4. Januar 2005, 13:19
- */
 package ho.core.prediction;
 
 import ho.core.gui.comp.entry.ColorLabelEntry;
 import ho.core.model.HOVerwaltung;
 import ho.core.prediction.engine.MatchResult;
-
 import javax.swing.SwingConstants;
 
-
-/**
- * DOCUMENT ME!
- *
- * @author Pirania
- */
 public class MatchScoreTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2007343001155380888L;
-	/** TODO Missing Parameter Documentation */
 	protected static String[] columnNames =
 		{
 			HOVerwaltung.instance().getLanguageString("Tore"),
@@ -36,8 +18,6 @@ public class MatchScoreTableModel extends AbstractMatchTableModel {
 
 	/**
 	 * Creates a new MatchPredictionSpieleTableModel object.
-	 *
-	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
 	public MatchScoreTableModel(MatchResult matchResult,boolean ishome ) {
 		super(matchResult,ishome);

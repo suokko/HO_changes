@@ -1,4 +1,3 @@
-// %3860311605:hoplugins.teamAnalyzer.manager%
 package ho.module.teamAnalyzer.manager;
 
 import ho.core.module.config.ModuleConfig;
@@ -13,28 +12,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-/**
- * TODO Missing Class Documentation
- *
- * @author TODO Author Name
- */
 public class ReportManager {
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    /** TODO Missing Parameter Documentation */
     public static TeamLineup lineup;
     private static List<MatchDetail> matchDetails;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param gameNumber TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static TeamLineup getLineup(int gameNumber) {
         TeamReport report = new TeamReport();
         int i = 1;
@@ -56,20 +39,10 @@ public class ReportManager {
         return builder.getLineup();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public static TeamLineup getLineup() {
         return lineup;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param matchDetails TODO Missing Method Parameter Documentation
-     */
     public static void buildReport(List<?> matchDetails) {
         TeamReport report = new TeamReport();
 
@@ -92,9 +65,6 @@ public class ReportManager {
         matchDetails = new ArrayList<MatchDetail>();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     public static void updateReport() {
         matchDetails = MatchManager.getMatchDetails();
 
@@ -107,9 +77,6 @@ public class ReportManager {
         updateFilteredMatches();
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private static void updateFilteredMatches() {
         List<String> filterList = new ArrayList<String>();
 

@@ -1,4 +1,3 @@
-// %2438288672:hoplugins.trainingExperience.ui%
 /*
  * Created on 14.10.2005
  */
@@ -23,25 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author <a href="mailto:kenmooda@users.sourceforge.net">Tommi Rautava </a>
- */
 public class TrainingLegendPanel extends JPanel {
     //~ Constructors -------------------------------------------------------------------------------
-
-    //    /** TODO Missing Parameter Documentation */
-    //    static final Color GREEN = new Color(0, 140, 0);
-    //
-    //    /** TODO Missing Parameter Documentation */
-    //    static final Color LIGHT_GREEN = new Color(40, 155, 40);
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 7019803928403346886L;
 
 	/**
@@ -86,14 +68,6 @@ public class TrainingLegendPanel extends JPanel {
         return new JLabel(title, icon, SwingConstants.LEFT);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param skill
-     * @param count TODO Missing Constructuor Parameter Documentation
-     *
-     * @return icon
-     */
     public static final Icon getSkillupTypeIcon(int skill, int count) {
         Color color = Skills.getSkillColor(skill);
 
@@ -120,22 +94,12 @@ public class TrainingLegendPanel extends JPanel {
         return new ImageIcon(image);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param image
-     * @param oldColor
-     * @param newColor
-     *
-     * @return Image
-     */
     public static Image ReplaceImageColor(Image image, Color oldColor, Color newColor) {
         FilteredImageSource filteredimagesource = new FilteredImageSource(image.getSource(),
                                                                           ((new ColorReplaceFilter(oldColor,
                                                                                                                                 newColor,
                                                                                                                                 null))));
 
-        //Color.WHITE))));
         return Toolkit.getDefaultToolkit().createImage(((filteredimagesource)));
     }
 
@@ -146,27 +110,14 @@ public class TrainingLegendPanel extends JPanel {
      */
     public static final class ColorReplaceFilter extends RGBImageFilter {
         //~ Instance fields ------------------------------------------------------------------------
-
-        /** TODO Missing Parameter Documentation */
         boolean transparency = false;
-
-        /** TODO Missing Parameter Documentation */
         int newColor = 0;
-
-        /** TODO Missing Parameter Documentation */
         int oldColor = 0;
-
-        /** TODO Missing Parameter Documentation */
         int transparentColor = 0;
 
         //~ Constructors ---------------------------------------------------------------------------
-
         /**
          * Creates a new ColorReplaceFilter object.
-         *
-         * @param oldColor TODO Missing Constructuor Parameter Documentation
-         * @param newColor TODO Missing Constructuor Parameter Documentation
-         * @param transparentColor TODO Missing Constructuor Parameter Documentation
          */
         ColorReplaceFilter(Color oldColor, Color newColor, Color transparentColor) {
             this.oldColor = oldColor.getRGB();
@@ -179,16 +130,6 @@ public class TrainingLegendPanel extends JPanel {
         }
 
         //~ Methods --------------------------------------------------------------------------------
-
-        /**
-         * TODO Missing Method Documentation
-         *
-         * @param x TODO Missing Method Parameter Documentation
-         * @param y TODO Missing Method Parameter Documentation
-         * @param rgb TODO Missing Method Parameter Documentation
-         *
-         * @return TODO Missing Return Method Documentation
-         */
         @Override
 		public int filterRGB(int x, int y, int rgb) {
             if (transparency && ((rgb | 0xff000000) == transparentColor)) {

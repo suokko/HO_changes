@@ -1,4 +1,3 @@
-// %1590051216:de.hattrickorganizer.gui.model%
 /*
  * MatchPredictionSpieleTableModel.java
  *
@@ -17,31 +16,17 @@ import java.awt.Color;
 
 import javax.swing.SwingConstants;
 
-/**
- * DOCUMENT ME!
- *
- * @author Pirania
- */
 public class MatchResultTableModel extends AbstractMatchTableModel {
 	//~ Instance fields ----------------------------------------------------------------------------
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 5568369952809628251L;
-	/** TODO Missing Parameter Documentation */
 	public final static String[] columnNames = {
 		HOVerwaltung.instance().getLanguageString("ls.match.result"),
 		HOVerwaltung.instance().getLanguageString("frequency"),
 		"" };
 
-
 	//~ Constructors -------------------------------------------------------------------------------
-
 	/**
 	 * Creates a new MatchPredictionSpieleTableModel object.
-	 *
-	 * @param vErgebnisse TODO Missing Constructuor Parameter Documentation
 	 */
 	public MatchResultTableModel(MatchResult matchresults,boolean isHome) {
 		super(matchresults,isHome);

@@ -1,31 +1,15 @@
-// %1695323697:de.hattrickorganizer.model%
-/*
- * FormulaFactors.java
- *
- * Created on 17. März 2003, 15:31
- */
 package ho.core.model;
 
 import ho.core.file.xml.XMLManager;
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
-
 import java.io.File;
 import java.util.Date;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class FormulaFactors {
     //~ Static fields/initializers -----------------------------------------------------------------
 

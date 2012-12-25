@@ -1,19 +1,8 @@
-// %745634183:de.hattrickorganizer.model%
-/*
- * FactorObject.java
- *
- * Created on 18. März 2003, 07:44
- */
 package ho.core.model;
 
 import ho.core.model.player.ISpielerPosition;
 import ho.core.util.HOLogger;
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public final class FactorObject {
     //~ Instance fields ----------------------------------------------------------------------------
 

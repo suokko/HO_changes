@@ -22,30 +22,14 @@ public class Team {
     private java.sql.Timestamp time;
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param string
-     */
     public void setName(String string) {
         name = string;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param i
-     */
     public void setTeamId(int i) {
         teamId = i;
     }
@@ -54,11 +38,6 @@ public class Team {
         time = t;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return
-     */
     public int getTeamId() {
         return teamId;
     }

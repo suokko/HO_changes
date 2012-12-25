@@ -1,9 +1,3 @@
-// %1210291755:de.hattrickorganizer.logik.xml%
-/*
- * xmlTabelleParser.java
- *
- * Created on 7. Oktober 2003, 11:32
- */
 package ho.core.file.xml;
 
 import ho.core.model.series.LigaTabelle;
@@ -14,13 +8,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
-
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class XMLTabelleParser {
     //~ Constructors -------------------------------------------------------------------------------
 

@@ -164,8 +164,6 @@ public class HTCalendar {
 
     /**
      * Sets the season correction factor for the local league.
-     *
-     * @param correction TODO Missing Constructuor Parameter Documentation
      */
     public void setSeasonCorrection(int correction) {
         this.seasonCorrection = correction;

@@ -1,7 +1,5 @@
-// %4038744218:hoplugins.teamAnalyzer.ui%
 package ho.module.teamAnalyzer.ui;
 
-//import ho.module.teamAnalyzer.SystemManager;
 import ho.core.constants.player.PlayerAbility;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
@@ -36,16 +34,8 @@ import javax.swing.ScrollPaneConstants;
 
 public class RecapPanel extends JPanel {
     //~ Static fields/initializers -----------------------------------------------------------------
-
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 486150690031160261L;
-
-	/** TODO Missing Parameter Documentation */
     public static final String VALUE_NA = "---"; //$NON-NLS-1$
-
-    /** TODO Missing Parameter Documentation */
     private static final String GOALS_SPACE = " - "; //$NON-NLS-1$
 
     //~ Instance fields ----------------------------------------------------------------------------
@@ -88,19 +78,12 @@ public class RecapPanel extends JPanel {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param lineup TODO Missing Method Parameter Documentation
-     */
     public void reload(TeamLineup lineup) {
         // Empty model
         while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
 
-        // table.updateUI();
         MatchRating averageRating = null;
         double stars = 0;
 
@@ -114,14 +97,14 @@ public class RecapPanel extends JPanel {
 
         if (list.size() > 1) {
             rowData = new Vector<Object>();
-            rowData.add(HOVerwaltung.instance().getLanguageString("Durchschnitt")); //$NON-NLS-1$
+            rowData.add(HOVerwaltung.instance().getLanguageString("Durchschnitt"));
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
             rowData.add(VALUE_NA);
             setRating(rowData, averageRating);
 
-            DecimalFormat df = new DecimalFormat("###.#"); //$NON-NLS-1$
+            DecimalFormat df = new DecimalFormat("###.#");
 
             rowData.add(df.format(stars));
             if(averageRating!=null) {
@@ -253,11 +236,6 @@ public class RecapPanel extends JPanel {
         setColumnInvisible(21);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param col TODO Missing Method Parameter Documentation
-     */
     private void setColumnInvisible(int col) {
         table.getTableHeader().getColumnModel().getColumn(col).setWidth(0);
         table.getTableHeader().getColumnModel().getColumn(col).setPreferredWidth(0);
@@ -265,12 +243,6 @@ public class RecapPanel extends JPanel {
         table.getTableHeader().getColumnModel().getColumn(col).setMinWidth(0);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param col TODO Missing Method Parameter Documentation
-     * @param width TODO Missing Method Parameter Documentation
-     */
     private void setColumnWidth(int col, int width) {
         table.getTableHeader().getColumnModel().getColumn(col).setWidth(width);
         table.getTableHeader().getColumnModel().getColumn(col).setPreferredWidth(width);
@@ -278,12 +250,6 @@ public class RecapPanel extends JPanel {
         table.getTableHeader().getColumnModel().getColumn(col).setMinWidth(0);
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param row TODO Missing Method Parameter Documentation
-     * @param rating TODO Missing Method Parameter Documentation
-     */
     private void setRating(Vector<Object> row, MatchRating rating) {
         if (rating == null) {
             for (int i = 0; i < 7; i++) {
@@ -302,22 +268,12 @@ public class RecapPanel extends JPanel {
         row.add(getRating((int) rating.getLeftAttack()));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param rating TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     private String getRating(int rating) {
         return RatingUtil.getRating(rating,
         		ModuleConfig.instance().getBoolean(SystemManager.ISNUMERICRATING),
         		ModuleConfig.instance().getBoolean(SystemManager.ISDESCRIPTIONRATING));
     }
 
-    /**
-     * TODO Missing Method Documentation
-     */
     private void jbInit() {
         Vector<Object> data = new Vector<Object>();
 

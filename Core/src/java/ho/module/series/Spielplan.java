@@ -1,9 +1,3 @@
-// %2477782368:de.hattrickorganizer.model.matchlist%
-/*
- * Spielplan.java
- *
- * Created on 7. Oktober 2003, 12:23
- */
 package ho.module.series;
 
 import ho.core.model.series.LigaTabelle;
@@ -18,41 +12,19 @@ import java.sql.Timestamp;
 import java.util.Vector;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author thomas.werth
- */
 public class Spielplan  {
     //~ Instance fields ----------------------------------------------------------------------------
 
     /*LigaTabellen Member für Schnellzugriff nach Berechnung*/
-
-    /** TODO Missing Parameter Documentation */
     protected LigaTabelle m_clTabelle;
-
-    /** TODO Missing Parameter Documentation */
     protected String m_sLigaName = "";
-
-    /** TODO Missing Parameter Documentation */
     protected Tabellenverlauf m_clVerlauf;
-
-    /** TODO Missing Parameter Documentation */
     protected Timestamp m_clFetchDate;
-
-    /** TODO Missing Parameter Documentation */
     protected Vector<Paarung> m_vEintraege = new Vector<Paarung>();
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iLigaId = -1;
-
-    /** TODO Missing Parameter Documentation */
     protected int m_iSaison = -1;
-
     //~ Constructors -------------------------------------------------------------------------------
-
     //In DB immer nur ein einzigen Eintrag zu Spielplan pro Saison halten da alte Daten immer enthalten bleiben in neuem Plan
-
     /**
      * Creates a new instance of Spielplan
      */
@@ -60,12 +32,6 @@ public class Spielplan  {
     }
 
     //~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     public final Vector<Paarung> getEintraege() {
         return m_vEintraege;
     }
@@ -126,10 +92,6 @@ public class Spielplan  {
 
     /**
      * liefert die Spiele zu einem Spieltag
-     *
-     * @param spieltag TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Vector<Paarung> getPaarungenBySpieltag(int spieltag) {
         final Vector<Paarung> spiele = new Vector<Paarung>();
@@ -152,10 +114,6 @@ public class Spielplan  {
 
     /**
      * liefert die Spiele eines bestimmten Teams, sortiert nach Spieltagen
-     *
-     * @param id TODO Missing Constructuor Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
      */
     public final Paarung[] getPaarungenByTeamId(int id) {
         Paarung tmp = null;
@@ -223,24 +181,12 @@ public class Spielplan  {
         return m_clVerlauf;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param spiel TODO Missing Method Parameter Documentation
-     */
     public final void addEintrag(Paarung spiel) {
         if ((spiel != null) && (!m_vEintraege.contains(spiel))) {
             m_vEintraege.add(spiel);
         }
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @param o TODO Missing Method Parameter Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final boolean equals(Object o) {
         if (o instanceof Spielplan) {
@@ -253,11 +199,6 @@ public class Spielplan  {
         return false;
     }
 
-    /**
-     * TODO Missing Method Documentation
-     *
-     * @return TODO Missing Return Method Documentation
-     */
     @Override
 	public final String toString() {
         return ho.core.model.HOVerwaltung.instance().getLanguageString("Season")
@@ -268,8 +209,6 @@ public class Spielplan  {
 
     /**
      * berechnet die Positionierung vom SPieltag zuvor
-     *
-     * @param tabelle TODO Missing Constructuor Parameter Documentation
      */
     protected final void berechneAltePositionen(LigaTabelle tabelle) {
         LigaTabelle compare = null;
@@ -303,8 +242,6 @@ public class Spielplan  {
      * berechnet die Tabelle anhand des Spielplans
      *
      * @param maxSpieltag gibt an bis zu welchem Spieltag gerechnet werden soll (inklusive)
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final LigaTabelle berechneTabelle(int maxSpieltag) {
         final LigaTabelle tmp = new LigaTabelle();
@@ -336,14 +273,7 @@ public class Spielplan  {
 
     /**
      * Erstellt einen TabellenEintrag aus den Spielen eines Vereins
-     *
-     * @param spiele TODO Missing Constructuor Parameter Documentation
-     * @param teamId TODO Missing Constructuor Parameter Documentation
-     * @param name TODO Missing Constructuor Parameter Documentation
-     * @param maxSpieltag gibt an bis zu welchem Spieltag die Tabelle berechnet werden soll ( 1-14
-     *        )
-     *
-     * @return TODO Missing Return Method Documentation
+     * @param maxSpieltag gibt an bis zu welchem Spieltag die Tabelle berechnet werden soll ( 1-14 )
      */
     protected final LigaTabellenEintrag berechneTabellenEintrag(Paarung[] spiele, int teamId,
                                                                 String name, int maxSpieltag) {
@@ -467,8 +397,6 @@ public class Spielplan  {
 
     /**
      * erzeugt den Tabellenverlauf
-     *
-     * @return TODO Missing Return Method Documentation
      */
     protected final Tabellenverlauf generateTabellenVerlauf() {
         int spieltag = -1;

@@ -83,7 +83,6 @@ public class RatingPredictionParameter  {
 			} catch (FileNotFoundException e) {
 				HOLogger.instance().error(RatingPredictionConfig.class, "File not found: " + newFilename);
 			} catch (Exception e) {
-				// TODO: handle exception
 				HOLogger.instance().error(RatingPredictionConfig.class, e);
 			}
 		}

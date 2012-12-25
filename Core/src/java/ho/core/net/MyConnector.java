@@ -1,9 +1,3 @@
-// %1308103607:de.hattrickorganizer.net%
-/*
- * MyConnector.java
- *
- * Created on 7. April 2003, 09:36
- */
 package ho.core.net;
 
 import ho.HO;
@@ -58,8 +52,6 @@ import org.w3c.dom.Document;
 import sun.misc.BASE64Encoder;
 
 /**
- * DOCUMENT ME!
- * 
  * @author thomas.werth
  */
 public class MyConnector {
