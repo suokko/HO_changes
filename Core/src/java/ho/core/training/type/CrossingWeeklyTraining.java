@@ -25,7 +25,7 @@ public class CrossingWeeklyTraining extends WeeklyTrainingType {
 				ISpielerPosition.rightInnerMidfield, ISpielerPosition.leftForward, 
 				ISpielerPosition.centralForward, ISpielerPosition.rightForward};
 		_PrimaryTrainingBaseLength = (float) 2.2;
-		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_PLAYMAKING; // 100%
+		_PrimaryTrainingSkillBaseLength = _PrimaryTrainingBaseLength + UserParameter.instance().TRAINING_OFFSET_WINGER; // 100%
 		_PrimaryTrainingSkillSecondaryLengthRate = (float) 2; // 50%
 	}
 	public static WeeklyTrainingType instance() {
