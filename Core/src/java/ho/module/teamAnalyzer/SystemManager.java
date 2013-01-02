@@ -191,7 +191,10 @@ public class SystemManager {
      * Update the UI
      */
     public static void updateUI() {
-        plugin.reload();
-
+        if (plugin != null) {
+        	// plugin is null if options are visited before team analyzer is accessed (lazy loading).
+        	// And the options calls this function after modification.
+        	plugin.reload();
+        }
     }
 }
