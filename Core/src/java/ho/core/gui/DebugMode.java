@@ -19,7 +19,8 @@ public class DebugMode {
 		menu.add(getSQLDialogMenuItem());
 		menu.add(getLookAndFeelDialogMenuItem());
 		menu.add(getSaveXMLMenuItem());
-		menu.add(getPlayerHistoryMenuItem());	
+		menu.add(getPlayerHistoryMenuItem());
+		menu.add(getMatchStatisticsMenuItem());
 		return menu;
 	}
 	
@@ -68,7 +69,18 @@ public class DebugMode {
 			}
 		});
 		return newItem;
-		
 	}
+
+	private static JMenuItem getMatchStatisticsMenuItem() {
+		JMenuItem newItem = new JMenuItem("Match Minutes");
+		newItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new ho.core.model.match.StatisticsTestFrame().setVisible(true);
+			}
+		});
+		return newItem;
+	}
+	
 	
 }
