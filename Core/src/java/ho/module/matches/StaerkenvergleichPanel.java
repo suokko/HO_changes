@@ -119,10 +119,16 @@ class StaerkenvergleichPanel extends LazyImagePanel {
 		}
 
 		if (info.getMatchStatus() == MatchKurzInfo.FINISHED) {
-			heimTeamToreLabel.setText(info.getHeimTore() + " (" + details.getHomeHalfTimeGoals()
-					+ ") ");
-			gastTeamToreLabel.setText(info.getGastTore() + " (" + details.getGuestHalfTimeGoals()
-					+ ") ");
+			
+			if (details.getHomeHalfTimeGoals() >= 0) {
+				heimTeamToreLabel.setText(info.getHeimTore() + " (" + details.getHomeHalfTimeGoals()
+						+ ") ");
+				gastTeamToreLabel.setText(info.getGastTore() + " (" + details.getGuestHalfTimeGoals()
+						+ ") ");
+			} else {
+				heimTeamToreLabel.setText(String.valueOf(info.getHeimTore()));
+				gastTeamToreLabel.setText(String.valueOf(info.getGastTore()));
+			}
 
 			String name4matchtyp = info.getMatchTyp().getName();
 			if ((details.getZuschauer() <= 0) && (info.getMatchTyp() != MatchType.TOURNAMENTGROUP)
