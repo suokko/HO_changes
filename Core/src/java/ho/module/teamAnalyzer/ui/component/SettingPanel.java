@@ -112,7 +112,8 @@ public class SettingPanel extends JPanel {
      */
     private void initListeners() {
         numberRating.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                     if (numberRating.isSelected() || descRating.isSelected()) {
                     	config.setBoolean(SystemManager.ISNUMERICRATING,numberRating.isSelected());
                         SystemManager.updateUI();
@@ -123,7 +124,8 @@ public class SettingPanel extends JPanel {
             });
 
         descRating.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                     if (numberRating.isSelected() || descRating.isSelected()) {
                     	config.setBoolean(SystemManager.ISDESCRIPTIONRATING,descRating.isSelected());
                         SystemManager.updateUI();
@@ -134,21 +136,24 @@ public class SettingPanel extends JPanel {
             });
 
         stars.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSTARS,stars.isSelected());
                     SystemManager.updateUI();
 
                 }
             });
         totalStrength.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISTOTALSTRENGTH,totalStrength.isSelected());
                     SystemManager.updateUI();
 
                 }
             });
         checkName.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISCHECKTEAMNAME,checkName.isSelected());
                     SystemManager.updateUI();
 
@@ -156,14 +161,16 @@ public class SettingPanel extends JPanel {
             });
 
         squad.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSQUAD,squad.isSelected());
                     SystemManager.updateUI();
 
                 }
             });
         smartSquad.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSMARTSQUAD,smartSquad.isSelected());
                     SystemManager.updateUI();
 
@@ -171,7 +178,8 @@ public class SettingPanel extends JPanel {
             });
 
         loddarStats.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISLODDARSTATS,loddarStats.isSelected());
                     SystemManager.updateUI();
 
@@ -179,33 +187,38 @@ public class SettingPanel extends JPanel {
             });
 
         myLineup.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISLINEUP,myLineup.isSelected());
                     SystemManager.updateUI();
                 }
             });
 
         tacticDetail.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISTACTICDETAIL,tacticDetail.isSelected());
                     SystemManager.updateUI();
                 }
             });
 
         unavailable.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSHOWUNAVAILABLE,unavailable.isSelected());
                     SystemManager.updateUI();
                 }
             });
         playerInfo.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISSHOWPLAYERINFO,playerInfo.isSelected());
                     SystemManager.updateUI();
                 }
             });
         mixedLineup.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                @Override
+				public void actionPerformed(ActionEvent e) {
                 	config.setBoolean(SystemManager.ISMIXEDLINEUP,mixedLineup.isSelected());
                     SystemManager.updateUI();
                 }
