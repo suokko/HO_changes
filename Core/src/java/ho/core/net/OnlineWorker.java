@@ -614,11 +614,19 @@ public class OnlineWorker {
 
 		// penalty takers
 		List<SpielerPosition> shooters = lineup.getPenaltyTakers();
+		
+		int penshooters = 0;
 		for (SpielerPosition pos : shooters) {
 			orders.append(',').append("{\"id\":\"").append(pos.getSpielerId());
-			orders.append("\" , \"behaviour\":\"0\"}");
+			orders.append("\",\"behaviour\":\"0\"}");
+			penshooters++;
 		}
-
+		// Always give 11 shooters. There is a CHPP error if the number given is not 0 or 11. 
+		for (int i = 0 ; i < 11-penshooters; i++) {
+			orders.append(',').append("{\"id\":\"0");
+			orders.append("\",\"behaviour\":\"0\"}");
+		}
+		
 		orders.append("], \"settings\":{\"tactic\": \"").append(lineup.getTacticType());
 		orders.append("\",\"speechLevel\":\"").append(lineup.getAttitude());
 		orders.append("\", \"newLineup\":\"\"},");
