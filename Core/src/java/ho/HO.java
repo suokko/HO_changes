@@ -9,18 +9,14 @@ import ho.core.gui.model.UserColumnController;
 import ho.core.gui.theme.ThemeManager;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.UserParameter;
-import ho.core.net.MyConnector;
 import ho.core.training.TrainingManager;
 import ho.core.util.ExceptionHandler;
 import ho.core.util.HOLogger;
 import ho.core.util.IOUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Timestamp;
-
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -50,12 +46,6 @@ public class HO {
 	 */
 	public static final int SPRACHVERSION = 2;
 	private static int revision = 0;
-	/**
-	 * After that date, the user gets a nag screen if he starts his old HO
-	 * version, set to empty string for no warning (DEVELOPMENT versions do not
-	 * show the nag screen)
-	 */
-	private static final String WARN_DATE = "2012-06-30 00:00:00.0";
 	/**
 	 * Is this a development version? Note that a "development" version can a
 	 * release ("Beta" or "DEV" version). The DEVELOPMENT flag is used by the
@@ -120,18 +110,6 @@ public class HO {
 			}
 		} catch (Exception ex) {
 			HOLogger.instance().log(HO.class, ex);
-		}
-
-		// Check if this HO version is (soft) expired
-		if (!DEVELOPMENT && WARN_DATE != null && WARN_DATE.length() > 0) {
-			final Timestamp datum = new Timestamp(System.currentTimeMillis());
-
-			if (datum.after(Timestamp.valueOf(WARN_DATE))) {
-				JOptionPane.showMessageDialog(null,
-						"Your HO version is very old!\nPlease download a new version at "
-								+ MyConnector.getHOSite(), "Update strongly recommended",
-						JOptionPane.WARNING_MESSAGE);
-			}
 		}
 
 		// Startbild
