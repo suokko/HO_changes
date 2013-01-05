@@ -4,6 +4,7 @@ package ho.core.util;
 
 import ho.core.constants.player.PlayerAbility;
 import ho.core.datatype.CBItem;
+import ho.core.datatype.ComboItem;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.match.Weather;
 import ho.core.model.player.ISpielerPosition;
@@ -210,7 +211,7 @@ public class Helper {
         final javax.swing.ComboBoxModel model = combobox.getModel();
 
         for (int i = 0; i < model.getSize(); i++) {
-            if (((CBItem) (model.getElementAt(i))).getId() == id) {
+            if (((ComboItem) (model.getElementAt(i))).getId() == id) {
                 combobox.setSelectedItem(model.getElementAt(i));
                 break;
             }

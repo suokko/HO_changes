@@ -4,44 +4,41 @@ package ho.core.datatype;
  * @author thomas.werth
  * @version
  */
-public class CBItem {
-    //~ Instance fields ----------------------------------------------------------------------------
+public class CBItem implements ComboItem {
 
-    private String m_sText;
-    private int m_iId;
+	private String m_sText;
+	private int m_iId;
 
-    //~ Constructors -------------------------------------------------------------------------------
+	public CBItem(String text, int id) {
+		m_sText = text;
+		m_iId = id;
+	}
 
-    public CBItem(String text, int id) {
-        m_sText = text;
-        m_iId = id;
-    }
+	@Override
+	public final int getId() {
+		return m_iId;
+	}
 
-    //~ Methods ------------------------------------------------------------------------------------
+	@Override
+	public final String getText() {
+		return m_sText;
+	}
 
-    public final int getId() {
-        return m_iId;
-    }
-
-    public final String getText() {
-        return m_sText;
-    }
-
-    @Override
+	@Override
 	public final boolean equals(Object obj) {
-        if (obj instanceof CBItem) {
-            final CBItem temp = (CBItem) obj;
+		if (obj instanceof CBItem) {
+			final CBItem temp = (CBItem) obj;
 
-            if (this.getId() == temp.getId()) {
-                return true;
-            }
-        }
+			if (this.getId() == temp.getId()) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
+	@Override
 	public final String toString() {
-        return m_sText;
-    }
+		return m_sText;
+	}
 }
