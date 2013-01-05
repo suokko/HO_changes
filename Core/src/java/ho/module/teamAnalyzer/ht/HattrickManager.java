@@ -6,7 +6,6 @@ import ho.core.file.xml.XMLManager;
 import ho.core.model.match.MatchKurzInfo;
 import ho.core.net.MyConnector;
 import ho.core.net.OnlineWorker;
-import ho.core.util.HOLogger;
 import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.Filter;
 import ho.module.teamAnalyzer.vo.Match;
@@ -193,17 +192,6 @@ public class HattrickManager {
                            .getNodeValue();
         return value;
     }
-
-    /**
-     * Log to HOLogger.
-     */
-	public final static void log(String message) {
-		try {
-			HOLogger.instance().log(HattrickManager.class, message);
-		} catch (Exception e) {
-			System.out.println(HattrickManager.class + " - Error during log(): " + e);
-		}
-	}
 	
 	   /**
      * Check if CHPP rules approve download for a match
@@ -221,15 +209,4 @@ public class HattrickManager {
     	return true;
     }
 
-    /**
-     * Return the week number from week and season, used for CHPP compatibility
-     *
-     * @param season
-     * @param week
-     *
-     * @return
-     */
-    private static int getWeekNumber(int season, int week) {
-        return ((season - 1) * 16) + week;
-    }
 }
