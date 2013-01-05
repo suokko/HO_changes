@@ -44,7 +44,7 @@ public class PlayerInfoPanel extends JPanel {
 		ageLabel.setText("" + oldPlayer.getAge());
 		formLabel.setText(PlayerAbility.getNameForSkill(oldPlayer.getForm(), false));
 
-		PlayerInfo actual = PlayerDataManager.getPlayerInfo(oldPlayer.getPlayerId());
+		PlayerInfo actual = PlayerDataManager.getLatestPlayerInfo(oldPlayer.getPlayerId());
 
 		if (actual.getForm() == 0) {
 			return;

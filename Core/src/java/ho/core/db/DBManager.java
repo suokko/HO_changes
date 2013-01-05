@@ -1547,12 +1547,8 @@ public class DBManager {
 				season);
 	}
 
-	public PlayerInfo getTAPlayerInfo(int playerId) {
-		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPlayerInfo(playerId);
-	}
-
-	public PlayerInfo getTAPreviousPlayerInfo(int playerId) {
-		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getPreviousPlayeInfo(playerId);
+	public PlayerInfo getTALatestPlayerInfo(int playerId) {
+		return ((TAPlayerTable) getTable(TAPlayerTable.TABLENAME)).getLatestPlayerInfo(playerId);
 	}
 
 	public void addTAPlayerInfo(PlayerInfo info) {

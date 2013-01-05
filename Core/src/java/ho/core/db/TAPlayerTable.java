@@ -1,13 +1,11 @@
 package ho.core.db;
 
-import ho.core.model.UserParameter;
-import ho.core.util.HTCalendarFactory;
+import ho.module.teamAnalyzer.manager.PlayerDataManager;
 import ho.module.teamAnalyzer.vo.PlayerInfo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Calendar;
 
 /**
  * The Table UserConfiguration contain all User properties. CONFIG_KEY = Primary
@@ -80,7 +78,7 @@ final class TAPlayerTable extends AbstractTable {
 	 * 
 	 * @return a numeric code
 	 */
-	PlayerInfo getPlayerInfo(int playerId) {
+	PlayerInfo getLatestPlayerInfo(int playerId) {
 		ResultSet rs = DBManager
 				.instance()
 				.getAdapter()
@@ -93,32 +91,6 @@ final class TAPlayerTable extends AbstractTable {
 				int season = week / 16;
 				int wk = week % 16;
 				return getPlayerInfo(playerId, wk, season);
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-
-		return new PlayerInfo();
-	}
-
-	PlayerInfo getPreviousPlayeInfo(int playerId) {
-		ResultSet rs = DBManager
-				.instance()
-				.getAdapter()
-				.executeQuery(
-						"SELECT WEEK FROM " + TABLENAME + " WHERE" + " PLAYERID=" + playerId
-								+ " ORDER BY WEEK DESC LIMIT 2");
-
-		try {
-			if (rs.next()) {
-				/* Take second week only */
-				rs.next();
-				if (rs.next()) {
-					int week = rs.getInt(1);
-					int season = week / 16;
-					int wk = week % 16;
-					return getPlayerInfo(playerId, wk, season);
-				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -141,7 +113,7 @@ final class TAPlayerTable extends AbstractTable {
 								+ info.getPlayerId() + ", " + info.getStatus() + " , "
 								+ info.getSpecialEvent() + ", " + info.getTSI() + ", "
 								+ info.getForm() + ", " + info.getAge() + ", "
-								+ info.getExperience() + ", " + getCurrentWeekNumber() + ")");
+								+ info.getExperience() + ", " + PlayerDataManager.getCurrentWeekNumber() + ")");
 	}
 
 	void updatePlayer(PlayerInfo info) {
@@ -154,28 +126,12 @@ final class TAPlayerTable extends AbstractTable {
 								+ +info.getForm() + " , AGE=" + info.getAge() + " , EXPERIENCE="
 								+ info.getExperience() + " , STATUS=" + info.getStatus()
 								+ " where PLAYERID=" + info.getPlayerId() + " and WEEK="
-								+ getCurrentWeekNumber());
-	}
-
-	private Integer getCurrentHTSeason() {
-		Calendar date = Calendar.getInstance();
-		date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-		return HTCalendarFactory.getHTSeason(date.getTime());
-	}
-
-	private Integer getCurrentHTWeek() {
-		Calendar date = Calendar.getInstance();
-		date.add(Calendar.HOUR, UserParameter.instance().TimeZoneDifference);
-		return HTCalendarFactory.getHTWeek(date.getTime());
-	}
-
-	private int getCurrentWeekNumber() {
-		return getCurrentHTWeek() + (getCurrentHTSeason() * 16);
+								+ PlayerDataManager.getCurrentWeekNumber());
 	}
 
 	void deleteOldPlayers() {
 		adapter.executeUpdate("DELETE FROM " + TABLENAME + " WHERE WEEK<"
-				+ (getCurrentWeekNumber() - 10));
+				+ (PlayerDataManager.getCurrentWeekNumber() - 10));
 	}
 
 }
