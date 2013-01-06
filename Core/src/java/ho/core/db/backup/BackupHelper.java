@@ -6,6 +6,7 @@ import ho.core.file.ExampleFileFilter;
 import ho.core.util.HOLogger;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Calendar;
 
 /**
@@ -23,8 +24,14 @@ public class BackupHelper {
 	public static void backup(File dbDirectory) {
 		Calendar now = Calendar.getInstance();
 
-		if (!dbDirectory.exists())
+		if (!dbDirectory.exists()) {
 			return;
+		}
+
+		File[] filesToBackup = getFilesToBackup(dbDirectory);
+		if (filesToBackup.length == 0) {
+			return;
+		}
 
 		HOZip zOut = null;
 		try {
@@ -32,13 +39,8 @@ public class BackupHelper {
 					+ "-" + now.get(Calendar.YEAR) + "-" + (now.get(Calendar.MONTH) + 1) + "-"
 					+ now.get(Calendar.DAY_OF_MONTH) + ".zip");
 
-			File[] files = dbDirectory.listFiles();
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].getName().endsWith(".script") || files[i].getName().endsWith(".data")
-						|| files[i].getName().endsWith(".backup")
-						|| files[i].getName().endsWith(".properties")) {
-					zOut.addFile(files[i]);
-				}
+			for (File file : filesToBackup) {
+				zOut.addFile(file);
 			}
 
 			zOut.closeArchive();
@@ -70,6 +72,18 @@ public class BackupHelper {
 			if (toDelete != null)
 				toDelete.delete();
 		}
+	}
+
+	private static File[] getFilesToBackup(File dbDirectory) {
+		return dbDirectory.listFiles(new FileFilter() {
+
+			@Override
+			public boolean accept(File file) {
+				String name = file.getName();
+				return (name.endsWith(".script") || name.endsWith(".data")
+						|| name.endsWith(".backup") || name.endsWith(".properties"));
+			}
+		});
 	}
 
 }
