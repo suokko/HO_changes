@@ -19,8 +19,6 @@ import javax.swing.event.ChangeListener;
  * Alle weiteren Optionen, die Keine Formeln sind
  */
 public final class SonstigeOptionenPanel extends ImagePanel implements ChangeListener, ItemListener {
-	// ~ Static fields/initializers
-	// -----------------------------------------------------------------
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,10 +59,6 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 			new CBItem("+17:00", 17), new CBItem("+18:00", 18), new CBItem("+19:00", 19), new CBItem("+20:00", 20),
 			new CBItem("+21:00", 21), new CBItem("+22:00", 22), new CBItem("+23:00", 23), new CBItem("+24:00", 24), };
 
-	// ~ Instance fields
-	// ----------------------------------------------------------------------------
-
-	// Nicht Statik, da es sonst zu früh initialisiert wird
 	public CBItem[] SORTIERUNG = { new CBItem(HOVerwaltung.instance().getLanguageString("ls.player.name"), ho.core.model.UserParameter.SORT_NAME),
 			new CBItem(HOVerwaltung.instance().getLanguageString("BestePosition"), ho.core.model.UserParameter.SORT_BESTPOS),
 			new CBItem(HOVerwaltung.instance().getLanguageString("Aufgestellt"), ho.core.model.UserParameter.SORT_AUFGESTELLT),
@@ -77,21 +71,12 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 	private ComboBoxPanel m_jcbSprachdatei;
 	private ComboBoxPanel m_jcbTimeZoneDifference;
 	private ComboBoxPanel m_jcbWaehrung;
-	// private JCheckBox m_jchEinzelnePositionen;
-	// private JCheckBox m_jchLogout;
-	// private JCheckBox m_jchShowSaveDialog;
-	// private JCheckBox m_jchUpdateCheck;
 	private JCheckBox m_jchZahlenBewertung;
-
-	// private ComboBoxPanel m_jcbHTIP = null;
 	private SliderPanel m_jslDeadline;
 	private SliderPanel m_jslMinStaerke;
 	private SliderPanel m_jslSchriftgroesse;
 	private SliderPanel m_jslWetterEffekt;
 	private SliderPanel m_jslFutureWeeks;
-
-	// ~ Constructors
-	// -------------------------------------------------------------------------------
 
 	/**
 	 * Creates a new SonstigeOptionenPanel object.
@@ -100,10 +85,6 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		initComponents();
 	}
 
-	// ~ Methods
-	// ------------------------------------------------------------------------------------
-
-	// -------
 	public static float getFaktorGeld4WaehrungsID(int id) {
 		for (int i = 0; i < SonstigeOptionenPanel.WAEHRUNGEN.length; i++) {
 			if (id == SonstigeOptionenPanel.WAEHRUNGEN[i].getId()) {
@@ -115,6 +96,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		return 1.0f;
 	}
 
+	@Override
 	public final void itemStateChanged(ItemEvent itemEvent) {
 		// Kein Selected Event!
 		ho.core.model.UserParameter.temp().zahlenFuerSkill = m_jchZahlenBewertung.isSelected();
@@ -137,6 +119,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		}
 	}
 
+	@Override
 	public final void stateChanged(ChangeEvent changeEvent) {
 		ho.core.model.UserParameter.temp().deadlineFrist = (int) m_jslDeadline.getValue();
 		ho.core.model.UserParameter.temp().MinIdealPosStk = m_jslMinStaerke.getValue();
@@ -183,7 +166,7 @@ public final class SonstigeOptionenPanel extends ImagePanel implements ChangeLis
 		m_jslFutureWeeks.addChangeListener(this);
 		add(m_jslFutureWeeks);
 
-		m_jslSchriftgroesse = new SliderPanel(HOVerwaltung.instance().getLanguageString("Schriftgroesse"), 12, 8, 1, 1.0f, 120);
+		m_jslSchriftgroesse = new SliderPanel(HOVerwaltung.instance().getLanguageString("Schriftgroesse"), 16, 8, 1, 1.0f, 120);
 		m_jslSchriftgroesse.setToolTipText(HOVerwaltung.instance().getLanguageString("tt_Optionen_Schriftgroesse"));
 		m_jslSchriftgroesse.setValue(ho.core.model.UserParameter.temp().schriftGroesse);
 		m_jslSchriftgroesse.addChangeListener(this);
