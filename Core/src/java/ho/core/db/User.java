@@ -5,7 +5,9 @@ import ho.core.util.HOLogger;
 import ho.tool.updater.UpdateHelper;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class User {
 
 	private static List<User> users = null;
 	private static final String FILENAME = "user.xml";
+	private static final String ENCODING = "UTF-8";
 	public static int INDEX = 0;
 	private String driver = "org.hsqldb.jdbcDriver";
 	private String name = "singleUser";
@@ -77,7 +80,7 @@ public class User {
 		users = new ArrayList<User>();
 
 		if (file.exists()) {
-			Document doc = UpdateHelper.getDocument(file);
+			Document doc = UpdateHelper.getDocument(file, ENCODING);
 			parseFile(doc.getChildNodes());
 		} else {
 			users.add(new User());
@@ -109,26 +112,28 @@ public class User {
 			if (!file.exists()) {
 				file.createNewFile();
 			}
+			
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+				    new FileOutputStream(file), ENCODING));
 
-			FileWriter fileWriter = new FileWriter(file, false);
-			fileWriter.write("<?xml version='1.0' encoding='ISO-8859-1' ?>" + "\r\n");
-			fileWriter.write("<HoUsers>\r\n");
+			writer.println("<?xml version='1.0' encoding='" + ENCODING + "' ?>");
+			writer.println("<HoUsers>");
 
 			for (int i = 0; i < users.size(); i++) {
 				User user = users.get(i);
-				fileWriter.write(" <User>\r\n");
-				fileWriter.write("   <Name>" + user.name + "</Name>\r\n");
-				fileWriter.write("   <Url>" + user.url + "</Url>\r\n");
-				fileWriter.write("   <User>" + user.user + "</User>\r\n");
-				fileWriter.write("   <Password>" + user.pwd + "</Password>\r\n");
-				fileWriter.write("   <Driver>" + user.driver + "</Driver>\r\n");
-				fileWriter.write("   <BackupLevel>" + user.backupLevel + "</BackupLevel>\r\n");
-				fileWriter.write(" </User>\r\n");
+				writer.println(" <User>");
+				writer.println("   <Name>" + user.name + "</Name>");
+				writer.println("   <Url>" + user.url + "</Url>");
+				writer.println("   <User>" + user.user + "</User>");
+				writer.println("   <Password>" + user.pwd + "</Password>");
+				writer.println("   <Driver>" + user.driver + "</Driver>");
+				writer.println("   <BackupLevel>" + user.backupLevel + "</BackupLevel>");
+				writer.println(" </User>");
 			}
 
-			fileWriter.write("</HoUsers>");
-			fileWriter.flush();
-			fileWriter.close();
+			writer.println("</HoUsers>");
+			writer.flush();
+			writer.close();
 		} catch (Exception e) {
 			HOLogger.instance().log(User.class, e);
 		}
