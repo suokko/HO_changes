@@ -194,7 +194,7 @@ class PlayersTableModel extends AbstractTableModel {
 
 		@Override
 		public String toString() {
-			return PlayerAgreeability.toString(_player.getAnsehen()) + " (" + _player.getAnsehen()
+			return PlayerAgreeability.toString(_player.getCharakter()) + " (" + _player.getCharakter()
 					+ ")";
 		}
 
@@ -203,9 +203,9 @@ class PlayersTableModel extends AbstractTableModel {
 			Spieler p1 = _player;
 			Spieler p2 = o2._player;
 
-			if (p1.getAnsehen() == p2.getAnsehen())
+			if (p1.getCharakter() == p2.getCharakter())
 				return 0;
-			return p1.getAnsehen() < p2.getAnsehen() ? -1 : 1;
+			return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
 		}
 	}
 
@@ -222,7 +222,7 @@ class PlayersTableModel extends AbstractTableModel {
 
 		@Override
 		public String toString() {
-			return PlayerHonesty.toString(_player.getCharakter()) + " (" + _player.getCharakter()
+			return PlayerHonesty.toString(_player.getAnsehen()) + " (" + _player.getAnsehen()
 					+ ")";
 		}
 
@@ -231,9 +231,9 @@ class PlayersTableModel extends AbstractTableModel {
 			Spieler p1 = _player;
 			Spieler p2 = o2._player;
 
-			if (p1.getCharakter() == p2.getCharakter())
+			if (p1.getAnsehen() == p2.getAnsehen())
 				return 0;
-			return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
+			return p1.getAnsehen() < p2.getAnsehen() ? -1 : 1;
 		}
 	}
 
@@ -257,7 +257,7 @@ class PlayersTableModel extends AbstractTableModel {
 			Spieler player = (Spieler) players.get(row);
 
 			int id = player.getSpielerID();
-
+			
 			data[row][COL_NAME] = player.getName();
 			data[row][COL_ID] = new Integer(id);
 			data[row][COL_AGGRESSIVITY] = new Aggressive(player);
