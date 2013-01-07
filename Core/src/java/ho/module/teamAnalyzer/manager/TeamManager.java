@@ -18,271 +18,269 @@ import java.util.List;
 import java.util.Map;
 
 public class TeamManager {
-    //~ Static fields/initializers -----------------------------------------------------------------
 
-    private static Map<Integer, Team> teams = null;
-    private static boolean updated = false;
+	private static Map<Integer, Team> teams;
+	private static boolean updated = false;
 
-    //~ Methods ------------------------------------------------------------------------------------
-    public static Team getNextCupOpponent() {
-        Team team = new Team();
-        int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        MatchKurzInfo[] cupMatches =DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                            SpielePanel.NUR_EIGENE_POKALSPIELE,
-                                                                            false);
-        MatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                                 SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE,
-                                                                                 false);
-        List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
+	public static Team getNextCupOpponent() {
+		Team team = new Team();
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] cupMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+				SpielePanel.NUR_EIGENE_POKALSPIELE, false);
+		MatchKurzInfo[] friendlyMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+				SpielePanel.NUR_EIGENE_FREUNDSCHAFTSSPIELE, false);
+		List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
 
-        l.addAll(Arrays.asList(friendlyMatches));
-        l.addAll(Arrays.asList(cupMatches));
+		l.addAll(Arrays.asList(friendlyMatches));
+		l.addAll(Arrays.asList(cupMatches));
 
-        Object[] matches = l.toArray();
+		Object[] matches = l.toArray();
 
-        for (int i = 0; i < matches.length; i++) {
-            MatchKurzInfo match = (MatchKurzInfo) matches[i];
+		for (int i = 0; i < matches.length; i++) {
+			MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
-            if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
-                if (match.getHeimID() == teamId) {
-                    team.setName(match.getGastName());
-                    team.setTeamId(match.getGastID());
-                } else {
-                    team.setName(match.getHeimName());
-                    team.setTeamId(match.getHeimID());
-                }
-                team.setTime(match.getMatchDateAsTimestamp());
+			if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+				if (match.getHeimID() == teamId) {
+					team.setName(match.getGastName());
+					team.setTeamId(match.getGastID());
+				} else {
+					team.setName(match.getHeimName());
+					team.setTeamId(match.getHeimID());
+				}
+				team.setTime(match.getMatchDateAsTimestamp());
 
-                return team;
-            }
-        }
+				return team;
+			}
+		}
 
-        return team;
-    }
+		return team;
+	}
 
-    
-    public static Team getNextTournamentOpponent() {
-    	Team team = new Team();
-    	int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-    	MatchKurzInfo[] tournamentMatches =DBManager.instance().getMatchesKurzInfo(teamId,
-    			SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE,
-    			true);
-    	List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
+	public static Team getNextTournamentOpponent() {
+		Team team = new Team();
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] tournamentMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+				SpielePanel.NUR_EIGENE_TOURNAMENTSPIELE, true);
+		List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
 
-    	l.addAll(Arrays.asList(tournamentMatches));
+		l.addAll(Arrays.asList(tournamentMatches));
 
-    	Object[] matches = l.toArray();
+		Object[] matches = l.toArray();
 
-    	for (int i = 0; i < matches.length; i++) {
-    		MatchKurzInfo match = (MatchKurzInfo) matches[i];
+		for (int i = 0; i < matches.length; i++) {
+			MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
-    		if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
-    			if (match.getHeimID() == teamId) {
-    				team.setName(match.getGastName());
-    				team.setTeamId(match.getGastID());
-    			} else {
-    				team.setName(match.getHeimName());
-    				team.setTeamId(match.getHeimID());
-    			}
-    			team.setTime(match.getMatchDateAsTimestamp());
-    			team.setTournament(true);
-    			return team;
-    		}
-    	}
+			if (match.getMatchStatus() != MatchKurzInfo.FINISHED) {
+				if (match.getHeimID() == teamId) {
+					team.setName(match.getGastName());
+					team.setTeamId(match.getGastID());
+				} else {
+					team.setName(match.getHeimName());
+					team.setTeamId(match.getHeimID());
+				}
+				team.setTime(match.getMatchDateAsTimestamp());
+				team.setTournament(true);
+				return team;
+			}
+		}
 
-    	return team;
-    }
-    
-    public static Team getNextLeagueOpponent() {
-        Spielplan league = getDivisionMatches();
+		return team;
+	}
 
-        if (league != null) {
-            List<?> matches = league.getPaarungenBySpieltag(HOVerwaltung.instance().getModel().getBasics().getSpieltag());
+	public static Team getNextLeagueOpponent() {
+		Spielplan league = getDivisionMatches();
 
-            for (Iterator<?> iter = matches.iterator(); iter.hasNext();) {
-                Paarung element = (Paarung) iter.next();
+		if (league != null) {
+			List<?> matches = league.getPaarungenBySpieltag(HOVerwaltung.instance().getModel()
+					.getBasics().getSpieltag());
 
-                if (element.getHeimId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
-                    Team t = new Team();
+			for (Iterator<?> iter = matches.iterator(); iter.hasNext();) {
+				Paarung element = (Paarung) iter.next();
 
-                    t.setName(element.getGastName());
-                    t.setTeamId(element.getGastId());
-                    t.setTime(element.getDatum());
+				if (element.getHeimId() == HOVerwaltung.instance().getModel().getBasics()
+						.getTeamId()) {
+					Team t = new Team();
 
-                    return t;
-                }
+					t.setName(element.getGastName());
+					t.setTeamId(element.getGastId());
+					t.setTime(element.getDatum());
 
-                if (element.getGastId() == HOVerwaltung.instance().getModel().getBasics().getTeamId()) {
-                    Team t = new Team();
+					return t;
+				}
 
-                    t.setName(element.getHeimName());
-                    t.setTeamId(element.getHeimId());
-                    t.setTime(element.getDatum());
+				if (element.getGastId() == HOVerwaltung.instance().getModel().getBasics()
+						.getTeamId()) {
+					Team t = new Team();
 
-                    return t;
-                }
-            }
-        }
+					t.setName(element.getHeimName());
+					t.setTeamId(element.getHeimId());
+					t.setTime(element.getDatum());
 
-        return getNextQualificationOpponent();
-    }
+					return t;
+				}
+			}
+		}
 
-    public static Team getTeam(int teamId) {
-        return teams.get(teamId);
-    }
+		return getNextQualificationOpponent();
+	}
 
-    public static boolean isTeamInList(int teamId) {
-        if (teams.get(teamId) != null) {
-            return true;
-        }
-        return false;
-    }
+	public static Team getTeam(int teamId) {
+		return getTeamsMap().get(teamId);
+	}
 
-    public static Collection<Team> getTeams() {
-        if (teams == null) {
-            teams = new HashMap<Integer, Team>();
+	public static boolean isTeamInList(int teamId) {
+		if (getTeamsMap().get(teamId) != null) {
+			return true;
+		}
+		return false;
+	}
 
-            List<Team> l = loadDivisionTeams();
+	public static Collection<Team> getTeams() {
+		return getTeamsMap().values();
+	}
 
-            for (Iterator<Team> iter = l.iterator(); iter.hasNext();) {
-                Team element = iter.next();
+	public static boolean isUpdated() {
+		updated = !updated;
 
-                teams.put(element.getTeamId(), element);
-            }
+		return !updated;
+	}
 
-            Team qualTeam = getNextQualificationOpponent();
+	public static void addFavouriteTeam(Team team) {
+		if (!isTeamInList(team.getTeamId())) {
+			getTeamsMap().put(team.getTeamId(), team);
+		}
 
-            if (qualTeam.getTeamId() != 0) {
-                teams.put(qualTeam.getTeamId(), qualTeam);
-            }
+		forceUpdate();
+	}
 
-            Team cupTeam = getNextCupOpponent();
+	public static void clean() {
+		teams = null;
+		updated = true;
+	}
 
-            if (cupTeam.getTeamId() != 0) {
-                teams.put(cupTeam.getTeamId(), cupTeam);
-            }
-            
-            List<Team> teamlist = loadTournamentteams();
-            for (Team tourneyteam: teamlist) {
-            	teams.put(tourneyteam.getTeamId(), tourneyteam);
-            }
-            
-        }
+	public static void forceUpdate() {
+		updated = true;
+	}
 
-        return teams.values();
-    }
+	private static Map<Integer, Team> getTeamsMap() {
+		if (teams == null) {
+			teams = new HashMap<Integer, Team>();
 
-    public static boolean isUpdated() {
-        updated = !updated;
+			List<Team> l = loadDivisionTeams();
 
-        return !updated;
-    }
+			for (Iterator<Team> iter = l.iterator(); iter.hasNext();) {
+				Team element = iter.next();
 
-    public static void addFavouriteTeam(Team team) {
-        if (!isTeamInList(team.getTeamId())) {
-            teams.put(team.getTeamId(), team);
-        }
+				teams.put(element.getTeamId(), element);
+			}
 
-        forceUpdate();
-    }
+			Team qualTeam = getNextQualificationOpponent();
 
-    public static void clean() {
-        teams = null;
-        updated = true;
-    }
+			if (qualTeam.getTeamId() != 0) {
+				teams.put(qualTeam.getTeamId(), qualTeam);
+			}
 
-    public static void forceUpdate() {
-        updated = true;
-    }
+			Team cupTeam = getNextCupOpponent();
 
-    private static Spielplan getDivisionMatches() {
-        Spielplan league = DBManager.instance().getSpielplan(HOVerwaltung.instance().getModel().getXtraDaten()
-                                                                   .getLeagueLevelUnitID(),
-                                                                   HOVerwaltung.instance().getModel().getBasics()
-                                                                   .getSeason());
+			if (cupTeam.getTeamId() != 0) {
+				teams.put(cupTeam.getTeamId(), cupTeam);
+			}
 
-        return league;
-    }
+			List<Team> teamlist = loadTournamentteams();
+			for (Team tourneyteam : teamlist) {
+				teams.put(tourneyteam.getTeamId(), tourneyteam);
+			}
+		}
+		return teams;
+	}
 
-    private static Team getNextQualificationOpponent() {
-        Team team = new Team();
-        int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-        MatchKurzInfo[] qualificationMatches = DBManager.instance().getMatchesKurzInfo(teamId,
-                                                                                      SpielePanel.NUR_EIGENE_PFLICHTSPIELE,
-                                                                                      false);
-        List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
+	private static Spielplan getDivisionMatches() {
+		Spielplan league = DBManager.instance().getSpielplan(
+				HOVerwaltung.instance().getModel().getXtraDaten().getLeagueLevelUnitID(),
+				HOVerwaltung.instance().getModel().getBasics().getSeason());
 
-        l.addAll(Arrays.asList(qualificationMatches));
+		return league;
+	}
 
-        Object[] matches = l.toArray();
+	private static Team getNextQualificationOpponent() {
+		Team team = new Team();
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] qualificationMatches = DBManager.instance().getMatchesKurzInfo(teamId,
+				SpielePanel.NUR_EIGENE_PFLICHTSPIELE, false);
+		List<MatchKurzInfo> l = new ArrayList<MatchKurzInfo>();
 
-        for (int i = 0; i < matches.length; i++) {
-            MatchKurzInfo match = (MatchKurzInfo) matches[i];
+		l.addAll(Arrays.asList(qualificationMatches));
 
-            if ((match.getMatchStatus() != MatchKurzInfo.FINISHED)
-                && (match.getMatchTyp() == MatchType.QUALIFICATION)) {
-                if (match.getHeimID() == teamId) {
-                    team.setName(match.getGastName());
-                    team.setTeamId(match.getGastID());
-                } else {
-                    team.setName(match.getHeimName());
-                    team.setTeamId(match.getHeimID());
-                }
-                team.setTime(match.getMatchDateAsTimestamp());
+		Object[] matches = l.toArray();
 
-                return team;
-            }
-        }
+		for (int i = 0; i < matches.length; i++) {
+			MatchKurzInfo match = (MatchKurzInfo) matches[i];
 
-        return team;
-    }
+			if ((match.getMatchStatus() != MatchKurzInfo.FINISHED)
+					&& (match.getMatchTyp() == MatchType.QUALIFICATION)) {
+				if (match.getHeimID() == teamId) {
+					team.setName(match.getGastName());
+					team.setTeamId(match.getGastID());
+				} else {
+					team.setName(match.getHeimName());
+					team.setTeamId(match.getHeimID());
+				}
+				team.setTime(match.getMatchDateAsTimestamp());
 
-    private static List<Team> loadDivisionTeams() {
-        List<Team> loadedTeams = new ArrayList<Team>();
-        Spielplan league = getDivisionMatches();
+				return team;
+			}
+		}
 
-        if (league != null) {
-            List<?> eintraege = league.getTabelle().getEintraege();
+		return team;
+	}
 
-            for (Iterator<?> iter = eintraege.iterator(); iter.hasNext();) {
-                LigaTabellenEintrag element = (LigaTabellenEintrag) iter.next();
-                Team t = new Team();
+	private static List<Team> loadDivisionTeams() {
+		List<Team> loadedTeams = new ArrayList<Team>();
+		Spielplan league = getDivisionMatches();
 
-                t.setName(element.getTeamName());
-                t.setTeamId(element.getTeamId());
-                loadedTeams.add(t);
-            }
-        }
+		if (league != null) {
+			List<?> eintraege = league.getTabelle().getEintraege();
 
-        return loadedTeams;
-    }
-    
-    private static List<Team> loadTournamentteams() {
-    	List<Team> loadedTeams = new ArrayList<Team>();
-    	int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
-    	MatchKurzInfo[] infoarray =  DBManager.instance().getMatchesKurzInfo(teamId, MatchKurzInfo.UPCOMING);
-    		
-    	for (int i = 0 ; i < infoarray.length ; i++) {
-    		if ( (infoarray[i].getMatchTyp() == MatchType.TOURNAMENTGROUP)
-    				|| (infoarray[i].getMatchTyp() == MatchType.TOURNAMENTPLAYOFF)) {
-    			MatchKurzInfo info = infoarray[i];
-    			Team t = new Team();
-    			String teamName;
-    			if (info.getGastID() == teamId) {
-    				t.setName(info.getHeimName());
-    				t.setTeamId(info.getHeimID());
-    				t.setTournament(true);
-    			} else if (info.getHeimID() == teamId) {
-    				t.setName(info.getGastName());
-    				t.setTeamId(info.getGastID());
-    				t.setTournament(true);
-    			} else {
-    				// Huh?
-    				continue;
-    			}
-    			loadedTeams.add(t);
-    		}
-    	}
-    	return loadedTeams;
-    }
+			for (Iterator<?> iter = eintraege.iterator(); iter.hasNext();) {
+				LigaTabellenEintrag element = (LigaTabellenEintrag) iter.next();
+				Team t = new Team();
+
+				t.setName(element.getTeamName());
+				t.setTeamId(element.getTeamId());
+				loadedTeams.add(t);
+			}
+		}
+
+		return loadedTeams;
+	}
+
+	private static List<Team> loadTournamentteams() {
+		List<Team> loadedTeams = new ArrayList<Team>();
+		int teamId = HOVerwaltung.instance().getModel().getBasics().getTeamId();
+		MatchKurzInfo[] infoarray = DBManager.instance().getMatchesKurzInfo(teamId,
+				MatchKurzInfo.UPCOMING);
+
+		for (int i = 0; i < infoarray.length; i++) {
+			if ((infoarray[i].getMatchTyp() == MatchType.TOURNAMENTGROUP)
+					|| (infoarray[i].getMatchTyp() == MatchType.TOURNAMENTPLAYOFF)) {
+				MatchKurzInfo info = infoarray[i];
+				Team t = new Team();
+				String teamName;
+				if (info.getGastID() == teamId) {
+					t.setName(info.getHeimName());
+					t.setTeamId(info.getHeimID());
+					t.setTournament(true);
+				} else if (info.getHeimID() == teamId) {
+					t.setName(info.getGastName());
+					t.setTeamId(info.getGastID());
+					t.setTournament(true);
+				} else {
+					// Huh?
+					continue;
+				}
+				loadedTeams.add(t);
+			}
+		}
+		return loadedTeams;
+	}
 }
