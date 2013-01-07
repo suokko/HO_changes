@@ -160,11 +160,11 @@ public class TrainingWeekManager {
     }
 
     
-    /** This one filters the list so that there is one per week. If multiple hrfs a week, the last one is used.
-     * 	If there is a week with no hrf, a new will be inserted with content identical to the old one, and with a
-     *  next training date one week after the previous one.
+    /** This one filters the list so that there is one per week.
+     *  The training data of a week is the content of the first hrf of that training week.
+     *  This is not the correct final result, but will be corrected when hattrick weeks are updated.
      *  
-     *  Objects in the input are included in the output, and can be modified by this function.
+     *  Objects in the input are included in the output, and will be modified by this function.
      * 
      * @param input list to be filtered
      * @return the filtered list
@@ -201,17 +201,9 @@ public class TrainingWeekManager {
     		actualTraining.setTime(tpw.getNextTrainingDate());
     		
     		if (!actualTraining.after(previousTraining)) {
-    			// The same week, update to the contents of the newer item.
-    			// old should point at the last item entered.
-    			old.setStaminaPart(tpw.getStaminaPart());
-    			old.setTrainingIntensity(tpw.getTrainingIntensity());
-    			old.setTrainingType(tpw.getTrainingType());
-    			old.setAssistants(tpw.getAssistants());
-    			old.setHrfId(tpw.getHrfId());
+    			// The same week, we ignore this one
     			continue;
     		}
-    	
-    		
     		
    			while (actualTraining.after(previousTraining)) {
    				
@@ -295,10 +287,6 @@ public class TrainingWeekManager {
 	         int weeks = 0;
 	         Timestamp nextTraining = null;
 	         
-	         Calendar now = Calendar.getInstance(Locale.UK);
-	         now.setTime(model.getXtraDaten().getTrainingDate());
-	         Calendar tswDate = Calendar.getInstance(Locale.UK);
-	         
 	         final JDBCAdapter ijdbca = DBManager.instance().getAdapter();
 	         final ResultSet rs = ijdbca.executeQuery(sql);
 	         rs.beforeFirst();
@@ -347,13 +335,14 @@ public class TrainingWeekManager {
      * @return The input list.
      */
     private static List<TrainingPerWeek> updateHattrickDates(List<TrainingPerWeek> input) {
+    	
     	HOModel hom = HOVerwaltung.instance().getModel();
     	Basics bas = hom.getBasics();
         int actualSeason = bas.getSeason();
         int actualWeek = bas.getSpieltag();
         int trainNumber = input.size();
         try {
-            // We are in the middle where season has not been updated!
+            // We are between the training and the match date, and should increase the week by 1. 
             if (hom.getXtraDaten().getTrainingDate().after(hom.getXtraDaten().getSeriesMatchDate())) {
                 actualWeek++;
                 if (actualWeek == 17) {
@@ -375,10 +364,10 @@ public class TrainingWeekManager {
             train.setHrfId(train.getHrfId());
             train.setPreviousHrfId(DBManager.instance().getPreviousHRF(train.getHrfId()));
          }
+
         return input;
     }
 
-    
     
     /**
      * Method that calculate the HT date for past week before
@@ -391,6 +380,9 @@ public class TrainingWeekManager {
      */
     private static HattrickDate calculateByDifference(int actualSeason, int actualWeek, int pastWeek) {
         final HattrickDate date = new HattrickDate();
+
+        // We need to subtract 1 week because we got the first hrf after download. This contains
+        // the training info for the previous week.
         actualWeek = (actualWeek - pastWeek) - 1;
 
         if (actualWeek <= 0) {
