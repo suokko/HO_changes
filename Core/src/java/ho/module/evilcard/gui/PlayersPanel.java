@@ -72,7 +72,6 @@ class PlayersPanel extends JPanel {
 		columnModel.getColumn(PlayersTableModel.COL_NAME).setPreferredWidth(120);
 		columnModel.getColumn(PlayersTableModel.COL_AGGRESSIVITY).setPreferredWidth(120);
 		columnModel.getColumn(PlayersTableModel.COL_HONESTY).setPreferredWidth(120);
-		columnModel.getColumn(PlayersTableModel.COL_AGREEABILITY).setPreferredWidth(120);
 		columnModel.getColumn(PlayersTableModel.COL_DIRECT_RED_CARDS).setPreferredWidth(20);
 		columnModel.getColumn(PlayersTableModel.COL_CARDS).setPreferredWidth(20);
 		columnModel.getColumn(PlayersTableModel.COL_WARNINGS).setPreferredWidth(20);

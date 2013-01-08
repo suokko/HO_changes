@@ -1,7 +1,6 @@
 package ho.module.evilcard.gui;
 
 import ho.core.constants.player.PlayerAggressiveness;
-import ho.core.constants.player.PlayerAgreeability;
 import ho.core.constants.player.PlayerHonesty;
 import ho.core.db.DBManager;
 import ho.core.gui.model.SpielerMatchCBItem;
@@ -22,20 +21,19 @@ class PlayersTableModel extends AbstractTableModel {
 
 	static final int COL_ID = 0;
 	static final int COL_NAME = 1;
-	static final int COL_AGREEABILITY = 2;
-	static final int COL_AGGRESSIVITY = 3;
-	static final int COL_HONESTY = 4;
-	static final int COL_CARDS = 5;
-	static final int COL_DIRECT_RED_CARDS = 6;
-	static final int COL_WARNINGS = 7;
-	static final int COL_WARNINGS_TYPE1 = 8;
-	static final int COL_WARNINGS_TYPE2 = 9;
-	static final int COL_WARNINGS_TYPE3 = 10;
-	static final int COL_WARNINGS_TYPE4 = 11;
-	static final int COL_RAW_AVERAGE = 12;
-	static final int COL_WEIGHTED_AVERAGE = 13;
-	static final int COL_MATCHES = 14;
-	static final int cols = 15;
+	static final int COL_AGGRESSIVITY = 2;
+	static final int COL_HONESTY = 3;
+	static final int COL_CARDS = 4;
+	static final int COL_DIRECT_RED_CARDS = 5;
+	static final int COL_WARNINGS = 6;
+	static final int COL_WARNINGS_TYPE1 = 7;
+	static final int COL_WARNINGS_TYPE2 = 8;
+	static final int COL_WARNINGS_TYPE3 = 9;
+	static final int COL_WARNINGS_TYPE4 = 10;
+	static final int COL_RAW_AVERAGE = 11;
+	static final int COL_WEIGHTED_AVERAGE = 12;
+	static final int COL_MATCHES = 13;
+	static final int cols = 14;
 
 	private String[] columnNames;
 	private Object[][] data = {};
@@ -48,8 +46,6 @@ class PlayersTableModel extends AbstractTableModel {
 		// Riempimento valori
 		columnNames[COL_ID] = HOVerwaltung.instance().getLanguageString("ls.player.id");
 		columnNames[COL_NAME] = HOVerwaltung.instance().getLanguageString("Spieler");
-		columnNames[COL_AGREEABILITY] = HOVerwaltung.instance().getLanguageString(
-				"ls.player.agreeability");
 		columnNames[COL_AGGRESSIVITY] = HOVerwaltung.instance().getLanguageString(
 				"ls.player.aggressiveness");
 		columnNames[COL_HONESTY] = HOVerwaltung.instance().getLanguageString("ls.player.honesty");
@@ -83,8 +79,6 @@ class PlayersTableModel extends AbstractTableModel {
 			return Aggressive.class;
 		case COL_HONESTY:
 			return Honesty.class;
-		case COL_AGREEABILITY:
-			return Agreeability.class;
 		case COL_MATCHES:
 		case COL_CARDS:
 		case COL_DIRECT_RED_CARDS:
@@ -182,34 +176,6 @@ class PlayersTableModel extends AbstractTableModel {
 	}
 
 	/**
-	 * Helper class to sort and show agreeability information
-	 * 
-	 */
-	private class Agreeability implements Comparable<Agreeability> {
-		private Spieler _player;
-
-		Agreeability(Spieler player) {
-			_player = player;
-		}
-
-		@Override
-		public String toString() {
-			return PlayerAgreeability.toString(_player.getCharakter()) + " (" + _player.getCharakter()
-					+ ")";
-		}
-
-		@Override
-		public int compareTo(Agreeability o2) {
-			Spieler p1 = _player;
-			Spieler p2 = o2._player;
-
-			if (p1.getCharakter() == p2.getCharakter())
-				return 0;
-			return p1.getCharakter() < p2.getCharakter() ? -1 : 1;
-		}
-	}
-
-	/**
 	 * Helper class to sort and show honesty information
 	 * 
 	 */
@@ -262,9 +228,8 @@ class PlayersTableModel extends AbstractTableModel {
 			data[row][COL_ID] = new Integer(id);
 			data[row][COL_AGGRESSIVITY] = new Aggressive(player);
 			data[row][COL_HONESTY] = new Honesty(player);
-			data[row][COL_AGREEABILITY] = new Agreeability(player);
 
-			for (int col = 5; col < cols; col++) {
+			for (int col = 4; col < cols; col++) {
 				data[row][col] = new Integer(0);
 			}
 
