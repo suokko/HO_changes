@@ -7,11 +7,13 @@ import ho.core.model.HOModel;
 import ho.core.model.HOVerwaltung;
 import ho.core.model.misc.Basics;
 import ho.core.util.HOLogger;
+import ho.core.util.HelperWrapper;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -138,7 +140,6 @@ public class TrainingWeekManager {
     	
     	TrainingPerWeek tpw = null;
     	Iterator<TrainingPerWeek> iter = trainingList.iterator();
-    	
     	// do for each override.
     	for (TrainingPerWeek over : overrides) {
     		// Search forwards through the trainingList, continuing from where we left off.
@@ -173,10 +174,10 @@ public class TrainingWeekManager {
     	
     	ArrayList<TrainingPerWeek> output = new ArrayList<TrainingPerWeek>();
     	TrainingPerWeek old = null;
-    	Calendar previousTraining = Calendar.getInstance(Locale.UK);
+    	Calendar previousTraining = Calendar.getInstance(Locale.US);
     	previousTraining.setFirstDayOfWeek(Calendar.SUNDAY);
     	
-    	Calendar actualTraining = Calendar.getInstance(Locale.UK);
+    	Calendar actualTraining = Calendar.getInstance(Locale.US);
     	actualTraining.setFirstDayOfWeek(Calendar.SUNDAY);
     	
     	for (TrainingPerWeek tpw: input) {
@@ -188,7 +189,8 @@ public class TrainingWeekManager {
     		if (old == null) {
     			// first item
     			old = tpw;
-    			Calendar cal = Calendar.getInstance(Locale.UK);
+    			Calendar cal = Calendar.getInstance(Locale.US);
+    			cal.setFirstDayOfWeek(Calendar.SUNDAY);
     			cal.setTime(tpw.getNextTrainingDate());
     			cal.add(Calendar.WEEK_OF_YEAR, -1);
     			tpw.setTrainingDate(new Timestamp(cal.getTimeInMillis()));
@@ -264,6 +266,7 @@ public class TrainingWeekManager {
     private static List<TrainingPerWeek> fetchTrainingListFromHrf() {
     	try {
     		HOModel model = HOVerwaltung.instance().getModel();
+    		Timestamp currentTraining = model.getXtraDaten().getTrainingDate();
     		Basics basics = model.getBasics();
     		List<TrainingPerWeek> output = new ArrayList<TrainingPerWeek>();
     		String sql = " SELECT TRAININGSART, TRAININGSINTENSITAET, STAMINATRAININGPART, " +
@@ -301,16 +304,15 @@ public class TrainingWeekManager {
 	                 nextTraining = rs.getTimestamp("TRAININGDATE");
 	                 assistants = rs.getInt("COTRAINER");
 	                 
-	                 calendar = Calendar.getInstance(Locale.UK);
-	         		 calendar.setFirstDayOfWeek(Calendar.SUNDAY);
-	         		 calendar.setTime(nextTraining);
+	                 calendar = HelperWrapper.instance().getLastTrainingDate(new Date(tStamp
+                             .getTime()), currentTraining);
 	                 
 	                 trainWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 	                 trainYear = calendar.get(Calendar.YEAR);
 	                 
 	                 TrainingPerWeek tpw = new TrainingPerWeek(trainWeek, trainYear, 
 	                		 					trainType, trainIntensity, trainStaminaTrainPart);
-	                 
+	                 tpw.setTrainingDate(new Timestamp(calendar.getTimeInMillis()));
 	                 tpw.setNextTrainingDate(nextTraining);
 	                 tpw.setHrfId(hrfId);
 	                 tpw.setAssistants(assistants);
