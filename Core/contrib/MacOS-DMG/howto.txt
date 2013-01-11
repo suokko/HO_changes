@@ -1,0 +1,29 @@
+In 2394 a new .dmg was committed.
+this was created in the following way.
+
+Source: http://stackoverflow.com/questions/286419/how-to-build-a-dmg-mac-os-x-file-on-a-non-mac-platform
+
+A couple of hfs packages are needed. They are complained about if you try without.
+
+From the above page>
+
+dd if=/dev/zero of=/tmp/foo.dmg bs=1M count=64
+mkfs.hfsplus -v ThisIsFoo /tmp/foo.dmg
+
+This creates a dmg file (in this case 64M) that can be mounted on a mac. It can also be mounted on linux, 
+with something like
+
+mount -o loop /tmp/foo.dmg /mnt/foo
+
+Alternatively with type set:
+
+mount -o loop -t hfsplus image.dmg /path/to/directory/you/want
+
+The HO template was not named ThisIsFoo, but HO... It is also 40M, not 64. The old was 15M.
+
+It was mounted, as was the old, and the content of the old .dmg was copied across.
+
+The ant script uses this template to create the .dmg installer. It mounts it, copies the
+HO content inside, and unmounts, renames, and gzips. The above mentioned copying after creating the
+dmg should copy across the necessary installer structures, but they are also present in this
+folder. They may or may not be copied by ant (I have not checked). 
