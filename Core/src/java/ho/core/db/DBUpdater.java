@@ -75,7 +75,10 @@ final class DBUpdater {
 				case 16:
 				case 17:
 					updateDBTo1432(DBVersion, version);
+				case 18:
+					updateDBv19(DBVersion, version);
 				}
+				
 
 				HOLogger.instance().log(getClass(), "done.");
 			} catch (Exception e) {
@@ -427,6 +430,31 @@ final class DBUpdater {
 		}
 	}
 
+	
+	// Follow this pattern in the future. Only set db version if not
+	// development, or if the current db is more than one version old. The
+	// last update should be made during first run of a non development
+	// version.
+	private void updateDBv19(int DBVersion, int version) throws SQLException {
+		
+		// 1.433 stuff.
+		
+		if (version < DBVersion) {
+			if(!HO.isDevelopment()) {
+				HOLogger.instance().info(DBUpdater.class, "Update done, setting db version number from " + version + " to " + DBVersion);
+				dbZugriff.saveUserParameter("DBVersion", DBVersion);
+			} else {
+			 	HOLogger.instance().info(DBUpdater.class, "Development update done, setting db version number from " + version + " to " + (DBVersion - 1));
+				dbZugriff.saveUserParameter("DBVersion", DBVersion - 1);
+			}
+		} else {
+			HOLogger.instance().info(DBUpdater.class,
+					"Update done, db version number will NOT be increased from " + version
+					+ " to " + DBVersion + " (isDevelopment=" + HO.isDevelopment() + ")");
+		}
+	}
+	
+	
 	/**
 	 * Automatic update of User Configuration parameters
 	 * 

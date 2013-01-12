@@ -33,14 +33,13 @@ public class HO {
 	 * include an increased VERSION number with DEVELOPMENT set to true an
 	 * updated VERSION number in conf/addToZip/version.txt new headers in
 	 * conf/addToZip/release_notes.txt and conf/addToZip/changelog.txt The last
-	 * SVN commit BEFORE a release should set DEVELOPMENT to false and set
-	 * WARN_DATE to 12 (?) months after the release date
+	 * SVN commit BEFORE a release should set DEVELOPMENT to false.
 	 */
 
 	/**
 	 * HO Version
 	 */
-	public static final double VERSION = 1.432d;
+	public static final double VERSION = 1.433d;
 	/**
 	 * language version
 	 */

@@ -1,6 +1,9 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 
+Changelist HO! 1.433
+====================
+
 
 Changelist HO! 1.432
 ====================
