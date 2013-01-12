@@ -42,41 +42,52 @@ public class OverviewPanel extends JPanel {
 
 		List<TableRow> data = new ArrayList<TableRow>();
 
-		List<PlayerTransfer> sold = DBManager.instance().getTransfers(0, false, true);
-		List<PlayerTransfer> bought = DBManager.instance().getTransfers(0, true, false);
+		List<PlayerTransfer> sold = DBManager.instance().getTransfers(0, false,
+				true);
+		List<PlayerTransfer> bought = DBManager.instance().getTransfers(0,
+				true, false);
 
 		for (PlayerTransfer sale : sold) {
 			TableRow row = new TableRow(getBuy(sale, bought), sale);
-			addSomeData(row);
-			data.add(row);
+			if (addSomeData(row)) {
+				data.add(row);
+			}
 		}
 
 		this.table = new JTable(new MyTableModel(data));
 		table.setPreferredScrollableViewportSize(new Dimension(1000, 400));
 		table.getColumnModel().getColumn(0).setCellRenderer(new DateRenderer());
-		table.getColumnModel().getColumn(2).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(2)
+				.setCellRenderer(new NumberRenderer());
 		table.getColumnModel().getColumn(3).setCellRenderer(new DateRenderer());
-		table.getColumnModel().getColumn(4).setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(5).setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(6).setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(7).setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(8).setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(9).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(4)
+				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(5)
+				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(6)
+				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(7)
+				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(8)
+				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(9)
+				.setCellRenderer(new NumberRenderer());
 		table.setAutoCreateRowSorter(true);
 
 		add(new JScrollPane(table), BorderLayout.CENTER);
-	
+
 		JButton button = new JButton("test");
 		add(button, BorderLayout.SOUTH);
 		button.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table.getSelectedRow();
 				selectedRow = table.convertRowIndexToModel(selectedRow);
-				int playerId = ((MyTableModel)table.getModel()).getPlayerId(selectedRow);
-				
-				WagesPanel p = new  WagesPanel(playerId);
+				int playerId = ((MyTableModel) table.getModel())
+						.getPlayerId(selectedRow);
+
+				WagesPanel p = new WagesPanel(playerId);
 				JDialog dlg = new JDialog();
 				dlg.getContentPane().add(new JScrollPane(p));
 				dlg.pack();
@@ -84,55 +95,80 @@ public class OverviewPanel extends JPanel {
 			}
 		});
 	}
-	
-	private void addSomeData(TableRow row) {
-		Spieler player = getPlayer(row.getSale().getPlayerId(), row.getSale().getPlayerName());
+
+	private boolean addSomeData(TableRow row) {
+		Spieler player = getPlayer(row.getSale().getPlayerId(), row.getSale()
+				.getPlayerName());
 
 		if (player == null) {
-			System.out.println("player " + row.getSale().getPlayerId() + " ("
-					+ row.getSale().getPlayerName() + " not found");
-		} else {
-			Date buyingDate;
-			if (player.isHomeGrown()) {
-				buyingDate = new Date(DBManager.instance()
-						.getSpielerFirstHRF(player.getSpielerID()).getHrfDate().getTime());
-			} else {
-				buyingDate = row.getBuyingDate();
-			}
-
-			List<Date> updates = Calc.getUpdates(Calc.getEconomyDate(), buyingDate,
-					row.getSellingDate());
-			row.setWeeksInTeam(updates.size());
-
-			List<Wage> wagesByAge = Wage.getWagesByAge(player.getSpielerID());
-
-			Map<Integer, Wage> ageWageMap = new HashMap<Integer, Wage>();
-			for (Wage wage : wagesByAge) {
-				ageWageMap.put(Integer.valueOf(wage.getAge()), wage);
-			}
-
-			Date birthDay17 = Calc.get17thBirthday(player.getSpielerID());
-			int wages = 0;
-			for (Date date : updates) {
-				int ageAt = Calc.getAgeAt(birthDay17, date);
-				wages += ageWageMap.get(Integer.valueOf(ageAt)).getWage();
-			}
-
-			row.setSumOfLoan(wages);
-			
-			int daysInTeam = Calc.getDaysBetween(row.getSellingDate(), buyingDate);
-			double fee = row.getSellingPrice() * (TransferFee.getFee(daysInTeam) / 100);
-			double feePreviousClub = 0;
-			double feeMotherClub = 0;
-			if (!player.isHomeGrown()) {
-				feePreviousClub = row.getSellingPrice() * (TransferFee.feePreviousClub(2) / 100);
-				feeMotherClub = row.getSellingPrice() * 0.02d;
-			}
-			int cost = (int)(fee + feePreviousClub + feeMotherClub);
-			row.setSellingCosts(cost);
-			int gewinn = row.getSellingPrice() - row.getBuyPrice() - wages - cost;
-			row.setNetProfit(gewinn);
+			System.out.println("####- player " + row.getSale().getPlayerId()
+					+ " (" + row.getSale().getPlayerName() + ") not found");
+			return false;
 		}
+		if (player.isHomeGrown()) {
+			System.out.println("####- player " + row.getSale().getPlayerId()
+					+ " (" + row.getSale().getPlayerName() + ") isHomeGrown");
+			return false;
+		}
+
+		Date buyingDate = row.getBuyingDate();
+
+		// if (player.isHomeGrown()) {
+		// buyingDate = new Date(DBManager.instance()
+		// .getSpielerFirstHRF(player.getSpielerID()).getHrfDate()
+		// .getTime());
+		// }
+
+		List<Date> updates = Calc.getUpdates(Calc.getEconomyDate(), buyingDate,
+				row.getSellingDate());
+		row.setWeeksInTeam(updates.size());
+
+		List<Wage> wagesByAge = Wage.getWagesByAge(player.getSpielerID());
+		Map<Integer, Wage> ageWageMap = new HashMap<Integer, Wage>();
+		for (Wage wage : wagesByAge) {
+			ageWageMap.put(Integer.valueOf(wage.getAge()), wage);
+		}
+
+		Date birthDay17 = Calc.get17thBirthday(player.getSpielerID());
+		int wages = 0;
+		boolean allWagesFound = true;
+		for (Date date : updates) {
+			int ageAt = Calc.getAgeAt(birthDay17, date);
+			Wage wage = ageWageMap.get(Integer.valueOf(ageAt));
+			if (wage != null) {
+				wages += wage.getWage();
+				// System.out.println("####- " + player.getName() + " wage is "
+				// + wage.getWage() + " for age " + ageAt);
+			} else {
+				System.out.println("####- " + player.getName()
+						+ " wage not found for age " + ageAt);
+				allWagesFound = false;
+			}
+
+		}
+
+		if (allWagesFound) {
+			row.setSumOfLoan(wages);
+		} else {
+			return false;
+		}
+
+		int daysInTeam = Calc.getDaysBetween(row.getSellingDate(), buyingDate);
+		double fee = row.getSellingPrice()
+				* (TransferFee.getFee(daysInTeam) / 100);
+		double feePreviousClub = 0;
+		double feeMotherClub = 0;
+		if (!player.isHomeGrown()) {
+			feePreviousClub = row.getSellingPrice()
+					* (TransferFee.feePreviousClub(2) / 100);
+			feeMotherClub = row.getSellingPrice() * 0.02d;
+		}
+		int cost = (int) (fee + feePreviousClub + feeMotherClub);
+		row.setSellingCosts(cost);
+		int gewinn = row.getSellingPrice() - row.getBuyPrice() - wages - cost;
+		row.setNetProfit(gewinn);
+
+		return true;
 	}
 
 	private PlayerTransfer getBuy(PlayerTransfer sale, List<PlayerTransfer> buys) {
@@ -147,7 +183,8 @@ public class OverviewPanel extends JPanel {
 	}
 
 	private Spieler getPlayer(int playerId, String playerName) {
-		List<Spieler> all = HOVerwaltung.instance().getModel().getAllOldSpieler();
+		List<Spieler> all = HOVerwaltung.instance().getModel()
+				.getAllOldSpieler();
 		for (Spieler player : all) {
 			if (playerId != 0) {
 				if (player.getSpielerID() == playerId) {
@@ -169,9 +206,9 @@ public class OverviewPanel extends JPanel {
 	private class MyTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1236642855349013418L;
-		private String[] columns = { "Buying date", "Name", "Buy price", "Selling date",
-				"Selling price", "Weeks in team", "Selling costs", "Sum of loan", "Net profit",
-				"Profit per week" };
+		private String[] columns = { "Buying date", "Name", "Buy price",
+				"Selling date", "Selling price", "Weeks in team",
+				"Selling costs", "Sum of loan", "Net profit", "Profit per week" };
 		private List<TableRow> data;
 
 		MyTableModel(List<TableRow> data) {
@@ -195,7 +232,7 @@ public class OverviewPanel extends JPanel {
 		public int getPlayerId(int row) {
 			return this.data.get(row).getSale().getPlayerId();
 		}
-		
+
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			switch (columnIndex) {
@@ -313,7 +350,7 @@ public class OverviewPanel extends JPanel {
 		public int getNetProfit() {
 			return this.netProfit;
 		}
-		
+
 		public void setNetProfit(int value) {
 			this.netProfit = value;
 		}
@@ -328,7 +365,7 @@ public class OverviewPanel extends JPanel {
 		public int getSellingCosts() {
 			return this.sellingCosts;
 		}
-		
+
 		public void setSellingCosts(int value) {
 			this.sellingCosts = value;
 		}
@@ -353,17 +390,19 @@ public class OverviewPanel extends JPanel {
 	private class DateRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = -1900876860494850567L;
-		private DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+		private DateFormat dateFormat = DateFormat
+				.getDateInstance(DateFormat.SHORT);
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
 			String val = "";
 			if (value != null) {
 				val = dateFormat.format((Date) value);
 			}
-			return super.getTableCellRendererComponent(table, val, isSelected, hasFocus, row,
-					column);
+			return super.getTableCellRendererComponent(table, val, isSelected,
+					hasFocus, row, column);
 		}
 	}
 
@@ -373,16 +412,17 @@ public class OverviewPanel extends JPanel {
 		private NumberFormat numberFormat = NumberFormat.getIntegerInstance();
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value,
-				boolean isSelected, boolean hasFocus, int row, int column) {
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
 
 			String val = "";
 			if (value != null) {
 				val = numberFormat.format((Number) value);
 			}
 
-			JLabel comp = (JLabel) super.getTableCellRendererComponent(table, val, isSelected,
-					hasFocus, row, column);
+			JLabel comp = (JLabel) super.getTableCellRendererComponent(table,
+					val, isSelected, hasFocus, row, column);
 
 			comp.setHorizontalAlignment(SwingConstants.RIGHT);
 			return comp;
