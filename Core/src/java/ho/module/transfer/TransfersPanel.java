@@ -7,6 +7,7 @@ import ho.core.model.HOVerwaltung;
 import ho.core.model.player.Spieler;
 import ho.module.transfer.history.HistoryPane;
 import ho.module.transfer.scout.TransferScoutPanel;
+import ho.module.transfer.test.OverviewPanel;
 import ho.module.transfer.transfertype.TransferTypePane;
 
 import java.awt.BorderLayout;
@@ -25,6 +26,7 @@ public class TransfersPanel extends JPanel implements IRefreshable{
     private List<Spieler> players;
     private TransferTypePane transferTypePane;
     private TransferScoutPanel scoutPanel;
+    private OverviewPanel overviewPanel;
     
 	public TransfersPanel(){
 		initialize();
@@ -45,6 +47,9 @@ public class TransfersPanel extends JPanel implements IRefreshable{
         
         scoutPanel = new TransferScoutPanel();
         tabPane.add(HOVerwaltung.instance().getLanguageString("TransferScout"), scoutPanel);
+        
+        this.overviewPanel = new OverviewPanel();
+        tabPane.add("Financial", this.overviewPanel);
         
         setLayout(new BorderLayout());
         add(tabPane, BorderLayout.CENTER);
