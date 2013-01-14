@@ -162,7 +162,7 @@ public final class UpdateController {
 					+ HOVerwaltung.instance().getLanguageString("ls.version") + ": " + version.getVersionString() + "\n"
 					+ HOVerwaltung.instance().getLanguageString("Source") + ": http://www.hattrickorganizer.net/\n\n"
 					+ HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
-					HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
+					HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				// updateHO(version.getVersion());
@@ -229,7 +229,7 @@ public final class UpdateController {
 					+ HOVerwaltung.instance().getLanguageString("Released") + ": " + vi.getReleaseDate() + "\n"
 					+ HOVerwaltung.instance().getLanguageString("Source") + ": http://ho1.sourceforge.net/development/\n\n"
 					+ HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
-					HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
+					HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateHO(MyConnector.getBetaSite() + "/" + vi.getZipFileName());
@@ -251,7 +251,8 @@ public final class UpdateController {
 			// Show update info
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
 					.getLanguageString("updateavailable") + "\n\n" +
-					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?", HOVerwaltung.instance().getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
+					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
+					HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateEPV(data.getRelease());
@@ -297,7 +298,8 @@ public final class UpdateController {
 			// Info anzeigen das es ein Update gibt
 			int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung.instance()
 					.getLanguageString("updateavailable") + "\n\n" +
-					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?", HOVerwaltung.instance().getLanguageString("Ratings"), JOptionPane.YES_NO_OPTION);
+					HOVerwaltung.instance().getLanguageString("ls.button.update") + "?",
+					HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 			if (update == JOptionPane.YES_OPTION) {
 				updateRatings(data.getRelease());
@@ -346,8 +348,8 @@ public final class UpdateController {
 				case News.HO: {
 					if (!UserParameter.instance().updateCheck && news.getVersion() > HO.VERSION) {
 						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), HOVerwaltung
-								.instance().getLanguageString("updateavailable") , HOVerwaltung.instance()
-								.getLanguageString("ls.button.update"), JOptionPane.YES_NO_OPTION);
+								.instance().getLanguageString("updateavailable") ,
+								HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 							UpdateController.updateHO(news.getVersion());
 						}
@@ -356,8 +358,9 @@ public final class UpdateController {
 				}
 				case News.EPV: {
 					if (news.getVersion() > HOParameter.instance().EpvRelease) {
-						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
-								.get(0), HOVerwaltung.instance().getLanguageString("ls.button.update"),
+						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+								news.getMessages().get(0),
+								HOVerwaltung.instance().getLanguageString("confirmation.title"),
 								JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 							UpdateController.updateEPV(news.getVersion());
@@ -369,8 +372,9 @@ public final class UpdateController {
 				case News.RATINGS: {
 					if (news.getVersion() > HOParameter.instance().RatingsRelease) {
 
-						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(), news.getMessages()
-								.get(0), HOVerwaltung.instance().getLanguageString("ls.button.update"),
+						int update = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
+								news.getMessages().get(0),
+								HOVerwaltung.instance().getLanguageString("confirmation.title"),
 								JOptionPane.YES_NO_OPTION);
 						if (update == JOptionPane.YES_OPTION) {
 

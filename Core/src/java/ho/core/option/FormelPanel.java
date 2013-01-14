@@ -59,12 +59,12 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
 
     //~ Methods ------------------------------------------------------------------------------------
 
-    //---------------Listener-------------------------------------------    
+    //---------------Listener-------------------------------------------
     public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(m_jbResetToDefaults)) {
             final int value = JOptionPane.showConfirmDialog(this,
                                                             HOVerwaltung.instance().getLanguageString("FrageFormelwertReset"),
-                                                            HOVerwaltung.instance().getLanguageString("FormelwertReset"),
+                                                            HOVerwaltung.instance().getLanguageString("confirmation.title"),
                                                             JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
@@ -73,7 +73,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
 
                 //Alle anderen Werte in GUI setzen
                 refresh();
-                
+
                 OptionManager.instance().setReInitNeeded();
             }
         } else if (actionEvent.getSource().equals(m_jbImport)) {
@@ -189,7 +189,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
     private void initComponents() {
         final GridBagLayout layout = new GridBagLayout();
         final GridBagConstraints constraints = new GridBagConstraints();
-        
+
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
@@ -261,7 +261,7 @@ final class FormelPanel extends ImagePanel implements ActionListener, ItemListen
         layout.setConstraints(panel, constraints);
         add(panel);
 
-        m_jbResetToDefaults = new JButton(HOVerwaltung.instance().getLanguageString("FormelwertReset"));
+        m_jbResetToDefaults = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.reset"));
         m_jbResetToDefaults.addActionListener(this);
 
         constraints.anchor = GridBagConstraints.WEST;

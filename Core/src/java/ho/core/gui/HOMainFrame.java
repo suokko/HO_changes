@@ -114,9 +114,9 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 	private final JMenuItem m_jmOptionen = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"Optionen"));
 	private final JMenu databaseMenu = new JMenu(HOVerwaltung.instance().getLanguageString(
-			"db.menu"));
+			"Datenbank"));
 	private final JMenuItem databaseOptionsMenu = new JMenuItem(HOVerwaltung.instance().getLanguageString(
-			"db.options.menu"));
+			"Optionen"));
 	private final JMenuItem m_jmiDbCleanupTool = new JMenuItem(HOVerwaltung.instance().getLanguageString("dbcleanup"));
 	private final JMenuItem m_jmTraining = new JMenuItem(HOVerwaltung.instance().getLanguageString(
 			"SubskillsBerechnen"));
@@ -197,10 +197,10 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 	/**
 	 * This method creates a MacOS specific listener for the quit operation
 	 * ("Command-Q")
-	 * 
+	 *
 	 * We need to use reflections here, because the com.apple.eawt.* classes are
 	 * Apple specific
-	 * 
+	 *
 	 * @author flattermann <flattermannHO@gmail.com>
 	 */
 	private void addMacOSListener() {
@@ -344,11 +344,11 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			new DownloadDialog();
 		} else if (source.equals(m_jmOptionen)) { // Options
 			new OptionenDialog(this).setVisible(true);
-		} else if (source.equals(databaseOptionsMenu)) { 
+		} else if (source.equals(databaseOptionsMenu)) {
 			new DatabaseOptionsDialog(this).setVisible(true);
-		} else if (source.equals(m_jmiDbCleanupTool)) { 
+		} else if (source.equals(m_jmiDbCleanupTool)) {
 			DBCleanupTool dbCleanupTool = new DBCleanupTool();
-			dbCleanupTool.showDialog(HOMainFrame.instance());			
+			dbCleanupTool.showDialog(HOMainFrame.instance());
 		} else if (source.equals(m_jmTraining)) { // recalc training
 			if (JOptionPane.showConfirmDialog(this,
 					HOVerwaltung.instance().getLanguageString("SubskillRecalcFull"), HOVerwaltung
@@ -702,7 +702,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 
 	/**
 	 * Zeigt das Tab an (Nicht Index, sondern Konstante benutzen!
-	 * 
+	 *
 	 * @param tabnumber
 	 *            number of the tab to show
 	 */
@@ -852,7 +852,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 			 * System.exit is called only in the case when @see beenden() is
 			 * called in advance. This event is called when switching into full
 			 * screen mode, too.
-			 * 
+			 *
 			 * @param windowEvent
 			 *            is ignored
 			 */

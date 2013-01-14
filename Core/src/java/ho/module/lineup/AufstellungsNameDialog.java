@@ -117,7 +117,8 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 
 			} else {
 				final int value = JOptionPane.showConfirmDialog(this, HOVerwaltung.instance()
-						.getLanguageString("Aufstellung_NameSchonVorhanden"), "",
+						.getLanguageString("Aufstellung_NameSchonVorhanden"),
+						HOVerwaltung.instance().getLanguageString("confirmation.title"),
 						JOptionPane.YES_NO_OPTION);
 
 				if (value == JOptionPane.YES_OPTION) {
@@ -146,7 +147,7 @@ final class AufstellungsNameDialog extends JDialog implements ActionListener {
 			setVisible(false);
 		}
 	}
-	
+
 	public boolean isCanceled() {
 		return this.canceled;
 	}

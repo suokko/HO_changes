@@ -87,7 +87,7 @@ public class SpielerTrainingsVergleichsPanel extends ImagePanel
         }
 
         final int value = JOptionPane.showConfirmDialog(this, text,
-				HOVerwaltung.instance().getLanguageString("ls.button.delete"), JOptionPane.YES_NO_OPTION);
+				HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.OK_OPTION) {
             for (int i = 0; i < hrfs.length; i++) {

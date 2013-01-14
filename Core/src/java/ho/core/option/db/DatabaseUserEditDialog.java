@@ -116,7 +116,7 @@ public class DatabaseUserEditDialog extends JDialog {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		JLabel nameLabel = new JLabel(getLangStr("db.options.dlg.label.name"));
+		JLabel nameLabel = new JLabel(getLangStr("Benutzername"));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(4, 4, 4, 2);
@@ -284,7 +284,7 @@ public class DatabaseUserEditDialog extends JDialog {
 		if (!file.exists()) {
 			String msg = getLangStr("db.options.dlg.msg.dirDoesNotExist", file.getAbsolutePath())
 					+ "\n" + getLangStr("db.options.dlg.question.createDir");
-			int res = JOptionPane.showConfirmDialog(this, msg, "", JOptionPane.YES_NO_OPTION);
+			int res = JOptionPane.showConfirmDialog(this, msg, HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 			if (res == JOptionPane.YES_OPTION) {
 				if (!file.mkdirs()) {
 					JOptionPane
