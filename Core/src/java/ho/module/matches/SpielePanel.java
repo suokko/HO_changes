@@ -190,7 +190,7 @@ public final class SpielePanel extends LazyImagePanel {
 				saveSettings();
 			}
 		});
-		
+
 		m_jcbSpieleFilter.addItemListener(new ItemListener() {
 
 			@Override
@@ -267,8 +267,8 @@ public final class SpielePanel extends LazyImagePanel {
 			}
 		}
 
-		int value = JOptionPane.showConfirmDialog(SpielePanel.this, text, HOVerwaltung.instance()
-				.getLanguageString("ls.button.delete"), JOptionPane.YES_NO_OPTION);
+		int value = JOptionPane.showConfirmDialog(SpielePanel.this, text,
+				HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 		if (value == JOptionPane.YES_OPTION) {
 			for (int i = 0; i < infos.length; i++) {

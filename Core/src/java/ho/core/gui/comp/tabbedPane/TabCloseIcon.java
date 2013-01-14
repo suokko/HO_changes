@@ -63,7 +63,7 @@ final class TabCloseIcon implements Icon {
 	}
 
 	private void closeTab() {
-		String title = HOVerwaltung.instance().getLanguageString("tab.close.confirm.title");
+		String title = HOVerwaltung.instance().getLanguageString("confirmation.title");
 		String message = HOVerwaltung.instance().getLanguageString("tab.close.confirm.msg");
 		if (JOptionPane.showConfirmDialog(mTabbedPane, message, title, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			int index = mTabbedPane.getSelectedIndex();

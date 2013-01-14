@@ -158,7 +158,7 @@ public class HistoryPane extends JSplitPane {
 
 	                final int choice = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
 	                                                                 sBuffer.toString(),
-	                                                                 hoV.getLanguageString("Warning"),
+	                                                                 HOVerwaltung.instance().getLanguageString("confirmation.title"),
 	                                                                 JOptionPane.YES_NO_OPTION);
 
 	                if (choice == JOptionPane.YES_OPTION) {

@@ -1,9 +1,6 @@
 Please visit the HO! forum in the CHPP section of Hattrick, or the
 forum at https://sourceforge.net/apps/phpbb/ho1/ if you have any questions!
 
-Changelist HO! 1.433
-====================
-
 
 Changelist HO! 1.432
 ====================
@@ -69,7 +66,7 @@ Changelist HO! 1.432
 - ArenaStats initial view corrected (filter setting was "competition matches", while what was displayed was "all matches").
 - on HRF import, user will not be asked for every HRF which was already imported if he wants to import it again (checkbox "apply to all")
 - user/database configuration form got some polish and went from the Options dialog to the File->Database menu
-- database cleanup tool went from the Tools menu to File->Database 
+- database cleanup tool went from the Tools menu to File->Database
 
 Language updates:
 -----------------
@@ -82,6 +79,7 @@ Language updates:
 - Updated Hangul (Korean) translations (thx SI-CH).
 - Updated Lithuanian translations (thx LA-MJ).
 - Updated Nederlands translations (thx BrammieG).
+- Updated Persian translations (thx bagher).
 - Updated Portugues translations (thx a_cardoso).
 - Updated Romanian translations (thx DragosE).
 - Updated Spanish translations (thx LarsVegas).

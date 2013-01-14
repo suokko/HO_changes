@@ -179,7 +179,7 @@ public class DatabaseOptionsDialog extends JDialog {
 		if (user != null) {
 			int res = JOptionPane.showConfirmDialog(this, HOVerwaltung.instance()
 					.getLanguageString("db.options.dlg.delete.question", user.getName()),
-					HOVerwaltung.instance().getLanguageString("db.options.dlg.delete.confirm"),
+					HOVerwaltung.instance().getLanguageString("confirmation.title"),
 					JOptionPane.YES_NO_OPTION);
 			if (res == JOptionPane.YES_OPTION) {
 				User.getAllUser().remove(user);
@@ -207,8 +207,8 @@ public class DatabaseOptionsDialog extends JDialog {
 		private static final long serialVersionUID = 1975023278731081088L;
 		private String[] columnNames = new String[] {
 				HOVerwaltung.instance().getLanguageString("Benutzername"),
-				HOVerwaltung.instance().getLanguageString("Datenbank"),
-				HOVerwaltung.instance().getLanguageString("AnzahlZIP") };
+				HOVerwaltung.instance().getLanguageString("db.options.dlg.label.dbPath"),
+				HOVerwaltung.instance().getLanguageString("db.options.dlg.label.zips") };
 
 		@Override
 		public Object getValueAt(int row, int column) {

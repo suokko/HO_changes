@@ -73,7 +73,7 @@ public class OnlineWorker {
 
 	/**
 	 * Get and optionally save HRF
-	 * 
+	 *
 	 */
 	public static void getHrf() {
 		// Show wait dialog
@@ -169,7 +169,7 @@ public class OnlineWorker {
 
 	/**
 	 * saugt das Archiv
-	 * 
+	 *
 	 * @param teamId
 	 *            null falls unnötig sonst im Format 2004-02-01
 	 * @param firstDate
@@ -177,7 +177,7 @@ public class OnlineWorker {
 	 * @param store
 	 *            True if matches are to be downloaded and stored. False if only
 	 *            a match list is wanted.
-	 * 
+	 *
 	 * @return The list of MatchKurzInfo. This can be null on error, or empty.
 	 */
 	public static List<MatchKurzInfo> getMatchArchive(int teamId, Date firstDate, boolean store) {
@@ -188,7 +188,7 @@ public class OnlineWorker {
 		GregorianCalendar tempEnd = new GregorianCalendar();
 		tempEnd.setTimeInMillis(tempBeginn.getTimeInMillis());
 		tempEnd.add(Calendar.MONTH, 3);
-		
+
 		GregorianCalendar endDate = new GregorianCalendar();
 		if (!tempEnd.before(endDate)) {
 			tempEnd.setTime(endDate.getTime());
@@ -199,12 +199,12 @@ public class OnlineWorker {
 		waitDialog.setVisible(true);
 		try {
 			String matchesString = "";
-			
+
 			while (tempBeginn.before(endDate)) {
 				try {
 					waitDialog.setValue(10);
 					matchesString = MyConnector.instance().getMatchesArchive(teamId, tempBeginn.getTime(),
-							tempEnd.getTime());				
+							tempEnd.getTime());
 					waitDialog.setValue(20);
 				} catch (Exception e) {
 					// Info
@@ -259,14 +259,14 @@ public class OnlineWorker {
 	 * Downloads a match with the given criteria and stores it in the database.
 	 * If a match is already in the db, and refresh is false, nothing is
 	 * downloaded.
-	 * 
+	 *
 	 * @param matchId
 	 *            ID for the match to be downloaded
 	 * @param matchType
 	 *            matchType for the match to be downloaded.
 	 * @param refresh
 	 *            If true the match will always be downloaded.
-	 * 
+	 *
 	 * @return true if the match is in the db afterwards
 	 */
 	public static boolean downloadMatchData(int matchid, MatchType matchType, boolean refresh) {
@@ -352,7 +352,7 @@ public class OnlineWorker {
 	/**
 	 * Loads the data for the given match from HT and updates the data for this
 	 * match in the DB.
-	 * 
+	 *
 	 * @param teamId
 	 *            the id of the team
 	 * @param match
@@ -378,7 +378,7 @@ public class OnlineWorker {
 	/**
 	 * Gets the most recent and upcoming matches for a given teamId and up to a
 	 * specific date. Nothing is stored to DB.
-	 * 
+	 *
 	 * @param teamId
 	 *            the id of the team.
 	 * @param date
@@ -405,7 +405,7 @@ public class OnlineWorker {
 
 	/**
 	 * saugt den Spielplan
-	 * 
+	 *
 	 * @param teamId
 	 *            angabe der Saison ( optinal &lt; 1 für aktuelle
 	 * @param forceRefresh
@@ -413,7 +413,7 @@ public class OnlineWorker {
 	 *            true if the full match details are to be stored, false if not.
 	 * @param upcoming
 	 *            true if upcoming matches should be included
-	 * 
+	 *
 	 * @return The list of MatchKurzInfos found or null if an exception
 	 *         occurred.
 	 */
@@ -478,7 +478,7 @@ public class OnlineWorker {
 
 	/**
 	 * saugt das Matchlineup
-	 * 
+	 *
 	 * @param matchId
 	 *            Die ID des Matches
 	 * @param teamId1
@@ -530,12 +530,12 @@ public class OnlineWorker {
 
 	/**
 	 * Get the Fixtures list
-	 * 
+	 *
 	 * @param season
 	 *            - The season, -1 for current
 	 * @param leagueID
 	 *            - The ID of the league to get the fixtures for
-	 * 
+	 *
 	 * @return true on sucess, false on failure
 	 */
 	public static boolean getSpielplan(int season, int leagueID) {
@@ -580,7 +580,7 @@ public class OnlineWorker {
 
 	/**
 	 * Uploads the given order to Hattrick
-	 * 
+	 *
 	 * @param matchId
 	 *            The id of the match in question. If left at 0 the match ID
 	 *            from the model will be used (next match).
@@ -635,7 +635,7 @@ public class OnlineWorker {
 		Iterator<Substitution> iter = lineup.getSubstitutionList().iterator();
 		while (iter.hasNext()) {
 			Substitution sub = iter.next();
-			// to get conform with CHPP API (playerout==playerin if its a 
+			// to get conform with CHPP API (playerout==playerin if its a
 			// behaviour change)
 			if (sub.getOrderType() == MatchOrderType.NEW_BEHAVIOUR) {
 				orders.append("{\"playerin\":\"").append(sub.getSubjectPlayerID()).append("\",");
@@ -645,7 +645,7 @@ public class OnlineWorker {
 			orders.append("\"playerout\":\"").append(sub.getSubjectPlayerID()).append("\",");
 			orders.append("\"orderType\":\"").append(sub.getOrderType().getId()).append("\",");
 			orders.append("\"min\":\"").append(sub.getMatchMinuteCriteria()).append("\",");
-		
+
 			// The uploaded position is not a RoleId
 			byte pos = (byte) ((sub.getRoleId() == -1) ? -1 : sub.getRoleId() -100);
 			orders.append("\"pos\":\"").append(pos).append("\",");
@@ -772,7 +772,7 @@ public class OnlineWorker {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param matchId
 	 *            The match ID for the match to download
 	 * @param matchType
@@ -834,7 +834,7 @@ public class OnlineWorker {
 	/**
 	 * Shows a file chooser asking for the location for the HRF file and saves
 	 * it to the location chosen by the user.
-	 * 
+	 *
 	 * @param hrfData
 	 *            the HRF data as string
 	 * @throws IOException
@@ -858,7 +858,7 @@ public class OnlineWorker {
 			int value = JOptionPane.OK_OPTION;
 			if (file.exists()) {
 				value = JOptionPane.showConfirmDialog(HOMainFrame.instance(),
-						getLangString("overwrite"), "", JOptionPane.YES_NO_OPTION);
+						getLangString("overwrite"), HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 			}
 
 			// Save
@@ -874,7 +874,7 @@ public class OnlineWorker {
 
 	/**
 	 * Gets a HRF file name, based on the current date.
-	 * 
+	 *
 	 * @return the HRF file name.
 	 */
 	private static String getHRFFileName() {
@@ -901,7 +901,7 @@ public class OnlineWorker {
 	/**
 	 * Shows a file chooser dialog to ask the user for the location to save the
 	 * HRF file.
-	 * 
+	 *
 	 * @param file
 	 *            the recommendation for the file name/location.
 	 * @return the file location choosen by the user or null if the canceled the
@@ -935,7 +935,7 @@ public class OnlineWorker {
 	/**
 	 * Convenience method for
 	 * HOMainFrame.instance().getInfoPanel().setLangInfoText(msg);
-	 * 
+	 *
 	 * @param msg
 	 *            the message to show
 	 */
@@ -946,7 +946,7 @@ public class OnlineWorker {
 	/**
 	 * Convenience method for
 	 * HOMainFrame.instance().getInfoPanel().setLangInfoText(msg, color);
-	 * 
+	 *
 	 * @param msg
 	 *            the message to show
 	 * @param color
@@ -958,7 +958,7 @@ public class OnlineWorker {
 
 	/**
 	 * Convenience method for HOVerwaltung.instance().getLanguageString(key)
-	 * 
+	 *
 	 * @param key
 	 *            the key for the language string
 	 * @return the string for the current language
@@ -969,12 +969,12 @@ public class OnlineWorker {
 
 	/**
 	 * Save the passed in data to the passed in file
-	 * 
+	 *
 	 * @param fileName
 	 *            Name of the file to save the data to
 	 * @param content
 	 *            The content to write to the file
-	 * 
+	 *
 	 * @return The saved file
 	 * @throws IOException
 	 */

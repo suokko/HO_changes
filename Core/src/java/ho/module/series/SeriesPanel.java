@@ -57,7 +57,7 @@ public class SeriesPanel extends LazyImagePanel {
 	protected void update() {
 		fillSaisonCB();
 	}
-	
+
 	private void print() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -78,7 +78,7 @@ public class SeriesPanel extends LazyImagePanel {
 			int value = JOptionPane.showConfirmDialog(this,
 					HOVerwaltung.instance().getLanguageString("ls.button.delete") + " "
 							+ HOVerwaltung.instance().getLanguageString("Ligatabelle") + ":\n"
-							+ spielplan.toString(), "", JOptionPane.YES_NO_OPTION);
+							+ spielplan.toString(), HOVerwaltung.instance().getLanguageString("confirmation.title"), JOptionPane.YES_NO_OPTION);
 
 			if (value == JOptionPane.YES_OPTION) {
 				final String[] dbkey = { "Saison", "LigaID" };
