@@ -1,10 +1,13 @@
 package ho.module.lineup;
 
+import ho.core.datatype.CBItem;
 import ho.core.gui.CursorToolkit;
 import ho.core.gui.HOMainFrame;
 import ho.core.gui.comp.panel.ImagePanel;
 import ho.core.gui.theme.HOIconName;
 import ho.core.gui.theme.ThemeManager;
+import ho.core.model.HOVerwaltung;
+import ho.core.model.UserParameter;
 import ho.core.model.match.Weather;
 
 import java.awt.Dimension;
@@ -15,11 +18,15 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -31,9 +38,16 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 	private static final long serialVersionUID = -6853036429678216392L;
 	private WeatherChooser weatherChooser;
 	private GroupChooser groupChooser;
+	private JComboBox assistantPriorityComboBox;
+	private JCheckBox idealPositionFirst;
+	private JCheckBox considerFormCheckBox;
+	private JCheckBox injuredCheckBox;
+	private JCheckBox suspendedCheckBox;
+	private JCheckBox excludeLastLinupCheckBox;
 
 	public AufstellungsAssistentPanelNew() {
 		initComponents();
+		initData();
 		addListeners();
 	}
 
@@ -44,27 +58,31 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isConsiderForm() {
-		return false;
+		return this.considerFormCheckBox.isSelected();
 	}
 
 	@Override
 	public boolean isIgnoreSuspended() {
-		return false;
+		return this.suspendedCheckBox.isSelected();
 	}
 
 	@Override
 	public String getGroup() {
-		return null;
+		List<String> groups = this.groupChooser.getGroups();
+		if (!groups.isEmpty()) {
+			return groups.get(0);
+		}
+		return "";
 	}
 
 	@Override
 	public boolean isGroupFilter() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isIdealPositionZuerst() {
-		return false;
+		return this.idealPositionFirst.isSelected();
 	}
 
 	@Override
@@ -79,7 +97,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 
 	@Override
 	public boolean isIgnoreInjured() {
-		return false;
+		return this.injuredCheckBox.isSelected();
 	}
 
 	@Override
@@ -96,10 +114,40 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		return null;
 	}
 
+	@Override
+	public List<String> getGroups() {
+		return this.groupChooser.getGroups();
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groupChooser.setGroups(groups);
+	}
+
+	public static List<String> asList(String str) {
+		String[] splitted = str.split(";");
+		return Arrays.asList(splitted);
+	}
+
+	public static String asString(List<String> list) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String group : list) {
+			stringBuilder.append(group).append(';');
+		}
+		if (stringBuilder.length() > 0) {
+			stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+		}
+		return stringBuilder.toString();
+	}
+
+	private void initData() {
+		this.groupChooser
+				.setGroups(asList(UserParameter.instance().aufstellungsAssistentPanel_gruppe));
+	}
+
 	private void initComponents() {
 		setLayout(new GridBagLayout());
 
-		JLabel weatherLabel = new JLabel("ls.match.weather");
+		JLabel weatherLabel = new JLabel(getLangStr("ls.match.weather"));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -112,10 +160,83 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		gbc.insets = new Insets(4, 2, 2, 4);
 		add(this.weatherChooser, gbc);
 
-		this.groupChooser = new GroupChooser();
+		JLabel groupLabel = new JLabel(getLangStr("Gruppe"));
+		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(4, 4, 2, 2);
+		add(groupLabel, gbc);
+
+		this.groupChooser = new GroupChooser();
+		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 4);
 		add(this.groupChooser, gbc);
+
+		JLabel priorityLabel = new JLabel(getLangStr("lineupassist.priority"));
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(4, 4, 2, 2);
+		add(priorityLabel, gbc);
+
+		CBItem[] priority = {
+				new CBItem(HOVerwaltung.instance().getLanguageString("AW-MF-ST"),
+						LineupAssistant.AW_MF_ST),
+				new CBItem(HOVerwaltung.instance().getLanguageString("AW-ST-MF"),
+						LineupAssistant.AW_ST_MF),
+				new CBItem(HOVerwaltung.instance().getLanguageString("MF-AW-ST"),
+						LineupAssistant.MF_AW_ST),
+				new CBItem(HOVerwaltung.instance().getLanguageString("MF-ST-AW"),
+						LineupAssistant.MF_ST_AW),
+				new CBItem(HOVerwaltung.instance().getLanguageString("ST-AW-MF"),
+						LineupAssistant.ST_AW_MF),
+				new CBItem(HOVerwaltung.instance().getLanguageString("ST-MF-AW"),
+						LineupAssistant.ST_MF_AW) };
+		this.assistantPriorityComboBox = new JComboBox(priority);
+		this.assistantPriorityComboBox
+				.setToolTipText(getLangStr("tt_AufstellungsAssistent_Reihenfolge"));
+		gbc.gridx = 1;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.assistantPriorityComboBox, gbc);
+
+		this.idealPositionFirst = new JCheckBox(getLangStr("Idealposition_zuerst"),
+				UserParameter.instance().aufstellungsAssistentPanel_idealPosition);
+		this.idealPositionFirst
+				.setToolTipText(getLangStr("tt_AufstellungsAssistent_Idealposition"));
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.idealPositionFirst, gbc);
+
+		this.considerFormCheckBox = new JCheckBox(getLangStr("Form_beruecksichtigen"),
+				UserParameter.instance().aufstellungsAssistentPanel_form);
+		this.considerFormCheckBox.setToolTipText(getLangStr("tt_AufstellungsAssistent_Form"));
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.considerFormCheckBox, gbc);
+
+		this.injuredCheckBox = new JCheckBox(getLangStr("Verletze_aufstellen"),
+				UserParameter.instance().aufstellungsAssistentPanel_verletzt);
+		this.injuredCheckBox.setToolTipText(getLangStr("tt_AufstellungsAssistent_Verletzte"));
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.injuredCheckBox, gbc);
+
+		this.suspendedCheckBox = new JCheckBox(getLangStr("Gesperrte_aufstellen"),
+				UserParameter.instance().aufstellungsAssistentPanel_gesperrt);
+		this.suspendedCheckBox.setToolTipText(getLangStr("tt_AufstellungsAssistent_Gesperrte"));
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.suspendedCheckBox, gbc);
+
+		this.excludeLastLinupCheckBox = new JCheckBox(getLangStr("NotLast_aufstellen"),
+				UserParameter.instance().aufstellungsAssistentPanel_notLast);
+		this.excludeLastLinupCheckBox
+				.setToolTipText(getLangStr("tt_AufstellungsAssistent_NotLast"));
+		gbc.gridy++;
+		gbc.insets = new Insets(2, 2, 2, 4);
+		add(this.excludeLastLinupCheckBox, gbc);
 
 		// dummy component to consume all extra space
 		gbc.gridx++;
@@ -155,7 +276,39 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		private JToggleButton dBtn;
 		private JToggleButton eBtn;
 		private JToggleButton fBtn;
-		private ButtonGroup buttonGroup;
+
+		List<String> getGroups() {
+			List<String> list = new ArrayList<String>();
+			if (aBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[1]);
+			}
+			if (bBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[2]);
+			}
+			if (cBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[3]);
+			}
+			if (dBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[4]);
+			}
+			if (eBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[5]);
+			}
+			if (fBtn.isSelected()) {
+				list.add(HOIconName.TEAMSMILIES[6]);
+			}
+			return list;
+		}
+
+		void setGroups(List<String> groups) {
+			List<String> list = (groups != null) ? groups : Collections.<String> emptyList();
+			this.aBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[1]));
+			this.bBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[2]));
+			this.cBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[3]));
+			this.dBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[4]));
+			this.eBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[5]));
+			this.fBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[6]));
+		}
 
 		public GroupChooser() {
 			initComponents();
@@ -166,48 +319,41 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 			setLayout(new FlowLayout(FlowLayout.LEADING, 1, 1));
 
 			Dimension btnSize = new Dimension(28, 28);
-			this.buttonGroup = new ButtonGroup();
 			this.aBtn = new JToggleButton();
 			this.aBtn.setPreferredSize(btnSize);
 			this.aBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[1]));
 			add(this.aBtn);
-			this.buttonGroup.add(this.aBtn);
 
 			this.bBtn = new JToggleButton();
 			this.bBtn.setPreferredSize(btnSize);
 			this.bBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[2]));
 			add(this.bBtn);
-			this.buttonGroup.add(this.bBtn);
 
 			this.cBtn = new JToggleButton();
 			this.cBtn.setPreferredSize(btnSize);
 			this.cBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[3]));
 			add(this.cBtn);
-			this.buttonGroup.add(this.cBtn);
 
 			this.dBtn = new JToggleButton();
 			this.dBtn.setPreferredSize(btnSize);
 			this.dBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[4]));
 			add(this.dBtn);
-			this.buttonGroup.add(this.dBtn);
 
 			this.eBtn = new JToggleButton();
 			this.eBtn.setPreferredSize(btnSize);
 			this.eBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[5]));
 			add(this.eBtn);
-			this.buttonGroup.add(this.eBtn);
 
 			this.fBtn = new JToggleButton();
 			this.fBtn.setPreferredSize(btnSize);
 			this.fBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]));
 			add(this.fBtn);
-			this.buttonGroup.add(this.fBtn);
 		}
 	}
 
 	/**
 	 * Component to show/choose the weather via some toggle buttons.
-	 *
+	 * 
 	 */
 	private class WeatherChooser extends JPanel {
 
@@ -322,4 +468,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		}
 	}
 
+	private String getLangStr(String key) {
+		return HOVerwaltung.instance().getLanguageString(key);
+	}
 }

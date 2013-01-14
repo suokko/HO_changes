@@ -26,8 +26,10 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -38,54 +40,59 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-
 /**
  * Die automatische Aufstellung wird hier konfiguriert und gestartet
  */
-public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener, IAufstellungsAssistentPanel {
-
-
+public class AufstellungsAssistentPanel extends ImagePanel implements ActionListener, ItemListener,
+		IAufstellungsAssistentPanel {
 
 	private static final long serialVersionUID = 5271343329674809429L;
-	private final JButton m_jbLoeschen 	= new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
-	private final JButton m_jbOK 			= new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
-	private final JButton m_jbReserveLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARRESERVE));
-	private final JButton m_jbClearPostionOrders = new JButton(ThemeManager.getIcon(HOIconName.CLEARPOSORDERS));
-	private final JCheckBox m_jchForm 	= new JCheckBox(HOVerwaltung.instance().getLanguageString("Form_beruecksichtigen"),
+	private final JButton m_jbLoeschen = new JButton(ThemeManager.getIcon(HOIconName.CLEARASSIST));
+	private final JButton m_jbOK = new JButton(ThemeManager.getIcon(HOIconName.STARTASSIST));
+	private final JButton m_jbReserveLoeschen = new JButton(
+			ThemeManager.getIcon(HOIconName.CLEARRESERVE));
+	private final JButton m_jbClearPostionOrders = new JButton(
+			ThemeManager.getIcon(HOIconName.CLEARPOSORDERS));
+	private final JCheckBox m_jchForm = new JCheckBox(HOVerwaltung.instance().getLanguageString(
+			"Form_beruecksichtigen"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_form);
-	private final JCheckBox m_jchGesperrte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Gesperrte_aufstellen"),
+	private final JCheckBox m_jchGesperrte = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("Gesperrte_aufstellen"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_gesperrt);
-	private final JCheckBox m_jchIdealPosition = new JCheckBox(HOVerwaltung.instance().getLanguageString("Idealposition_zuerst"),
+	private final JCheckBox m_jchIdealPosition = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("Idealposition_zuerst"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_idealPosition);
-	private final JCheckBox m_jchLast		= new JCheckBox(HOVerwaltung.instance().getLanguageString("NotLast_aufstellen"),
+	private final JCheckBox m_jchLast = new JCheckBox(HOVerwaltung.instance().getLanguageString(
+			"NotLast_aufstellen"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_notLast);
-	private final JCheckBox m_jchListBoxGruppenFilter = new JCheckBox(HOVerwaltung.instance().getLanguageString("ListBoxGruppenFilter"),
+	private final JCheckBox m_jchListBoxGruppenFilter = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("ListBoxGruppenFilter"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_cbfilter);
-	private final JCheckBox m_jchNot 		= new JCheckBox(HOVerwaltung.instance().getLanguageString("Not"),
-			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_not);
-	private final JCheckBox m_jchVerletzte = new JCheckBox(HOVerwaltung.instance().getLanguageString("Verletze_aufstellen"),
+	private final JCheckBox m_jchNot = new JCheckBox(HOVerwaltung.instance().getLanguageString(
+			"Not"), ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_not);
+	private final JCheckBox m_jchVerletzte = new JCheckBox(HOVerwaltung.instance()
+			.getLanguageString("Verletze_aufstellen"),
 			ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_verletzt);
-	private final JComboBox m_jcbGruppe 	= new JComboBox(HOIconName.TEAMSMILIES);
-	private final JComboBox m_jcbWetter 	= new JComboBox(Helper.WETTER);
+	private final JComboBox m_jcbGruppe = new JComboBox(HOIconName.TEAMSMILIES);
+	private final JComboBox m_jcbWetter = new JComboBox(Helper.WETTER);
 	private final CBItem[] REIHENFOLGE = {
 			new CBItem(HOVerwaltung.instance().getLanguageString("AW-MF-ST"),
 					LineupAssistant.AW_MF_ST),
 
-					new CBItem(HOVerwaltung.instance().getLanguageString("AW-ST-MF"),
-							LineupAssistant.AW_ST_MF),
+			new CBItem(HOVerwaltung.instance().getLanguageString("AW-ST-MF"),
+					LineupAssistant.AW_ST_MF),
 
-							new CBItem(HOVerwaltung.instance().getLanguageString("MF-AW-ST"),
-									LineupAssistant.MF_AW_ST),
+			new CBItem(HOVerwaltung.instance().getLanguageString("MF-AW-ST"),
+					LineupAssistant.MF_AW_ST),
 
-									new CBItem(HOVerwaltung.instance().getLanguageString("MF-ST-AW"),
-											LineupAssistant.MF_ST_AW),
+			new CBItem(HOVerwaltung.instance().getLanguageString("MF-ST-AW"),
+					LineupAssistant.MF_ST_AW),
 
-											new CBItem(HOVerwaltung.instance().getLanguageString("ST-AW-MF"),
-													LineupAssistant.ST_AW_MF),
+			new CBItem(HOVerwaltung.instance().getLanguageString("ST-AW-MF"),
+					LineupAssistant.ST_AW_MF),
 
-													new CBItem(HOVerwaltung.instance().getLanguageString("ST-MF-AW"),
-															LineupAssistant.ST_MF_AW)
-	};
+			new CBItem(HOVerwaltung.instance().getLanguageString("ST-MF-AW"),
+					LineupAssistant.ST_MF_AW) };
 	private JComboBox m_jcbReihenfolge = new JComboBox(REIHENFOLGE);
 	private HashMap<PlayerPositionPanel, LineupAssistantSelectorOverlay> positions = new HashMap<PlayerPositionPanel, LineupAssistantSelectorOverlay>();
 
@@ -95,7 +102,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	JButton overlayOk = null;
 	JButton overlayCancel = null;
 
-	//~ Constructors -------------------------------------------------------------------------------
+	// ~ Constructors
+	// -------------------------------------------------------------------------------
 
 	/**
 	 * Creates a new AufstellungsAssistentPanel object.
@@ -104,9 +112,12 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		initComponents();
 	}
 
-	//~ Methods ------------------------------------------------------------------------------------
+	// ~ Methods
+	// ------------------------------------------------------------------------------------
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isExcludeLastMatch()
 	 */
 	@Override
@@ -114,15 +125,20 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchLast.isSelected();
 	}
 
-	/* (non-Javadoc)
-	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isFormBeruecksichtigen()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ho.module.lineup.IAufstellungsAssistentPanel#isFormBeruecksichtigen()
 	 */
 	@Override
 	public final boolean isConsiderForm() {
 		return m_jchForm.isSelected();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGesperrtIgnorieren()
 	 */
 	@Override
@@ -130,15 +146,23 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchGesperrte.isSelected();
 	}
 
-	/* (non-Javadoc)
-	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getGruppe()
-	 */
 	@Override
 	public final String getGroup() {
 		return m_jcbGruppe.getSelectedItem().toString();
 	}
 
-	/* (non-Javadoc)
+	@Override
+	public List<String> getGroups() {
+		List<String> list = new ArrayList<String>();
+		if (m_jcbGruppe.getSelectedItem() != null) {
+			list.add(m_jcbGruppe.getSelectedItem().toString());
+		}
+		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isGruppenFilter()
 	 */
 	@Override
@@ -146,7 +170,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchListBoxGruppenFilter.isSelected();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isIdealPositionZuerst()
 	 */
 	@Override
@@ -154,7 +180,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchIdealPosition.isSelected();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isNotGruppe()
 	 */
 	@Override
@@ -162,7 +190,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchNot.isSelected();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getReihenfolge()
 	 */
 	@Override
@@ -170,7 +200,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return ((CBItem) m_jcbReihenfolge.getSelectedItem()).getId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#isVerletztIgnorieren()
 	 */
 	@Override
@@ -178,7 +210,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		return m_jchVerletzte.isSelected();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getWetter()
 	 */
 	@Override
@@ -189,29 +223,37 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	@Override
 	public final void actionPerformed(java.awt.event.ActionEvent actionEvent) {
-		final HOModel hoModel 		= HOVerwaltung.instance().getModel();
+		final HOModel hoModel = HOVerwaltung.instance().getModel();
 		final HOMainFrame mainFrame = ho.core.gui.HOMainFrame.instance();
 
 		if (actionEvent.getSource().equals(m_jbLoeschen)) {
-			//Alle Positionen leeren
+			// Alle Positionen leeren
 			hoModel.getAufstellung().resetAufgestellteSpieler();
 			hoModel.getAufstellung().setKicker(0);
 			hoModel.getAufstellung().setKapitaen(0);
-			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Aufstellung_geloescht"));
+			HOMainFrame
+					.instance()
+					.getInfoPanel()
+					.setLangInfoText(
+							HOVerwaltung.instance().getLanguageString("Aufstellung_geloescht"));
 			mainFrame.getAufstellungsPanel().update();
 
-			//gui.RefreshManager.instance ().doRefresh ();
+			// gui.RefreshManager.instance ().doRefresh ();
 		} else if (actionEvent.getSource().equals(m_jbClearPostionOrders)) {
 			// event listener for clear positonal orders button
 			hoModel.getAufstellung().resetPositionOrders();
-			HOMainFrame.instance().getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Positional_orders_cleared"));
+			HOMainFrame
+					.instance()
+					.getInfoPanel()
+					.setLangInfoText(
+							HOVerwaltung.instance().getLanguageString("Positional_orders_cleared"));
 			mainFrame.getAufstellungsPanel().update();
 
 		} else if (actionEvent.getSource().equals(m_jbReserveLoeschen)) {
 			hoModel.getAufstellung().resetReserveBank();
 			mainFrame.getAufstellungsPanel().update();
 
-			//gui.RefreshManager.instance ().doRefresh ();
+			// gui.RefreshManager.instance ().doRefresh ();
 		} else if (actionEvent.getSource().equals(m_jbOK)) {
 			displayGUI();
 		} else if (actionEvent.getSource().equals(m_jchListBoxGruppenFilter)
@@ -219,23 +261,26 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 			mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
 		} else if (actionEvent.getSource().equals(m_jcbGruppe)
 				|| actionEvent.getSource().equals(m_jchNot)) {
-			//Nur wenn Filter aktiv
+			// Nur wenn Filter aktiv
 			if (m_jchListBoxGruppenFilter.isSelected()) {
 				mainFrame.getAufstellungsPanel().getAufstellungsPositionsPanel().refresh();
 			}
 		} else if (actionEvent.getSource().equals(overlayOk)) {
 
 			// Check that max 11 positions are sent
-			Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
+			Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+					.entrySet().iterator();
 			int reds = 0;
-			while (it.hasNext()){
+			while (it.hasNext()) {
 				if (!it.next().getValue().isSelected()) {
 					reds++;
 				}
 			}
 			if (reds < 3) {
-				// We have more positions left than is allowed in the lineup. Return.
-				javax.swing.JOptionPane.showMessageDialog(HOMainFrame.instance().getAufstellungsPanel(),
+				// We have more positions left than is allowed in the lineup.
+				// Return.
+				javax.swing.JOptionPane.showMessageDialog(HOMainFrame.instance()
+						.getAufstellungsPanel(),
 						HOVerwaltung.instance().getLanguageString("lineupassist.Error"),
 						HOVerwaltung.instance().getLanguageString("lineupassist.ErrorHeader"),
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -255,61 +300,64 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	@Override
 	public final void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
-			//Wetter -> Refresh
+			// Wetter -> Refresh
 			ho.core.gui.HOMainFrame.instance().getAufstellungsPanel().update();
 
-			//gui.RefreshManager.instance ().doRefresh ();
+			// gui.RefreshManager.instance ().doRefresh ();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ho.module.lineup.IAufstellungsAssistentPanel#addToAssistant(ho.module.lineup.PlayerPositionPanel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ho.module.lineup.IAufstellungsAssistentPanel#addToAssistant(ho.module
+	 * .lineup.PlayerPositionPanel)
 	 */
 	@Override
 	public void addToAssistant(PlayerPositionPanel positionPanel) {
 		positions.put(positionPanel, null);
 	}
 
-
-
 	private void startAssistant(HOModel hoModel, HOMainFrame mainFrame) {
 
-		// First, clear all positions that are not selected. We need to clear the way.
+		// First, clear all positions that are not selected. We need to clear
+		// the way.
 
-		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
-		while (it.hasNext()){
+		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+				.entrySet().iterator();
+		while (it.hasNext()) {
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			if (!entry.getValue().isSelected()) {
-				HOVerwaltung.instance().getModel().getAufstellung().
-					setSpielerAtPosition(entry.getKey().getPositionsID(), 0);
+				HOVerwaltung.instance().getModel().getAufstellung()
+						.setSpielerAtPosition(entry.getKey().getPositionsID(), 0);
 			}
 		}
-
 
 		final Vector<Spieler> vSpieler = new Vector<Spieler>();
 		final Vector<Spieler> alleSpieler = hoModel.getAllSpieler();
 
 		for (int i = 0; i < alleSpieler.size(); i++) {
 			final ho.core.model.player.Spieler spieler = (ho.core.model.player.Spieler) alleSpieler
-			.get(i);
+					.get(i);
 
-			// Wenn der Spieler spielberechtigt ist und entweder alle Gruppen aufgestellt werden sollen,
+			// Wenn der Spieler spielberechtigt ist und entweder alle Gruppen
+			// aufgestellt werden sollen,
 			// oder genau die zu der der Spieler gehört
 			if (spieler.isSpielberechtigt()
-					&& (((this.getGroup().trim().equals("")
-							|| spieler.getTeamInfoSmilie().equals(this.getGroup()))
-							&& !m_jchNot.isSelected())
-							|| (!spieler.getTeamInfoSmilie().equals(this.getGroup())
-									&& m_jchNot.isSelected()))) {
+					&& (((this.getGroup().trim().equals("") || spieler.getTeamInfoSmilie().equals(
+							this.getGroup())) && !m_jchNot.isSelected()) || (!spieler
+							.getTeamInfoSmilie().equals(this.getGroup()) && m_jchNot.isSelected()))) {
 				boolean include = true;
 				final AufstellungCBItem lastLineup = AufstellungsVergleichHistoryPanel
-				.getLastLineup();
+						.getLastLineup();
 
 				if (m_jchLast.isSelected()
 						&& (lastLineup != null)
-						&& lastLineup.getAufstellung().isSpielerInAnfangsElf(spieler.getSpielerID())) {
+						&& lastLineup.getAufstellung()
+								.isSpielerInAnfangsElf(spieler.getSpielerID())) {
 					include = false;
-					HOLogger.instance().log(getClass(),"Exclude: " + spieler.getName());
+					HOLogger.instance().log(getClass(), "Exclude: " + spieler.getName());
 				}
 
 				if (include) {
@@ -319,39 +367,38 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		}
 
 		hoModel.getAufstellung().doAufstellung(vSpieler,
-				(byte) ((CBItem) m_jcbReihenfolge
-						.getSelectedItem()).getId(),
-						m_jchForm.isSelected(),
-						m_jchIdealPosition.isSelected(),
-						m_jchVerletzte.isSelected(),
-						m_jchGesperrte.isSelected(),
-						ho.core.model.UserParameter.instance().WetterEffektBonus,
-						getWeather());
-		mainFrame.getInfoPanel().setLangInfoText(HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
+				(byte) ((CBItem) m_jcbReihenfolge.getSelectedItem()).getId(),
+				m_jchForm.isSelected(), m_jchIdealPosition.isSelected(),
+				m_jchVerletzte.isSelected(), m_jchGesperrte.isSelected(),
+				ho.core.model.UserParameter.instance().WetterEffektBonus, getWeather());
+		mainFrame.getInfoPanel().setLangInfoText(
+				HOVerwaltung.instance().getLanguageString("Autoaufstellung_fertig"));
 		mainFrame.getAufstellungsPanel().update();
 
-		//gui.RefreshManager.instance ().doRefresh ();
+		// gui.RefreshManager.instance ().doRefresh ();
 	}
-
 
 	private void displayGUI() {
 
 		// Add overlays to player panels
 
-		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
-		while (it.hasNext()){
+		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+				.entrySet().iterator();
+		while (it.hasNext()) {
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			if (entry.getValue() == null) {
 				boolean selected = true;
 				LineupAssistantSelectorOverlay laso = new LineupAssistantSelectorOverlay();
-				HashMap <String, String> upValues = ho.core.model.UserParameter.instance().getValues();
+				HashMap<String, String> upValues = ho.core.model.UserParameter.instance()
+						.getValues();
 				if (UserParameter.instance().assistantSaved) {
-					selected = ho.core.model.UserParameter.instance().getBooleanValue(upValues, "assistant" + entry.getKey().getPositionsID());
+					selected = ho.core.model.UserParameter.instance().getBooleanValue(upValues,
+							"assistant" + entry.getKey().getPositionsID());
 				} else {
 					int posId = entry.getKey().getPositionsID();
-					if (( posId == ISpielerPosition.centralForward) ||
-							(posId == ISpielerPosition.centralInnerMidfield) ||
-							(posId == ISpielerPosition.middleCentralDefender)) {
+					if ((posId == ISpielerPosition.centralForward)
+							|| (posId == ISpielerPosition.centralInnerMidfield)
+							|| (posId == ISpielerPosition.middleCentralDefender)) {
 						selected = false;
 					}
 				}
@@ -364,14 +411,14 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		// Add two buttons and a label
 
-		JLayeredPane posPanel = HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().getCenterPanel();
+		JLayeredPane posPanel = HOMainFrame.instance().getAufstellungsPanel()
+				.getAufstellungsPositionsPanel().getCenterPanel();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 		constraints.insets = new Insets(2, 2, 2, 2);
-
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -398,7 +445,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		if (overlayCancel == null) {
-			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString("ls.button.cancel"));
+			overlayCancel = new JButton(HOVerwaltung.instance().getLanguageString(
+					"ls.button.cancel"));
 			overlayCancel.addActionListener(this);
 			overlayCancel.setFont(new Font("serif", Font.BOLD, 16));
 			overlayCancel.setBackground(overlayOk.getBackground());
@@ -407,20 +455,20 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		posPanel.revalidate();
 
-
-
 	}
 
 	private void removeGUI() {
 		// Remove overlays
-		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
-		while (it.hasNext()){
+		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+				.entrySet().iterator();
+		while (it.hasNext()) {
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			entry.getKey().removeAssistantOverlay(entry.getValue());
 		}
 
 		// Remove buttons and labels
-		JLayeredPane pane = HOMainFrame.instance().getAufstellungsPanel().getAufstellungsPositionsPanel().getCenterPanel();
+		JLayeredPane pane = HOMainFrame.instance().getAufstellungsPanel()
+				.getAufstellungsPositionsPanel().getCenterPanel();
 
 		pane.remove(infoLabel);
 		pane.remove(overlayCancel);
@@ -430,14 +478,17 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ho.module.lineup.IAufstellungsAssistentPanel#getPositionStatuses()
 	 */
 	@Override
 	public Map<Integer, Boolean> getPositionStatuses() {
 		HashMap<Integer, Boolean> returnMap = new HashMap<Integer, Boolean>();
-		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
-		while (it.hasNext()){
+		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+				.entrySet().iterator();
+		while (it.hasNext()) {
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			returnMap.put(entry.getKey().getPositionsID(), entry.getValue().isSelected());
 		}
@@ -446,7 +497,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	}
 
 	private void updateDefaultSelection() {
-		// There should be a more sensible way to do this. Merging maps or something...
+		// There should be a more sensible way to do this. Merging maps or
+		// something...
 		// But brute force and ignorance should never be underestimated.
 
 		UserParameter.instance().assistant101 = getStatusForPosition(101);
@@ -466,8 +518,9 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 	}
 
 	private boolean getStatusForPosition(int position) {
-		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions.entrySet().iterator();
-		while (it.hasNext()){
+		Iterator<Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay>> it = positions
+				.entrySet().iterator();
+		while (it.hasNext()) {
 			Map.Entry<PlayerPositionPanel, LineupAssistantSelectorOverlay> entry = it.next();
 			if (entry.getKey().getPositionsID() == position) {
 				return entry.getValue().isSelected();
@@ -486,7 +539,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 
 		final HOVerwaltung hoVerwaltung = ho.core.model.HOVerwaltung.instance();
 
-		m_jcbWetter.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Wetter"));
+		m_jcbWetter.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Wetter"));
 		m_jcbWetter.setSelectedIndex(1);
 		m_jcbWetter.setPreferredSize(new Dimension(50, 20));
 		m_jcbWetter.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
@@ -500,36 +554,46 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jchNot.setOpaque(false);
 		m_jchNot.addActionListener(this);
 		panel2.add(m_jchNot, BorderLayout.WEST);
-		m_jcbGruppe.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Gruppe"));
-		m_jcbGruppe.setSelectedItem(ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_gruppe);
+		m_jcbGruppe.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Gruppe"));
+		List<String> groups = AufstellungsAssistentPanelNew.asList(UserParameter.instance().aufstellungsAssistentPanel_gruppe);
+		String group = (!groups.isEmpty()) ? groups.get(0) : "";
+		m_jcbGruppe
+				.setSelectedItem(group);
 		m_jcbGruppe.setBackground(ThemeManager.getColor(HOColorName.TABLEENTRY_BG));
 		m_jcbGruppe.setRenderer(new ho.core.gui.comp.renderer.SmilieListCellRenderer());
 		m_jcbGruppe.addActionListener(this);
 		panel2.add(m_jcbGruppe, BorderLayout.CENTER);
 		panel.add(panel2);
 
-		m_jchListBoxGruppenFilter.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_GruppeFilter"));
+		m_jchListBoxGruppenFilter.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_GruppeFilter"));
 		m_jchListBoxGruppenFilter.setOpaque(false);
 		m_jchListBoxGruppenFilter.addActionListener(this);
 		panel.add(m_jchListBoxGruppenFilter);
 
-		m_jcbReihenfolge.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Reihenfolge"));
+		m_jcbReihenfolge.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Reihenfolge"));
 		ho.core.util.Helper.markierenComboBox(m_jcbReihenfolge,
 				ho.core.model.UserParameter.instance().aufstellungsAssistentPanel_reihenfolge);
 		panel.add(m_jcbReihenfolge);
-		m_jchIdealPosition.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Idealposition"));
+		m_jchIdealPosition.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Idealposition"));
 		m_jchIdealPosition.setOpaque(false);
 		panel.add(m_jchIdealPosition);
 		m_jchForm.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Form"));
 		m_jchForm.setOpaque(false);
 		panel.add(m_jchForm);
-		m_jchVerletzte.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Verletzte"));
+		m_jchVerletzte.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Verletzte"));
 		m_jchVerletzte.setOpaque(false);
 		panel.add(m_jchVerletzte);
-		m_jchGesperrte.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_Gesperrte"));
+		m_jchGesperrte.setToolTipText(hoVerwaltung
+				.getLanguageString("tt_AufstellungsAssistent_Gesperrte"));
 		m_jchGesperrte.setOpaque(false);
 		panel.add(m_jchGesperrte);
-		m_jchLast.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_NotLast"));
+		m_jchLast
+				.setToolTipText(hoVerwaltung.getLanguageString("tt_AufstellungsAssistent_NotLast"));
 		m_jchLast.setOpaque(false);
 		m_jchLast.addActionListener(this);
 		panel.add(m_jchLast);
@@ -543,7 +607,8 @@ public class AufstellungsAssistentPanel extends ImagePanel implements ActionList
 		m_jbLoeschen.addActionListener(this);
 		panel.add(m_jbLoeschen);
 		m_jbClearPostionOrders.setPreferredSize(new Dimension(28, 28));
-		m_jbClearPostionOrders.setToolTipText(hoVerwaltung.getLanguageString("Clear_positional_orders"));
+		m_jbClearPostionOrders.setToolTipText(hoVerwaltung
+				.getLanguageString("Clear_positional_orders"));
 		m_jbClearPostionOrders.addActionListener(this);
 		panel.add(m_jbClearPostionOrders);
 		m_jbReserveLoeschen.setPreferredSize(new Dimension(28, 28));

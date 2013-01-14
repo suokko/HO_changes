@@ -27,6 +27,7 @@ import ho.core.option.db.DatabaseOptionsDialog;
 import ho.core.util.BrowserLauncher;
 import ho.core.util.HOLogger;
 import ho.core.util.StringUtils;
+import ho.module.lineup.AufstellungsAssistentPanelNew;
 import ho.module.lineup.IAufstellungsAssistentPanel;
 import ho.module.lineup.LineupMasterView;
 import ho.module.lineup.LineupPanel;
@@ -798,7 +799,7 @@ public final class HOMainFrame extends JFrame implements Refreshable, ActionList
 		parameter.bestPostWidth = Math.max(getSpielerUebersichtPanel().getBestPosWidth(),
 				getAufstellungsPanel().getBestPosWidth());
 
-		parameter.aufstellungsAssistentPanel_gruppe = aap.getGroup();
+		parameter.aufstellungsAssistentPanel_gruppe = AufstellungsAssistentPanelNew.asString(aap.getGroups());
 		parameter.aufstellungsAssistentPanel_reihenfolge = aap.getOrder();
 		parameter.aufstellungsAssistentPanel_not = aap.isNotGroup();
 		parameter.aufstellungsAssistentPanel_cbfilter = aap.isGroupFilter();

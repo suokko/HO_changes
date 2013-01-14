@@ -2,6 +2,7 @@ package ho.module.lineup;
 
 import ho.core.model.match.Weather;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IAufstellungsAssistentPanel {
@@ -13,6 +14,8 @@ public interface IAufstellungsAssistentPanel {
 	boolean isIgnoreSuspended();
 
 	String getGroup();
+	
+	List<String> getGroups();
 
 	boolean isGroupFilter();
 
