@@ -37,6 +37,16 @@ public class HO {
 	 */
 
 	/**
+	 * Preparing updates from inside HO:
+	 * 
+	 * Beta versions: Upload to development and update betaversion.htm in same folder
+	 * 
+	 * Full release: Upload a zip with no revision info to the final folder. Update
+	 * version.htm in onlinefiles folder. 
+	 */
+	
+	
+	/**
 	 * HO Version
 	 */
 	public static final double VERSION = 1.433d;
