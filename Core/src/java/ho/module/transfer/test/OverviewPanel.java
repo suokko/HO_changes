@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -42,10 +46,8 @@ public class OverviewPanel extends JPanel {
 
 		List<TableRow> data = new ArrayList<TableRow>();
 
-		List<PlayerTransfer> sold = DBManager.instance().getTransfers(0, false,
-				true);
-		List<PlayerTransfer> bought = DBManager.instance().getTransfers(0,
-				true, false);
+		List<PlayerTransfer> sold = DBManager.instance().getTransfers(0, false, true);
+		List<PlayerTransfer> bought = DBManager.instance().getTransfers(0, true, false);
 
 		for (PlayerTransfer sale : sold) {
 			TableRow row = new TableRow(getBuy(sale, bought), sale);
@@ -57,35 +59,31 @@ public class OverviewPanel extends JPanel {
 		this.table = new JTable(new MyTableModel(data));
 		table.setPreferredScrollableViewportSize(new Dimension(1000, 400));
 		table.getColumnModel().getColumn(0).setCellRenderer(new DateRenderer());
-		table.getColumnModel().getColumn(2)
-				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(2).setCellRenderer(new NumberRenderer());
 		table.getColumnModel().getColumn(3).setCellRenderer(new DateRenderer());
-		table.getColumnModel().getColumn(4)
-				.setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(5)
-				.setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(6)
-				.setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(7)
-				.setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(8)
-				.setCellRenderer(new NumberRenderer());
-		table.getColumnModel().getColumn(9)
-				.setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(4).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(5).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(6).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(7).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(8).setCellRenderer(new NumberRenderer());
+		table.getColumnModel().getColumn(9).setCellRenderer(new NumberRenderer());
 		table.setAutoCreateRowSorter(true);
+		
+		List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+		sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+		table.getRowSorter().setSortKeys(sortKeys);
 
 		add(new JScrollPane(table), BorderLayout.CENTER);
 
 		JButton button = new JButton("test");
-		add(button, BorderLayout.SOUTH);
+//		add(button, BorderLayout.SOUTH);
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table.getSelectedRow();
 				selectedRow = table.convertRowIndexToModel(selectedRow);
-				int playerId = ((MyTableModel) table.getModel())
-						.getPlayerId(selectedRow);
+				int playerId = ((MyTableModel) table.getModel()).getPlayerId(selectedRow);
 
 				WagesPanel p = new WagesPanel(playerId);
 				JDialog dlg = new JDialog();
@@ -97,21 +95,22 @@ public class OverviewPanel extends JPanel {
 	}
 
 	private boolean addSomeData(TableRow row) {
-		Spieler player = getPlayer(row.getSale().getPlayerId(), row.getSale()
-				.getPlayerName());
+		Spieler player = getPlayer(row.getSale().getPlayerId(), row.getSale().getPlayerName());
 
 		if (player == null) {
-			System.out.println("####- player " + row.getSale().getPlayerId()
-					+ " (" + row.getSale().getPlayerName() + ") not found");
+			System.out.println("####- player " + row.getSale().getPlayerId() + " ("
+					+ row.getSale().getPlayerName() + ") not found");
 			return false;
 		}
 		if (player.isHomeGrown()) {
-			System.out.println("####- player " + row.getSale().getPlayerId()
-					+ " (" + row.getSale().getPlayerName() + ") isHomeGrown");
+			System.out.println("####- player " + row.getSale().getPlayerId() + " ("
+					+ row.getSale().getPlayerName() + ") isHomeGrown");
 			return false;
 		}
 
 		Date buyingDate = row.getBuyingDate();
+		Date birthDay17 = Calc.get17thBirthday(player.getSpielerID());
+		int wagesSum = 0;
 
 		// if (player.isHomeGrown()) {
 		// buyingDate = new Date(DBManager.instance()
@@ -123,49 +122,58 @@ public class OverviewPanel extends JPanel {
 				row.getSellingDate());
 		row.setWeeksInTeam(updates.size());
 
-		List<Wage> wagesByAge = Wage.getWagesByAge(player.getSpielerID());
 		Map<Integer, Wage> ageWageMap = new HashMap<Integer, Wage>();
-		for (Wage wage : wagesByAge) {
-			ageWageMap.put(Integer.valueOf(wage.getAge()), wage);
+		List<Wage> wagesByAge = Wage.getWagesByAge(player.getSpielerID());
+		if (!wagesByAge.isEmpty()) {
+			// order by age
+			Collections.sort(wagesByAge, new Comparator<Wage>() {
+
+				@Override
+				public int compare(Wage o1, Wage o2) {
+					return Integer.valueOf(o1.getAge()).compareTo(Integer.valueOf(o2.getAge()));
+				}
+			});
+			for (Wage wage : wagesByAge) {
+				ageWageMap.put(Integer.valueOf(wage.getAge()), wage);
+			}
+
+			// the first wage is payed immediately when the player is bought
+			wagesSum += wagesByAge.get(0).getWage();
 		}
 
-		Date birthDay17 = Calc.get17thBirthday(player.getSpielerID());
-		int wages = 0;
 		boolean allWagesFound = true;
 		for (Date date : updates) {
 			int ageAt = Calc.getAgeAt(birthDay17, date);
 			Wage wage = ageWageMap.get(Integer.valueOf(ageAt));
 			if (wage != null) {
-				wages += wage.getWage();
+				wagesSum += wage.getWage();
 				// System.out.println("####- " + player.getName() + " wage is "
 				// + wage.getWage() + " for age " + ageAt);
 			} else {
-				System.out.println("####- " + player.getName()
-						+ " wage not found for age " + ageAt);
+				System.out
+						.println("####- " + player.getName() + " wage not found for age " + ageAt);
 				allWagesFound = false;
 			}
 
 		}
 
 		if (allWagesFound) {
-			row.setSumOfLoan(wages);
+			row.setSumOfLoan(wagesSum);
 		} else {
 			return false;
 		}
 
 		int daysInTeam = Calc.getDaysBetween(row.getSellingDate(), buyingDate);
-		double fee = row.getSellingPrice()
-				* (TransferFee.getFee(daysInTeam) / 100);
+		double fee = row.getSellingPrice() * (TransferFee.getFee(daysInTeam) / 100);
 		double feePreviousClub = 0;
 		double feeMotherClub = 0;
 		if (!player.isHomeGrown()) {
-			feePreviousClub = row.getSellingPrice()
-					* (TransferFee.feePreviousClub(2) / 100);
+//			feePreviousClub = row.getSellingPrice() * (TransferFee.feePreviousClub(2) / 100);
 			feeMotherClub = row.getSellingPrice() * 0.02d;
 		}
 		int cost = (int) (fee + feePreviousClub + feeMotherClub);
 		row.setSellingCosts(cost);
-		int gewinn = row.getSellingPrice() - row.getBuyPrice() - wages - cost;
+		int gewinn = row.getSellingPrice() - row.getBuyPrice() - wagesSum - cost;
 		row.setNetProfit(gewinn);
 
 		return true;
@@ -183,8 +191,7 @@ public class OverviewPanel extends JPanel {
 	}
 
 	private Spieler getPlayer(int playerId, String playerName) {
-		List<Spieler> all = HOVerwaltung.instance().getModel()
-				.getAllOldSpieler();
+		List<Spieler> all = HOVerwaltung.instance().getModel().getAllOldSpieler();
 		for (Spieler player : all) {
 			if (playerId != 0) {
 				if (player.getSpielerID() == playerId) {
@@ -206,9 +213,9 @@ public class OverviewPanel extends JPanel {
 	private class MyTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1236642855349013418L;
-		private String[] columns = { "Buying date", "Name", "Buy price",
-				"Selling date", "Selling price", "Weeks in team",
-				"Selling costs", "Sum of loan", "Net profit", "Profit per week" };
+		private String[] columns = { "Buying date", "Name", "Buy price", "Selling date",
+				"Selling price", "Weeks in team", "Selling costs", "Sum of loan", "Net profit",
+				"Profit per week" };
 		private List<TableRow> data;
 
 		MyTableModel(List<TableRow> data) {
@@ -390,19 +397,17 @@ public class OverviewPanel extends JPanel {
 	private class DateRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = -1900876860494850567L;
-		private DateFormat dateFormat = DateFormat
-				.getDateInstance(DateFormat.SHORT);
+		private DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
 			String val = "";
 			if (value != null) {
 				val = dateFormat.format((Date) value);
 			}
-			return super.getTableCellRendererComponent(table, val, isSelected,
-					hasFocus, row, column);
+			return super.getTableCellRendererComponent(table, val, isSelected, hasFocus, row,
+					column);
 		}
 	}
 
@@ -412,17 +417,16 @@ public class OverviewPanel extends JPanel {
 		private NumberFormat numberFormat = NumberFormat.getIntegerInstance();
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
 
 			String val = "";
 			if (value != null) {
 				val = numberFormat.format((Number) value);
 			}
 
-			JLabel comp = (JLabel) super.getTableCellRendererComponent(table,
-					val, isSelected, hasFocus, row, column);
+			JLabel comp = (JLabel) super.getTableCellRendererComponent(table, val, isSelected,
+					hasFocus, row, column);
 
 			comp.setHorizontalAlignment(SwingConstants.RIGHT);
 			return comp;
