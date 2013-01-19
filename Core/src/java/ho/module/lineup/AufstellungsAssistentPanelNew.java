@@ -176,7 +176,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(4, 4, 2, 2);
+		gbc.insets = new Insets(6, 4, 6, 2);
 		add(priorityLabel, gbc);
 
 		CBItem[] priority = {
@@ -196,7 +196,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		this.assistantPriorityComboBox
 				.setToolTipText(getLangStr("tt_AufstellungsAssistent_Reihenfolge"));
 		gbc.gridx = 1;
-		gbc.insets = new Insets(2, 2, 2, 4);
+		gbc.insets = new Insets(6, 2, 6, 4);
 		add(this.assistantPriorityComboBox, gbc);
 
 		this.idealPositionFirst = new JCheckBox(getLangStr("Idealposition_zuerst"),
