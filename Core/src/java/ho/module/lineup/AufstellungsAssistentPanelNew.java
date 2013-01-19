@@ -17,6 +17,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,12 +40,14 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 	private static final long serialVersionUID = -6853036429678216392L;
 	private WeatherChooser weatherChooser;
 	private GroupChooser groupChooser;
+	private JLabel groupLabel;
 	private JComboBox assistantPriorityComboBox;
 	private JCheckBox idealPositionFirst;
 	private JCheckBox considerFormCheckBox;
 	private JCheckBox injuredCheckBox;
 	private JCheckBox suspendedCheckBox;
 	private JCheckBox excludeLastLinupCheckBox;
+	private JCheckBox allPlayersCheckBox;
 
 	public AufstellungsAssistentPanelNew() {
 		initComponents();
@@ -160,21 +164,25 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		gbc.insets = new Insets(4, 2, 2, 4);
 		add(this.weatherChooser, gbc);
 
-		JLabel groupLabel = new JLabel(getLangStr("Gruppe"));
+		this.groupLabel = new JLabel(getLangStr("Gruppe"));
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(4, 4, 2, 2);
-		add(groupLabel, gbc);
+		add(this.groupLabel, gbc);
 
 		this.groupChooser = new GroupChooser();
 		gbc.gridx = 1;
 		gbc.insets = new Insets(2, 2, 2, 4);
 		add(this.groupChooser, gbc);
 
+		this.allPlayersCheckBox = new JCheckBox("all");
+//		gbc.gridy++;
+//		add(this.allPlayersCheckBox, gbc);
+		
 		JLabel priorityLabel = new JLabel(getLangStr("lineupassist.priority"));
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy++;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(6, 4, 6, 2);
 		add(priorityLabel, gbc);
@@ -265,6 +273,16 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 				});
 			}
 		});
+		
+		this.allPlayersCheckBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				boolean enable = e.getStateChange() == ItemEvent.DESELECTED;
+				groupChooser.setChooserEnabled(enable);
+				groupLabel.setEnabled(enable);
+			}
+		});
 	}
 
 	private class GroupChooser extends JPanel {
@@ -276,7 +294,12 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 		private JToggleButton dBtn;
 		private JToggleButton eBtn;
 		private JToggleButton fBtn;
+		private JToggleButton ungroupedBtn;
 
+		public GroupChooser() {
+			initComponents();
+		}
+		
 		List<String> getGroups() {
 			List<String> list = new ArrayList<String>();
 			if (aBtn.isSelected()) {
@@ -300,6 +323,16 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 			return list;
 		}
 
+		public void setChooserEnabled(boolean enabled) {
+			this.aBtn.setEnabled(enabled);
+			this.bBtn.setEnabled(enabled);
+			this.cBtn.setEnabled(enabled);
+			this.dBtn.setEnabled(enabled);
+			this.eBtn.setEnabled(enabled);
+			this.fBtn.setEnabled(enabled);
+			this.ungroupedBtn.setEnabled(enabled);
+		}
+
 		void setGroups(List<String> groups) {
 			List<String> list = (groups != null) ? groups : Collections.<String> emptyList();
 			this.aBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[1]));
@@ -308,10 +341,7 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 			this.dBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[4]));
 			this.eBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[5]));
 			this.fBtn.setSelected(list.contains(HOIconName.TEAMSMILIES[6]));
-		}
-
-		public GroupChooser() {
-			initComponents();
+			// ungroupedBtn
 		}
 
 		private void initComponents() {
@@ -348,6 +378,11 @@ public class AufstellungsAssistentPanelNew extends ImagePanel implements
 			this.fBtn.setPreferredSize(btnSize);
 			this.fBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]));
 			add(this.fBtn);
+			
+			this.ungroupedBtn  = new JToggleButton();
+			this.ungroupedBtn.setPreferredSize(btnSize);
+//			this.fBtn.setIcon(ThemeManager.getIcon(HOIconName.TEAMSMILIES[6]));
+			add(this.ungroupedBtn);
 		}
 	}
 
