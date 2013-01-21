@@ -155,12 +155,14 @@ public class Lineup {
 			m_iTacticType = Integer.parseInt(properties.getProperty("tactictype", "0"));
 			// bugfix: i had a HRF with installning=null (the string null)
 			String installning = properties.getProperty("installning");
-			if (StringUtils.isNumeric(installning)) {
+			
+			try {
 				m_iAttitude = Integer.parseInt(installning);
-			} else {
+			} catch (Exception e) {
+				HOLogger.instance().warning(getClass(), "Failed to parse attitude: " + installning);
 				m_iAttitude = IMatchDetails.EINSTELLUNG_NORMAL;
 			}
-
+			
 			// and read the sub contents
 			for (int i = 0; i < 5; i++) {
 
